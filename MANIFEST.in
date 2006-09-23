@@ -1,0 +1,4 @@
+include LICENSE.txt README.txt  DEVELOPERS.txt 
+recursive-include weblogo/weblogo_htdocs/ *.html *.cgi *.*
+include cap.fa
+include test_weblogo.py
