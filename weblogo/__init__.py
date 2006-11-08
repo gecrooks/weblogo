@@ -105,6 +105,24 @@ from corebio.moremath import *
 from corebio.data import amino_acid_composition
 from corebio.seq import unambiguous_rna_alphabet, unambiguous_dna_alphabet, unambiguous_protein_alphabet
 
+
+# ------ META DATA ------
+
+description  = "Create sequence logos from biological sequence alignments." 
+
+__version__ = "3.0b9"
+
+# These keywords are subsituted by subversion.
+# The date and revision will only  tell the truth after a branch or tag,
+# since different files in trunk will have been changed at different times
+release_date ="$Date: 2006-09-20 21:55:15 -0700 (Wed, 20 Sep 2006) $".split()[1]
+release_build = "$Revision: 152 $".split()[1]
+release_description = "WebLogo %s (%s)" % (__version__,  release_date)
+
+
+
+
+
 def cgi(htdocs_directory) :
     import weblogo._cgi
     weblogo._cgi.main(htdocs_directory)
@@ -168,18 +186,6 @@ class Ghostscript(object) :
 
 aa_composition = [ amino_acid_composition[_k] for _k in unambiguous_protein_alphabet]
 
-# ------ META DATA ------
-
-description  = "Create sequence logos from biological sequence alignments." 
-
-__version__ = "3.0b8"
-
-# These keywords are subsituted by subversion.
-# The date and revision will only  tell the truth after a branch or tag,
-# since different files in trunk will have been changed at different times
-release_date ="$Date: 2006-09-20 21:55:15 -0700 (Wed, 20 Sep 2006) $".split()[1]
-release_build = "$Revision: 152 $".split()[1]
-release_description = "WebLogo %s (%s)" % (__version__,  release_date)
 
 
 # ------  DATA ------

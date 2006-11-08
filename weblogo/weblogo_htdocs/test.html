@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<?xml-stylesheet href="logo.css" type="text/css"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="logo.css" />
+<link rel="stylesheet" type="text/css" href="logo.css" >
 
 <title>WebLogo - Tests </title>
-<meta name="author" content="Gavin E. Crooks" />
-<meta name="ID" content="$ID:" />
+<meta name="author" content="Gavin E. Crooks" >
+<meta name="ID" content="$ID:" >
 
 <style type="text/css">
 td {
@@ -37,30 +37,30 @@ td {
   <a href="create.cgi">create</a>&nbsp;&middot; 
   <a href="examples.html">examples</a>&nbsp;&middot; 
   <a href="manual.html">manual</a>&nbsp;&middot; 
-<br/>
+<br>
 &nbsp;
 </td></tr>
 
 <tr><td colspan='2'>
 
-Various tests of the WebLogo webapp. <br />
+Various tests of the WebLogo webapp. <br >
 
-<hr />
+<hr >
 
 <dl>
 <dt>Relative Entropy Test</dt>
 <dd>
 The entropy should be 2 bits, 1 bit, 0 bits
 (The small sample correction should be turned off.) 
-<br />
+<br >
 <form method="post" action="create.cgi">
-<input type="submit" name="cmd_edit" value="Edit" />
-<input type="submit" name="cmd_create" value="Create" />
-<input type="hidden" name="show_yaxis" value="true" />
-<input type="hidden" name="show_xaxis" value="true" />
-<input type="hidden" name="show_fineprint" value="true" />
-<input type="hidden" name="show_errorbars" value="true" />
-<input type="hidden" name="composition" value="comp_none" />
+<input type="submit" name="cmd_edit" value="Edit" >
+<input type="submit" name="cmd_create" value="Create" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="show_errorbars" value="true" >
+<input type="hidden" name="composition" value="comp_none" >
 
 <input type="hidden" name="sequences" value=
 ">
@@ -71,7 +71,7 @@ GTCGTCGTCGTC
 GGGGGGGGGGGG
 >
 GGAGGAGGAGGA
-" />
+" >
 </form>
 </dd>
 
@@ -80,16 +80,16 @@ GGAGGAGGAGGA
 <dd>
 Replace and display x-label, y-label and title. 
 <form method="post" action="create.cgi">
-<input type="submit" name="cmd_edit" value="Edit" />
-<input type="submit" name="cmd_create" value="Create" />
-<input type="hidden" name="show_yaxis" value="true" />
-<input type="hidden" name="show_xaxis" value="true" />
-<input type="hidden" name="show_fineprint" value="true" />
-<input type="hidden" name="show_errorbars" value="true" />
+<input type="submit" name="cmd_edit" value="Edit" >
+<input type="submit" name="cmd_create" value="Create" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="show_errorbars" value="true" >
 
-<input type="hidden" name="yaxis_label" value="The Y-axis" /> 
-<input type="hidden" name="xaxis_label" value="The X-axis" /> 
-<input type="hidden" name="logo_title" value="This is the TITLE" /> 
+<input type="hidden" name="yaxis_label" value="The Y-axis" > 
+<input type="hidden" name="xaxis_label" value="The X-axis" > 
+<input type="hidden" name="logo_title" value="This is the TITLE" > 
 <input type="hidden" name="sequences" value=
 ">
 AAAGTGAAAGTGAAAGTGAAAGTG
@@ -99,19 +99,19 @@ AAAGCGAAAGCGAAAGCGAAAGCG
 TGCCCTTGCCCTTGCCCTTGCCCT
 >
 TGCCTTTGCCTTTGCCTTTGCCTT
-" />
+" >
 </form>
 
 Same, but do not show axes
 <form method="post" action="create.cgi">
-<input type="submit" name="cmd_edit" value="Edit" />
-<input type="submit" name="cmd_create" value="Create" />
-<input type="hidden" name="show_fineprint" value="true" />
-<input type="hidden" name="show_errorbars" value="true" />
+<input type="submit" name="cmd_edit" value="Edit" >
+<input type="submit" name="cmd_create" value="Create" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="show_errorbars" value="true" >
 
-<input type="hidden" name="yaxis_label" value="This is the Y-axis" /> 
-<input type="hidden" name="xaxis_label" value="This is the X-axis" /> 
-<input type="hidden" name="logo_title" value="This is the TITLE" /> 
+<input type="hidden" name="yaxis_label" value="This is the Y-axis" > 
+<input type="hidden" name="xaxis_label" value="This is the X-axis" > 
+<input type="hidden" name="logo_title" value="This is the TITLE" > 
 <input type="hidden" name="sequences" value=
 ">
 AAAGTGAAAGTGAAAGTGAAAGTG
@@ -121,7 +121,7 @@ AAAGCGAAAGCGAAAGCGAAAGCG
 TGCCCTTGCCCTTGCCCTTGCCCT
 >
 TGCCTTTGCCTTTGCCTTTGCCTT
-" />
+" >
 </form>
 </dd>
 
@@ -131,12 +131,12 @@ TGCCTTTGCCTTTGCCTTTGCCTT
 <dd>
 Ensure that this logo can be created in each of the available formats
 <form method="post" action="create.cgi">
-<input type="submit" name="cmd_edit" value="Edit" />
-<input type="submit" name="cmd_create" value="Create" />
-<input type="hidden" name="show_yaxis" value="true" />
-<input type="hidden" name="show_xaxis" value="true" />
-<input type="hidden" name="show_fineprint" value="true" />
-<input type="hidden" name="show_errorbars" value="true" />
+<input type="submit" name="cmd_edit" value="Edit" >
+<input type="submit" name="cmd_create" value="Create" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="show_errorbars" value="true" >
 
 Format: <select name="format">
 <option value="png_print">PNG</option>
@@ -155,7 +155,7 @@ AAAGCGAAAGCGAAAGCGAAAGCG
 TGCCCTTGCCCTTGCCCTTGCCCT
 >
 TGCCTTTGCCTTTGCCTTTGCCTT
-" />
+" >
 </form>
 </dd>
 
@@ -167,13 +167,13 @@ TGCCTTTGCCTTTGCCTTTGCCTT
 Each character in each stack has the same entropy. The letters
 should be alphabetized, top down.
 <form method="post" action="create.cgi">
-<input type="submit" name="cmd_edit" value="Edit" />
-<input type="submit" name="cmd_create" value="Create" />
-<input type="hidden" name="show_yaxis" value="true" />
-<input type="hidden" name="show_xaxis" value="true" />
-<input type="hidden" name="show_fineprint" value="true" />
-<input type="hidden" name="show_errorbars" value="true" />
-<input type="hidden" name="composition" value="comp_none" />
+<input type="submit" name="cmd_edit" value="Edit" >
+<input type="submit" name="cmd_create" value="Create" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="show_errorbars" value="true" >
+<input type="hidden" name="composition" value="comp_none" >
 (NA)
 <input type="hidden" name="sequences" value=
 ">
@@ -184,16 +184,16 @@ AAAGCG
 TGCCCT
 >
 TGCCTT
-" />
+" >
 </form>
 
 <form method="post" action="create.cgi">
-<input type="submit" name="cmd_edit" value="Edit" />
-<input type="submit" name="cmd_create" value="Create" />
-<input type="hidden" name="show_yaxis" value="true" />
-<input type="hidden" name="show_xaxis" value="true" />
-<input type="hidden" name="show_fineprint" value="true" />
-<input type="hidden" name="show_errorbars" value="true" /> (AA)
+<input type="submit" name="cmd_edit" value="Edit" >
+<input type="submit" name="cmd_create" value="Create" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="show_errorbars" value="true" > (AA)
 <input type="hidden" name="sequences" value=
 ">
 CA
@@ -207,7 +207,7 @@ VG
 KG
 >
 KG
-" />
+" >
 </form>
 </dd>
 
@@ -217,8 +217,8 @@ KG
 <dd>
 Should not die just because there is only 1 stack.
 <form method="post" action="create.cgi">
-<input type="submit" name="cmd_edit" value="Edit" />
-<input type="submit" name="cmd_create" value="Create" />
+<input type="submit" name="cmd_edit" value="Edit" >
+<input type="submit" name="cmd_create" value="Create" >
 <input type="hidden" name="sequences" value=
 ">
 A
@@ -232,7 +232,7 @@ G
 G
 >
 G
-" />
+" >
 </form>
 </dd>
 
@@ -243,11 +243,11 @@ The samples per column decrease from 32 (left) to 1 (right).
 Before the small sample correction the relative entropy of each stack
 is 2 bits. 
 <form method="post" action="create.cgi">
-<input type="submit" name="cmd_edit" value="Edit" />
-<input type="submit" name="cmd_create" value="Create" />
-<input type="hidden" name="show_yaxis" value="true" />
-<input type="hidden" name="show_xaxis" value="true" />
-<input type="hidden" name="show_fineprint" value="true" />
+<input type="submit" name="cmd_edit" value="Edit" >
+<input type="submit" name="cmd_create" value="Create" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
 <select name="composition" >
 <option value = "comp_none" >No adjustment for composition</option>
 <option value = "comp_auto" >auto</option>
@@ -316,7 +316,7 @@ GGG-----------------------------
 GG------------------------------
 >
 G-------------------------------
-" />
+" >
 </form>
 </dd>
 
@@ -326,20 +326,20 @@ G-------------------------------
 <dd>
 Each of these tests should result in a polite and informative error message.
 <form method="post" action="create.cgi">
-<input type="submit" name="cmd_create" value="Fail: No sequence data" />
-<input type="hidden" name="show_yaxis" value="true" />
-<input type="hidden" name="show_xaxis" value="true" />
-<input type="hidden" name="show_fineprint" value="true" />
-<input type="hidden" name="show_errorbars" checked="checked" />
-<input type="hidden" name="sequences" value="" />
+<input type="submit" name="cmd_create" value="Fail: No sequence data" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="show_errorbars" checked="checked" >
+<input type="hidden" name="sequences" value="" >
 </form>
 
 <form method="post" action="create.cgi">
-<input type="submit" name="cmd_create" value="Fail: Malformed sequences" />
-<input type="hidden" name="show_yaxis" value="true" />
-<input type="hidden" name="show_xaxis" value="true" />
-<input type="hidden" name="show_fineprint" value="true" />
-<input type="hidden" name="show_errorbars" checked="checked" />
+<input type="submit" name="cmd_create" value="Fail: Malformed sequences" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="show_errorbars" checked="checked" >
 <input type="hidden" name="sequences" value="
 asdajksgh
 >
@@ -347,36 +347,36 @@ GGGGGGGGGGGGGG------------------
 >
 GGGGGGGGGGGGG-------------------
 >
-" />
+" >
 </form>
 
 <form method="post" action="create.cgi">
-<input type="submit" name="cmd_create" value="Fail: Unknown format" />
-<input type="hidden" name="format" value="NO_SUCH_FORMAT" />
-<input type="hidden" name="show_yaxis" value="true" />
-<input type="hidden" name="show_xaxis" value="true" />
-<input type="hidden" name="show_fineprint" value="true" />
-<input type="hidden" name="show_errorbars" checked="checked" />
+<input type="submit" name="cmd_create" value="Fail: Unknown format" >
+<input type="hidden" name="format" value="NO_SUCH_FORMAT" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="show_errorbars" checked="checked" >
 <input type="hidden" name="sequences" value=">
 GGGGGGGGGGGGGG------------------
 >
 GGGGGGGGGGGGG-------------------
 >
-" />
+" >
 </form>
 
 <form method="post" action="create.cgi">
-<input type="submit" name="cmd_create" value="Fail: Malformed data" />
-<input type="hidden" name="show_yaxis" value="true" />
-<input type="hidden" name="show_xaxis" value="true" />
-<input type="hidden" name="show_fineprint" value="true" />
-<input type="hidden" name="show_errorbars" checked="checked" />
+<input type="submit" name="cmd_create" value="Fail: Malformed data" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="show_errorbars" checked="checked" >
 <input type="hidden" name="sequences" value=">
 GGGGGGGGGGGGGG------------------
 >
 GGGGGGGGGGGGG-------------------
 >
-" />
+" >
 </form>
 
 
@@ -388,11 +388,11 @@ GGGGGGGGGGGGG-------------------
 <dd>
 Same sequences, three different sizes.
 <form method="post" action="create.cgi">
-<input type="submit" name="cmd_edit" value="Edit" />
-<input type="submit" name="cmd_create" value="Create" />
-<input type="hidden" name="show_yaxis" value="true" />
-<input type="hidden" name="show_xaxis" value="true" />
-<input type="hidden" name="show_fineprint" value="true" />
+<input type="submit" name="cmd_edit" value="Edit" >
+<input type="submit" name="cmd_create" value="Create" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
 Size: 
 <select name="size" >
 <option  selected="selected" >small</option>
@@ -500,7 +500,7 @@ gtgtgtaaacgtgaacgcaatc
 aactgtgaaacgaaacatattt
 >uxuAB 165->187
 TCTTGTGATGTGGTTAACCAAT
-" />
+" >
 </form>
 </dd>
 

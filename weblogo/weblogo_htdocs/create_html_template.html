@@ -1,13 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<?xml-stylesheet href="logo.css" type="text/css"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="logo.css" />
+<link rel="stylesheet" type="text/css" href="logo.css" >
 
 
 <title>WebLogo - Create </title>
-<meta name="author" content="Gavin E. Crooks" />
-<meta name="ID" content="$ID:" />
+<meta name="author" content="Gavin E. Crooks" >
+<meta name="ID" content="$ID:" >
 
 <style type="text/css">
 td {
@@ -42,14 +42,14 @@ td {
   <a class="selected" href="create.cgi">create</a>&nbsp;&middot; 
   <a href="examples.html">examples</a>&nbsp;&middot; 
   <a href="manual.html">manual</a>&nbsp;&middot; 
-<br/>
+<br>
 <span style="font-size:small">$version</span>&nbsp;&nbsp;
 </td></tr>
 
 <tr><td >
 Sequence data
 </td><td > 
-<input type="file" name="sequences_file"   /> 
+<input type="file" name="sequences_file"   > 
 </td></tr>
 
 <tr><td >
@@ -67,14 +67,14 @@ Sequence data
 
 <tr><td>
 </td><td align="right">
-<input  style="font-size:large" type="submit" name="cmd_create" value="&nbsp;Create&nbsp;Logo&nbsp;&nbsp;&nbsp;&nbsp;"  />
+<input  style="font-size:large" type="submit" name="cmd_create" value="&nbsp;Create&nbsp;Logo&nbsp;&nbsp;&nbsp;&nbsp;"  >
 </td></tr>
      
 
 <!-- Reset defaults must come after create_logo so that hitting enter creates a logo-->  
 <!--
 <tr><td>
-<input type="submit" name="cmd_reset" value="Reset defaults" />
+<input type="submit" name="cmd_reset" value="Reset defaults" >
 </td><td  class="err_msg" rowspan="2">
 ${error_message} &nbsp;
 </td></tr>
@@ -113,7 +113,7 @@ Logo size
 <tr><td ${stacks_per_line_err}>
     Stacks per line
 </td><td>
-<input type="text" name="stacks_per_line" value="${stacks_per_line}" size="4" maxlength="4" />
+<input type="text" name="stacks_per_line" value="${stacks_per_line}" size="4" maxlength="4" >
 </td></tr>
 
 <tr><td ${alphabet_err}>
@@ -143,12 +143,12 @@ Units </td><td>
 <tr><td ${first_index_err}>
 First position number
 </td><td>
-<input  type="text" name="first_index" value="${first_index}" size="4" maxlength="80" />
+<input  type="text" name="first_index" value="${first_index}" size="4" maxlength="80" >
 </td></tr>
 
 <tr><td ${logo_range_err} >
 Logo range </td><td>
-<input type="text" name="logo_start" value="${logo_start}" size="4" maxlength="80" /> - <input type="text" name="logo_end"  value="${logo_end}" size="4" maxlength="80" />
+<input type="text" name="logo_start" value="${logo_start}" size="4" maxlength="80" > - <input type="text" name="logo_end"  value="${logo_end}" size="4" maxlength="80" >
 </td></tr>
 
 
@@ -169,14 +169,14 @@ Composition
 <option ${comp_Scerevisiae} value="comp_Scerevisiae" >S. cerevisiae (38%) </option>
 </select>
 or
-<input type="text" name="percentCG" value="${percentCG}" size="4" maxlength="8"   />  % CG
+<input type="text" name="percentCG" value="${percentCG}" size="4" maxlength="8"   >  % CG
 </td></tr>
 
 
 <tr><td>
 Error bars
 </td><td>
- <input type="checkbox" name="show_errorbars" value="true" ${show_errorbars}  />
+ <input type="checkbox" name="show_errorbars" value="true" ${show_errorbars}  >
 </td></tr>
  
 
@@ -187,55 +187,55 @@ Error bars
 <tr    ><td ${logo_title_err}>
 Title
 </td><td >
-<input   type="text"  name="logo_title"  size="52" maxlength="80" value="${logo_title}" /> 
+<input   type="text"  name="logo_title"  size="52" maxlength="80" value="${logo_title}" > 
 </td></tr>
 
 <tr><td>
 Figure label</td><td>
-<input type="text" name="logo_label"  value="${logo_label}" size="4" maxlength="100" /> 
+<input type="text" name="logo_label"  value="${logo_label}" size="4" maxlength="100" > 
 </td></tr>
 
 
 <tr><td>
 X-axis
 </td><td>
-<input type="checkbox" name="show_xaxis" value="true" ${show_xaxis} />
+<input type="checkbox" name="show_xaxis" value="true" ${show_xaxis} >
 Label: 
-<input type="text" name="xaxis_label"  value="${xaxis_label}" size="20" maxlength="100" />  
+<input type="text" name="xaxis_label"  value="${xaxis_label}" size="20" maxlength="100" >  
 </td></tr>
 
 
 <tr><td>
 Y-axis
 </td><td>
-<input type="checkbox" name="show_yaxis" value="true" ${show_yaxis} /> 
-Label: <input type="text" name="yaxis_label" value="${yaxis_label}" size="20" maxlength="32" />  
+<input type="checkbox" name="show_yaxis" value="true" ${show_yaxis} > 
+Label: <input type="text" name="yaxis_label" value="${yaxis_label}" size="20" maxlength="32" >  
 
 </td></tr>
 
 <tr><td ${yaxis_scale_err} >
 Y-axis scale:
 </td><td>
-<input type="text" name="yaxis_scale"  value="${yaxis_scale}" size="4" maxlength="100"  /> 
+<input type="text" name="yaxis_scale"  value="${yaxis_scale}" size="4" maxlength="100"  > 
 </td></tr>
 
  <tr><td ${yaxis_tic_interval_err} >
 Y-axis tic spacing:
 </td><td>
-<input type="text" name="yaxis_tic_interval" value="${yaxis_tic_interval}"  size="4" maxlength="100"  /> 
+<input type="text" name="yaxis_tic_interval" value="${yaxis_tic_interval}"  size="4" maxlength="100"  > 
 </td></tr>
 
 
 <tr><td>
 Sequence end labels
 </td><td>
-<input type="checkbox" name="show_ends" value="true" ${show_ends} /> 
+<input type="checkbox" name="show_ends" value="true" ${show_ends} > 
 </td></tr>
   
 <tr><td>
 Version fineprint 
   </td><td>
-<input type="checkbox" name="show_fineprint" value="true" ${show_fineprint} />
+<input type="checkbox" name="show_fineprint" value="true" ${show_fineprint} >
 </td></tr>
 
 
@@ -254,7 +254,7 @@ Version fineprint
 <option ${color_custom} value="color_custom">Custom (Specify below)</option>
 </select> 
 <!--&nbsp; Color key:
-<input type="checkbox" name="show_color_key" value="true" ${show_color_key} disabled />
+<input type="checkbox" name="show_color_key" value="true" ${show_color_key} disabled >
 -->
 </td></tr>
 
@@ -265,33 +265,33 @@ Version fineprint
 </tr>
 
 <tr >
-<td ${color0_err}><input name="symbols0" type="text"  size="16" maxlength="64" value="${symbols0}"/></td>
-<td><input name="color0" type="text"  size="16" maxlength="64"  value="${color0}"/></td>
-<!--<td><input name="desc0"  size="16" maxlength="64"  value="${desc0}"/></td> -->
+<td ${color0_err}><input name="symbols0" type="text"  size="16" maxlength="64" value="${symbols0}"></td>
+<td><input name="color0" type="text"  size="16" maxlength="64"  value="${color0}"></td>
+<!--<td><input name="desc0"  size="16" maxlength="64"  value="${desc0}"></td> -->
 </tr>
 
 <tr >
-<td ${color1_err}><input name="symbols1" type="text"  size="16" maxlength="64" value="${symbols1}"/></td>
-<td><input name="color1" type="text"  size="16" maxlength="64"  value="${color1}"/></td>
-<!--<td><input name="desc1"  size="16" maxlength="64"  value="${desc1}"/></td>-->
+<td ${color1_err}><input name="symbols1" type="text"  size="16" maxlength="64" value="${symbols1}"></td>
+<td><input name="color1" type="text"  size="16" maxlength="64"  value="${color1}"></td>
+<!--<td><input name="desc1"  size="16" maxlength="64"  value="${desc1}"></td>-->
 </tr>
 
 <tr>
-<td ${color2_err}><input name="symbols2" type="text"  size="16" maxlength="64" value="${symbols2}"/></td>
-<td><input name="color2" type="text"  size="16" maxlength="64"  value="${color2}"/></td>
-<!--<td><input name="desc2"  size="16" maxlength="64"  value="${desc2}"/></td>-->
+<td ${color2_err}><input name="symbols2" type="text"  size="16" maxlength="64" value="${symbols2}"></td>
+<td><input name="color2" type="text"  size="16" maxlength="64"  value="${color2}"></td>
+<!--<td><input name="desc2"  size="16" maxlength="64"  value="${desc2}"></td>-->
 </tr>
 
 <tr>
-<td ${color3_err}><input name="symbols3" type="text"  size="16" maxlength="64" value="${symbols3}"/></td>
-<td><input name="color3" type="text"  size="16" maxlength="64"  value="${color3}"/></td>
-<!--<td><input name="desc3"  size="16" maxlength="64"  value="${desc3}"/></td>-->
+<td ${color3_err}><input name="symbols3" type="text"  size="16" maxlength="64" value="${symbols3}"></td>
+<td><input name="color3" type="text"  size="16" maxlength="64"  value="${color3}"></td>
+<!--<td><input name="desc3"  size="16" maxlength="64"  value="${desc3}"></td>-->
 </tr>
 
 <tr>
-<td ${color4_err}><input name="symbols4" type="text"  size="16" maxlength="64" value="${symbols4}"/></td>
-<td><input name="color4" type="text"  size="16" maxlength="64"  value="${color4}"/></td>
-<!--<td><input name="desc4"  size="16" maxlength="64"  value="${desc4}"/></td>-->
+<td ${color4_err}><input name="symbols4" type="text"  size="16" maxlength="64" value="${symbols4}"></td>
+<td><input name="color4" type="text"  size="16" maxlength="64"  value="${color4}"></td>
+<!--<td><input name="desc4"  size="16" maxlength="64"  value="${desc4}"></td>-->
 </tr>
 
 
@@ -306,9 +306,9 @@ Version fineprint
 </td></tr>
       
 <tr><td>
-<input type="submit" name="cmd_reset" value="Reset defaults" />
+<input type="submit" name="cmd_reset" value="Reset defaults" >
 </td><td align="right">
-<input  style="font-size:large" type="submit" name="cmd_create" value="&nbsp;Create&nbsp;Logo&nbsp;&nbsp;&nbsp;&nbsp;"  />
+<input  style="font-size:large" type="submit" name="cmd_create" value="&nbsp;Create&nbsp;Logo&nbsp;&nbsp;&nbsp;&nbsp;"  >
 </td></tr>
      
      
