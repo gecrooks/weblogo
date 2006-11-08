@@ -38,7 +38,7 @@
 
 import cgi
 import cgitb; cgitb.enable()
-import weblogo.ui
+import weblogo
 
 if __name__=="__main__" :
     weblogo.cgi(__file__)
