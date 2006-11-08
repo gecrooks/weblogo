@@ -21,29 +21,9 @@ To build a simple logo run
 To run as a standalone webserver at localhost:8080 
     ./weblogo.py --server
 
-
-------------
-Installation
-------------
-Download the latest distribution from the project home page, http://code.google.com/p/weblogo/	
-    > curl http://weblogo.googlecode.com/svn/dist/weblogo.tar.gz >weblogo.tar.gz    
-    > tar -zxf weblogo.tar.gz
-    > cd weblogo-*
-
-WebLogo requires python version 2.3 (or above). The following command will quickly determine if python is available. 
-
-    > python -V
-    Python 2.4.2
-
-
-Download python : http://www.python.org/download/
-
-To install WebLogo from the main WebLogo directory:
-    > python setup.py --help install           # Show installation options
-    > python setup.py install                  # Install code.
-    > python setup.py install --home ~/local   # Install code into alternative location
-
-
+Please consult the manual for more information:
+    http://bespoke.lbl.gov/weblogo/manual.html
+(Also located in the weblogo/weblogo_htdocs subdirectory.)
 
 -----------------------------
 Distribution and Modification

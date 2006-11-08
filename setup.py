@@ -3,8 +3,9 @@
 """
 WebLogo, an application for generating sequence logos, graphical representations of sequence conservation within amino acid or nucleic acid multiple sequence alignments. WebLogo makes extensive use of the CoreBio python toolkit for computational biology.. 
 
-WebLogo: http://code.google.com/p/weblogo/
-CoreBio: http://code.google.com/p/corebio/
+WebLogo:             http://bespoke.lbl.gov/weblogo/
+WebLogo development: http://code.google.com/p/weblogo/
+CoreBio development: http://code.google.com/p/corebio/
 """
 
 import sys
@@ -33,7 +34,7 @@ def main() :
         maintainer       = "Gavin Crooks",
         maintainer_email = "gec@threeplusone.com",
         url              = "http://code.google.com/p/weblogo/",    
-        download_url     = 'http://corebio.googlecode.com/svn/dist/weblogo-%s.tar.gz' % __version__ ,
+        download_url     = 'http://weblogo.googlecode.com/svn/dist/weblogo-%s.tar.gz' % __version__ ,
         classifiers      =[
             'Development Status :: 4 - Beta',
             'Intended Audience :: Science/Research',
