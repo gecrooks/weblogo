@@ -47,9 +47,9 @@ import cgitb; cgitb.enable()
 #print __name__
 
 from StringIO import StringIO
-from weblogo.visual.colorscheme import ColorScheme, ColorGroup
+from weblogo.color import *
+from weblogo.colorscheme import ColorScheme, ColorGroup
 from weblogo._corebio.utils import *
-from weblogo.visual.color import *
 from weblogo._corebio._future import Template
 
 import weblogo
