@@ -35,6 +35,11 @@ New and improved feature include:
 * Similarly, we now display Bayesian 95% confidence intervals for error bars.
 * Compositional adjustment.
 
+* Includes contributions from Clare Gollnick, David Ding, John Gilman.
+* Incorporates or adapts ideas and code from Gary Hon, Steven Brenner,      
+     John-Marc Chandonia, Liana Lareau, Ed Green, James Casbon, Jeffrey Chang,
+     Frank Kauff, Cymon J. Cox ...
+
 
 
 
@@ -160,7 +165,17 @@ Brenner, and was hosted by the School of Biological Science,
 University of Cambridge
 
 
-The WebLogo Team :
+WebLogo change log
+-----------------------     
++ New feature
+* Changed/Improved feature
+! Fixed bug
+- Removed feature
+
+Versions : major.minor.patch. 
+
+The WebLogo Team 
+------------------
 
 LL:  Liana Lareau
 GEC: Gavin E. Crooks

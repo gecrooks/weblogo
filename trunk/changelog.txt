@@ -1,26 +1,3 @@
 
-WebLogo 3.0 Beta 
--------------
-
-+ Release early, release often.
-+ WebLogo 3.0.3 beta
-
-* Includes contributions from Clare Gollnick, David Ding, John Gilman.
-* Incorporates or adapts ideas and code from Gary Hon, Steven Brenner,      
-     John-Marc Chandonia, Liana Lareau, Ed Green, James Casbon, Jeffrey Chang,
-     Frank Kauff, Cymon J. Cox ...
-
-
-WebLogo change log
------------------------     
-+ New feature
-* Changed/Improved feature
-! Fixed bug
-- Removed feature
-
-Versions : major.minor.patch. 
-
-GEC : Gavin Crooks
-JXG : John Gilman
-
+See weblogo/weblogo_htdocs/weblogo_changelog.txt
      
