@@ -117,7 +117,7 @@ from corebio.seq import unambiguous_rna_alphabet, unambiguous_dna_alphabet, unam
 
 description  = "Create sequence logos from biological sequence alignments." 
 
-__version__ = "3.0b10"
+__version__ = "3.0b11"
 
 # These keywords are subsituted by subversion.
 # The date and revision will only  tell the truth after a branch or tag,
