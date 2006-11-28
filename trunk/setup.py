@@ -1,12 +1,6 @@
 #!/usr/bin/env python
 
-"""
-WebLogo, an application for generating sequence logos, graphical representations of sequence conservation within amino acid or nucleic acid multiple sequence alignments. WebLogo makes extensive use of the CoreBio python toolkit for computational biology.. 
 
-WebLogo:             http://bespoke.lbl.gov/weblogo/
-WebLogo development: http://code.google.com/p/weblogo/
-CoreBio development: http://code.google.com/p/corebio/
-"""
 
 import sys
 
@@ -22,15 +16,18 @@ if not hasattr(sys, 'version_info') or sys.version_info < (2,3,0,'final'):
         "Dependancy error: WebLogo requires Python 2.3 or later."
  
 
-from weblogo import __version__
+from weblogolib import __version__
 
 
-def main() :           
+def main() :     
+    long_description = open("README.txt").read()
+
+      
     setup(
-        name         = "weblogo",
+        name             =  "weblogo",
         version          =  __version__,
-        description      = "Sequence Logos Redrawn",
-        long_description  = __doc__,
+        description      = "WebLogo3 : Sequence Logos Redrawn",
+        long_description  = long_description,
         maintainer       = "Gavin Crooks",
         maintainer_email = "gec@threeplusone.com",
         url              = "http://code.google.com/p/weblogo/",    
@@ -52,10 +49,17 @@ def main() :
             ],
         
         packages  = [ 
-            'weblogo'
+            'weblogolib',
+            'weblogolib._corebio',
+            'weblogolib._corebio.resource', 
+            'weblogolib._corebio.seq_io', 
+            'weblogolib._corebio.seq_io._nexus', 
+            'weblogolib._corebio.ssearch_io',         
+            'weblogolib._corebio.utils',
+            'weblogolib._corebio._future',            
             ],
             
-        data_files = ['weblogo/weblogo_htdocs/*.*',],
+        data_files = ['weblogolib/weblogo_htdocs/*.*',],
         
         cmdclass= {"install_data" : _install_data},        
     )
