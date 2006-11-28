@@ -1,9 +1,9 @@
-===============================================================================
 
+-------------------------------------------------------------------------------
                                WebLogo
 
                         http://code.google.com/p/weblogo/
-===============================================================================
+-------------------------------------------------------------------------------
 
 WebLogo is a tool for creating sequence logos from biological sequence 
 alignments.  It can be run on the command line, as a standalone webserver, as a
