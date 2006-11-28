@@ -37,13 +37,13 @@
 
 import unittest
 
-import weblogo
-from weblogo import  *
+import weblogolib
+from weblogolib import  *
 
 from StringIO import StringIO
 
-import weblogo._corebio
-sys.modules['corebio'] = sys.modules['weblogo._corebio']
+import weblogolib._corebio
+sys.modules['corebio'] = sys.modules['weblogolib._corebio']
 
 
 from corebio.seq import *
@@ -159,7 +159,7 @@ class test_seqlogo(unittest.TestCase) :
         self._exec( ["--help"], ["options:"])
 
     def test_version_option(self) :
-        self._exec( ['--version'], weblogo.__version__)
+        self._exec( ['--version'], weblogolib.__version__)
 
     
     def test_default_build(self) :
