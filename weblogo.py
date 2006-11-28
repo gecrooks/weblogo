@@ -62,7 +62,7 @@ To create a logo in python code:
 WebLogo makes extensive use of the corebio python toolkit for computational biology.  (http://code.google.com/p/corebio)
 
 """
-import weblogo
+import weblogolib
 
 # Standard python voodoo for CLI
 if __name__ == "__main__":
@@ -77,7 +77,7 @@ if __name__ == "__main__":
     #stats.print_stats(40)
     #sys.exit()
 
-    weblogo.main()
+    weblogolib.main()
     
 
 

@@ -52,8 +52,8 @@ Status : Beta - Needs documentation.
 # http://www.jalview.org
 
 
-from weblogo._corebio import seq
-from weblogo.color import Color
+from _corebio import seq
+from color import Color
 
 class ColorScheme(object):
     """ A coloring of an alphabet.

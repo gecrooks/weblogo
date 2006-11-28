@@ -47,12 +47,12 @@ import cgitb; cgitb.enable()
 #print __name__
 
 from StringIO import StringIO
-from weblogo.color import *
-from weblogo.colorscheme import ColorScheme, ColorGroup
-from weblogo._corebio.utils import *
-from weblogo._corebio._future import Template
+from color import *
+from colorscheme import ColorScheme, ColorGroup
+from _corebio.utils import *
+from _corebio._future import Template
 
-import weblogo
+import weblogolib as weblogo
 
 
 
@@ -130,7 +130,7 @@ class Field(object) :
             try :
                 return self.conversion(self.value)
             except ValueError, e :
-                raise LogoValueError, (self.name, self.errmsg)
+                raise ValueError, (self.name, self.errmsg)
         else:
             return self.value
     

@@ -38,9 +38,15 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 #  POSSIBILITY OF SUCH DAMAGE. 
 
-""" WebLogo is a tool for creating sequence logos from biological sequence
+# Replicates README.txt
+""" WebLogo is a tool for creating sequence logos from biological sequence 
 alignments.  It can be run on the command line, as a standalone webserver, as a
 CGI webapp, or as a python library.
+
+Please consult the manual for installation instructions and more information:
+(Also located in the weblogo/weblogo_htdocs subdirectory.)
+
+    http://bespoke.lbl.gov/weblogo/manual.html
 
 For help on the command line interface run
     ./weblogo.py --help
@@ -49,7 +55,7 @@ To build a simple logo run
     ./weblogo.py  < cap.fa > logo0.eps
     
 To run as a standalone webserver at localhost:8080 
-    ./weblogo.py --serve
+    ./weblogo.py --server
 
 To create a logo in python code:
     >>> seqs = seq_io.read( fin) 
@@ -62,6 +68,7 @@ To create a logo in python code:
 WebLogo makes extensive use of the corebio python toolkit for computational biology.  (http://code.google.com/p/corebio)
 
 """
+
 
 #TODO: Split out Motif class
 #TODO: Add LogoValueError exception class rather than current tuple hack.
@@ -77,8 +84,8 @@ from StringIO import StringIO
 # We have our own private copy of corebio stored as weblogo._corebio.
 # First we import our copy, then we mangle sys.modules so that package
 # has correct name
-import weblogo._corebio
-sys.modules['corebio'] = sys.modules['weblogo._corebio']
+import weblogolib._corebio
+sys.modules['corebio'] = sys.modules['weblogolib._corebio']
 
 from  corebio.data import rna_letters, dna_letters, amino_acid_letters
 import random
@@ -96,8 +103,8 @@ import numarray as na
 from corebio.utils.deoptparse import DeOptionParser
 from optparse import OptionGroup
 
-from weblogo.color import *
-from weblogo.colorscheme import *
+from color import *
+from colorscheme import *
 from corebio.seq import Alphabet, Seq, SeqList
 from corebio import seq_io
 from corebio.utils import isfloat, find_command
@@ -110,7 +117,7 @@ from corebio.seq import unambiguous_rna_alphabet, unambiguous_dna_alphabet, unam
 
 description  = "Create sequence logos from biological sequence alignments." 
 
-__version__ = "3.0b9"
+__version__ = "3.0b10"
 
 # These keywords are subsituted by subversion.
 # The date and revision will only  tell the truth after a branch or tag,
@@ -124,8 +131,8 @@ release_description = "WebLogo %s (%s)" % (__version__,  release_date)
 
 
 def cgi(htdocs_directory) :
-    import weblogo._cgi
-    weblogo._cgi.main(htdocs_directory)
+    import weblogolib._cgi
+    weblogolib._cgi.main(htdocs_directory)
         
 class Ghostscript(object) :
     formats = ('png', 'pdf', 'jpeg')
