@@ -1242,7 +1242,7 @@ def _build_option_parser() :
         type="dict",
         choices = formatters,
         metavar= "FORMAT",
-        help="Format of output: eps (default), png, pdf, gif, txt",
+        help="Format of output: eps (default), png, png_print, pdf, jpeg, txt",
         default = default_formatter)
         #TODO Implement all these formatters
 
