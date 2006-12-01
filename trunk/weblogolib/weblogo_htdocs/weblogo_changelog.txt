@@ -36,6 +36,7 @@ New and improved feature include:
 * Compositional adjustment.
 
 * Includes contributions from Clare Gollnick, David Ding, John Gilman.
+* Incorporates bug fixes and feedback from John Reid, ...
 * Incorporates or adapts ideas and code from Gary Hon, Steven Brenner,      
      John-Marc Chandonia, Liana Lareau, Ed Green, James Casbon, Jeffrey Chang,
      Frank Kauff, Cymon J. Cox ...
