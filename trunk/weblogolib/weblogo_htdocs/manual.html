@@ -277,7 +277,8 @@ The weblogo <a href="#CLI">command line client</a>, <code>weblogo.py</code>, pro
 
 <h4>Dependencies</h4>
 <p>
-WebLogo version 3 is written in python. It is necessary to have <a href="http://www.python.org/download/">python 2.3, 2.4 or 2.5</a> installed before WebLogo will run.  WebLogo requires a recent version of  <a href="http://www.cs.wisc.edu/~ghost/">ghostscript</a> to create PNG and PDF output.
+WebLogo version 3 is written in python. It is necessary to have <a href="http://www.python.org/download/">python 2.3, 2.4 or 2.5</a>  and the
+extension package <a href="http://www.stsci.edu/resources/software_hardware/numarray">numarray</a> installed before WebLogo will run. WebLogo requires a recent version of  <a href="http://www.cs.wisc.edu/~ghost/">ghostscript</a> to create PNG and PDF output.
 </p>
 
 
@@ -318,7 +319,7 @@ sudo python setup.py install_scripts --install-dir /usr/local/bin
 </pre>
 </p>
 <p>
-If <code>setuptools</code> has been installed, then WebLogo can be downloaded and installed with a single command:
+Alternativly, if the python package <code>setuptools</code> has been installed, then WebLogo can be downloaded and installed with a single command:
 <pre>
 sudo easy_install weblogo
 </pre>
