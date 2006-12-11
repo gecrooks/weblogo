@@ -168,8 +168,8 @@ __version__ = "3.0b12"
 # These keywords are subsituted by subversion.
 # The date and revision will only  tell the truth after a branch or tag,
 # since different files in trunk will have been changed at different times
-release_date ="$Date: 2006-09-20 21:55:15 -0700 (Wed, 20 Sep 2006) $".split()[1]
-release_build = "$Revision: 152 $".split()[1]
+release_date ="$Date$".split()[1]
+release_build = "$Revision$".split()[1]
 release_description = "WebLogo %s (%s)" % (__version__,  release_date)
 
 
