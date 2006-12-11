@@ -39,9 +39,12 @@
 #  POSSIBILITY OF SUCH DAMAGE. 
 
 # Replicates README.txt
-""" WebLogo is a tool for creating sequence logos from biological sequence 
-alignments.  It can be run on the command line, as a standalone webserver, as a
-CGI webapp, or as a python library.
+
+"""WebLogo (http://code.google.com/p/weblogo/) is a tool for creating sequence 
+logos from biological sequence alignments.  It can be run on the command line,
+as a standalone webserver, as a CGI webapp, or as a python library.
+
+The main WebLogo webserver is located at http://bespoke.lbl.gov/weblogo/
 
 Please consult the manual for installation instructions and more information:
 (Also located in the weblogo/weblogo_htdocs subdirectory.)
@@ -61,22 +64,22 @@ To create a logo in python code:
     >>> from weblogolib import *
     >>> fin = open('cap.fa')
     >>> seqs = read_seq_data(fin) 
-    >>> data = LogoData(seqs)
+    >>> data = LogoData.from_seqs(seqs)
     >>> options = LogoOptions()
     >>> options.title = "A Logo Title"
     >>> format = LogoFormat(data, options)
     >>> fout = open('cap.eps', 'w') 
     >>> eps_formatter( data, format, fout)
 
-WebLogo makes extensive use of the corebio python toolkit for computational biology.  (http://code.google.com/p/corebio)
+
+WebLogo makes extensive use of the corebio python toolkit for computational biology. (http://code.google.com/p/corebio)
+
+-- Distribution and Modification --
+This package is distributed under the new BSD Open Source License. 
+Please see the LICENSE.txt file for details on copyright and licensing.
+The WebLogo source code can be downloaded from http://code.google.com/p/weblogo/
 
 """
-
-
-#TODO: Split out Motif class
-#TODO: Add LogoValueError exception class rather than current tuple hack.
-#TODO: Refactor to use Ghostscript class.
-
 
 import sys
 import copy
@@ -99,9 +102,9 @@ from corebio._future.subprocess import *
 
 from math import log, sqrt
 
-# Avoid 'from numarray import *' since numarray has lots of names defined
-from numarray import array, asarray, Float32, Float64, ones, zeros, Int32,all,any, shape
-import numarray as na
+# Avoid 'from numpy import *' since numpy has lots of names defined
+from numpy import array, asarray, float64, ones, zeros, int32,all,any, shape
+import numpy as na
 
 from corebio.utils.deoptparse import DeOptionParser
 from optparse import OptionGroup
@@ -115,8 +118,48 @@ from corebio.moremath import *
 from corebio.data import amino_acid_composition
 from corebio.seq import unambiguous_rna_alphabet, unambiguous_dna_alphabet, unambiguous_protein_alphabet
 
+from corebio.seq import unambiguous_rna_alphabet as rna
+from corebio.seq import unambiguous_dna_alphabet as dna
+from corebio.seq import unambiguous_protein_alphabet as protein
+
+
+
 
 # ------ META DATA ------
+
+__all__ = ['LogoSize', 
+            'LogoOptions', 
+            'description', 
+            '__version__', 
+            'LogoFormat',
+            'LogoData',
+            'Dirichlet',
+            'GhostscriptAPI',
+            'std_color_schemes',
+            'default_color_schemes',
+            'classic',
+            'std_units',
+            'std_sizes',
+            'std_alphabets',
+            'std_percentCG',
+            'pdf_formatter',
+            'jpeg_formatter',
+            'png_formatter',
+            'png_print_formatter',
+            'txt_formatter',
+            'eps_formatter',
+            'formatters',
+            'default_formatter',
+            'base_distribution',
+            'equiprobable_distribution',
+            'read_seq_data',
+            'which_alphabet',
+            'color',
+            'colorscheme',
+            'rna',
+            'dna',
+            'protein'
+            ]
 
 description  = "Create sequence logos from biological sequence alignments." 
 
@@ -137,7 +180,9 @@ def cgi(htdocs_directory) :
     import weblogolib._cgi
     weblogolib._cgi.main(htdocs_directory)
         
-class Ghostscript(object) :
+class GhostscriptAPI(object) :
+    """Interface to the command line program Ghostscript ('gs')"""
+    
     formats = ('png', 'pdf', 'jpeg')
     
     def __init__(self, path=None) :
@@ -154,7 +199,7 @@ class Ghostscript(object) :
             raise RuntimeError("Cannot communicate with ghostscript.")  
         return out.strip()
        
-    def convert(self, format,fin, fout,  width,  height, resolution=300) :
+    def convert(self, format, fin, fout,  width,  height, resolution=300) :
         device_map = { 'png':'png16m',  'pdf':'pdfwrite', 'jpeg':'jpeg'}
        
         try :
@@ -184,13 +229,16 @@ class Ghostscript(object) :
         error_msg = "Unrecoverable error : Ghostscript conversion failed " \
                     "(Invalid postscript?). %s" % " ".join(args) 
 
+        source = fin.read()
         try :
-            p = Popen(args, stdin=fin, stdout = fout) 
-            (out,err) = p.communicate() 
+            p = Popen(args, stdin=PIPE, stdout = PIPE) 
+            (out,err) = p.communicate(source) 
         except OSError :
             raise RuntimeError(error_msg)
     
         if p.returncode != 0 : raise RuntimeError(error_msg)
+        
+        print >>fout, out
 # end class Ghostscript
 
 
@@ -237,7 +285,9 @@ class LogoSize(object) :
     def __init__(self, stack_width, stack_height) :
          self.stack_width = stack_width
          self.stack_height = stack_height
-
+         
+    def __repr__(self):
+        return stdrepr(self)
 
 # The base stack width is set equal to 9pt Courier. 
 # (Courier has a width equal to 3/5 of the point size.)
@@ -273,27 +323,100 @@ std_percentCG = {
 # thermophile Thermus thermophilus.
 # Nat Biotechnol 2004, 22:547-53
             
-
+def stdrepr(obj) :
+    attr = vars(obj).items()
+    attr.sort()
+    args = []
+    for a in attr :
+        if a[0][0]=='_' : continue
+        args.append( '%s=%s' % ( a[0], repr(a[1])) )
+    args = ',\n'.join(args).replace('\n', '\n    ')
+    return '%s(\n    %s\n)' % (obj.__class__.__name__, args)
+  
   
 class LogoOptions(object) :
     """ A container for all logo formating options. Not all of these
-    are directly accesible through the CLI or web interfaces.    
-    """
+    are directly accessible through the CLI or web interfaces. 
+    
+    To display LogoOption defaults:
+    >>> from weblogolib import *
+    >>> LogoOptions()
+    
+    
+    Attributes:
+        o alphabet
+        o creator_text           -- Embedded as comment in figures.
+        o logo_title             
+        o logo_label
+        o stacks_per_line
+        o unit_name  
+        o show_yaxis 
+        o yaxis_label             -- Default depends on other settings.
+        o yaxis_tic_interval 
+        o yaxis_minor_tic_ratio 
+        o yaxis_scale
+        o show_xaxis 
+        o xaxis_label
+        o xaxis_tic_interval 
+        o rotate_numbers
+        o number_interval
+        o show_ends 
+        o show_fineprint
+        o fineprint
+        o show_boxes 
+        o shrink_fraction
+        o outline_linewidth
+        o show_errorbars 
+        o errorbar_fraction 
+        o errorbar_width_fraction 
+        o errorbar_gray 
+        o resolution             -- Dots per inch
+        o default_color 
+        o color_scheme 
+        o debug
+        o logo_margin
+        o stroke_width
+        o tic_length
+        o size
+        o stack_margin
+        o pad_right
+        o small_fontsize
+        o fontsize
+        o title_fontsize
+        o number_fontsize
+        o text_font
+        o logo_font
+        o title_font
+        o first_index
+        o logo_start
+        o logo_end
+        o scale_width
+    """  
     # TODO: Make sure all of these options are actually used.
     # TODO: Plot type, units and the default yaxis label
     # TODO: Add docstring documentation for all of these options.
-    def __init__(self) :
-        self.creator_text = release_description,
+      
 
+    def __init__(self, **kwargs) :
+        """ Create a new LogoOptions instance.
+        
+        >>> L = LogoOptions(logo_title = "Some Title String")
+        >>> L.show_yaxis = False
+        >>> repr(L)
+        """
+
+        self.creator_text = release_description,
+        self.alphabet = protein
+        
         self.logo_title = ""
         self.logo_label = ""
         self.stacks_per_line = 40
-        #self.total_stacks = None #FIXME
         
         self.unit_name = "bits"
      
         self.show_yaxis = True
-        self.yaxis_label = None         # default depends on other settings. See LogoFormat
+        # yaxis_lable default depends on other settings. See LogoFormat
+        self.yaxis_label = None
         self.yaxis_tic_interval = 1.
         self.yaxis_minor_tic_ratio = 5
         self.yaxis_scale = None
@@ -313,18 +436,16 @@ class LogoOptions(object) :
         self.outline_linewidth  = 0.2           # FIXME: Used?
   
         self.show_errorbars = True
-        self.errorbar_fraction = 0.0
+        self.errorbar_fraction = 0.90
         self.errorbar_width_fraction = 0.25      
-        self.errorbar_gray = 0.5
+        self.errorbar_gray = 0.75
  
         self.resolution  = 96.     # Dots per inch
            
         self.default_color = Color.by_name("black")    
         self.color_scheme = None
-        self.show_color_key = False
+        #self.show_color_key = False # NOT yet implemented
         
-        self.alphabet = None    
-                
         self.debug = False
         
         self.logo_margin = 2
@@ -352,7 +473,20 @@ class LogoOptions(object) :
         # Scale width of characters proportional to gaps
         self.scale_width = True
 
+        from corebio.utils import update
+        update(self, **kwargs)
+
+    def __repr__(self) :
+        attr = vars(self).items()
+        attr.sort()
+        args = []
+        for a in attr :
+            if a[0][0]=='_' : continue
+            args.append( '%s=%s' % ( a[0], repr(a[1])) )
+        args = ',\n'.join(args).replace('\n', '\n    ')
+        return '%s(\n    %s\n)' % (self.__class__.__name__, args)
 # End class LogoOptions
+
 
         
 
@@ -360,20 +494,21 @@ class LogoFormat(LogoOptions) :
     """ Specifies the format of the logo. Requires a LogoData and LogoOptions 
     objects.
     
-    >>> data = LogoData(data)
+    >>> data = LogoData.from_seqs(seqs )
     >>> options = LogoOptions()
     >>> options.title = "A Logo Title"
     >>> format = LogoFormat(data, options) 
     """
     
-    def __init__(self, data, options= LogoOptions() ) :
+    def __init__(self, data, options= None) :
         LogoOptions.__init__(self)
-        self.__dict__.update(options.__dict__)
-
-        self.data = data
         
-        self.alphabet = data.seqs.alphabet
-         
+        if options is not None :
+            self.__dict__.update(options.__dict__)
+                 
+        self.alphabet = data.alphabet
+        self.seqlen = data.length
+        
         self.show_title = False
         self.show_xaxis_label = False
         self.yaxis_minor_tic_interval = None
@@ -393,33 +528,52 @@ class LogoFormat(LogoOptions) :
         self.end_type = None
 
         if self.stacks_per_line< 1 :
-            raise ValueError (("stacks_per_line", "Stacks per line should be greater than zero.") )
+            raise ValueError (("stacks_per_line", 
+                "Stacks per line should be greater than zero.") )
+        
         if self.size.stack_height<=0.0 : 
-            raise ValueError (("stack_height", "Stack height must be greater than zero.") )
-        if self.small_fontsize <= 0 or self.fontsize <=0 or self.title_fontsize<=0 :
+            raise ValueError (("stack_height", 
+                "Stack height must be greater than zero.") )
+        
+        if (self.small_fontsize <= 0 or self.fontsize <=0 or    
+                self.title_fontsize<=0 ):
             raise ValueError("Font sizes must be positive.")
+        
         if self.errorbar_fraction<0.0 or self.errorbar_fraction>1.0 :
             raise ValueError(
-                "The visible fraction of the error bar must be between zero and one.")
+        "The visible fraction of the error bar must be between zero and one.")
+        
         if self.yaxis_tic_interval<=0.0 :
             raise ValueError(
-                ('yaxis_tic_interval',"The yaxis tic interval cannot be negative.") )
+                ('yaxis_tic_interval',
+                    "The yaxis tic interval cannot be negative.") )
+        
         if self.size.stack_width <= 0.0 :
-            raise ValueError("The width of a stack should be a positive number.")
-        if self.yaxis_minor_tic_interval and self.yaxis_minor_tic_interval<=0.0 : 
+            raise ValueError(
+                "The width of a stack should be a positive number.")
+        
+        if self.yaxis_minor_tic_interval and \
+                self.yaxis_minor_tic_interval<=0.0 : 
             raise ValueError("Distances cannot be negative.")
+        
         if self.xaxis_tic_interval<=0 :
             raise ValueError("Tic interval must be greater than zero.")
+        
         if self.number_interval<=0 :
             raise ValueError("Invalid interval between numbers.")
+        
         if self.shrink_fraction<0.0 or self.shrink_fraction>1.0 :
             raise ValueError("Invalid shrink fraction.")
+        
         if self.stack_margin<=0.0 : 
             raise ValueError("Invalid stack margin."  )
+        
         if self.logo_margin<=0.0 : 
             raise ValueError("Invalid logo margin."  )
+        
         if self.stroke_width<=0.0 : 
             raise ValueError("Invalid stroke width.")  
+        
         if self.tic_length<=0.0 : 
             raise ValueError("Invalid tic length.") 
 
@@ -428,15 +582,19 @@ class LogoFormat(LogoOptions) :
         # Inclusive upper and lower bounds
         # FIXME: Validate here. Move from eps_formatter        
         if self.logo_start is  None: self.logo_start = self.first_index
-        if self.logo_end is  None : self.logo_end = len(data.seqs[0]) + self.first_index -1 
+        
+        if self.logo_end is  None : 
+            self.logo_end = self.seqlen + self.first_index -1 
+        
         self.total_stacks = self.logo_end - self.logo_start +1
 
         if self.logo_start - self.first_index <0 :
             raise ValueError(
-                ('logo_range',"Logo range extends before start of available sequence.") )
-        if self.logo_end - self.first_index  >= len(data.seqs[0])  : 
+    ('logo_range',"Logo range extends before start of available sequence.") )
+        
+        if self.logo_end - self.first_index  >= self.seqlen  : 
             raise ValueError(
-                ('logo_range',"Logo range extends beyond end of available sequence.") )
+        ('logo_range',"Logo range extends beyond end of available sequence.") )
     
         if self.logo_title      : self.show_title = True
         if not self.fineprint   : self.show_fineprint = False
@@ -444,6 +602,7 @@ class LogoFormat(LogoOptions) :
 
         if self.yaxis_label is None : 
             self.yaxis_label = self.unit_name
+        
         if self.yaxis_label : 
             self.show_yaxis_label = True
         else :
@@ -546,64 +705,23 @@ class LogoFormat(LogoOptions) :
 
 def pdf_formatter(data, format, fout) :
     """ Generate a logo in PDF format."""
-    device = "pdfwrite"
-    args = ["gs", 
-        "-sDEVICE=%s" % device, 
-        "-dPDFSETTINGS=/printer",
-        "-q",   # Quite: Do not dump messages to stdout.
-        "-sOutputFile=-",
-        "-dDEVICEWIDTHPOINTS=%s" % str(format.logo_width),  
-        "-dDEVICEHEIGHTPOINTS=%s" % str(format.logo_height),  
-        "-dSAFER",  # For added security
-        "-dNOPAUSE",
-        "-", # Read from stdin. Must be last argument.
-        ]
+    
+    feps = StringIO()
+    eps_formatter(data, format, feps)
+    feps.seek(0)
+    
+    gs = GhostscriptAPI()    
+    gs.convert('pdf', feps, fout, format.logo_width, format.logo_height)
 
-    f = StringIO()
-    eps_formatter(data, format, f)
-    eps = f.getvalue()
-
-    p = Popen(args, stdin=PIPE,stdout = PIPE) 
-    (out,err) = p.communicate(eps) 
-    if p.returncode != 0 or len(out)==0:
-        raise RuntimeError("Unrecoverable seqlogo error : Ghostscript conversion failed (Invalid postscript?). Sorry.") 
-    print >>fout, out
 
 def _bitmap_formatter(data, format, fout, device) :
-
-    args = ["gs", 
-        "-sDEVICE=%s" % device, 
-        "-dPDFSETTINGS=/printer",
-        "-q",
-        "-r%s" % str(format.resolution), 
-        "-sOutputFile=-",
-        "-dDEVICEWIDTHPOINTS=%s" % str(format.logo_width),  
-        "-dDEVICEHEIGHTPOINTS=%s" % str(format.logo_height),  
-        "-dSAFER",
-        "-dNOPAUSE",]
-        
-    if format.resolution<300 : # Antialias if resolution is Less than 300 DPI
-        args.append("-dGraphicsAlphaBits=4")
-        args.append("-dTextAlphaBits=4")
-        args.append("-dAlignToPixels=0")
-        
-    args.append("-")      
-
-    f = StringIO()
-    eps_formatter(data, format, f)
-    eps = f.getvalue()
-
-    p = Popen(args, stdin=PIPE,stdout = PIPE) 
-    try :
-        (out,err) = p.communicate(eps) 
-    except OSError, err :
-        raise RuntimeError("Unrecoverable seqlogo error : Ghostscript conversion failed (Invalid postscript?). Sorry. %s" % args )
+    feps = StringIO()
+    eps_formatter(data, format, feps)
+    feps.seek(0)
     
-    if p.returncode != 0 or len(out)==0:
-        raise RuntimeError("","Unrecoverable seqlogo error : Ghostscript conversion failed (Invalid postscript?). Sorry." )
-
-
-    print >>fout, out
+    gs = GhostscriptAPI()    
+    gs.convert(device, feps, fout, 
+        format.logo_width, format.logo_height, format.resolution)
 
 
 def jpeg_formatter(data, format, fout) : 
@@ -613,43 +731,20 @@ def jpeg_formatter(data, format, fout) :
 
 def png_formatter(data, format, fout) : 
     """ Generate a logo in PNG format."""
-    _bitmap_formatter(data, format, fout, device="png16m")
+    _bitmap_formatter(data, format, fout, device="png")
 
 
 def png_print_formatter(data, format, fout) : 
     """ Generate a logo in PNG format with print quality (600 DPI) resolution."""
     format.resolution = 600
-    _bitmap_formatter(data, format, fout, device="png16m")
+    _bitmap_formatter(data, format, fout, device="png")
 
 
 def txt_formatter( logodata, format, fout) :
     """ Create a text representation of the logo data. 
-    Status: Alpha
     """
-    # TODO: write me
-    print >>fout, logodata
-    seq_from = format.logo_start- format.first_index
-    seq_to = format.logo_end - format.first_index +1
-    #from corebio.distributions import Dirichlet 
-    #from numarray import asarray, Float64
-    
-    # seq_index : zero based index into sequence data
-    # logo_index : User visible coordinate, first_index based
-    # stack_index : zero based index of visible stacks
-    for seq_index in range(seq_from, seq_to) :
-        logo_index = seq_index + format.first_index 
-        #stack_index = seq_index - seq_from
-        
-    
-        print >>fout, '>', logo_index, 
-    
-        print >>fout, 'E:', logodata.entropy[seq_index], ' A:', logodata.counts[seq_index].sum(),
-        
-        for c in logodata.counts[seq_index] :
-            print >>fout, c,
-        print >>fout, ''         
+    print >>fout, str(logodata)
 
-     #   print >>fout, Dirichlet( asarray(logodata.counts[seq_index], Float64)+0.25).mean_entropy()
    
 
     
@@ -738,17 +833,17 @@ def eps_formatter( logodata, format, fout) :
         else :
             stack_height = 1.0 # Probability
 
-        if logodata.entropy_interval is not None and conv_factor:
+      #  if logodata.entropy_interval is not None and conv_factor:
             # Draw Error bars
-            low, high = logodata.entropy_interval[seq_index]
-            center = logodata.entropy[seq_index]
+       #     low, high = logodata.entropy_interval[seq_index]
+       #     center = logodata.entropy[seq_index]
 
 
-            down = (center - low) * conv_factor
-            up   = (high - center) * conv_factor
-            data.append(" %f %f %f DrawErrorbarFirst" % (down, up, stack_height) )
+       #     down = (center - low) * conv_factor
+       #     up   = (high - center) * conv_factor
+       #     data.append(" %f %f %f DrawErrorbarFirst" % (down, up, stack_height) )
         
-        s = zip(logodata.counts[seq_index], logodata.seqs.alphabet)
+        s = zip(logodata.counts[seq_index], logodata.alphabet)
         def mycmp( c1, c2 ) :
             # Sort by frequency. If equal frequency then reverse alphabetic
             if c1[0] == c2[0] : return cmp(c2[1], c1[1])
@@ -760,20 +855,19 @@ def eps_formatter( logodata, format, fout) :
         if C > 0.0 :
             fraction_width = 1.0
             if format.scale_width :
-                fraction_width = C / len(logodata.seqs)
+                fraction_width = logodata.weight[seq_index] 
             # print >>sys.stderr, fraction_width
             for c in s:
                 data.append(" %f %f (%s) ShowSymbol" % (fraction_width, c[0]*stack_height/C, c[1]) )
 
         # Draw error bar on top of logo. Replaced by DrawErrorbarFirst above.
-        #if logodata.entropy_interval is not None and conv_factor:
-        #    low, high = logodata.entropy_interval[seq_index]
-        #    center = logodata.entropy[seq_index]
+        if logodata.entropy_interval is not None and conv_factor:
+            low, high = logodata.entropy_interval[seq_index]
+            center = logodata.entropy[seq_index]
 
-
-        #    down = (center - low) * conv_factor
-        #    up   = (high - center) * conv_factor
-        #    data.append(" %f %f DrawErrorbar" % (down, up) )
+            down = (center - low) * conv_factor
+            up   = (high - center) * conv_factor
+            data.append(" %f %f DrawErrorbar" % (down, up) )
             
         data.append("EndStack")
         data.append("")
@@ -794,7 +888,7 @@ formatters = {
     'png': png_formatter,
     'png_print' : png_print_formatter,
     'jpeg'  : jpeg_formatter,
-    #'txt' : txt_formatter,          # FIXME: Implement
+    'txt' : txt_formatter,          # FIXME: Implement
     }     
     
 default_formatter = eps_formatter
@@ -832,7 +926,7 @@ def parse_prior(composition, alphabet, weight=None) :
         prior = weight * equiprobable_distribution(len(alphabet)) 
     elif comp == 'auto' or comp == 'automatic':
         if alphabet == unambiguous_protein_alphabet :
-            prior =  weight * asarray(aa_composition, Float64)
+            prior =  weight * asarray(aa_composition, float64)
         else :
             prior = weight * equiprobable_distribution(len(alphabet)) 
     
@@ -850,9 +944,9 @@ def parse_prior(composition, alphabet, weight=None) :
         explicit = explicit.replace(',',' ').replace("'", ' ').replace('"',' ').replace(':', ' ').split()
         
         if len(explicit) != len(alphabet)*2 :
-            print explicit
+            #print explicit
             raise ValueError("Explicit prior does not match length of alphabet")
-        prior = - ones(len(alphabet), Float64) 
+        prior = - ones(len(alphabet), float64) 
         try :
             for r in range(len(explicit)/2) :
                 letter = explicit[r*2]
@@ -878,10 +972,10 @@ def base_distribution(percentCG) :
     C = (percentCG/100.)/2.
     G = (percentCG/100.)/2.
     T = (1. - (percentCG/100))/2.
-    return asarray((A,C,G,T), Float64)   
+    return asarray((A,C,G,T), float64)   
 
 def equiprobable_distribution( length) :
-    return ones( shape = (length), type=Float64) /length   
+    return ones( (length), float64) /length   
   
 
 
@@ -961,14 +1055,67 @@ def which_alphabet(seqs) :
 class LogoData(object) :
     """The data needed to generate a sequence logo.
        
-    - seqs  -- The actual sequence data. A corebio.seq.SeqList object 
+    - alphabet 
+    - length
     - counts  -- An array of character counts
     - entropy -- The relative entropy of each column
     - entropy_interval -- entropy confidence interval
      """
-    # FIXME: Clean this up
-    def __init__(self, seqs, prior= None):
+     
+    def __init__(self, length=None, alphabet = None, counts =None, 
+            entropy =None, entropy_interval = None, weight=None) :
+        """Creates a new LogoData object"""
+        self.length = length
+        self.alphabet = alphabet
+        self.counts = counts
+        self.entropy = entropy
+        self.entropy_interval = entropy_interval
+        self.weight = weight
+    
+    
+    #@classmethod    
+    def from_counts(cls, alphabet, counts, prior= None):
+        """Build a logodata object from counts."""
+        seq_length, A = counts.shape
+        
+        if prior is not None: prior = array(prior, float64)
+        
+        if prior is None :
+            R = log(A)
+            ent = zeros(  seq_length, float64)
+            entropy_interval = None    
+            for i in range (0, seq_length) :
+                C = sum(counts[i]) 
+                #FIXME: fixup corebio.moremath.entropy()?
+                if C == 0 :
+                    ent[i] = 0.0
+                else :
+                    ent[i] = R - entropy(counts[i])
+        else :
+            ent = zeros(  seq_length, float64)
+            entropy_interval = zeros( (seq_length,2) , float64)
+        
+            R = log(A)
+            
+            for i in range (0, seq_length) :
+                alpha = array(counts[i] , float64)
+                alpha += prior
+                
+                posterior = Dirichlet(alpha)
+                ent[i] = posterior.mean_relative_entropy(prior/sum(prior)) 
+                entropy_interval[i][0], entropy_interval[i][1] = \
+                    posterior.interval_relative_entropy(prior/sum(prior), 0.95) 
+ 
+        weight = array( na.sum(counts,axis=1) , float) 
+        weight /= max(weight)
+ 
+        return cls(seq_length, alphabet, counts, ent, entropy_interval, weight)
+    from_counts = classmethod(from_counts)
 
+
+    #@classmethod    
+    def from_seqs(cls, seqs, prior= None):
+        """Build a LogoData object form a SeqList, a list of sequences."""
         # --- VALIDATE DATA ---
         # check that at least one sequence of length at least 1 long
         if len(seqs)==0 or len(seqs[0]) ==0:
@@ -984,57 +1131,34 @@ class LogoData(object) :
 
         # FIXME: Check seqs.alphabet?
 
-
-        # --- Build Logo ---
-        
-        if prior is not None:
-            prior = array(prior, Float64)
-        
-        self.seqs = seqs
-        
-                
         counts = asarray(seqs.tally())
-        #print repr(seqs.alphabet)
-        #print seqs
-        #print seqs.tally()
-        #sys.exit()
-        
-        entropy_interval = None
-        
-        if prior is None :
-            R = log(len(seqs.alphabet))
-            ent = zeros( shape= seq_length, type=Float64)
-            for i in range (0, seq_length) :
-                C = sum(counts[i]) 
-                #FIXME: fixup corebio.moremath.entropy()?
-                if C == 0 :
-                    ent[i] = 0.0
-                else :
-                    ent[i] = R - entropy(counts[i])
-        else :
-            ent = zeros( shape= seq_length, type=Float64)
-            entropy_interval = zeros( shape=(seq_length,2) , type=Float64)
-        
-            R = log(len(seqs.alphabet))
-            
-            
-            for i in range (0, seq_length) :
-                alpha = array(counts[i] , type=Float64)
-                alpha += prior
-                
-                posterior = Dirichlet(alpha)
-                ent[i] = posterior.mean_relative_entropy(prior/sum(prior)) 
-                entropy_interval[i][0], entropy_interval[i][1] = \
-                    posterior.interval_relative_entropy(prior/sum(prior), 0.95) 
- 
-        
-        self.seqs = seqs
-        self.counts = counts
+        return cls.from_counts(seqs.alphabet, counts, prior)
+    from_seqs = classmethod(from_seqs)
 
-        self.entropy = ent
-        self.entropy_interval = entropy_interval
-
-
+    def __str__(self) :
+        out = StringIO()
+        print >>out, '# LogoData'
+        
+        print >>out, '#\t',
+        for a in self.alphabet :
+            print >>out, a, '\t',
+        print >>out, 'Entropy\tLow\tHigh\tWeight'
+        
+        for i in range(self.length) :
+            print >>out, i, '\t',
+            for c in self.counts[i] : print >>out, c, '\t',
+            print >>out, self.entropy[i], '\t',
+            if self.entropy_interval is not None:
+                print >>out, self.entropy_interval[i][0], '\t', 
+                print >>out, self.entropy_interval[i][1], '\t',
+            else :
+                print >>out, '\t','\t',
+            if self.weight is not None :
+                print >>out, self.weight[i],
+            print >>out, ''
+        print >>out, '# End LogoData'
+        
+        return out.getvalue()
 
 # ====================== Main: Parse Command line =============================
 def main(): 
@@ -1082,7 +1206,7 @@ def httpd_serve_forever(port=8080) :
     # so that we can run the standalone server
     # without having to run the install script.      
     pythonpath = os.getenv("PYTHONPATH", '')
-    pythonpath += ":" + os.path.abspath(sys.path[0])
+    pythonpath += ":" + os.path.abspath(sys.path[0]).split()[0]
     os.environ["PYTHONPATH"] = pythonpath
     
 
@@ -1111,8 +1235,8 @@ def _build_logodata(options) :
 
     # FIXME: Error handling
     prior = parse_prior( options.composition,seqs.alphabet, options.weight)
-    data = LogoData(seqs, prior)
-
+    data = LogoData.from_seqs(seqs, prior)
+    
     return data
      
              
@@ -1173,7 +1297,8 @@ def _build_logoformat( logodata, opts) :
         args["color_scheme"] = color_scheme
     
     logooptions = LogoOptions() 
-    logooptions.__dict__.update(args) # FIXME: inelegant
+    for a, v in args.iteritems() :
+        setattr(logooptions,a,v)
 
     
     theformat =  LogoFormat(logodata, logooptions )
@@ -1247,7 +1372,7 @@ def _build_option_parser() :
         metavar= "FORMAT",
         help="Format of output: eps (default), png, png_print, pdf, jpeg, txt",
         default = default_formatter)
-        #TODO Implement all these formatters
+
 
     # ========================== Data OPTIONS ==========================
 
@@ -2283,8 +2408,7 @@ class Dirichlet(object) :
         """
         # TODO: Check that alphas are positive
         #TODO : what if alpha's not one dimensional?
-        #from numarray import asarray, Float64
-        self.alpha = asarray(alpha, Float64)
+        self.alpha = asarray(alpha, float64)
         
         self._total = sum(alpha)
         self._mean = None
@@ -2301,10 +2425,9 @@ class Dirichlet(object) :
         Authors:
             Gavin E. Crooks <gec@compbio.berkeley.edu> (2002)
         """
-        #from numarray import asarray, Float64, zeros
         alpha = self.alpha
         K = len(alpha)
-        theta = zeros( (K,), Float64)
+        theta = zeros( (K,), float64)
 
         for k in range(K):
             theta[k] = random.gammavariate(alpha[k], 1.0) 
@@ -2318,12 +2441,11 @@ class Dirichlet(object) :
         return self._mean
     
     def covariance(self) :
-        #from numarray import asarray, Float64, zeros
         alpha = self.alpha
         A = sum(alpha)
         #A2 = A * A
         K = len(alpha)
-        cv = zeros( (K,K), Float64) 
+        cv = zeros( (K,K), float64) 
         
         for i in range(K) :
             cv[i,i] = alpha[i] * (1. - alpha[i]/A) / (A * (A+1.) )
@@ -2336,20 +2458,18 @@ class Dirichlet(object) :
         return cv
         
     def mean_x(self, x) :
-        
-        x = asarray(x, Float64)
+        x = asarray(x, float64)
         if shape(x) != shape(self.alpha) :
             raise ValueError("Argument must be same dimension as Dirichlet")
         # TODO: Check tha shape(x) == shape(alpha)
         return sum( x * self.mean()) 
 
     def variance_x(self, x) :
-        #from numarray import asarray, Float64, zeros
-        x = asarray(x, Float64)
+        x = asarray(x, float64)
         # x needs to be the same shape as alpha
         cv = self.covariance()
         
-        var = na.matrixmultiply(na.matrixmultiply(na.transpose( x), cv), x)
+        var = na.dot(na.dot(na.transpose( x), cv), x)
         return var
 
 
@@ -2393,9 +2513,9 @@ class Dirichlet(object) :
         A2 = A * (A+1)
         L = len(alpha)
         
-        dg1 = zeros( (L) , Float64)
-        dg2 = zeros( (L) , Float64)
-        tg2 = zeros( (L) , Float64)        
+        dg1 = zeros( (L) , float64)
+        dg2 = zeros( (L) , float64)
+        tg2 = zeros( (L) , float64)        
         
         for i in range(L) :
             dg1[i] = digamma(alpha[i] + 1.0)

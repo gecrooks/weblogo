@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>optparse.OptionParser</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css"></link>
+</head>
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="weblogolib-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          <a class="navbar" target="_top" href="http://code.google.com/p/weblogo/">CoreBio</a>
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <font size="-1"><b class="breadcrumbs">
+        Module&nbsp;optparse ::
+        Class&nbsp;OptionParser
+      </b></font></br>
+    </td>
+    <td><table cellpadding="0" cellspacing="0">
+      <tr><td align="right"><font size="-2">[<a href="frames.html"target="_top">frames</a>&nbsp;|&nbsp;<a href="optparse.OptionParser-class.html" target="_top">no&nbsp;frames</a>]</font></td></tr>
+    </table></td>
+</tr></table>
+
+<!-- =========== START OF CLASS DESCRIPTION =========== -->
+<h2 class="class">Class OptionParser</h2>
+
+<pre class="base-tree">
+<a href="optparse.OptionContainer-class.html"><code>OptionContainer</code></a> --+
+                  |
+                 <b>OptionParser</b>
+</pre><br />
+
+<hr/>
+
+<pre class="literalblock">
+Class attributes:
+  standard_option_list : [Option]
+    list of standard options that will be accepted by all instances
+    of this parser class (intended to be overridden by subclasses).
+
+Instance attributes:
+  usage : string
+    a usage string for your program.  Before it is displayed
+    to the user, &quot;%prog&quot; will be expanded to the name of
+    your program (self.prog or os.path.basename(sys.argv[0])).
+  prog : string
+    the name of the current program (to override
+    os.path.basename(sys.argv[0])).
+
+  option_groups : [OptionGroup]
+    list of option groups in this parser (option groups are
+    irrelevant for parsing the command-line, but very useful
+    for generating help)
+
+  allow_interspersed_args : bool = true
+    if true, positional arguments may be interspersed with options.
+    Assuming -a and -b each take a single argument, the command-line
+      -ablah foo bar -bboo baz
+    will be interpreted the same as
+      -ablah -bboo -- foo bar baz
+    If this flag were false, that command line would be interpreted as
+      -ablah -- foo bar -bboo baz
+    -- ie. we stop processing options as soon as we see the first
+    non-option argument.  (This is the tradition followed by
+    Python's getopt module, Perl's Getopt::Std, and other argument-
+    parsing libraries, but it is generally annoying to users.)
+
+  process_default_values : bool = true
+    if true, option default values are processed similarly to option
+    values from the command line: that is, they are passed to the
+    type-checking function for the option's type (as long as the
+    default value is a string).  (This really only matters if you
+    have defined custom types; see SF bug #955889.)  Set it to false
+    to restore the behaviour of Optik 1.4.1 and earlier.
+
+  rargs : [string]
+    the argument list currently being parsed.  Only set when
+    parse_args() is active, and continually trimmed down as
+    we consume arguments.  Mainly there for the benefit of
+    callback options.
+  largs : [string]
+    the list of leftover arguments that we have skipped while
+    parsing options.  If allow_interspersed_args is false, this
+    list is always empty.
+  values : Values
+    the set of option values currently being accumulated.  Only
+    set when parse_args() is active.  Also mainly for callbacks.
+
+Because of the 'rargs', 'largs', and 'values' attributes,
+OptionParser is not thread-safe.  If, for some perverse reason, you
+need to parse command-line arguments simultaneously in different
+threads, use different OptionParser instances.
+</pre>
+<hr/>
+
+
+<!-- =========== START OF METHOD SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Method Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="__init__"></a><span class="summary-sig"><span class="summary-sig-name">__init__</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>usage</span>,
+          <span class=summary-sig-arg>option_list</span>,
+          <span class=summary-sig-arg>option_class</span>,
+          <span class=summary-sig-arg>version</span>,
+          <span class=summary-sig-arg>conflict_handler</span>,
+          <span class=summary-sig-arg>description</span>,
+          <span class=summary-sig-arg>formatter</span>,
+          <span class=summary-sig-arg>add_help_option</span>,
+          <span class=summary-sig-arg>prog</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="add_option_group"></a><span class="summary-sig"><span class="summary-sig-name">add_option_group</span>(<span class=summary-sig-arg>self</span>,
+          <span class="summary-sig-vararg">*args</span>,
+          <span class="summary-sig-kwarg">**kwargs</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="optparse.OptionParser-class.html#check_values" class="summary-sig-name"><code>check_values</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>values</span>,
+          <span class=summary-sig-arg>args</span>)</span></code>
+<br />
+check_values(values : Values, args : [string])
+-&gt; (values : Values, args : [string])
+
+Check that the supplied option values and leftover arguments are
+valid.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="disable_interspersed_args"></a><span class="summary-sig"><span class="summary-sig-name">disable_interspersed_args</span>(<span class=summary-sig-arg>self</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="enable_interspersed_args"></a><span class="summary-sig"><span class="summary-sig-name">enable_interspersed_args</span>(<span class=summary-sig-arg>self</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="optparse.OptionParser-class.html#error" class="summary-sig-name"><code>error</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>msg</span>)</span></code>
+<br />
+error(msg : string)
+
+Print a usage message incorporating 'msg' to stderr and exit.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="exit"></a><span class="summary-sig"><span class="summary-sig-name">exit</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>status</span>,
+          <span class=summary-sig-arg>msg</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="expand_prog_name"></a><span class="summary-sig"><span class="summary-sig-name">expand_prog_name</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>s</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="format_help"></a><span class="summary-sig"><span class="summary-sig-name">format_help</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>formatter</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="format_option_help"></a><span class="summary-sig"><span class="summary-sig-name">format_option_help</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>formatter</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="get_default_values"></a><span class="summary-sig"><span class="summary-sig-name">get_default_values</span>(<span class=summary-sig-arg>self</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="get_description"></a><span class="summary-sig"><span class="summary-sig-name">get_description</span>(<span class=summary-sig-arg>self</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="get_option_group"></a><span class="summary-sig"><span class="summary-sig-name">get_option_group</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>opt_str</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="get_prog_name"></a><span class="summary-sig"><span class="summary-sig-name">get_prog_name</span>(<span class=summary-sig-arg>self</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="get_usage"></a><span class="summary-sig"><span class="summary-sig-name">get_usage</span>(<span class=summary-sig-arg>self</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="get_version"></a><span class="summary-sig"><span class="summary-sig-name">get_version</span>(<span class=summary-sig-arg>self</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="optparse.OptionParser-class.html#parse_args" class="summary-sig-name"><code>parse_args</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>args</span>,
+          <span class=summary-sig-arg>values</span>)</span></code>
+<br />
+parse_args(args : [string] = sys.argv[1:],
+           values : Values = None)
+-&gt; (values : Values, args : [string])
+
+Parse the command-line options found in 'args' (default:
+sys.argv[1:]).</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="optparse.OptionParser-class.html#print_help" class="summary-sig-name"><code>print_help</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>file</span>)</span></code>
+<br />
+print_help(file : file = stdout)
+
+Print an extended help message, listing all options and any
+help text provided with them, to 'file' (default stdout).</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="optparse.OptionParser-class.html#print_usage" class="summary-sig-name"><code>print_usage</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>file</span>)</span></code>
+<br />
+print_usage(file : file = stdout)
+
+Print the usage message for the current program (self.usage) to
+'file' (default stdout).</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="optparse.OptionParser-class.html#print_version" class="summary-sig-name"><code>print_version</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>file</span>)</span></code>
+<br />
+print_version(file : file = stdout)
+
+Print the version message for this program (self.version) to
+'file' (default stdout).</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="set_default"></a><span class="summary-sig"><span class="summary-sig-name">set_default</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>dest</span>,
+          <span class=summary-sig-arg>value</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="set_defaults"></a><span class="summary-sig"><span class="summary-sig-name">set_defaults</span>(<span class=summary-sig-arg>self</span>,
+          <span class="summary-sig-kwarg">**kwargs</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="set_process_default_values"></a><span class="summary-sig"><span class="summary-sig-name">set_process_default_values</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>process</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="set_usage"></a><span class="summary-sig"><span class="summary-sig-name">set_usage</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>usage</span>)</span></code>
+</td></tr>
+<tr bgcolor="#e8f0f8" class="group">
+  <th colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;Inherited from OptionContainer</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="optparse.OptionContainer-class.html#add_option" class="summary-sig-name"><code>add_option</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class="summary-sig-vararg">*args</span>,
+          <span class="summary-sig-kwarg">**kwargs</span>)</span></code>
+<br />
+add_option(Option)...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="optparse.OptionContainer-class.html#add_options" class="summary-sig-name"><code>add_options</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>option_list</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="optparse.OptionContainer-class.html#format_description" class="summary-sig-name"><code>format_description</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>formatter</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="optparse.OptionContainer-class.html#get_option" class="summary-sig-name"><code>get_option</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>opt_str</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="optparse.OptionContainer-class.html#has_option" class="summary-sig-name"><code>has_option</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>opt_str</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="optparse.OptionContainer-class.html#remove_option" class="summary-sig-name"><code>remove_option</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>opt_str</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="optparse.OptionContainer-class.html#set_conflict_handler" class="summary-sig-name"><code>set_conflict_handler</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>handler</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="optparse.OptionContainer-class.html#set_description" class="summary-sig-name"><code>set_description</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>description</span>)</span></code>
+</td></tr>
+</table><br />
+
+
+<!-- =========== START OF CLASS VARIABLE SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Class Variable Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>list</code></font></td>
+<td><b><a href="optparse.OptionParser-class.html#standard_option_list"><code>standard_option_list</code></a></b> = <span title="[]"><code>[]                                </code>
+</span></td></tr>
+</table><br />
+
+
+<!-- =========== START OF METHOD DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Method Details</th></tr>
+</table>
+
+<a name="check_values"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">check_values</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>values</span>,
+          <span class=sig-arg>args</span>)</span>
+  </h3>
+<pre class="literalblock">
+check_values(values : Values, args : [string])
+-&gt; (values : Values, args : [string])
+
+Check that the supplied option values and leftover arguments are
+valid.  Returns the option values and leftover arguments
+(possibly adjusted, possibly completely new -- whatever you
+like).  Default implementation just returns the passed-in
+values; subclasses may override as desired.
+</pre>
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="error"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">error</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>msg</span>)</span>
+  </h3>
+<pre class="literalblock">
+error(msg : string)
+
+Print a usage message incorporating 'msg' to stderr and exit.
+If you override this in a subclass, it should not return -- it
+should either exit or raise an exception.
+</pre>
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="parse_args"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">parse_args</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>args</span>=<span class=sig-default>None</span>,
+          <span class=sig-arg>values</span>=<span class=sig-default>None</span>)</span>
+  </h3>
+<pre class="literalblock">
+parse_args(args : [string] = sys.argv[1:],
+           values : Values = None)
+-&gt; (values : Values, args : [string])
+
+Parse the command-line options found in 'args' (default:
+sys.argv[1:]).  Any errors result in a call to 'error()', which
+by default prints the usage message to stderr and calls
+sys.exit() with an error message.  On success returns a pair
+(values, args) where 'values' is an Values instance (with all
+your option values) and 'args' is the list of arguments left
+over after parsing options.
+</pre>
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="print_help"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">print_help</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>file</span>=<span class=sig-default>None</span>)</span>
+  </h3>
+<pre class="literalblock">
+print_help(file : file = stdout)
+
+Print an extended help message, listing all options and any
+help text provided with them, to 'file' (default stdout).
+</pre>
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="print_usage"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">print_usage</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>file</span>=<span class=sig-default>None</span>)</span>
+  </h3>
+<pre class="literalblock">
+print_usage(file : file = stdout)
+
+Print the usage message for the current program (self.usage) to
+'file' (default stdout).  Any occurence of the string &quot;%prog&quot; in
+self.usage is replaced with the name of the current program
+(basename of sys.argv[0]).  Does nothing if self.usage is empty
+or not defined.
+</pre>
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="print_version"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">print_version</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>file</span>=<span class=sig-default>None</span>)</span>
+  </h3>
+<pre class="literalblock">
+print_version(file : file = stdout)
+
+Print the version message for this program (self.version) to
+'file' (default stdout).  As with print_usage(), any occurence
+of &quot;%prog&quot; in self.version is replaced by the current program's
+name.  Does nothing if self.version is empty or undefined.
+</pre>
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+<br />
+
+
+<!-- =========== START OF CLASS VARIABLE DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Class Variable Details</th></tr>
+</table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="standard_option_list"></a>
+<h3>standard_option_list</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>list</code>
+
+      </dd>
+<span title="[]">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+[]                                                                     </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<br />
+
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="weblogolib-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          <a class="navbar" target="_top" href="http://code.google.com/p/weblogo/">CoreBio</a>
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td align="left"><font size="-2">Generated by Epydoc 2.1 on </font></td>
+    <td align="right"><a href="http://epydoc.sourceforge.net"
+                      ><font size="-2">http://epydoc.sf.net</font></a></td>
+  </tr>
+</table>
+</body>
+</html>
