@@ -51,15 +51,6 @@ To build a simple logo run
 To run as a standalone webserver at localhost:8080 
     ./weblogo.py --serve
 
-To create a logo in python code:
-    >>> seqs = seq_io.read( fin) 
-    >>> data = LogoData(data)
-    >>> options = LogoOptions()
-    >>> options.title = "A Logo Title"
-    >>> format = LogoFormat(data, options) 
-    >>> logo = format( data, format)
-
-WebLogo makes extensive use of the corebio python toolkit for computational biology.  (http://code.google.com/p/corebio)
 
 """
 import weblogolib

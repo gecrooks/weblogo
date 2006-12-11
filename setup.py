@@ -4,6 +4,8 @@
 
 import sys
 
+ 
+
 from distutils.core import setup
 from distutils.core import Extension
 from distutils.command.build import build
@@ -61,7 +63,9 @@ def main() :
             
         data_files = ['weblogolib/weblogo_htdocs/*.*',],
         
-        cmdclass= {"install_data" : _install_data},        
+        cmdclass= {"install_data" : _install_data},
+        
+        install_requires=['numpy'],        
     )
 
 

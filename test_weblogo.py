@@ -39,11 +39,18 @@ import unittest
 
 import weblogolib
 from weblogolib import  *
-
+from weblogolib import  parse_prior, GhostscriptAPI
+from weblogolib.color import *
+from weblogolib.colorscheme import *
 from StringIO import StringIO
+import sys
 
 import weblogolib._corebio
 sys.modules['corebio'] = sys.modules['weblogolib._corebio']
+from numpy import array, asarray, float64, ones, zeros, int32,all,any, shape
+import numpy as na
+from corebio import seq_io
+
 
 
 from corebio.seq import *
@@ -52,6 +59,8 @@ from corebio.seq import *
 from corebio._future.subprocess import *
 from corebio._future import resource_stream
 
+from corebio.moremath import entropy
+from math import log, sqrt
 
 def testdata_stream( name ): 
     return resource_stream(__name__, 'tests/data/'+name, __file__)    
@@ -64,7 +73,7 @@ class test_logoformat(unittest.TestCase) :
            
 class test_ghostscript(unittest.TestCase) :
     def test_version(self) :
-        version = Ghostscript().version
+        version = GhostscriptAPI().version
     
 
     
@@ -96,7 +105,7 @@ class test_parse_prior(unittest.TestCase) :
         self.assertTrue( all( equiprobable_distribution(4) 
             == parse_prior( ' 50.0 % ', unambiguous_dna_alphabet, 1. )  ) )
 
-        self.assertTrue( all( array( (0.3,0.2,0.2,0.3), Float64) 
+        self.assertTrue( all( array( (0.3,0.2,0.2,0.3), float64) 
             == parse_prior( ' 40.0 % ', unambiguous_dna_alphabet, 1. )  ) )
 
     def test_parse_prior_float(self) :  
@@ -106,7 +115,7 @@ class test_parse_prior(unittest.TestCase) :
         self.assertTrue( all( equiprobable_distribution(4) 
             == parse_prior( ' 0.500 ', unambiguous_dna_alphabet, 1. )  ) )
 
-        self.assertTrue( all( array( (0.3,0.2,0.2,0.3), Float64) 
+        self.assertTrue( all( array( (0.3,0.2,0.2,0.3), float64) 
             == parse_prior( ' 0.40 ', unambiguous_dna_alphabet, 1. )  ) )
 
     def test_auto(self) :
@@ -123,12 +132,26 @@ class test_parse_prior(unittest.TestCase) :
  
     def test_explicit(self) :
         s = "{'A':10, 'C':40, 'G':40, 'T':10}"
-        p = array( (10, 40, 40,10), Float64)
+        p = array( (10, 40, 40,10), float64)
         self.assertTrue( all(
             p == parse_prior( s,  unambiguous_dna_alphabet ) ) )
         
         
+class test_logooptions(unittest.TestCase) :
+    def test_create(self) :
+        opt = LogoOptions()
+        opt.small_fontsize =10
+        options = repr(opt)
         
+        opt = LogoOptions(title="sometitle")
+        assert opt.title == "sometitle"
+         
+class test_logosize(unittest.TestCase) :
+    def test_create(self) :
+        s = LogoSize(101.0,10.0)
+        assert s.stack_width == 101.0
+        r = repr(s)         
+      
         
 class test_seqlogo(unittest.TestCase) :
     # FIXME: The version of python used by Popen may not be the
@@ -399,7 +422,7 @@ class test_Dirichlet(unittest.TestCase) :
 
 
         def do_test( alpha, samples = 1000) :
-            ent = zeros( (samples,), Float64)
+            ent = zeros( (samples,), float64)
             #alpha = ones( ( K,), Float64 ) * A/K
             
             #pt = zeros( (len(alpha) ,), Float64)
@@ -440,14 +463,14 @@ class test_Dirichlet(unittest.TestCase) :
     
     
     def test_mean(self) :
-        alpha = ones( ( 10,), Float64 ) * 23.
+        alpha = ones( ( 10,), float64 ) * 23.
         d = Dirichlet(alpha)
         m = d.mean()
         self.assertAlmostEqual( m[2], 1./10)
         self.assertAlmostEqual( sum(m), 1.0)
     
     def test_covariance(self) :
-        alpha = ones( ( 4,), Float64 ) 
+        alpha = ones( ( 4,), float64 ) 
         d = Dirichlet(alpha)
         cv = d.covariance()
         self.assertEqual( cv.shape, (4,4)  )
@@ -492,7 +515,7 @@ class test_Dirichlet(unittest.TestCase) :
         # This test can fail randomly, but the precision form a few
         # thousand samples is low. Increasing samples, 1000->2000
         samples = 2000
-        sent = zeros( (samples,), Float64) 
+        sent = zeros( (samples,), float64) 
         
         for s in range(samples) :
             post = d.sample()
@@ -502,7 +525,7 @@ class test_Dirichlet(unittest.TestCase) :
             sent[s] = e
         sent.sort()
         self.assertTrue( abs(sent.mean() - rent) < 4.*sqrt(vrent) )
-        self.assertAlmostEqual( sent.stddev(), sqrt(vrent), 1 )
+        self.assertAlmostEqual( sent.std(), sqrt(vrent), 1 )
         self.assertTrue( abs(low-sent[ int( samples *0.025)])<0.2 )
         self.assertTrue( abs(high-sent[ int( samples *0.975)])<0.2 )
         

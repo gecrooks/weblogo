@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>optparse.OptionContainer</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css"></link>
+</head>
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="weblogolib-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          <a class="navbar" target="_top" href="http://code.google.com/p/weblogo/">CoreBio</a>
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <font size="-1"><b class="breadcrumbs">
+        Module&nbsp;optparse ::
+        Class&nbsp;OptionContainer
+      </b></font></br>
+    </td>
+    <td><table cellpadding="0" cellspacing="0">
+      <tr><td align="right"><font size="-2">[<a href="frames.html"target="_top">frames</a>&nbsp;|&nbsp;<a href="optparse.OptionContainer-class.html" target="_top">no&nbsp;frames</a>]</font></td></tr>
+    </table></td>
+</tr></table>
+
+<!-- =========== START OF CLASS DESCRIPTION =========== -->
+<h2 class="class">Class OptionContainer</h2>
+
+<dl><dt><b>Known Subclasses:</b></dt>
+<dd>
+    <a href="optparse.OptionParser-class.html"><code>OptionParser</code></a></dd></dl>
+
+<hr/>
+
+<pre class="literalblock">
+Abstract base class.
+
+Class attributes:
+  standard_option_list : [Option]
+    list of standard options that will be accepted by all instances
+    of this parser class (intended to be overridden by subclasses).
+
+Instance attributes:
+  option_list : [Option]
+    the list of Option objects contained by this OptionContainer
+  _short_opt : { string : Option }
+    dictionary mapping short option strings, eg. &quot;-f&quot; or &quot;-X&quot;,
+    to the Option instances that implement them.  If an Option
+    has multiple short option strings, it will appears in this
+    dictionary multiple times. [1]
+  _long_opt : { string : Option }
+    dictionary mapping long option strings, eg. &quot;--file&quot; or
+    &quot;--exclude&quot;, to the Option instances that implement them.
+    Again, a given Option can occur multiple times in this
+    dictionary. [1]
+  defaults : { string : any }
+    dictionary mapping option destination names to default
+    values for each destination [1]
+
+[1] These mappings are common to (shared by) all components of the
+    controlling OptionParser, where they are initially created.
+</pre>
+<hr/>
+
+
+<!-- =========== START OF METHOD SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Method Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="__init__"></a><span class="summary-sig"><span class="summary-sig-name">__init__</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>option_class</span>,
+          <span class=summary-sig-arg>conflict_handler</span>,
+          <span class=summary-sig-arg>description</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="optparse.OptionContainer-class.html#add_option" class="summary-sig-name"><code>add_option</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class="summary-sig-vararg">*args</span>,
+          <span class="summary-sig-kwarg">**kwargs</span>)</span></code>
+<br />
+add_option(Option)...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="add_options"></a><span class="summary-sig"><span class="summary-sig-name">add_options</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>option_list</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="format_description"></a><span class="summary-sig"><span class="summary-sig-name">format_description</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>formatter</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="format_help"></a><span class="summary-sig"><span class="summary-sig-name">format_help</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>formatter</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="format_option_help"></a><span class="summary-sig"><span class="summary-sig-name">format_option_help</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>formatter</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="get_description"></a><span class="summary-sig"><span class="summary-sig-name">get_description</span>(<span class=summary-sig-arg>self</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="get_option"></a><span class="summary-sig"><span class="summary-sig-name">get_option</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>opt_str</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="has_option"></a><span class="summary-sig"><span class="summary-sig-name">has_option</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>opt_str</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="remove_option"></a><span class="summary-sig"><span class="summary-sig-name">remove_option</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>opt_str</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="set_conflict_handler"></a><span class="summary-sig"><span class="summary-sig-name">set_conflict_handler</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>handler</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="set_description"></a><span class="summary-sig"><span class="summary-sig-name">set_description</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>description</span>)</span></code>
+</td></tr>
+</table><br />
+
+
+<!-- =========== START OF METHOD DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Method Details</th></tr>
+</table>
+
+<a name="add_option"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">add_option</span>(<span class=sig-arg>self</span>,
+          <span class="sig-vararg">*args</span>,
+          <span class="sig-kwarg">**kwargs</span>)</span>
+  </h3>
+<pre class="literalblock">
+add_option(Option)
+add_option(opt_str, ..., kwarg=val, ...)
+</pre>
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+<br />
+
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="weblogolib-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          <a class="navbar" target="_top" href="http://code.google.com/p/weblogo/">CoreBio</a>
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td align="left"><font size="-2">Generated by Epydoc 2.1 on </font></td>
+    <td align="right"><a href="http://epydoc.sourceforge.net"
+                      ><font size="-2">http://epydoc.sf.net</font></a></td>
+  </tr>
+</table>
+</body>
+</html>

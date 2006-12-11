@@ -53,7 +53,7 @@ from _corebio.utils import *
 from _corebio._future import Template
 
 import weblogolib as weblogo
-
+import weblogolib
 
 
 # TODO: Check units
@@ -316,7 +316,7 @@ def main(htdocs_directory = None) :
         seqs = weblogo.read_seq_data(StringIO( sequences), alphabet=logooptions.alphabet)
         if comp=='percentCG': comp = str(percentCG/100)
         prior = weblogo.parse_prior(comp, seqs.alphabet)
-        data = weblogo.LogoData(seqs, prior) 
+        data = weblogo.LogoData.from_seqs(seqs, prior) 
         logoformat =  weblogo.LogoFormat(data, logooptions)
         format = form["format"].value
         weblogo.formatters[format](data, logoformat, logo)            
@@ -335,11 +335,15 @@ def main(htdocs_directory = None) :
     #
 
     print "Content-Type:", mime_type[format]
-        
     # Content-Disposition: inline       Open logo in browser window
-    # Content-Disposition: attachment   Download logo
-    # print 'Content-Disposition: inline; filename="logo.%s"' % extension[format]        
-    print 'Content-Disposition: attachment; filename="logo.%s"' % extension[format]        
+    # Content-Disposition: attachment   Download logo  
+    if form_values.has_key("download") :
+        print 'Content-Disposition: attachment; ' \
+            'filename="logo.%s"' % extension[format] 
+    else :       
+        print 'Content-Disposition: inline; ' \
+            'filename="logo.%s"' % extension[format]        
+    
         
     # Seperate header from data
     print 
