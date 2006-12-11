@@ -19,7 +19,7 @@ rm -rd dist/_extract_/
 
 echo 
 echo "## Build API docs :" 
-epydoc -q -o apidocs/ -n CoreBio -u http://code.google.com/p/weblogo/ --docformat plaintext --no-frames --no-private weblogolib    || exit
+epydoc -q -o apidocs/ -n WebLogo -u http://code.google.com/p/weblogo/ --docformat plaintext --no-frames --no-private weblogolib    || exit
 
 
 
