@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>optparse.HelpFormatter</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css"></link>
+</head>
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="weblogolib-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          <a class="navbar" target="_top" href="http://code.google.com/p/weblogo/">WebLogo</a>
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <font size="-1"><b class="breadcrumbs">
+        Module&nbsp;optparse ::
+        Class&nbsp;HelpFormatter
+      </b></font></br>
+    </td>
+    <td><table cellpadding="0" cellspacing="0">
+      <tr><td align="right"><font size="-2">[<a href="frames.html"target="_top">frames</a>&nbsp;|&nbsp;<a href="optparse.HelpFormatter-class.html" target="_top">no&nbsp;frames</a>]</font></td></tr>
+    </table></td>
+</tr></table>
+
+<!-- =========== START OF CLASS DESCRIPTION =========== -->
+<h2 class="class">Class HelpFormatter</h2>
+
+<dl><dt><b>Known Subclasses:</b></dt>
+<dd>
+    <a href="optparse.IndentedHelpFormatter-class.html"><code>IndentedHelpFormatter</code></a></dd></dl>
+
+<hr/>
+
+<pre class="literalblock">
+Abstract base class for formatting option help.  OptionParser
+instances should use one of the HelpFormatter subclasses for
+formatting help; by default IndentedHelpFormatter is used.
+
+Instance attributes:
+  parser : OptionParser
+    the controlling OptionParser instance
+  indent_increment : int
+    the number of columns to indent per nesting level
+  max_help_position : int
+    the maximum starting column for option help text
+  help_position : int
+    the calculated starting column for option help text;
+    initially the same as the maximum
+  width : int
+    total number of columns for output (pass None to constructor for
+    this value to be taken from the $COLUMNS environment variable)
+  level : int
+    current indentation level
+  current_indent : int
+    current indentation level (in columns)
+  help_width : int
+    number of columns available for option help text (calculated)
+  default_tag : str
+    text to replace with each option's default value, &quot;%default&quot;
+    by default.  Set to false value to disable default value expansion.
+  option_strings : { Option : str }
+    maps Option instances to the snippet of help text explaining
+    the syntax of that option, e.g. &quot;-h, --help&quot; or
+    &quot;-fFILE, --file=FILE&quot;
+  _short_opt_fmt : str
+    format string controlling how short options with values are
+    printed in help text.  Must be either &quot;%s%s&quot; (&quot;-fFILE&quot;) or
+    &quot;%s %s&quot; (&quot;-f FILE&quot;), because those are the two syntaxes that
+    Optik supports.
+  _long_opt_fmt : str
+    similar but for long options; must be either &quot;%s %s&quot; (&quot;--file FILE&quot;)
+    or &quot;%s=%s&quot; (&quot;--file=FILE&quot;).
+</pre>
+<hr/>
+
+
+<!-- =========== START OF METHOD SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Method Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="__init__"></a><span class="summary-sig"><span class="summary-sig-name">__init__</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>indent_increment</span>,
+          <span class=summary-sig-arg>max_help_position</span>,
+          <span class=summary-sig-arg>width</span>,
+          <span class=summary-sig-arg>short_first</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="dedent"></a><span class="summary-sig"><span class="summary-sig-name">dedent</span>(<span class=summary-sig-arg>self</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="expand_default"></a><span class="summary-sig"><span class="summary-sig-name">expand_default</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>option</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="format_description"></a><span class="summary-sig"><span class="summary-sig-name">format_description</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>description</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="format_heading"></a><span class="summary-sig"><span class="summary-sig-name">format_heading</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>heading</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="format_option"></a><span class="summary-sig"><span class="summary-sig-name">format_option</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>option</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="optparse.HelpFormatter-class.html#format_option_strings" class="summary-sig-name"><code>format_option_strings</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>option</span>)</span></code>
+<br />
+Return a comma-separated list of option strings &amp; metavariables.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="format_usage"></a><span class="summary-sig"><span class="summary-sig-name">format_usage</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>usage</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="indent"></a><span class="summary-sig"><span class="summary-sig-name">indent</span>(<span class=summary-sig-arg>self</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="set_long_opt_delimiter"></a><span class="summary-sig"><span class="summary-sig-name">set_long_opt_delimiter</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>delim</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="set_parser"></a><span class="summary-sig"><span class="summary-sig-name">set_parser</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>parser</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="set_short_opt_delimiter"></a><span class="summary-sig"><span class="summary-sig-name">set_short_opt_delimiter</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>delim</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="store_option_strings"></a><span class="summary-sig"><span class="summary-sig-name">store_option_strings</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>parser</span>)</span></code>
+</td></tr>
+</table><br />
+
+
+<!-- =========== START OF CLASS VARIABLE SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Class Variable Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>str</code></font></td>
+<td><b><a href="optparse.HelpFormatter-class.html#NO_DEFAULT_VALUE"><code>NO_DEFAULT_VALUE</code></a></b> = <span title="'none'"><code><span class="variable-quote">'</span>none<span class="variable-quote">'</span>                                </code>
+</span></td></tr>
+</table><br />
+
+
+<!-- =========== START OF METHOD DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Method Details</th></tr>
+</table>
+
+<a name="format_option_strings"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">format_option_strings</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>option</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return a comma-separated list of option strings &amp; metavariables.
+</pre>
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+<br />
+
+
+<!-- =========== START OF CLASS VARIABLE DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Class Variable Details</th></tr>
+</table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="NO_DEFAULT_VALUE"></a>
+<h3>NO_DEFAULT_VALUE</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>str</code>
+
+      </dd>
+<span title="'none'">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+<span class="variable-quote">'</span>none<span class="variable-quote">'</span>                                                                 </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<br />
+
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="weblogolib-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          <a class="navbar" target="_top" href="http://code.google.com/p/weblogo/">WebLogo</a>
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td align="left"><font size="-2">Generated by Epydoc 2.1 on </font></td>
+    <td align="right"><a href="http://epydoc.sourceforge.net"
+                      ><font size="-2">http://epydoc.sf.net</font></a></td>
+  </tr>
+</table>
+</body>
+</html>
