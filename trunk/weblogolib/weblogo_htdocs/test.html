@@ -60,6 +60,7 @@ The entropy should be 2 bits, 1 bit, 0 bits
 <input type="hidden" name="show_xaxis" value="true" >
 <input type="hidden" name="show_fineprint" value="true" >
 <input type="hidden" name="show_errorbars" value="true" >
+<input type="hidden" name="download" value="true" >
 <input type="hidden" name="composition" value="comp_none" >
 
 <input type="hidden" name="sequences" value=
@@ -86,6 +87,7 @@ Replace and display x-label, y-label and title.
 <input type="hidden" name="show_xaxis" value="true" >
 <input type="hidden" name="show_fineprint" value="true" >
 <input type="hidden" name="show_errorbars" value="true" >
+<input type="hidden" name="download" value="true" >
 
 <input type="hidden" name="yaxis_label" value="The Y-axis" > 
 <input type="hidden" name="xaxis_label" value="The X-axis" > 
@@ -108,6 +110,7 @@ Same, but do not show axes
 <input type="submit" name="cmd_create" value="Create" >
 <input type="hidden" name="show_fineprint" value="true" >
 <input type="hidden" name="show_errorbars" value="true" >
+<input type="hidden" name="download" value="true" >
 
 <input type="hidden" name="yaxis_label" value="This is the Y-axis" > 
 <input type="hidden" name="xaxis_label" value="This is the X-axis" > 
@@ -137,6 +140,7 @@ Ensure that this logo can be created in each of the available formats
 <input type="hidden" name="show_xaxis" value="true" >
 <input type="hidden" name="show_fineprint" value="true" >
 <input type="hidden" name="show_errorbars" value="true" >
+<input type="hidden" name="download" value="true" >
 
 Format: <select name="format">
 <option value="png_print">PNG</option>
@@ -173,6 +177,7 @@ should be alphabetized, top down.
 <input type="hidden" name="show_xaxis" value="true" >
 <input type="hidden" name="show_fineprint" value="true" >
 <input type="hidden" name="show_errorbars" value="true" >
+<input type="hidden" name="download" value="true" >
 <input type="hidden" name="composition" value="comp_none" >
 (NA)
 <input type="hidden" name="sequences" value=
@@ -194,6 +199,7 @@ TGCCTT
 <input type="hidden" name="show_xaxis" value="true" >
 <input type="hidden" name="show_fineprint" value="true" >
 <input type="hidden" name="show_errorbars" value="true" > (AA)
+<input type="hidden" name="download" value="true" >
 <input type="hidden" name="sequences" value=
 ">
 CA
@@ -219,6 +225,7 @@ Should not die just because there is only 1 stack.
 <form method="post" action="create.cgi">
 <input type="submit" name="cmd_edit" value="Edit" >
 <input type="submit" name="cmd_create" value="Create" >
+<input type="hidden" name="download" value="true" >
 <input type="hidden" name="sequences" value=
 ">
 A
@@ -247,6 +254,7 @@ is 2 bits.
 <input type="submit" name="cmd_create" value="Create" >
 <input type="hidden" name="show_yaxis" value="true" >
 <input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="download" value="true" >
 <input type="hidden" name="show_fineprint" value="true" >
 <select name="composition" >
 <option value = "comp_none" >No adjustment for composition</option>
@@ -330,6 +338,7 @@ Each of these tests should result in a polite and informative error message.
 <input type="hidden" name="show_yaxis" value="true" >
 <input type="hidden" name="show_xaxis" value="true" >
 <input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="download" value="true" >
 <input type="hidden" name="show_errorbars" checked="checked" >
 <input type="hidden" name="sequences" value="" >
 </form>
@@ -337,6 +346,7 @@ Each of these tests should result in a polite and informative error message.
 <form method="post" action="create.cgi">
 <input type="submit" name="cmd_create" value="Fail: Malformed sequences" >
 <input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="download" value="true" >
 <input type="hidden" name="show_xaxis" value="true" >
 <input type="hidden" name="show_fineprint" value="true" >
 <input type="hidden" name="show_errorbars" checked="checked" >
@@ -357,6 +367,7 @@ GGGGGGGGGGGGG-------------------
 <input type="hidden" name="show_xaxis" value="true" >
 <input type="hidden" name="show_fineprint" value="true" >
 <input type="hidden" name="show_errorbars" checked="checked" >
+<input type="hidden" name="download" value="true" >
 <input type="hidden" name="sequences" value=">
 GGGGGGGGGGGGGG------------------
 >
@@ -369,12 +380,13 @@ GGGGGGGGGGGGG-------------------
 <input type="submit" name="cmd_create" value="Fail: Malformed data" >
 <input type="hidden" name="show_yaxis" value="true" >
 <input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="download" value="true" >
 <input type="hidden" name="show_fineprint" value="true" >
 <input type="hidden" name="show_errorbars" checked="checked" >
 <input type="hidden" name="sequences" value=">
 GGGGGGGGGGGGGG------------------
 >
-GGGGGGGGGGGGG-------------------
+GGGGGGGGGGGGG------------------
 >
 " >
 </form>
@@ -389,6 +401,7 @@ GGGGGGGGGGGGG-------------------
 Same sequences, three different sizes.
 <form method="post" action="create.cgi">
 <input type="submit" name="cmd_edit" value="Edit" >
+<input type="hidden" name="download" value="true" >
 <input type="submit" name="cmd_create" value="Create" >
 <input type="hidden" name="show_yaxis" value="true" >
 <input type="hidden" name="show_xaxis" value="true" >

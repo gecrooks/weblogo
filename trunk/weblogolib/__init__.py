@@ -406,7 +406,7 @@ class LogoOptions(object) :
         """
 
         self.creator_text = release_description,
-        self.alphabet = protein
+        self.alphabet = None
         
         self.logo_title = ""
         self.logo_label = ""
@@ -1008,7 +1008,6 @@ def read_seq_data(fin, input_parser=seq_io.read, alphabet=None, cased=False, max
         seqs.alphabet = alphabet 
     else :
         seqs.alphabet = which_alphabet(seqs)
-
     return seqs
 
  
@@ -1047,8 +1046,8 @@ def which_alphabet(seqs) :
     score = [1.0*asarray(seqs.tally(a)).sum()/sqrt(len(a)) for a in alphabets]
     #print score
     best = argmax(score) # Ties go to last in list.
-    return alphabets[best]
-    
+    a = alphabets[best]
+    return a
 
     
     
@@ -1130,7 +1129,7 @@ class LogoData(object) :
                   "Sequence number %d differs in length from the previous sequences" % (i+1) ) )
 
         # FIXME: Check seqs.alphabet?
-
+        
         counts = asarray(seqs.tally())
         return cls.from_counts(seqs.alphabet, counts, prior)
     from_seqs = classmethod(from_seqs)
