@@ -52,7 +52,7 @@ Status : Beta - Needs documentation.
 # http://www.jalview.org
 
 
-from _corebio import seq
+from corebio import seq
 from color import Color
 
 class ColorScheme(object):

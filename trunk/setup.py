@@ -1,10 +1,6 @@
 #!/usr/bin/env python
 
-
-
 import sys
-
- 
 
 from distutils.core import setup
 from distutils.core import Extension
@@ -17,9 +13,8 @@ if not hasattr(sys, 'version_info') or sys.version_info < (2,3,0,'final'):
     raise SystemExit,  \
         "Dependancy error: WebLogo requires Python 2.3 or later."
  
-
+ 
 from weblogolib import __version__
-
 
 def main() :     
     long_description = open("README.txt").read()
@@ -52,26 +47,14 @@ def main() :
         
         packages  = [ 
             'weblogolib',
-            'weblogolib._corebio',
-            'weblogolib._corebio.resource', 
-            'weblogolib._corebio.seq_io', 
-            'weblogolib._corebio.seq_io._nexus', 
-            'weblogolib._corebio.ssearch_io',         
-            'weblogolib._corebio.utils',
-            'weblogolib._corebio._future',            
             ],
             
         data_files = ['weblogolib/weblogo_htdocs/*.*',],
         
         cmdclass= {"install_data" : _install_data},
         
-        install_requires=['numpy'],        
+        install_requires=['numpy', 'corebio'],        
     )
-
-
-
-
-
 
 
 # Python 2.3 compatability 

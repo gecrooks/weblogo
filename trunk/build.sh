@@ -13,6 +13,12 @@ echo
 echo "## Lines of code" 
 wc -l *.py weblogolib/*.py | grep 'total' 
 
+echo 
+echo "## Code Tags" 
+grep 'FIXME\|TODO' *.* weblogolib/*.* weblogolib/weblogo_htdocs/*.* 
+
+
+
 echo "# Cleaning previous "
 rm -rd dist/_extract_/
 
