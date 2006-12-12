@@ -45,14 +45,10 @@ from weblogolib.colorscheme import *
 from StringIO import StringIO
 import sys
 
-import weblogolib._corebio
-sys.modules['corebio'] = sys.modules['weblogolib._corebio']
 from numpy import array, asarray, float64, ones, zeros, int32,all,any, shape
 import numpy as na
+
 from corebio import seq_io
-
-
-
 from corebio.seq import *
 
 # python2.3 compatability
@@ -61,6 +57,7 @@ from corebio._future import resource_stream
 
 from corebio.moremath import entropy
 from math import log, sqrt
+
 
 def testdata_stream( name ): 
     return resource_stream(__name__, 'tests/data/'+name, __file__)    
@@ -410,9 +407,6 @@ class test_Dirichlet(unittest.TestCase) :
     assertTrue  = unittest.TestCase.failUnless
     assertFalse = unittest.TestCase.failIf
 
-    # TODO
-    # Test invalid init.
-    
     
     def test_init(self) :
         d = Dirichlet( ( 1,1,1,1,) )

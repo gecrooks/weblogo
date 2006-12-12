@@ -40,7 +40,8 @@
 
 # Replicates README.txt
 
-"""WebLogo (http://code.google.com/p/weblogo/) is a tool for creating sequence 
+"""
+WebLogo (http://code.google.com/p/weblogo/) is a tool for creating sequence 
 logos from biological sequence alignments.  It can be run on the command line,
 as a standalone webserver, as a CGI webapp, or as a python library.
 
@@ -72,12 +73,12 @@ To create a logo in python code:
     >>> eps_formatter( data, format, fout)
 
 
-WebLogo makes extensive use of the corebio python toolkit for computational biology. (http://code.google.com/p/corebio)
-
 -- Distribution and Modification --
 This package is distributed under the new BSD Open Source License. 
 Please see the LICENSE.txt file for details on copyright and licensing.
 The WebLogo source code can be downloaded from http://code.google.com/p/weblogo/
+WebLogo requires Python 2.3, 2.4 or 2.5, the corebio python toolkit for computational biology (http://code.google.com/p/corebio), and the python array 
+package 'numpy' (http://www.scipy.org/Download)
 
 """
 
@@ -87,11 +88,7 @@ import os
 from datetime import datetime
 from StringIO import StringIO
 
-# We have our own private copy of corebio stored as weblogo._corebio.
-# First we import our copy, then we mangle sys.modules so that package
-# has correct name
-import weblogolib._corebio
-sys.modules['corebio'] = sys.modules['weblogolib._corebio']
+
 
 from  corebio.data import rna_letters, dna_letters, amino_acid_letters
 import random
@@ -113,14 +110,10 @@ from color import *
 from colorscheme import *
 from corebio.seq import Alphabet, Seq, SeqList
 from corebio import seq_io
-from corebio.utils import isfloat, find_command
+from corebio.utils import isfloat, find_command, ArgumentError
 from corebio.moremath import *
 from corebio.data import amino_acid_composition
 from corebio.seq import unambiguous_rna_alphabet, unambiguous_dna_alphabet, unambiguous_protein_alphabet
-
-from corebio.seq import unambiguous_rna_alphabet as rna
-from corebio.seq import unambiguous_dna_alphabet as dna
-from corebio.seq import unambiguous_protein_alphabet as protein
 
 
 
@@ -156,9 +149,6 @@ __all__ = ['LogoSize',
             'which_alphabet',
             'color',
             'colorscheme',
-            'rna',
-            'dna',
-            'protein'
             ]
 
 description  = "Create sequence logos from biological sequence alignments." 
@@ -171,8 +161,6 @@ __version__ = "3.0b12"
 release_date ="$Date$".split()[1]
 release_build = "$Revision$".split()[1]
 release_description = "WebLogo %s (%s)" % (__version__,  release_date)
-
-
 
 
 
@@ -242,7 +230,8 @@ class GhostscriptAPI(object) :
 # end class Ghostscript
 
 
-aa_composition = [ amino_acid_composition[_k] for _k in unambiguous_protein_alphabet]
+aa_composition = [ amino_acid_composition[_k] for _k in
+                    unambiguous_protein_alphabet]
 
 
 
@@ -365,7 +354,6 @@ class LogoOptions(object) :
         o fineprint
         o show_boxes 
         o shrink_fraction
-        o outline_linewidth
         o show_errorbars 
         o errorbar_fraction 
         o errorbar_width_fraction 
@@ -391,11 +379,7 @@ class LogoOptions(object) :
         o logo_start
         o logo_end
         o scale_width
-    """  
-    # TODO: Make sure all of these options are actually used.
-    # TODO: Plot type, units and the default yaxis label
-    # TODO: Add docstring documentation for all of these options.
-      
+    """       
 
     def __init__(self, **kwargs) :
         """ Create a new LogoOptions instance.
@@ -433,7 +417,6 @@ class LogoOptions(object) :
     
         self.show_boxes = False
         self.shrink_fraction = 0.5
-        self.outline_linewidth  = 0.2           # FIXME: Used?
   
         self.show_errorbars = True
         self.errorbar_fraction = 0.90
@@ -499,7 +482,7 @@ class LogoFormat(LogoOptions) :
     >>> options.title = "A Logo Title"
     >>> format = LogoFormat(data, options) 
     """
-    
+    # TODO: Raise ArgumentErrors instead of ValueError and document
     def __init__(self, data, options= None) :
         LogoOptions.__init__(self)
         
@@ -528,12 +511,12 @@ class LogoFormat(LogoOptions) :
         self.end_type = None
 
         if self.stacks_per_line< 1 :
-            raise ValueError (("stacks_per_line", 
-                "Stacks per line should be greater than zero.") )
+            raise ArgumentError("Stacks per line should be greater than zero.",
+                                "stacks_per_line" )
         
         if self.size.stack_height<=0.0 : 
-            raise ValueError (("stack_height", 
-                "Stack height must be greater than zero.") )
+            raise ArgumentError( 
+                "Stack height must be greater than zero.", "stack_height")
         
         if (self.small_fontsize <= 0 or self.fontsize <=0 or    
                 self.title_fontsize<=0 ):
@@ -544,9 +527,8 @@ class LogoFormat(LogoOptions) :
         "The visible fraction of the error bar must be between zero and one.")
         
         if self.yaxis_tic_interval<=0.0 :
-            raise ValueError(
-                ('yaxis_tic_interval',
-                    "The yaxis tic interval cannot be negative.") )
+            raise ArgumentError( "The yaxis tic interval cannot be negative.",
+                'yaxis_tic_interval')
         
         if self.size.stack_width <= 0.0 :
             raise ValueError(
@@ -589,12 +571,14 @@ class LogoFormat(LogoOptions) :
         self.total_stacks = self.logo_end - self.logo_start +1
 
         if self.logo_start - self.first_index <0 :
-            raise ValueError(
-    ('logo_range',"Logo range extends before start of available sequence.") )
+            raise ArgumentError(
+                "Logo range extends before start of available sequence.",
+                'logo_range')
         
         if self.logo_end - self.first_index  >= self.seqlen  : 
-            raise ValueError(
-        ('logo_range',"Logo range extends beyond end of available sequence.") )
+            raise ArgumentError(
+                "Logo range extends beyond end of available sequence.",
+                'logo_range')
     
         if self.logo_title      : self.show_title = True
         if not self.fineprint   : self.show_fineprint = False
@@ -766,7 +750,7 @@ def eps_formatter( logodata, format, fout) :
         "errorbar_width_fraction",
         "errorbar_gray",    "small_fontsize",       "fontsize",
         "title_fontsize",   "number_fontsize",      "text_font",
-        "logo_font",        "title_font",           "outline_linewidth",
+        "logo_font",        "title_font",          
         "logo_label",       "yaxis_scale",          "end_type",
         "debug",            "show_title",           "show_xaxis",
         "show_xaxis_label", "show_yaxis",           "show_yaxis_label",
@@ -888,7 +872,7 @@ formatters = {
     'png': png_formatter,
     'png_print' : png_print_formatter,
     'jpeg'  : jpeg_formatter,
-    'txt' : txt_formatter,          # FIXME: Implement
+    'txt' : txt_formatter,          
     }     
     
 default_formatter = eps_formatter
@@ -963,7 +947,8 @@ def parse_prior(composition, alphabet, weight=None) :
         raise ValueError("NO SUCH COMPOSITION")
     
     if len(prior) != len(alphabet) :
-        raise ValueError("The sequence alphabet and composition are incompatible.")
+        raise ValueError(
+            "The sequence alphabet and composition are incompatible.")
     return prior
 
     
@@ -980,7 +965,11 @@ def equiprobable_distribution( length) :
 
 
 
-def read_seq_data(fin, input_parser=seq_io.read, alphabet=None, cased=False, max_file_size=0,):
+def read_seq_data(fin, input_parser=seq_io.read, 
+                    alphabet=None, cased=False, max_file_size=0):
+    # TODO: Document this method and enviroment variable
+
+    max_file_size =int(os.environ.get("WEBLOGO_MAX_FILE_SIZE", max_file_size))
 
     # If max_file_size is set, or if fin==stdin (which is non-seekable), we
     # read the data and replace fin with a StringIO object. 
@@ -988,7 +977,8 @@ def read_seq_data(fin, input_parser=seq_io.read, alphabet=None, cased=False, max
         data = fin.read(max_file_size)
         more_data = fin.read(2)
         if more_data != "" :
-            raise IOError("File too large %d"  % max_file_size) #FIXME: Better message
+            #FIXME: Better message
+            raise IOError("File too large %d"  % max_file_size) 
         fin = StringIO(data)
     elif fin == sys.stdin:
         fin = StringIO(fin.read())
@@ -1010,25 +1000,6 @@ def read_seq_data(fin, input_parser=seq_io.read, alphabet=None, cased=False, max
         seqs.alphabet = which_alphabet(seqs)
     return seqs
 
- 
-#def guess_alphabet(seqs) :    
-#    total_count = 0
-#    amino_count = 0
-#    rna_count   = 0
-#    dna_count   = 0 
-#    
-#    for s in seqs:
-#        for c in s:
-#            total_count +=1
-#            if c in amino_acid_letters: amino_count +=1
-#            if c in dna_letters : dna_count +=1
-#            if c in rna_letters: rna_count += 1
-#    #print total_count, amino_count, rna_count, dna_count
-#                
-#    best = max(amino_count, dna_count, rna_count)
-#    if best == dna_count : return unambiguous_dna_alphabet
-#    if best == rna_count : return unambiguous_rna_alphabet
-#    return unambiguous_protein_alphabet
 
 
 #TODO: Move to seq_io? 
@@ -1125,8 +1096,9 @@ class LogoData(object) :
         for i,s in enumerate(seqs) :
             #print i,s, len(s)
             if seq_length != len(s) :
-                raise ValueError(( 'sequences',
-                  "Sequence number %d differs in length from the previous sequences" % (i+1) ) )
+                raise ArgumentError(
+    "Sequence number %d differs in length from the previous sequences" % (i+1) ,
+                        'sequences')
 
         # FIXME: Check seqs.alphabet?
         
@@ -1207,13 +1179,11 @@ def httpd_serve_forever(port=8080) :
     pythonpath = os.getenv("PYTHONPATH", '')
     pythonpath += ":" + os.path.abspath(sys.path[0]).split()[0]
     os.environ["PYTHONPATH"] = pythonpath
-    
 
-    # TODO: Add command line option to override default webpage directory
+    # FIXME: DOES THIS WORK?    
     htdocs = os.path.join(os.path.dirname(__file__), "weblogo_htdocs") 
     os.chdir(htdocs) 
 
-    
     HandlerClass = __HTTPRequestHandler
     ServerClass = BaseHTTPServer.HTTPServer
     httpd = ServerClass(('', port), HandlerClass)
@@ -1232,7 +1202,6 @@ def _build_logodata(options) :
         options.input_parser.read,
         alphabet=options.alphabet)      
 
-    # FIXME: Error handling
     prior = parse_prior( options.composition,seqs.alphabet, options.weight)
     data = LogoData.from_seqs(seqs, prior)
     
@@ -1430,8 +1399,6 @@ def _build_option_parser() :
         help="The weight of prior data.  Default: total pseudocounts equal to the number of monomer types.",
         metavar="NUMBER")
 
-
-    # FIXME: Better name needed. Coordinate?
     data_grp.add_option( "-i", "--first-index",
         dest="first_index",
         action="store",
@@ -1440,9 +1407,6 @@ def _build_option_parser() :
         help="Index of first position in sequence data (default: 1)",
         metavar="INDEX")
 
-
-    # FIXME: Upper, Lower should be format options?
-    # Need refactoring anyways.
     data_grp.add_option( "-l", "--lower",
         dest="logo_start",
         action="store",
@@ -1459,8 +1423,6 @@ def _build_option_parser() :
 
     # ========================== FORMAT OPTIONS ==========================
 
-    #TODO: YAxis Interval. Default maximum.
-    
     format_grp.add_option( "-s", "--size",
         dest="logo_size",
         action="store",
@@ -1513,7 +1475,7 @@ def _build_option_parser() :
         dest="yaxis_scale",
         action="store",
         type="float",
-        help="Height of yaxis in units. ",
+        help="Height of yaxis in units. (Default: Maximum value with uninformative prior.)",
         metavar = "UNIT") 
 
     format_grp.add_option( "-Y", "--show-yaxis",
@@ -1626,18 +1588,16 @@ def _build_option_parser() :
         dest="show_boxes",
         action="store",
         type = "boolean",
-        default=False, #FIXME
+        default=False, 
         metavar = "YES/NO",
         help="Draw boxes around symbols? (default: no)")
 
-    # TODO: Add this information to manual.
-    # Low resolution bitmaps (DPI<300) are antialiased.
     advanced_grp.add_option( "", "--resolution",
         dest="resolution",
         action="store",
         type="float",
         default=96,
-        help="Bitmap resolution in dots per inch (DPI).  (default: 96 DPI, except png_print, 600 DPI)",
+        help="Bitmap resolution in dots per inch (DPI).  (default: 96 DPI, except png_print, 600 DPI) Low resolution bitmaps (DPI<300) are antialiased.",
         metavar="DPI")  
 
     advanced_grp.add_option( "", "--scale-width",
@@ -1670,24 +1630,6 @@ def _build_option_parser() :
         default= 8080,
         help="Listen to this local port. (Default: %default)",
         metavar="PORT")
-
-    # FIXME: Implement
-   # parser.add_option( "", "--max",
-   #     dest="max_file_size",
-   #     action="store",
-   #     type="int",
-   #     help="Maximum size of input sequence file. (default: no limit)",
-   #     metavar="BYTES")
-
-    # FIXME: Implement
-    #server_grp.add_option( "", "--htdocs",
-    #    dest="htdocs",
-    #    action="store",
-    #    type="string",
-    #    default= "weblogo_htdocs",
-    #    help="Directory containing weblogo's web-pages. Default is weblogo_htdocs inside current directory."
-   #     )
-
 
     return parser
     
@@ -1760,8 +1702,7 @@ _template = r"""%!PS-Adobe-3.0 EPSF-3.0
 
 /show_boxes             ${show_boxes} def    % True or False
 /shrink                 ${shrink} def    % True or False
-/shrink_fraction        ${shrink_fraction} def             
-/outline_linewidth      ${outline_linewidth} def    
+/shrink_fraction        ${shrink_fraction} def               
 
 /show_errorbars         ${show_errorbars} def      % True or False
 /errorbar_fraction      ${errorbar_fraction} def
@@ -2460,14 +2401,14 @@ class Dirichlet(object) :
         x = asarray(x, float64)
         if shape(x) != shape(self.alpha) :
             raise ValueError("Argument must be same dimension as Dirichlet")
-        # TODO: Check tha shape(x) == shape(alpha)
         return sum( x * self.mean()) 
 
     def variance_x(self, x) :
         x = asarray(x, float64)
-        # x needs to be the same shape as alpha
+        if shape(x) != shape(self.alpha) :
+            raise ValueError("Argument must be same dimension as Dirichlet")        
+            
         cv = self.covariance()
-        
         var = na.dot(na.dot(na.transpose( x), cv), x)
         return var
 

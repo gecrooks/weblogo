@@ -36,8 +36,6 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 #  POSSIBILITY OF SUCH DAMAGE. 
 
-
-
 import sys
 import cgi as cgilib
 import cgitb; cgitb.enable()
@@ -49,11 +47,10 @@ import cgitb; cgitb.enable()
 from StringIO import StringIO
 from color import *
 from colorscheme import ColorScheme, ColorGroup
-from _corebio.utils import *
-from _corebio._future import Template
 
-import weblogolib as weblogo
 import weblogolib
+from corebio.utils import *
+from corebio._future import Template
 
 
 # TODO: Check units
@@ -66,8 +63,6 @@ def resource_string(resource, basefilename) :
     import os
     fn =  os.path.join(os.path.dirname(basefilename), resource)
     return open( fn ).read()
-
-    
 
 mime_type = {
     'eps': 'application/postscript', 
@@ -90,13 +85,13 @@ extension = {
 
 alphabets = {
     'alphabet_auto': None, 
-    'alphabet_protein': weblogo.unambiguous_protein_alphabet, 
-    'alphabet_rna': weblogo.unambiguous_rna_alphabet,
-    'alphabet_dna': weblogo.unambiguous_dna_alphabet}
+    'alphabet_protein': weblogolib.unambiguous_protein_alphabet, 
+    'alphabet_rna': weblogolib.unambiguous_rna_alphabet,
+    'alphabet_dna': weblogolib.unambiguous_dna_alphabet}
 
 color_schemes = {}
-for k in weblogo.std_color_schemes.keys():
-    color_schemes[ 'color_'+k.replace(' ', '_')] = weblogo.std_color_schemes[k]
+for k in weblogolib.std_color_schemes.keys():
+    color_schemes[ 'color_'+k.replace(' ', '_')] = weblogolib.std_color_schemes[k]
     
 
 composition = {'comp_none' : 'none',
@@ -158,7 +153,7 @@ def float_or_none(value) :
 def main(htdocs_directory = None) :
  
     # name, value, options, callback? 
-    logooptions = weblogo.LogoOptions() 
+    logooptions = weblogolib.LogoOptions() 
     
     # A list of form fields.
     # The default for checkbox values must be False (irrespective of
@@ -166,12 +161,12 @@ def main(htdocs_directory = None) :
     # but an unchecked checkbox returns nothing.
     controls = [
         Field( 'sequences', ''),
-        Field( 'format', 'png_print', weblogo.formatters.get ,
+        Field( 'format', 'png', weblogolib.formatters.get ,
             options=['png_print', 'png', 'jpeg', 'eps', 'pdf', 'txt'] , 
             errmsg="Unknown format option."),
         Field( 'stacks_per_line', logooptions.stacks_per_line , int, 
             errmsg='Invalid number of stacks per line.'),
-        Field( 'size','medium', weblogo.std_sizes.get,
+        Field( 'size','medium', weblogolib.std_sizes.get,
             options=['small', 'medium', 'large'], errmsg='Invalid logo size.'),
         Field( 'alphabet','alphabet_auto', alphabets.get,
             options=['alphabet_auto', 'alphabet_protein', 'alphabet_dna', 
@@ -180,7 +175,7 @@ def main(htdocs_directory = None) :
         Field( 'unit_name', 'bits', 
             options=[ 'probability', 'bits', 'nats', 'kT', 'kJ/mol', 
                         'kcal/mol']),
-        Field( 'first_index', 1, int),
+        Field( 'first_index', 1, int_or_none),
         Field( 'logo_start', '', int_or_none),
         Field( 'logo_end', '', int_or_none),
         Field( 'composition', 'comp_auto', composition.get,
@@ -273,7 +268,7 @@ def main(htdocs_directory = None) :
 
         if color :
             try :
-                custom.groups.append(weblogo.ColorGroup(symbols, color, desc))
+                custom.groups.append(weblogolib.ColorGroup(symbols, color, desc))
             except ValueError, e : 
                 errors.append( ('color%d'%i, "Invalid color: %s" % color) )
     
@@ -319,14 +314,14 @@ def main(htdocs_directory = None) :
     try :
         comp = form["composition"].get_value()
         percentCG = form["percentCG"].get_value()
-        seqs = weblogo.read_seq_data(StringIO( sequences), 
+        seqs = weblogolib.read_seq_data(StringIO( sequences), 
                                         alphabet=logooptions.alphabet)
         if comp=='percentCG': comp = str(percentCG/100)
-        prior = weblogo.parse_prior(comp, seqs.alphabet)
-        data = weblogo.LogoData.from_seqs(seqs, prior) 
-        logoformat =  weblogo.LogoFormat(data, logooptions)
+        prior = weblogolib.parse_prior(comp, seqs.alphabet)
+        data = weblogolib.LogoData.from_seqs(seqs, prior) 
+        logoformat =  weblogolib.LogoFormat(data, logooptions)
         format = form["format"].value
-        weblogo.formatters[format](data, logoformat, logo)            
+        weblogolib.formatters[format](data, logoformat, logo)            
     except ValueError, e :
         errors.append( e.args )
     except RuntimeError, e :
@@ -365,7 +360,7 @@ def send_form(controls, errors=[], htdocs_directory=None) :
             os.path.dirname(__file__, "weblogo_htdocs") )
 
     subsitutions = {}
-    subsitutions["version"] = weblogo.release_description 
+    subsitutions["version"] = weblogolib.release_description 
     
     for c in controls :
         if c.options :
@@ -387,6 +382,7 @@ def send_form(controls, errors=[], htdocs_directory=None) :
         subsitutions[c.name+'_err']  = ''
             
     if errors :
+        print >>sys.stderr, errors
         error_message = []
         for e in errors :
             if type(e) is str :
