@@ -74,7 +74,7 @@ mime_type = {
     'pdf': 'application/pdf',
     'png': 'image/png',
     'png_print': 'image/png',    
-    'txt' : 'text/plain',          # FIXME: Implement
+    'txt' : 'text/plain',       
     'jpeg'  : 'image/jpeg',
 }
 
@@ -83,7 +83,7 @@ extension = {
     'pdf': 'pdf',
     'png': 'png',
     'png_print': 'png',
-    'txt' : 'txt',          # FIXME: Implement
+    'txt' : 'txt',        
     'jpeg'  : 'png'
 }
 
@@ -167,16 +167,19 @@ def main(htdocs_directory = None) :
     controls = [
         Field( 'sequences', ''),
         Field( 'format', 'png_print', weblogo.formatters.get ,
-            options=['png_print', 'png', 'jpeg', 'eps', 'pdf', 'txt'] , errmsg="Unknown format option."),
+            options=['png_print', 'png', 'jpeg', 'eps', 'pdf', 'txt'] , 
+            errmsg="Unknown format option."),
         Field( 'stacks_per_line', logooptions.stacks_per_line , int, 
             errmsg='Invalid number of stacks per line.'),
         Field( 'size','medium', weblogo.std_sizes.get,
             options=['small', 'medium', 'large'], errmsg='Invalid logo size.'),
         Field( 'alphabet','alphabet_auto', alphabets.get,
-            options=['alphabet_auto', 'alphabet_protein', 'alphabet_dna', 'alphabet_rna'],
+            options=['alphabet_auto', 'alphabet_protein', 'alphabet_dna', 
+                        'alphabet_rna'],
             errmsg="Unknown sequence type."),
         Field( 'unit_name', 'bits', 
-            options=[ 'probability', 'bits', 'nats', 'kT', 'kJ/mol', 'kcal/mol']),
+            options=[ 'probability', 'bits', 'nats', 'kT', 'kJ/mol', 
+                        'kcal/mol']),
         Field( 'first_index', 1, int),
         Field( 'logo_start', '', int_or_none),
         Field( 'logo_end', '', int_or_none),
@@ -195,7 +198,8 @@ def main(htdocs_directory = None) :
         Field( 'yaxis_label', logooptions.yaxis_label, string_or_none ),
         Field( 'yaxis_scale', logooptions.yaxis_scale , float_or_none,
             errmsg="The yaxis scale must be a positive number." ),
-        Field( 'yaxis_tic_interval', logooptions.yaxis_tic_interval , float_or_none),
+        Field( 'yaxis_tic_interval', logooptions.yaxis_tic_interval , 
+                float_or_none),
         Field( 'show_ends', False, truth), 
         Field( 'show_fineprint', False , truth), 
         Field( 'color_scheme', 'color_auto', color_schemes.get,
@@ -244,8 +248,10 @@ def main(htdocs_directory = None) :
        
        
     options_from_form = ['format', 'stacks_per_line', 'size', 
-        'alphabet', 'unit_name', 'first_index', 'logo_start','logo_end', 'composition', 
-        'show_errorbars', 'logo_title', 'logo_label', 'show_xaxis', 'xaxis_label',
+        'alphabet', 'unit_name', 'first_index', 'logo_start','logo_end',
+         'composition', 
+        'show_errorbars', 'logo_title', 'logo_label', 'show_xaxis', 
+        'xaxis_label',
         'show_yaxis', 'yaxis_label', 'yaxis_scale', 'yaxis_tic_interval',
         'show_ends', 'show_fineprint']
     
@@ -267,7 +273,7 @@ def main(htdocs_directory = None) :
 
         if color :
             try :
-                custom.groups.append( weblogo.ColorGroup( symbols, color, desc)  )
+                custom.groups.append(weblogo.ColorGroup(symbols, color, desc))
             except ValueError, e : 
                 errors.append( ('color%d'%i, "Invalid color: %s" % color) )
     
@@ -313,7 +319,8 @@ def main(htdocs_directory = None) :
     try :
         comp = form["composition"].get_value()
         percentCG = form["percentCG"].get_value()
-        seqs = weblogo.read_seq_data(StringIO( sequences), alphabet=logooptions.alphabet)
+        seqs = weblogo.read_seq_data(StringIO( sequences), 
+                                        alphabet=logooptions.alphabet)
         if comp=='percentCG': comp = str(percentCG/100)
         prior = weblogo.parse_prior(comp, seqs.alphabet)
         data = weblogo.LogoData.from_seqs(seqs, prior) 
