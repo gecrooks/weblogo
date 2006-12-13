@@ -156,7 +156,7 @@ class test_seqlogo(unittest.TestCase) :
     def _exec(self,  args, outputtext, returncode =0, stdin=None) :
         if not stdin : 
             stdin = testdata_stream("cap.fa")
-        args = ["./weblogo.py"] + args
+        args = ["./weblogo"] + args
         p = Popen(args,stdin=stdin,stdout=PIPE, stderr=PIPE)    
         (out, err) = p.communicate()
         if returncode ==0 and p.returncode >0 :

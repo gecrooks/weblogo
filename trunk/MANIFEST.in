@@ -1,5 +1,5 @@
 include LICENSE.txt README.txt  
-recursive-include weblogolib/weblogo_htdocs/ *.html *.cgi *.*
+recursive-include weblogolib/htdocs/ *.html *.cgi *.*
 include cap.fa
 recursive-include tests/data/ *.*
 include test_weblogo.py

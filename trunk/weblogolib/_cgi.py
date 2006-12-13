@@ -357,7 +357,7 @@ def main(htdocs_directory = None) :
 def send_form(controls, errors=[], htdocs_directory=None) :
     if htdocs_directory is None :
         htdocs_directory = os.path.join(
-            os.path.dirname(__file__, "weblogo_htdocs") )
+            os.path.dirname(__file__, "htdocs") )
 
     subsitutions = {}
     subsitutions["version"] = weblogolib.release_description 

@@ -41,19 +41,12 @@ def main() :
             'Topic :: Software Development :: Libraries :: Python Modules',
             ],
         
-        scripts = [
-            'weblogo.py', 
-            ],
-        
-        packages  = [ 
-            'weblogolib',
-            ],
-            
-        data_files = ['weblogolib/weblogo_htdocs/*.*',],
+        scripts = [ 'weblogo', ],
+        packages  = [ 'weblogolib',],
+        data_files = ['weblogolib/htdocs/*.*',],
+        install_requires=['numpy', 'corebio'],        
         
         cmdclass= {"install_data" : _install_data},
-        
-        install_requires=['numpy', 'corebio'],        
     )
 
 

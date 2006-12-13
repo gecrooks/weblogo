@@ -263,7 +263,7 @@ Optional, but we appreciate the acknowledgment.
 </ul>
 
 <h4>More Options</h4>
-The weblogo <a href="#CLI">command line client</a>, <code>weblogo.py</code>, provides many more options and greater control over the final logo appearance.
+The weblogo <a href="#CLI">command line client</a>, <code>weblogo</code>, provides many more options and greater control over the final logo appearance.
     
 
 
@@ -304,7 +304,7 @@ After unpacking the WebLogo tarfile, it should be possible to immediately create
 logos using the command line client (Provided that python, numpy, corebio and ghostscript have already been installed).
 </p>
 <pre> 
-./weblogo.py --format PNG &lt; htdocs/examples/cap_hth.fa &gt; cap_hth.png   
+./weblogo --format PNG &lt; htdocs/examples/cap_hth.fa &gt; cap_hth.png   
 </pre>
 <p>    
 Please consult the file <code>build_examples.sh</code> for more examples.
@@ -312,7 +312,7 @@ Please consult the file <code>build_examples.sh</code> for more examples.
 To run WebLogo as a stand alone web service, run the logo server command :
 </p>
 <pre> 
-./weblogo.py --serve 
+./weblogo --serve 
 </pre>
 <p>
 It should now be possible to access WebLogo at <a href="http://localhost:8080/">http://localhost:8080/</a>.
@@ -369,10 +369,10 @@ SetEnv COREBIOPATH /path/to/gs
 
 <!-- ================================================================== -->
 <a name="CLI" ></a>
-<h2><code>weblogo.py</code>, The WebLogo Command Line Interface (CLI)</h2>
+<h2><code>weblogo</code>, The WebLogo Command Line Interface (CLI)</h2>
 The  command line client has many options not available through the web interface. Please consult the bundled <code>build_examples.sh</code> script for inspiration.
 <pre >
-usage: weblogo.py [options]  < sequence_data.fa > sequence_logo.eps
+usage: weblogo [options]  < sequence_data.fa > sequence_logo.eps
 
 Create sequence logos from biological sequence alignments.
 
@@ -503,7 +503,7 @@ If you wish to extend WebLogo or to contribute code, then you should download th
 <pre>
 &gt; svn checkout http://weblogo.googlecode.com/svn/trunk/ weblogo
 &gt;  cd weblogo
-&gt; ./weblogo.py &lt; cap.fa &gt; cap.eps
+&gt; ./weblogo &lt; cap.fa &gt; cap.eps
 </pre>
 <p>
 Please consult the developer notes, <code>DEVELOPERS.txt</code> and  software license <code>LICENSE.txt</code>
