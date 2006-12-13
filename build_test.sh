@@ -1,8 +1,7 @@
 
 mkdir -p tmp
 
-
-
+echo "# Test weblogo by building logos with many different options."
 
 echo -ne '.'
 ./weblogo  < cap.fa > tmp/logo0.eps ||exit
