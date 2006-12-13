@@ -48,18 +48,18 @@ as a standalone webserver, as a CGI webapp, or as a python library.
 The main WebLogo webserver is located at http://bespoke.lbl.gov/weblogo/
 
 Please consult the manual for installation instructions and more information:
-(Also located in the weblogo/weblogo_htdocs subdirectory.)
+(Also located in the weblogolib/htdocs subdirectory.)
 
     http://bespoke.lbl.gov/weblogo/manual.html
 
 For help on the command line interface run
-    ./weblogo.py --help
+    ./weblogo --help
 
 To build a simple logo run
-    ./weblogo.py  < cap.fa > logo0.eps
+    ./weblogo  < cap.fa > logo0.eps
     
 To run as a standalone webserver at localhost:8080 
-    ./weblogo.py --server
+    ./weblogo --server
 
 To create a logo in python code:
     >>> from weblogolib import *
@@ -1181,7 +1181,7 @@ def httpd_serve_forever(port=8080) :
     os.environ["PYTHONPATH"] = pythonpath
 
     # FIXME: DOES THIS WORK?    
-    htdocs = os.path.join(os.path.dirname(__file__), "weblogo_htdocs") 
+    htdocs = os.path.join(os.path.dirname(__file__), "htdocs") 
     os.chdir(htdocs) 
 
     HandlerClass = __HTTPRequestHandler
