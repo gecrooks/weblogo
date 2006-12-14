@@ -1,0 +1,1563 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>__builtin__.str</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css"></link>
+</head>
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="weblogolib-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          <a class="navbar" target="_top" href="http://code.google.com/p/weblogo/">WebLogo</a>
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <font size="-1"><b class="breadcrumbs">
+        Module&nbsp;__builtin__ ::
+        Class&nbsp;str
+      </b></font></br>
+    </td>
+    <td><table cellpadding="0" cellspacing="0">
+      <tr><td align="right"><font size="-2">[<a href="frames.html"target="_top">frames</a>&nbsp;|&nbsp;<a href="__builtin__.str-class.html" target="_top">no&nbsp;frames</a>]</font></td></tr>
+    </table></td>
+</tr></table>
+
+<!-- =========== START OF CLASS DESCRIPTION =========== -->
+<h2 class="class">Type str</h2>
+
+<pre class="base-tree">
+<a href="__builtin__.object-class.html"><code>object</code></a> --+    
+         |    
+<a href="__builtin__.basestring-class.html"><code>basestring</code></a> --+
+             |
+            <b>str</b>
+</pre><br />
+
+<hr/>
+
+<pre class="literalblock">
+str(object) -&gt; string
+
+Return a nice string representation of the object.
+If the argument is a string, the return value is the same object.
+</pre>
+<hr/>
+
+
+<!-- =========== START OF METHOD SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Method Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#__add__" class="summary-sig-name"><code>__add__</code></a>(<span class=summary-sig-arg>x</span>,
+          <span class=summary-sig-arg>y</span>)</span></code>
+<br />
+x.__add__(y) &lt;==&gt; x+y...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#__contains__" class="summary-sig-name"><code>__contains__</code></a>(<span class=summary-sig-arg>x</span>,
+          <span class=summary-sig-arg>y</span>)</span></code>
+<br />
+x.__contains__(y) &lt;==&gt; y in x...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#__eq__" class="summary-sig-name"><code>__eq__</code></a>(<span class=summary-sig-arg>x</span>,
+          <span class=summary-sig-arg>y</span>)</span></code>
+<br />
+x.__eq__(y) &lt;==&gt; x==y...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#__ge__" class="summary-sig-name"><code>__ge__</code></a>(<span class=summary-sig-arg>x</span>,
+          <span class=summary-sig-arg>y</span>)</span></code>
+<br />
+x.__ge__(y) &lt;==&gt; x&gt;=y...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#__getattribute__" class="summary-sig-name"><code>__getattribute__</code></a>(<span class="summary-sig-vararg">...</span>)</span></code>
+<br />
+x.__getattribute__('name') &lt;==&gt; x.name...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#__getitem__" class="summary-sig-name"><code>__getitem__</code></a>(<span class=summary-sig-arg>x</span>,
+          <span class=summary-sig-arg>y</span>)</span></code>
+<br />
+x.__getitem__(y) &lt;==&gt; x[y]...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="__getnewargs__"></a><span class="summary-sig"><span class="summary-sig-name">__getnewargs__</span>(<span class="summary-sig-vararg">...</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#__getslice__" class="summary-sig-name"><code>__getslice__</code></a>(<span class=summary-sig-arg>x</span>,
+          <span class=summary-sig-arg>i</span>,
+          <span class=summary-sig-arg>j</span>)</span></code>
+<br />
+Use of negative indices is not supported.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#__gt__" class="summary-sig-name"><code>__gt__</code></a>(<span class=summary-sig-arg>x</span>,
+          <span class=summary-sig-arg>y</span>)</span></code>
+<br />
+x.__gt__(y) &lt;==&gt; x&gt;y...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#__hash__" class="summary-sig-name"><code>__hash__</code></a>(<span class=summary-sig-arg>x</span>)</span></code>
+<br />
+x.__hash__() &lt;==&gt; hash(x)...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#__le__" class="summary-sig-name"><code>__le__</code></a>(<span class=summary-sig-arg>x</span>,
+          <span class=summary-sig-arg>y</span>)</span></code>
+<br />
+x.__le__(y) &lt;==&gt; x&lt;=y...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#__len__" class="summary-sig-name"><code>__len__</code></a>(<span class=summary-sig-arg>x</span>)</span></code>
+<br />
+x.__len__() &lt;==&gt; len(x)...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#__lt__" class="summary-sig-name"><code>__lt__</code></a>(<span class=summary-sig-arg>x</span>,
+          <span class=summary-sig-arg>y</span>)</span></code>
+<br />
+x.__lt__(y) &lt;==&gt; x&lt;y...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#__mod__" class="summary-sig-name"><code>__mod__</code></a>(<span class=summary-sig-arg>x</span>,
+          <span class=summary-sig-arg>y</span>)</span></code>
+<br />
+x.__mod__(y) &lt;==&gt; x%y...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#__mul__" class="summary-sig-name"><code>__mul__</code></a>(<span class=summary-sig-arg>x</span>,
+          <span class=summary-sig-arg>n</span>)</span></code>
+<br />
+x.__mul__(n) &lt;==&gt; x*n...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#__ne__" class="summary-sig-name"><code>__ne__</code></a>(<span class=summary-sig-arg>x</span>,
+          <span class=summary-sig-arg>y</span>)</span></code>
+<br />
+x.__ne__(y) &lt;==&gt; x!=y...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#__new__" class="summary-sig-name"><code>__new__</code></a>(<span class=summary-sig-arg>T</span>,
+          <span class=summary-sig-arg>S</span>,
+          <span class="summary-sig-vararg">...</span>)</span></code>
+<br />
+T.__new__(S, ...) -&gt; a new object with type S, a subtype of T...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#__repr__" class="summary-sig-name"><code>__repr__</code></a>(<span class=summary-sig-arg>x</span>)</span></code>
+<br />
+x.__repr__() &lt;==&gt; repr(x)...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#__rmod__" class="summary-sig-name"><code>__rmod__</code></a>(<span class=summary-sig-arg>x</span>,
+          <span class=summary-sig-arg>y</span>)</span></code>
+<br />
+x.__rmod__(y) &lt;==&gt; y%x...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#__rmul__" class="summary-sig-name"><code>__rmul__</code></a>(<span class=summary-sig-arg>x</span>,
+          <span class=summary-sig-arg>n</span>)</span></code>
+<br />
+x.__rmul__(n) &lt;==&gt; n*x...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#__str__" class="summary-sig-name"><code>__str__</code></a>(<span class=summary-sig-arg>x</span>)</span></code>
+<br />
+x.__str__() &lt;==&gt; str(x)...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#capitalize" class="summary-sig-name"><code>capitalize</code></a>(<span class=summary-sig-arg>S</span>)</span></code>
+<br />
+Return a copy of the string S with only its first character
+capitalized.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#center" class="summary-sig-name"><code>center</code></a>(<span class=summary-sig-arg>S</span>,
+          <span class=summary-sig-arg>width</span>,
+          <span class=summary-sig-arg>fillchar</span>)</span></code>
+<br />
+Return S centered in a string of length width.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#count" class="summary-sig-name"><code>count</code></a>(<span class=summary-sig-arg>S</span>,
+          <span class=summary-sig-arg>sub</span>,
+          <span class=summary-sig-arg>start</span>,
+          <span class=summary-sig-arg>end</span>)</span></code>
+<br />
+Return the number of occurrences of substring sub in string
+S[start:end].</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#decode" class="summary-sig-name"><code>decode</code></a>(<span class=summary-sig-arg>S</span>,
+          <span class=summary-sig-arg>encoding</span>,
+          <span class=summary-sig-arg>errors</span>)</span></code>
+<br />
+Decodes S using the codec registered for encoding.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#encode" class="summary-sig-name"><code>encode</code></a>(<span class=summary-sig-arg>S</span>,
+          <span class=summary-sig-arg>encoding</span>,
+          <span class=summary-sig-arg>errors</span>)</span></code>
+<br />
+Encodes S using the codec registered for encoding.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#endswith" class="summary-sig-name"><code>endswith</code></a>(<span class=summary-sig-arg>S</span>,
+          <span class=summary-sig-arg>suffix</span>,
+          <span class=summary-sig-arg>start</span>,
+          <span class=summary-sig-arg>end</span>)</span></code>
+<br />
+Return True if S ends with the specified suffix, False otherwise.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#expandtabs" class="summary-sig-name"><code>expandtabs</code></a>(<span class=summary-sig-arg>S</span>,
+          <span class=summary-sig-arg>tabsize</span>)</span></code>
+<br />
+Return a copy of S where all tab characters are expanded using spaces.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#find" class="summary-sig-name"><code>find</code></a>(<span class=summary-sig-arg>S</span>,
+          <span class=summary-sig-arg>sub</span>,
+          <span class=summary-sig-arg>start</span>,
+          <span class=summary-sig-arg>end</span>)</span></code>
+<br />
+Return the lowest index in S where substring sub is found,
+such that sub is contained within s[start,end].</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#index" class="summary-sig-name"><code>index</code></a>(<span class=summary-sig-arg>S</span>,
+          <span class=summary-sig-arg>sub</span>,
+          <span class=summary-sig-arg>start</span>,
+          <span class=summary-sig-arg>end</span>)</span></code>
+<br />
+Like S.find() but raise ValueError when the substring is not found.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#isalnum" class="summary-sig-name"><code>isalnum</code></a>(<span class=summary-sig-arg>S</span>)</span></code>
+<br />
+Return True if all characters in S are alphanumeric
+and there is at least one character in S, False otherwise.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#isalpha" class="summary-sig-name"><code>isalpha</code></a>(<span class=summary-sig-arg>S</span>)</span></code>
+<br />
+Return True if all characters in S are alphabetic
+and there is at least one character in S, False otherwise.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#isdigit" class="summary-sig-name"><code>isdigit</code></a>(<span class=summary-sig-arg>S</span>)</span></code>
+<br />
+Return True if all characters in S are digits
+and there is at least one character in S, False otherwise.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#islower" class="summary-sig-name"><code>islower</code></a>(<span class=summary-sig-arg>S</span>)</span></code>
+<br />
+Return True if all cased characters in S are lowercase and there is
+at least one cased character in S, False otherwise.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#isspace" class="summary-sig-name"><code>isspace</code></a>(<span class=summary-sig-arg>S</span>)</span></code>
+<br />
+Return True if all characters in S are whitespace
+and there is at least one character in S, False otherwise.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#istitle" class="summary-sig-name"><code>istitle</code></a>(<span class=summary-sig-arg>S</span>)</span></code>
+<br />
+Return True if S is a titlecased string and there is at least one
+character in S, i.e.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#isupper" class="summary-sig-name"><code>isupper</code></a>(<span class=summary-sig-arg>S</span>)</span></code>
+<br />
+Return True if all cased characters in S are uppercase and there is
+at least one cased character in S, False otherwise.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#join" class="summary-sig-name"><code>join</code></a>(<span class=summary-sig-arg>S</span>,
+          <span class=summary-sig-arg>sequence</span>)</span></code>
+<br />
+Return a string which is the concatenation of the strings in the
+sequence.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#ljust" class="summary-sig-name"><code>ljust</code></a>(<span class=summary-sig-arg>S</span>,
+          <span class=summary-sig-arg>width</span>,
+          <span class=summary-sig-arg>fillchar</span>)</span></code>
+<br />
+Return S left justified in a string of length width.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#lower" class="summary-sig-name"><code>lower</code></a>(<span class=summary-sig-arg>S</span>)</span></code>
+<br />
+Return a copy of the string S converted to lowercase.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#lstrip" class="summary-sig-name"><code>lstrip</code></a>(<span class=summary-sig-arg>S</span>,
+          <span class=summary-sig-arg>chars</span>)</span></code>
+<br />
+Return a copy of the string S with leading whitespace removed.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#replace" class="summary-sig-name"><code>replace</code></a>(<span class="summary-sig-vararg">...</span>)</span></code>
+<br />
+S.replace (old, new[, count]) -&gt; string
+
+Return a copy of string S with all occurrences of substring
+old replaced by new.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#rfind" class="summary-sig-name"><code>rfind</code></a>(<span class=summary-sig-arg>S</span>,
+          <span class=summary-sig-arg>sub</span>,
+          <span class=summary-sig-arg>start</span>,
+          <span class=summary-sig-arg>end</span>)</span></code>
+<br />
+Return the highest index in S where substring sub is found,
+such that sub is contained within s[start,end].</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#rindex" class="summary-sig-name"><code>rindex</code></a>(<span class=summary-sig-arg>S</span>,
+          <span class=summary-sig-arg>sub</span>,
+          <span class=summary-sig-arg>start</span>,
+          <span class=summary-sig-arg>end</span>)</span></code>
+<br />
+Like S.rfind() but raise ValueError when the substring is not found.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#rjust" class="summary-sig-name"><code>rjust</code></a>(<span class=summary-sig-arg>S</span>,
+          <span class=summary-sig-arg>width</span>,
+          <span class=summary-sig-arg>fillchar</span>)</span></code>
+<br />
+Return S right justified in a string of length width.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#rsplit" class="summary-sig-name"><code>rsplit</code></a>(<span class=summary-sig-arg>S</span>,
+          <span class=summary-sig-arg>sep</span>,
+          <span class=summary-sig-arg>maxsplit</span>)</span></code>
+<br />
+Return a list of the words in the string S, using sep as the
+delimiter string, starting at the end of the string and working
+to the front.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#rstrip" class="summary-sig-name"><code>rstrip</code></a>(<span class=summary-sig-arg>S</span>,
+          <span class=summary-sig-arg>chars</span>)</span></code>
+<br />
+Return a copy of the string S with trailing whitespace removed.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#split" class="summary-sig-name"><code>split</code></a>(<span class=summary-sig-arg>S</span>,
+          <span class=summary-sig-arg>sep</span>,
+          <span class=summary-sig-arg>maxsplit</span>)</span></code>
+<br />
+Return a list of the words in the string S, using sep as the
+delimiter string.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#splitlines" class="summary-sig-name"><code>splitlines</code></a>(<span class=summary-sig-arg>S</span>,
+          <span class=summary-sig-arg>keepends</span>)</span></code>
+<br />
+Return a list of the lines in S, breaking at line boundaries.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#startswith" class="summary-sig-name"><code>startswith</code></a>(<span class=summary-sig-arg>S</span>,
+          <span class=summary-sig-arg>prefix</span>,
+          <span class=summary-sig-arg>start</span>,
+          <span class=summary-sig-arg>end</span>)</span></code>
+<br />
+Return True if S starts with the specified prefix, False otherwise.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#strip" class="summary-sig-name"><code>strip</code></a>(<span class=summary-sig-arg>S</span>,
+          <span class=summary-sig-arg>chars</span>)</span></code>
+<br />
+Return a copy of the string S with leading and trailing
+whitespace removed.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#swapcase" class="summary-sig-name"><code>swapcase</code></a>(<span class=summary-sig-arg>S</span>)</span></code>
+<br />
+Return a copy of the string S with uppercase characters
+converted to lowercase and vice versa.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#title" class="summary-sig-name"><code>title</code></a>(<span class=summary-sig-arg>S</span>)</span></code>
+<br />
+Return a titlecased version of S, i.e.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#translate" class="summary-sig-name"><code>translate</code></a>(<span class=summary-sig-arg>S</span>,
+          <span class=summary-sig-arg>table</span>,
+          <span class=summary-sig-arg>deletechars</span>)</span></code>
+<br />
+Return a copy of the string S, where all characters occurring
+in the optional argument deletechars are removed, and the
+remaining characters have been mapped through the given
+translation table, which must be a string of length 256.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#upper" class="summary-sig-name"><code>upper</code></a>(<span class=summary-sig-arg>S</span>)</span></code>
+<br />
+Return a copy of the string S converted to uppercase.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.str-class.html#zfill" class="summary-sig-name"><code>zfill</code></a>(<span class=summary-sig-arg>S</span>,
+          <span class=summary-sig-arg>width</span>)</span></code>
+<br />
+Pad a numeric string S with zeros on the left, to fill a field
+of the specified width.</td></tr>
+<tr bgcolor="#e8f0f8" class="group">
+  <th colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;Inherited from object</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.object-class.html#__init__" class="summary-sig-name"><code>__init__</code></a>(<span class="summary-sig-vararg">...</span>)</span></code>
+<br />
+x.__init__(...) initializes x; see x.__class__.__doc__ for signature...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.object-class.html#__delattr__" class="summary-sig-name"><code>__delattr__</code></a>(<span class="summary-sig-vararg">...</span>)</span></code>
+<br />
+x.__delattr__('name') &lt;==&gt; del x.name...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.object-class.html#__reduce__" class="summary-sig-name"><code>__reduce__</code></a>(<span class="summary-sig-vararg">...</span>)</span></code>
+<br />
+helper for pickle...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.object-class.html#__reduce_ex__" class="summary-sig-name"><code>__reduce_ex__</code></a>(<span class="summary-sig-vararg">...</span>)</span></code>
+<br />
+helper for pickle...</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.object-class.html#__setattr__" class="summary-sig-name"><code>__setattr__</code></a>(<span class="summary-sig-vararg">...</span>)</span></code>
+<br />
+x.__setattr__('name', value) &lt;==&gt; x.name = value...</td></tr>
+</table><br />
+
+
+<!-- =========== START OF METHOD DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Method Details</th></tr>
+</table>
+
+<a name="__add__"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">__add__</span>(<span class=sig-arg>x</span>,
+          <span class=sig-arg>y</span>)</span>
+    <br /><i>(Addition operator)</i>
+  </h3>
+<pre class="literalblock">
+x.__add__(y) &lt;==&gt; x+y
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+x+y
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="__contains__"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">__contains__</span>(<span class=sig-arg>x</span>,
+          <span class=sig-arg>y</span>)</span>
+    <br /><i>(In operator)</i>
+  </h3>
+<pre class="literalblock">
+x.__contains__(y) &lt;==&gt; y in x
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+y in x
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="__eq__"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">__eq__</span>(<span class=sig-arg>x</span>,
+          <span class=sig-arg>y</span>)</span>
+    <br /><i>(Equality operator)</i>
+  </h3>
+<pre class="literalblock">
+x.__eq__(y) &lt;==&gt; x==y
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+x==y
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="__ge__"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">__ge__</span>(<span class=sig-arg>x</span>,
+          <span class=sig-arg>y</span>)</span>
+    <br /><i>(Greater-than-or-equals operator)</i>
+  </h3>
+<pre class="literalblock">
+x.__ge__(y) &lt;==&gt; x&gt;=y
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+x&gt;=y
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="__getattribute__"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">__getattribute__</span>(<span class="sig-vararg">...</span>)</span>
+  </h3>
+<pre class="literalblock">
+x.__getattribute__('name') &lt;==&gt; x.name
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="__builtin__.object-class.html#__getattribute__"><code>__builtin__.object.__getattribute__</code></a></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="__getitem__"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">__getitem__</span>(<span class=sig-arg>x</span>,
+          <span class=sig-arg>y</span>)</span>
+    <br /><i>(Indexing operator)</i>
+  </h3>
+<pre class="literalblock">
+x.__getitem__(y) &lt;==&gt; x[y]
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+x[y]
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="__getslice__"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">__getslice__</span>(<span class=sig-arg>x</span>,
+          <span class=sig-arg>i</span>,
+          <span class=sig-arg>j</span>)</span>
+    <br /><i>(Slicling operator)</i>
+  </h3>
+<pre class="literalblock">
+Use of negative indices is not supported.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+x[i:j]
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="__gt__"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">__gt__</span>(<span class=sig-arg>x</span>,
+          <span class=sig-arg>y</span>)</span>
+    <br /><i>(Greater-than operator)</i>
+  </h3>
+<pre class="literalblock">
+x.__gt__(y) &lt;==&gt; x&gt;y
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+x&gt;y
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="__hash__"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">__hash__</span>(<span class=sig-arg>x</span>)</span>
+    <br /><i>(Hashing function)</i>
+  </h3>
+<pre class="literalblock">
+x.__hash__() &lt;==&gt; hash(x)
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+hash(x)
+</pre>
+      </dd>
+    </dl>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="__builtin__.object-class.html#__hash__"><code>__builtin__.object.__hash__</code></a></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="__le__"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">__le__</span>(<span class=sig-arg>x</span>,
+          <span class=sig-arg>y</span>)</span>
+    <br /><i>(Less-than-or-equals operator)</i>
+  </h3>
+<pre class="literalblock">
+x.__le__(y) &lt;==&gt; x&lt;=y
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+x&lt;=y
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="__len__"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">__len__</span>(<span class=sig-arg>x</span>)</span>
+    <br /><i>(Length operator)</i>
+  </h3>
+<pre class="literalblock">
+x.__len__() &lt;==&gt; len(x)
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+len(x)
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="__lt__"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">__lt__</span>(<span class=sig-arg>x</span>,
+          <span class=sig-arg>y</span>)</span>
+    <br /><i>(Less-than operator)</i>
+  </h3>
+<pre class="literalblock">
+x.__lt__(y) &lt;==&gt; x&lt;y
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+x&lt;y
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="__mod__"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">__mod__</span>(<span class=sig-arg>x</span>,
+          <span class=sig-arg>y</span>)</span>
+  </h3>
+<pre class="literalblock">
+x.__mod__(y) &lt;==&gt; x%y
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+x%y
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="__mul__"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">__mul__</span>(<span class=sig-arg>x</span>,
+          <span class=sig-arg>n</span>)</span>
+  </h3>
+<pre class="literalblock">
+x.__mul__(n) &lt;==&gt; x*n
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+x*n
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="__ne__"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">__ne__</span>(<span class=sig-arg>x</span>,
+          <span class=sig-arg>y</span>)</span>
+  </h3>
+<pre class="literalblock">
+x.__ne__(y) &lt;==&gt; x!=y
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+x!=y
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="__new__"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">__new__</span>(<span class=sig-arg>T</span>,
+          <span class=sig-arg>S</span>,
+          <span class="sig-vararg">...</span>)</span>
+  </h3>
+<pre class="literalblock">
+T.__new__(S, ...) -&gt; a new object with type S, a subtype of T
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+a new object with type S, a subtype of T
+</pre>
+      </dd>
+    </dl>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="__builtin__.basestring-class.html#__new__"><code>__builtin__.basestring.__new__</code></a></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="__repr__"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">__repr__</span>(<span class=sig-arg>x</span>)</span>
+    <br /><i>(Representation operator)</i>
+  </h3>
+<pre class="literalblock">
+x.__repr__() &lt;==&gt; repr(x)
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+repr(x)
+</pre>
+      </dd>
+    </dl>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="__builtin__.object-class.html#__repr__"><code>__builtin__.object.__repr__</code></a></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="__rmod__"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">__rmod__</span>(<span class=sig-arg>x</span>,
+          <span class=sig-arg>y</span>)</span>
+  </h3>
+<pre class="literalblock">
+x.__rmod__(y) &lt;==&gt; y%x
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+y%x
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="__rmul__"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">__rmul__</span>(<span class=sig-arg>x</span>,
+          <span class=sig-arg>n</span>)</span>
+  </h3>
+<pre class="literalblock">
+x.__rmul__(n) &lt;==&gt; n*x
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+n*x
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="__str__"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">__str__</span>(<span class=sig-arg>x</span>)</span>
+    <br /><i>(Informal representation operator)</i>
+  </h3>
+<pre class="literalblock">
+x.__str__() &lt;==&gt; str(x)
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+str(x)
+</pre>
+      </dd>
+    </dl>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="__builtin__.object-class.html#__str__"><code>__builtin__.object.__str__</code></a></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="capitalize"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">capitalize</span>(<span class=sig-arg>S</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return a copy of the string S with only its first character
+capitalized.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+string
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="center"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">center</span>(<span class=sig-arg>S</span>,
+          <span class=sig-arg>width</span>,
+          <span class=sig-arg>fillchar</span>=<span class=sig-default>...</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return S centered in a string of length width. Padding is
+done using the specified fill character (default is a space)
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+string
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="count"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">count</span>(<span class=sig-arg>S</span>,
+          <span class=sig-arg>sub</span>,
+          <span class=sig-arg>start</span>=<span class=sig-default>...</span>,
+          <span class=sig-arg>end</span>=<span class=sig-default>...</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return the number of occurrences of substring sub in string
+S[start:end].  Optional arguments start and end are
+interpreted as in slice notation.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+int
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="decode"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">decode</span>(<span class=sig-arg>S</span>,
+          <span class=sig-arg>encoding</span>=<span class=sig-default>...</span>,
+          <span class=sig-arg>errors</span>=<span class=sig-default>...</span>)</span>
+  </h3>
+<pre class="literalblock">
+Decodes S using the codec registered for encoding. encoding defaults
+to the default encoding. errors may be given to set a different error
+handling scheme. Default is 'strict' meaning that encoding errors raise
+a UnicodeDecodeError. Other possible values are 'ignore' and 'replace'
+as well as any other name registerd with codecs.register_error that is
+able to handle UnicodeDecodeErrors.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+object
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="encode"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">encode</span>(<span class=sig-arg>S</span>,
+          <span class=sig-arg>encoding</span>=<span class=sig-default>...</span>,
+          <span class=sig-arg>errors</span>=<span class=sig-default>...</span>)</span>
+  </h3>
+<pre class="literalblock">
+Encodes S using the codec registered for encoding. encoding defaults
+to the default encoding. errors may be given to set a different error
+handling scheme. Default is 'strict' meaning that encoding errors raise
+a UnicodeEncodeError. Other possible values are 'ignore', 'replace' and
+'xmlcharrefreplace' as well as any other name registered with
+codecs.register_error that is able to handle UnicodeEncodeErrors.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+object
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="endswith"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">endswith</span>(<span class=sig-arg>S</span>,
+          <span class=sig-arg>suffix</span>,
+          <span class=sig-arg>start</span>=<span class=sig-default>...</span>,
+          <span class=sig-arg>end</span>=<span class=sig-default>...</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return True if S ends with the specified suffix, False otherwise.
+With optional start, test S beginning at that position.
+With optional end, stop comparing S at that position.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+bool
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="expandtabs"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">expandtabs</span>(<span class=sig-arg>S</span>,
+          <span class=sig-arg>tabsize</span>=<span class=sig-default>...</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return a copy of S where all tab characters are expanded using spaces.
+If tabsize is not given, a tab size of 8 characters is assumed.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+string
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="find"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">find</span>(<span class=sig-arg>S</span>,
+          <span class=sig-arg>sub</span>,
+          <span class=sig-arg>start</span>=<span class=sig-default>...&nbsp;</span>,
+          <span class=sig-arg>end</span>=<span class=sig-default>...</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return the lowest index in S where substring sub is found,
+such that sub is contained within s[start,end].  Optional
+arguments start and end are interpreted as in slice notation.
+
+Return -1 on failure.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+int
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="index"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">index</span>(<span class=sig-arg>S</span>,
+          <span class=sig-arg>sub</span>,
+          <span class=sig-arg>start</span>=<span class=sig-default>...&nbsp;</span>,
+          <span class=sig-arg>end</span>=<span class=sig-default>...</span>)</span>
+  </h3>
+<pre class="literalblock">
+Like S.find() but raise ValueError when the substring is not found.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+int
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="isalnum"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">isalnum</span>(<span class=sig-arg>S</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return True if all characters in S are alphanumeric
+and there is at least one character in S, False otherwise.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+bool
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="isalpha"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">isalpha</span>(<span class=sig-arg>S</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return True if all characters in S are alphabetic
+and there is at least one character in S, False otherwise.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+bool
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="isdigit"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">isdigit</span>(<span class=sig-arg>S</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return True if all characters in S are digits
+and there is at least one character in S, False otherwise.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+bool
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="islower"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">islower</span>(<span class=sig-arg>S</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return True if all cased characters in S are lowercase and there is
+at least one cased character in S, False otherwise.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+bool
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="isspace"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">isspace</span>(<span class=sig-arg>S</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return True if all characters in S are whitespace
+and there is at least one character in S, False otherwise.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+bool
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="istitle"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">istitle</span>(<span class=sig-arg>S</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return True if S is a titlecased string and there is at least one
+character in S, i.e. uppercase characters may only follow uncased
+characters and lowercase characters only cased ones. Return False
+otherwise.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+bool
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="isupper"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">isupper</span>(<span class=sig-arg>S</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return True if all cased characters in S are uppercase and there is
+at least one cased character in S, False otherwise.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+bool
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="join"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">join</span>(<span class=sig-arg>S</span>,
+          <span class=sig-arg>sequence</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return a string which is the concatenation of the strings in the
+sequence.  The separator between elements is S.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+string
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="ljust"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">ljust</span>(<span class=sig-arg>S</span>,
+          <span class=sig-arg>width</span>,
+          <span class=sig-arg>fillchar</span>=<span class=sig-default>...</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return S left justified in a string of length width. Padding is
+done using the specified fill character (default is a space).
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+string
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="lower"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">lower</span>(<span class=sig-arg>S</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return a copy of the string S converted to lowercase.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+string
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="lstrip"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">lstrip</span>(<span class=sig-arg>S</span>,
+          <span class=sig-arg>chars</span>=<span class=sig-default>...</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return a copy of the string S with leading whitespace removed.
+If chars is given and not None, remove characters in chars instead.
+If chars is unicode, S will be converted to unicode before stripping
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+string or unicode
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="replace"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">replace</span>(<span class="sig-vararg">...</span>)</span>
+  </h3>
+<pre class="literalblock">
+S.replace (old, new[, count]) -&gt; string
+
+Return a copy of string S with all occurrences of substring
+old replaced by new.  If the optional argument count is
+given, only the first count occurrences are replaced.
+</pre>
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="rfind"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">rfind</span>(<span class=sig-arg>S</span>,
+          <span class=sig-arg>sub</span>,
+          <span class=sig-arg>start</span>=<span class=sig-default>...&nbsp;</span>,
+          <span class=sig-arg>end</span>=<span class=sig-default>...</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return the highest index in S where substring sub is found,
+such that sub is contained within s[start,end].  Optional
+arguments start and end are interpreted as in slice notation.
+
+Return -1 on failure.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+int
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="rindex"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">rindex</span>(<span class=sig-arg>S</span>,
+          <span class=sig-arg>sub</span>,
+          <span class=sig-arg>start</span>=<span class=sig-default>...&nbsp;</span>,
+          <span class=sig-arg>end</span>=<span class=sig-default>...</span>)</span>
+  </h3>
+<pre class="literalblock">
+Like S.rfind() but raise ValueError when the substring is not found.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+int
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="rjust"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">rjust</span>(<span class=sig-arg>S</span>,
+          <span class=sig-arg>width</span>,
+          <span class=sig-arg>fillchar</span>=<span class=sig-default>...</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return S right justified in a string of length width. Padding is
+done using the specified fill character (default is a space)
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+string
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="rsplit"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">rsplit</span>(<span class=sig-arg>S</span>,
+          <span class=sig-arg>sep</span>=<span class=sig-default>...&nbsp;</span>,
+          <span class=sig-arg>maxsplit</span>=<span class=sig-default>...</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return a list of the words in the string S, using sep as the
+delimiter string, starting at the end of the string and working
+to the front.  If maxsplit is given, at most maxsplit splits are
+done. If sep is not specified or is None, any whitespace string
+is a separator.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+list of strings
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="rstrip"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">rstrip</span>(<span class=sig-arg>S</span>,
+          <span class=sig-arg>chars</span>=<span class=sig-default>...</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return a copy of the string S with trailing whitespace removed.
+If chars is given and not None, remove characters in chars instead.
+If chars is unicode, S will be converted to unicode before stripping
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+string or unicode
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="split"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">split</span>(<span class=sig-arg>S</span>,
+          <span class=sig-arg>sep</span>=<span class=sig-default>...&nbsp;</span>,
+          <span class=sig-arg>maxsplit</span>=<span class=sig-default>...</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return a list of the words in the string S, using sep as the
+delimiter string.  If maxsplit is given, at most maxsplit
+splits are done. If sep is not specified or is None, any
+whitespace string is a separator.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+list of strings
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="splitlines"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">splitlines</span>(<span class=sig-arg>S</span>,
+          <span class=sig-arg>keepends</span>=<span class=sig-default>...</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return a list of the lines in S, breaking at line boundaries.
+Line breaks are not included in the resulting list unless keepends
+is given and true.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+list of strings
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="startswith"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">startswith</span>(<span class=sig-arg>S</span>,
+          <span class=sig-arg>prefix</span>,
+          <span class=sig-arg>start</span>=<span class=sig-default>...</span>,
+          <span class=sig-arg>end</span>=<span class=sig-default>...</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return True if S starts with the specified prefix, False otherwise.
+With optional start, test S beginning at that position.
+With optional end, stop comparing S at that position.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+bool
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="strip"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">strip</span>(<span class=sig-arg>S</span>,
+          <span class=sig-arg>chars</span>=<span class=sig-default>...</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return a copy of the string S with leading and trailing
+whitespace removed.
+If chars is given and not None, remove characters in chars instead.
+If chars is unicode, S will be converted to unicode before stripping
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+string or unicode
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="swapcase"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">swapcase</span>(<span class=sig-arg>S</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return a copy of the string S with uppercase characters
+converted to lowercase and vice versa.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+string
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="title"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">title</span>(<span class=sig-arg>S</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return a titlecased version of S, i.e. words start with uppercase
+characters, all remaining cased characters have lowercase.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+string
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="translate"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">translate</span>(<span class=sig-arg>S</span>,
+          <span class=sig-arg>table</span>,
+          <span class=sig-arg>deletechars</span>=<span class=sig-default>...</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return a copy of the string S, where all characters occurring
+in the optional argument deletechars are removed, and the
+remaining characters have been mapped through the given
+translation table, which must be a string of length 256.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+string
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="upper"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">upper</span>(<span class=sig-arg>S</span>)</span>
+  </h3>
+<pre class="literalblock">
+Return a copy of the string S converted to uppercase.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+string
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="zfill"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">zfill</span>(<span class=sig-arg>S</span>,
+          <span class=sig-arg>width</span>)</span>
+  </h3>
+<pre class="literalblock">
+Pad a numeric string S with zeros on the left, to fill a field
+of the specified width.  The string S is never truncated.
+</pre>
+  <dl><dt></dt><dd>
+    <dl><dt><b>Returns:</b></dt>
+      <dd>
+<pre class="literalblock">
+string
+</pre>
+      </dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+<br />
+
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="weblogolib-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          <a class="navbar" target="_top" href="http://code.google.com/p/weblogo/">WebLogo</a>
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td align="left"><font size="-2">Generated by Epydoc 2.1 on </font></td>
+    <td align="right"><a href="http://epydoc.sourceforge.net"
+                      ><font size="-2">http://epydoc.sf.net</font></a></td>
+  </tr>
+</table>
+</body>
+</html>
