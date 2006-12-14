@@ -7,6 +7,9 @@ from distutils.core import Extension
 from distutils.command.build import build
 from distutils.command.install_data import install_data
 
+# Supress warning that distutils generates for the install_requires option
+import warnings
+warnings.simplefilter('ignore', UserWarning, lineno =236)
 
 # check dependancies
 if not hasattr(sys, 'version_info') or sys.version_info < (2,3,0,'final'):
@@ -43,7 +46,7 @@ def main() :
         
         scripts = [ 'weblogo', ],
         packages  = [ 'weblogolib',],
-        data_files = ['weblogolib/htdocs/*.*',],
+        data_files = ['weblogolib/htdocs/*.*','weblogolib/template.eps'],
         install_requires=['numpy', 'corebio'],        
         
         cmdclass= {"install_data" : _install_data},

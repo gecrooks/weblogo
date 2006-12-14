@@ -152,6 +152,9 @@ The type of biological molecule.
 </li>
 </ul>
 
+<h4>Ignore lower case</h4>
+Disregard lower case letters in the and only count
+upper case letters in sequences?
 
 <h4>Units</h4>
 The units used for the y-axis. 
@@ -186,7 +189,8 @@ Secondly, the background composition is used in the small sample correction of i
 Behind the scenes, things are more complex. We do a full Bayesian calculation, starting with explicit Dirichlet priors based on the background composition, to which we add the data and then calculate both the posterior mean relative entropy (the stack height) and Bayesian 95% confidence intervals for error bars. These interesting details will be explained elsewhere.
 </p> 
 
-
+<h4>Scale stack width</h4>
+Scale the visible stack width by the fraction of symbols in the column?  (i.e. columns with many gaps or unknown residues are narrow.)
 
 <h4>Error bars</h4>
 Display error bars. These indicate an approximate, Bayesian 95% confidence   interval.
@@ -362,7 +366,10 @@ The cgi script also has to be able to find the '<code>gs</code>' ghostscript exe
 <pre>
 SetEnv COREBIOPATH /path/to/gs
 </pre>
-
+The maxium bytes of uploaded sequecne data can be controlled with the <code>WEBLOGO_MAX_FILE_SIZE</code> environment variable.
+<pre>
+SetEnv WEBLOGO_MAX_FILE_SIZE 1000000
+</pre>
      
 
 
@@ -398,13 +405,14 @@ options:
                                 neither the alphabet nor sequence-type are
                                 specified then weblogo will examine the input
                                 data and make an educated guess. See also
-                                --sequence-type, --cased
+                                --sequence-type, --ignore-lower-case
        --ignore-lower-case YES/NO
                                 Disregard lower case letters and only count
-                                upper case letters in sequences?
-    -U --units NUMBER           A unit of entropy ('bits' (default), 'nats'),
-                                or a unit of free energy ('kT', 'kJ/mol',
-                                'kcal/mol'), or 'frequency' for probabilities
+                                upper case letters in sequences? (Default: No)
+    -U --units NUMBER           A unit of entropy ('bits' (default), 'nats',
+                                'digits'), or a unit of free energy ('kT',
+                                'kJ/mol', 'kcal/mol'), or 'probability' for
+                                probabilities
        --composition COMP.      The expected composition of the sequences:
                                 'auto' (default), 'equiprobable', 'none' (Do
                                 not perform any compositional adjustment), a
@@ -479,8 +487,7 @@ options:
 
        --serve                  Start a standalone WebLogo server for creating
                                 sequence logos.
-       --port PORT              Listen to this local port. (Default: 8080)</pre>                              
-
+       --port PORT              Listen to this local port. (Default: 8080)
 
 <!-- ===================================================================== -->
 <a name="API" ></a>

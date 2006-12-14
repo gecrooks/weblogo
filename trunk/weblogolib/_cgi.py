@@ -152,7 +152,6 @@ def float_or_none(value) :
 
 def main(htdocs_directory = None) :
  
-    # name, value, options, callback? 
     logooptions = weblogolib.LogoOptions() 
     
     # A list of form fields.
@@ -189,7 +188,7 @@ def main(htdocs_directory = None) :
         Field( 'logo_label', logooptions.logo_label ),
         Field( 'show_xaxis', False, truth),
         Field( 'xaxis_label', logooptions.xaxis_label ),
-        Field( 'show_yaxis', False, truth),     #TODO: CHECK
+        Field( 'show_yaxis', False, truth),  
         Field( 'yaxis_label', logooptions.yaxis_label, string_or_none ),
         Field( 'yaxis_scale', logooptions.yaxis_scale , float_or_none,
             errmsg="The yaxis scale must be a positive number." ),
@@ -215,6 +214,8 @@ def main(htdocs_directory = None) :
         Field( 'color4', ''),
         Field( 'symbols4', ''),
         Field( 'desc4', ''),
+        Field( 'ignore_lower_case', False, truth), 
+        Field( 'scale_width', False, truth), 
         ]
     
     form = {}
@@ -232,10 +233,10 @@ def main(htdocs_directory = None) :
         form['show_yaxis'].value = logooptions.show_yaxis
         form['show_ends'].value = logooptions.show_ends
         form['show_fineprint'].value = logooptions.show_fineprint
+        form['scale_width'].value = logooptions.scale_width
         
         send_form(controls, htdocs_directory = htdocs_directory) 
         return
-
     
     # Get form content
     for c in controls :
@@ -248,7 +249,7 @@ def main(htdocs_directory = None) :
         'show_errorbars', 'logo_title', 'logo_label', 'show_xaxis', 
         'xaxis_label',
         'show_yaxis', 'yaxis_label', 'yaxis_scale', 'yaxis_tic_interval',
-        'show_ends', 'show_fineprint']
+        'show_ends', 'show_fineprint', 'scale_width']
     
     errors = []
     for optname in options_from_form :
@@ -314,18 +315,23 @@ def main(htdocs_directory = None) :
     try :
         comp = form["composition"].get_value()
         percentCG = form["percentCG"].get_value()
+        ignore_lower_case = form_values.has_key("ignore_lower_case") 
         seqs = weblogolib.read_seq_data(StringIO( sequences), 
-                                        alphabet=logooptions.alphabet)
+                                        alphabet=logooptions.alphabet,
+                                        ignore_lower_case=ignore_lower_case
+                                        )
         if comp=='percentCG': comp = str(percentCG/100)
         prior = weblogolib.parse_prior(comp, seqs.alphabet)
         data = weblogolib.LogoData.from_seqs(seqs, prior) 
         logoformat =  weblogolib.LogoFormat(data, logooptions)
         format = form["format"].value
         weblogolib.formatters[format](data, logoformat, logo)            
-    except ValueError, e :
-        errors.append( e.args )
-    except RuntimeError, e :
-        errors.append( e.args )
+    except ValueError, err :
+        errors.append( err.args )
+    except IOError, err :
+        errors.append( err.args)
+    except RuntimeError, err :
+        errors.append( err.args )
               
     if form_values.has_key("cmd_validate") or errors :
         send_form(controls, errors, htdocs_directory) 

@@ -168,7 +168,7 @@ Generate a logo in PNG format with print quality (600 DPI) resolution.</td></tr>
   <td><code><a name="read_seq_data"></a><span class="summary-sig"><span class="summary-sig-name">read_seq_data</span>(<span class=summary-sig-arg>fin</span>,
           <span class=summary-sig-arg>input_parser</span>,
           <span class=summary-sig-arg>alphabet</span>,
-          <span class=summary-sig-arg>cased</span>,
+          <span class=summary-sig-arg>ignore_lower_case</span>,
           <span class=summary-sig-arg>max_file_size</span>)</span></code>
 </td></tr>
 <tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
@@ -193,16 +193,16 @@ for a Seq or SeqList.</td></tr>
 <td><b><a href="weblogolib-module.html#__version__"><code>__version__</code></a></b> = <span title="'3.0b12'"><code><span class="variable-quote">'</span>3.0b12<span class="variable-quote">'</span>                                   </code>
 </span></td></tr>
 <tr><td align="right" valign="top" width="15%"><font size="-1"><code>ColorScheme</code></font></td>
-<td><b><a href="weblogolib-module.html#classic"><code>classic</code></a></b> = <span title="&lt;weblogolib.colorscheme.ColorScheme object at 0x13957b0&gt;"><code>&lt;weblogolib.colorscheme.ColorScheme&nbsp;object&nbsp;at&nbsp;<span class="variable-ellipsis">...</span></code>
+<td><b><a href="weblogolib-module.html#classic"><code>classic</code></a></b> = <span title="&lt;weblogolib.colorscheme.ColorScheme object at 0x138f790&gt;"><code>&lt;weblogolib.colorscheme.ColorScheme&nbsp;object&nbsp;at&nbsp;<span class="variable-ellipsis">...</span></code>
 </span></td></tr>
 <tr><td align="right" valign="top" width="15%"><font size="-1"><code>dict</code></font></td>
-<td><b><a href="weblogolib-module.html#default_color_schemes"><code>default_color_schemes</code></a></b> = <span title="{Alphabet( 'ACDEFGHIKLMNPQRSTVWY', zip('acdefghiklmnpqrstvwy', 'ACDEFGHIKLMNPQRSTVWY') ): &lt;weblogolib.colorscheme.ColorScheme object at 0x1356470&gt;, Alphabet( 'ACGU', zip('acgu', 'ACGU') ): &lt;weblogolib.colorscheme.ColorScheme object at 0x13563f0&gt;, Alphabet( 'ACGT', zip('acgt', 'ACGT') ): &lt;weblogolib.colorscheme.ColorScheme object at 0x13563f0&gt;}"><code>{Alphabet(&nbsp;'ACDEFGHIKLMNPQRSTVWY<span class="variable-ellipsis">...</span></code>
+<td><b><a href="weblogolib-module.html#default_color_schemes"><code>default_color_schemes</code></a></b> = <span title="{Alphabet( 'ACDEFGHIKLMNPQRSTVWY', zip('acdefghiklmnpqrstvwy', 'ACDEFGHIKLMNPQRSTVWY') ): &lt;weblogolib.colorscheme.ColorScheme object at 0x1356450&gt;, Alphabet( 'ACGU', zip('acgu', 'ACGU') ): &lt;weblogolib.colorscheme.ColorScheme object at 0x13563d0&gt;, Alphabet( 'ACGT', zip('acgt', 'ACGT') ): &lt;weblogolib.colorscheme.ColorScheme object at 0x13563d0&gt;}"><code>{Alphabet(&nbsp;'ACDEFGHIKLMNPQRSTVWY<span class="variable-ellipsis">...</span></code>
 </span></td></tr>
 <tr><td align="right" valign="top" width="15%"><font size="-1"><code>str</code></font></td>
 <td><b><a href="weblogolib-module.html#description"><code>description</code></a></b> = <span title="'Create sequence logos from biological sequence alignments.'"><code><span class="variable-quote">'</span>Create&nbsp;sequence&nbsp;logos&nbsp;from&nbsp;biological&nbsp;seq<span class="variable-ellipsis">...</span></code>
 </span></td></tr>
 <tr><td align="right" valign="top" width="15%"><font size="-1"><code>dict</code></font></td>
-<td><b><a href="weblogolib-module.html#formatters"><code>formatters</code></a></b> = <span title="{'eps': &lt;function eps_formatter at 0x1397c30&gt;, 'jpeg': &lt;function jpeg_formatter at 0x1397b30&gt;, 'pdf': &lt;function pdf_formatter at 0x13979f0&gt;, 'txt': &lt;function txt_formatter at 0x1397bf0&gt;, 'png_print': &lt;function png_print_formatter at 0x1397bb0&gt;, 'png': &lt;function png_formatter at 0x1397b70&gt;}"><code>{'eps':&nbsp;&lt;function&nbsp;eps_formatter&nbsp;at&nbsp;0x1397c3<span class="variable-ellipsis">...</span></code>
+<td><b><a href="weblogolib-module.html#formatters"><code>formatters</code></a></b> = <span title="{'eps': &lt;function eps_formatter at 0x1391c30&gt;, 'jpeg': &lt;function jpeg_formatter at 0x1391b30&gt;, 'pdf': &lt;function pdf_formatter at 0x13919f0&gt;, 'txt': &lt;function txt_formatter at 0x1391bf0&gt;, 'png_print': &lt;function png_print_formatter at 0x1391bb0&gt;, 'png': &lt;function png_formatter at 0x1391b70&gt;}"><code>{'eps':&nbsp;&lt;function&nbsp;eps_formatter&nbsp;at&nbsp;0x1391c3<span class="variable-ellipsis">...</span></code>
 </span></td></tr>
 <tr><td align="right" valign="top" width="15%"><font size="-1"><code>dict</code></font></td>
 <td><b><a href="weblogolib-module.html#std_alphabets"><code>std_alphabets</code></a></b> = <span title="{'protein': Alphabet( 'ACDEFGHIKLMNPQRSTVWY', zip('acdefghiklmnpqrstvwy', 'ACDEFGHIKLMNPQRSTVWY') ), 'dna': Alphabet( 'ACGT', zip('acgt', 'ACGT') ), 'rna': Alphabet( 'ACGU', zip('acgu', 'ACGU') )}"><code>{'protein':&nbsp;Alphabet(&nbsp;'ACDEFGHIKLMNPQRST<span class="variable-ellipsis">...</span></code>
@@ -376,10 +376,10 @@ for a Seq or SeqList.
           <code>ColorScheme</code>
 
       </dd>
-<span title="&lt;weblogolib.colorscheme.ColorScheme object at 0x13957b0&gt;">      <dt><b>Value:</b></dt>
+<span title="&lt;weblogolib.colorscheme.ColorScheme object at 0x138f790&gt;">      <dt><b>Value:</b></dt>
       <dd><table><tr><td>
 <pre class="variable">
-&lt;weblogolib.colorscheme.ColorScheme object at 0x13957b0&gt;               </pre>
+&lt;weblogolib.colorscheme.ColorScheme object at 0x138f790&gt;               </pre>
         </td></tr></table></dd>
 </span>    </dl>
   </dd>
@@ -396,16 +396,16 @@ for a Seq or SeqList.
           <code>dict</code>
 
       </dd>
-<span title="{Alphabet( 'ACDEFGHIKLMNPQRSTVWY', zip('acdefghiklmnpqrstvwy', 'ACDEFGHIKLMNPQRSTVWY') ): &lt;weblogolib.colorscheme.ColorScheme object at 0x1356470&gt;, Alphabet( 'ACGU', zip('acgu', 'ACGU') ): &lt;weblogolib.colorscheme.ColorScheme object at 0x13563f0&gt;, Alphabet( 'ACGT', zip('acgt', 'ACGT') ): &lt;weblogolib.colorscheme.ColorScheme object at 0x13563f0&gt;}">      <dt><b>Value:</b></dt>
+<span title="{Alphabet( 'ACDEFGHIKLMNPQRSTVWY', zip('acdefghiklmnpqrstvwy', 'ACDEFGHIKLMNPQRSTVWY') ): &lt;weblogolib.colorscheme.ColorScheme object at 0x1356450&gt;, Alphabet( 'ACGU', zip('acgu', 'ACGU') ): &lt;weblogolib.colorscheme.ColorScheme object at 0x13563d0&gt;, Alphabet( 'ACGT', zip('acgt', 'ACGT') ): &lt;weblogolib.colorscheme.ColorScheme object at 0x13563d0&gt;}">      <dt><b>Value:</b></dt>
       <dd><table><tr><td>
 <pre class="variable">
 {Alphabet( 'ACGT', zip('acgt', 'ACGT') ): &lt;weblogolib.colorscheme.Colo<span class="variable-linewrap">\</span>
-rScheme object at 0x13563f0&gt;,
+rScheme object at 0x13563d0&gt;,
  Alphabet( 'ACGU', zip('acgu', 'ACGU') ): &lt;weblogolib.colorscheme.Colo<span class="variable-linewrap">\</span>
-rScheme object at 0x13563f0&gt;,
+rScheme object at 0x13563d0&gt;,
  Alphabet( 'ACDEFGHIKLMNPQRSTVWY', zip('acdefghiklmnpqrstvwy', 'ACDEFG<span class="variable-linewrap">\</span>
 HIKLMNPQRSTVWY') ): &lt;weblogolib.colorscheme.ColorScheme object at 0x13<span class="variable-linewrap">\</span>
-56470&gt;}                                                                </pre>
+56450&gt;}                                                                </pre>
         </td></tr></table></dd>
 </span>    </dl>
   </dd>
@@ -442,15 +442,15 @@ HIKLMNPQRSTVWY') ): &lt;weblogolib.colorscheme.ColorScheme object at 0x13<span c
           <code>dict</code>
 
       </dd>
-<span title="{'eps': &lt;function eps_formatter at 0x1397c30&gt;, 'jpeg': &lt;function jpeg_formatter at 0x1397b30&gt;, 'pdf': &lt;function pdf_formatter at 0x13979f0&gt;, 'txt': &lt;function txt_formatter at 0x1397bf0&gt;, 'png_print': &lt;function png_print_formatter at 0x1397bb0&gt;, 'png': &lt;function png_formatter at 0x1397b70&gt;}">      <dt><b>Value:</b></dt>
+<span title="{'eps': &lt;function eps_formatter at 0x1391c30&gt;, 'jpeg': &lt;function jpeg_formatter at 0x1391b30&gt;, 'pdf': &lt;function pdf_formatter at 0x13919f0&gt;, 'txt': &lt;function txt_formatter at 0x1391bf0&gt;, 'png_print': &lt;function png_print_formatter at 0x1391bb0&gt;, 'png': &lt;function png_formatter at 0x1391b70&gt;}">      <dt><b>Value:</b></dt>
       <dd><table><tr><td>
 <pre class="variable">
-{'eps': &lt;function eps_formatter at 0x1397c30&gt;,
- 'jpeg': &lt;function jpeg_formatter at 0x1397b30&gt;,
- 'pdf': &lt;function pdf_formatter at 0x13979f0&gt;,
- 'png': &lt;function png_formatter at 0x1397b70&gt;,
- 'png_print': &lt;function png_print_formatter at 0x1397bb0&gt;,
- 'txt': &lt;function txt_formatter at 0x1397bf0&gt;}                         </pre>
+{'eps': &lt;function eps_formatter at 0x1391c30&gt;,
+ 'jpeg': &lt;function jpeg_formatter at 0x1391b30&gt;,
+ 'pdf': &lt;function pdf_formatter at 0x13919f0&gt;,
+ 'png': &lt;function png_formatter at 0x1391b70&gt;,
+ 'png_print': &lt;function png_print_formatter at 0x1391bb0&gt;,
+ 'txt': &lt;function txt_formatter at 0x1391bf0&gt;}                         </pre>
         </td></tr></table></dd>
 </span>    </dl>
   </dd>

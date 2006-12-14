@@ -15,22 +15,31 @@ wc -l *.py weblogolib/*.py | grep 'total'
 
 echo 
 echo "## Code Tags" 
-grep 'FIXME\|TODO' *.* weblogolib/*.* weblogolib/weblogo_htdocs/*.* 
+grep 'FIXME\|TODO' *.py weblogolib/*.* weblogolib/htdocs/*.* 
 
 
-
+echo
 echo "# Cleaning previous "
 rm -rd dist/_extract_/
 
 
 echo 
-echo "## Build API docs :" 
+echo "## Rebuild API docs :" 
 epydoc -q -o apidocs/ -n WebLogo -u http://code.google.com/p/weblogo/ --docformat plaintext --no-frames --no-private weblogolib    || exit
 
+echo 
+echo "## Rebuild examples :" 
+cd weblogolib/htdocs/examples
+sh build_examples.sh
+cd ../../..     ls
 
 
 echo
 echo "## PYTHON 2.4 ##"
+echo "## CoreBio version"
+python2.4 -c 'import corebio; print corebio.__version__'
+
+echo
 echo "## Build source distribution :"
 python2.4 setup.py -q sdist                                     || exit
 
@@ -57,6 +66,11 @@ echo
 echo "## Clean up..."
 cd ../../..
 rm -rd dist/_extract_/                                          || exit
+
+echo
+echo "## Run build test  :"
+sh build_test.sh                                                || exit 
+
 
 echo "## Success"
 

@@ -69,7 +69,6 @@ Sequence data
 </td><td align="right">
 <input  style="font-size:large" type="submit" name="cmd_create" value="&nbsp;Create&nbsp;Logo&nbsp;&nbsp;&nbsp;&nbsp;"  > <br>
 <span style="font-size:small"><input type="checkbox" name="download" value="false" >Download</span>
-
 </td></tr>
      
 
@@ -82,6 +81,7 @@ ${error_message} &nbsp;
 </td></tr>
 <tr><td>&nbsp;</td></tr>
 -->
+
 <tr><td colspan='2' style="height:30pt;border-left-width:90pt;" class="err_msg">
 ${error_message}
 </td></tr>
@@ -130,6 +130,13 @@ Sequence type </td><td>
 </td></tr>
 
 <tr><td>
+Ignore lower case
+</td><td>
+<input type="checkbox" name="ignore_lower_case" value="true" ${ignore_lower_case} > 
+</td></tr>
+
+
+<tr><td>
 Units </td><td>
 <select name="unit_name"  >
 <option ${probability} >probability</option>
@@ -174,6 +181,11 @@ or
 <input type="text" name="percentCG" value="${percentCG}" size="4" maxlength="8"   >  % CG
 </td></tr>
 
+<tr><td>
+Scale stack widths
+</td><td>
+<input type="checkbox" name="scale_width" value="true" ${scale_width} > 
+</td></tr>
 
 <tr><td>
 Error bars
@@ -226,6 +238,7 @@ Y-axis tic spacing:
 </td><td>
 <input type="text" name="yaxis_tic_interval" value="${yaxis_tic_interval}"  size="4" maxlength="100"  > 
 </td></tr>
+
 
 
 <tr><td>
