@@ -1,0 +1,67 @@
+
+/*
+   Logo Cascading Style Sheet
+*/
+
+body {
+  font-family: sans-serif;
+  color: black;
+  background: white;
+}
+a:link { color: #369; background: transparent }
+a:visited { color: #066; background: transparent }
+a:active { color: #C00; background: transparent }
+
+a.selected:visited { 
+  color: #000;
+  background: #EEE;
+  text-decoration: none;
+}
+
+li {margin-bottom: 0.5em}
+
+
+th, td { /* ns 4 */
+  font-family: sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 { text-align: left }
+h1  { color: #900 }
+h1 { text-align: left }
+h1 { font: 170% sans-serif}
+h2 { font: bold 140% sans-serif }
+h3 { font: bold 120% sans-serif }
+h4 { font: bold 100% sans-serif }
+h5 { font: italic 100% sans-serif }
+h6 { font: small-caps 100% sans-serif }
+
+h2 { margin-top: 2em}
+h4 { margin-bottom: 0.2em}
+
+.discourse {
+    font-size: small
+    }
+
+
+p {text-align: justify; margin-top: 0em}
+p.copyright { font-size: small; text-align: center }
+
+pre { margin-left: 2em ; }
+
+dt, dd { margin-top: 0; margin-bottom: 0 } /* opera 3.50 */
+dt { font-weight: bold }
+
+/* navigator 4 requires this */
+pre, code { 
+            font-family: monospace ; 
+          
+} 
+
+
+
+
+
+
+
+
+

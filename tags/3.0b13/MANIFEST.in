@@ -1,0 +1,7 @@
+include LICENSE.txt README.txt  
+recursive-include weblogolib/htdocs/ *.html *.cgi *.*
+include weblogolib/template.eps
+recursive-include tests/data/ *.*
+include test_weblogo.py
+include build_test.sh
+include cap.fa
