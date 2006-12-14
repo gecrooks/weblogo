@@ -17,7 +17,6 @@ New and improved feature include:
 * The size of logo stacks is consistent (Does not change with sequence length.)
 * The width of the characters in a stack are scaled by the fraction of non-gaps.
   Therefore gappy columns are visually less important than columns with gaps.
-  (Experimental feature.)
 * Three standard logo sizes.
 * Can now read many multiple sequence alignment formats, including
   CLUSTALW, FASTA, plain flatfile, MSF, NBRF, PIR, NEXUS and PHYLIP.
@@ -36,10 +35,11 @@ New and improved feature include:
 * Compositional adjustment.
 
 * Includes contributions from Clare Gollnick, David Ding, John Gilman.
-* Incorporates bug fixes and feedback from John Reid, ...
+* Incorporates bug fixes and feedback from John Reid, Gordon Robertson, 
+  Eric Odell ...
 * Incorporates or adapts ideas and code from Gary Hon, Steven Brenner,      
      John-Marc Chandonia, Liana Lareau, Ed Green, James Casbon, Jeffrey Chang,
-     Frank Kauff, Cymon J. Cox ...
+     Frank Kauff, Cymon J. Cox,  ...
 
 
 
