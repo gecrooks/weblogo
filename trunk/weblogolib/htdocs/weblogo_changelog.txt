@@ -11,7 +11,7 @@ New and improved feature include:
 
 * Simplified GUI. More useful options, less obscure options that are rarely
   used.
-* Several choices of unit including bits and nats, and corresponding energy 	
+* Several choices of unit including bits and nats, and corresponding energy 
   measures such as kJ/mol.
 * Error bars are smaller and more discrete.
 * The size of logo stacks is consistent (Does not change with sequence length.)
