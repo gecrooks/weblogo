@@ -200,7 +200,8 @@ class GhostscriptAPI(object) :
         args = [self.command, 
             "-sDEVICE=%s" % device, 
             "-dPDFSETTINGS=/printer",
-            "-q",   # Quite: Do not dump messages to stdout.
+            #"-q",   # Quite: Do not dump messages to stdout.
+            "-sstdout=%stderr", # Redirect messages and errors to stderr
             "-sOutputFile=-", # Stdout
             "-dDEVICEWIDTHPOINTS=%s" % str(width),  
             "-dDEVICEHEIGHTPOINTS=%s" % str(height),  
@@ -221,12 +222,15 @@ class GhostscriptAPI(object) :
 
         source = fin.read()
         try :
-            p = Popen(args, stdin=PIPE, stdout = PIPE) 
+            p = Popen(args, stdin=PIPE, stdout = PIPE, stderr= PIPE) 
             (out,err) = p.communicate(source) 
         except OSError :
             raise RuntimeError(error_msg)
     
-        if p.returncode != 0 : raise RuntimeError(error_msg)
+        if p.returncode != 0 : 
+            error_msg += '\nReturn code: %i\n' % p.returncode 
+            if err is not None : error_msg += err
+            raise RuntimeError(error_msg)
         
         print >>fout, out
 # end class Ghostscript
