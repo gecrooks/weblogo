@@ -97,7 +97,7 @@ for k in weblogolib.std_color_schemes.keys():
 composition = {'comp_none' : 'none',
     'comp_auto' : 'auto',
     'comp_equiprobable':'equiprobable',
-    'comp_CG': 'CG',
+    'comp_CG': 'percentCG',
     'comp_Celegans' : 'C. elegans',
     'comp_Dmelanogaster' : 'D. melanogaster',
     'comp_Ecoli' : 'E. coli',

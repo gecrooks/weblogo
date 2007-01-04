@@ -906,8 +906,8 @@ def parse_prior(composition, alphabet, weight=None) :
     - An explicit distribution,  e.g. {'A':10, 'C':40, 'G':40, 'T':10}
     """
     if composition is None: return None
-    composition = composition.strip()
-    comp = composition.lower()
+    comp = composition.strip()
+    #comp = comp.lower()
     
     if comp == 'none': return None
     
@@ -949,9 +949,12 @@ def parse_prior(composition, alphabet, weight=None) :
     
         if any(prior==-1.) :
             raise ValueError("Explicit prior does not match alphabet") 
+        prior/= sum(prior)
+        prior *= weight
+        
         
     else : 
-        raise ValueError("NO SUCH COMPOSITION")
+        raise ValueError("Unknown or malformed composition: %s"%composition)
     
     if len(prior) != len(alphabet) :
         raise ValueError(
