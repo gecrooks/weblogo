@@ -176,9 +176,16 @@ class GhostscriptAPI(object) :
     formats = ('png', 'pdf', 'jpeg')
     
     def __init__(self, path=None) :
-        command = find_command('gs', path=path) 
-        self.command = command
+        try:
+            command = find_command('gs', path=path)
+        except EnvironmentError:
+            try:
+                command = find_command('gswin32c.exe', path=path)
+            except EnvironmentError:
+                raise EnvironmentError("Could not find Ghostscript on path."
+                " There should be either a gs executable or a gswin32c.exe on your system's path")
         
+        self.command = command        
     
     def version(self) :
         args = [self.command, '--version']
