@@ -5,3 +5,4 @@ recursive-include tests/data/ *.*
 include test_weblogo.py
 include build_test.sh
 include cap.fa
+recursive-include apidocs/ *.html

@@ -2,7 +2,9 @@
 
 
 echo 
-echo "## Build WebLogo release" 
+echo "## Build a WebLogo release" 
+echo "# Use setup.py to install from a built distribution."
+echo "# Requires epydoc to build documentation. "
 python -c "import weblogolib; print weblogolib.description"  
 
 echo 
@@ -35,13 +37,12 @@ cd ../../..     ls
 
 
 echo
-echo "## PYTHON 2.4 ##"
 echo "## CoreBio version"
-python2.4 -c 'import corebio; print corebio.__version__'
+python -c 'import corebio; print corebio.__version__'
 
 echo
 echo "## Build source distribution :"
-python2.4 setup.py -q sdist                                     || exit
+python setup.py -q sdist                                     || exit
 
 echo
 echo "## Extract source distribution"
@@ -52,15 +53,15 @@ echo "## Change directory to source"
 cd dist/_extract_/weblogo* 
 
 echo "## Run unit tests  :"
-python2.4 ./test_weblogo.py                                     || exit 
+python ./test_weblogo.py                                     || exit 
 
 echo
 echo "## Build "
-python2.4 setup.py build                                        || exit
+python setup.py build                                        || exit
 
 echo
 echo "## Install "
-python2.4 setup.py install --home ../install                    || exit
+python setup.py install --home ../install                    || exit
 echo
 
 echo "## Clean up..."
