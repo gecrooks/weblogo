@@ -129,7 +129,7 @@ class test_parse_prior(unittest.TestCase) :
  
     def test_explicit(self) :
         s = "{'A':10, 'C':40, 'G':40, 'T':10}"
-        p = array( (10, 40, 40,10), float64)
+        p = array( (10, 40, 40,10), float64)*4./100.
         self.assertTrue( all(
             p == parse_prior( s,  unambiguous_dna_alphabet ) ) )
         
@@ -175,8 +175,8 @@ class test_seqlogo(unittest.TestCase) :
         self._exec( ["-I"], [], 2)
     
     def test_help_option(self) :
-        self._exec( ["-h"], ["options:"])
-        self._exec( ["--help"], ["options:"])
+        self._exec( ["-h"], ["options"])
+        self._exec( ["--help"], ["options"])
 
     def test_version_option(self) :
         self._exec( ['--version'], weblogolib.__version__)

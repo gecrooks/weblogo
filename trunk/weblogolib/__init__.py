@@ -907,15 +907,14 @@ def parse_prior(composition, alphabet, weight=None) :
     """
     if composition is None: return None
     comp = composition.strip()
-    #comp = comp.lower()
     
-    if comp == 'none': return None
+    if comp.lower() == 'none': return None
     
-    if weight is None: weight = float(len(alphabet))
+    if weight is None and alphabet is not None: weight = float(len(alphabet))
     
-    if comp == 'equiprobable' :
+    if comp.lower() == 'equiprobable' :
         prior = weight * equiprobable_distribution(len(alphabet)) 
-    elif comp == 'auto' or comp == 'automatic':
+    elif comp.lower() == 'auto' or comp.lower() == 'automatic':
         if alphabet == unambiguous_protein_alphabet :
             prior =  weight * asarray(aa_composition, float64)
         else :
@@ -1050,7 +1049,7 @@ class LogoData(object) :
         self.entropy = entropy
         self.entropy_interval = entropy_interval
         self.weight = weight
-    
+        
     
     #@classmethod    
     def from_counts(cls, alphabet, counts, prior= None):
