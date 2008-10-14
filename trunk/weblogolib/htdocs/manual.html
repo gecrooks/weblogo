@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-    "http://www.w3.org/TR/html4/strict.dtd">
+    "http://www.w3.org/TR/html4/transitional.dtd">
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="logo.css" >
@@ -376,115 +376,115 @@ SetEnv WEBLOGO_MAX_FILE_SIZE 1000000
 <h2><code>weblogo</code>, The WebLogo Command Line Interface (CLI)</h2>
 The  command line client has many options not available through the web interface. Please consult the bundled <code>build_examples.sh</code> script for inspiration.
 <pre >
-usage: weblogo [options]  < sequence_data.fa > sequence_logo.eps
+	Usage: weblogo [options]  < sequence_data.fa > sequence_logo.eps
 
-Create sequence logos from biological sequence alignments.
+	Create sequence logos from biological sequence alignments.
 
-options:
-     --version                  show program's version number and exit
-  -h --help                     show this help message and exit
+	Options:
+	     --version                  show program's version number and exit
+	  -h --help                     show this help message and exit
 
-  Input/Output Options:
-    -f --fin FILENAME           Sequence input file (default: stdin)
-       --fin-format FORMAT      Multiple sequence alignment format: (clustal,
-                                fasta, plain, msf, genbank, nbrf, nexus,
-                                phylip, stockholm, intelligenetics, table,
-                                array)
-    -o --fout FILENAME          Output file (default: stdout)
-    -F --format FORMAT          Format of output: eps (default), png,
-                                png_print, pdf, jpeg, txt
+	  Input/Output Options:
+	    -f --fin FILENAME           Sequence input file (default: stdin)
+	       --fin-format FORMAT      Multiple sequence alignment format: (clustal,
+	                                fasta, plain, msf, genbank, nbrf, nexus,
+	                                phylip, stockholm, intelligenetics, table,
+	                                array)
+	    -o --fout FILENAME          Output file (default: stdout)
+	    -F --format FORMAT          Format of output: eps (default), png,
+	                                png_print, pdf, jpeg, txt
 
-  Logo Data Options:
-    -A --sequence-type TYPE     The type of sequence data: 'protein', 'rna' or
-                                'dna'.
-    -a --alphabet ALPHABET      The set of symbols to count, e.g. 'AGTC'. All
-                                characters not in the alphabet are ignored. If
-                                neither the alphabet nor sequence-type are
-                                specified then weblogo will examine the input
-                                data and make an educated guess. See also
-                                --sequence-type, --ignore-lower-case
-       --ignore-lower-case YES/NO
-                                Disregard lower case letters and only count
-                                upper case letters in sequences? (Default: No)
-    -U --units NUMBER           A unit of entropy ('bits' (default), 'nats',
-                                'digits'), or a unit of free energy ('kT',
-                                'kJ/mol', 'kcal/mol'), or 'probability' for
-                                probabilities
-       --composition COMP.      The expected composition of the sequences:
-                                'auto' (default), 'equiprobable', 'none' (Do
-                                not perform any compositional adjustment), a
-                                CG percentage, a species name (e.g. 'E. coli',
-                                'H. sapiens'), or an explicit distribution
-                                (e.g. {'A':10, 'C':40, 'G':40, 'T':10}). The
-                                automatic option uses a typical distribution
-                                for proteins and equiprobable distribution for
-                                everything else.
-       --weight NUMBER          The weight of prior data.  Default: total
-                                pseudocounts equal to the number of monomer
-                                types.
-    -i --first-index INDEX      Index of first position in sequence data
-                                (default: 1)
-    -l --lower INDEX            Lower bound of sequence to display
-    -u --upper INDEX            Upper bound of sequence to display
+	  Logo Data Options:
+	    -A --sequence-type TYPE     The type of sequence data: 'protein', 'rna' or
+	                                'dna'.
+	    -a --alphabet ALPHABET      The set of symbols to count, e.g. 'AGTC'. All
+	                                characters not in the alphabet are ignored. If
+	                                neither the alphabet nor sequence-type are
+	                                specified then weblogo will examine the input
+	                                data and make an educated guess. See also
+	                                --sequence-type, --ignore-lower-case
+	       --ignore-lower-case YES/NO
+	                                Disregard lower case letters and only count
+	                                upper case letters in sequences? (Default: No)
+	    -U --units NUMBER           A unit of entropy ('bits' (default), 'nats',
+	                                'digits'), or a unit of free energy ('kT',
+	                                'kJ/mol', 'kcal/mol'), or 'probability' for
+	                                probabilities
+	       --composition COMP.      The expected composition of the sequences:
+	                                'auto' (default), 'equiprobable', 'none' (Do
+	                                not perform any compositional adjustment), a
+	                                CG percentage, a species name (e.g. 'E. coli',
+	                                'H. sapiens'), or an explicit distribution
+	                                (e.g. {'A':10, 'C':40, 'G':40, 'T':10}). The
+	                                automatic option uses a typical distribution
+	                                for proteins and equiprobable distribution for
+	                                everything else.
+	       --weight NUMBER          The weight of prior data.  Default: total
+	                                pseudocounts equal to the number of monomer
+	                                types.
+	    -i --first-index INDEX      Index of first position in sequence data
+	                                (default: 1)
+	    -l --lower INDEX            Lower bound of sequence to display
+	    -u --upper INDEX            Upper bound of sequence to display
 
-  Logo Format Options:
-    These options control the format and display of the logo.
+	  Logo Format Options:
+	    These options control the format and display of the logo.
 
-    -s --size LOGOSIZE          Specify a standard logo size (small, medium
-                                (default), large)
-    -n --stacks-per-line COUNT  Maximum number of logo stacks per logo line.
-                                (default: 40)
-    -t --title TEXT             Logo title text.
-       --label TEXT             A figure label, e.g. '2a'
-    -X --show-xaxis YES/NO      Display sequence numbers along x-axis?
-                                (default: True)
-    -x --xlabel TEXT            X-axis label
-    -S --yaxis UNIT             Height of yaxis in units. (Default: Maximum
-                                value with uninformative prior.)
-    -Y --show-yaxis YES/NO      Display entropy scale along y-axis? (default:
-                                True)
-    -y --ylabel TEXT            Y-axis label  (default depends on plot type
-                                and units)
-    -E --show-ends YES/NO       Label the ends of the sequence? (default:
-                                False)
-    -P --fineprint TEXT         The fine print (default: weblogo version)
-       --ticmarks NUMBER        Distance between ticmarks (default: 1.0)
-       --errorbars YES/NO       Display error bars? (default: True)
+	    -s --size LOGOSIZE          Specify a standard logo size (small, medium
+	                                (default), large)
+	    -n --stacks-per-line COUNT  Maximum number of logo stacks per logo line.
+	                                (default: 40)
+	    -t --title TEXT             Logo title text.
+	       --label TEXT             A figure label, e.g. '2a'
+	    -X --show-xaxis YES/NO      Display sequence numbers along x-axis?
+	                                (default: True)
+	    -x --xlabel TEXT            X-axis label
+	    -S --yaxis UNIT             Height of yaxis in units. (Default: Maximum
+	                                value with uninformative prior.)
+	    -Y --show-yaxis YES/NO      Display entropy scale along y-axis? (default:
+	                                True)
+	    -y --ylabel TEXT            Y-axis label  (default depends on plot type
+	                                and units)
+	    -E --show-ends YES/NO       Label the ends of the sequence? (default:
+	                                False)
+	    -P --fineprint TEXT         The fine print (default: weblogo version)
+	       --ticmarks NUMBER        Distance between ticmarks (default: 1.0)
+	       --errorbars YES/NO       Display error bars? (default: True)
 
-  Color Options:
-    Colors can be specified using CSS2 syntax. e.g. 'red', '#FF0000', etc.
+	  Color Options:
+	    Colors can be specified using CSS2 syntax. e.g. 'red', '#FF0000', etc.
 
-    -c --color-scheme SCHEME    Specify a standard color scheme (auto, base
-                                pairing, charge, chemistry, classic,
-                                hydrophobicity, monochrome)
-    -C --color COLOR SYMBOLS DESCRIPTION 
-                                Specify symbol colors, e.g. --color black AG
-                                'Purine' --color red TC 'Pyrimidine'
-       --default-color COLOR    Symbol color if not otherwise specified.
+	    -c --color-scheme SCHEME    Specify a standard color scheme (auto, base
+	                                pairing, charge, chemistry, classic,
+	                                hydrophobicity, monochrome)
+	    -C --color COLOR SYMBOLS DESCRIPTION 
+	                                Specify symbol colors, e.g. --color black AG
+	                                'Purine' --color red TC 'Pyrimidine'
+	       --default-color COLOR    Symbol color if not otherwise specified.
 
-  Advanced Format Options:
-    These options provide fine control over the display of the logo.
+	  Advanced Format Options:
+	    These options provide fine control over the display of the logo.
 
-    -W --stack-width POINTS     Width of a logo stack (default: 10.8)
-    -H --stack-height POINTS    Height of a logo stack (default: 54.0)
-       --box YES/NO             Draw boxes around symbols? (default: no)
-       --resolution DPI         Bitmap resolution in dots per inch (DPI).
-                                (default: 96 DPI, except png_print, 600 DPI)
-                                Low resolution bitmaps (DPI<300) are
-                                antialiased.
-       --scale-width YES/NO     Scale the visible stack width by the fraction
-                                of symbols in the column?  (i.e. columns with
-                                many gaps of unknowns are narrow.)  (default:
-                                yes)
-       --debug YES/NO           Output additional diagnostic information.
-                                (default: False)
+	    -W --stack-width POINTS     Width of a logo stack (default: 10.8)
+	    -H --stack-height POINTS    Height of a logo stack (default: 54.0)
+	       --box YES/NO             Draw boxes around symbols? (default: no)
+	       --resolution DPI         Bitmap resolution in dots per inch (DPI).
+	                                (default: 96 DPI, except png_print, 600 DPI)
+	                                Low resolution bitmaps (DPI<300) are
+	                                antialiased.
+	       --scale-width YES/NO     Scale the visible stack width by the fraction
+	                                of symbols in the column?  (i.e. columns with
+	                                many gaps of unknowns are narrow.)  (default:
+	                                yes)
+	       --debug YES/NO           Output additional diagnostic information.
+	                                (default: False)
 
-  WebLogo Server:
-    Run a standalone webserver on a local port.
+	  WebLogo Server:
+	    Run a standalone webserver on a local port.
 
-       --serve                  Start a standalone WebLogo server for creating
-                                sequence logos.
-       --port PORT              Listen to this local port. (Default: 8080)
+	       --serve                  Start a standalone WebLogo server for creating
+	                                sequence logos.
+	       --port PORT              Listen to this local port. (Default: 8080)
 </pre >
 <!-- ===================================================================== -->
 <a name="API" ></a>
@@ -571,6 +571,15 @@ Please direct questions to the <a href="http://groups.google.com/group/WebLogo">
 </td></tr>
 </table>
 
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-5951066-1");
+pageTracker._trackPageview();
+</script>
 </body>
 </html>
 
