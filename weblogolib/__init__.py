@@ -1123,8 +1123,13 @@ class LogoData(object) :
 
     def __str__(self) :
         out = StringIO()
-        print >>out, '# LogoData'
-        
+        print >>out, '## LogoData'
+        print >>out, '# First column is position number, couting from zero'
+        print >>out, '# Subsequent columns are raw symbol counts'
+        print >>out, '# Entropy is mean entropy measured in nats.' 
+        print >>out, '# Low and High are the 95% confidence limits.'
+        print >>out, '# Weight is the fraction of non-gap symbols in the column.'
+        print >>out, '#\t'
         print >>out, '#\t',
         for a in self.alphabet :
             print >>out, a, '\t',
