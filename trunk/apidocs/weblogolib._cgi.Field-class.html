@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>weblogolib.LogoSize</title>
+  <title>weblogolib._cgi.Field</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -43,7 +43,8 @@
     <td width="100%">
       <span class="breadcrumbs">
         <a href="weblogolib-module.html">Package&nbsp;weblogolib</a> ::
-        Class&nbsp;LogoSize
+        <a href="weblogolib._cgi-module.html">Module&nbsp;_cgi</a> ::
+        Class&nbsp;Field
       </span>
     </td>
     <td>
@@ -54,14 +55,19 @@
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
-<h1 class="epydoc">Class LogoSize</h1><p class="nomargin-top"><span class="codelink"><a href="weblogolib-pysrc.html#LogoSize">source&nbsp;code</a></span></p>
+<h1 class="epydoc">Class Field</h1><p class="nomargin-top"><span class="codelink"><a href="weblogolib._cgi-pysrc.html#Field">source&nbsp;code</a></span></p>
 <pre class="base-tree">
 object --+
          |
-        <strong class="uidshort">LogoSize</strong>
+        <strong class="uidshort">Field</strong>
 </pre>
 
 <hr />
+<pre class="literalblock">
+A representation of an HTML form field.
+
+</pre>
+
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
 <table class="summary" border="1" cellpadding="3"
@@ -76,12 +82,15 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="weblogolib.LogoSize-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">stack_width</span>,
-        <span class="summary-sig-arg">stack_height</span>)</span><br />
+          <td><span class="summary-sig"><a href="weblogolib._cgi.Field-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">default</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">conversion</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">options</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">errmsg</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">Illegal value.</code><code class="variable-quote">'</code></span>)</span><br />
       x.__init__(...) initializes x; see x.__class__.__doc__ for signature</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="weblogolib-pysrc.html#LogoSize.__init__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="weblogolib._cgi-pysrc.html#Field.__init__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -95,10 +104,9 @@ object --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="weblogolib.LogoSize-class.html#__repr__" class="summary-sig-name">__repr__</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      repr(x)</td>
+          <td><span class="summary-sig"><a name="get_value"></a><span class="summary-sig-name">get_value</span>(<span class="summary-sig-arg">self</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="weblogolib-pysrc.html#LogoSize.__repr__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="weblogolib._cgi-pysrc.html#Field.get_value">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -115,6 +123,7 @@ object --+
       <code>__new__</code>,
       <code>__reduce__</code>,
       <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
       <code>__setattr__</code>,
       <code>__str__</code>
       </p>
@@ -154,12 +163,15 @@ object --+
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">stack_width</span>,
-        <span class="sig-arg">stack_height</span>)</span>
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">default</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">conversion</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">options</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">errmsg</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">Illegal value.</code><code class="variable-quote">'</code></span>)</span>
     <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="weblogolib-pysrc.html#LogoSize.__init__">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="weblogolib._cgi-pysrc.html#Field.__init__">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -170,33 +182,6 @@ x.__init__(...) initializes x; see x.__class__.__doc__ for signature
   <dl class="fields">
     <dt>Overrides:
         object.__init__
-        <dd><em class="note">(inherited documentation)</em></dd>
-    </dt>
-  </dl>
-</td></tr></table>
-</div>
-<a name="__repr__"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">__repr__</span>(<span class="sig-arg">self</span>)</span>
-    <br /><em class="fname">(Representation operator)</em>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="weblogolib-pysrc.html#LogoSize.__repr__">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <pre class="literalblock">
-repr(x)
-
-</pre>
-  <dl class="fields">
-    <dt>Overrides:
-        object.__repr__
         <dd><em class="note">(inherited documentation)</em></dd>
     </dt>
   </dl>
