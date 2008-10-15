@@ -77,9 +77,9 @@ To create a logo in python code:
 This package is distributed under the new BSD Open Source License. 
 Please see the LICENSE.txt file for details on copyright and licensing.
 The WebLogo source code can be downloaded from http://code.google.com/p/weblogo/
-WebLogo requires Python 2.3, 2.4 or 2.5, the corebio python toolkit for computational biology (http://code.google.com/p/corebio), and the python array 
-package 'numpy' (http://www.scipy.org/Download)
-
+WebLogo requires Python 2.3, 2.4 or 2.5, the corebio python toolkit for computational 
+biology (http://code.google.com/p/corebio), and the python array package 
+'numpy' (http://www.scipy.org/Download)
 """
 
 import sys
@@ -155,7 +155,7 @@ __all__ = ['LogoSize',
 
 description  = "Create sequence logos from biological sequence alignments." 
 
-__version__ = "3.0b14"
+__version__ = "3.0"
 
 # These keywords are subsituted by subversion.
 # The date and revision will only  tell the truth after a branch or tag,

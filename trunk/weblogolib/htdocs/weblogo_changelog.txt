@@ -3,7 +3,7 @@
 WebLogo Release Notes
 
 
-3.0 (2005-09-01) [GEC]
+3.0 (2008-10-14) [GEC]
 
 A significant update of WebLogo.
 
