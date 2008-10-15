@@ -17,14 +17,21 @@ svn checkout https://weblogo.googlecode.com/svn/trunk/ weblogo-VERSION --usernam
 cd weblogo-VERSION
 open weblogolib/__init__.py
 ...
-open changelog.txt
+open weblogolib/htdocs/weblogo_changelog.txt
 ...
 
 # 3. Build apidocs, build and test release:
 rm apidocs/*.html
 ./build.sh
 
-# Tag
+# 4. Commit updated apidocs. 
+svn status |grep '!'    # Check for any html files removed
+svn rm apidocs/...      # Remove any obsolete html files
+svn add apidocs/...     # Add any new html files
+svn commit -m "Updating apidocs" apidocs
+
+# 5. Tag
+
 
 svn copy -m "Tag 3.0b12" https://weblogo.googlecode.com/svn/trunk https://weblogo.googlecode.com/svn/tags/3.0b12 
 
