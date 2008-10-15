@@ -33,7 +33,7 @@ def main() :
         url              = "http://code.google.com/p/weblogo/",    
         download_url     = 'http://weblogo.googlecode.com/svn/dist/weblogo-%s.tar.gz' % __version__ ,
         classifiers      =[
-            'Development Status :: 4 - Beta',
+            'Development Status :: 5 - Production/Stable',
             'Intended Audience :: Science/Research',
             'License :: OSI Approved :: BSD License',
             'Topic :: Scientific/Engineering :: Bio-Informatics',
