@@ -31,7 +31,8 @@ def main() :
         maintainer       = "Gavin Crooks",
         maintainer_email = "gec@threeplusone.com",
         url              = "http://code.google.com/p/weblogo/",    
-        download_url     = 'http://weblogo.googlecode.com/svn/dist/weblogo-%s.tar.gz' % __version__ ,
+        
+        download_url     = 'http://weblogo.googlecode.com/files/weblogo-%s.tar.gz' % __version__ ,
         classifiers      =[
             'Development Status :: 5 - Production/Stable',
             'Intended Audience :: Science/Research',
