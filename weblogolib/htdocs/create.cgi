@@ -41,6 +41,10 @@ import cgitb; cgitb.enable()
 import weblogolib
 
 if __name__=="__main__" :
+
+    # Set path to ghostscript here, if can't set it in webserver configuration
+    import os
+    os.environ["COREBIOPATH"]="/opt/local/bin/:/home/three/local/bin"
     weblogolib.cgi(__file__)
 
 
