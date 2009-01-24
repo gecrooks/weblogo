@@ -424,6 +424,8 @@ class LogoOptions(object) :
         self.rotate_numbers = False
         self.number_interval = 5            
         self.show_ends = False
+        self.annotate = None
+        
           
         self.show_fineprint = True
         self.fineprint =  "WebLogo "+__version__ 
@@ -688,6 +690,23 @@ class LogoFormat(LogoOptions) :
         if self.show_ends and self.alphabet in end_types:
             end_type = end_types[self.alphabet]
         self.end_type = end_type
+
+        
+        if self.annotate is None :
+            self.annotate = []
+            for i in range(self.seqlen):
+                index = i + self.first_index
+                if index % self.number_interval == 0 : 
+                    self.annotate.append( "%d"%index)
+                else :
+                    self.annotate.append("")
+                    
+        if len(self.annotate)!=self.seqlen  :
+            raise ArgumentError(
+                  "Annotations must be same length as sequences.",
+                  'annotate')
+            
+
     # End __init__
 # End class LogoFormat
 
@@ -820,26 +839,13 @@ def eps_formatter( logodata, format, fout) :
             data.append("StartLine")
             data.append("")
         
-        if logo_index % format.number_interval == 0 : 
-            data.append("(%d) StartStack" % logo_index)
-        else :            
-            data.append("() StartStack" )
+        data.append("(%s) StartStack" % format.annotate[seq_index] )
 
         if conv_factor: 
             stack_height = logodata.entropy[seq_index] * std_units[format.unit_name]
         else :
             stack_height = 1.0 # Probability
 
-      #  if logodata.entropy_interval is not None and conv_factor:
-            # Draw Error bars
-       #     low, high = logodata.entropy_interval[seq_index]
-       #     center = logodata.entropy[seq_index]
-
-
-       #     down = (center - low) * conv_factor
-       #     up   = (high - center) * conv_factor
-       #     data.append(" %f %f %f DrawErrorbarFirst" % (down, up, stack_height) )
-        
         s = zip(logodata.counts[seq_index], logodata.alphabet)
         def mycmp( c1, c2 ) :
             # Sort by frequency. If equal frequency then reverse alphabetic
@@ -1259,6 +1265,7 @@ def _build_logoformat( logodata, opts) :
         "logo_start",
         "logo_end",
         "scale_width", 
+        "annotate",
         ]
   
     for k in direct_from_opts:
@@ -1283,6 +1290,11 @@ def _build_logoformat( logodata, opts) :
                      "error: option --color: invalid value: '%s'" % color )          
                  
         args["color_scheme"] = color_scheme
+ 
+ 
+    if opts.annotate:
+        args["annotate"] = opts.annotate.split(',')
+ 
     
     logooptions = LogoOptions() 
     for a, v in args.iteritems() :
@@ -1489,6 +1501,14 @@ def _build_option_parser() :
         default = defaults.xaxis_label,
         help="X-axis label",
         metavar="TEXT")
+
+    format_grp.add_option( "", "--annotate",
+            dest="annotate",
+            action="store",
+            type="string",
+            default = None,
+            help="A comma seperated list of custom stack annotations, e.g. '1,3,4,5,6,7'.  Annotation list must be same length as sequences.",
+            metavar="TEXT")
 
     format_grp.add_option( "-S", "--yaxis",
         dest="yaxis_scale",

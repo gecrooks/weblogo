@@ -209,7 +209,9 @@ class test_seqlogo(unittest.TestCase) :
         self._exec( ['--title', '3456'], ['/logo_title         (3456) def',
             '/show_title         True def'])
         
-
+    def test_annotate(self) :
+        self._exec( ["--annotate","1,2,3,4"], [], 2)
+        self._exec( ["--annotate","1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,,"],[])
 
         
  
