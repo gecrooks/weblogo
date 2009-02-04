@@ -344,54 +344,71 @@ class LogoOptions(object) :
     >>> from weblogolib import *
     >>> LogoOptions()
     
-    
-    Attributes:
-        o alphabet
-        o creator_text           -- Embedded as comment in figures.
+    All physical lengths are measured in points. (72 points per inch, 28.3 points per cm)
+      
+    String attributes:
+        o creator_text      -- Embedded as comment in figures.
         o logo_title             
         o logo_label
-        o stacks_per_line
-        o unit_name  
+        o unit_name         -- See std_units for options. (Default 'bits') 
+        o yaxis_label       -- Defaults to unit_name      
+        o xaxis_label
+        o fineprint         -- Defaults to WebLogo name and version
+        
+    Boolean attributes:
         o show_yaxis 
-        o yaxis_label             -- Default depends on other settings.
+        o show_xaxis         
+        o show_ends 
+        o show_fineprint        
+        o show_errorbars    -- Draw errorbars (default: False)
+        o show_boxes        -- Draw boxes around stack characters (default: True)
+        o debug             -- Draw extra graphics debugging information. 
+        o rotate_numbers    -- Draw xaxis numbers with vertical orientation? 
+        o scale_width       -- boolean, scale width of characters proportional to ungap
+        o pad_right                                
+                                
+    Other attributes:
+        o stacks_per_line
+        
         o yaxis_tic_interval 
         o yaxis_minor_tic_ratio 
         o yaxis_scale
-        o show_xaxis 
-        o xaxis_label
         o xaxis_tic_interval 
-        o rotate_numbers
         o number_interval
-        o show_ends 
-        o show_fineprint
-        o fineprint
-        o show_boxes 
-        o shrink_fraction
-        o show_errorbars 
+
+        o shrink_fraction       -- Proportional shrinkage of characters if show_boxes is true.
+
         o errorbar_fraction 
         o errorbar_width_fraction 
         o errorbar_gray 
+
         o resolution             -- Dots per inch
+        
         o default_color 
         o color_scheme 
-        o debug
-        o logo_margin
-        o stroke_width
-        o tic_length
-        o size
-        o stack_margin
-        o pad_right
-        o small_fontsize
-        o fontsize
-        o title_fontsize
-        o number_fontsize
+        
+        o size                  -- a LogoSize object. 
+        o size.stack_width      -- points
+        o size.stack_height     -- points
+
+        o logo_margin           -- Default: 2 pts
+        o stroke_width          -- Default: 0.5 pts
+        o tic_length            -- Default: 5 pts
+        o stack_margin          -- Default: 0.5 pts
+        
+        o small_fontsize        -- Small text font size in points
+        o fontsize              -- Regular text font size in points
+        o title_fontsize        -- Title text font size in points
+        o number_fontsize       -- Font size for axis-numbers, in points.
+        
         o text_font
         o logo_font
         o title_font
+        
         o first_index
         o logo_start
         o logo_end
-        o scale_width
+
     """       
 
     def __init__(self, **kwargs) :
@@ -403,7 +420,6 @@ class LogoOptions(object) :
         """
 
         self.creator_text = release_description,
-        self.alphabet = None
         
         self.logo_title = ""
         self.logo_label = ""
@@ -467,8 +483,6 @@ class LogoOptions(object) :
         self.first_index = 1        
         self.logo_start = None      
         self.logo_end=None          
-
-        # Scale width of characters proportional to gaps
         self.scale_width = True
 
         from corebio.utils import update
@@ -507,11 +521,13 @@ class LogoFormat(LogoOptions) :
         self.alphabet = data.alphabet
         self.seqlen = data.length
         
+        
+        # Derived parameters.
         self.show_title = False
         self.show_xaxis_label = False
         self.yaxis_minor_tic_interval = None
         self.lines_per_logo       = None
-        self.char_width       = None
+        self.char_width       = None        # Maximum character width. Stack width minus margins. 
         self.line_margin_left = None
         self.line_margin_right    = None
         self.line_margin_bottom = None
@@ -524,6 +540,7 @@ class LogoFormat(LogoOptions) :
         self.logo_width = None
         self.creation_date = None
         self.end_type = None
+
 
         if self.stacks_per_line< 1 :
             raise ArgumentError("Stacks per line should be greater than zero.",
