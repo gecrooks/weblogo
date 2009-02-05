@@ -192,8 +192,8 @@ class test_seqlogo(unittest.TestCase) :
         self._exec( ['--stack-width','1234'], ["/stack_width         1234"] )
 
     def test_height(self) :
-        self._exec( ['-H','1234'], ["/stack_height        1234"] )
-        self._exec( ['--stack-height','1234'], ["/stack_height        1234"] )
+        self._exec( ['-W','1000'], ["/stack_height        5000"] )
+        self._exec( ['-W','1000', '--aspect-ratio', '2'], ["/stack_height        2000"] )
         
         
     def test_stacks_per_line(self) :
