@@ -50,7 +50,7 @@ The main WebLogo webserver is located at http://bespoke.lbl.gov/weblogo/
 Please consult the manual for installation instructions and more information:
 (Also located in the weblogolib/htdocs subdirectory.)
 
-    http://bespoke.lbl.gov/weblogo/manual.html
+    http://weblogo.threeplusone.com/manual.html
 
 For help on the command line interface run
     ./weblogo --help
@@ -158,7 +158,7 @@ description  = "Create sequence logos from biological sequence alignments."
 __version__ = "3.0"
 
 # These keywords are subsituted by subversion.
-# The date and revision will only  tell the truth after a branch or tag,
+# The date and revision will only tell the truth after a branch or tag,
 # since different files in trunk will have been changed at different times
 release_date ="$Date$".split()[1]
 release_build = "$Revision$".split()[1]
@@ -296,9 +296,9 @@ class LogoSize(object) :
 # Check that can get 80 characters in journal page @small
 # 40 chacaters in a journal column
 std_sizes = {
-    "small" : LogoSize( stack_width = 5.4, stack_height = 5.4*1*5), 
-    "medium" : LogoSize( stack_width = 5.4*2, stack_height = 5.4*2*5),
-    "large"  : LogoSize( stack_width = 5.4*3, stack_height = 5.4*3*5),    
+    "small" : 5.4 , 
+    "medium" : 5.4*2,
+    "large"  : 5.4*3
 }
             
 
@@ -364,8 +364,8 @@ class LogoOptions(object) :
         o show_boxes        -- Draw boxes around stack characters (default: True)
         o debug             -- Draw extra graphics debugging information. 
         o rotate_numbers    -- Draw xaxis numbers with vertical orientation? 
-        o scale_width       -- boolean, scale width of characters proportional to ungap
-        o pad_right                                
+        o scale_width       -- boolean, scale width of characters proportional to ungaps
+        o pad_right         -- Make a single line logo the same width as multiline logos (default: False)                           
                                 
     Other attributes:
         o stacks_per_line
@@ -382,14 +382,13 @@ class LogoOptions(object) :
         o errorbar_width_fraction 
         o errorbar_gray 
 
-        o resolution             -- Dots per inch
+        o resolution             -- Dots per inch (Default: 96) Used for bitmapped output formats
         
         o default_color 
         o color_scheme 
         
-        o size                  -- a LogoSize object. 
-        o size.stack_width      -- points
-        o size.stack_height     -- points
+        o stack_width           --
+        o stack_aspect_ratio    -- Ratio of stack height to width (Default: 5)
 
         o logo_margin           -- Default: 2 pts
         o stroke_width          -- Default: 0.5 pts
@@ -418,6 +417,8 @@ class LogoOptions(object) :
         >>> L.show_yaxis = False
         >>> repr(L)
         """
+
+        self.alphabet = None
 
         self.creator_text = release_description,
         
@@ -466,7 +467,8 @@ class LogoOptions(object) :
         self.stroke_width = 0.5
         self.tic_length = 5
         
-        self.size = std_sizes["medium"]        
+        self.stack_width = std_sizes["medium"]        
+        self.stack_aspect_ratio = 5
         
         self.stack_margin = 0.5
         self.pad_right = False  
@@ -541,15 +543,20 @@ class LogoFormat(LogoOptions) :
         self.creation_date = None
         self.end_type = None
 
-
+        self.stack_height = self.stack_width * self.stack_aspect_ratio
+        
         if self.stacks_per_line< 1 :
             raise ArgumentError("Stacks per line should be greater than zero.",
                                 "stacks_per_line" )
-        
-        if self.size.stack_height<=0.0 : 
+         
+        if self.stack_width<=0.0 : 
             raise ArgumentError( 
-                "Stack height must be greater than zero.", "stack_height")
+                    "Stack width must be greater than zero.", "stack_width")
         
+        if self.stack_aspect_ratio<=0.0 : 
+            raise ArgumentError( 
+                "Stack aspect ratio must be greater than zero.", "stack_aspect_ratio")
+         
         if (self.small_fontsize <= 0 or self.fontsize <=0 or    
                 self.title_fontsize<=0 ):
             raise ValueError("Font sizes must be positive.")
@@ -562,10 +569,7 @@ class LogoFormat(LogoOptions) :
             raise ArgumentError( "The yaxis tic interval cannot be negative.",
                 'yaxis_tic_interval')
         
-        if self.size.stack_width <= 0.0 :
-            raise ValueError(
-                "The width of a stack should be a positive number.")
-        
+         
         if self.yaxis_minor_tic_interval and \
                 self.yaxis_minor_tic_interval<=0.0 : 
             raise ValueError("Distances cannot be negative.")
@@ -652,7 +656,7 @@ class LogoFormat(LogoOptions) :
         if self.lines_per_logo==1 and not self.pad_right:
             self.stacks_per_line = min(self.stacks_per_line, self.total_stacks)
 
-        self.char_width = self.size.stack_width - 2* self.stack_margin
+        self.char_width = self.stack_width - 2* self.stack_margin
     
     
         if self.show_yaxis :
@@ -686,9 +690,9 @@ class LogoFormat(LogoOptions) :
         if self.show_fineprint :
             self.xaxis_label_height += self.small_fontsize
 
-        self.line_height = (self.size.stack_height + self.line_margin_top +    
+        self.line_height = (self.stack_height + self.line_margin_top +    
                             self.line_margin_bottom )
-        self.line_width  = (self.size.stack_width*self.stacks_per_line + 
+        self.line_width  = (self.stack_width*self.stacks_per_line + 
                             self.line_margin_left + self.line_margin_right )
 
         self.logo_height = int(2*self.logo_margin + self.title_height \
@@ -804,16 +808,12 @@ def eps_formatter( logodata, format, fout) :
         "debug",            "show_title",           "show_xaxis",
         "show_xaxis_label", "show_yaxis",           "show_yaxis_label",
         "show_boxes",       "show_errorbars",       "show_fineprint",
-        "rotate_numbers",   "show_ends",            
+        "rotate_numbers",   "show_ends",            "stack_height",
+        "stack_width"
         ]
    
     for s in from_format :
         subsitutions[s] = getattr(format,s)
-
-
-    from_format_size = ["stack_height", "stack_width"]
-    for s in from_format_size :
-        subsitutions[s] = getattr(format.size,s)
 
     subsitutions["shrink"] = str(format.show_boxes).lower()
 
@@ -1001,8 +1001,6 @@ def base_distribution(percentCG) :
 def equiprobable_distribution( length) :
     return ones( (length), float64) /length   
   
-
-
 
 def read_seq_data(fin, input_parser=seq_io.read, 
                     alphabet=None, ignore_lower_case=False, max_file_size=0):
@@ -1283,17 +1281,19 @@ def _build_logoformat( logodata, opts) :
         "logo_end",
         "scale_width", 
         "annotate",
+        "stack_width",
+        "stack_aspect_ratio"
         ]
   
     for k in direct_from_opts:
         args[k] = opts.__dict__[k]
 
-    logo_size = copy.copy(opts.__dict__['logo_size'])
-    size_from_opts = ["stack_width", "stack_height"]
-    for k in size_from_opts :
-        length = getattr(opts, k)
-        if length : setattr( logo_size, k, length )
-    args["size"] = logo_size    
+#    logo_size = copy.copy(opts.__dict__['logo_size'])
+#    size_from_opts = ["stack_width", "stack_height"]
+#    for k in size_from_opts :
+#        length = getattr(opts, k)
+#        if length : setattr( logo_size, k, length )
+#   args["size"] = logo_size    
 
 
     if opts.colors:
@@ -1472,12 +1472,12 @@ def _build_option_parser() :
     # ========================== FORMAT OPTIONS ==========================
 
     format_grp.add_option( "-s", "--size",
-        dest="logo_size",
+        dest="stack_width",
         action="store",
         type ="dict",
         choices = std_sizes,
         metavar = "LOGOSIZE",
-        default = defaults.size,
+        default = defaults.stack_width,
         help="Specify a standard logo size (small, medium (default), large)" )
             
     format_grp.add_option( "-n", "--stacks-per-line",
@@ -1628,16 +1628,16 @@ def _build_option_parser() :
         dest="stack_width",
         action="store",
         type="float",
-        default= None,
-        help="Width of a logo stack (default: %s)"% defaults.size.stack_width,
+        default= defaults.stack_width,
+        help="Width of a logo stack (default: %s)"% defaults.stack_width,
         metavar="POINTS" )
 
-    advanced_grp.add_option( "-H", "--stack-height",
-        dest="stack_height",
+    advanced_grp.add_option( "", "--aspect-ratio",
+        dest="stack_aspect_ratio",
         action="store",
         type="float",
-        default= None,
-        help="Height of a logo stack (default: %s)"%defaults.size.stack_height,
+        default= defaults.stack_aspect_ratio ,
+        help="Ratio of stack height to width (default: %s)"%defaults.stack_aspect_ratio,
         metavar="POINTS" )    
 
     advanced_grp.add_option( "", "--box",
