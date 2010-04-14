@@ -45,7 +45,7 @@ WebLogo (http://code.google.com/p/weblogo/) is a tool for creating sequence
 logos from biological sequence alignments.  It can be run on the command line,
 as a standalone webserver, as a CGI webapp, or as a python library.
 
-The main WebLogo webserver is located at http://bespoke.lbl.gov/weblogo/
+The main WebLogo webserver is located at http://weblogo.threeplusone.com/
 
 Please consult the manual for installation instructions and more information:
 (Also located in the weblogolib/htdocs subdirectory.)
@@ -88,8 +88,6 @@ import os
 from datetime import datetime
 from StringIO import StringIO
 
-
-
 from  corebio.data import rna_letters, dna_letters, amino_acid_letters
 import random
 
@@ -97,7 +95,6 @@ import random
 from corebio._future import Template
 from corebio._future.subprocess import *
 from corebio._future import resource_string, resource_filename
-
 
 from math import log, sqrt
 
@@ -112,7 +109,7 @@ from color import *
 from colorscheme import *
 from corebio.seq import Alphabet, Seq, SeqList
 from corebio import seq_io
-from corebio.utils import isfloat, find_command, ArgumentError
+from corebio.utils import isfloat, find_command, ArgumentError, stdrepr
 from corebio.moremath import *
 from corebio.data import amino_acid_composition
 from corebio.seq import unambiguous_rna_alphabet, unambiguous_dna_alphabet, unambiguous_protein_alphabet
@@ -122,8 +119,7 @@ from corebio.seq import unambiguous_rna_alphabet, unambiguous_dna_alphabet, unam
 
 # ------ META DATA ------
 
-__all__ = ['LogoSize', 
-            'LogoOptions', 
+__all__ = [ 'LogoOptions', 
             'description', 
             '__version__', 
             'LogoFormat',
@@ -148,7 +144,6 @@ __all__ = ['LogoSize',
             'base_distribution',
             'equiprobable_distribution',
             'read_seq_data',
-            'which_alphabet',
             'color',
             'colorscheme',
             ]
@@ -272,7 +267,6 @@ default_color_schemes = {
     unambiguous_dna_alphabet: base_pairing 
 }
 
-
 std_units = {
     "bits"    : 1./log(2),
     "nats"    : 1.,
@@ -283,14 +277,6 @@ std_units = {
     "probability" : None,
 }
 
-class LogoSize(object) :
-    def __init__(self, stack_width, stack_height) :
-         self.stack_width = stack_width
-         self.stack_height = stack_height
-         
-    def __repr__(self):
-        return stdrepr(self)
-
 # The base stack width is set equal to 9pt Courier. 
 # (Courier has a width equal to 3/5 of the point size.)
 # Check that can get 80 characters in journal page @small
@@ -300,8 +286,6 @@ std_sizes = {
     "medium" : 5.4*2,
     "large"  : 5.4*3
 }
-            
-
             
 std_alphabets = {
     'protein': unambiguous_protein_alphabet, 
@@ -325,16 +309,7 @@ std_percentCG = {
 # thermophile Thermus thermophilus.
 # Nat Biotechnol 2004, 22:547-53
             
-def stdrepr(obj) :
-    attr = vars(obj).items()
-    attr.sort()
-    args = []
-    for a in attr :
-        if a[0][0]=='_' : continue
-        args.append( '%s=%s' % ( a[0], repr(a[1])) )
-    args = ',\n'.join(args).replace('\n', '\n    ')
-    return '%s(\n    %s\n)' % (obj.__class__.__name__, args)
-  
+
   
 class LogoOptions(object) :
     """ A container for all logo formating options. Not all of these
@@ -420,7 +395,7 @@ class LogoOptions(object) :
 
         self.alphabet = None
 
-        self.creator_text = release_description,
+        self.creator_text = release_description
         
         self.logo_title = ""
         self.logo_label = ""
@@ -491,14 +466,14 @@ class LogoOptions(object) :
         update(self, **kwargs)
 
     def __repr__(self) :
-        attr = vars(self).items()
-        attr.sort()
-        args = []
-        for a in attr :
-            if a[0][0]=='_' : continue
-            args.append( '%s=%s' % ( a[0], repr(a[1])) )
-        args = ',\n'.join(args).replace('\n', '\n    ')
-        return '%s(\n    %s\n)' % (self.__class__.__name__, args)
+        from corebio.util import stdrepr
+        return stdrepr( self) 
+
+    def __repr__(self) :
+        attributes = vars(self).keys()
+        attributes.sort()
+        return stdrepr(self, attributes )
+ 
 # End class LogoOptions
 
 
@@ -1033,30 +1008,10 @@ def read_seq_data(fin, input_parser=seq_io.read,
     if alphabet :
         seqs.alphabet = alphabet 
     else :
-        seqs.alphabet = which_alphabet(seqs)
+        seqs.alphabet = Alphabet.which(seqs)
     return seqs
 
 
-
-#TODO: Move to seq_io? 
-#   Would have to check that no symbol outside of full alphabet?
-def which_alphabet(seqs) :
-    """ Returns the most appropriate unambiguous protien, rna or dna alphabet
-    for a Seq or SeqList.
-    """
-    alphabets = (unambiguous_protein_alphabet,
-                unambiguous_rna_alphabet,
-                unambiguous_dna_alphabet,
-            )
-    # Heuristic
-    # Count occurances of each letter. Downweight longer alphabet.
-    score = [1.0*asarray(seqs.tally(a)).sum()/sqrt(len(a)) for a in alphabets]
-    #print score
-    best = argmax(score) # Ties go to last in list.
-    a = alphabets[best]
-    return a
-
-    
     
 class LogoData(object) :
     """The data needed to generate a sequence logo.
@@ -1138,7 +1093,7 @@ class LogoData(object) :
 
         # FIXME: Check seqs.alphabet?
         
-        counts = asarray(seqs.tally())
+        counts = asarray(seqs.profile())
         return cls.from_counts(seqs.alphabet, counts, prior)
     from_seqs = classmethod(from_seqs)
 
