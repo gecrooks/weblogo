@@ -1017,7 +1017,7 @@ class LogoData(object) :
         self.weight = weight
         
     
-    #@classmethod    
+    @classmethod    
     def from_counts(cls, alphabet, counts, prior= None):
         """Build a logodata object from counts."""
         seq_length, A = counts.shape
@@ -1054,10 +1054,9 @@ class LogoData(object) :
         weight /= max(weight)
  
         return cls(seq_length, alphabet, counts, ent, entropy_interval, weight)
-    from_counts = classmethod(from_counts)
 
 
-    #@classmethod    
+    @classmethod    
     def from_seqs(cls, seqs, prior= None):
         """Build a LogoData object form a SeqList, a list of sequences."""
         # --- VALIDATE DATA ---
@@ -1078,7 +1077,7 @@ class LogoData(object) :
         
         counts = asarray(seqs.profile())
         return cls.from_counts(seqs.alphabet, counts, prior)
-    from_seqs = classmethod(from_seqs)
+
 
     def __str__(self) :
         out = StringIO()
