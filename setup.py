@@ -12,9 +12,9 @@ import warnings
 warnings.simplefilter('ignore', UserWarning, lineno =236)
 
 # check dependancies
-if not hasattr(sys, 'version_info') or sys.version_info < (2,3,0,'final'):
+if not hasattr(sys, 'version_info') or sys.version_info < (2,4,0,'final'):
     raise SystemExit,  \
-        "Dependancy error: WebLogo requires Python 2.3 or later."
+        "Dependancy error: WebLogo requires Python 2.4 or later."
  
  
 from weblogolib import __version__
@@ -48,48 +48,11 @@ def main() :
         scripts = [ 'weblogo', ],
         packages  = [ 'weblogolib',],
         data_files = ['weblogolib/htdocs/*.*','weblogolib/template.eps'],
-        install_requires=['numpy', 'corebio'],        
+        requires=['numpy', 'corebio'],        
         
-        cmdclass= {"install_data" : _install_data},
     )
 
 
-# Python 2.3 compatability 
-# Rework the install_data command to act like the package_data distutils
-# command included with python 2.4.
-# Adapted from biopython, which was adapted from mxtexttools
-class _install_data(install_data):
-    def finalize_options(self):
-        if self.install_dir is None:
-            installobj = self.distribution.get_command_obj('install')
-            # Use install_lib rather than install_platlib because we are
-            # currently a pure python distribution (No c extensions.)
-            self.install_dir = installobj.install_lib 
-            #print installobj.install_lib 
-        install_data.finalize_options(self)
-
-    def run (self):
-        import glob
-        import os
-        if not self.dry_run:
-            self.mkpath(self.install_dir)
-        data_files = self.get_inputs()
-        for entry in data_files:
-            if type(entry) is not type(""):
-                raise ValueError("data_files must be strings")
-            # Unix- to platform-convention conversion
-            entry = os.sep.join(entry.split("/"))
-            filenames = glob.glob(entry)
-            for filename in filenames:
-                dst = os.path.join(self.install_dir, filename)
-                dstdir = os.path.split(dst)[0]
-                if not self.dry_run:
-                    self.mkpath(dstdir)
-                    outfile = self.copy_file(filename, dst)[0]
-                else:
-                    outfile = dst
-                self.outfiles.append(outfile)
-  
 if __name__ == '__main__' :
     main()
     
