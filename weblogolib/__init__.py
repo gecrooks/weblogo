@@ -487,8 +487,9 @@ class LogoFormat(LogoOptions) :
     >>> options = LogoOptions()
     >>> options.title = "A Logo Title"
     >>> format = LogoFormat(data, options) 
+    
+    Raises an ArgumentError if arguments are invalid.
     """
-    # TODO: Raise ArgumentErrors instead of ValueError and document
     def __init__(self, data, options= None) :
         LogoOptions.__init__(self)
         
@@ -520,57 +521,33 @@ class LogoFormat(LogoOptions) :
 
         self.stack_height = self.stack_width * self.stack_aspect_ratio
         
-        if self.stacks_per_line< 1 :
-            raise ArgumentError("Stacks per line should be greater than zero.",
-                                "stacks_per_line" )
-         
-        if self.stack_width<=0.0 : 
-            raise ArgumentError( 
-                    "Stack width must be greater than zero.", "stack_width")
+        # Attribute to test, test, error message
+        arg_conditions = (
+            ("stacks_per_line",     lambda x: x>0 ,     "Stacks per line must positive."),
+            ("stack_width",         lambda x: x>0.0,    "Stack width must be greater than zero."),
+            ("stack_aspect_ratio" , lambda x: x>0,    "Stack aspect ratio must be greater than zero."),
+            ("fontsize" ,           lambda x: x>0 ,     "Font sizes must be positive."),
+            ("small_fontsize" ,     lambda x: x>0 ,     "Font sizes must be positive."),
+            ("title_fontsize" ,     lambda x: x>0 ,     "Font sizes must be positive."),
+            ("errorbar_fraction" ,  lambda x: x>=0.0 and x<=1.0, 
+                "The visible fraction of the error bar must be between zero and one."),
+            ("yaxis_tic_interval" , lambda x: x>=0.0 , "The yaxis tic interval cannot be negative."),                                    
+            ("yaxis_minor_tic_interval" , lambda x: not (x and x<0.0) , "Distances cannot be negative."),
+            ("xaxis_tic_interval" , lambda x: x>0.0 ,   "Tic interval must be greater than zero."),
+            ("number_interval" ,    lambda x: x>0.0 ,      "Invalid interval between numbers."),
+            ("shrink_fraction" ,    lambda x: x>=0.0 and x<=1.0 , "Invalid shrink fraction."),
+            ("stack_margin" ,       lambda x: x>0.0 , "Invalid stack margin."),
+            ("logo_margin" ,        lambda x: x>0.0 , "Invalid logo margin."),
+            ("stroke_width",       lambda x: x>0.0 , "Invalid stroke width."),
+            ("tic_length" ,         lambda x: x>0.0 , "Invalid tic length."),
+        )
         
-        if self.stack_aspect_ratio<=0.0 : 
-            raise ArgumentError( 
-                "Stack aspect ratio must be greater than zero.", "stack_aspect_ratio")
-         
-        if (self.small_fontsize <= 0 or self.fontsize <=0 or    
-                self.title_fontsize<=0 ):
-            raise ValueError("Font sizes must be positive.")
-        
-        if self.errorbar_fraction<0.0 or self.errorbar_fraction>1.0 :
-            raise ValueError(
-        "The visible fraction of the error bar must be between zero and one.")
-        
-        if self.yaxis_tic_interval<=0.0 :
-            raise ArgumentError( "The yaxis tic interval cannot be negative.",
-                'yaxis_tic_interval')
-        
-         
-        if self.yaxis_minor_tic_interval and \
-                self.yaxis_minor_tic_interval<=0.0 : 
-            raise ValueError("Distances cannot be negative.")
-        
-        if self.xaxis_tic_interval<=0 :
-            raise ValueError("Tic interval must be greater than zero.")
-        
-        if self.number_interval<=0 :
-            raise ValueError("Invalid interval between numbers.")
-        
-        if self.shrink_fraction<0.0 or self.shrink_fraction>1.0 :
-            raise ValueError("Invalid shrink fraction.")
-        
-        if self.stack_margin<=0.0 : 
-            raise ValueError("Invalid stack margin."  )
-        
-        if self.logo_margin<=0.0 : 
-            raise ValueError("Invalid logo margin."  )
-        
-        if self.stroke_width<=0.0 : 
-            raise ValueError("Invalid stroke width.")  
-        
-        if self.tic_length<=0.0 : 
-            raise ValueError("Invalid tic length.") 
-
-        # FIXME: More validation
+        # Run arguments tests. The second, attribute argument to the ArgumentError is used by the UI to
+        # provide user feedback.
+        # FIXME: More validation        
+        for test in arg_conditions :
+            if not test[1]( getattr(self,test[0]) ) : raise ArgumentError(test[2], test[0])
+   
          
         # Inclusive upper and lower bounds
         # FIXME: Validate here. Move from eps_formatter        
@@ -612,7 +589,7 @@ class LogoFormat(LogoOptions) :
                 self.yaxis_scale=1.0    # probability units
 
         if self.yaxis_scale<=0.0 : 
-            raise ValueError(('yaxis_scale', "Invalid yaxis scale"))
+            raise ArgumentError("Invalid yaxis scale", 'yaxis_scale',)
 
         if self.yaxis_tic_interval >= self.yaxis_scale:
             self.yaxis_tic_interval /= 2. 
