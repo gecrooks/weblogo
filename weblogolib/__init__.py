@@ -541,8 +541,8 @@ class LogoFormat(LogoOptions) :
             ("tic_length" ,         lambda x: x>0.0 , "Invalid tic length."),
         )
         
-        # Run arguments tests. The second, attribute argument to the ArgumentError is used by the UI to
-        # provide user feedback.
+        # Run arguments tests. The second, attribute argument to the ArgumentError is 
+        # used by the UI to provide user feedback.
         # FIXME: More validation        
         for test in arg_conditions :
             if not test[1]( getattr(self,test[0]) ) : raise ArgumentError(test[2], test[0])
@@ -953,9 +953,16 @@ def equiprobable_distribution( length) :
     return ones( (length), float64) /length   
   
 
-def read_seq_data(fin, input_parser=seq_io.read, 
-                    alphabet=None, ignore_lower_case=False, max_file_size=0):
-    # TODO: Document this method and enviroment variable
+def read_seq_data(fin, 
+                input_parser=seq_io.read, 
+                alphabet=None, 
+                ignore_lower_case=False, 
+                max_file_size=0):
+    """ Read sequence data from the input stream and return a seqs object. 
+    
+    The enviroment variable WEBLOGO_MAX_FILE_SIZE overides the max_file_size argument.
+    Used to limit the load on the WebLogo webserver.
+    """
 
     max_file_size =int(os.environ.get("WEBLOGO_MAX_FILE_SIZE", max_file_size))
 
