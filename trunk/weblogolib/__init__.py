@@ -77,7 +77,7 @@ To create a logo in python code:
 This package is distributed under the new BSD Open Source License. 
 Please see the LICENSE.txt file for details on copyright and licensing.
 The WebLogo source code can be downloaded from http://code.google.com/p/weblogo/
-WebLogo requires Python 2.3, 2.4 or 2.5, the corebio python toolkit for computational 
+WebLogo requires Python 2.4 or 2.5, the corebio python toolkit for computational 
 biology (http://code.google.com/p/corebio), and the python array package 
 'numpy' (http://www.scipy.org/Download)
 """
@@ -91,10 +91,9 @@ from StringIO import StringIO
 from  corebio.data import rna_letters, dna_letters, amino_acid_letters
 import random
 
-# python2.3 compatability
-from corebio._future import Template
-from corebio._future.subprocess import *
-from corebio._future import resource_string, resource_filename
+from string import Template
+from subprocess import *
+from pkg_resources import resource_string, resource_filename
 
 from math import log, sqrt
 
@@ -849,7 +848,7 @@ def eps_formatter( logodata, format, fout) :
 
 
     # Create and output logo
-    template = resource_string( __name__, 'template.eps', __file__)
+    template = resource_string( __name__, 'template.eps')
     logo = Template(template).substitute(subsitutions)
     print >>fout, logo
  
@@ -1153,7 +1152,7 @@ def httpd_serve_forever(port=8080) :
     pythonpath += ":" + os.path.abspath(sys.path[0]).split()[0]
     os.environ["PYTHONPATH"] = pythonpath
 
-    htdocs = resource_filename(__name__, 'htdocs', __file__)
+    htdocs = resource_filename(__name__, 'htdocs')
     os.chdir(htdocs) 
 
     HandlerClass = __HTTPRequestHandler

@@ -6,8 +6,6 @@ weblogolib.jpeg_formatter	weblogolib-module.html#jpeg_formatter
 weblogolib.httpd_serve_forever	weblogolib-module.html#httpd_serve_forever
 weblogolib._k	weblogolib-module.html#_k
 weblogolib.main	weblogolib-module.html#main
-weblogolib.which_alphabet	weblogolib-module.html#which_alphabet
-weblogolib.stdrepr	weblogolib-module.html#stdrepr
 weblogolib._build_option_parser	weblogolib-module.html#_build_option_parser
 weblogolib.std_sizes	weblogolib-module.html#std_sizes
 weblogolib.release_description	weblogolib-module.html#release_description
@@ -58,6 +56,9 @@ weblogolib.colorscheme.monochrome	weblogolib.colorscheme-module.html#monochrome
 weblogolib.colorscheme.base_pairing	weblogolib.colorscheme-module.html#base_pairing
 weblogolib.colorscheme.chemistry	weblogolib.colorscheme-module.html#chemistry
 weblogolib.colorscheme.nucleotide	weblogolib.colorscheme-module.html#nucleotide
+weblogolib.matrix_io	weblogolib.matrix_io-module.html
+weblogolib.matrix_io.read	weblogolib.matrix_io-module.html#read
+weblogolib.matrix_io.ischar	weblogolib.matrix_io-module.html#ischar
 weblogolib.Dirichlet	weblogolib.Dirichlet-class.html
 weblogolib.Dirichlet.interval_relative_entropy	weblogolib.Dirichlet-class.html#interval_relative_entropy
 weblogolib.Dirichlet._total	weblogolib.Dirichlet-class.html#_total
@@ -89,9 +90,6 @@ weblogolib.LogoFormat.__init__	weblogolib.LogoFormat-class.html#__init__
 weblogolib.LogoOptions	weblogolib.LogoOptions-class.html
 weblogolib.LogoOptions.__repr__	weblogolib.LogoOptions-class.html#__repr__
 weblogolib.LogoOptions.__init__	weblogolib.LogoOptions-class.html#__init__
-weblogolib.LogoSize	weblogolib.LogoSize-class.html
-weblogolib.LogoSize.__repr__	weblogolib.LogoSize-class.html#__repr__
-weblogolib.LogoSize.__init__	weblogolib.LogoSize-class.html#__init__
 weblogolib._cgi.Field	weblogolib._cgi.Field-class.html
 weblogolib._cgi.Field.get_value	weblogolib._cgi.Field-class.html#get_value
 weblogolib._cgi.Field.__init__	weblogolib._cgi.Field-class.html#__init__

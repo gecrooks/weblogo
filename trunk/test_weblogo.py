@@ -51,16 +51,15 @@ import numpy as na
 from corebio import seq_io
 from corebio.seq import *
 
-# python2.3 compatability
-from corebio._future.subprocess import *
-from corebio._future import resource_stream
+from subprocess import *
+from pkg_resources import resource_stream
 
 from corebio.moremath import entropy
 from math import log, sqrt
 
 
 def testdata_stream( name ): 
-    return resource_stream(__name__, 'tests/data/'+name, __file__)    
+    return resource_stream(__name__, 'tests/data/'+name)    
 
 class test_logoformat(unittest.TestCase) :
 
@@ -235,9 +234,6 @@ class test_colorscheme(unittest.TestCase) :
 
 
 class test_color(unittest.TestCase) :
-    # 2.3 Python compatibility
-    assertTrue  = unittest.TestCase.failUnless
-    assertFalse = unittest.TestCase.failIf
 
     def test_color_names(self) :
         names = Color.names()
@@ -389,10 +385,6 @@ class test_color(unittest.TestCase) :
        
    
 class test_Dirichlet(unittest.TestCase) :
-    # 2.3 Python compatibility
-    assertTrue  = unittest.TestCase.failUnless
-    assertFalse = unittest.TestCase.failIf
-
     
     def test_init(self) :
         d = Dirichlet( ( 1,1,1,1,) )

@@ -37,6 +37,6 @@ Please see the LICENSE.txt file for details on copyright and licensing.
 The WebLogo source code can be downloaded from 
 http://code.google.com/p/weblogo/
 
-WebLogo requires Python 2.3, 2.4 or 2.5, the corebio python toolkit for
+WebLogo requires Python 2.4 or 2.5, the corebio python toolkit for
 computational biology (http://code.google.com/p/corebio), and the python
 array package 'numpy' (http://www.scipy.org/Download)
