@@ -142,13 +142,7 @@ class test_logooptions(unittest.TestCase) :
         
         opt = LogoOptions(title="sometitle")
         assert opt.title == "sometitle"
-         
-class test_logosize(unittest.TestCase) :
-    def test_create(self) :
-        s = LogoSize(101.0,10.0)
-        assert s.stack_width == 101.0
-        r = repr(s)         
-      
+        
         
 class test_seqlogo(unittest.TestCase) :
     # FIXME: The version of python used by Popen may not be the
@@ -214,17 +208,7 @@ class test_seqlogo(unittest.TestCase) :
         self._exec( ["--annotate","1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,,"],[])
 
         
- 
-class test_which(unittest.TestCase) :
-    def test_which(self):
-        tests = ( 
-            (seq_io.read(testdata_stream('cap.fa')), unambiguous_dna_alphabet),
-            (seq_io.read(testdata_stream('cox2.msf')), unambiguous_protein_alphabet),
-            (seq_io.read(testdata_stream('Rv3829c.fasta')), unambiguous_protein_alphabet),
-        )
-        for t in tests :
-            self.failUnlessEqual(which_alphabet(t[0]), t[1])
-       
+
         
 
 
