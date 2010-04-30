@@ -77,7 +77,7 @@ To create a logo in python code:
 This package is distributed under the new BSD Open Source License. 
 Please see the LICENSE.txt file for details on copyright and licensing.
 The WebLogo source code can be downloaded from http://code.google.com/p/weblogo/
-WebLogo requires Python 2.4 or 2.5, the corebio python toolkit for computational 
+WebLogo requires Python 2.4, 2.5 or 2.6, the corebio python toolkit for computational 
 biology (http://code.google.com/p/corebio), and the python array package 
 'numpy' (http://www.scipy.org/Download)
 """
@@ -1830,17 +1830,6 @@ class Dirichlet(object) :
 
 # Standard python voodoo for CLI
 if __name__ == "__main__":
-    ## Code Profiling. Uncomment these lines
-    #import hotshot, hotshot.stats
-    #prof = hotshot.Profile("stones.prof")
-    #prof.runcall(main)
-    #prof.close()
-    #stats = hotshot.stats.load("stones.prof")
-    #stats.strip_dirs()
-    #stats.sort_stats('cumulative', 'calls')
-    #stats.print_stats(40)
-    #sys.exit()
-
     main()
     
 
