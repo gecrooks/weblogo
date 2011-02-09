@@ -47,7 +47,8 @@ def main() :
         
         scripts = [ 'weblogo', ],
         packages  = [ 'weblogolib',],
-        data_files = ['weblogolib/htdocs/*.*','weblogolib/template.eps'],
+		package_data={'weblogolib': 
+			['htdocs/*.*','htdocs/img/*.*','htdocs/examples/*.*','template.eps']},
         requires=['numpy', 'corebio'],        
         
     )
