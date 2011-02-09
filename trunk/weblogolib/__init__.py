@@ -93,7 +93,7 @@ import random
 
 from string import Template
 from subprocess import *
-from pkg_resources import resource_string, resource_filename
+from corebio._future import resource_string, resource_filename
 
 from math import log, sqrt
 
