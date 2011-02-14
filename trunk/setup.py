@@ -45,11 +45,24 @@ def main() :
             'Topic :: Software Development :: Libraries :: Python Modules',
             ],
         
-        scripts = [ 'weblogo', ],
-        packages  = [ 'weblogolib',],
-		package_data={'weblogolib': 
-			['htdocs/*.*','htdocs/img/*.*','htdocs/examples/*.*','template.eps']},
-        requires=['numpy', 'corebio'],        
+        scripts = [ 'weblogo', 'transformseq'],
+	    packages  = [ 
+	        'corebio', 
+	        'corebio.db', 
+	        'corebio.secstruc',
+	        'corebio.seq_io', 
+	        'corebio.seq_io._nexus', 
+	        'corebio.ssearch_io',         
+	        'corebio.utils',
+	        'corebio._future',
+			'weblogolib',
+	        ],
+
+		package_data={
+		'weblogolib': ['htdocs/*.*','htdocs/img/*.*','htdocs/examples/*.*','template.eps'],
+		'corebio': ['data/*.*']
+			},
+        requires=['numpy'],        
         
     )
 
