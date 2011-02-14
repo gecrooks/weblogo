@@ -27,12 +27,13 @@
 
 """Extra utilities and core classes not in standard python.
 """
+# private submodules, such as _which, are for internal corebio use.
 
 
 __all__ = ('isblank', 'isfloat', 'isint', 'fcmp', 'remove_whitespace', 
             'invert_dict', 'update', 'stdrepr', 'Token', 'Struct', 'Reiterate',
              'deoptparse', 'crc32', 'crc64', 'FileIndex', 'find_command',
-             'ArgumentError', 'frozendict')
+             'ArgumentError', 'frozendict','group_count')
 
 import os.path
 import math
@@ -76,11 +77,10 @@ def remove_whitespace( astring) :
 def invert_dict( dictionary) :
     """Constructs a new dictionary with inverted mappings so that keys become 
     values and vice versa. If the values of the original dictionary are not
-    unique then only one of the original kesys will be included in the new
+    unique then only one of the original keys will be included in the new
     dictionary.
     """
     return dict( [(value, key) for key, value in dictionary.iteritems()] )
-
 
 
 def update(obj, **entries):
@@ -97,7 +97,6 @@ def update(obj, **entries):
     return obj
 
 
-
 def stdrepr( obj,  attributes=None, name=None) :
     """Create a standard representation of an object."""
     if name==None : name = obj.__class__.__name__
@@ -108,6 +107,16 @@ def stdrepr( obj,  attributes=None, name=None) :
         args.append( '%s=%s' % ( a, repr( getattr(obj, a) ) ) )
     args = ',\n'.join(args).replace('\n', '\n    ')
     return '%s(\n    %s\n)' % (name, args)
+
+def group_count(i):
+    """An iteration that returns tuples of items and the number of consecutive
+    occurrences. Thus group_count('aabbbc') yields ('a',2), ('b',3), ('c',1)
+    """
+    from itertools import groupby
+    return [ (item, sum( 1 for n in group) ) for item, group in groupby(i)]
+
+
+
    
 
 class Token(object):
