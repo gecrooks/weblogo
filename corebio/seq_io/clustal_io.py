@@ -155,9 +155,11 @@ def _scan( fin ):
             if m is not None :
                 yield Token("header", m.group() )
                 continue
-            else :
-                raise ValueError("Cannot find required header")
-
+			# Just keep going and hope for the best.
+            #else :
+                #raise ValueError("Cannot find required header")
+				
+				
         
         if state == body :
             if line.isspace() : continue

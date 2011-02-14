@@ -55,6 +55,15 @@ class test_clustal_parser(unittest.TestCase) :
         
         seqs = clustal_io.read(StringIO(s))  
   
+    def test_parse_headerless(self):
+        f = testdata_stream("clustal_headerless.aln")
+        seqs = clustal_io.read(f)
+        self.assertEquals(len(seqs), 21)
+        self.assertEquals(seqs[2].name, "O16386_CAEEL")
+        self.assertEquals(len(seqs[1]), 136)
+        
+        
+
     """ Wrong alphabet should throw a parsing error """
     def test_parse_error(self) :
         f = testdata_stream("clustal.aln")
@@ -103,11 +112,13 @@ class test_clustal_parser(unittest.TestCase) :
         
         self.assertEquals(seqs, seqs2)
 
-    def test_parse_table_fail(self) :
-        # should fail with parse error
-        f = StringIO(table_io.example)
-        self.failUnlessRaises(ValueError, 
-            clustal_io.read, f  )
+  # Having removed requirment for clustal header line, this parses fine.
+  #  def test_parse_table_fail(self) :
+  #      # should fail with parse error
+  #      f = StringIO(table_io.example)
+  #     
+  #      self.failUnlessRaises(ValueError, 
+  #          clustal_io.read, f  )
 
 
 
