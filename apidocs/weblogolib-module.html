@@ -60,12 +60,12 @@ WebLogo (http://code.google.com/p/weblogo/) is a tool for creating sequence
 logos from biological sequence alignments.  It can be run on the command line,
 as a standalone webserver, as a CGI webapp, or as a python library.
 
-The main WebLogo webserver is located at http://bespoke.lbl.gov/weblogo/
+The main WebLogo webserver is located at http://weblogo.threeplusone.com/
 
 Please consult the manual for installation instructions and more information:
 (Also located in the weblogolib/htdocs subdirectory.)
 
-    http://bespoke.lbl.gov/weblogo/manual.html
+    http://weblogo.threeplusone.com/manual.html
 
 For help on the command line interface run
     ./weblogo --help
@@ -92,7 +92,7 @@ To create a logo in python code:
 This package is distributed under the new BSD Open Source License. 
 Please see the LICENSE.txt file for details on copyright and licensing.
 The WebLogo source code can be downloaded from http://code.google.com/p/weblogo/
-WebLogo requires Python 2.3, 2.4 or 2.5, the corebio python toolkit for computational 
+WebLogo requires Python 2.4, 2.5 or 2.6, the corebio python toolkit for computational 
 biology (http://code.google.com/p/corebio), and the python array package 
 'numpy' (http://www.scipy.org/Download)
 
@@ -112,9 +112,12 @@ biology (http://code.google.com/p/corebio), and the python array package
 </tr>
   <tr><td class="summary">
   <ul class="nomargin">
+    <li class="private"> <strong class="uidlink"><a href="weblogolib.__init__1-module.html">weblogolib.__init__1</a></strong>: <em class="summary">WebLogo (http://code.google.com/p/weblogo/) is a tool for creating sequence 
+logos from biological sequence alignments.</em>    </li>
     <li class="private"> <strong class="uidlink"><a href="weblogolib._cgi-module.html">weblogolib._cgi</a></strong>    </li>
     <li> <strong class="uidlink"><a href="weblogolib.color-module.html">weblogolib.color</a></strong>: <em class="summary">Color specifications using CSS2 (Cascading Style Sheet) syntax.</em>    </li>
     <li> <strong class="uidlink"><a href="weblogolib.colorscheme-module.html">weblogolib.colorscheme</a></strong>: <em class="summary">Popular color codings for nucleic and amino acids.</em>    </li>
+    <li> <strong class="uidlink"><a href="weblogolib.matrix_io-module.html">weblogolib.matrix_io</a></strong>    </li>
   </ul></td></tr>
 </table>
 
@@ -133,13 +136,6 @@ biology (http://code.google.com/p/corebio), and the python array package
     </td><td class="summary">
         <a href="weblogolib.GhostscriptAPI-class.html" class="summary-name">GhostscriptAPI</a><br />
       Interface to the command line program Ghostscript ('gs')
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a href="weblogolib.LogoSize-class.html" class="summary-name">LogoSize</a>
     </td>
   </tr>
 <tr>
@@ -354,31 +350,14 @@ biology (http://code.google.com/p/corebio), and the python array package
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="read_seq_data"></a><span class="summary-sig-name">read_seq_data</span>(<span class="summary-sig-arg">fin</span>,
-        <span class="summary-sig-arg">input_parser</span>=<span class="summary-sig-default">&lt;function read at 0x12b05b0&gt;</span>,
+          <td><span class="summary-sig"><a href="weblogolib-module.html#read_seq_data" class="summary-sig-name">read_seq_data</a>(<span class="summary-sig-arg">fin</span>,
+        <span class="summary-sig-arg">input_parser</span>=<span class="summary-sig-default">seq_io.read</span>,
         <span class="summary-sig-arg">alphabet</span>=<span class="summary-sig-default">None</span>,
         <span class="summary-sig-arg">ignore_lower_case</span>=<span class="summary-sig-default">False</span>,
-        <span class="summary-sig-arg">max_file_size</span>=<span class="summary-sig-default">0</span>)</span></td>
+        <span class="summary-sig-arg">max_file_size</span>=<span class="summary-sig-default">0</span>)</span><br />
+      Read sequence data from the input stream and return a seqs object.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="weblogolib-pysrc.html#read_seq_data">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="which_alphabet"></a><span class="summary-sig-name">which_alphabet</span>(<span class="summary-sig-arg">seqs</span>)</span><br />
-      Returns the most appropriate unambiguous protien, rna or dna alphabet
-for a Seq or SeqList.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="weblogolib-pysrc.html#which_alphabet">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -399,7 +378,7 @@ for a Seq or SeqList.</td>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="weblogolib-module.html#description" class="summary-name">description</a> = <code title="'Create sequence logos from biological sequence alignments.'"><code class="variable-quote">'</code><code class="variable-string">Create sequence logos from biological sequence </code><code class="variable-ellipsis">...</code></code>
+        <a href="weblogolib-module.html#description" class="summary-name">description</a> = <code title="&quot;Create sequence logos from biological sequence alignments.&quot;">&quot;Create sequence logos from biological sequence <code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr>
@@ -416,7 +395,7 @@ Group(&quot;C&quot;, &quot;blue&quot;), ColorGroup(&quot;A&quot;, &quot;green&qu
     </td><td class="summary">
         <a href="weblogolib-module.html#std_color_schemes" class="summary-name">std_color_schemes</a> = <code title="{&quot;auto&quot;: None, &quot;monochrome&quot;: monochrome, &quot;base pairing&quot;: base_pairing,\
  &quot;classic&quot;: classic, &quot;hydrophobicity&quot;: hydrophobicity, &quot;chemistry&quot;: ch\
-emistry, &quot;charge&quot;: charge,}"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">auto</code><code class="variable-quote">'</code><code class="variable-op">: </code>None<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">base pairing</code><code class="variable-quote">'</code><code class="variable-op">: </code>&lt;weblogolib<code class="variable-ellipsis">...</code></code>
+emistry, &quot;charge&quot;: charge,}">{&quot;auto&quot;: None, &quot;monochrome&quot;: monochrome, &quot;<code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr>
@@ -424,58 +403,40 @@ emistry, &quot;charge&quot;: charge,}"><code class="variable-group">{</code><cod
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
         <a href="weblogolib-module.html#default_color_schemes" class="summary-name">default_color_schemes</a> = <code title="{unambiguous_protein_alphabet: hydrophobicity, unambiguous_rna_alphabe\
-t: base_pairing, unambiguous_dna_alphabet: base_pairing}"><code class="variable-group">{</code>Alphabet( 'ACGT', zip('acgt', 'ACGT')<code class="variable-ellipsis">...</code></code>
+t: base_pairing, unambiguous_dna_alphabet: base_pairing}">{unambiguous_protein_alphabet: hydroph<code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="weblogolib-module.html#std_units" class="summary-name">std_units</a> = <code title="{'bits': 1.44269504089,
- 'digits': 0.434294481903,
- 'kJ/mol': 2.4789598268,
- 'kT': 1.0,
- 'kcal/mol': 0.59242405,
- 'nats': 1.0,
- 'probability': None}"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">bits</code><code class="variable-quote">'</code><code class="variable-op">: </code>1.44269504089<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">digits</code><code class="variable-quote">'</code><code class="variable-op">: </code>0.434294481903<code class="variable-op">, </code><code class="variable-ellipsis">...</code></code>
+        <a href="weblogolib-module.html#std_units" class="summary-name">std_units</a> = <code title="{&quot;bits&quot;: 1./ log(2), &quot;nats&quot;: 1., &quot;digits&quot;: 1./ log(10), &quot;kT&quot;: 1., &quot;kJ/\
+mol&quot;: 8.314472* 298.15/ 1000., &quot;kcal/mol&quot;: 1.987* 298.15/ 1000., &quot;prob\
+ability&quot;: None,}">{&quot;bits&quot;: 1./ log(2), &quot;nats&quot;: 1., &quot;digits&quot;: 1./ log<code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="weblogolib-module.html#std_sizes" class="summary-name">std_sizes</a> = <code title="{'large': LogoSize(
-    stack_height=81.000000000000014,
-    stack_width=16.200000000000003
-),
- 'medium': LogoSize(
-    stack_height=54.0,
-    stack_width=10.800000000000001
-),
-..."><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">large</code><code class="variable-quote">'</code><code class="variable-op">: </code>LogoSi<code class="variable-ellipsis">...</code></code>
+        <a name="std_sizes"></a><span class="summary-name">std_sizes</span> = <code title="{&quot;small&quot;: 5.4, &quot;medium&quot;: 5.4* 2, &quot;large&quot;: 5.4* 3}">{&quot;small&quot;: 5.4, &quot;medium&quot;: 5.4* 2, &quot;large&quot;: 5.4* 3}</code>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="weblogolib-module.html#std_alphabets" class="summary-name">std_alphabets</a> = <code title="{'dna': Alphabet( 'ACGT', zip('acgt', 'ACGT') ),
- 'protein': Alphabet( 'ACDEFGHIKLMNPQRSTVWY', zip('acdefghiklmnpqrstvw\
-y', 'ACDEFGHIKLMNPQRSTVWY') ),
- 'rna': Alphabet( 'ACGU', zip('acgu', 'ACGU') )}"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">dna</code><code class="variable-quote">'</code><code class="variable-op">: </code>Alphabet( 'ACGT', zip('acgt', 'ACGT') <code class="variable-ellipsis">...</code></code>
+        <a href="weblogolib-module.html#std_alphabets" class="summary-name">std_alphabets</a> = <code title="{'protein': unambiguous_protein_alphabet, 'rna': unambiguous_rna_alpha\
+bet, 'dna': unambiguous_dna_alphabet}">{'protein': unambiguous_protein_alphabet, 'rna<code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="weblogolib-module.html#std_percentCG" class="summary-name">std_percentCG</a> = <code title="{'C. elegans': 36.0,
- 'D. melanogaster': 43.0,
- 'E. coli': 50.5,
- 'H. sapiens': 40.0,
- 'M. musculus': 42.0,
- 'S. cerevisiae': 38.0,
- 'T. thermophilus': 69.4}"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">C. elegans</code><code class="variable-quote">'</code><code class="variable-op">: </code>36.0<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">D. melanogaster</code><code class="variable-quote">'</code><code class="variable-op">: </code>43.0<code class="variable-op">, </code><code class="variable-ellipsis">...</code></code>
+        <a href="weblogolib-module.html#std_percentCG" class="summary-name">std_percentCG</a> = <code title="{'H. sapiens': 40., 'E. coli': 50.5, 'S. cerevisiae': 38., 'C. elegans\
+': 36., 'D. melanogaster': 43., 'M. musculus': 42., 'T. thermophilus':\
+ 69.4,}">{'H. sapiens': 40., 'E. coli': 50.5, 'S. cerev<code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr>
@@ -488,6 +449,45 @@ atter,}">{'eps': eps_formatter, 'pdf': pdf_formatter, 'png<code class="variable-
     </td>
   </tr>
 </table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Function Details</span></td>
+</tr>
+</table>
+<a name="read_seq_data"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">read_seq_data</span>(<span class="sig-arg">fin</span>,
+        <span class="sig-arg">input_parser</span>=<span class="sig-default">seq_io.read</span>,
+        <span class="sig-arg">alphabet</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">ignore_lower_case</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">max_file_size</span>=<span class="sig-default">0</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="weblogolib-pysrc.html#read_seq_data">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+Read sequence data from the input stream and return a seqs object. 
+
+The enviroment variable WEBLOGO_MAX_FILE_SIZE overides the max_file_size argument.
+Used to limit the load on the WebLogo webserver.
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
 <!-- ==================== VARIABLES DETAILS ==================== -->
 <a name="section-VariablesDetails"></a>
 <table class="details" border="1" cellpadding="3"
@@ -509,7 +509,7 @@ atter,}">{'eps': eps_formatter, 'pdf': pdf_formatter, 'png<code class="variable-
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-<code class="variable-quote">'</code><code class="variable-string">Create sequence logos from biological sequence alignments.</code><code class="variable-quote">'</code>
+&quot;Create sequence logos from biological sequence alignments.&quot;
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -585,39 +585,9 @@ t: base_pairing, unambiguous_dna_alphabet: base_pairing}
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-<code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">bits</code><code class="variable-quote">'</code><code class="variable-op">: </code>1.44269504089<code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">digits</code><code class="variable-quote">'</code><code class="variable-op">: </code>0.434294481903<code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">kJ/mol</code><code class="variable-quote">'</code><code class="variable-op">: </code>2.4789598268<code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">kT</code><code class="variable-quote">'</code><code class="variable-op">: </code>1.0<code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">kcal/mol</code><code class="variable-quote">'</code><code class="variable-op">: </code>0.59242405<code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">nats</code><code class="variable-quote">'</code><code class="variable-op">: </code>1.0<code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">probability</code><code class="variable-quote">'</code><code class="variable-op">: </code>None<code class="variable-group">}</code>
-</pre></td></tr></table>
-</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="std_sizes"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">std_sizes</h3>
-  
-  <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-<code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">large</code><code class="variable-quote">'</code><code class="variable-op">: </code>LogoSize(
-    stack_height=81.000000000000014,
-    stack_width=16.200000000000003
-)<code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">medium</code><code class="variable-quote">'</code><code class="variable-op">: </code>LogoSize(
-    stack_height=54.0,
-    stack_width=10.800000000000001
-)<code class="variable-op">,</code>
-<code class="variable-ellipsis">...</code>
+{&quot;bits&quot;: 1./ log(2), &quot;nats&quot;: 1., &quot;digits&quot;: 1./ log(10), &quot;kT&quot;: 1., &quot;kJ/<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+mol&quot;: 8.314472* 298.15/ 1000., &quot;kcal/mol&quot;: 1.987* 298.15/ 1000., &quot;prob<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+ability&quot;: None,}
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -635,10 +605,8 @@ t: base_pairing, unambiguous_dna_alphabet: base_pairing}
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-<code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">dna</code><code class="variable-quote">'</code><code class="variable-op">: </code>Alphabet( 'ACGT', zip('acgt', 'ACGT') )<code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">protein</code><code class="variable-quote">'</code><code class="variable-op">: </code>Alphabet( 'ACDEFGHIKLMNPQRSTVWY', zip('acdefghiklmnpqrstvw<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-y', 'ACDEFGHIKLMNPQRSTVWY') )<code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">rna</code><code class="variable-quote">'</code><code class="variable-op">: </code>Alphabet( 'ACGU', zip('acgu', 'ACGU') )<code class="variable-group">}</code>
+{'protein': unambiguous_protein_alphabet, 'rna': unambiguous_rna_alpha<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+bet, 'dna': unambiguous_dna_alphabet}
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -656,13 +624,9 @@ y', 'ACDEFGHIKLMNPQRSTVWY') )<code class="variable-op">,</code>
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-<code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">C. elegans</code><code class="variable-quote">'</code><code class="variable-op">: </code>36.0<code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">D. melanogaster</code><code class="variable-quote">'</code><code class="variable-op">: </code>43.0<code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">E. coli</code><code class="variable-quote">'</code><code class="variable-op">: </code>50.5<code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">H. sapiens</code><code class="variable-quote">'</code><code class="variable-op">: </code>40.0<code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">M. musculus</code><code class="variable-quote">'</code><code class="variable-op">: </code>42.0<code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">S. cerevisiae</code><code class="variable-quote">'</code><code class="variable-op">: </code>38.0<code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">T. thermophilus</code><code class="variable-quote">'</code><code class="variable-op">: </code>69.4<code class="variable-group">}</code>
+{'H. sapiens': 40., 'E. coli': 50.5, 'S. cerevisiae': 38., 'C. elegans<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+': 36., 'D. melanogaster': 43., 'M. musculus': 42., 'T. thermophilus':<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+ 69.4,}
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -720,7 +684,7 @@ atter,}
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Tue Oct 14 17:18:42 2008
+    Generated by Epydoc 3.0.1 on Mon Feb 14 13:18:54 2011
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

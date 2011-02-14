@@ -1,0 +1,15 @@
+SEQ  1    QIVNSVDTMTLTNANVSPDGFTRAGILVNGVHGPLIRGGKNDNFELNVVN   50          1A65
+STR        EETTEEEEEEEEEEETTTT  EEEEEETTBTTTEEEEETTT EEEEEEE               1A65
+REM  --------------- Detailed secondary structure assignment-------------  1A65
+REM                                                                        1A65
+REM  |---Residue---|    |--Structure--|   |-Phi-|   |-Psi-|  |-Area-|      1A65
+ASG  GLN A    1    1    C          Coil    360.00    157.13      95.4      1A65
+ASG  ILE A    2    2    E        Strand   -123.71    140.44      52.6      1A65
+ASG  VAL A    3    3    E        Strand   -107.57    132.67       0.8      1A65
+ASG  ASN A    4    4    T          Turn    -88.63    171.80      82.8      1A65
+ASG  SER A    5    5    T          Turn    -67.82    -20.25      20.9      1A65
+ASG  VAL A    6    6    E        Strand   -122.49    116.13      88.1      1A65
+ASG  ASP A    7    7    E        Strand   -171.42    177.50      48.2      1A65
+ASG  THR A    8    8    E        Strand   -111.06    136.75      56.7      1A65
+ASG  MET A    9    9    E        Strand   -116.98     98.04       0.0      1A65
+ASG  THR A   10   10    E        Strand    -91.78    123.05      38.1      1A65
