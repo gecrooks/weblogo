@@ -77,6 +77,37 @@ def cmp_sccs(sccs1, sccs2) :
 
     return cmp(s1,s2)
 
+def sccs_relation(sccs1, sccs2) :
+    """Are two scop domains related? Returns +1 if homologous , -1 if not homologous, 
+    and 0 if ambiguous.
+
+    Protein domains are classified into a hierarchy of class, fold, superfamily
+    and family. Homologous domains are placed into the  same superfamily, 
+    whereas domains belonging to different classes or folds are considered 
+    unrelated. The evolutionary relationship of domains classified in the same
+    fold but different superfamilies is ambiguous. (Green and Brenner, 2002).           
+
+     - sccs1, sccs2 : Two SCOP concise classification string (e.g. a.4.5.11) which represent 
+    a domain's classification. The letter represents the class, and the numbers are the fold,
+    superfamily, and family, respectively.
+    """
+
+    s1 = sccs1.split('.')
+    s2 = sccs2.split('.')
+
+    if s1[0] != s2[0] :
+        #  Different classes: not homologs
+        return -1
+    elif s1[1] != s2[1] :
+        #  Different folds: not homologs
+        return -1
+    elif s1[2] == s2[2] :
+        # Same class, fold and superfamily: homologs
+        return +1
+    else :
+        # Same class and fold, but different superfamilies: Ambiguous
+        return 0
+
 
 
 def _open_scop_file(scop_dir_path, version, filetype) :
@@ -355,6 +386,13 @@ class Domain(Node) :
             s.append("{"+sp.description+"}")
 
         return " ".join(s)
+
+
+    def relation(self, other) :
+        """BETA"""
+        if self.sid == other.sid : return 0
+        return sccs_relation(self.sccs, other.sccs)
+        
 
     def to_des_record(self):
         """Return a des.Record"""
