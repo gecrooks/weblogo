@@ -90,6 +90,15 @@ class test_scop(unittest.TestCase):
         assert cmp_sccs("b.1.2.2", "a.5.1.11") == 1
         assert cmp_sccs("b.1.2.2", "b.1.2") == 1        
 
+    def test_sccs_relations(self):
+        assert sccs_relation("a.1.1.1", "a.1.1.1") == 1
+        assert sccs_relation("a.1.1.2", "a.1.1.1") == 1
+        assert sccs_relation("a.1.1.2", "a.1.1.11") == 1
+        assert sccs_relation("a.1.2.2", "a.1.1.11") == 0
+        assert sccs_relation("a.1.2.2", "a.5.1.11") == -1         
+        assert sccs_relation("b.1.2.2", "a.5.1.11") == -1
+        assert sccs_relation("b.1.2.2", "b.1.2") == 1        
+
 
 
     def testConstructFromDirectory(self):
