@@ -145,7 +145,7 @@ class test_seq_io(unittest.TestCase) :
             testdata_stream("pfam.txt"),
         )
         table_examples = (
-            StringIO(table_io.example),
+            #StringIO(table_io.example),#Because clustal parser will now read tables. 
         )
         array_examples = (StringIO(array_io.example), ) 
         
@@ -159,7 +159,7 @@ class test_seq_io(unittest.TestCase) :
             nbrf_io : nbrf_examples,
             nexus_io : nexus_examples,
             stockholm_io : stockholm_examples,
-            table_io : table_examples,
+            table_io : table_examples,						
             array_io : array_examples,
             genbank_io : test_genbank_io.examples()
         }
