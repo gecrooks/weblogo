@@ -451,50 +451,6 @@ class Seq(str):
         return counts
         
         
-    def kmers(self, alphabet = None, k=1):
-        """Counts the occurrences of overlapping alphabetic subsequences.   
-        
-        Arguments:
-        - alphabet -- an optional alternative alphabet
-        - k        -- subsequence length. Default: 1 (monomers)
-        
-        Returns :
-            A list of kmers counts in alphabetic order.
-        Status :
-            Alpha -- Not sure on interface. Will only work for small k
-        """      
-        # TODO: Refactor?
-        # TODO: Rename 'kmers' to 'words' or word_count
-        if not alphabet : alphabet = self.alphabet 
-        
-        L = len(alphabet)
-        N = L**k
-        counts = [0,]*N
-        
-        ords = alphabet.ords(self) 
-
-
-        # Easy case 
-        if k==1 :       
-            for n in ords:
-                if n<N : counts[n] +=1
-            return counts
-        
-        # Kmer counting. 
-        # FIXME: This code assumes that k isn't too large.
-
-        # e.g. L =10, k = 3, multi = [100,10,1]
-        multi = [ L**i for i in range(k-1,-1,-1)]
-        
-        for i in range(len(ords)-k+1) :
-            if ords[i] >= N :   # Skip non-alphabetic kmers
-                i += k
-                continue
-            #FIXME: this should be a function of alphabet?
-            n = sum([multi[j]* ords[i+j] for j in range(k)  ])
-            counts[n] +=1
-        
-        return counts 
 
     def __getslice__(self, i, j):    
         cls = self.__class__
@@ -610,6 +566,36 @@ class Seq(str):
         s = str.translate(self, _complement_table)
         cls = self.__class__
         return cls(s, self.alphabet, self.name, self.description) 
+ 
+    def words(self, k, alphabet=None) :
+        """Return an iteration over all subwords of length k in the sequence. If an optional
+        alphabet is provided, only words from that alphabet are returned.
+        
+        >>> list(Seq("abcabc").words(3))
+        ['abc', 'bca', 'cab', 'abc']
+        """
+        
+        if len(self) < k : return
+        
+        # An optimization. Chopping up strings isfaster.
+        seq = self.alphabet.normalize(self).tostring()
+        #seq = self.tostring() 
+    
+        for i in range(0,len(seq)-k+1) :
+            word = seq[i:i+k]
+            if alphabet is None or alphabet.alphabetic(word) :
+                yield word
+
+    def word_count(self, k, alphabet=None):
+        """Return a count of all subwords in the sequence.
+        
+        >>> from corebio.seq import *
+        >>> Seq("abcabc").word_count(3)
+        [('abc', 2), ('bca', 1), ('cab', 1)]
+        """
+        from corebio.utils import group_count
+        words = sorted(self.words(k,alphabet))
+        return group_count(words)
  
         
 # end class Seq

@@ -89,7 +89,11 @@ class test_utils(unittest.TestCase) :
             self.assertTrue( isblank(s))
         for s in not_blank:
             self.assertFalse( isblank(s))
-             
+ 
+    def test_group_count(self):
+        test = 'aaabbbbcccddea'
+        out = group_count(test)     
+        self.assertTrue( tuple(out) == (('a',3),('b',4),('c',3),('d',2),('e',1),('a',1)) )    
         
     def test_reiterate(self) :
         i = Reiterate( iter("123456") )

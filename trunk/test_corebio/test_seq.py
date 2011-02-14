@@ -166,22 +166,23 @@ class test_seq(unittest.TestCase):
         c = s.tally( Alphabet("AC"))
         self.assertEquals(2, len(c))
         self.assertEquals(list(c), [4,6])
-        
-        
-        
-    def test_kmers(self) :
-        # Kmers
-        s = Seq("AGTCAGCTACGACGCGC", unambiguous_dna_alphabet)    
-        c = s.kmers(k=2)
-        self.assertEquals(len(unambiguous_dna_alphabet)**2, len(c))
-        self.assertEquals(list(c),
-            [0,2,2,0,1,0,3,1,1,3,0,1,1,1,0,0])
 
 
+    def test_words(self) :
+        s = Seq("AGTCAGCTACGACGcgcx", dna_alphabet)
+        w = list(s.words(2,unambiguous_dna_alphabet ))
+        self.assertEquals(len(w),len(s)-2)
+        self.assertEquals(w, ['AG', 'GT', 'TC', 'CA', 'AG', 'GC', 'CT', 'TA', 'AC', 'CG', 'GA', 'AC', 'CG', 'GC', 'CG', 'GC'])
         
-        
-        
-        
+        self.assertEquals(list(s.words(len(s), unambiguous_dna_alphabet)), [])
+        self.assertEquals(list(s.words(len(s)-1,unambiguous_dna_alphabet)), ["AGTCAGCTACGACGCGC",])
+
+    def test_words2(self) :
+        s = Seq("AGTCAGCTACGACGCGC", unambiguous_dna_alphabet)
+        wc = s.word_count(2)
+        count = zip(*wc)[1]
+        self.assertEquals(count, (2,2,1,3,1,1,3,1,1,1) )
+                
     def test_getslice(self):
         s = Seq("AGTCAGCTACGACGCGC", dna_alphabet)
         slice = s[2:4]
