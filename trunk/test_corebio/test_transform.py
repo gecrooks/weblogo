@@ -77,7 +77,13 @@ class test_transform(unittest.TestCase):
    #     s3 = Seq("ACGTTNNNNNNNNNNNACGTTNNNNNNNNNNN", dna_alphabet )
    #     self.assertEquals(s2, s3)
     
-     
+    def test_reduced_protein_alphabets(self):
+        seq = Seq("ENHGGKVALKTHCGKYLSIGDHKQVYLSHHLHGDHSLFHLEHHGGKVSIKGHHHHYISADHHGHVSTKEHHDHDTTFEEIII", reduced_protein_alphabet)
+        
+        for t in reduced_protein_alphabets.values():
+            s = t(seq)
+
+
     
 
 

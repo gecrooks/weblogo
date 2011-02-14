@@ -32,20 +32,33 @@ Classes :
 Functions :
 -  mask_low_complexity -- Implementation of Seg algorithm to remove low complexity  
         regions from protein sequences.
-   
+
+Other:
+-   reduced_protein_alphabets -- A dictinoary of transforms that reduce the size of the protein alphabet,
+        merging various amino acids into classes.
+        
+        "LiBn" where n is 2 to 19 are from Li et al (2003), table I, 2 to 19 groups.
+        "LiBn" where n is 2 to 19 are from Li et al (2003), table II (no interlacing), 2 to 19 groups.
+        
+        Ref: Li et al Reduction of protein sequence complexity by residue grouping, 
+            Prot. Eng. 16 323-330 (2003)  
+
     
 """
 
 
 from corebio.data import dna_extended_letters, dna_ambiguity
-from corebio.seq import Seq, protein_alphabet, nucleic_alphabet, dna_alphabet
+from corebio.seq import Seq, protein_alphabet, nucleic_alphabet, dna_alphabet, Alphabet
+
+from corebio.seq import reduced_protein_alphabet as std_protein_alphabet 
 from string import maketrans
 from corebio.moremath import log2 , entropy
 
 __all__ = [
     'Transform',
     'mask_low_complexity',
-    'GeneticCode'
+    'GeneticCode',
+    'reduced_protein_alphabets'
     ]
 
 class Transform(object) :
@@ -55,7 +68,7 @@ class Transform(object) :
     
     Example:
     trans = Transform( 
-        Seq("ACGTRYSWKMBDHVN-acgtUuryswkmbdhvnXx?.~'", dna_alphabet),                    
+        Seq("ACGTRYSWKMBDHVN-acgtUuryswkmbdhvnXx?.~", dna_alphabet),                    
         Seq("ACGTRYSWKMNNNNN-acgtUuryswkmbnnnnXx?.~", reduced_nucleic_alphabet)         
         )
     s0 = Seq("AAAAAV", nucleic_alphabet)
@@ -66,18 +79,19 @@ class Transform(object) :
     Status : Beta 
     """
     
-    __slots__ = ["table", "source", "target"]
-    def __init__(self, source, target) :
+    __slots__ = ["table", "source", "target","name","description"]
+    def __init__(self, source, target, name=None,description=None) :
 
         self.table = maketrans(source, target)
         self.source = source
         self.target = target
-     
+        self.name = name
+        self.description = description
      
     def __call__(self, seq) :
         """Translate sequence."""
         if not self.source.alphabet.alphabetic(seq) :
-            raise ValueError("Incompatable alphabets")
+            raise ValueError("Incompatible alphabets")
         s = str.translate(seq, self.table)
         cls = self.target.__class__
         return cls(s, self.target.alphabet, seq.name, seq.description)
@@ -175,8 +189,14 @@ def mask_low_complexity(seq, width =12, trigger=1.8, extension=2.0, mask='X') :
         else :
             prev_segged = False
 
+    segged = seq.alphabet.chrs(s)
+    segged.name =seq.name
+    segged.description = seq.description
+    return segged
     
-    return  seq.alphabet.chrs(s)
+    
+    
+    
 # end mask_low_complexity()    
      
 
@@ -600,6 +620,202 @@ _codon_tables = (
         "TCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAG",),
     )
     
-          
+
+
+reduced_protein_alphabets = {
+#
+    "LiB2": Transform(
+    	Seq("CFYWMLIV-GPATSNHQEDRKX*-", std_protein_alphabet  ),
+    	Seq("IIIIIIII-SSSSSSSSSSSSX*-", Alphabet("ISX*-") ),
+    	"Li et al (2003), table II, group 2"),
+#
+    "LiB3": Transform(
+    	Seq("CFYWMLIV-GPATS-NHQEDRKX*-", std_protein_alphabet  ),
+    	Seq("IIIIIIII-SSSSS-EEEEEEEX*-", Alphabet("ISEX*-") ),
+    	"Li et al (2003), table II, group 3"),
+#
+    "LiB4": Transform(
+    	Seq("CFYW-MLIV-GPATS-NHQEDRKX*-", std_protein_alphabet  ),
+    	Seq("YYYY-IIII-SSSSS-EEEEEEEX*-", Alphabet("YISEX*-") ),
+    	"Li et al (2003), table II, group 4"),	
+#
+    "LiB5": Transform(
+    	Seq("CFYW-MLIV-G-PATS-NHQEDRKX*-", std_protein_alphabet ) ,
+    	Seq("YYYY-IIII-G-SSSS-EEEEEEEX*-", Alphabet("YIGSEX*-") ),
+    	"Li et al (2003), table II, group 5"),	
+#
+    "LiB6": Transform(
+    	Seq("CFYW-MLIV-G-P-ATS-NHQEDRKX*-", std_protein_alphabet ) ,
+    	Seq("YYYY-IIII-G-P-SSS-EEEEEEEX*-", Alphabet("YIGPSEX*-") ),
+    	"Li et al (2003), table II, group 6"),	
+#
+    "LiB7": Transform(
+    	Seq("CFYW-MLIV-G-P-ATS-NHQED-RKX*-", std_protein_alphabet  ),
+    	Seq("YYYY-IIII-G-P-SSS-EEEEE-KKX*-", Alphabet("YIGPSEKX*-") ),
+    	"Li et al (2003), table II, group 7"),	
+#
+    "LiB8": Transform(
+    	Seq("CFYW-MLIV-G-P-ATS-NH-QED-RKX*-", std_protein_alphabet  ),
+    	Seq("YYYY-IIII-G-P-SSS-NN-EEE-KKX*-", Alphabet("YIGPSNEKX*-") ),
+    	"Li et al (2003), table II, group 8"),	
+#
+    "LiB9": Transform(
+    	Seq("CFYW-ML-IV-G-P-ATS-NH-QED-RKX*-", std_protein_alphabet  ),
+    	Seq("YYYY-LL-II-G-P-SSS-NN-EEE-KKX*-", Alphabet("YLIGPSNEKX*-") ),
+    	"Li et al (2003), table II, group 9"),	
+#
+    "LiB10": Transform(
+    	Seq("C-FYW-ML-IV-G-P-ATS-NH-QED-RKX*-", std_protein_alphabet  ),
+    	Seq("C-YYY-LL-II-G-P-SSS-NN-EEE-KKX*-", Alphabet("CYLIGPSNEKX*-") ),
+    	"Li et al (2003), table II, group 10"),	
+#
+    "LiB11": Transform(
+    	Seq("C-FYW-ML-IV-G-P-A-TS-NH-QED-RKX*-", std_protein_alphabet  ),
+    	Seq("C-YYY-LL-II-G-P-A-SS-NN-EEE-KKX*-", Alphabet("CYLIGPASNEKX*-") ),
+    	"Li et al (2003), table II, group 11"),	
+#
+    "LiB12": Transform(
+    	Seq("C-FYW-ML-IV-G-P-A-TS-NH-QE-D-RKX*-", std_protein_alphabet  ),
+    	Seq("C-YYY-LL-II-G-P-A-SS-NN-EE-D-KKX*-", Alphabet("CYLIGPASNEDKX*-") ),
+    	"Li et al (2003), table II, group 12"),	
+#
+    "LiB13": Transform(
+    	Seq("C-FYW-ML-IV-G-P-A-T-S-NH-QE-D-RKX*-", std_protein_alphabet ),
+    	Seq("C-YYY-LL-II-G-P-A-T-S-NN-EE-D-KKX*-", Alphabet("CYLIGPATSNEDKX*-") ),
+    	"Li et al (2003), table II, group 13"),	
+#
+    "LiB14": Transform(
+    	Seq("C-FYW-ML-IV-G-P-A-T-S-N-H-QE-D-RKX*-", std_protein_alphabet  ),
+    	Seq("C-YYY-LL-II-G-P-A-T-S-N-H-EE-D-KKX*-", Alphabet("CYLIGPATSNHEDKX*-") ),
+    	"Li et al (2003), table II, group 14"),	
+#
+    "LiB15": Transform(
+    	Seq("C-FYW-ML-IV-G-P-A-T-S-N-H-QE-D-R-KX*-", std_protein_alphabet  ),
+    	Seq("C-YYY-LL-II-G-P-A-T-S-N-H-EE-D-R-KX*-", Alphabet("CYLIGPATSNHEDRKX*-") ),
+    	"Li et al (2003), table II, group 15"),	
+#
+    "LiB16": Transform(
+    	Seq("C-FY-W-ML-IV-G-P-A-T-S-N-H-QE-D-R-KX*-", std_protein_alphabet  ),
+    	Seq("C-YY-W-LL-II-G-P-A-T-S-N-H-EE-D-R-KX*-", Alphabet("CYWLIGPATSNHEDRKX*-") ),
+    	"Li et al (2003), table II, group 16"),	
+#
+    "LiB17": Transform(
+    	Seq("C-FY-W-ML-IV-G-P-A-T-S-N-H-Q-E-D-R-KX*-", std_protein_alphabet  ),
+    	Seq("C-YY-W-LL-II-G-P-A-T-S-N-H-Q-E-D-R-KX*-", Alphabet("CYWLIGPATSNHQEDRKX*-") ),
+    	"Li et al (2003), table II, group 17"),	
+#
+    "LiB18": Transform(
+    	Seq("C-FY-W-M-L-IV-G-P-A-T-S-N-H-Q-E-D-R-KX*-", std_protein_alphabet  ),
+    	Seq("C-YY-W-M-L-II-G-P-A-T-S-N-H-Q-E-D-R-KX*-", Alphabet("CYWMLIGPATSNHQEDRKX*-") ),
+    	"Li et al (2003), table II, group 18"),	
+#
+    "LiB19": Transform(
+    	Seq("C-F-Y-W-M-L-IV-G-P-A-T-S-N-H-Q-E-D-R-KX*-", std_protein_alphabet  ),
+    	Seq("C-F-Y-W-M-L-II-G-P-A-T-S-N-H-Q-E-D-R-KX*-", Alphabet("CFYWMLIGPATSNHQEDRKX*-") ),
+    	"Li et al (2003), table II, group 19"),	
+#
+    "LiB19": Transform(
+        Seq("C-F-Y-W-M-L-I-V-G-P-A-T-S-N-H-Q-E-D-R-KX*-", std_protein_alphabet  ),
+        Seq("C-F-Y-W-M-L-I-V-G-P-A-T-S-N-H-Q-E-D-R-KX*-", Alphabet("CFYWMLIVGPATSNHQEDRKX*-") ),
+            "Li et al (2003), table II, group 20"),	
+    	
+#
+    "LiA2": Transform(
+    	Seq("CMFILVWY-AGTSNQDEHRKPX*-", std_protein_alphabet  ),
+    	Seq("IIIIIIII-SSSSSSSSSSSSX*-", Alphabet("ISX*-") ),
+    	"Li et al (2003), table I, group 2"),
+#
+    "LiA3": Transform(
+    	Seq("CMFILVWY-AGTSP-NQDEHRKX*-", std_protein_alphabet  ),
+    	Seq("IIIIIIII-SSSSS-EEEEEEEX*-", Alphabet("ISEX*-") ),
+    	"Li et al (2003), table I, group 3"),
+#
+    "LiA4": Transform(
+    	Seq("CMFWY-ILV-AGTS-NQDEHRKPX*-", std_protein_alphabet  ),
+    	Seq("YYYYY-III-SSSS-EEEEEEEEX*-", Alphabet("YISEX*-") ),
+    	"Li et al (2003), table I, group 4"),	
+#
+    "LiA5": Transform(
+    	Seq("FWYH-MILV-CATSP-G-NQDERKX*-", std_protein_alphabet ) ,
+    	Seq("YYYY-IIII-SSSSS-G-EEEEEEX*-", Alphabet("YISGEX*-") ),
+    	"Li et al (2003), table I, group 5"),	
+#
+    "LiA6": Transform(
+    	Seq("FWYH-MILV-CATS-P-G-NQDERKX*-", std_protein_alphabet ) ,
+    	Seq("YYYY-IIII-SSSS-P-G-EEEEEEX*-", Alphabet("YISPGEX*-") ),
+    	"Li et al (2003), table I, group 6"),	
+#
+    "LiA7": Transform(
+    	Seq("FWYH-MILV-CATS-P-G-NQDE-RKX*-", std_protein_alphabet  ),
+    	Seq("YYYY-IIII-SSSS-P-G-EEEE-KKX*-", Alphabet("YISPGEKX*-") ),
+    	"Li et al (2003), table I, group 7"),	
+#
+    "LiA8": Transform(
+    	Seq("FWYH-MILV-CA-NTS-P-G-DE-QRKX*-", std_protein_alphabet  ),
+    	Seq("YYYY-IIII-AA-SSS-P-G-NN-KKKX*-", Alphabet("YIASPGNKX*-") ),
+    	"Li et al (2003), table I, group 8"),	
+#
+    "LiA9": Transform(
+    	Seq("FWYH-ML-IV-CA-NTS-P-G-DE-QRKX*-", std_protein_alphabet  ),
+    	Seq("YYYY-LL-VV-AA-SSS-P-G-NN-KKKX*-", Alphabet("YLVASPGNKX*-") ),
+    	"Li et al (2003), table I, group 9"),	
+#
+    "LiA10": Transform(
+    	Seq("FWY-ML-IV-CA-TS-NH-P-G-DE-QRKX*-", std_protein_alphabet  ),
+    	Seq("YYY-LL-VV-AA-TT-NN-P-G-DD-KKKX*-", Alphabet("YLVATNPGDKX*-") ),
+    	"Li et al (2003), table I, group 10"),	
+#
+    "LiA11": Transform(
+    	Seq("FWY-ML-IV-CA-TS-NH-P-G-D-QE-RKX*-", std_protein_alphabet  ),
+    	Seq("YYY-LL-VV-AA-TT-NN-P-G-D-EE-KKX*-", Alphabet("YLVATNPGDEKX*-") ),
+    	"Li et al (2003), table I, group 11"),	
+#
+    "LiA12": Transform(
+    	Seq("FWY-ML-IV-C-A-TS-NH-P-G-D-QE-RKX*-", std_protein_alphabet  ),
+    	Seq("YYY-LL-VV-C-A-TT-NN-P-G-D-EE-KKX*-", Alphabet("YLVCATNPGDEKX*-") ),
+    	"Li et al (2003), table I, group 12"),	
+#
+    "LiA13": Transform(
+    	Seq("FWY-ML-IV-C-A-T-S-NH-P-G-D-QE-RKX*-", std_protein_alphabet ),
+    	Seq("YYY-LL-VV-C-A-T-S-NN-P-G-D-EE-KKX*-", Alphabet("YLVCATSNPGDEKX*-") ),
+    	"Li et al (2003), table I, group 13"),	
+#
+    "LiA14": Transform(
+    	Seq("FWY-ML-IV-C-A-T-S-NH-P-G-D-QE-R-KX*-", std_protein_alphabet  ),
+    	Seq("YYY-LL-VV-C-A-T-S-NN-P-G-D-EE-R-KX*-", Alphabet("YLVCATSNPGDERKX*-") ),
+    	"Li et al (2003), table I, group 14"),	
+#
+    "LiA15": Transform(
+    	Seq("FWY-ML-IV-C-A-T-S-N-H-P-G-D-QE-R-KX*-", std_protein_alphabet  ),
+    	Seq("YYY-LL-VV-C-A-T-S-N-H-P-G-D-EE-R-KX*-", Alphabet("YLVCATSNHPGDERKX*-") ),
+    	"Li et al (2003), table I, group 15"),	
+#
+    "LiA16": Transform(
+    	Seq("W-FY-ML-IV-C-A-T-S-N-H-P-G-D-QE-R-KX*-", std_protein_alphabet  ),
+    	Seq("W-YY-LL-VV-C-A-T-S-N-H-P-G-D-EE-R-KX*-", Alphabet("WYLVCATSNHPGDERKX*-") ),
+    	"Li et al (2003), table I, group 16"),	
+#
+    "LiA17": Transform(
+    	Seq("W-FY-ML-IV-C-A-T-S-N-H-P-G-D-Q-E-R-KX*-", std_protein_alphabet  ),
+    	Seq("W-YY-LL-VV-C-A-T-S-N-H-P-G-D-Q-E-R-KX*-", Alphabet("WYLVCATSNHPGDQERKX*-") ),
+    	"Li et al (2003), table I, group 17"),	
+#
+    "LiA18": Transform(
+    	Seq("W-FY-M-L-IV-C-A-T-S-N-H-P-G-D-Q-E-R-KX*-", std_protein_alphabet  ),
+    	Seq("W-YY-M-L-VV-C-A-T-S-N-H-P-G-D-Q-E-R-KX*-", Alphabet("WYMLVCATSNHPGDQERKX*-") ),
+    	"Li et al (2003), table I, group 18"),	
+#
+    "LiA19": Transform(
+    	Seq("W-F-Y-M-L-IV-C-A-T-S-N-H-P-G-D-Q-E-R-KX*-", std_protein_alphabet  ),
+    	Seq("W-F-Y-M-L-VV-C-A-T-S-N-H-P-G-D-Q-E-R-KX*-", Alphabet("WFYMLVCATSNHPGDQERKX*-") ),
+    	"Li et al (2003), table I, group 19"),
+#
+    "LiA20": Transform(
+        Seq("W-F-Y-M-L-I-V-C-A-T-S-N-H-P-G-D-Q-E-R-KX*-", std_protein_alphabet  ),
+        Seq("W-F-Y-M-L-I-V-C-A-T-S-N-H-P-G-D-Q-E-R-KX*-", Alphabet("WFYMLIVCATSNHPGDQERKX*-") ),
+        "Li et al (2003), table I, group 20"),
+
+}
+ 
         
            

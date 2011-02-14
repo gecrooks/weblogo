@@ -17,6 +17,7 @@ one format to another.
 from corebio.utils.deoptparse import DeOptionParser
 from optparse import OptionGroup
 from corebio import seq_io
+from corebio.seq import SeqList
 
 import sys
 
@@ -32,6 +33,19 @@ def main():
     if args : parser.error("Unparsable arguments: %s " % args)
 
     seqs = opts.reader.read(opts.fin)
+    
+    if opts.trans_seg: 
+        from corebio.transform import mask_low_complexity
+        seqs = SeqList([mask_low_complexity(s) for s in seqs])
+    
+    if opts.subsample is not None:
+        from random import random
+        frac = opts.subsample
+        ss = []
+        for s in seqs :
+            if random() < frac : ss.append(s)
+        seqs = SeqList(ss)
+    
     opts.writer.write( opts.fout, seqs)
 
 
@@ -67,6 +81,26 @@ def _build_option_parser() :
         default=sys.stdout,
         help="Output file (default: stdout)",
         metavar="FILENAME")
+    
+    trans_grp = OptionGroup(parser, "Transformations",)
+    parser.add_option_group(trans_grp)
+
+    trans_grp.add_option( "", "--seg",
+        dest="trans_seg",
+        action="store_true",
+        default=False,
+        help="Mask low complexity regions in protein sequences.",
+        metavar="FILENAME")
+
+    trans_grp.add_option( "", "--subsample",
+        dest="subsample",
+        action="store",
+        type= "float",
+        default=None,
+        help="Return a randmom subsample of the sequences.",
+        metavar="FRACTION")
+
+
 
     # Writers      
     out_formats = []
