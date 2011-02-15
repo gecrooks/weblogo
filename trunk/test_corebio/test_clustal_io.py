@@ -60,7 +60,7 @@ class test_clustal_parser(unittest.TestCase) :
         seqs = clustal_io.read(f)
         self.assertEquals(len(seqs), 21)
         self.assertEquals(seqs[2].name, "O16386_CAEEL")
-        self.assertEquals(len(seqs[1]), 136)
+        self.assertEquals(len(seqs[1]), 137)
         
         
 
@@ -112,13 +112,13 @@ class test_clustal_parser(unittest.TestCase) :
         
         self.assertEquals(seqs, seqs2)
 
-  # Having removed requirment for clustal header line, this parses fine.
-  #  def test_parse_table_fail(self) :
-  #      # should fail with parse error
-  #      f = StringIO(table_io.example)
-  #     
-  #      self.failUnlessRaises(ValueError, 
-  #          clustal_io.read, f  )
+  
+    def test_parse_table_fail(self) :
+        # should fail with parse error
+        f = StringIO(table_io.example)
+       
+        self.failUnlessRaises(ValueError, 
+            clustal_io.read, f  )
 
 
 

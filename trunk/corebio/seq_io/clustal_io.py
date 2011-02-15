@@ -98,8 +98,8 @@ def read(fin, alphabet=None) :
     seq_ids = []
     seqs = []
     block_count = 0
-    
-    
+    data_len =0
+
     for token in _scan(fin):
         if token.typeof== "begin_block":
             block_count = 0
@@ -113,6 +113,11 @@ def read(fin, alphabet=None) :
                     "Character on line: %d not in alphabet: %s : %s" % (
                     token.lineno, alphabet, token.data) )
             seqs[block_count].append(token.data)
+            if block_count==0 :
+                data_len = len(token.data) 
+            elif data_len != len(token.data) :
+                raise ValueError("Inconsistent line lengths")
+                
             block_count +=1
 
           
@@ -155,11 +160,11 @@ def _scan( fin ):
             if m is not None :
                 yield Token("header", m.group() )
                 continue
-			# Just keep going and hope for the best.
+            # Just keep going and hope for the best.
             #else :
                 #raise ValueError("Cannot find required header")
-				
-				
+                
+                
         
         if state == body :
             if line.isspace() : continue
