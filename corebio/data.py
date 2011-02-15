@@ -61,6 +61,7 @@ Other subsitution scoring matrices:
     - dist20_comp 
     - pam250
     - pam120
+    - vtml160
     
 Description of database cross references :
     - dbxref.txt (http://www.expasy.org/cgi-bin/lists?dbxref.txt)
@@ -161,6 +162,7 @@ resource_names = [
     'pam250',
     'pam120', 
     'dbxref.txt',
+    'vtml160',
     ]
 
 _resource_filenames = {
@@ -175,6 +177,7 @@ _resource_filenames = {
     'pam250':      'data/pam250.mat',
     'pam120':      'data/pam120.mat', 
     'dbxref.txt' : 'data/dbxref.txt',
+    'vtml160' :    'data/vtml160',
     }
 
 # TODO: Subsitution matrix parser, SeqMatrix.read
