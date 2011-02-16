@@ -1016,10 +1016,13 @@ class LogoData(object) :
         self.entropy_interval = entropy_interval
         self.weight = weight
         
-    
+
     @classmethod    
     def from_counts(cls, alphabet, counts, prior= None):
         """Build a logodata object from counts."""
+        # Counts is a Motif object?
+        #counts = counts.array
+        
         seq_length, A = counts.shape
         
         if prior is not None: prior = array(prior, float64)
@@ -1068,6 +1071,7 @@ class LogoData(object) :
         seq_length = len(seqs[0])
         for i,s in enumerate(seqs) :
             #print i,s, len(s)
+            #TODO: Redundant? Should be checked in SeqList?
             if seq_length != len(s) :
                 raise ArgumentError(
     "Sequence number %d differs in length from the previous sequences" % (i+1) ,
@@ -1075,7 +1079,7 @@ class LogoData(object) :
 
         # FIXME: Check seqs.alphabet?
         
-        counts = asarray(seqs.profile())
+        counts = seqs.profile()
         return cls.from_counts(seqs.alphabet, counts, prior)
 
 
@@ -1175,14 +1179,42 @@ def httpd_serve_forever(port=8080) :
     
 
 def _build_logodata(options) :
-    seqs = read_seq_data(options.fin, 
-        options.input_parser.read,
-        alphabet=options.alphabet,
-        ignore_lower_case = options.ignore_lower_case)      
-
-    prior = parse_prior( options.composition,seqs.alphabet, options.weight)
-    data = LogoData.from_seqs(seqs, prior)
     
+    if not options.fmatrix :
+        seqs = read_seq_data(options.fin, 
+            options.input_parser.read,
+            alphabet=options.alphabet,
+            ignore_lower_case = options.ignore_lower_case)   
+            
+        if options.reverse: 
+            seqs = SeqList([s.reverse() for s in seqs], seqs.alphabet)
+        
+        if options.complement :
+            seqs= SeqList( [Seq(s,seqs.alphabet).complement() for s in seqs], seqs.alphabet)
+
+          
+        
+        prior = parse_prior( options.composition,seqs.alphabet, options.weight)
+        data = LogoData.from_seqs(seqs, prior)
+
+    else :
+        from corebio.matrix import Motif
+    
+        if options.ignore_lower_case:
+            raise ValueError("error: option --ignore-lower-case incompatible with matrix input")
+        
+        #FIXME : implement
+        if options.reverse:
+            raise ValueError("error: option --reverse incompatible with matrix input")
+        
+        #FIXME : implement
+        if options.complement:
+            raise ValueError("error: option --complement incompatible with matrix input")
+                      
+        motif = Motif.read_transfac(options.fin, alphabet=options.alphabet)
+        prior = parse_prior( options.composition,motif.alphabet, options.weight)
+        data = LogoData.from_counts(motif.alphabet, motif, prior)
+        
     return data
      
              
@@ -1274,6 +1306,9 @@ def _build_option_parser() :
         
     io_grp = OptionGroup(parser, "Input/Output Options",)
     data_grp = OptionGroup(parser, "Logo Data Options",)
+    trans_grp = OptionGroup(parser, "Transformations", "Optional transformations of the sequence data.")
+
+ 
     format_grp = OptionGroup(parser, "Logo Format Options", 
         "These options control the format and display of the logo.")
     color_grp = OptionGroup(parser, "Color Options", 
@@ -1286,6 +1321,7 @@ def _build_option_parser() :
 
     parser.add_option_group(io_grp)
     parser.add_option_group(data_grp)
+    parser.add_option_group(trans_grp)      
     parser.add_option_group(format_grp)  
     parser.add_option_group(color_grp)
     parser.add_option_group(advanced_grp)
@@ -1293,8 +1329,6 @@ def _build_option_parser() :
     
     # ========================== IO OPTIONS ==========================
     
-
-
     io_grp.add_option( "-f", "--fin",
         dest="fin",
         action="store",
@@ -1311,6 +1345,16 @@ def _build_option_parser() :
         help="Multiple sequence alignment format: (%s)" % 
            ', '.join([ f.names[0] for f in seq_io.formats]),
         metavar="FORMAT")
+
+     
+    io_grp.add_option( "", "--matrix",
+        dest="fmatrix",
+        action="store",
+        type = "boolean",
+        default=False,
+        metavar = "YES/NO",
+        help="Read sequence count data from motif matrix."
+       )
 
     io_grp.add_option("-o", "--fout", dest="fout",
         type="file_out",
@@ -1348,15 +1392,6 @@ def _build_option_parser() :
              "If neither the alphabet nor sequence-type are specified then weblogo will examine the input data and make an educated guess. "
              "See also --sequence-type, --ignore-lower-case" )                       
     
-    # FIXME Add test? 
-    data_grp.add_option( "", "--ignore-lower-case",
-        dest="ignore_lower_case",
-        action="store",
-        type = "boolean",
-        default=False,
-        metavar = "YES/NO",
-        help="Disregard lower case letters and only count upper case letters in sequences? (Default: No)"
-       )
        
     data_grp.add_option( "-U", "--units",
         dest="unit_name",
@@ -1405,6 +1440,33 @@ def _build_option_parser() :
         type="int",
         help="Upper bound of sequence to display",
         metavar="INDEX")
+
+    # ========================== Transformation OPTIONS ==========================
+    
+
+    # FIXME Add test? 
+    trans_grp.add_option( "", "--ignore-lower-case",
+        dest="ignore_lower_case",
+        action="store_true",
+        default=False,
+        help="Disregard lower case letters and only count upper case letters in sequences."
+       )
+
+    trans_grp.add_option( "", "--reverse",
+        dest="reverse",
+        action="store_true",
+        default=False,
+        help="reverse sequences",
+        )
+
+    trans_grp.add_option( "", "--complement",
+        dest="complement",
+        action="store_true",
+        default=False,
+        help="complement DNA sequences",
+        )
+    
+
 
     # ========================== FORMAT OPTIONS ==========================
 

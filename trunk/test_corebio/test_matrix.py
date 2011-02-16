@@ -15,6 +15,14 @@ from numpy import *
 
 from corebio.matrix import *
 
+class test_AlphabeticArray(unittest.TestCase) :
+    def test_create(self): 
+
+        matrix = AlphabeticArray( (protein_alphabet, protein_alphabet) )
+        matrix['A', 'C'] = 10 
+        assert matrix[0,1]==10.0
+        
+ 
 class test_Motif(unittest.TestCase) :
     def test_read_transfac(self):
         f = testdata_stream("transfac_matrix.txt")
@@ -30,6 +38,7 @@ class test_Motif(unittest.TestCase) :
         assert m[3, 'A']==3.0
         assert m[0, 'G']==152.0         
         assert shape(m.array) == (15,4)
+
 
 
 class test_SubMatrix(unittest.TestCase) :

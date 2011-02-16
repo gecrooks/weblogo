@@ -311,11 +311,11 @@ class Alphabet(object) :
     def __getitem__(self, key) :
         return self._letters[key]
 
-    # @staticmethod 
+    @staticmethod 
     def which(seqs, alphabets=None) :
         """ Returns the most appropriate unambiguous protien, rna or dna alphabet
-        for a Seq or SeqList. If a list of alphabet is suppied, then the alphabet
-        of guessed from that list.
+        for a Seq or SeqList. If a list of alphabets is suppied, then the best alphabet
+        is selected from that list.
 
         The heuristic is to count the occurances of letters for each alphabet and 
         downweight longer alphabets by the square root of the alphabet length. Ties
@@ -331,7 +331,6 @@ class Alphabet(object) :
         best = score.index(max(score))
         a = alphabets[best]
         return a
-    which = staticmethod(which) # python2.3 compatability, instead of decorator
 
 # End class Alphabet
         
@@ -660,7 +659,10 @@ class SeqList(list):
  
         
     def profile(self, alphabet = None):
-        """Counts the occurrences of characters in each column.""" 
+        """Counts the occurrences of characters in each column.
+
+        Returns: Motif(counts, alphabet)
+        """
         if not alphabet : alphabet = self.alphabet
         if not alphabet : raise ValueError("No alphabet")        
         
@@ -674,7 +676,9 @@ class SeqList(list):
             for j,n in enumerate(o) :
                 if n<N : counts[ j][n] +=1
  
-        return counts
+		from corebio.matrix import Motif
+
+        return Motif(alphabet, counts)
 # end class SeqList
 
 

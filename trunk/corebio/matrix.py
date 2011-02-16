@@ -30,6 +30,7 @@ Arrays indexed by alphabetic strings.
 
 
 from corebio.seq import Alphabet
+from corebio.seq import unambiguous_dna_alphabet, unambiguous_rna_alphabet, unambiguous_protein_alphabet
 
 from corebio.utils import isint
 
@@ -39,7 +40,7 @@ from itertools import izip
 __all__= 'AlphabeticArray', 'submatrix_alphabet', 'SubMatrix', 'Motif'
 
 class AlphabeticArray(object) :
-    """An alphabetic array. Wraps a numarray array so that each dimension
+    """An alphabetic array. Wraps a numpy array so that each dimension
     can be associated with an alphabet and indexed with characters or strings.
     
     Attributes :
@@ -61,7 +62,7 @@ class AlphabeticArray(object) :
     10
     >>>
     >>> # Different alphabets on each dimension:
-    >>> import numarray as na    
+    >>> import numpy as na    
     >>> a234 = na.zeros( shape = (2,3,4) )
     >>> alpha = ( "AB", "ABC", "ABCD")
     >>> aa = AlphabeticArray(alpha,a234)
@@ -92,10 +93,10 @@ class AlphabeticArray(object) :
                     non-alphabetic dimension. If None the dimension length is 
                     taken from values argument.
         - values -- An array of values to be indexed. If None the a new  
-                 array is created. If this argument is not a numarray array
+                 array is created. If this argument is not a numpy array
                  then the alphabet list must be explicit (Cannot contain 
                  None.)
-        - dtype -- An optional numarray type code.
+        - dtype -- An optional numpy type code.
         """
     
         # A dummy object to be used in place of None in the alphabets list
@@ -178,7 +179,7 @@ class AlphabeticArray(object) :
 
         """        
         # TODO: Above docstring is not very clear. 
-        # Deep voodoo using numarray indexing     
+        # Deep voodoo using numpy indexing     
         keys =  self._ordkey( keys)
         outerkeys = []
         for i, k in enumerate(keys) :
@@ -200,17 +201,17 @@ class AlphabeticArray(object) :
     # The following code is desinged to proxy all attributes
     # of the wrapped array. But I'm not entirely sure that this will work as
     # intended.       
-    #def __getattr__(self, name) :
-    #    try :
-    #        return object.__getattr__(self, name) 
-    #    except AttributeError:
-    #        return getattr(self.array, name)
+    def __getattr__(self, name) :
+        try :
+            return object.__getattr__(self, name) 
+        except AttributeError:
+            return getattr(self.array, name)
 
-    #def __setattr__(self, name, value) :
-    #    try :
-    #        return object.__setattr__(self, name, value) 
-    #    except AttributeError:
-    #        return setattr(self.array, name, value)
+    def __setattr__(self, name, value) :
+        try :
+            return object.__setattr__(self, name, value) 
+        except AttributeError:
+            return setattr(self.array, name, value)
 
 # End class AlphabeticArray
 
@@ -268,9 +269,9 @@ class SubMatrix(AlphabeticArray) :
         Arguments:
         - fin       --  matrix file 
         - alphabet  -- The set of subsitution characters. Default: ''
-        -  typeof    -- A numarray type or typecode.
+        -  typeof    -- A numpy type or typecode.
         Returns:
-        -  A numarray matrix of substitution scores
+        -  A numpy matrix of substitution scores
         Raises:
         -  ValueError on unreadable input
         """
@@ -355,7 +356,7 @@ class Motif(AlphabeticArray) :
     def __init__(self, alphabet, array=None, dtype=None, name=None,
             description = None, scale=None) :
         AlphabeticArray.__init__(self, (None, alphabet), array, dtype)
-        self.alphabet = Alphabet(alphabet)
+        self.alphabet = alphabet
         self.name = name
         self.description = description
         self.scale = scale    
@@ -431,12 +432,23 @@ class Motif(AlphabeticArray) :
 
         # Check defacto_alphabet
         defacto_alphabet = Alphabet(defacto_alphabet)
+
         if alphabet :
-            if alphabet != defacto_alphabet :
+            if not alphabet.alphabetic(defacto_alphabet) :
                 raise ValueError, "Incompatible alphabets: %s , %d (defacto)"% (
                     alphabet, defacto_alphabet)
-        alphabet = defacto_alphabet
-
+        else :            
+            alphabets = (unambiguous_dna_alphabet,
+                      unambiguous_rna_alphabet,
+                      unambiguous_protein_alphabet,
+                      )
+            for a in alphabets :
+                if a.alphabetic(defacto_alphabet) :
+                    alphabet = a
+                    break
+            if not alphabet :
+                alphabet = defacto_alphabet
+   
 
         # The last item of each row may be extra cruft. Remove
         if len(items[0]) == len(header) +1 :
@@ -454,8 +466,10 @@ class Motif(AlphabeticArray) :
         if position_header :
             matrix.transpose() 
 
-        return Motif(alphabet, matrix)
+        return  Motif(alphabet, matrix)
+        
 
+        
 
    
         
