@@ -32,7 +32,7 @@ See also :
 
 from corebio.seq import Seq, protein_alphabet, Alphabet
 from corebio.utils import stdrepr, find_command
-from corebio._future.subprocess import * # python2.3 compatability
+from subprocess import * 
 from StringIO import StringIO
 
 # alphabet for stride secondary structure

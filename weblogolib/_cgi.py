@@ -50,7 +50,7 @@ from colorscheme import ColorScheme, ColorGroup
 
 import weblogolib
 from corebio.utils import *
-from corebio._future import Template
+from string import Template
 
 
 # TODO: Check units
@@ -58,7 +58,9 @@ from corebio._future import Template
 # TODO: In WebLogo2: why slash create.cgi? I think this was a workaround
 # for some browser quirk
 #<form method="post" action="/create.cgi" enctype="multipart/form-data">
-    
+
+
+# Should replace with corebio.utils?    
 def resource_string(resource, basefilename) :
     import os
     fn =  os.path.join(os.path.dirname(basefilename), resource)
@@ -411,7 +413,7 @@ def send_form(controls, errors=[], htdocs_directory=None) :
         subsitutions["error_message"] = ""
     
         
-    template = resource_string("create_html_template.html", htdocs_directory)
+    template = resource_string( "create_html_template.html", htdocs_directory)
     html = Template(template).safe_substitute(subsitutions) #FIXME
 
     print "Content-Type: text/html\n\n"

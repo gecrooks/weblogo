@@ -94,6 +94,9 @@ class test_utils(unittest.TestCase) :
         test = 'aaabbbbcccddea'
         out = group_count(test)     
         self.assertTrue( tuple(out) == (('a',3),('b',4),('c',3),('d',2),('e',1),('a',1)) )    
+
+
+
         
     def test_reiterate(self) :
         i = Reiterate( iter("123456") )
@@ -214,6 +217,16 @@ class test_utils(unittest.TestCase) :
         t = 0
         for v in idx : t+=v
         assert t == 8
+
+
+
+        def test_resource(self) :
+            fn = resource_filename(__name__, 'data/cap.fa', __file__)
+            assert fn.endswith('test_corebio/data/cap.fa')
+            f = resource_stream(__name__, 'data/cap.fa', __file__)
+            s = resource_string(__name__, 'data/cap.fa', __file__)
+            assert s.startswith('>aldB')
+
 
 
 tfile = """line 0   

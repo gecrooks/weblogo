@@ -30,13 +30,21 @@
 # private submodules, such as _which, are for internal corebio use.
 
 
+
 __all__ = ('isblank', 'isfloat', 'isint', 'fcmp', 'remove_whitespace', 
             'invert_dict', 'update', 'stdrepr', 'Token', 'Struct', 'Reiterate',
              'deoptparse', 'crc32', 'crc64', 'FileIndex', 'find_command',
-             'ArgumentError', 'frozendict','group_count')
+             'ArgumentError', 'frozendict','group_count', 
+             'resource_string', 'resource_stream','resource_filename')
 
 import os.path
 import math
+
+try :
+    import pkg_resources
+except ImportError :
+    pkg_resources = None
+
 
 def isblank( string) :
     """Is this whitespace or an empty string?"""
@@ -477,4 +485,50 @@ class frozendict(dict):
     def __repr__(self):
         return "frozendict(%s)" % dict.__repr__(self)    
 # end class frozendict   
+
+
+
+
+def resource_string( modulename, resource, basefilename = None):
+    """Locate and return a resource as a string.
+    >>> f = resource_string( __name__, 'somedatafile', __file__)
+    """
+    if pkg_resources : 
+        return pkg_resources.resource_string(modulename, resource)    
+    
+    f = resource_stream( modulename, resource, basefilename)
+    return f.read()
+    
+def resource_stream( modulename, resource, basefilename = None):
+    """Locate and return a resource as a stream.
+    >>> f = resource_stream( __name__, 'somedatafile', __file__)
+    """    
+    if pkg_resources :  
+        return pkg_resources.resource_stream(modulename, resource)    
+    
+    return open( resource_filename( modulename, resource, basefilename) )
+
+def resource_filename( modulename, resource, basefilename = None): 
+    """Locate and return a resource filename.
+    >>> f = resource_filename( __name__, 'somedatafile', __file__)
+
+    A resource is a data file stored with the python code in a package.
+    All three resource methods (resource_string,  resource_stream,
+    resource_filename) call the corresponding methods in the 'pkg_resources'
+    module, if installed. Otherwise, we resort to locating the resource
+    in the local filesystem. However, this does not work if the package
+    is located inside a zip file. 
+    """ 
+    if pkg_resources : 
+        return pkg_resources.resource_filename(modulename, resource)            
+    
+    if basefilename is None :
+        raise NotImplementedError(
+            "Require either basefilename or pkg_resources")
+    
+    import os
+    return os.path.join(os.path.dirname(basefilename), resource)
+
+
+
           
