@@ -390,6 +390,7 @@ The  command line client has many options not available through the web interfac
 	                                fasta, plain, msf, genbank, nbrf, nexus,
 	                                phylip, stockholm, intelligenetics, table,
 	                                array)
+	       --matrix YES/NO          Read sequence count data from motif matrix.
 	    -o --fout FILENAME          Output file (default: stdout)
 	    -F --format FORMAT          Format of output: eps (default), png,
 	                                png_print, pdf, jpeg, txt
@@ -403,9 +404,6 @@ The  command line client has many options not available through the web interfac
 	                                specified then weblogo will examine the input
 	                                data and make an educated guess. See also
 	                                --sequence-type, --ignore-lower-case
-	       --ignore-lower-case YES/NO
-	                                Disregard lower case letters and only count
-	                                upper case letters in sequences? (Default: No)
 	    -U --units NUMBER           A unit of entropy ('bits' (default), 'nats',
 	                                'digits'), or a unit of free energy ('kT',
 	                                'kJ/mol', 'kcal/mol'), or 'probability' for
@@ -427,6 +425,14 @@ The  command line client has many options not available through the web interfac
 	    -l --lower INDEX            Lower bound of sequence to display
 	    -u --upper INDEX            Upper bound of sequence to display
 
+	  Transformations:
+	    Optional transformations of the sequence data.
+
+	       --ignore-lower-case      Disregard lower case letters and only count
+	                                upper case letters in sequences? (Default: No)
+	       --reverse                reverse sequences
+	       --complement             complement DNA sequences
+
 	  Logo Format Options:
 	    These options control the format and display of the logo.
 
@@ -439,6 +445,9 @@ The  command line client has many options not available through the web interfac
 	    -X --show-xaxis YES/NO      Display sequence numbers along x-axis?
 	                                (default: True)
 	    -x --xlabel TEXT            X-axis label
+	       --annotate TEXT          A comma seperated list of custom stack
+	                                annotations, e.g. '1,3,4,5,6,7'.  Annotation
+	                                list must be same length as sequences.
 	    -S --yaxis UNIT             Height of yaxis in units. (Default: Maximum
 	                                value with uninformative prior.)
 	    -Y --show-yaxis YES/NO      Display entropy scale along y-axis? (default:
@@ -466,7 +475,7 @@ The  command line client has many options not available through the web interfac
 	    These options provide fine control over the display of the logo.
 
 	    -W --stack-width POINTS     Width of a logo stack (default: 10.8)
-	    -H --stack-height POINTS    Height of a logo stack (default: 54.0)
+	       --aspect-ratio POINTS    Ratio of stack height to width (default: 5)
 	       --box YES/NO             Draw boxes around symbols? (default: no)
 	       --resolution DPI         Bitmap resolution in dots per inch (DPI).
 	                                (default: 96 DPI, except png_print, 600 DPI)
@@ -485,6 +494,7 @@ The  command line client has many options not available through the web interfac
 	       --serve                  Start a standalone WebLogo server for creating
 	                                sequence logos.
 	       --port PORT              Listen to this local port. (Default: 8080)
+
 </pre >
 <!-- ===================================================================== -->
 <a name="API" ></a>

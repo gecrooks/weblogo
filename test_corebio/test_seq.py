@@ -348,6 +348,8 @@ class test_seqlist(unittest.TestCase):
         self.assertEquals( list(tally[3]), [1,1,1,1] )                
         self.assertEquals( list(tally[4]), [0,0,0,4] )
 
+        self.assertEquals( tally[4,'D'], 4 )
+
     def test_tally(self):
         # 1234567890123456789012345678
         s0 = Seq("ACTTT", nucleic_alphabet )    
