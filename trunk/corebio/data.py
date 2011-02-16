@@ -143,7 +143,7 @@ Status: Beta (Data needs to be proof checked.)
 # http://au.expasy.org/cgi-bin/protscale.pl       
 
 from StringIO import StringIO
-from _future import resource_string, resource_stream,resource_filename
+from corebio.utils import resource_string, resource_stream,resource_filename
 import utils
 
 # Explictly list set of available data resources. We want to be able to access

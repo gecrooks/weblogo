@@ -35,7 +35,7 @@ Refs:
 
 from corebio.seq import Seq, protein_alphabet, Alphabet
 from corebio.db.astral import to_one_letter_code
-from corebio._future.subprocess import * # python2.3 compatability
+from subprocess import * 
 from StringIO import StringIO
 from corebio.utils import stdrepr, find_command
 

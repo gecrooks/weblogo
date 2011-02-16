@@ -11,7 +11,6 @@ def suite():
         'test_corebio.test_db',
         'test_corebio.test_dssp',
         'test_corebio.test_fasta_io',
-        'test_corebio.test_future',
         'test_corebio.test_genbank_io',
         'test_corebio.test_intelligenetics_io',
         'test_corebio.test_matrix',

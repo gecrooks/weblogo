@@ -2,7 +2,7 @@
 
 
 import unittest
-from corebio._future import resource_string, resource_stream, resource_filename
+from corebio.utils import resource_string, resource_stream, resource_filename
 
 def testdata_string( name ): 
     return resource_string(__name__, 'data/'+name, __file__)    

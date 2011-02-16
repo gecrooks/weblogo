@@ -93,7 +93,7 @@ import random
 
 from string import Template
 from subprocess import *
-from corebio._future import resource_string, resource_filename
+from corebio.utils import resource_string, resource_filename
 
 from math import log, sqrt
 
@@ -848,7 +848,7 @@ def eps_formatter( logodata, format, fout) :
 
 
     # Create and output logo
-    template = resource_string( __name__, 'template.eps')
+    template = resource_string( __name__, 'template.eps', __file__)
     logo = Template(template).substitute(subsitutions)
     print >>fout, logo
  
@@ -1162,7 +1162,7 @@ def httpd_serve_forever(port=8080) :
     pythonpath += ":" + os.path.abspath(sys.path[0]).split()[0]
     os.environ["PYTHONPATH"] = pythonpath
 
-    htdocs = resource_filename(__name__, 'htdocs')
+    htdocs = resource_filename(__name__, 'htdocs', __file__)
     os.chdir(htdocs) 
 
     HandlerClass = __HTTPRequestHandler
