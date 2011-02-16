@@ -117,11 +117,11 @@ base_pairing = ColorScheme([
     ColorGroup("GC",    "blue", "Strong (3 Watson-Crick hydrogen bonds)")],
     )
 
-
+# From Crooks2004c-Proteins-SeqStr.pdf
 hydrophobicity = ColorScheme([
-    ColorGroup( "RKDENQ",   "black", "hydrophobic"),
+    ColorGroup( "RKDENQ",   "black", "hydrophilic"),
     ColorGroup( "SGHTAP",   "green", "neutral"  ),
-    ColorGroup( "YVMCLFIW", "blue",  "hydrophilic") ],
+    ColorGroup( "YVMCLFIW", "blue",  "hydrophobic") ],
     alphabet = seq.unambiguous_protein_alphabet
     )
 
