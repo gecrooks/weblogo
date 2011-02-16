@@ -17,7 +17,7 @@ one format to another.
 from corebio.utils.deoptparse import DeOptionParser
 from optparse import OptionGroup
 from corebio import seq_io
-from corebio.seq import SeqList
+from corebio.seq import SeqList, Seq, nucleic_alphabet
 
 import sys
 
@@ -45,6 +45,14 @@ def main():
         for s in seqs :
             if random() < frac : ss.append(s)
         seqs = SeqList(ss)
+
+    if opts.reverse :
+        seqs = SeqList([s.reverse() for s in seqs])
+ 
+    if opts.complement :
+         seqs = SeqList([Seq(s,alphabet=nucleic_alphabet) for s in seqs]) 
+         seqs = SeqList([s.complement() for s in seqs])
+ 
     
     opts.writer.write( opts.fout, seqs)
 
@@ -90,16 +98,29 @@ def _build_option_parser() :
         action="store_true",
         default=False,
         help="Mask low complexity regions in protein sequences.",
-        metavar="FILENAME")
+        metavar="TRUE/FALSE")
 
     trans_grp.add_option( "", "--subsample",
         dest="subsample",
         action="store",
         type= "float",
         default=None,
-        help="Return a randmom subsample of the sequences.",
+        help="Return a random subsample of the sequences.",
         metavar="FRACTION")
 
+    trans_grp.add_option( "", "--reverse",
+        dest="reverse",
+        action="store_true",
+        default=False,
+        help="reverse sequences",
+        metavar="TRUE/FALSE")
+
+    trans_grp.add_option( "", "--complement",
+        dest="complement",
+        action="store_true",
+        default=False,
+        help="complement DNA sequences",
+        metavar="TRUE/FALSE")
 
 
     # Writers      
