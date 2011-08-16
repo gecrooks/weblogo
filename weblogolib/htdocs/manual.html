@@ -1,9 +1,10 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-    "http://www.w3.org/TR/html4/transitional.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="logo.css" >
 <title>WebLogo 3 - User's Manual</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
 <meta name="author" content="Gavin E. Crooks" >
 
 <style type="text/css">
@@ -289,10 +290,11 @@ installed before WebLogo will run. WebLogo also requires a recent version of  <a
 <h4> Download and Installation</h4>
 <p>
 If the python package <a href="http://peak.telecommunity.com/DevCenter/setuptools"><code>setuptools</code></a> has been installed, then WebLogo and its dependancies can be downloaded and installed with a single command:
+</p>
 <pre>
 sudo easy_install weblogo
 </pre>
-</p>
+
 
 <p>
 Alternatively, weblogo and its dependancies can be installed manually.
@@ -321,18 +323,19 @@ It should now be possible to access WebLogo at <a href="http://localhost:8080/">
 </p>
 
 <p>
-The command line client and WebLogo libraries can be permanently installed using the supplied <code>setup.py</code> script. 
+The command line client and WebLogo libraries can be permanently installed using the supplied <code>setup.py</code> script. </p>
 <pre> 
 sudo python setup.py install
 </pre> 
-Run <code>python setup.py help</code> for more installation options. For example, to specifically install the weblogo script to /usr/local/bin
+<p>
+Run <code>python setup.py help</code> for more installation options. For example, to specifically install the weblogo script to /usr/local/bin </p>
 <pre>
 sudo python setup.py install_scripts --install-dir /usr/local/bin
 </pre>
-</p>
 
 
-</p>
+
+
 <h4>Web App</h4>
 
 <p>
