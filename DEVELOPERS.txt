@@ -32,8 +32,10 @@ svn commit -m "Updating apidocs" apidocs
 
 # 5. Tag
 
-
 svn copy -m "Tag 3.0b12" https://weblogo.googlecode.com/svn/trunk https://weblogo.googlecode.com/svn/tags/3.0b12 
 
 # Upload Tarball
 svn import -m "Dist 0.x.0" dist/weblogo-3.x.0.tar.gz  https://weblogo.googlecode.com/svn/dist/weblogo-3.x.0.tar.gz
+
+
+

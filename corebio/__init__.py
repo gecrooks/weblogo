@@ -51,6 +51,7 @@ Environment Variables:
 """ 
 
 __all__ = [ 'data',
+            'matrix',
             "moremath",
             "db", 
             "seq", 
