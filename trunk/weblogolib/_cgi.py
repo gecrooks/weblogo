@@ -369,7 +369,8 @@ def send_form(controls, errors=[], htdocs_directory=None) :
 
     subsitutions = {}
     subsitutions["version"] = weblogolib.release_description 
-    
+    # Bug fix. Not sure why this default substitution isn't added automatically like everything else
+    subsitutions['color_custom'] = ''  
     for c in controls :
         if c.options :
             for opt in c.options :
@@ -386,9 +387,10 @@ def send_form(controls, errors=[], htdocs_directory=None) :
                 else :
                     subsitutions[c.name] = ''
             else :
-                subsitutions[c.name] = str(value)
+                subsitutions[c.name] = str(value)            
         subsitutions[c.name+'_err']  = ''
-            
+    subsitutions['logo_range_err'] = ''
+    
     if errors :
         print >>sys.stderr, errors
         error_message = []
@@ -420,11 +422,13 @@ def send_form(controls, errors=[], htdocs_directory=None) :
     print html
 
     # DEBUG
-    # keys = subsitutions.keys()
-    # keys.sort()
-    # for k in keys :
+    #keys = subsitutions.keys()
+    #keys.sort()
+    #for k in keys :
     #    print k,"=", subsitutions[k], " <br />" 
 
+    #print " <br />"
+    #print " <br />"
     #for k in controls :
     #    print k.name,"=", k.get_value(), " <br />" 
 
