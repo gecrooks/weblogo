@@ -3,6 +3,25 @@
 WebLogo Release Notes
 
 
+3.1 (2011-01-01) [GEC]
+
+Mostly bug fixes, code improvements and minor user enhancements.
+
+* Command line: Add parsing of transfac PWM files
+* Command line: Add reverse and complement transformations
+* Improve clustal file parsing
+* Currently compatible with python 2.5, 2.6 and 2.7
+* Deprecate support for python 2.3 and 2.4
+* Migrate corebio library into weblogo for easier maintenance and development.
+* Add new annotate option for custom annotation line
+* Miscellaneous minor bug fixes and refactoring.
+
+* Incorporates bug fixes and feedback from Gavin Crooks, John Gilman, 
+Kevin Schutz and Perry Evan.
+
+
+
+
 3.0 (2008-10-14) [GEC]
 
 A significant update of WebLogo.
