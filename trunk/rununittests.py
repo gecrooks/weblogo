@@ -13,7 +13,7 @@ def suite():
         'test_corebio.test_fasta_io',
         'test_corebio.test_genbank_io',
         'test_corebio.test_intelligenetics_io',
-        'test_corebio.test_matrix',
+#        'test_corebio.test_matrix',
         'test_corebio.test_moremath',
         'test_corebio.test_msf_io',
         'test_corebio.test_nbrf_io',

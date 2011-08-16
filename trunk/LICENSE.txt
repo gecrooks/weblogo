@@ -4,19 +4,17 @@
 
 ===============================================================================
 
-This package is distributed under the new BSD Open Source License. Much 
-of the code was written by Gavin E. Crooks, Gary Hon, Steven Brenner, John-Marc
-Chandonia, Liana Lareau, David Ding, Clare Gollnick and other contributers.
+This package is distributed under the new BSD Open Source License. 
 
 
 Copyright Notice 
 ================
-Copyright (c) 2006, The Regents of the University of California, through
+Copyright (c) 2006-2011, The Regents of the University of California, through
 Lawrence Berkeley National Laboratory (subject to receipt of any required 
 approvals from the U.S. Dept. of Energy).  All rights reserved.
 
 Parts of this software package are covered by the individual copyrights of the
-contributers. Please refer to individual source code files for further details.
+contributors. Please refer to individual source code files for further details.
 
 NOTICE.  This software was developed under funding from the U.S. Department of 
 Energy.  As such, the U.S. Government has been granted for itself and others 

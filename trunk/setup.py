@@ -54,7 +54,6 @@ def main() :
 	        'corebio.seq_io._nexus', 
 	        'corebio.ssearch_io',         
 	        'corebio.utils',
-	        'corebio._future',
 			'weblogolib',
 	        ],
 
