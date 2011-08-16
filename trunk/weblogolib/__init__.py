@@ -4,7 +4,7 @@
 
 #  Copyright (c) 2003-2004 The Regents of the University of California.
 #  Copyright (c) 2005 Gavin E. Crooks
-#  Copyright (c) 2006, The Regents of the University of California, through 
+#  Copyright (c) 2006-2011, The Regents of the University of California, through 
 #  Lawrence Berkeley National Laboratory (subject to receipt of any required
 #  approvals from the U.S. Dept. of Energy).  All rights reserved.
 
@@ -77,7 +77,7 @@ To create a logo in python code:
 This package is distributed under the new BSD Open Source License. 
 Please see the LICENSE.txt file for details on copyright and licensing.
 The WebLogo source code can be downloaded from http://code.google.com/p/weblogo/
-WebLogo requires Python 2.4, 2.5 or 2.6, the corebio python toolkit for computational 
+WebLogo requires Python 2.5, 2.6 or 2.7, the corebio python toolkit for computational 
 biology (http://code.google.com/p/corebio), and the python array package 
 'numpy' (http://www.scipy.org/Download)
 """
@@ -149,7 +149,7 @@ __all__ = [ 'LogoOptions',
 
 description  = "Create sequence logos from biological sequence alignments." 
 
-__version__ = "3.0"
+__version__ = "3.1"
 
 # These keywords are subsituted by subversion.
 # The date and revision will only tell the truth after a branch or tag,
