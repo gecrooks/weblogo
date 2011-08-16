@@ -167,7 +167,7 @@ def main(htdocs_directory = None) :
             errmsg="Unknown format option."),
         Field( 'stacks_per_line', logooptions.stacks_per_line , int, 
             errmsg='Invalid number of stacks per line.'),
-        Field( 'size','medium', weblogolib.std_sizes.get,
+        Field( 'stack_width','medium', weblogolib.std_sizes.get,
             options=['small', 'medium', 'large'], errmsg='Invalid logo size.'),
         Field( 'alphabet','alphabet_auto', alphabets.get,
             options=['alphabet_auto', 'alphabet_protein', 'alphabet_dna', 
@@ -245,13 +245,14 @@ def main(htdocs_directory = None) :
         c.value = form_values.getfirst( c.name, c.default) 
        
        
-    options_from_form = ['format', 'stacks_per_line', 'size', 
+    options_from_form = ['format', 'stacks_per_line', 'stack_width', 
         'alphabet', 'unit_name', 'first_index', 'logo_start','logo_end',
          'composition', 
         'show_errorbars', 'logo_title', 'logo_label', 'show_xaxis', 
         'xaxis_label',
         'show_yaxis', 'yaxis_label', 'yaxis_scale', 'yaxis_tic_interval',
         'show_ends', 'show_fineprint', 'scale_width']
+    
     
     errors = []
     for optname in options_from_form :
@@ -308,8 +309,7 @@ def main(htdocs_directory = None) :
     if form_values.has_key("cmd_edit") or errors :
         send_form(controls, errors, htdocs_directory)
         return    
-                
-
+ 
     # We write the logo into a local buffer so that we can catch and
     # handle any errors. Once the "Content-Type:" header has been sent
     # we can't send any useful feedback
