@@ -1,0 +1,11 @@
+ 6 20 A W U
+A         0001111000 0011112300              
+Weights   00112221A0 1110201200
+Archaeopt CGATGCTTAC CGCCGATGCT
+HesperorniCGTTACTCGT TGTCGTTACT
+BaluchitheTAATGTTAAT TGTTAATGTT
+B. virginiTAATGTTCGT TGTTAATGTT
+BrontosaurCAAAACCCAT CATCAAAACC
+B.subtilisGGCAGCCAAT CACGGCAGCC
+1					
+((dmras1,ddrasa),((hschras,spras),(scras1,scras2)));

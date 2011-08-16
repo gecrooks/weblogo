@@ -1,0 +1,41 @@
+
+
+==================
+DEVELOPING WEBLOGO
+==================
+
+
+-------------------
+ Build and Release 
+-------------------
+# 1. Check out a fresh copy of trunk.
+svn checkout https://weblogo.googlecode.com/svn/trunk/ weblogo-VERSION --username USERNAME 
+
+# 2.  Update version number. 
+#     Update and finalize the changelog. 
+# 	Set release date.
+cd weblogo-VERSION
+open weblogolib/__init__.py
+...
+open weblogolib/htdocs/weblogo_changelog.txt
+...
+
+# 3. Build apidocs, build and test release:
+rm apidocs/*.html
+./build.sh
+
+# 4. Commit updated apidocs. 
+svn status |grep '!'    # Check for any html files removed
+svn rm apidocs/...      # Remove any obsolete html files
+svn add apidocs/...     # Add any new html files
+svn commit -m "Updating apidocs" apidocs
+
+# 5. Tag
+
+svn copy -m "Tag 3.0b12" https://weblogo.googlecode.com/svn/trunk https://weblogo.googlecode.com/svn/tags/3.0b12 
+
+# Upload Tarball
+svn import -m "Dist 0.x.0" dist/weblogo-3.x.0.tar.gz  https://weblogo.googlecode.com/svn/dist/weblogo-3.x.0.tar.gz
+
+
+
