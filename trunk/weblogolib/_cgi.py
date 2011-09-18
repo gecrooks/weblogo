@@ -40,10 +40,6 @@ import sys
 import cgi as cgilib
 import cgitb; cgitb.enable()
 
-#print "Content-Type: text/html\n\n"
-#print "HELLO WORLD"
-#print __name__
-
 from StringIO import StringIO
 from color import *
 from colorscheme import ColorScheme, ColorGroup
@@ -392,6 +388,25 @@ def send_form(controls, errors=[], htdocs_directory=None) :
                 subsitutions[c.name] = str(value)            
         subsitutions[c.name+'_err']  = ''
     subsitutions['logo_range_err'] = ''
+   
+    # Disable graphcis options if necessary auxiliary programs are not installed.
+    try:
+        command = find_command('gs')
+    except EnvironmentError:
+        try:
+            command = find_command('gswin32c.exe')
+        except EnvironmentError:
+            subsitutions['png_print'] = 'disabled="disabled"'
+            subsitutions['png'] = 'disabled="disabled"'
+            subsitutions['jpeg'] = 'disabled="disabled"'
+            subsitutions['pdf'] = 'disabled="disabled"'
+            subsitutions['svg'] = 'disabled="disabled"'
+            subsitutions['eps'] = 'selected="selected"'
+    try:
+        command = find_command('pdf2svg')
+    except EnvironmentError:
+        subsitutions['svg'] = 'disabled="disabled"'
+       
     
     if errors :
         print >>sys.stderr, errors
