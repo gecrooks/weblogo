@@ -69,6 +69,7 @@ def resource_string(resource, basefilename) :
 mime_type = {
     'eps': 'application/postscript', 
     'pdf': 'application/pdf',
+    'svg': 'image/svg+xml',
     'png': 'image/png',
     'png_print': 'image/png',    
     'txt' : 'text/plain',       
@@ -79,6 +80,7 @@ extension = {
     'eps': 'eps',
     'pdf': 'pdf',
     'png': 'png',
+    'svg': 'svg',
     'png_print': 'png',
     'txt' : 'txt',        
     'jpeg'  : 'png'
@@ -163,7 +165,7 @@ def main(htdocs_directory = None) :
     controls = [
         Field( 'sequences', ''),
         Field( 'format', 'png', weblogolib.formatters.get ,
-            options=['png_print', 'png', 'jpeg', 'eps', 'pdf', 'txt'] , 
+            options=['png_print', 'png', 'jpeg', 'eps', 'pdf', 'svg', 'txt'] , 
             errmsg="Unknown format option."),
         Field( 'stacks_per_line', logooptions.stacks_per_line , int, 
             errmsg='Invalid number of stacks per line.'),

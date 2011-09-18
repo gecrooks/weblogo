@@ -39,3 +39,7 @@ http://code.google.com/p/weblogo/
 
 WebLogo requires Python 2.5, 2.6 or 2.7, and the python
 array package 'numpy' (http://www.scipy.org/Download)
+
+Generating logos in PDF or bitmap graphics formats require that the ghostscript
+program 'gs' be installed. Scalable Vector Graphics (SVG) format also requires 
+the program 'pdf2svg'.
