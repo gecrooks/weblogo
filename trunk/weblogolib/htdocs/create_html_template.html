@@ -31,7 +31,7 @@ td {
 
 
 
-<form method="post" action="create.cgi" enctype="multipart/form-data" >
+<form method="post" name="logoform" action="create.cgi" enctype="multipart/form-data" >
 <table width="80%" border = '0' cellspacing='0' cellpadding='1' align="center">
 <tr><td >
 <h1> WebLogo 3 : Create</h1>
@@ -65,7 +65,8 @@ Sequence data
 
 
 
-<tr><td>
+<tr><td align="left">
+<input type="button" name="cmd_clear" value="Clear" onclick="document.logoform.sequences.value='';" >
 </td><td align="right">
 <input  style="font-size:large" type="submit" name="cmd_create" value="&nbsp;Create&nbsp;Logo&nbsp;&nbsp;&nbsp;&nbsp;"  > <br>
 <span style="font-size:small"><input type="checkbox" name="download" value="false" >Download</span>
