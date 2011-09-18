@@ -1139,7 +1139,7 @@ class LogoData(object) :
         print >>out, 'Entropy\tLow\tHigh\tWeight'
         
         for i in range(self.length) :
-            print >>out, i, '\t',
+            print >>out, i+1, '\t',
             for c in self.counts[i] : print >>out, c, '\t',
             print >>out, self.entropy[i], '\t',
             if self.entropy_interval is not None:
