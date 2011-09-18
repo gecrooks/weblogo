@@ -3,7 +3,7 @@
 WebLogo Release Notes
 
 
-3.1 (2011-01-01) [GEC]
+3.1 (2011-08-16) [GEC]
 
 Mostly bug fixes, code improvements and minor user enhancements.
 
@@ -18,7 +18,6 @@ Mostly bug fixes, code improvements and minor user enhancements.
 
 * Incorporates bug fixes and feedback from Gavin Crooks, John Gilman, 
 Kevin Schutz and Perry Evan.
-
 
 
 
