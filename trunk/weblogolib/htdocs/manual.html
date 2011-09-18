@@ -122,6 +122,7 @@ Enter your multiple sequence alignment here, or select a file to upload. Support
 </li><li> JPEG :Screen resolution bitmap
 </li><li> EPS : Encapsulated postscript
 </li><li> PDF : Portable Document Format
+</li><li> SVG : Scalable Vector Graphics
 </li>
 </ul>
 Generally speaking, vector formats (EPS and PDF) are better for printing, while bitmaps (JPEG and PNG) are more suitable for displaying on the screen or embedding into a web page.
@@ -283,7 +284,7 @@ The weblogo <a href="#CLI">command line client</a>, <code>weblogo</code>, provid
 WebLogo version 3 is written in python. It is necessary to have <a href="http://www.python.org/download/">python 2.3, 2.4 or 2.5</a>  and the
 extension packages <a href="http://www.scipy.org/Download">numpy</a> and
 <a href="http://code.google.com/p/corebio">corebio</a>
-installed before WebLogo will run. WebLogo also requires a recent version of  <a href="http://www.cs.wisc.edu/~ghost/">ghostscript</a> to create PNG and PDF output.
+installed before WebLogo will run. WebLogo also requires a recent version of  <a href="http://www.cs.wisc.edu/~ghost/">ghostscript</a> to create PNG and PDF output, and <a href="http://www.cityinthesky.co.uk/opensource/pdf2svg">pdf2svg</a> to generate SVG output.
 </p>
 
 
@@ -305,7 +306,7 @@ This code is distributed under various <a href="http://www.opensource.org/docs/d
 
 <p>
 After unpacking the WebLogo tarfile, it should be possible to immediately create
-logos using the command line client (Provided that python, numpy, corebio and ghostscript have already been installed).
+logos using the command line client (Provided that python, numpy and ghostscript have already been installed).
 </p>
 <pre> 
 ./weblogo --format PNG &lt; htdocs/examples/cap_hth.fa &gt; cap_hth.png   
@@ -397,7 +398,7 @@ The  command line client has many options not available through the web interfac
 	       --matrix YES/NO          Read sequence count data from motif matrix.
 	    -o --fout FILENAME          Output file (default: stdout)
 	    -F --format FORMAT          Format of output: eps (default), png,
-	                                png_print, pdf, jpeg, txt
+	                                png_print, pdf, svg, jpeg, txt
 
 	  Logo Data Options:
 	    -A --sequence-type TYPE     The type of sequence data: 'protein', 'rna' or

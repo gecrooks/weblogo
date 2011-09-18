@@ -45,7 +45,7 @@ WebLogo (http://code.google.com/p/weblogo/) is a tool for creating sequence
 logos from biological sequence alignments.  It can be run on the command line,
 as a standalone webserver, as a CGI webapp, or as a python library.
 
-The main WebLogo webserver is located at http://weblogo.threeplusone.com/
+The main WebLogo webserver is located at http://weblogo.threeplusone.com
 
 Please consult the manual for installation instructions and more information:
 (Also located in the weblogolib/htdocs subdirectory.)
@@ -59,7 +59,7 @@ To build a simple logo run
     ./weblogo  < cap.fa > logo0.eps
     
 To run as a standalone webserver at localhost:8080 
-    ./weblogo --server
+    ./weblogo --serve
 
 To create a logo in python code:
     >>> from weblogolib import *
@@ -76,10 +76,16 @@ To create a logo in python code:
 -- Distribution and Modification --
 This package is distributed under the new BSD Open Source License. 
 Please see the LICENSE.txt file for details on copyright and licensing.
-The WebLogo source code can be downloaded from http://code.google.com/p/weblogo/
-WebLogo requires Python 2.5, 2.6 or 2.7, the corebio python toolkit for computational 
-biology (http://code.google.com/p/corebio), and the python array package 
-'numpy' (http://www.scipy.org/Download)
+The WebLogo source code can be downloaded from 
+http://code.google.com/p/weblogo/
+
+WebLogo requires Python 2.5, 2.6 or 2.7, and the python
+array package 'numpy' (http://www.scipy.org/Download)
+
+Generating logos in PDF or bitmap graphics formats require that the ghostscript
+program 'gs' be installed. Scalable Vector Graphics (SVG) format also requires 
+the program 'pdf2svg'.
+
 """
 
 import sys
@@ -716,6 +722,40 @@ def jpeg_formatter(data, format, fout) :
     """ Generate a logo in JPEG format."""
     _bitmap_formatter(data, format, fout, device="jpeg")
 
+def svg_formatter(data, format, fout) : 
+    """ Generate a logo in Scalable Vector Graphics (SVG) format.
+    Requires the program 'pdf2svg' be installed.
+    """
+
+    fpdf = StringIO()
+    pdf_formatter(data, format, fpdf)
+    fpdf.seek(0)
+    
+    try:
+   	    command = find_command('pdf2svg') 
+    except EnvironmentError:
+    	raise EnvironmentError("Scalable Vector Graphics (SVG) format requires the program 'pdf2svg'. "
+    	                        "Cannot find 'pdf2svg' on search path.")
+
+    import tempfile, os
+    fpdfi, fname_pdf = tempfile.mkstemp(suffix=".pdf")
+    fsvgi, fname_svg = tempfile.mkstemp(suffix=".svg")
+    try:
+        
+        fpdf2 = open(fname_pdf, 'w')
+        fpdf2.write(fpdf.getvalue() )
+        fpdf2.seek(0)
+  
+        args = [command, fname_pdf, fname_svg]
+        p = Popen(args)
+        (out,err) = p.communicate() 
+
+        fsvg = open(fname_svg)
+        fout.write(fsvg.read())
+    finally:
+        os.remove(fname_svg)
+        os.remove(fname_pdf)
+
 
 def png_formatter(data, format, fout) : 
     """ Generate a logo in PNG format."""
@@ -860,6 +900,7 @@ formatters = {
     'png': png_formatter,
     'png_print' : png_print_formatter,
     'jpeg'  : jpeg_formatter,
+    'svg'   : svg_formatter,
     'txt' : txt_formatter,          
     }     
     
@@ -1368,7 +1409,7 @@ def _build_option_parser() :
         type="dict",
         choices = formatters,
         metavar= "FORMAT",
-        help="Format of output: eps (default), png, png_print, pdf, jpeg, txt",
+        help="Format of output: eps (default), png, png_print, pdf, jpeg, svg, txt",
         default = default_formatter)
 
 
