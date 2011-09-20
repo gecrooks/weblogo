@@ -75,7 +75,7 @@ msf_io              msf             msf         yes
 nbrf_io             nbrf, pir       pir         yes
 nexus_io            nexus           nexus       yes
 phylip_io           phylip          phy         yes
-plain_io            plain, raw      txt         yes  yes    none
+plain_io            plain, raw                  yes  yes    none
 table_io            table           tbl         yes  yes    none
 
 Each IO module defines one or more of the following functions and variables:
