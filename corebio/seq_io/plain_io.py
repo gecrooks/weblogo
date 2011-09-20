@@ -55,7 +55,7 @@ example = """
 """
 
 names = ("plain","raw")
-extensions = ('txt',  )
+extensions = ()
 
 def read(fin, alphabet=None): 
     """Read a file of raw sequecne data. 
