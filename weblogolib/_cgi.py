@@ -153,7 +153,7 @@ def float_or_none(value) :
 def main(htdocs_directory = None) :
  
     logooptions = weblogolib.LogoOptions() 
-    
+      
     # A list of form fields.
     # The default for checkbox values must be False (irrespective of
     # the default in logooptions) since a checked checkbox returns 'true'
@@ -316,13 +316,22 @@ def main(htdocs_directory = None) :
         comp = form["composition"].get_value()
         percentCG = form["percentCG"].get_value()
         ignore_lower_case = form_values.has_key("ignore_lower_case") 
-        seqs = weblogolib.read_seq_data(StringIO( sequences), 
+        if comp=='percentCG': comp = str(percentCG/100)     
+        
+        from corebio.matrix import Motif
+         
+        try:
+            motif = Motif.read_transfac(StringIO( sequences), alphabet=logooptions.alphabet)
+            prior = weblogolib.parse_prior( comp,motif.alphabet)  
+            data = weblogolib.LogoData.from_counts(motif.alphabet, motif, prior)          
+        except ValueError, motif_err :
+            seqs = weblogolib.read_seq_data(StringIO( sequences), 
                                         alphabet=logooptions.alphabet,
                                         ignore_lower_case=ignore_lower_case
                                         )
-        if comp=='percentCG': comp = str(percentCG/100)
-        prior = weblogolib.parse_prior(comp, seqs.alphabet)
-        data = weblogolib.LogoData.from_seqs(seqs, prior) 
+            prior = weblogolib.parse_prior(comp, seqs.alphabet)                        
+            data = weblogolib.LogoData.from_seqs(seqs, prior) 
+            
         logoformat =  weblogolib.LogoFormat(data, logooptions)
         format = form["format"].value
         weblogolib.formatters[format](data, logoformat, logo)            
