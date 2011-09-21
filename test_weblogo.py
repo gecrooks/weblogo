@@ -59,7 +59,7 @@ from math import log, sqrt
 
 
 def testdata_stream( name ): 
-    return resource_stream(__name__, 'tests/data/'+name)    
+    return resource_stream(__name__, 'test_weblogo/data/'+name)    
 
 class test_logoformat(unittest.TestCase) :
 
