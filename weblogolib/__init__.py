@@ -101,7 +101,7 @@ from string import Template
 from subprocess import *
 from corebio.utils import resource_string, resource_filename
 
-from math import log, sqrt
+from math import log, sqrt, exp
 
 # Avoid 'from numpy import *' since numpy has lots of names defined
 from numpy import array, asarray, float64, ones, zeros, int32,all,any, shape
@@ -130,6 +130,8 @@ __all__ = [ 'LogoOptions',
             'LogoFormat',
             'LogoData',
             'Dirichlet',
+            'Gamma',
+            'find_root',
             'GhostscriptAPI',
             'std_color_schemes',
             'default_color_schemes',
@@ -1912,23 +1914,165 @@ class Dirichlet(object) :
     def interval_relative_entropy(self, pvec, frac) :
         mean = self.mean_relative_entropy(pvec) 
         variance = self.variance_relative_entropy(pvec) 
-       
         sd = sqrt(variance)
-        return max(0.0, mean - sd*1.96), mean + sd*1.96
         
-        
-        # TODO
         # If the variance is small, use the standard 95% 
         # confidence interval: mean +/- 1.96 * sd
-        #if variance< 0.1 :
-        #    sd = sqrt(variance)
-        #    return max(0.0, mean - sd*1.96), mean + sd*1.96
+        if mean/sd >3.0 :
+            return max(0.0, mean - sd*1.96), mean + sd*1.96
         
-        #g = Gamma.from_mean_variance(mean, variance)
-        #low_limit = g.inverse_cdf( (1.-frac)/2.)
-        #high_limit = g.inverse_cdf( 1. - (1.-frac)/2. )
+        g = Gamma.from_mean_variance(mean, variance)
+        low_limit = g.inverse_cdf( (1.-frac)/2.)
+        high_limit = g.inverse_cdf( 1. - (1.-frac)/2. )
         
-        #return low_limit, high_limit
+        return low_limit, high_limit
+
+
+class Gamma(object) :
+    """The gamma probability distribution. (Not to be confused with the
+    gamma function.)
+    
+    
+    """
+    __slots__ = 'alpha', 'beta'
+    
+    def __init__(self, alpha, beta) :
+        if alpha <=0.0 :
+            raise ValueError("alpha must be positive")
+        if beta <=0.0 :
+            raise ValueError("beta must be positive")
+        self.alpha = alpha
+        self.beta = beta
+        
+
+    def from_shape_scale(cls, shape, scale) :
+        return cls( shape, 1./scale)
+    from_shape_scale = classmethod(from_shape_scale)
+    
+
+    def from_mean_variance(cls, mean, variance) :
+        alpha = mean **2 / variance
+        beta = alpha/mean
+        return cls(alpha, beta)
+    from_mean_variance = classmethod(from_mean_variance)
+
+    def mean(self) :
+        return self.alpha / self.beta
+        
+    def variance(self) :
+        return self.alpha / (self.beta**2)
+
+        
+    def sample(self) :
+        return random.gammavariate(self.alpha, 1./self.beta) 
+
+    def pdf(self, x) :
+        if x==0.0 : return 0.0
+        a = self.alpha
+        b = self.beta
+        return (x**(a-1.)) * exp(- b*x )* (b**a) / gamma(a) 
+        
+    def cdf(self, x) :
+        return 1.0-normalized_incomplete_gamma(self.alpha, self.beta*x)
+
+    def inverse_cdf(self, p) :
+        def rootof(x) :
+            return self.cdf(exp(x)) - p
+    
+        return exp(find_root(  rootof, log(self.mean()) ) )
+
+#
+
+def find_root(f, x, y=None, fprime=None, tolerance=1.48e-8, max_iterations=50):
+    """Return argument 'x' of the function f(x), such that f(x)=0 to
+    within the given tolerance. 
+    
+    f : The function to optimize, f(x)
+    x : The initial guess
+    y : An optional second guess that shoudl bracket the root.
+    fprime : The derivate of f'(x) (Optional)
+    tolerance : The error bounds 
+    max_iterations : Maximum number of iterations
+    
+    Raises:
+        ArithmeticError :
+            Failure to converge to the given tolerence
+
+    Notes:
+        Uses Newton-Raphson algorihtm if f'(x) is given, else uses bisect if
+        y is given and brackets the root, else uses secant. 
+
+    Status : Beta (Not fully tested)
+    """
+
+  
+    def secant (f, x, tolerance, max_iterations):
+        x0 = x
+        x1 = x0+ 1e-4
+        v0 = f(x0)
+        v1 = f(x1)
+        x2 = 0
+        
+        for i in range(max_iterations):
+            # print x0, x1, v0, v1, x2-x0
+            x2 = x1 - v1*(x1-x0)/(v1-v0)
+            if abs(x2-x1) < tolerance : return x2        
+            x0 = x1
+            v0 = v1        
+            x1 = x2
+            v1 = f(x1)
+
+        raise ArithmeticError(
+            "Failed to converge after %d iterations, value is %f" \
+                % (max_iterations,x1) )
+
+
+    def bisect(f, a, b, tolerance, max_iterations) :
+        fa = f(a)
+        fb = f(b)
+
+        if fa==0: return a
+        if fb==0: return b
+                
+        if fa*fb >0 :
+            raise ArithmeticError("Start points do not bracket root.")
+        
+        for i in range(max_iterations):
+            #print a,b, fa, fb
+            delta = b-a
+            xm = a + 0.5*delta # Minimize roundoff in computing the midpoint
+            fm = f(xm)
+            if delta < tolerance : return xm
+            
+            if fm * fa >0 : #   Root lies in interval [xm,b], replace a
+                a = xm
+                fa = fm
+            else : #   Root lies in interval [a,xm], replace b
+                b = xm
+                fb = fm
+
+        raise ArithmeticError(
+            "Failed to converge after %d iterations, value is %f" \
+                % (max_iterations, x) )
+    
+    
+    def newton(f, x, fprime, tolerance, max_iterations) :
+        x0 = x
+        for i in range(max_iterations) :
+            x1 = x0 - f(x0)/fprime(x0)
+            if abs(x1-x0) < tolerance: return x1
+            x0 = x1
+            
+        raise ArithmeticError(
+            "Failed to converge after %d iterations, value is %f" \
+                % (max_iterations,x1) )
+
+    if fprime is not None :
+        return newton(f, x, fprime, tolerance, max_iterations)
+    elif y is not None :
+        return bisect(f, x, y, tolerance, max_iterations)
+    else :
+        return secant(f, x, tolerance, max_iterations)
 
 
 # Standard python voodoo for CLI

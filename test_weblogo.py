@@ -380,6 +380,107 @@ class test_color(unittest.TestCase) :
         self.failUnlessEqual(c1,c2)        
         
         
+#
+
+class test_gamma(unittest.TestCase) :
+    def test_create(self) :
+        a = 1.213
+        b = 3.210
+        g = Gamma(a, b)
+        self.assertEquals( g.alpha, a)
+        self.assertEquals( g.beta, b)
+        
+    def test_mean_variance(self) :
+        g = Gamma.from_mean_variance(2.0, 3.0)
+        self.assertEquals( g.mean(), 2.0)
+        self.assertEquals( g.variance(), 3.0)
+                
+        g = Gamma.from_mean_variance(2.0123, 3.01283)
+        self.assertEquals( g.mean(), 2.0123)
+        self.assertEquals( g.variance(), 3.01283)
+        
+    def test_from_shape_scale(self):
+        g = Gamma.from_shape_scale(1.0, 8.0)
+        self.assertEquals( g.alpha, 1.0)
+        self.assertEquals( g.beta, 1.0/8.0)
+
+    def test_invalid_args(self):
+        self.failUnlessRaises( ValueError, Gamma, 1.0, -1.0   )
+        self.failUnlessRaises( ValueError, Gamma, 0.0,  1.0   )
+        self.failUnlessRaises( ValueError, Gamma, 1.0, 0.0   )
+
+        
+    def test_sample(self) :
+        m = 10.0
+        v = 2.0
+        g = Gamma.from_mean_variance(m, v)
+        #print g.alpha, g.beta
+        S = 1000
+        total = 0.0
+        for s in range(S):
+            total += g.sample()
+        mean = total/S
+        
+        # The estimated mean will differ from true mean by a small amount
+
+        error = 4. * sqrt( g.variance()/S)
+        # print mean, m, error
+        self.assertTrue( abs(mean - m) < error)
+
+        
+    def test_pdf(self) :
+        m = 3.0
+        v = 2.0
+        g = Gamma.from_mean_variance(m, v)
+        upper = 30.
+                    
+        norm = integrate( g.pdf, 0, upper)
+        self.assertAlmostEqual(norm , 1.0)
+        
+        def fx(x) : return x * g.pdf(x)
+        mean = integrate( fx, 0, upper) 
+        self.assertAlmostEqual( mean, m)
+
+        def fx2(x) : return x*x * g.pdf(x)
+        x2 = integrate( fx2, 0, upper)
+        var = x2 - mean**2
+        self.assertAlmostEqual( var, v)
+         
+    def test_cdf(self) :
+        m = 3.0
+        v = 2.0
+        g = Gamma.from_mean_variance(m, v)    
+        # Numerical integration
+        S = 1000
+        M = 10.
+        total_p = 0.0
+        epsilon = 1e-4
+        last = 0.0
+        for s in range(S) :
+            x = s*M/S
+            p = g.pdf(x) *M/S
+            total_p += (last-p) /2.0
+            last = p
+            #print x, total_p, g.cdf(x)
+            
+            self.assertTrue( (total_p - g.cdf(x)) <epsilon )
+
+    def test_inverse_cdf(self) :
+        g = Gamma.from_mean_variance( 2.34, 4)   
+        self.assertAlmostEquals( 3.9, g.inverse_cdf(g.cdf(3.9) ) )
+        self.assertAlmostEquals( 1.92, g.inverse_cdf(g.cdf(1.92) ) )
+
+        g = Gamma.from_mean_variance( 10.34, 2)   
+        self.assertAlmostEquals( 3.9, g.inverse_cdf(g.cdf(3.9) ) )
+        self.assertAlmostEquals( 10.92, g.inverse_cdf(g.cdf(10.92) ) )
+
+        g = Gamma.from_mean_variance( 10.34, 2)  
+        self.assertAlmostEquals( 0.975, g.cdf(g.inverse_cdf(0.975) ) )
+        self.assertAlmostEquals( 0.025, g.cdf(g.inverse_cdf(0.025) ) )
+
+        g = Gamma.from_mean_variance( 1.34, 4)  
+        self.assertAlmostEquals( 0.975, g.cdf(g.inverse_cdf(0.975) ) )
+        self.assertAlmostEquals( 0.025, g.cdf(g.inverse_cdf(0.025) ) )
        
        
        
@@ -510,8 +611,29 @@ def mean( a) :
     
 def var(a) :
     return (sum(a*a) /len(a) ) - mean(a)**2
-       
-       
+    
+    
+    
+#
+def integrate(f, a, b, n=1000): 
+    """Numerical integate the function 'f' from 'a' to 'b' using
+    a discretization with 'n' points.
+
+    Args:    
+    - f -- A function that eats a float and returns a float.
+    - a -- Lower integration bound (float)
+    - b -- Upper integration bound (float)
+    - n -- number of sample points (int)
+
+    Status :
+        Alpha (very primative.)
+    """
+    h = (b-a)/(n-1.0); 
+    total = 0.0; 
+    for i in range(n): 
+        total += f(a+(i)*h); 
+    result  = h*(total - 0.5*f(a) -0.5*f(b)); 
+    return result  
 
         
 if __name__ == '__main__':
