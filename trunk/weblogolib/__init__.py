@@ -901,7 +901,7 @@ formatters = {
     'png_print' : png_print_formatter,
     'jpeg'  : jpeg_formatter,
     'svg'   : svg_formatter,
-    'txt' : txt_formatter,          
+    'logodata' : txt_formatter,          
     }     
     
 default_formatter = eps_formatter
@@ -1141,14 +1141,14 @@ class LogoData(object) :
         for i in range(self.length) :
             print >>out, i+1, '\t',
             for c in self.counts[i] : print >>out, c, '\t',
-            print >>out, self.entropy[i], '\t',
+            print >>out, "%6.4f" % self.entropy[i], '\t',
             if self.entropy_interval is not None:
-                print >>out, self.entropy_interval[i][0], '\t', 
-                print >>out, self.entropy_interval[i][1], '\t',
+                print >>out, "%6.4f" % self.entropy_interval[i][0], '\t', 
+                print >>out, "%6.4f" % self.entropy_interval[i][1], '\t',
             else :
                 print >>out, '\t','\t',
             if self.weight is not None :
-                print >>out, self.weight[i],
+                print >>out, "%6.4f" % self.weight[i],
             print >>out, ''
         print >>out, '# End LogoData'
         
@@ -1221,7 +1221,7 @@ def httpd_serve_forever(port=8080) :
 
 def _build_logodata(options) :
     
-    if not options.fmatrix :
+    if options.input_parser != "transfac":
         seqs = read_seq_data(options.fin, 
             options.input_parser.read,
             alphabet=options.alphabet,
@@ -1378,24 +1378,18 @@ def _build_option_parser() :
         help="Sequence input file (default: stdin)",
         metavar="FILENAME")
 
-    io_grp.add_option("", "--fin-format", 
+    # Add position weight matrix formats to input parsers by hand
+    fin_choices = dict(seq_io.format_names())
+    fin_choices['transfac'] = 'transfac'
+    
+    io_grp.add_option("-D", "--datatype", 
         dest="input_parser",
         action="store", type ="dict",
         default = seq_io,
-        choices = seq_io.format_names(),
-        help="Multiple sequence alignment format: (%s)" % 
+        choices = fin_choices,       # seq_io.format_names(),
+        help="Type of multiple sequence alignment or position weight matrix file: (%s, transfac)" % 
            ', '.join([ f.names[0] for f in seq_io.formats]),
         metavar="FORMAT")
-
-     
-    io_grp.add_option( "", "--matrix",
-        dest="fmatrix",
-        action="store",
-        type = "boolean",
-        default=False,
-        metavar = "YES/NO",
-        help="Read sequence count data from motif matrix."
-       )
 
     io_grp.add_option("-o", "--fout", dest="fout",
         type="file_out",
@@ -1409,7 +1403,7 @@ def _build_option_parser() :
         type="dict",
         choices = formatters,
         metavar= "FORMAT",
-        help="Format of output: eps (default), png, png_print, pdf, jpeg, svg, txt",
+        help="Format of output: eps (default), png, png_print, pdf, jpeg, svg, logodata",
         default = default_formatter)
 
 
