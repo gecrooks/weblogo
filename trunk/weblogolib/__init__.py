@@ -1912,17 +1912,23 @@ class Dirichlet(object) :
     def interval_relative_entropy(self, pvec, frac) :
         mean = self.mean_relative_entropy(pvec) 
         variance = self.variance_relative_entropy(pvec) 
+       
+        sd = sqrt(variance)
+        return max(0.0, mean - sd*1.96), mean + sd*1.96
+        
+        
+        # TODO
         # If the variance is small, use the standard 95% 
         # confidence interval: mean +/- 1.96 * sd
-        if variance< 0.1 :
-            sd = sqrt(variance)
-            return max(0.0, mean - sd*1.96), mean + sd*1.96
+        #if variance< 0.1 :
+        #    sd = sqrt(variance)
+        #    return max(0.0, mean - sd*1.96), mean + sd*1.96
         
-        g = Gamma.from_mean_variance(mean, variance)
-        low_limit = g.inverse_cdf( (1.-frac)/2.)
-        high_limit = g.inverse_cdf( 1. - (1.-frac)/2. )
+        #g = Gamma.from_mean_variance(mean, variance)
+        #low_limit = g.inverse_cdf( (1.-frac)/2.)
+        #high_limit = g.inverse_cdf( 1. - (1.-frac)/2. )
         
-        return low_limit, high_limit
+        #return low_limit, high_limit
 
 
 # Standard python voodoo for CLI
