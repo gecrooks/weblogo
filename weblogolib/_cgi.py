@@ -321,6 +321,7 @@ def main(htdocs_directory = None) :
         from corebio.matrix import Motif
          
         try:
+            # Try reading data in transfac format first. 
             motif = Motif.read_transfac(StringIO( sequences), alphabet=logooptions.alphabet)
             prior = weblogolib.parse_prior( comp,motif.alphabet)  
             data = weblogolib.LogoData.from_counts(motif.alphabet, motif, prior)          
