@@ -39,3 +39,5 @@ svn import -m "Dist 0.x.0" dist/weblogo-3.x.0.tar.gz  https://weblogo.googlecode
 
 
 
+
+The README.txt file should match the googlecode front page and the comments in weblogo cmd.

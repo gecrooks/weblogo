@@ -13,7 +13,7 @@ svn status
 
 echo 
 echo "## Lines of code" 
-wc -l *.py weblogolib/*.py | grep 'total' 
+wc -l *.py weblogolib/*.py corebio/*.py corebio/*/*.py test_corebio/*.py weblogo transformseq | grep 'total' 
 
 echo 
 echo "## Code Tags" 
@@ -54,6 +54,7 @@ cd dist/_extract_/weblogo*
 
 echo "## Run unit tests  :"
 python ./test_weblogo.py                                     || exit 
+python ./test_corebio.py                                     || exit 
 
 echo
 echo "## Build "

@@ -284,9 +284,8 @@ The weblogo <a href="#CLI">command line client</a>, <code>weblogo</code>, provid
 
 <h4>Dependencies</h4>
 <p>
-WebLogo version 3 is written in python. It is necessary to have <a href="http://www.python.org/download/">python 2.3, 2.4 or 2.5</a>  and the
-extension packages <a href="http://www.scipy.org/Download">numpy</a> and
-<a href="http://code.google.com/p/corebio">corebio</a>
+WebLogo version 3 is written in python. It is necessary to have <a href="http://www.python.org/download/">python 2.5, 2.6 or 2.7</a>  and the
+extension package <a href="http://www.scipy.org/Download">numpy</a>
 installed before WebLogo will run. WebLogo also requires a recent version of  <a href="http://www.cs.wisc.edu/~ghost/">ghostscript</a> to create PNG and PDF output, and <a href="http://www.cityinthesky.co.uk/opensource/pdf2svg">pdf2svg</a> to generate SVG output.
 </p>
 
@@ -311,7 +310,7 @@ This code is distributed under various <a href="http://www.opensource.org/docs/d
 After unpacking the WebLogo tarfile, it should be possible to immediately create
 logos using the command line client (Provided that python, numpy and ghostscript have already been installed).
 </p>
-<pre> 
+<pre>
 ./weblogo --format PNG &lt; htdocs/examples/cap_hth.fa &gt; cap_hth.png   
 </pre>
 <p>    
@@ -319,7 +318,7 @@ Please consult the file <code>build_examples.sh</code> for more examples.
 </p><p>
 To run WebLogo as a stand alone web service, run the logo server command :
 </p>
-<pre> 
+<pre>
 ./weblogo --serve 
 </pre>
 <p>
@@ -327,8 +326,8 @@ It should now be possible to access WebLogo at <a href="http://localhost:8080/">
 </p>
 
 <p>
-The command line client and WebLogo libraries can be permanently installed using the supplied <code>setup.py</code> script. </p>
-<pre> 
+The command line client and WebLogo libraries can be permanently installed using the supplied <code>setup.py</code> script.</p>
+<pre>
 sudo python setup.py install
 </pre> 
 <p>
