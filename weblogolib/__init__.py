@@ -153,7 +153,7 @@ __all__ = [ 'LogoOptions',
 
 description  = "Create sequence logos from biological sequence alignments." 
 
-__version__ = "3.1"
+__version__ = "3.2"
 
 # These keywords are subsituted by subversion.
 # The date and revision will only tell the truth after a branch or tag,
