@@ -53,7 +53,7 @@ To run as a standalone webserver at localhost:8080
 
 
 """
-import weblogolib
+import weblogolib._cli
 
 # Standard python voodoo for CLI
 if __name__ == "__main__":
@@ -68,7 +68,7 @@ if __name__ == "__main__":
     #stats.print_stats(40)
     #sys.exit()
 
-    weblogolib.main()
+    weblogolib._cli.main()
     
 
 
