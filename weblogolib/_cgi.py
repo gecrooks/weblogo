@@ -322,6 +322,7 @@ def main(htdocs_directory = None) :
          
         try:
             # Try reading data in transfac format first. 
+            # TODO Refactor this code 
             motif = Motif.read_transfac(StringIO( sequences), alphabet=logooptions.alphabet)
             prior = weblogolib.parse_prior( comp,motif.alphabet)  
             data = weblogolib.LogoData.from_counts(motif.alphabet, motif, prior)          
@@ -462,7 +463,8 @@ def send_form(controls, errors=[], htdocs_directory=None) :
 
 
 if __name__=="__main__" :
-    main()
+    import _cli
+    _cli.main()
 
 
 

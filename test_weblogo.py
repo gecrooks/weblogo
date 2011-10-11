@@ -57,6 +57,7 @@ from pkg_resources import resource_stream
 from corebio.moremath import entropy
 from math import log, sqrt
 
+from weblogolib.logomath import Dirichlet, Gamma
 
 def testdata_stream( name ): 
     return resource_stream(__name__, 'test_weblogo/data/'+name)    
