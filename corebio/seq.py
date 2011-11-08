@@ -170,8 +170,8 @@ class Alphabet(object) :
         - letters -- the letters in the alphabet. The ordering determines
             the ordinal position of each character in this alphabet.
         - alt -- A list of (alternative, canonical) letters. The alternatives
-            are given the same ordinal position as the canonical character. 
-            e.g. (('?','X'),('x', 'X')) states that '?' and 'x' are synomonous 
+            are given the same ordinal position as the canonical characters. 
+            e.g. (('?','X'),('x', 'X')) states that '?' and 'x' are synonomous 
             with 'X'.  Values that are not in 'letters' are ignored. Alternatives
             that are already in 'letters' are also ignored. If the same
             alternative character is used twice then the alternative is assigned
@@ -313,11 +313,11 @@ class Alphabet(object) :
 
     @staticmethod 
     def which(seqs, alphabets=None) :
-        """ Returns the most appropriate unambiguous protien, rna or dna alphabet
-        for a Seq or SeqList. If a list of alphabets is suppied, then the best alphabet
+        """ Returns the most appropriate unambiguous protein, RNA or DNA alphabet
+        for a Seq or SeqList. If a list of alphabets is supplied, then the best alphabet
         is selected from that list.
 
-        The heuristic is to count the occurances of letters for each alphabet and 
+        The heuristic is to count the occurrences of letters for each alphabet and 
         downweight longer alphabets by the square root of the alphabet length. Ties
         go to the first alphabet in the list.
 
@@ -492,7 +492,7 @@ class Seq(str):
     def reverse(self) :
         """Return the reversed sequence. 
         
-        Not that this method returns a new object, in contrast to
+        Note that this method returns a new object, in contrast to
         the in-place reverse() method of list objects.
         """
         cls = self.__class__
@@ -522,7 +522,7 @@ class Seq(str):
         return cls(str(self).translate(trans), self.alphabet)
         
     def mask(self, letters= 'abcdefghijklmnopqrstuvwxyz', mask='X') :
-        """Replace all occurences of letters with the mask character.
+        """Replace all occurrences of letters with the mask character.
         The default is to replace all lower case letters with 'X'.
         """
         LL = len(letters)
@@ -544,7 +544,7 @@ class Seq(str):
         return GeneticCode.std().translate(self)
 
     def back_translate(self) :
-        """Translate a protein sequence back into coding DNA, using using the
+        """Translate a protein sequence back into coding DNA, using the
         standard genetic code. See corebio.transform.GeneticCode for
         details and more options.
         """
@@ -576,7 +576,7 @@ class Seq(str):
         
         if len(self) < k : return
         
-        # An optimization. Chopping up strings isfaster.
+        # An optimization. Chopping up strings is faster.
         seq = self.alphabet.normalize(self).tostring()
         #seq = self.tostring() 
     

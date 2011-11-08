@@ -24,19 +24,19 @@
 #  THE SOFTWARE.
 #
 
-"""Read Sequences in interleaved Phylip format (not sequential) and returns a
-list of sequences. Phylips is a very common phylogeny generating sequence type
-that has the following traits
+"""Reads Sequences in interleaved Phylip format (not sequential) and returns a
+list of sequences. Phylip is a very common phylogeny generating sequence type
+that has the following traits:
 1) First line contains number of species and number of characters in a species'
-sequence. Options can may follow, and they can be spaced or unspaced. Options are
+sequence. Options may follow, and they can be spaced or unspaced. Options are
 simply letters such as A and W after the number of characters.
-2) Options doesn't have to contain U in order for a usertree to appear.
+2) Options don't have to contain U in order for a usertree to appear.
 3) If there are options then options appear first, then the sequences. For the
 first iteration of sequences the first ten spaces are reserved for names of
 options and species, the rest is for sequences.
 4) For the second and following iterations the names are removed, only
 sequence appears
-4) At end of file an usertree may appear. First there is a number that indicts
+4) At end of file a usertree may appear. First there is a number that indicts
 the number of lines the usertree will take, and then the usertrees follow.
 
 Examples:
@@ -74,7 +74,7 @@ def iterseq(fin, alphabet=None):
     return iter(read(fin, alphabet) )
 
 
-#Read takes in a phylip file name, read it, processes it, and returns a SeqList
+#Read takes in a phylip file name, reads it, processes it, and returns a SeqList
 def read(fin, alphabet=None):
     
    
@@ -109,7 +109,7 @@ def read(fin, alphabet=None):
                 num_options -= 1
                 pass
     
-        elif usertree_tracker > 0:                    #baskically skip usertree
+        elif usertree_tracker > 0:                    #bascally skip usertree
             if len(sequence[num_seq-1]) == num_total_seq:
                 usertree_tracker -=1
                 pass
@@ -128,7 +128,7 @@ def read(fin, alphabet=None):
                 raise ValueError('parse error') 
 
 
-    #when options end, this take care of the sequence
+    #when options end, this takes care of the sequence
         elif num_options == 0:
             if (num_seq==0):
                 raise ValueError("Empty File, or possibly wrong file")

@@ -35,7 +35,7 @@ CoreBio is often capable of guessing the correct format:
 >>> report = ssearch_io.read(afile)
 >>> print report
 
-Alternatively, each report type has a seperate module. Each module defines a
+Alternatively, each report type has a separate module. Each module defines a
 read(fin) method that can parse that report format.
 
 >>> from corebio.ssearch_io import fasta
@@ -50,7 +50,7 @@ blastxml        NCBI Blast          NCBI XML format
 Status: Beta 
 """
 # Dev. References :
-#   Inspired by Bioperls searchIO system
+#   Inspired by Bioperl's searchIO system
 #       http://www.bioperl.org/wiki/HOWTO:SearchIO
 
 __all__ = ['read', 'Report', 'Result', 
@@ -84,7 +84,7 @@ def read(fin) :
 
 class Report(object) :
     """The results of a database search. The Report contains a list of 1 or more
-    Results, one for each query. Each query result containts a list of hits. 
+    Results, one for each query. Each query result contains a list of hits. 
     Each Hit contains a list of HSP's (High scoring segment pairs).
     
     The structure of the report will vary somewhat depending on the source.
@@ -98,7 +98,7 @@ class Report(object) :
 
      parameters           -- Dictionary of parameters used in search
 	 
-	 results              -- A list of list of Results, one per query
+	 results              -- A list of lists of Results, one per query
 	 """
     __slots__ = ['algorithm', 'algorithm_version', 'algorithm_reference','database_name', 
                 'database_letters', 'database_entries', 'parameters', 'results']
@@ -136,7 +136,7 @@ class Hit(object) :
     Each hit may have one or more Alignments
     
     target       -- Information about the target sequence. 
-    raw_score	 -- Typically the ignficance of the hit in bits, e.g. 92.0
+    raw_score	 -- Typically the significance of the hit in bits, e.g. 92.0
     significance -- Typically evalue. e.g '2e-022' 
     alignments   -- A list of alignments between subject and target
     """
@@ -173,10 +173,10 @@ class Alignment(object):
     """An alignment between query and subject sequences. 
     For BLAST, these are High scoring Segment pairs (HSPs)
   
-    raw_score	     -- Typically signficance of the hit in bits, e.g. 92.0
+    raw_score	     -- Typically significance of the hit in bits, e.g. 92.0
     significance     -- Typically evalue. e.g '2e-022' 
 
-    similar	          -- number of conserved residues #FIXME eiter frac or num
+    similar	          -- number of conserved residues #FIXME either frac or num
     identical	      -- number of identical residues
     gaps              -- number of gaps    
     length            -- length of the alignment

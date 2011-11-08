@@ -17,13 +17,13 @@ Ref:
     http://astral.berkeley.edu/ 
 
 * Classes :
-    - Raf       -- A file ofASTRAL RAF (Rapid Access Format) Sequence Maps.
+    - Raf       -- A file of ASTRAL RAF (Rapid Access Format) Sequence Maps.
     - RafSeqMap -- A sequence map, a RAF record.
     - Res       -- A single residue mapping from a RAF record.
     
 * Functions :
     - parse_domain  -- Convert an ASTRAL fasta header string into a Scop domain.
-    - normalize_letters -- Bormalize RAF amino acid codes.
+    - normalize_letters -- Normalize RAF amino acid codes.
 
 """
 
@@ -64,13 +64,13 @@ def normalize_letters(one_letter_code) :
      
 _domain_re = re.compile(r">?([\w_\.]*)\s+([\w\.]*)\s+\(([^)]*)\) (.*)")
 def parse_domain(str) :
-    """Convert an ASTRAL fasta header string into a Scop domain.
+    """Convert an ASTRAL fasta header string into a SCOP domain.
 
     An ASTRAL (http://astral.stanford.edu/) header contains a concise
     description of a SCOP domain. A very similar format is used when a
     Domain object is converted into a string.  The Domain returned by this
     method contains most of the SCOP information, but it will not be located
-    within the SCOP hierarchy (i.e. The parent node will be None). The
+    within the SCOP hierarchy (i.e. the parent node will be None). The
     description is composed of the SCOP protein and species descriptions.
 
     A typical ASTRAL header looks like --
@@ -102,8 +102,8 @@ class Raf(FileIndex) :
     the CIF files are corrected manually, with the original PDB file serving as
     the final arbiter in case of discrepancies. 
 
-    Residues are referenced by residue ID. This consists of a the PDB residue
-    sequence number (up to 4 digits) and an optional PDB  insertion code (an
+    Residues are referenced by residue ID. This consists of the PDB residue
+    sequence number (up to 4 digits) and an optional PDB insertion code (an
     ascii alphabetic character, a-z, A-Z). e.g. "1", "10A", "1010b", "-1"
 
     See "ASTRAL RAF Sequence Maps":http://astral.stanford.edu/raf.html
@@ -116,7 +116,7 @@ class Raf(FileIndex) :
     reads the file once, noting the location and content of each RafSeqMap.
     The index key is a concatenation of the  PDB ID and chain ID. e.g
     "2drcA", "155c_". RAF uses an underscore to indicate blank
-    chain IDs. Custom maps of subsequences or spanning multiple chains, can
+    chain IDs. Custom maps of subsequences or spanning multiple chains can
     be constructed with the get_seqmap method. 
     
     """
@@ -172,7 +172,7 @@ class Raf(FileIndex) :
 class RafSeqMap(object) :
     """ASTRAL RAF (Rapid Access Format) Sequence Maps.
 
-    RafSeqMap is a list like object; You can find the location of particular
+    RafSeqMap is a list like object; you can find the location of particular
     residues with index(), slice this RafSeqMap into fragments, and glue 
     fragments back together with extend().
 

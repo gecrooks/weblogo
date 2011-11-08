@@ -133,12 +133,12 @@ class DsspRecord(object) :
         return Seq(''.join([r.aa for r in self.residues]), protein_alphabet)
         
     def secondary(self):
-        """Return the secondary structure of the protien as a Seq object"""
+        """Return the secondary structure of the protein as a Seq object"""
         return Seq(''.join([r.secstruc for r in self.residues]), dssp_alphabet)
         
         
     def get_residue(self, chainid, resid) :
-        """ Return the given resiude """
+        """ Return the given residue """
         if not self._res_dict :
             d = {}
             for r in self.residues :

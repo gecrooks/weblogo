@@ -151,7 +151,7 @@ class DeOption(Option):
                     "must supply a dictionary of choices for type 'dict'")
             elif not isinstance(self.choices, dict):
                 raise OptionValueError(
-                    "choices must be a dictinary ('%s' supplied)"
+                    "choices must be a dictionary ('%s' supplied)"
                     % str(type(self.choices)).split("'")[1])
             return
         self._check_choice()

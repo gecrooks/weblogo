@@ -41,11 +41,11 @@ Special Functions :
 
 - gamma()                       -- Gamma function.
 - lngamma()                     -- Logarithm of the gamma function
-- factorial()                   -- The factorial function.
+- factorial()                   -- Factorial function.
 - digamma()                     -- Digamma function (logarithmic derivative of gamma).
 - trigamma()                    -- Trigamma function (derivative of digamma).
 
-- cgamma()                       -- Complex math version of conterparts above.
+- cgamma()                       -- Complex math version of counterparts above.
 - clngamma()                                   
 - cdigamma()                     
 - ctrigamma()                    
@@ -304,7 +304,7 @@ def trigamma(x) :
     """The trigamma function, the derivative of the digamma function.
             trigamma(z) = d/dz digamma(z) = d/dz d/dz ln( gamma(z) )
     
-    See: Eric W. Weisstein. "Digamma Function." From MathWorld--
+    See: Eric W. Weisstein. "Trigamma Function." From MathWorld--
     A Wolfram Web Resource. http://mathworld.wolfram.com/TrigammaFunction.html
     """
     return ctrigamma(x).real    
@@ -361,7 +361,7 @@ def incomplete_gamma(a,x) :
          http://mathworld.wolfram.com/IncompleteGammaFunction.html
 
     Bugs :
-        This implentation is not very accurate for some arguments. 
+        This implementation is not very accurate for some arguments. 
     """   
     return  normalized_incomplete_gamma(a,x) * gamma(a)
 
@@ -375,7 +375,7 @@ def normalized_incomplete_gamma(a,x) :
     See: 
         incomplete_gamma()
     Bugs :
-        This implentation is not very accurate for some arguments. 
+        This implementation is not very accurate for some arguments. 
     """
     maxiter = 100
     epsilon = 1.48e-8
@@ -455,11 +455,11 @@ def entropy( pvec, base= exp(1) ) :
 
     
 def argmax( alist) :
-    """Return the index of the last occurance of the maximum value in the list."""
+    """Return the index of the last occurrence of the maximum value in the list."""
     return max(izip(alist, count() ))[1]
 
 def argmin( alist) :
-    """Return the index of the first occurance of the minimum value in the list."""
+    """Return the index of the first occurrence of the minimum value in the list."""
     return min(izip(alist, count() ))[1]
 
      

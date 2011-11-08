@@ -87,21 +87,21 @@ class AlphabeticArray(object) :
         """
         Args:
         - alphabets -- a list of alphabets (as string or Alphabet objects) to
-                    be used to convert strings into indicies. The lengths of 
+                    be used to convert strings into indices. The lengths of 
                     the alphabets match the shape of the indexed array. 
                     Alternatively, an integer or None in the list indicate a 
                     non-alphabetic dimension. If None the dimension length is 
                     taken from values argument.
-        - values -- An array of values to be indexed. If None the a new  
+        - values -- An array of values to be indexed. If None a new  
                  array is created. If this argument is not a numpy array
-                 then the alphabet list must be explicit (Cannot contain 
+                 then the alphabet list must be explicit (cannot contain 
                  None.)
         - dtype -- An optional numpy type code.
         """
     
         # A dummy object to be used in place of None in the alphabets list
-        # so that we get meaninful error messages if we try to index a 
-        # nonalpahbetic dimension with a string.
+        # so that we get meaningful error messages if we try to index a 
+        # nonalphabetic dimension with a string.
         class NullAlphabet(object) :
             def ord(self, key) :
                 raise IndexError('This dimension does not have an alphabet')
@@ -198,7 +198,7 @@ class AlphabeticArray(object) :
         return AlphabeticArray(new_alphabets,new_array)
 
  
-    # The following code is desinged to proxy all attributes
+    # The following code is designed to proxy all attributes
     # of the wrapped array. But I'm not entirely sure that this will work as
     # intended.       
     def __getattr__(self, name) :
@@ -268,7 +268,7 @@ class SubMatrix(AlphabeticArray) :
         
         Arguments:
         - fin       --  matrix file 
-        - alphabet  -- The set of subsitution characters. Default: ''
+        - alphabet  -- The set of substitution characters. Default: ''
         -  typeof    -- A numpy type or typecode.
         Returns:
         -  A numpy matrix of substitution scores
@@ -277,7 +277,7 @@ class SubMatrix(AlphabeticArray) :
         """
         # TODO: Parse name, description, scale, where avaliable.
         # TODO: Include '*' in submatrix_alphabet
-        # TODO: Read dna subsitution matrixes
+        # TODO: Read DNA substitution matrixes
         if alphabet is None : alphabet =submatrix_alphabet
         L = len(alphabet)
         matrix = na.zeros( (L,L), typeof)
@@ -335,7 +335,7 @@ class SubMatrix(AlphabeticArray) :
 
 
 #TODO
-# Seperate PWM (Position weight matrix. (Log odds?) 
+# Separate PWM (Position weight matrix. (Log odds?) 
 #, ICM (Information content matrix
 #, PFM (Position frequency matrix)
 

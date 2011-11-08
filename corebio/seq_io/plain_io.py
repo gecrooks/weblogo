@@ -58,7 +58,7 @@ names = ("plain","raw")
 extensions = ()
 
 def read(fin, alphabet=None): 
-    """Read a file of raw sequecne data. 
+    """Read a file of raw sequence data. 
 
     Args:
         fin -- A stream or file to read
@@ -73,12 +73,12 @@ def read(fin, alphabet=None):
 
 
 def iterseq(fin, alphabet=None) :
-    """ Read the sequence data and yeild one (and only one) sequence.
+    """ Read the sequence data and yield one (and only one) sequence.
 
     Args:
         fin -- A stream or file to read
         alphabet -- The expected alphabet of the data, if given    
-    Yeilds: 
+    Yields: 
         Seq -- One alphabetic sequence at a time.
     Raises: 
         ValueError -- If the file is unparsable

@@ -140,8 +140,8 @@ def _cull(potential, matches, verbose=0):
 def whichgen(command, path=None, verbose=0, exts=None):
     """Return a generator of full paths to the given command.
     
-    "command" is a the name of the executable to search for.
-    "path" is an optional alternate path list to search. The default it
+    "command" is the name of the executable to search for.
+    "path" is an optional alternate path list to search. The default is
         to use the PATH environment variable.
     "verbose", if true, will cause a 2-tuple to be returned for each
         match. The second element is a textual description of where the

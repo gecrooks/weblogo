@@ -24,7 +24,7 @@
 #  THE SOFTWARE.
 #
 
-"""Read and write sequence information in tab delimited format.
+"""Read and write sequence information in tab-delimited format.
 
 This very simple format has two columns per line. The first column is a sequence name, the second column is the sequence itself. The columns are separated by a single tab ("\\t") character.
 
@@ -89,12 +89,12 @@ def iterseq(fin, alphabet=None):
         columns = line.split('\t')
         if len(columns) !=2 :
             raise ValueError( "Parse failed on line %d: did not find two "
-             "columns seperated by a tab."  % (lineno) )        
+             "columns separated by a tab."  % (lineno) )        
         yield Seq(columns[1], alphabet=alphabet, name=columns[0])
      
      
 def write(fout, seqs): 
-    """Write a two column, tab delineated file. 
+    """Write a two column, tab-delimited file. 
 
     Args:
         fout -- A writable stream.

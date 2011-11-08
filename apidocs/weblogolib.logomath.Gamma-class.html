@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>weblogolib.GhostscriptAPI</title>
+  <title>weblogolib.logomath.Gamma</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -43,7 +43,8 @@
     <td width="100%">
       <span class="breadcrumbs">
         <a href="weblogolib-module.html">Package&nbsp;weblogolib</a> ::
-        Class&nbsp;GhostscriptAPI
+        <a href="weblogolib.logomath-module.html">Module&nbsp;logomath</a> ::
+        Class&nbsp;Gamma
       </span>
     </td>
     <td>
@@ -54,16 +55,17 @@
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
-<h1 class="epydoc">Class GhostscriptAPI</h1><p class="nomargin-top"><span class="codelink"><a href="weblogolib-pysrc.html#GhostscriptAPI">source&nbsp;code</a></span></p>
+<h1 class="epydoc">Class Gamma</h1><p class="nomargin-top"><span class="codelink"><a href="weblogolib.logomath-pysrc.html#Gamma">source&nbsp;code</a></span></p>
 <pre class="base-tree">
 object --+
          |
-        <strong class="uidshort">GhostscriptAPI</strong>
+        <strong class="uidshort">Gamma</strong>
 </pre>
 
 <hr />
 <pre class="literalblock">
-Interface to the command line program Ghostscript ('gs')
+The gamma probability distribution. (Not to be confused with the
+gamma function.)
 
 </pre>
 
@@ -81,11 +83,12 @@ Interface to the command line program Ghostscript ('gs')
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="weblogolib.GhostscriptAPI-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">path</span>=<span class="summary-sig-default">None</span>)</span><br />
+          <td><span class="summary-sig"><a href="weblogolib.logomath.Gamma-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">alpha</span>,
+        <span class="summary-sig-arg">beta</span>)</span><br />
       x.__init__(...) initializes x; see help(type(x)) for signature</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="weblogolib-pysrc.html#GhostscriptAPI.__init__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="weblogolib.logomath-pysrc.html#Gamma.__init__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -99,9 +102,9 @@ Interface to the command line program Ghostscript ('gs')
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="version"></a><span class="summary-sig-name">version</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td><span class="summary-sig"><a name="mean"></a><span class="summary-sig-name">mean</span>(<span class="summary-sig-arg">self</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="weblogolib-pysrc.html#GhostscriptAPI.version">source&nbsp;code</a></span>
+            <span class="codelink"><a href="weblogolib.logomath-pysrc.html#Gamma.mean">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -115,15 +118,76 @@ Interface to the command line program Ghostscript ('gs')
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="convert"></a><span class="summary-sig-name">convert</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">format</span>,
-        <span class="summary-sig-arg">fin</span>,
-        <span class="summary-sig-arg">fout</span>,
-        <span class="summary-sig-arg">width</span>,
-        <span class="summary-sig-arg">height</span>,
-        <span class="summary-sig-arg">resolution</span>=<span class="summary-sig-default">300</span>)</span></td>
+          <td><span class="summary-sig"><a name="variance"></a><span class="summary-sig-name">variance</span>(<span class="summary-sig-arg">self</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="weblogolib-pysrc.html#GhostscriptAPI.convert">source&nbsp;code</a></span>
+            <span class="codelink"><a href="weblogolib.logomath-pysrc.html#Gamma.variance">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="sample"></a><span class="summary-sig-name">sample</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="weblogolib.logomath-pysrc.html#Gamma.sample">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="pdf"></a><span class="summary-sig-name">pdf</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">x</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="weblogolib.logomath-pysrc.html#Gamma.pdf">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="cdf"></a><span class="summary-sig-name">cdf</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">x</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="weblogolib.logomath-pysrc.html#Gamma.cdf">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="inverse_cdf"></a><span class="summary-sig-name">inverse_cdf</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">p</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="weblogolib.logomath-pysrc.html#Gamma.inverse_cdf">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -150,19 +214,48 @@ Interface to the command line program Ghostscript ('gs')
     </td>
   </tr>
 </table>
-<!-- ==================== CLASS VARIABLES ==================== -->
-<a name="section-ClassVariables"></a>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
   <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Class Variables</span></td>
+    <span class="table-header">Class Methods</span></td>
 </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="formats"></a><span class="summary-name">formats</span> = <code title="('png', 'pdf', 'jpeg')"><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">png</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">pdf</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">jpeg</code><code class="variable-quote">'</code><code class="variable-group">)</code></code>
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="from_shape_scale"></a><span class="summary-sig-name">from_shape_scale</span>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">shape</span>,
+        <span class="summary-sig-arg">scale</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="weblogolib.logomath-pysrc.html#Gamma.from_shape_scale">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="from_mean_variance"></a><span class="summary-sig-name">from_mean_variance</span>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">mean</span>,
+        <span class="summary-sig-arg">variance</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="weblogolib.logomath-pysrc.html#Gamma.from_mean_variance">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
     </td>
   </tr>
 </table>
@@ -174,6 +267,20 @@ Interface to the command line program Ghostscript ('gs')
   <td align="left" colspan="2" class="table-header">
     <span class="table-header">Properties</span></td>
 </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="alpha"></a><span class="summary-name">alpha</span>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="beta"></a><span class="summary-name">beta</span>
+    </td>
+  </tr>
   <tr>
     <td colspan="2" class="summary">
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
@@ -199,11 +306,12 @@ Interface to the command line program Ghostscript ('gs')
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">path</span>=<span class="sig-default">None</span>)</span>
+        <span class="sig-arg">alpha</span>,
+        <span class="sig-arg">beta</span>)</span>
     <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="weblogolib-pysrc.html#GhostscriptAPI.__init__">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="weblogolib.logomath-pysrc.html#Gamma.__init__">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   

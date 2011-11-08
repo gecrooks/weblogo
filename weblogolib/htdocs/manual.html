@@ -72,7 +72,7 @@ or nucleic acid multiple sequence alignment.
 Each logo consists of stacks of symbols, one stack for each position in the
 sequence. The overall height of the stack indicates the sequence conservation
 at that position, while the height of symbols within the stack indicates the
-relative frequency of each amino or nucleic acid at that position. The width of the stack is proportional to the fraction of valid symbols in that position. (Positions with many gasp have thin stacks.)  In general, a sequence logo provides a richer and more precise description of, for example,
+relative frequency of each amino or nucleic acid at that position. The width of the stack is proportional to the fraction of valid symbols in that position. (Positions with many gaps have thin stacks.)  In general, a sequence logo provides a richer and more precise description of, for example,
 a binding site, than would a consensus sequence. 
 </p>
 
@@ -134,7 +134,7 @@ Generally speaking, vector formats (EPS and PDF) are better for printing, while 
 The physical dimensions of the generated logo.
 Specifically, controls the size of individual symbols stacks.
 <ul>
-<li>     small : 5.4 points wide (Same as 9pt Courier), aspect ratio 5:1
+<li>     small : 5.4 points wide (same as 9pt Courier), aspect ratio 5:1
 </li><li> medium : Double the width and height of small.
 </li><li> large : Triple the width and height of small.
 </li>
@@ -155,7 +155,7 @@ The type of biological molecule.
 </ul>
 
 <h4>Ignore lower case</h4>
-Disregard lower case letters in the and only count
+Disregard lower case letters and only count
 upper case letters in sequences?
 
 <h4>Units</h4>
@@ -165,34 +165,36 @@ The units used for the y-axis.
 </li><li> bits: Information content in bits
 </li><li> nats: Natural units, 1 bit = ln 2 (0.69) nats
 </li><li> kT : Thermal energy units in natural units (Numerically the same as nats)
-</li><li> kJ/mol : Thermal energy (Assuming T = 300 K)
-</li><li> kcal/mol : Thermal energy (Assuming T = 300 K)
+</li><li> kJ/mol : Thermal energy (assuming T = 300 K)
+</li><li> kcal/mol : Thermal energy (assuming T = 300 K)
 </li>
 </ul>
 
 
 <h4>First position number</h4>
-The numerical label of the first residue in the multiple sequence alignment. The label must be an integer. Residue labels for the logo will be relative to this number. (See also: Logo Range)
+<a name="First position number"></a>
+The numerical label of the first position in the sequence data in the input file. The label must be an integer. Residue labels for the logo will be relative to this number. (See also: <a href="#logo range">Logo range</a>.)
 <h4>Logo range</h4>
-By default, all sequence data is displayed in the Sequence Logo. With this option, you can instead show a subrange of the entire sequence. Start and end positions are included, and the numbering of positions is relative to the sequence number of the first position. (See also: First Position Number ) Thus, if the first position number is "2", start is "5" and end is "10", then the 4th through 9th (inclusive) sequence positions will be displayed, and they will be numbered "5", "6", "7", "8", "9" and "10".
+<a name="logo range"></a>
+By default, all sequence data from the input file is displayed in the Sequence Logo. With this option, you can instead show a subrange of the sequence data. The numbering of Start and End Positions is relative to the First Position Number. Thus, if the First Position Number is "2", Start is "5" and End is "10", then the 4th through 9th (inclusive) sequence positions of the input file will be displayed, and they will be numbered "5", "6", "7", "8", "9" and "10".
 
 <a name="CA"></a>
 <h4>Composition</h4>
 <p>
-The background composition of the genome or proteome from which the sequences have been drawn. The default, automatic option is to use equiprobable background for nucleic acids and a typical amino acid usage pattern for proteins. However, you may also explicitly set the expected CG content for nucleic acid sequences, insists on equiprobable background distributions, or turn off composition adjustment altogether.
+The background composition of the genome or proteome from which the sequences have been drawn. The default, automatic option is to use equiprobable background for nucleic acids and a typical amino acid usage pattern for proteins. However, you may also explicitly set the expected CG content for nucleic acid sequences, insist on equiprobable background distributions, or turn off composition adjustment altogether.
 </p>
 <p>
 Compositional adjustment has two effects. First, the information content of a site is defined as the relative entropy of the monomers at that site to the background distribution. Consequentially,  rare monomers have higher information content (when they occur) than relatively common monomers. 
 </p>
 <p>
-Secondly, the background composition is used in the small sample correction of information content. Briefly, if only a few sequences are available in the multiple sequence alignment, then sites typically appear more conserved than they really are. Small samples bias the relative entropy upwards. To compensate, we add pseudocounts to the actual counts, proportional to the expected background  composition. These pseudocounts smooth the data for small samples, but become irrelevant for large samples. The proportionality constant is set to 4 for nucleic acid sequences, and 20 for proteins (These numbers have been found to give reasonable results in practice). 
+Secondly, the background composition is used in the small sample correction of information content. Briefly, if only a few sequences are available in the multiple sequence alignment, then sites typically appear more conserved than they really are. Small samples bias the relative entropy upwards. To compensate, we add pseudocounts to the actual counts, proportional to the expected background  composition. These pseudocounts smooth the data for small samples, but become irrelevant for large samples. The proportionality constant is set to 4 for nucleic acid sequences, and 20 for proteins (these numbers have been found to give reasonable results in practice). 
 </p>
 <p>
 Behind the scenes, things are more complex. We do a full Bayesian calculation, starting with explicit Dirichlet priors based on the background composition, to which we add the data and then calculate both the posterior mean relative entropy (the stack height) and Bayesian 95% confidence intervals for error bars. These interesting details will be explained elsewhere.
 </p> 
 
 <h4>Scale stack width</h4>
-Scale the visible stack width by the fraction of symbols in the column?  (i.e. columns with many gaps or unknown residues are narrow.)
+Scale the visible stack width by the fraction of symbols in the column?  (I.e. columns with many gaps or unknown residues are narrow.)
 
 <h4>Error bars</h4>
 Display error bars. These indicate an approximate, Bayesian 95% confidence   interval.
@@ -201,7 +203,7 @@ Display error bars. These indicate an approximate, Bayesian 95% confidence   int
 Give your logo a title.
 
 <h4>Figure label</h4>
-An optional figure label, added to the top left (e.g. '(a)')
+An optional figure label, added to the top left (e.g. '(a)').
 
 <h4>X-axis</h4>
 Add a label to the x-axis, or hide axis altogether.
@@ -213,7 +215,7 @@ The vertical axis indicates the information content of a sequence position. Use 
 The height of the y-axis in designated units. The automatic option will pick reasonable defaults based on the sequence type and axis unit.
 
 <h4>Y-axis tic spacing</h4>
-The distance between major tic marks on the Y-axis.
+The distance between major tic marks on the y-axis.
 
 <h4>Sequence end labels</h4>
 Choose this option to label the 5' &amp; 3' ends of nucleic acid or the N &amp; C termini of amino acid sequences.
@@ -225,7 +227,7 @@ Optional, but we appreciate the acknowledgment.
 <h4>Color Scheme</h4>
 <ul>
 <li> auto : use Base Pairing for nucleic acids (NA), Hydrophobicity for amino acids (AA).
-</li><li> monochrome: All symbols black
+</li><li> monochrome : All symbols black
 </li><li> Base Pairing (NA default) :
 <table border="1" cellpadding="2" cellspacing="0" >
 <tr><td>2 Watson-Crick hydrogen bonds</td><td>TAU</td><td style="color:darkorange">dark orange</td></tr>
@@ -247,7 +249,7 @@ Optional, but we appreciate the acknowledgment.
 <tr><td>Hydrophobic</td><td>YVMCLFIW</td><td style="color:blue">blue</td></tr>
 </table>
 
-</li><li> Chemistry (AA):  Color amino acids according to chemical properties. WebLogo (version 1 and 2) and makelogo default color. (Note that the WebLogo 2 documentation erroneously lists Q and N under green.)
+</li><li> Chemistry (AA) :  Color amino acids according to chemical properties. WebLogo (version 1 and 2) and makelogo default color. (Note that the WebLogo 2 documentation erroneously lists Q and N under green.)
 <table border="1" cellpadding="2" cellspacing="0" >
 <tr><td>Polar</td><td>G,S,T,Y,C</td><td style="color:green"> green</td></tr>
 <tr><td>Neutral</td><td>Q,N</td><td style="color:purple"> purple</td></tr>
@@ -265,7 +267,7 @@ Optional, but we appreciate the acknowledgment.
 
 
 
-</li><li> Custom : A custom color scheme can be specified in the input field below. Specify colors on the left and associated symbols on the right. Colors are entered using  <a href="http://www.w3.org/TR/REC-CSS2/syndata.html#color-units">CSS2 (Cascading Style Sheet)</a> syntax. (e.g. 'red', '#F00', '#FF0000',  'rgb(255, 0, 0)', 'rgb(100%, 0%, 0%)' or 'hsl(0, 100%, 50%)' for the color red.)
+</li><li> Custom : A custom color scheme can be specified in the input field below. Specify colors on the left and associated symbols on the right. Colors are entered using  <a href="http://www.w3.org/TR/REC-CSS2/syndata.html#color-units">CSS2 (Cascading Style Sheet)</a> syntax. (E.g. 'red', '#F00', '#FF0000',  'rgb(255, 0, 0)', 'rgb(100%, 0%, 0%)' or 'hsl(0, 100%, 50%)' for the color red.)
 </li>
 </ul>
 
@@ -292,7 +294,7 @@ installed before WebLogo will run. WebLogo also requires a recent version of  <a
 
 <h4> Download and Installation</h4>
 <p>
-If the python package <a href="http://peak.telecommunity.com/DevCenter/setuptools"><code>setuptools</code></a> has been installed, then WebLogo and its dependancies can be downloaded and installed with a single command:
+If the python package <a href="http://peak.telecommunity.com/DevCenter/setuptools"><code>setuptools</code></a> has been installed, then WebLogo and its dependencies can be downloaded and installed with a single command:
 </p>
 <pre>
 sudo easy_install weblogo
@@ -300,7 +302,7 @@ sudo easy_install weblogo
 
 
 <p>
-Alternatively, weblogo and its dependancies can be installed manually.
+Alternatively, weblogo and its dependencies can be installed manually.
 The WebLogo source code can be downloaded from 
 <a href="http://code.google.com/p/weblogo/">http://code.google.com/p/weblogo/</a>.
 This code is distributed under various <a href="http://www.opensource.org/docs/definition">open source licenses</a>. Please consult the <code>LICENSE.txt</code> file in the source distribution for details. 
@@ -308,7 +310,7 @@ This code is distributed under various <a href="http://www.opensource.org/docs/d
 
 <p>
 After unpacking the WebLogo tarfile, it should be possible to immediately create
-logos using the command line client (Provided that python, numpy and ghostscript have already been installed).
+logos using the command line client (provided that python, numpy and ghostscript have already been installed).
 </p>
 <pre>
 ./weblogo --format PNG &lt; htdocs/examples/cap_hth.fa &gt; cap_hth.png   
@@ -342,7 +344,7 @@ sudo python setup.py install_scripts --install-dir /usr/local/bin
 <h4>Web App</h4>
 
 <p>
-  To use WebLogo as a web application, first install the weblogo dependancies and libraries as above, then
+  To use WebLogo as a web application, first install the weblogo dependencies and libraries as above, then
  place (or link) the <code>weblogolib/weblogo_htdocs</code> directory
   somewhere within the document root of your webserver. The webserver 
   must be able to execute the CGI script <code>create.cgi</code>. For Apache, you may have to add an <code>ExecCGI</code>
@@ -366,11 +368,11 @@ It may also be necessary to set the <code>PATH</code> and <code>PYTHONPATH</code
 <pre>
 SetEnv PYTHONPATH /path/to/weblogo/libraries
 </pre>
-The cgi script also has to be able to find the '<code>gs</code>' ghostscript executable. If ghostscipt is installed in a non-standard location add the following environment variable.
+The cgi script also has to be able to find the '<code>gs</code>' ghostscript executable. If ghostscript is installed in a non-standard location add the following environment variable.
 <pre>
 SetEnv COREBIOPATH /path/to/gs
 </pre>
-The maxium bytes of uploaded sequecne data can be controlled with the <code>WEBLOGO_MAX_FILE_SIZE</code> environment variable.
+The maximum bytes of uploaded sequence data can be controlled with the <code>WEBLOGO_MAX_FILE_SIZE</code> environment variable.
 <pre>
 SetEnv WEBLOGO_MAX_FILE_SIZE 1000000
 </pre>
@@ -452,7 +454,7 @@ The  command line client has many options not available through the web interfac
 	    -X --show-xaxis YES/NO      Display sequence numbers along x-axis?
 	                                (default: True)
 	    -x --xlabel TEXT            X-axis label
-	       --annotate TEXT          A comma seperated list of custom stack
+	       --annotate TEXT          A comma separated list of custom stack
 	                                annotations, e.g. '1,3,4,5,6,7'.  Annotation
 	                                list must be same length as sequences.
 	    -S --yaxis UNIT             Height of yaxis in units. (Default: Maximum

@@ -16,8 +16,8 @@ Constants:
         
 There are two common ways of reducing the full secondary structure alphabet to 
 the simpler three letter EHL alphabet. The EHL reduction converts 3/10 and pi
-helixes to H (helix) and beta-bidges to strands (E), whereas the FA reduction 
-convers all not canonical helixes and strrands to L (loop). The FA reduction is
+helixes to H (helix) and beta-bridges to strands (E), whereas the FA reduction 
+converts all non-canonical helixes and strands to L (loop). The FA reduction is
 more predictable.
     - fa_reduce_secstruc_to_ehl
     - reduce_secstruc_to_ehl
