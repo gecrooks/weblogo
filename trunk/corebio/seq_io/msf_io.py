@@ -27,7 +27,7 @@
 
 """Read sequence information in MSF format.
     
-This is a file format for biological sequence data. The sequences are interweaved and each line is labeled with the sequence name. The MSF format can be identified in one, or more of the following ways: 
+This is a file format for biological sequence data. The sequences are interweaved and each line is labeled with the sequence name. The MSF format can be identified in one or more of the following ways: 
 1. The word PileUp on the first line (optional)
 2. the word !!AA_MULTIPLE_ALIGNMENT or !!NA_MULTIPLE_ALIGNMENT at the start of the file (optional)
 3. the word MSF on the first line of the file, and the characters ".." at the end of this line (optional)

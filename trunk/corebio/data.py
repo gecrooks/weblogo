@@ -57,7 +57,7 @@ BLOSUM Scoring Matrices
     - blosum80    
     - blosum100   
 
-Other subsitution scoring matrices:
+Other substitution scoring matrices:
     - dist20_comp 
     - pam250
     - pam120
@@ -108,7 +108,7 @@ Attributes:
         letter codes.
          
     - extended_three_to_one
-        -- Map between three letter amino acid codes (First letter capitalized) 
+        -- Map between three letter amino acid codes (first letter capitalized) 
         and standard one letter codes. This map contains many nonstandard three
         letter codes, used, for example, to specify chemically modified amino
         acids in PDB files.
@@ -118,7 +118,7 @@ Attributes:
     - amino_acid_names
 
     - amino_acid_composition
-        -- Average  amino acid composition of proteins.
+        -- Average amino acid composition of proteins.
         Ref: McCaldon P., Argos P. Proteins 4:99-122 (1988).
 
     - kyte_doolittle_hydrophobicity 
@@ -128,7 +128,7 @@ Attributes:
     - nucleotide_names
     
     - amino_acid_accesible_surface_area
-        -- Nominal maxium solvent accessoble area for unmodified amino acids,
+        -- Nominal maximum solvent accessoble area for unmodified amino acids,
         in square Angstroms.
         Ref: Sander & Rost, (1994), Proteins, 20:216-226
 
@@ -146,7 +146,7 @@ from StringIO import StringIO
 from corebio.utils import resource_string, resource_stream,resource_filename
 import utils
 
-# Explictly list set of available data resources. We want to be able to access
+# Explicitly list set of available data resources. We want to be able to access
 # these resources in, for example, a webapp, without inadvertently allowing
 # unrestricted read access to the local file system.
 
@@ -180,11 +180,11 @@ _resource_filenames = {
     'vtml160' :    'data/vtml160',
     }
 
-# TODO: Subsitution matrix parser, SeqMatrix.read
+# TODO: Substitution matrix parser, SeqMatrix.read
 # _resource_parsers = {}
 
 def data_string( name ): 
-    """Load the specified resource as as string."""
+    """Load the specified resource as a string."""
     fn = _resource_filenames[name]
     return resource_string(__name__, fn , __file__)    
 

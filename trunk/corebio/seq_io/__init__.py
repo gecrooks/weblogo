@@ -41,7 +41,7 @@
 """ Sequence file reading and writing.
 
 Biological sequence data is stored and transmitted using a wide variety of
-different file formats. This package provides convient methods to read and
+different file formats. This package provides convenient methods to read and
 write several of these file fomats.
 
 CoreBio is often capable of guessing the correct file type, either from the
@@ -50,7 +50,7 @@ file extension or the structure of the file:
 >>> afile = open("test_corebio/data/cap.fa")
 >>> seqs = corebio.seq_io.read(afile)
 
-Alternatively, each sequence file type has a seperate module named FILETYPE_io
+Alternatively, each sequence file type has a separate module named FILETYPE_io
 (e.g. fasta_io, clustal_io).
 >>> import corebio.seq_io.fasta_io
 >>> afile = open("test_corebio/data/cap.fa")
@@ -99,14 +99,14 @@ write(afile, seqlist)
     Write a collection of sequences to the specifed file.
 
 write_seq(afile, seq)
-    Write one sequence to the file. Only implemented for non-inteleaved, 
+    Write one sequence to the file. Only implemented for non-interleaved, 
     headerless formats, such as fasta and plain.
 
 example
     A string containing a short example of the file format
 
 names
-    A list of synonyms for the file format. e.g. for fasta_io, ( 'fasta',    
+    A list of synonyms for the file format. E.g. for fasta_io, ( 'fasta',    
     'pearson', 'fa'). The first entry is the preferred format name.
 
 extensions

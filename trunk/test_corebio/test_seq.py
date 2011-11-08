@@ -82,7 +82,7 @@ class test_alphabet(unittest.TestCase) :
         self.failUnlessEqual(a1, generic_alphabet)
     
     def test_create_from_alphabet(self) :
-        """ If we create pass an alphabet to the constuctor, it's passed 
+        """ If we pass an alphabet to the constuctor, it's passed 
         right back """
         a1 = Alphabet("kjdahf")
         a2 = Alphabet(a1)

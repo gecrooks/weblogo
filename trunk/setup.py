@@ -11,10 +11,10 @@ from distutils.command.install_data import install_data
 import warnings
 warnings.simplefilter('ignore', UserWarning, lineno =236)
 
-# check dependancies
+# check dependencies
 if not hasattr(sys, 'version_info') or sys.version_info < (2,5,0,'final'):
     raise SystemExit,  \
-        "Dependancy error: WebLogo requires Python 2.5 or later."
+        "Dependency error: WebLogo requires Python 2.5 or later."
  
  
 from weblogolib import __version__

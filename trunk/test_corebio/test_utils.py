@@ -117,7 +117,7 @@ class test_utils(unittest.TestCase) :
         self.assertEquals( i.index() ,2)
         self.assertTrue( i.has_item() )
         
-        # Reper application of Reiterate should return same iterator.
+        # Repeated application of Reiterate should return same iterator.
         assert i is iter(i)
         assert i is Reiterate(i)
         

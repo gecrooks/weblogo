@@ -155,7 +155,7 @@ description  = "Create sequence logos from biological sequence alignments."
 
 __version__ = "3.2"
 
-# These keywords are subsituted by subversion.
+# These keywords are substituted by subversion.
 # The date and revision will only tell the truth after a branch or tag,
 # since different files in trunk will have been changed at different times
 release_date ="$Date$".split()[1]
@@ -283,7 +283,7 @@ std_units = {
 # The base stack width is set equal to 9pt Courier. 
 # (Courier has a width equal to 3/5 of the point size.)
 # Check that can get 80 characters in journal page @small
-# 40 chacaters in a journal column
+# 40 characters in a journal column
 std_sizes = {
     "small" : 5.4 , 
     "medium" : 5.4*2,
@@ -315,7 +315,7 @@ std_percentCG = {
 
   
 class LogoOptions(object) :
-    """ A container for all logo formating options. Not all of these
+    """ A container for all logo formatting options. Not all of these
     are directly accessible through the CLI or web interfaces. 
     
     To display LogoOption defaults:
@@ -360,13 +360,13 @@ class LogoOptions(object) :
         o errorbar_width_fraction 
         o errorbar_gray 
 
-        o resolution             -- Dots per inch (Default: 96) Used for bitmapped output formats
+        o resolution             -- Dots per inch (default: 96). Used for bitmapped output formats
         
         o default_color 
         o color_scheme 
         
         o stack_width           --
-        o stack_aspect_ratio    -- Ratio of stack height to width (Default: 5)
+        o stack_aspect_ratio    -- Ratio of stack height to width (default: 5)
 
         o logo_margin           -- Default: 2 pts
         o stroke_width          -- Default: 0.5 pts
@@ -483,7 +483,7 @@ class LogoOptions(object) :
         
 
 class LogoFormat(LogoOptions) :     
-    """ Specifies the format of the logo. Requires a LogoData and LogoOptions 
+    """ Specifies the format of the logo. Requires LogoData and LogoOptions 
     objects.
     
     >>> data = LogoData.from_seqs(seqs )
@@ -494,6 +494,9 @@ class LogoFormat(LogoOptions) :
     Raises an ArgumentError if arguments are invalid.
     """
     def __init__(self, data, options= None) :
+        """ Create a new LogoFormat instance.
+        
+        """
         LogoOptions.__init__(self)
         
         if options is not None :
@@ -526,7 +529,7 @@ class LogoFormat(LogoOptions) :
         
         # Attribute to test, test, error message
         arg_conditions = (
-            ("stacks_per_line",     lambda x: x>0 ,     "Stacks per line must positive."),
+            ("stacks_per_line",     lambda x: x>0 ,     "Stacks per line must be positive."),
             ("stack_width",         lambda x: x>0.0,    "Stack width must be greater than zero."),
             ("stack_aspect_ratio" , lambda x: x>0,    "Stack aspect ratio must be greater than zero."),
             ("fontsize" ,           lambda x: x>0 ,     "Font sizes must be positive."),
@@ -690,7 +693,7 @@ class LogoFormat(LogoOptions) :
 
 # ------ Logo Formaters ------
 # Each formatter is a function f(LogoData, LogoFormat, output file).
-# that draws a represntation of the logo into the given file.
+# that draws a representation of the logo into the given file.
 # The main graphical formatter is eps_formatter. A mapping 'formatters'
 # containing all available formatters is located after the formatter
 # definitions. 
@@ -777,7 +780,7 @@ def txt_formatter( logodata, format, fout) :
 def eps_formatter( logodata, format, fout) :
     """ Generate a logo in Encapsulated Postscript (EPS)"""
     
-    subsitutions = {}
+    substitutions = {}
     from_format =[
         "creation_date",    "logo_width",           "logo_height",      
         "lines_per_logo",   "line_width",           "line_height",
@@ -802,9 +805,9 @@ def eps_formatter( logodata, format, fout) :
         ]
    
     for s in from_format :
-        subsitutions[s] = getattr(format,s)
+        substitutions[s] = getattr(format,s)
 
-    subsitutions["shrink"] = str(format.show_boxes).lower()
+    substitutions["shrink"] = str(format.show_boxes).lower()
 
 
     # --------- COLORS --------------
@@ -812,14 +815,14 @@ def eps_formatter( logodata, format, fout) :
         return  " ".join( ("[",str(color.red) , str(color.green), 
             str(color.blue), "]"))  
 
-    subsitutions["default_color"] = format_color(format.default_color)
+    substitutions["default_color"] = format_color(format.default_color)
 
     colors = []  
     for group in format.color_scheme.groups :
         cf = format_color(group.color)
         for s in group.symbols :
             colors.append( "  ("+s+") " + cf )
-    subsitutions["color_dict"] = "\n".join(colors)
+    substitutions["color_dict"] = "\n".join(colors)
         
     data = []
     
@@ -882,12 +885,12 @@ def eps_formatter( logodata, format, fout) :
         data.append("")
                
     data.append("EndLine")
-    subsitutions["logo_data"] = "\n".join(data)  
+    substitutions["logo_data"] = "\n".join(data)  
 
 
     # Create and output logo
     template = resource_string( __name__, 'template.eps', __file__)
-    logo = Template(template).substitute(subsitutions)
+    logo = Template(template).substitute(substitutions)
     print >>fout, logo
  
 
@@ -999,7 +1002,7 @@ def read_seq_data(fin,
                 max_file_size=0):
     """ Read sequence data from the input stream and return a seqs object. 
     
-    The enviroment variable WEBLOGO_MAX_FILE_SIZE overides the max_file_size argument.
+    The environment variable WEBLOGO_MAX_FILE_SIZE overides the max_file_size argument.
     Used to limit the load on the WebLogo webserver.
     """
 
@@ -1058,7 +1061,7 @@ class LogoData(object) :
 
     @classmethod    
     def from_counts(cls, alphabet, counts, prior= None):
-        """Build a logodata object from counts."""
+        """Build a LogoData object from counts."""
         # Counts is a Motif object?
         #counts = counts.array
         
@@ -1100,7 +1103,7 @@ class LogoData(object) :
 
     @classmethod    
     def from_seqs(cls, seqs, prior= None):
-        """Build a LogoData object form a SeqList, a list of sequences."""
+        """Build a LogoData object from a SeqList, a list of sequences."""
         # --- VALIDATE DATA ---
         # check that at least one sequence of length at least 1 long
         if len(seqs)==0 or len(seqs[0]) ==0:
@@ -1125,7 +1128,7 @@ class LogoData(object) :
     def __str__(self) :
         out = StringIO()
         print >>out, '## LogoData'
-        print >>out, '# First column is position number, couting from zero'
+        print >>out, '# First column is position number, counting from zero'
         print >>out, '# Subsequent columns are raw symbol counts'
         print >>out, '# Entropy is mean entropy measured in nats.' 
         print >>out, '# Low and High are the 95% confidence limits.'

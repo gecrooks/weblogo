@@ -109,7 +109,7 @@ def iterseq(fin, alphabet=None):
     arguments:
         fin -- A stream or file to read
         alphabet --    
-    yeilds :
+    yields :
         Seq
     raises :
         ValueError -- On a parse error.

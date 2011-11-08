@@ -586,7 +586,7 @@ class test_Dirichlet(unittest.TestCase) :
         #print
         #print '> ', rent, vrent, low, high
      
-        # This test can fail randomly, but the precision form a few
+        # This test can fail randomly, but the precision from a few
         # thousand samples is low. Increasing samples, 1000->2000
         samples = 2000
         sent = zeros( (samples,), float64) 
@@ -617,7 +617,7 @@ def var(a) :
     
 #
 def integrate(f, a, b, n=1000): 
-    """Numerical integate the function 'f' from 'a' to 'b' using
+    """Numerically integrate the function 'f' from 'a' to 'b' using
     a discretization with 'n' points.
 
     Args:    
@@ -627,7 +627,7 @@ def integrate(f, a, b, n=1000):
     - n -- number of sample points (int)
 
     Status :
-        Alpha (very primative.)
+        Alpha (very primitive.)
     """
     h = (b-a)/(n-1.0); 
     total = 0.0; 

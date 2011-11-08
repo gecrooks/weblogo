@@ -22,9 +22,9 @@ are family, superfamily and fold.
 
 The Scop object in this module represents the entire SCOP classification. It
 can be built from the three SCOP parsable files (see DesRecord, HieRecord and
-ClaRecord), modified is so desired, and converted back to the same file formats.
+ClaRecord), modified if so desired, and converted back to the same file formats.
 A single SCOP domain (represented by the Domain class) can be obtained from
-Scop using the domain's SCOP identifier (sid).
+SCOP using the domain's SCOP identifier (sid).
 
 Classes:
  - Scop     -- The entire SCOP hierarchy.
@@ -78,7 +78,7 @@ def cmp_sccs(sccs1, sccs2) :
     return cmp(s1,s2)
 
 def sccs_relation(sccs1, sccs2) :
-    """Are two scop domains related? Returns +1 if homologous , -1 if not homologous, 
+    """Are two SCOP domains related? Returns +1 if homologous , -1 if not homologous, 
     and 0 if ambiguous.
 
     Protein domains are classified into a hierarchy of class, fold, superfamily
@@ -123,11 +123,11 @@ class Scop(object):
     domains          -- A list of all domains
     nodes_by_sid     -- A dictionary of nodes indexed by SCOP identifier 
                         (e.g. 'd1hbia_')
-    domains_by_sunid -- A dictionary of domains indexed by SCOP uniquie
+    domains_by_sunid -- A dictionary of domains indexed by SCOP unique
                         identifiers (e.g. 14996)
     """
     def __init__(self):
-        """ An empty Scop object.
+        """ An empty SCOP object.
         
         See also Scop.parse() and Scop.parse_files()
         """
@@ -271,7 +271,7 @@ class Scop(object):
 
   
 class Node(object) :
-    """ A node in the Scop hierarchy
+    """ A node in the SCOP hierarchy
 
     sunid  -- SCOP unique identifiers. e.g. '14986'
     parent -- The parent node
@@ -282,7 +282,7 @@ class Node(object) :
         
     """
     def __init__(self) :
-        """A new, uninitilized SCOP node."""
+        """A new, uninitialized SCOP node."""
         self.sunid=''    
         self.parent = None
         self.children=[]
@@ -321,7 +321,7 @@ class Node(object) :
         return rec
         
     def descendents( self, node_type) :
-        """ Return a list of all decendent nodes of the given type. Node type
+        """ Return a list of all descendant nodes of the given type. Node type
         can be a two letter code or longer description. e.g. 'fa' or 'family'
         """
         if node_type in _nodetype_to_code:
@@ -423,14 +423,14 @@ class Domain(Node) :
 class DesRecord(object):
     """ Handle the SCOP DEScription file.
 
-    The file format is described in the scop
+    The file format is described in the SCOP
     "release notes.":http://scop.berkeley.edu/release-notes-1.55.html 
     The latest DES file can be found
     "elsewhere at SCOP.":http://scop.mrc-lmb.cam.ac.uk/scop/parse/
   
-    The DES file consisnt of one DES record per line. Each record 
-    holds information for one node in the SCOP hierarchy, and consist
-    of 5 tab deliminated fields,
+    The DES file consists of one DES record per line. Each record 
+    holds information for one node in the SCOP hierarchy, and consists
+    of 5 tab-delimited fields,
     sunid, node type, sccs, node name, node description.
 
     For example ::
@@ -461,7 +461,7 @@ class DesRecord(object):
             self.description =''
         else :
             entry = record.rstrip()  # no trailing whitespace
-            columns = entry.split("\t")  # separate the tab-delineated cols
+            columns = entry.split("\t")  # separate the tab-delimited cols
             if len(columns) != 5:
                 raise ValueError("I don't understand the format of %s" % entry)
         
@@ -496,13 +496,13 @@ class HieRecord(object):
     """Handle the SCOP HIErarchy files, which describe the SCOP hierarchy in
     terms of SCOP unique identifiers (sunid).
 
-    The file format is described in the scop
+    The file format is described in the SCOP
     "release notes.":http://scop.berkeley.edu/release-notes-1.55.html 
     The latest HIE file can be found
     "elsewhere at SCOP.":http://scop.mrc-lmb.cam.ac.uk/scop/parse/
   
     "Release 1.55":http://scop.berkeley.edu/parse/dir.hie.scop.txt_1.55     
-    Records consist of 3 tab deliminated fields; node's sunid,
+    Records consist of 3 tab-delimited fields: node's sunid,
     parent's sunid, and a list of children's sunids. For example ::
     
     0       -       46456,48724,51349,53931,56572,56835,56992,57942
@@ -524,7 +524,7 @@ class HieRecord(object):
         
         # Parses HIE records.
         entry = record.rstrip()        # no trailing whitespace
-        columns = entry.split('\t')   # separate the tab-delineated cols
+        columns = entry.split('\t')   # separate the tab-delimited cols
         if len(columns) != 3:
             raise ValueError("I don't understand the format of %s" % entry)
         
@@ -578,7 +578,7 @@ class HieRecord(object):
 class ClaRecord(object):
     """Handle the SCOP CLAssification file, which describes SCOP domains.
 
-    The file format is described in the scop
+    The file format is described in the SCOP
     "release notes.":http://scop.berkeley.edu/release-notes-1.55.html 
     The latest CLA file can be found
     "elsewhere at SCOP.":http://scop.mrc-lmb.cam.ac.uk/scop/parse/
@@ -600,9 +600,9 @@ class ClaRecord(object):
         
         if not record: return
         
-        # Parse a tab-deliminated CLA record.
+        # Parse a tab-delimited CLA record.
         entry = record.rstrip()        # no trailing whitespace
-        columns = entry.split('\t')   # separate the tab-delineated cols
+        columns = entry.split('\t')   # separate the tab-delimited cols
         if len(columns) != 6:
             raise ValueError("I don't understand the format of %s" % entry)
 
@@ -654,7 +654,7 @@ class DomRecord(object):
     The DOM files for older releases can be found 
     "elsewhere at SCOP.":http://scop.mrc-lmb.cam.ac.uk/scop/parse/
 
-    DOM records consist of 4 tab deliminated fields;
+    DOM records consist of 4 tab-delimited fields:
     sid, pdbid, residues, hierarchy
     For example ::
     
@@ -674,7 +674,7 @@ class DomRecord(object):
         
         if record:
             entry = record.rstrip()  # no trailing whitespace
-            columns = entry.split("\t")  # separate the tab-delineated cols
+            columns = entry.split("\t")  # separate the tab-delimited cols
             if len(columns) != 4:
                 raise ValueError("I don't understand the format of %s" % entry)
             self.sid, pdbid, res, self.hierarchy = columns
@@ -708,7 +708,7 @@ class Residues(object) :
     """A collection of residues from a PDB structure.
 
     This class provides code to work with SCOP domain definitions. These
-    are concisely expressed as a one or more chain fragments. For example,
+    are concisely expressed as one or more chain fragments. For example,
     "(1bba A:10-20,B:)" indicates residue 10 through 20 (inclusive) of
     chain A, and every residue of chain B in the pdb structure 1bba. The pdb
     id and brackets are optional. In addition "-" indicates every residue of

@@ -130,7 +130,7 @@ def iterseq(fin, alphabet=None):
             s = Seq( "".join(seqs), alphabet, name=name, description=header)
         except ValueError:
              raise ValueError(
-                "Parsed failed with sequence starting at line %d: "
+                "Parse failed with sequence starting at line %d: "
                 "Character not in alphabet: %s" % (header_lineno, alphabet) )
         return s
 

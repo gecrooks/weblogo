@@ -84,7 +84,7 @@ class RunStride(object) :
         return out
     
     def record(self, pdb_filename) :
-        """Process a protein structure fle in PDB format through the STRIDE
+        """Process a protein structure file in PDB format through the STRIDE
         program and return the parsed output as a StrideRecord object.
         """
         data = self.process_pdb(pdb_filename) 
@@ -128,12 +128,12 @@ class StrideRecord(object) :
         return Seq(''.join([r.aa for r in self.residues]), protein_alphabet)
         
     def secondary(self):
-        """Return the secondary structure of the protien as a Seq object"""
+        """Return the secondary structure of the protein as a Seq object"""
         return Seq(''.join([r.secstruc for r in self.residues]), stride_alphabet)
         
         
     def get_residue(self, chainid, resid) :
-        """ Return the given resiude """
+        """ Return the given residue """
         if not self._res_dict :
             d = {}
             for r in self.residues :
@@ -148,7 +148,7 @@ class StrideRecord(object) :
     
     
 class StrideResidue(object):                 
-    """ Structural information of a single resiude. An ASG line from a stride
+    """ Structural information of a single residue. An ASG line from a stride
         output file.
         
         Attributes :

@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>weblogolib.GhostscriptAPI</title>
+  <title>weblogolib.logomath</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -43,7 +43,7 @@
     <td width="100%">
       <span class="breadcrumbs">
         <a href="weblogolib-module.html">Package&nbsp;weblogolib</a> ::
-        Class&nbsp;GhostscriptAPI
+        Module&nbsp;logomath
       </span>
     </td>
     <td>
@@ -53,27 +53,40 @@
     </td>
   </tr>
 </table>
-<!-- ==================== CLASS DESCRIPTION ==================== -->
-<h1 class="epydoc">Class GhostscriptAPI</h1><p class="nomargin-top"><span class="codelink"><a href="weblogolib-pysrc.html#GhostscriptAPI">source&nbsp;code</a></span></p>
-<pre class="base-tree">
-object --+
-         |
-        <strong class="uidshort">GhostscriptAPI</strong>
-</pre>
-
-<hr />
-<pre class="literalblock">
-Interface to the command line program Ghostscript ('gs')
-
-</pre>
-
-<!-- ==================== INSTANCE METHODS ==================== -->
-<a name="section-InstanceMethods"></a>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module logomath</h1><p class="nomargin-top"><span class="codelink"><a href="weblogolib.logomath-pysrc.html">source&nbsp;code</a></span></p>
+<!-- ==================== CLASSES ==================== -->
+<a name="section-Classes"></a>
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
   <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Instance Methods</span></td>
+    <span class="table-header">Classes</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="weblogolib.logomath.Dirichlet-class.html" class="summary-name">Dirichlet</a><br />
+      The Dirichlet probability distribution.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="weblogolib.logomath.Gamma-class.html" class="summary-name">Gamma</a><br />
+      The gamma probability distribution.
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Functions</span></td>
 </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
@@ -81,141 +94,126 @@ Interface to the command line program Ghostscript ('gs')
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="weblogolib.GhostscriptAPI-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">path</span>=<span class="summary-sig-default">None</span>)</span><br />
-      x.__init__(...) initializes x; see help(type(x)) for signature</td>
+          <td><span class="summary-sig"><a href="weblogolib.logomath-module.html#find_root" class="summary-sig-name">find_root</a>(<span class="summary-sig-arg">f</span>,
+        <span class="summary-sig-arg">x</span>,
+        <span class="summary-sig-arg">y</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">fprime</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">tolerance</span>=<span class="summary-sig-default">1.48e-08</span>,
+        <span class="summary-sig-arg">max_iterations</span>=<span class="summary-sig-default">50</span>)</span><br />
+      Return argument 'x' of the function f(x), such that f(x)=0 to
+within the given tolerance.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="weblogolib-pysrc.html#GhostscriptAPI.__init__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="weblogolib.logomath-pysrc.html#find_root">source&nbsp;code</a></span>
             
           </td>
         </tr>
       </table>
       
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="version"></a><span class="summary-sig-name">version</span>(<span class="summary-sig-arg">self</span>)</span></td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="weblogolib-pysrc.html#GhostscriptAPI.version">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="convert"></a><span class="summary-sig-name">convert</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">format</span>,
-        <span class="summary-sig-arg">fin</span>,
-        <span class="summary-sig-arg">fout</span>,
-        <span class="summary-sig-arg">width</span>,
-        <span class="summary-sig-arg">height</span>,
-        <span class="summary-sig-arg">resolution</span>=<span class="summary-sig-default">300</span>)</span></td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="weblogolib-pysrc.html#GhostscriptAPI.convert">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
-      <code>__delattr__</code>,
-      <code>__format__</code>,
-      <code>__getattribute__</code>,
-      <code>__hash__</code>,
-      <code>__new__</code>,
-      <code>__reduce__</code>,
-      <code>__reduce_ex__</code>,
-      <code>__repr__</code>,
-      <code>__setattr__</code>,
-      <code>__sizeof__</code>,
-      <code>__str__</code>,
-      <code>__subclasshook__</code>
-      </p>
     </td>
   </tr>
 </table>
-<!-- ==================== CLASS VARIABLES ==================== -->
-<a name="section-ClassVariables"></a>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
   <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Class Variables</span></td>
+    <span class="table-header">Variables</span></td>
 </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a name="formats"></a><span class="summary-name">formats</span> = <code title="('png', 'pdf', 'jpeg')"><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">png</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">pdf</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">jpeg</code><code class="variable-quote">'</code><code class="variable-group">)</code></code>
+        <a name="__package__"></a><span class="summary-name">__package__</span> = <code title="'weblogolib'"><code class="variable-quote">'</code><code class="variable-string">weblogolib</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="bits_per_nat"></a><span class="summary-name">bits_per_nat</span> = <code title="1.44269504089">1.44269504089</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="catalan"></a><span class="summary-name">catalan</span> = <code title="0.915965594177">0.915965594177</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="euler_gamma"></a><span class="summary-name">euler_gamma</span> = <code title="0.577215664902">0.577215664902</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="golden_ratio"></a><span class="summary-name">golden_ratio</span> = <code title="1.61803398875">1.61803398875</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="sqrt_2pi"></a><span class="summary-name">sqrt_2pi</span> = <code title="2.50662827463">2.50662827463</code>
     </td>
   </tr>
 </table>
-<!-- ==================== PROPERTIES ==================== -->
-<a name="section-Properties"></a>
-<table class="summary" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr bgcolor="#70b0f0" class="table-header">
-  <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Properties</span></td>
-</tr>
-  <tr>
-    <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
-      <code>__class__</code>
-      </p>
-    </td>
-  </tr>
-</table>
-<!-- ==================== METHOD DETAILS ==================== -->
-<a name="section-MethodDetails"></a>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
   <td align="left" colspan="2" class="table-header">
-    <span class="table-header">Method Details</span></td>
+    <span class="table-header">Function Details</span></td>
 </tr>
 </table>
-<a name="__init__"></a>
+<a name="find_root"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">path</span>=<span class="sig-default">None</span>)</span>
-    <br /><em class="fname">(Constructor)</em>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">find_root</span>(<span class="sig-arg">f</span>,
+        <span class="sig-arg">x</span>,
+        <span class="sig-arg">y</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">fprime</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">tolerance</span>=<span class="sig-default">1.48e-08</span>,
+        <span class="sig-arg">max_iterations</span>=<span class="sig-default">50</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="weblogolib-pysrc.html#GhostscriptAPI.__init__">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="weblogolib.logomath-pysrc.html#find_root">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
   <pre class="literalblock">
-x.__init__(...) initializes x; see help(type(x)) for signature
+Return argument 'x' of the function f(x), such that f(x)=0 to
+within the given tolerance. 
+
+f : The function to optimize, f(x)
+x : The initial guess
+y : An optional second guess that shoudl bracket the root.
+fprime : The derivate of f'(x) (Optional)
+tolerance : The error bounds 
+max_iterations : Maximum number of iterations
+
+Raises:
+    ArithmeticError :
+        Failure to converge to the given tolerence
+
+Notes:
+    Uses Newton-Raphson algorihtm if f'(x) is given, else uses bisect if
+    y is given and brackets the root, else uses secant. 
+
+Status : Beta (Not fully tested)
 
 </pre>
   <dl class="fields">
-    <dt>Overrides:
-        object.__init__
-        <dd><em class="note">(inherited documentation)</em></dd>
-    </dt>
   </dl>
 </td></tr></table>
 </div>

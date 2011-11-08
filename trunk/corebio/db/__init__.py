@@ -124,9 +124,9 @@ class DataSource(object) :
     Attributes:
         -- name - The name of the database.
         -- abbrev - Standard abrreviation
-        -- alt_abbrev - A liost of alitenative abrreviations or names.
+        -- alt_abbrev - A list of alternative abrreviations or names.
         -- url - Main URL of the database.
-        -- resource_url - The URL of indicudaul database reosurces, e.g.    
+        -- resource_url - The URL of individual database resources, e.g.    
                     'biocyc.org/getid?id=%s', where '%s' is replaced by the
                     resource identifier.
         -- parser - A function that can convert raw data into an object.

@@ -364,7 +364,7 @@ def main(htdocs_directory = None) :
             'filename="logo.%s"' % extension[format]        
     
         
-    # Seperate header from data
+    # Separate header from data
     print 
         
     # Finally, and at last, send the logo.
@@ -376,47 +376,47 @@ def send_form(controls, errors=[], htdocs_directory=None) :
         htdocs_directory = os.path.join(
             os.path.dirname(__file__, "htdocs") )
 
-    subsitutions = {}
-    subsitutions["version"] = weblogolib.release_description 
+    substitutions = {}
+    substitutions["version"] = weblogolib.release_description 
     # Bug fix. Not sure why this default substitution isn't added automatically like everything else
-    subsitutions['color_custom'] = ''  
+    substitutions['color_custom'] = ''  
     for c in controls :
         if c.options :
             for opt in c.options :
-                subsitutions[opt.replace('/','_')] = ''
-            subsitutions[c.value.replace('/','_')] = 'selected'
+                substitutions[opt.replace('/','_')] = ''
+            substitutions[c.value.replace('/','_')] = 'selected'
         else :
             value = c.value
             if value == None : value = 'auto'
             if value=='true':
-                subsitutions[c.name] = 'checked'
+                substitutions[c.name] = 'checked'
             elif type(value)==bool :
                 if value :
-                    subsitutions[c.name] = 'checked'
+                    substitutions[c.name] = 'checked'
                 else :
-                    subsitutions[c.name] = ''
+                    substitutions[c.name] = ''
             else :
-                subsitutions[c.name] = str(value)            
-        subsitutions[c.name+'_err']  = ''
-    subsitutions['logo_range_err'] = ''
+                substitutions[c.name] = str(value)            
+        substitutions[c.name+'_err']  = ''
+    substitutions['logo_range_err'] = ''
    
-    # Disable graphcis options if necessary auxiliary programs are not installed.
+    # Disable graphics options if necessary auxiliary programs are not installed.
     try:
         command = find_command('gs')
     except EnvironmentError:
         try:
             command = find_command('gswin32c.exe')
         except EnvironmentError:
-            subsitutions['png_print'] = 'disabled="disabled"'
-            subsitutions['png'] = 'disabled="disabled"'
-            subsitutions['jpeg'] = 'disabled="disabled"'
-            subsitutions['pdf'] = 'disabled="disabled"'
-            subsitutions['svg'] = 'disabled="disabled"'
-            subsitutions['eps'] = 'selected="selected"'
+            substitutions['png_print'] = 'disabled="disabled"'
+            substitutions['png'] = 'disabled="disabled"'
+            substitutions['jpeg'] = 'disabled="disabled"'
+            substitutions['pdf'] = 'disabled="disabled"'
+            substitutions['svg'] = 'disabled="disabled"'
+            substitutions['eps'] = 'selected="selected"'
     try:
         command = find_command('pdf2svg')
     except EnvironmentError:
-        subsitutions['svg'] = 'disabled="disabled"'
+        substitutions['svg'] = 'disabled="disabled"'
        
     
     if errors :
@@ -426,7 +426,7 @@ def send_form(controls, errors=[], htdocs_directory=None) :
             if type(e) is str :
                 msg = e
             elif len(e)==2:
-                subsitutions[e[0]+"_err"] = "class='error'"    
+                substitutions[e[0]+"_err"] = "class='error'"    
                 msg = e[1]
             else :
                 msg = e[0]
@@ -438,22 +438,22 @@ def send_form(controls, errors=[], htdocs_directory=None) :
             
         error_message += \
             "<input style='float:right; font-size:small' type='submit' name='cmd_validate' value='Clear Error' /> "
-        subsitutions["error_message"] = ''.join(error_message)
+        substitutions["error_message"] = ''.join(error_message)
     else :
-        subsitutions["error_message"] = ""
+        substitutions["error_message"] = ""
     
         
     template = resource_string( "create_html_template.html", htdocs_directory)
-    html = Template(template).safe_substitute(subsitutions) #FIXME
+    html = Template(template).safe_substitute(substitutions) #FIXME
 
     print "Content-Type: text/html\n\n"
     print html
 
     # DEBUG
-    #keys = subsitutions.keys()
+    #keys = substitutions.keys()
     #keys.sort()
     #for k in keys :
-    #    print k,"=", subsitutions[k], " <br />" 
+    #    print k,"=", substitutions[k], " <br />" 
 
     #print " <br />"
     #print " <br />"

@@ -29,7 +29,7 @@
 A sequence file in IG format can contain several sequences, each consisting of a
 number of comment lines that must begin with a semicolon (";"), a line with the 
 sequence name and the sequence itself terminated with the termination character 
-'1' for linear or '2' for circular sequences. The termination caracter is
+'1' for linear or '2' for circular sequences. The termination character is
 defacto optional.
 
 --- Example IG File ---
@@ -117,7 +117,7 @@ def iterseq(fin, alphabet=None):
             s = Seq( "".join(seqs), alphabet, name=name, description=desc)
         except ValueError :
              raise ValueError(
-                "Parsed failed with sequence starting at line %d: "
+                "Parse failed with sequence starting at line %d: "
                 "Character not in alphabet: %s" % (lineno, alphabet) )
         return s
 

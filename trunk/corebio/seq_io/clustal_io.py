@@ -82,7 +82,7 @@ header_line = re.compile(r'(CLUSTAL.*)$')
 seq_line   = re.compile(r'(\s*\S+\s+)(\S+)\s*(\d*)\s*$')
 
 # Saved group includes variable length leading space.
-# Must consult a seq_line to figure out how long the leading spoace is since
+# Must consult a seq_line to figure out how long the leading space is since
 # the maximum CLUSTAL ids length (normally 10 characters) can be changed.
 match_line = re.compile(r'([\s:\.\*]*)$') 
 
@@ -133,7 +133,7 @@ def read(fin, alphabet=None) :
 #     space and then the sequence.
 
 def _scan( fin ):
-    """Scan a clustal format MSA file and yeild tokens.
+    """Scan a clustal format MSA file and yield tokens.
         The basic file structure is
             begin_document
                 header?     
@@ -145,7 +145,7 @@ def _scan( fin ):
     
         Usage:
         for token in scan(clustal_file):
-            do_somthing(token)
+            do_something(token)
     """
     header, body, block = range(3)
     

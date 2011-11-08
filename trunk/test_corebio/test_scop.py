@@ -174,7 +174,7 @@ class DesTests(unittest.TestCase):
         try: 
             for line in f :
                 rec = DesRecord(line)
-                #End of line is plateform dependant. Strip it off
+                #End of line is platform dependent. Strip it off
                 assert str(rec).rstrip() == line.rstrip()
         finally:
             f.close()        
@@ -224,7 +224,7 @@ class test_scop_cla(unittest.TestCase):
         try: 
             for line in f :
                 rec = ClaRecord(line)
-                #End of line is plateform dependant. Strip it off
+                #End of line is platform dependent. Strip it off
                 assert str(rec).rstrip() == line.rstrip()
         finally:
             f.close()        
@@ -377,7 +377,7 @@ class HieTests(unittest.TestCase):
         try: 
             for line in f :
                 rec = HieRecord(line)
-                #End of line is plateform dependant. Strip it off
+                #End of line is platform dependent. Strip it off
                 assert str(rec).rstrip() == line.rstrip()
         finally:
             f.close()        

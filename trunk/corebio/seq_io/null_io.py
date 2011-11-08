@@ -33,7 +33,7 @@ names = ()
 extensions = ()
 
 def read(fin, alphabet=None):       
-    assert fin is not None    # Do something with arguments to quite pychecker
+    assert fin is not None    # Do something with arguments to quiet pychecker
     if alphabet is not None : pass
     return SeqList([])
 

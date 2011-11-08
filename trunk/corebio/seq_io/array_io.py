@@ -59,7 +59,7 @@ names = ("array",'flatfile')
 extensions = ()
 
 def read(fin, alphabet=None): 
-    """Read a file of raw sequecne alignment data. 
+    """Read a file of raw sequence alignment data. 
 
     Args:
         fin -- A stream or file to read
@@ -74,7 +74,7 @@ def read(fin, alphabet=None):
 
 
 def iterseq(fin, alphabet=None) :
-    """ Read one line of sequence data and yeild the sequence.
+    """ Read one line of sequence data and yield the sequence.
 
     Args:
         fin -- A stream or file to read
@@ -92,7 +92,7 @@ def iterseq(fin, alphabet=None) :
         if line.isspace(): continue # Blank line
         line = line.strip() 
 
-        if line[0] == '>' : # probable a fasta file. Fail.
+        if line[0] == '>' : # probably a fasta file. Fail.
             raise ValueError(
                 "Parse Error on input line: %d " % (linenum) )
         
@@ -104,7 +104,7 @@ def iterseq(fin, alphabet=None) :
                      (linenum, alphabet, line) )
         
         if line_length and line_length != len(line) :
-            raise ValueError("Line %d has a incommensurate length." % linenum)
+            raise ValueError("Line %d has an incommensurate length." % linenum)
         line_length = len(line)
         
         yield Seq(line, alphabet)

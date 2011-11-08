@@ -349,7 +349,7 @@ def _build_option_parser() :
         action="store",
         type="string",
         default = "auto",
-        help="The expected composition of the sequences: 'auto' (default), 'equiprobable', 'none' (Do not perform any compositional adjustment), a CG percentage, a species name (e.g. 'E. coli', 'H. sapiens'), or an explicit distribution (e.g. {'A':10, 'C':40, 'G':40, 'T':10}). The automatic option uses a typical distribution for proteins and equiprobable distribution for everything else. ",
+        help="The expected composition of the sequences: 'auto' (default), 'equiprobable', 'none' (do not perform any compositional adjustment), a CG percentage, a species name (e.g. 'E. coli', 'H. sapiens'), or an explicit distribution (e.g. {'A':10, 'C':40, 'G':40, 'T':10}). The automatic option uses a typical distribution for proteins and equiprobable distribution for everything else. ",
         metavar="COMP.")
 
     data_grp.add_option( "", "--weight",
@@ -464,7 +464,7 @@ def _build_option_parser() :
             action="store",
             type="string",
             default = None,
-            help="A comma seperated list of custom stack annotations, e.g. '1,3,4,5,6,7'.  Annotation list must be same length as sequences.",
+            help="A comma separated list of custom stack annotations, e.g. '1,3,4,5,6,7'.  Annotation list must be same length as sequences.",
             metavar="TEXT")
 
     format_grp.add_option( "-S", "--yaxis",
@@ -486,7 +486,7 @@ def _build_option_parser() :
         dest="yaxis_label",
         action="store",
         type="string",
-        help="Y-axis label  (default depends on plot type and units)",
+        help="Y-axis label (default depends on plot type and units)",
         metavar="TEXT")
 
     format_grp.add_option( "-E", "--show-ends",
@@ -593,7 +593,7 @@ def _build_option_parser() :
         action="store",
         type="float",
         default=96,
-        help="Bitmap resolution in dots per inch (DPI).  (default: 96 DPI, except png_print, 600 DPI) Low resolution bitmaps (DPI<300) are antialiased.",
+        help="Bitmap resolution in dots per inch (DPI).  (Default: 96 DPI, except png_print, 600 DPI) Low resolution bitmaps (DPI<300) are antialiased.",
         metavar="DPI")  
 
     advanced_grp.add_option( "", "--scale-width",
@@ -602,14 +602,14 @@ def _build_option_parser() :
         type = "boolean",
         default= True, 
         metavar = "YES/NO",
-        help="Scale the visible stack width by the fraction of symbols in the column?  (i.e. columns with many gaps of unknowns are narrow.)  (default: yes)")
+        help="Scale the visible stack width by the fraction of symbols in the column?  (I.e. columns with many gaps of unknowns are narrow.)  (Default: yes)")
    
     advanced_grp.add_option( "", "--debug",
         action="store",
         type = "boolean",
         default= defaults.debug,
         metavar = "YES/NO",
-        help="Output additional diagnostic information. (default: %default)")
+        help="Output additional diagnostic information. (Default: %default)")
 
 
     # ========================== Server options =========================   

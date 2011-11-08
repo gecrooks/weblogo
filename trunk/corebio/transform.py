@@ -27,14 +27,14 @@
 
 Classes :
 - Transform   -- Simple transforms of alphabetic strings.
-- GeneticCode -- The genetic mapping of dna to protein.
+- GeneticCode -- The genetic mapping of DNA to protein.
 
 Functions :
 -  mask_low_complexity -- Implementation of Seg algorithm to remove low complexity  
         regions from protein sequences.
 
 Other:
--   reduced_protein_alphabets -- A dictinoary of transforms that reduce the size of the protein alphabet,
+-   reduced_protein_alphabets -- A dictionary of transforms that reduce the size of the protein alphabet,
         merging various amino acids into classes.
         
         "LiBn" where n is 2 to 19 are from Li et al (2003), table I, 2 to 19 groups.
@@ -64,7 +64,7 @@ __all__ = [
 class Transform(object) :
     """A translation between alphabetic strings.
     (This class is not called 'Translation' to avoid confusion with the
-    biological translation of rna to protein.)
+    biological translation of RNA to protein.)
     
     Example:
     trans = Transform( 
@@ -111,9 +111,9 @@ def mask_low_complexity(seq, width =12, trigger=1.8, extension=2.0, mask='X') :
     Uses the method of Seg [1] by Wootton & Federhen [2] to divide a sequence   
     into regions of high and low complexity. The sequence is divided into
     overlapping windows. Low complexity windows either have a sequence entropy
-    less that the trigger complexity, or have an entropy less than the extension    
+    less than the trigger complexity, or have an entropy less than the extension    
     complexity and neighbor other low-complexity windows. The sequence within   
-    low complexity regions are replaced with the mask character (default 'X'), 
+    a low complexity region is replaced with the mask character (default 'X'), 
     and the masked alphabetic sequence is returned.
     
     The default parameters, width=12, trigger=1.8, extension=2.0, mask='X' are
@@ -245,9 +245,9 @@ class GeneticCode(object):
         """Create a new GeneticCode.
 
         Args:
-        -- ident - Standarad identifier (Or zero). An integer
+        -- ident - Standard identifier (or zero). An integer
         -- description 
-        -- amino acid - A sequecne of amino acids and stop codons. e.g.
+        -- amino acid - A sequence of amino acids and stop codons. e.g.
             "FFLLSSSSYY**CC*WLLLLPPPPHHQQRRRRIIIMTTTTNNKKSSRRVVVVAAAADDEEGGGG"
         -- start - A sequence indicating start codons, e.g.,
             "---M---------------M---------------M----------------------------"
@@ -358,7 +358,7 @@ class GeneticCode(object):
         # codes. 
         for C in codons :
             translated = dict() # Use dict, because no set in py2.3
-            c = C.replace('U', 'T') # Convert rna codon to dna
+            c = C.replace('U', 'T') # Convert RNA codon to DNA
             for c1 in dna_ambiguity[c[0]]:
                 for c2 in dna_ambiguity[c[1]]:
                     for c3 in dna_ambiguity[c[2]]:
@@ -409,7 +409,7 @@ class GeneticCode(object):
         -- seq - A polypeptide sequence.
         
         Returns :
-        -- Seq - A dna sequence
+        -- Seq - A DNA sequence
         """
         # TODO: Optimzie
         # TODO: Insanity check alphabet.
@@ -448,7 +448,7 @@ class GeneticCode(object):
     def __str__(self) :
         """Returns a text representation of this genetic code."""
         # Inspired by http://bugzilla.open-bio.org/show_bug.cgi?id=1963
-        letters = "TCAG" # Convectional ordering for codon tables.
+        letters = "TCAG" # Conventional ordering for codon tables.
         string = []
         
         if self.ident :

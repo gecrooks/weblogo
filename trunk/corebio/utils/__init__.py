@@ -213,7 +213,7 @@ class Reiterate(object):
             return self._iterator.next()
 
     def index(self) :
-        """The number of items returned. Incremented by next(), Decremented
+        """The number of items returned. Incremented by next(), decremented
         by push(), unchanged by peek()  """
         return self._index
         
@@ -243,7 +243,7 @@ class Reiterate(object):
             return False    
             
     def filter(self, predicate):
-        """Return the next item in the iteration that satisifed the 
+        """Return the next item in the iteration that satisfied the 
         predicate."""
         next = self.next()
         while not predicate(next) : next = self.next()
