@@ -484,7 +484,7 @@ ${color_dict}
        % if char_height is negative or very small replace with zero 
        % BUG FIX: This used to be '0.0 gt' but it seems that DrawHeight
        % has a finite, non-zero minimum, which results in a rangecheck error
-       0.001 gt {}{pop 0.0} ifelse 
+       0.01 gt {}{pop 0.0} ifelse 
     def 
 
     char_height 0.0 gt {
