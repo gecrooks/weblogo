@@ -115,7 +115,7 @@ def httpd_serve_forever(port=8080) :
     HandlerClass = __HTTPRequestHandler
     ServerClass = BaseHTTPServer.HTTPServer
     httpd = ServerClass(('', port), HandlerClass)
-    print "Serving HTTP on localhost:%d ..." % port
+    print "WebLogo server running at http://localhost:%d/" % port
     
     try :
         httpd.serve_forever()
