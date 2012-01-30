@@ -313,7 +313,7 @@ After unpacking the WebLogo tarfile, it should be possible to immediately create
 logos using the command line client (provided that python, numpy and ghostscript have already been installed).
 </p>
 <pre>
-./weblogo --format PNG &lt; htdocs/examples/cap_hth.fa &gt; cap_hth.png   
+./weblogo --format PNG &lt; weblogolib/htdocs/examples/cap_hth.fa &gt; cap_hth.png   
 </pre>
 <p>    
 Please consult the file <code>build_examples.sh</code> for more examples.
@@ -345,7 +345,7 @@ sudo python setup.py install_scripts --install-dir /usr/local/bin
 
 <p>
   To use WebLogo as a web application, first install the weblogo dependencies and libraries as above, then
- place (or link) the <code>weblogolib/weblogo_htdocs</code> directory
+ place (or link) the <code>weblogolib/htdocs</code> directory
   somewhere within the document root of your webserver. The webserver 
   must be able to execute the CGI script <code>create.cgi</code>. For Apache, you may have to add an <code>ExecCGI</code>
   option and add a cgi handler in the <code>httpd.conf</code> configuration file.

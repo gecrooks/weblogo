@@ -68,7 +68,7 @@ mime_type = {
     'svg': 'image/svg+xml',
     'png': 'image/png',
     'png_print': 'image/png',    
-    'txt' : 'text/plain',       
+    'logodata' : 'text/plain',       
     'jpeg'  : 'image/jpeg',
 }
 
@@ -78,7 +78,7 @@ extension = {
     'png': 'png',
     'svg': 'svg',
     'png_print': 'png',
-    'txt' : 'txt',        
+    'logodata' : 'txt',        
     'jpeg'  : 'png'
 }
 
@@ -161,7 +161,7 @@ def main(htdocs_directory = None) :
     controls = [
         Field( 'sequences', ''),
         Field( 'format', 'png', weblogolib.formatters.get ,
-            options=['png_print', 'png', 'jpeg', 'eps', 'pdf', 'svg', 'txt'] , 
+            options=['png_print', 'png', 'jpeg', 'eps', 'pdf', 'svg', 'logodata'] , #TODO: Should copy list from __init__.formatters
             errmsg="Unknown format option."),
         Field( 'stacks_per_line', logooptions.stacks_per_line , int, 
             errmsg='Invalid number of stacks per line.'),
