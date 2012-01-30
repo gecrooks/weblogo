@@ -1,0 +1,33 @@
+AC   M00001
+XX
+ID   V$MYOD_01
+XX
+DT   19.10.1992 (created); ewi.
+DT   22.10.1997 (updated); dbo.
+CO   Copyright (C), Biobase GmbH.
+XX
+NA   MyoD
+XX
+DE   myoblast determination gene product
+XX
+BF   T00526 MyoD; Species: mouse, Mus musculus.
+XX
+PO      A      C      G      T
+01      1      2      2      0      S
+02      2      1      2      0      R
+03      3      0      1      1      A
+04      0      5      0      0      C
+05      5      0      0      0      A
+06      0      0      4      1      G
+07      0      1      4      0      G
+08      0      0      0      5      T
+09      0      0      5      0      G
+10      0      1      2      2      K
+11      0      2      0      3      Y
+12      1      0      3      1      G
+XX
+BA   5 functional elements in 3 genes
+XX
+CC   no comment
+XX
+//   

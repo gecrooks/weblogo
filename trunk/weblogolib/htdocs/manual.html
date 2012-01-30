@@ -72,8 +72,7 @@ or nucleic acid multiple sequence alignment.
 Each logo consists of stacks of symbols, one stack for each position in the
 sequence. The overall height of the stack indicates the sequence conservation
 at that position, while the height of symbols within the stack indicates the
-relative frequency of each amino or nucleic acid at that position. The width of the stack is proportional to the fraction of valid symbols in that position. (Positions with many gaps have thin stacks.)  In general, a sequence logo provides a richer and more precise description of, for example,
-a binding site, than would a consensus sequence. 
+relative frequency of each amino or nucleic acid at that position. The width of the stack is proportional to the fraction of valid symbols in that position. (Positions with many gaps have thin stacks.)  In general, a sequence logo provides a richer and more precise description of, for example,a binding site, than would a consensus sequence. 
 </p>
 
 
@@ -115,7 +114,8 @@ Schneider TD, Stephens RM. 1990.
 
 
 <h4>Sequence Data</h4>
-Enter your multiple sequence alignment here, or select a file to upload. Supported file formats include CLUSTALW, FASTA, plain flatfile, MSF, NBRF, PIR, NEXUS and PHYLIP.  All sequences must be the same length, else WebLogo will return an error and report the first sequence that differed in length from previous sequences.
+Enter your multiple sequence alignment or position weight matrix file, or select a file to upload. Supported file formats include CLUSTALW, FASTA, plain flatfile, MSF, NBRF, PIR, NEXUS and PHYLIP for multiple sequence alignments, and transfac for position weight matrices.  All sequences must be the same length, else WebLogo will return an error and report the first sequence that differed in length from previous sequences.
+
 
 <h4>Output format</h4>
 
@@ -384,7 +384,7 @@ SetEnv WEBLOGO_MAX_FILE_SIZE 1000000
 <a name="CLI" ></a>
 <h2><code>weblogo</code>, The WebLogo Command Line Interface (CLI)</h2>
 The  command line client has many options not available through the web interface. Please consult the bundled <code>build_examples.sh</code> script for inspiration.
-<pre >
+<pre>
 	Usage: weblogo [options]  < sequence_data.fa > sequence_logo.eps
 
 	Create sequence logos from biological sequence alignments.
@@ -395,14 +395,14 @@ The  command line client has many options not available through the web interfac
 
 	  Input/Output Options:
 	    -f --fin FILENAME           Sequence input file (default: stdin)
-	       --fin-format FORMAT      Multiple sequence alignment format: (clustal,
-	                                fasta, plain, msf, genbank, nbrf, nexus,
-	                                phylip, stockholm, intelligenetics, table,
-	                                array)
-	       --matrix YES/NO          Read sequence count data from motif matrix.
+	    -D --datatype FORMAT        Type of multiple sequence alignment or
+	                                position weight matrix file: (clustal, fasta,
+	                                plain, msf, genbank, nbrf, nexus, phylip,
+	                                stockholm, intelligenetics, table, array,
+	                                transfac)
 	    -o --fout FILENAME          Output file (default: stdout)
 	    -F --format FORMAT          Format of output: eps (default), png,
-	                                png_print, pdf, svg, jpeg, txt
+	                                png_print, pdf, jpeg, svg, logodata
 
 	  Logo Data Options:
 	    -A --sequence-type TYPE     The type of sequence data: 'protein', 'rna' or
@@ -418,11 +418,11 @@ The  command line client has many options not available through the web interfac
 	                                'kJ/mol', 'kcal/mol'), or 'probability' for
 	                                probabilities
 	       --composition COMP.      The expected composition of the sequences:
-	                                'auto' (default), 'equiprobable', 'none' (Do
+	                                'auto' (default), 'equiprobable', 'none' (do
 	                                not perform any compositional adjustment), a
 	                                CG percentage, a species name (e.g. 'E. coli',
 	                                'H. sapiens'), or an explicit distribution
-	                                (e.g. {'A':10, 'C':40, 'G':40, 'T':10}). The
+	                                (e.g. "{'A':10, 'C':40, 'G':40, 'T':10}"). The
 	                                automatic option uses a typical distribution
 	                                for proteins and equiprobable distribution for
 	                                everything else.
@@ -438,7 +438,7 @@ The  command line client has many options not available through the web interfac
 	    Optional transformations of the sequence data.
 
 	       --ignore-lower-case      Disregard lower case letters and only count
-	                                upper case letters in sequences? (Default: No)
+	                                upper case letters in sequences.
 	       --reverse                reverse sequences
 	       --complement             complement DNA sequences
 
@@ -461,8 +461,8 @@ The  command line client has many options not available through the web interfac
 	                                value with uninformative prior.)
 	    -Y --show-yaxis YES/NO      Display entropy scale along y-axis? (default:
 	                                True)
-	    -y --ylabel TEXT            Y-axis label  (default depends on plot type
-	                                and units)
+	    -y --ylabel TEXT            Y-axis label (default depends on plot type and
+	                                units)
 	    -E --show-ends YES/NO       Label the ends of the sequence? (default:
 	                                False)
 	    -P --fineprint TEXT         The fine print (default: weblogo version)
@@ -487,15 +487,15 @@ The  command line client has many options not available through the web interfac
 	       --aspect-ratio POINTS    Ratio of stack height to width (default: 5)
 	       --box YES/NO             Draw boxes around symbols? (default: no)
 	       --resolution DPI         Bitmap resolution in dots per inch (DPI).
-	                                (default: 96 DPI, except png_print, 600 DPI)
-	                                Low resolution bitmaps (DPI<300) are
+	                                (Default: 96 DPI, except png_print, 600 DPI)
+	                                Low resolution bitmaps (DPI less than 300) are
 	                                antialiased.
 	       --scale-width YES/NO     Scale the visible stack width by the fraction
-	                                of symbols in the column?  (i.e. columns with
-	                                many gaps of unknowns are narrow.)  (default:
+	                                of symbols in the column?  (I.e. columns with
+	                                many gaps of unknowns are narrow.)  (Default:
 	                                yes)
 	       --debug YES/NO           Output additional diagnostic information.
-	                                (default: False)
+	                                (Default: False)
 
 	  WebLogo Server:
 	    Run a standalone webserver on a local port.
@@ -504,7 +504,8 @@ The  command line client has many options not available through the web interfac
 	                                sequence logos.
 	       --port PORT              Listen to this local port. (Default: 8080)
 
-</pre >
+
+</pre>
 <!-- ===================================================================== -->
 <a name="API" ></a>
 <h2>WebLogo Application Programmer Interface (API)</h2>

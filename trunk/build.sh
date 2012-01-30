@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 
 echo 
@@ -27,12 +27,16 @@ rm -rd dist/_extract_/
 
 echo 
 echo "## Rebuild API docs :" 
-epydoc -q -o apidocs/ -n WebLogo -u http://code.google.com/p/weblogo/ --docformat plaintext --no-frames --no-private weblogolib    || exit
+epydoc -q -o apidocs/ -n WebLogo -u http://code.google.com/p/weblogo/ --parse-only --docformat plaintext --no-frames --no-private weblogolib    || exit
+
+echo 
+echo "## Check documentation coverage :"
+epydoc --parse-only check weblogolib || exit
 
 echo 
 echo "## Rebuild examples :" 
-cd weblogolib/htdocs/examples
-sh build_examples.sh
+cd weblogolib/htdocs/examples 
+bash build_examples.sh || exit
 cd ../../..     ls
 
 
@@ -71,7 +75,7 @@ rm -rd dist/_extract_/                                          || exit
 
 echo
 echo "## Run build test  :"
-sh build_test.sh                                                || exit 
+bash build_test.sh                                                || exit 
 
 
 echo "## Success"
