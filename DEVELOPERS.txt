@@ -5,11 +5,13 @@ DEVELOPING WEBLOGO
 ==================
 
 
--------------------
- Build and Release 
--------------------
+---------------------------------------------
+ Procedure to Build and Release new versions 
+---------------------------------------------
+
 # 1. Check out a fresh copy of trunk.
 svn checkout https://weblogo.googlecode.com/svn/trunk/ weblogo-VERSION --username USERNAME 
+
 
 # 2.  Update version number. 
 #     Update and finalize the changelog. 
@@ -19,25 +21,56 @@ open weblogolib/__init__.py
 ...
 open weblogolib/htdocs/weblogo_changelog.txt
 ...
+open corebio/_version.py
 
-# 3. Build apidocs, build and test release:
+
+# 3. Build apidocs, build and test release, and commit updated apidocs
 rm apidocs/*.html
 ./build.sh
 
-# 4. Commit updated apidocs. 
 svn status |grep '!'    # Check for any html files removed
 svn rm apidocs/...      # Remove any obsolete html files
 svn add apidocs/...     # Add any new html files
 svn commit -m "Updating apidocs" apidocs
 
-# 5. Tag
+# 4. Run webpage tests.
+./weblogo --serve
+# then goto localhost:8080/test.html and try tests
 
-svn copy -m "Tag 3.0b12" https://weblogo.googlecode.com/svn/trunk https://weblogo.googlecode.com/svn/tags/3.0b12 
 
-# Upload Tarball
+
+# 5. Branch
+svn copy -m "Branch 0.x" https://weblogo.googlecode.com/svn/trunk/ https://weblogo.googlecode.com/svn/branches/0.x 
+
+
+# 6. Update version number in trunk, # e.g. # __version__ = '0.5.0' #b' + revision -> __version__ = '0.6b' + revision 
+# Add new entry to changelog
+open corebio._version.py
+open changelog.txt
+
+
+# 7. Switch to branch. 
+svn switch https://corebio.googlecode.com/svn/branches/0.x
+./build.sh
+
+
+# 8. Tag
+svn copy -m "Tag 3.2.0" https://weblogo.googlecode.com/svn/trunk https://weblogo.googlecode.com/svn/tags/3.2.0 
+
+
+# 9. Upload distribution tarball
 svn import -m "Dist 0.x.0" dist/weblogo-3.x.0.tar.gz  https://weblogo.googlecode.com/svn/dist/weblogo-3.x.0.tar.gz
 
 
-
-
+# 10. Update project page. (Currently, just download link text) (http://code.google.com/p/corebio/admin)
 The README.txt file should match the googlecode front page and the comments in weblogo cmd.
+
+
+# 11. Resister
+python setup.py register
+ 
+
+# 12. Post announcement. (http://groups.google.com/group/CoreBio)
+
+
+
