@@ -349,7 +349,7 @@ def _build_option_parser() :
         action="store",
         type="string",
         default = "auto",
-        help="The expected composition of the sequences: 'auto' (default), 'equiprobable', 'none' (do not perform any compositional adjustment), a CG percentage, a species name (e.g. 'E. coli', 'H. sapiens'), or an explicit distribution (e.g. {'A':10, 'C':40, 'G':40, 'T':10}). The automatic option uses a typical distribution for proteins and equiprobable distribution for everything else. ",
+        help="The expected composition of the sequences: 'auto' (default), 'equiprobable', 'none' (do not perform any compositional adjustment), a CG percentage, a species name (e.g. 'E. coli', 'H. sapiens'), or an explicit distribution (e.g. \"{'A':10, 'C':40, 'G':40, 'T':10}\"). The automatic option uses a typical distribution for proteins and equiprobable distribution for everything else. ",
         metavar="COMP.")
 
     data_grp.add_option( "", "--weight",
