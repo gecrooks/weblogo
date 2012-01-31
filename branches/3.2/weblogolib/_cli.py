@@ -96,11 +96,18 @@ def httpd_serve_forever(port=8080) :
     import CGIHTTPServer 
     
     class __HTTPRequestHandler(CGIHTTPServer.CGIHTTPRequestHandler):
+        # Modify CGIHTTPRequestHandler so that it will run the cgi script directly, instead of exec'ing
+        # This bypasses the need for the cgi script to have execute permissions set,
+        # since distutils install does not preserve permissions.
         def is_cgi(self) :
+            self.have_fork = False          # Prevent CGIHTTPRequestHandler from using fork
             if self.path == "/create.cgi": 
                 self.cgi_info = '', 'create.cgi'
                 return True
             return False
+        def is_python(self,path):            # Let CGIHTTPRequestHandler know that cgi script is python
+            return True
+            
     
     # Add current directory to PYTHONPATH. This is
     # so that we can run the standalone server
