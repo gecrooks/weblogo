@@ -1,0 +1,611 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="logo.css" >
+<title>WebLogo 3 - User's Manual</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+<meta name="author" content="Gavin E. Crooks" >
+
+<style type="text/css">
+</style>
+</head>
+
+<body style="align:center">
+
+<table width="80%" border = '0' cellspacing='0' cellpadding='1' align="center">
+<tr><td >
+<h1>WebLogo 3 : User's Manual</h1>
+
+</td><td align = "right" > 
+    &middot; 
+  <a href="./">about</a>&nbsp;&middot;
+  <a href="create.cgi">create</a>&nbsp;&middot; 
+  <a href="examples.html">examples</a>&nbsp;&middot; 
+  <a class="selected" href="manual.html">manual</a>&nbsp;&middot; 
+<br>
+<span style="font-size:small">&nbsp;</span>&nbsp;&nbsp;
+
+</td></tr>
+
+<tr><td colspan="2" class="discourse">
+
+<h4>Contents</h4>
+
+<img alt="Sequence logo example." 
+	  src="img/example.png"  align="right" vspace="5" hspace="10">
+<!--
+<img alt="WebLogo: Create" width="499" height="633"
+	  src="img/weblogo_create.png" align="right" border='1' vspace="10" hspace="10"></a>
+-->
+
+<ul>
+<li><a href="#intro">Introduction</a>
+</li><li><a href="#create">Creating Sequences Logos using the Web interface</a>
+</li><li><a href="#download">Downloading and Installing WebLogo</a>
+</li><li><a href="#CLI"> Command Line Interface (CLI)</a>
+</li><li><a href="#API"> Application Programmer Interface (API)</a>
+</li><li><a href="#dev"> Development and Future Features</a>
+</li><li><a href="#misc">Miscellanea</a>
+</li>
+</ul>
+
+<h4> Release Notes and Known Bugs</h4>
+The <a href="weblogo_changelog.txt">WebLogo release notes</a> detail changes to WebLogo and known issues with particular versions.
+
+
+<a name="intro" ></a><h2>Introduction</h2>
+
+
+<p>
+<strong>WebLogo</strong>
+is a web based application designed to make the 
+<a href="create.cgi">generation</a> of 
+sequence logos as easy and painless as possible.
+</p>
+
+
+<p>
+A <a href="http://www.lecb.ncifcrf.gov/~toms/sequencelogo.html">sequence&nbsp;logo</a> 
+is a graphical representation of an amino acid
+or nucleic acid multiple sequence alignment.
+Each logo consists of stacks of symbols, one stack for each position in the
+sequence. The overall height of the stack indicates the sequence conservation
+at that position, while the height of symbols within the stack indicates the
+relative frequency of each amino or nucleic acid at that position. The width of the stack is proportional to the fraction of valid symbols in that position. (Positions with many gaps have thin stacks.)  In general, a sequence logo provides a richer and more precise description of, for example,a binding site, than would a consensus sequence. 
+</p>
+
+
+
+
+
+
+
+<!-- ============================================================== -->
+
+<h4>References</h4>
+
+
+<p>
+<a href="http://threeplusone.com/">Crooks GE</a>, 
+<a href="http://compbio.berkeley.edu/">Hon G</a>, 
+<a href="http://compbio.berkeley.edu/">Chandonia JM</a>,
+<a href="http://compbio.berkeley.edu/people/brenner/">Brenner SE</a> 
+WebLogo: A sequence logo 
+generator, 
+<em>Genome Research</em>, 14:1188-1190, (2004) 
+[<a href="http://threeplusone.com/pubs/fulltext/Crooks2004a-GR-WebLogo.pdf">Full Text</a> ]
+</p>
+
+<p>
+Schneider TD, Stephens RM. 1990.
+<a class="out" href="http://www.lecb.ncifcrf.gov/~toms/paper/logopaper/">Sequence Logos: A New Way to Display Consensus Sequences.</a>
+<em>Nucleic Acids Res.</em> <em>18</em>:6097-6100
+</p>
+
+
+
+
+
+
+
+<a name="create" ></a>
+<h2>Creating Sequences Logos using the Web interface</h2>
+
+
+<h4>Sequence Data</h4>
+Enter your multiple sequence alignment or position weight matrix file, or select a file to upload. Supported file formats include CLUSTALW, FASTA, plain flatfile, MSF, NBRF, PIR, NEXUS and PHYLIP for multiple sequence alignments, and transfac for position weight matrices.  All sequences must be the same length, else WebLogo will return an error and report the first sequence that differed in length from previous sequences.
+
+
+<h4>Output format</h4>
+
+<ul>
+<li> PNG : (600 DPI) Print resolution bitmap
+</li><li> PNG :  (low res, 96 DPI) Screen resolution bitmap
+</li><li> JPEG :Screen resolution bitmap
+</li><li> EPS : Encapsulated postscript
+</li><li> PDF : Portable Document Format
+</li><li> SVG : Scalable Vector Graphics
+</li>
+</ul>
+Generally speaking, vector formats (EPS and PDF) are better for printing, while bitmaps (JPEG and PNG) are more suitable for displaying on the screen or embedding into a web page.
+
+<h4>Logo size</h4>
+The physical dimensions of the generated logo.
+Specifically, controls the size of individual symbols stacks.
+<ul>
+<li>     small : 5.4 points wide (same as 9pt Courier), aspect ratio 5:1
+</li><li> medium : Double the width and height of small.
+</li><li> large : Triple the width and height of small.
+</li>
+</ul>
+The choices have been limited to promote inter-logo consistency. Small logos can fit 80 stacks across a printed page, or 40 across a half page column. The <a href="#CLI">command line interface</a> provides greater control, if so desired.
+
+<h4>Stacks per line</h4>
+If the length of the sequences is greater than this maximum number of stacks per line, then the logo will be split across multiple lines.
+
+<h4>Sequence type</h4>
+The type of biological molecule.
+<ul>
+<li> auto: Automatically guess sequence type from the data
+</li><li> protein
+</li><li> dna
+</li><li> rna
+</li>
+</ul>
+
+<h4>Ignore lower case</h4>
+Disregard lower case letters and only count
+upper case letters in sequences?
+
+<h4>Units</h4>
+The units used for the y-axis. 
+<ul>
+<li>      probability: Show residue probabilities, rather than information content. If <a href="#CA">compositional adjustment</a> is disabled, then these are the raw residue frequencies. 
+</li><li> bits: Information content in bits
+</li><li> nats: Natural units, 1 bit = ln 2 (0.69) nats
+</li><li> kT : Thermal energy units in natural units (Numerically the same as nats)
+</li><li> kJ/mol : Thermal energy (assuming T = 300 K)
+</li><li> kcal/mol : Thermal energy (assuming T = 300 K)
+</li>
+</ul>
+
+
+<h4>First position number</h4>
+<a name="First position number"></a>
+The numerical label of the first position in the sequence data in the input file. The label must be an integer. Residue labels for the logo will be relative to this number. (See also: <a href="#logo range">Logo range</a>.)
+<h4>Logo range</h4>
+<a name="logo range"></a>
+By default, all sequence data from the input file is displayed in the Sequence Logo. With this option, you can instead show a subrange of the sequence data. The numbering of Start and End Positions is relative to the First Position Number. Thus, if the First Position Number is "2", Start is "5" and End is "10", then the 4th through 9th (inclusive) sequence positions of the input file will be displayed, and they will be numbered "5", "6", "7", "8", "9" and "10".
+
+<a name="CA"></a>
+<h4>Composition</h4>
+<p>
+The background composition of the genome or proteome from which the sequences have been drawn. The default, automatic option is to use equiprobable background for nucleic acids and a typical amino acid usage pattern for proteins. However, you may also explicitly set the expected CG content for nucleic acid sequences, insist on equiprobable background distributions, or turn off composition adjustment altogether.
+</p>
+<p>
+Compositional adjustment has two effects. First, the information content of a site is defined as the relative entropy of the monomers at that site to the background distribution. Consequentially,  rare monomers have higher information content (when they occur) than relatively common monomers. 
+</p>
+<p>
+Secondly, the background composition is used in the small sample correction of information content. Briefly, if only a few sequences are available in the multiple sequence alignment, then sites typically appear more conserved than they really are. Small samples bias the relative entropy upwards. To compensate, we add pseudocounts to the actual counts, proportional to the expected background  composition. These pseudocounts smooth the data for small samples, but become irrelevant for large samples. The proportionality constant is set to 4 for nucleic acid sequences, and 20 for proteins (these numbers have been found to give reasonable results in practice). 
+</p>
+<p>
+Behind the scenes, things are more complex. We do a full Bayesian calculation, starting with explicit Dirichlet priors based on the background composition, to which we add the data and then calculate both the posterior mean relative entropy (the stack height) and Bayesian 95% confidence intervals for error bars. These interesting details will be explained elsewhere.
+</p> 
+
+<h4>Scale stack width</h4>
+Scale the visible stack width by the fraction of symbols in the column?  (I.e. columns with many gaps or unknown residues are narrow.)
+
+<h4>Error bars</h4>
+Display error bars. These indicate an approximate, Bayesian 95% confidence   interval.
+
+<h4>Title</h4>
+Give your logo a title.
+
+<h4>Figure label</h4>
+An optional figure label, added to the top left (e.g. '(a)').
+
+<h4>X-axis</h4>
+Add a label to the x-axis, or hide axis altogether.
+
+<h4>Y-axis</h4>
+The vertical axis indicates the information content of a sequence position. Use this option to toggle the y-axis and override the default axis label.
+
+<h4>Y-axis scale</h4>
+The height of the y-axis in designated units. The automatic option will pick reasonable defaults based on the sequence type and axis unit.
+
+<h4>Y-axis tic spacing</h4>
+The distance between major tic marks on the y-axis.
+
+<h4>Sequence end labels</h4>
+Choose this option to label the 5' &amp; 3' ends of nucleic acid or the N &amp; C termini of amino acid sequences.
+
+<h4>Version fineprint</h4>
+Toggle display of the WebLogo version information in the lower right corner.
+Optional, but we appreciate the acknowledgment.
+
+<h4>Color Scheme</h4>
+<ul>
+<li> auto : use Base Pairing for nucleic acids (NA), Hydrophobicity for amino acids (AA).
+</li><li> monochrome : All symbols black
+</li><li> Base Pairing (NA default) :
+<table border="1" cellpadding="2" cellspacing="0" >
+<tr><td>2 Watson-Crick hydrogen bonds</td><td>TAU</td><td style="color:darkorange">dark orange</td></tr>
+<tr><td>3 Watson-Crick hydrogen bonds</td><td>GC</td><td style="color:blue"> blue</td></tr>
+</table>
+
+</li><li> Classic (NA) : WebLogo (version 1 and 2) and makelogo default color scheme for nucleic acids: G, orange; T &amp; U, red; C, blue; and A, green. 
+<table border="1" cellpadding="2" cellspacing="0" >
+<tr><td>G</td><td style="color:orange"> orange</td></tr>
+<tr><td>TU</td><td style="color:red"> red</td></tr>
+<tr><td>C</td><td style="color:blue">blue</td></tr>
+<tr><td>A</td><td style="color:green">green</td></tr>
+</table>
+
+</li><li> Hydrophobicity (AA default) :
+<table border="1" cellpadding="2" cellspacing="0" >
+<tr><td>Hydrophilic</td><td>RKDENQ</td><td style="color:black"> black</td></tr>
+<tr><td>Neutral</td><td>SGHTAP</td><td style="color:green"> green</td></tr>
+<tr><td>Hydrophobic</td><td>YVMCLFIW</td><td style="color:blue">blue</td></tr>
+</table>
+
+</li><li> Chemistry (AA) :  Color amino acids according to chemical properties. WebLogo (version 1 and 2) and makelogo default color. (Note that the WebLogo 2 documentation erroneously lists Q and N under green.)
+<table border="1" cellpadding="2" cellspacing="0" >
+<tr><td>Polar</td><td>G,S,T,Y,C</td><td style="color:green"> green</td></tr>
+<tr><td>Neutral</td><td>Q,N</td><td style="color:purple"> purple</td></tr>
+<tr><td>Basic</td><td>K,R,H</td><td style="color:blue"> blue</td></tr>
+<tr><td>Acidic</td><td>D,E</td><td style="color:red">red</td></tr>
+<tr><td>Hydrophobic</td><td>A,V,L,I,P,W,F,M</td><td style="color:black">black</td></tr>
+</table>
+
+</li><li> Charge (AA) :
+<table border="1" cellpadding="2" cellspacing="0" >
+<tr><td>Positive</td><td>KRH</td><td style="color:blue"> blue</td></tr>
+<tr><td>Negative</td><td>DE</td><td style="color:red"> red</td></tr>
+</table>
+
+
+
+
+</li><li> Custom : A custom color scheme can be specified in the input field below. Specify colors on the left and associated symbols on the right. Colors are entered using  <a href="http://www.w3.org/TR/REC-CSS2/syndata.html#color-units">CSS2 (Cascading Style Sheet)</a> syntax. (E.g. 'red', '#F00', '#FF0000',  'rgb(255, 0, 0)', 'rgb(100%, 0%, 0%)' or 'hsl(0, 100%, 50%)' for the color red.)
+</li>
+</ul>
+
+<h4>More Options</h4>
+The weblogo <a href="#CLI">command line client</a>, <code>weblogo</code>, provides many more options and greater control over the final logo appearance.
+    
+
+
+
+
+
+<!-- ========================================================= -->
+<a name="download" ></a>
+<h2>Installing WebLogo</h2>
+
+
+<h4>Dependencies</h4>
+<p>
+WebLogo version 3 is written in python. It is necessary to have <a href="http://www.python.org/download/">python 2.5, 2.6 or 2.7</a>  and the
+extension package <a href="http://www.scipy.org/Download">numpy</a>
+installed before WebLogo will run. WebLogo also requires a recent version of  <a href="http://www.cs.wisc.edu/~ghost/">ghostscript</a> to create PNG and PDF output, and <a href="http://www.cityinthesky.co.uk/opensource/pdf2svg">pdf2svg</a> to generate SVG output.
+</p>
+
+
+<h4> Download and Installation</h4>
+<p>
+If the python package <a href="http://peak.telecommunity.com/DevCenter/setuptools"><code>setuptools</code></a> has been installed, then WebLogo and its dependencies can be downloaded and installed with a single command:
+</p>
+<pre>
+sudo easy_install weblogo
+</pre>
+
+
+<p>
+Alternatively, weblogo and its dependencies can be installed manually.
+The WebLogo source code can be downloaded from 
+<a href="http://code.google.com/p/weblogo/">http://code.google.com/p/weblogo/</a>.
+This code is distributed under various <a href="http://www.opensource.org/docs/definition">open source licenses</a>. Please consult the <code>LICENSE.txt</code> file in the source distribution for details. 
+</p>
+
+<p>
+After unpacking the WebLogo tarfile, it should be possible to immediately create
+logos using the command line client (provided that python, numpy and ghostscript have already been installed).
+</p>
+<pre>
+./weblogo --format PNG &lt; cap.fa &gt; cap.png   
+</pre>
+<p>    
+Please consult the file <code>build_examples.sh</code> for more examples.
+</p><p>
+To run WebLogo as a stand alone web service, run the logo server command :
+</p>
+<pre>
+./weblogo --serve 
+</pre>
+<p>
+It should now be possible to access WebLogo at <a href="http://localhost:8080/">http://localhost:8080/</a>.
+</p>
+
+<p>
+The command line client and WebLogo libraries can be permanently installed using the supplied <code>setup.py</code> script.</p>
+<pre>
+sudo python setup.py install
+</pre> 
+<p>
+Run <code>python setup.py help</code> for more installation options. For example, to specifically install the weblogo script to /usr/local/bin </p>
+<pre>
+sudo python setup.py install_scripts --install-dir /usr/local/bin
+</pre>
+
+
+
+
+<h4>Web App</h4>
+
+<p>
+  To use WebLogo as a web application, first install the weblogo dependencies and libraries as above, then
+ place (or link) the <code>weblogolib/htdocs</code> directory
+  somewhere within the document root of your webserver. The webserver 
+  must be able to execute the CGI script <code>create.cgi</code>. For Apache, you may have to add an <code>ExecCGI</code>
+  option and add a cgi handler in the <code>httpd.conf</code> configuration file.
+  Something like this:
+</p>
+<pre>
+&lt;Directory "/home/httpd/htdocs/weblogo/">
+    Options FollowSymLinks MultiViews ExecCGI
+    AllowOverride None
+    Order allow,deny
+    Allow from all
+&lt;/Directory>
+...
+# To use CGI scripts outside of ScriptAliased directories:
+# (You will also need to add "ExecCGI" to the "Options" directive.)
+#
+AddHandler cgi-script .cgi
+</pre>
+It may also be necessary to set the <code>PATH</code> and <code>PYTHONPATH</code> environment variables.
+<pre>
+SetEnv PYTHONPATH /path/to/weblogo/libraries
+</pre>
+The cgi script also has to be able to find the '<code>gs</code>' ghostscript executable. If ghostscript is installed in a non-standard location add the following environment variable.
+<pre>
+SetEnv COREBIOPATH /path/to/gs
+</pre>
+The maximum bytes of uploaded sequence data can be controlled with the <code>WEBLOGO_MAX_FILE_SIZE</code> environment variable.
+<pre>
+SetEnv WEBLOGO_MAX_FILE_SIZE 1000000
+</pre>
+     
+
+
+
+<!-- ================================================================== -->
+<a name="CLI" ></a>
+<h2><code>weblogo</code>, The WebLogo Command Line Interface (CLI)</h2>
+The  command line client has many options not available through the web interface. Please consult the bundled <code>build_examples.sh</code> script for inspiration.
+<pre>
+	Usage: weblogo [options]  < sequence_data.fa > sequence_logo.eps
+
+	Create sequence logos from biological sequence alignments.
+
+	Options:
+	     --version                  show program's version number and exit
+	  -h --help                     show this help message and exit
+
+	  Input/Output Options:
+	    -f --fin FILENAME           Sequence input file (default: stdin)
+	    -D --datatype FORMAT        Type of multiple sequence alignment or
+	                                position weight matrix file: (clustal, fasta,
+	                                plain, msf, genbank, nbrf, nexus, phylip,
+	                                stockholm, intelligenetics, table, array,
+	                                transfac)
+	    -o --fout FILENAME          Output file (default: stdout)
+	    -F --format FORMAT          Format of output: eps (default), png,
+	                                png_print, pdf, jpeg, svg, logodata
+
+	  Logo Data Options:
+	    -A --sequence-type TYPE     The type of sequence data: 'protein', 'rna' or
+	                                'dna'.
+	    -a --alphabet ALPHABET      The set of symbols to count, e.g. 'AGTC'. All
+	                                characters not in the alphabet are ignored. If
+	                                neither the alphabet nor sequence-type are
+	                                specified then weblogo will examine the input
+	                                data and make an educated guess. See also
+	                                --sequence-type, --ignore-lower-case
+	    -U --units NUMBER           A unit of entropy ('bits' (default), 'nats',
+	                                'digits'), or a unit of free energy ('kT',
+	                                'kJ/mol', 'kcal/mol'), or 'probability' for
+	                                probabilities
+	       --composition COMP.      The expected composition of the sequences:
+	                                'auto' (default), 'equiprobable', 'none' (do
+	                                not perform any compositional adjustment), a
+	                                CG percentage, a species name (e.g. 'E. coli',
+	                                'H. sapiens'), or an explicit distribution
+	                                (e.g. "{'A':10, 'C':40, 'G':40, 'T':10}"). The
+	                                automatic option uses a typical distribution
+	                                for proteins and equiprobable distribution for
+	                                everything else.
+	       --weight NUMBER          The weight of prior data.  Default: total
+	                                pseudocounts equal to the number of monomer
+	                                types.
+	    -i --first-index INDEX      Index of first position in sequence data
+	                                (default: 1)
+	    -l --lower INDEX            Lower bound of sequence to display
+	    -u --upper INDEX            Upper bound of sequence to display
+
+	  Transformations:
+	    Optional transformations of the sequence data.
+
+	       --ignore-lower-case      Disregard lower case letters and only count
+	                                upper case letters in sequences.
+	       --reverse                reverse sequences
+	       --complement             complement DNA sequences
+
+	  Logo Format Options:
+	    These options control the format and display of the logo.
+
+	    -s --size LOGOSIZE          Specify a standard logo size (small, medium
+	                                (default), large)
+	    -n --stacks-per-line COUNT  Maximum number of logo stacks per logo line.
+	                                (default: 40)
+	    -t --title TEXT             Logo title text.
+	       --label TEXT             A figure label, e.g. '2a'
+	    -X --show-xaxis YES/NO      Display sequence numbers along x-axis?
+	                                (default: True)
+	    -x --xlabel TEXT            X-axis label
+	       --annotate TEXT          A comma separated list of custom stack
+	                                annotations, e.g. '1,3,4,5,6,7'.  Annotation
+	                                list must be same length as sequences.
+	    -S --yaxis UNIT             Height of yaxis in units. (Default: Maximum
+	                                value with uninformative prior.)
+	    -Y --show-yaxis YES/NO      Display entropy scale along y-axis? (default:
+	                                True)
+	    -y --ylabel TEXT            Y-axis label (default depends on plot type and
+	                                units)
+	    -E --show-ends YES/NO       Label the ends of the sequence? (default:
+	                                False)
+	    -P --fineprint TEXT         The fine print (default: weblogo version)
+	       --ticmarks NUMBER        Distance between ticmarks (default: 1.0)
+	       --errorbars YES/NO       Display error bars? (default: True)
+
+	  Color Options:
+	    Colors can be specified using CSS2 syntax. e.g. 'red', '#FF0000', etc.
+
+	    -c --color-scheme SCHEME    Specify a standard color scheme (auto, base
+	                                pairing, charge, chemistry, classic,
+	                                hydrophobicity, monochrome)
+	    -C --color COLOR SYMBOLS DESCRIPTION 
+	                                Specify symbol colors, e.g. --color black AG
+	                                'Purine' --color red TC 'Pyrimidine'
+	       --default-color COLOR    Symbol color if not otherwise specified.
+
+	  Advanced Format Options:
+	    These options provide fine control over the display of the logo.
+
+	    -W --stack-width POINTS     Width of a logo stack (default: 10.8)
+	       --aspect-ratio POINTS    Ratio of stack height to width (default: 5)
+	       --box YES/NO             Draw boxes around symbols? (default: no)
+	       --resolution DPI         Bitmap resolution in dots per inch (DPI).
+	                                (Default: 96 DPI, except png_print, 600 DPI)
+	                                Low resolution bitmaps (DPI less than 300) are
+	                                antialiased.
+	       --scale-width YES/NO     Scale the visible stack width by the fraction
+	                                of symbols in the column?  (I.e. columns with
+	                                many gaps of unknowns are narrow.)  (Default:
+	                                yes)
+	       --debug YES/NO           Output additional diagnostic information.
+	                                (Default: False)
+
+	  WebLogo Server:
+	    Run a standalone webserver on a local port.
+
+	       --serve                  Start a standalone WebLogo server for creating
+	                                sequence logos.
+	       --port PORT              Listen to this local port. (Default: 8080)
+
+
+</pre>
+<!-- ===================================================================== -->
+<a name="API" ></a>
+<h2>WebLogo Application Programmer Interface (API)</h2>
+
+The WebLogo python libraries provide even greater flexibility than the command line client. The code is split between two principle packages, <code>weblogo</code> itself, which contains specialized sequence logo generation code, and <code>corebio</code>, a package that contains code of more general utility. 
+Please consult the  <a href="http://weblogo.googlecode.com/svn/trunk/apidocs/index.html">WebLogo</a> and  <a href="http://corebio.googlecode.com/svn/tags/0.5.0/apidocs/index.html">CoreBio</a> API documentation.
+
+
+
+<!-- ================================================================== -->
+<a name="dev" ></a>
+<h2>WebLogo Development and Future Features</h2>
+<p>
+The development project is hosted at 
+<a href="http://code.google.com/p/weblogo/">http://code.google.com/p/weblogo</a>.
+
+If you wish to extend WebLogo or to contribute code, then you should download the full source code development package directly from the subversion repository.
+</p>
+<pre>
+&gt; svn checkout http://weblogo.googlecode.com/svn/trunk/ weblogo
+&gt;  cd weblogo
+&gt; ./weblogo &lt; cap.fa &gt; cap.eps
+</pre>
+<p>
+Please consult the developer notes, <code>DEVELOPERS.txt</code> and  software license <code>LICENSE.txt</code>
+</p>
+
+<p> Outstanding bugs and feature requests are listed on the <a href="http://code.google.com/p/weblogo/issues/list">WebLogo issue tracker.</a>
+</p>
+
+<a name="misc" ></a>
+<h2>Miscellanea</h2>
+
+<h4>WebLogo 2</h4>
+The legacy WebLogo 2 sever can be found <a href="http://weblogo.berkeley.edu/">here.</a>
+
+
+
+<h4>Acknowledgments</h4>
+
+<p>
+WebLogo was created by  
+<a href="http://threeplusone.com/">Gavin E. Crooks</a>, 
+<a href="http://compbio.berkeley.edu/">Liana Lareau</a>,
+<a href="http://compbio.berkeley.edu/">Gary Hon</a>, 
+<a href="http://compbio.berkeley.edu/">John-Marc Chandonia</a> and
+<a href="http://compbio.berkeley.edu/people/brenner/">Steven E. Brenner</a>.
+<a href="weblogo_changelog.txt">Many others</a> have provided suggestions, bug fixes and moral support.
+</p>
+
+<p>
+WebLogo was originally based upon the programs 
+<a href="http://www.lecb.ncifcrf.gov/~toms/delila/alpro.html">alpro</a> and 
+<a href="http://www.lecb.ncifcrf.gov/~toms/delila/makelogo.html">makelogo</a>, 
+both of which are part of Tom Schneider's 
+<a href="http://www.lecb.ncifcrf.gov/~toms/delila.html">delila</a> package. Many thanks
+are due to him for making this software freely available and for encouraging its use. 
+</p>
+
+
+
+
+<h4>Disclaimer</h4>
+
+<p>
+While no permanent records are kept of submitted sequences, we cannot 
+undertake to guarantee that data sent to WebLogo remains secure. Moreover,
+no guarantees whatsoever are provided about data generated by WebLogo. 
+</p>
+
+
+<h4>Feedback</h4>
+<p>
+Suggestions on how to improve WebLogo are heartily welcomed! 
+Please direct questions to the <a href="http://groups.google.com/group/WebLogo">WebLogo discussion group</a>. 
+
+
+</p>
+
+
+</td></tr>
+</table>
+
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-5951066-1");
+pageTracker._trackPageview();
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

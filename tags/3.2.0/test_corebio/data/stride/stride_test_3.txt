@@ -1,0 +1,11 @@
+REM                .         .         .         .         .               1A59
+SEQ  1    EPTIHKGLAGVTADVTAISKVNSDTNSLLYRGYPVQELAAKCSFEQVAYL   50          1A59
+STR            GGGTTT    TTTEEEETTTTEEEETTEEHHHHHHH  HHHHHHH               1A59
+REM  --------------- Detailed secondary structure assignment-------------  1A59
+REM                                                                        1A59
+REM  |---Residue---|    |--Structure--|   |-Phi-|   |-Psi-|  |-Area-|      1A59
+ASG  VAL -   12   11    T          Turn    -91.52    122.86      57.7      1A59
+ASG  THR -   13   12    C          Coil    -86.65    105.28     129.6      1A59
+ASG  ALA -   14   13    C          Coil    -77.28    -27.45      50.1      1A59
+ASG  ASP -   15   14    C          Coil   -172.70   -176.68      60.4      1A59
+ASG  VAL -   16   15    C          Coil   -103.84    157.33     106.2      1A59

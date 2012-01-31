@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>weblogolib.colorscheme</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="weblogolib-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://code.google.com/p/weblogo/">WebLogo</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="weblogolib-module.html">Package&nbsp;weblogolib</a> ::
+        Module&nbsp;colorscheme
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="weblogolib.colorscheme-module.html">Module weblogolib.colorscheme</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-comment">#  Copyright (c) 2003-2005 The Regents of the University of California.</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#  Copyright (c) 2005 Gavin E. Crooks</tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-comment"></tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-comment">#  This software is distributed under the MIT Open Source License.</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#  &lt;http://www.opensource.org/licenses/mit-license.html&gt;</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#  Permission is hereby granted, free of charge, to any person obtaining a </tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#  copy of this software and associated documentation files (the "Software"),</tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#  to deal in the Software without restriction, including without limitation</tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#  the rights to use, copy, modify, merge, publish, distribute, sublicense,</tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#  and/or sell copies of the Software, and to permit persons to whom the</tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#  Software is furnished to do so, subject to the following conditions:</tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#</tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#  The above copyright notice and this permission notice shall be included</tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#  in all copies or substantial portions of the Software.</tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR </tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, </tt> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER </tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</tt> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN </tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#  THE SOFTWARE.</tt> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"><tt class="py-comment"></tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"><tt class="py-docstring">""" Popular color codings for nucleic and amino acids. </tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"><tt class="py-docstring">Classes:</tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line"><tt class="py-docstring">    ColorScheme -- A color scheme</tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"><tt class="py-docstring">    ColorGroup  </tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"><tt class="py-docstring">    </tt> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line"><tt class="py-docstring">    </tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"><tt class="py-docstring">Generic</tt> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line"><tt class="py-docstring">    monochrome</tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line"><tt class="py-docstring">Nucleotides</tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line"><tt class="py-docstring">    nucleotide</tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line"><tt class="py-docstring">    base pairing</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line"><tt class="py-docstring">Amino Acid</tt> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line"><tt class="py-docstring">    hydrophobicity</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line"><tt class="py-docstring">    chemistry</tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line"><tt class="py-docstring">    charge</tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line"><tt class="py-docstring">    taylor</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line"><tt class="py-docstring">Status : Beta - Needs documentation.</tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line"><tt class="py-comment"># Good online references include bioruby and the JalView alignment editor.</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment"># Clamp, M., Cuff, J., Searle, S. M. and Barton, G. J. (2004), </tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment"># "The Jalview Java Alignment Editor," Bioinformatics, 12, 426-7</tt> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment"># http://www.jalview.org</tt> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line"><tt class="py-comment"></tt> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line"> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">corebio</tt> <tt class="py-keyword">import</tt> <tt class="py-name">seq</tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Module weblogolib.color=weblogolib.color-module.html,Method weblogolib.colorscheme.ColorScheme.color()=weblogolib.colorscheme.ColorScheme-class.html#color"><a title="weblogolib.color
+weblogolib.colorscheme.ColorScheme.color" class="py-name" href="#" onclick="return doclink('link-0', 'color', 'link-0');">color</a></tt> <tt class="py-keyword">import</tt> <tt id="link-1" class="py-name" targets="Class weblogolib.color.Color=weblogolib.color.Color-class.html"><a title="weblogolib.color.Color" class="py-name" href="#" onclick="return doclink('link-1', 'Color', 'link-1');">Color</a></tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line"> </tt>
+<a name="ColorScheme"></a><div id="ColorScheme-def"><a name="L58"></a><tt class="py-lineno"> 58</tt> <a class="py-toggle" href="#" id="ColorScheme-toggle" onclick="return toggle('ColorScheme');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="weblogolib.colorscheme.ColorScheme-class.html">ColorScheme</a><tt class="py-op">(</tt><tt class="py-base-class">object</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ColorScheme-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="ColorScheme-expanded"><a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line">    <tt class="py-docstring">""" A coloring of an alphabet.</tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line"><tt class="py-docstring">    </tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line"><tt class="py-docstring">    title : string            -- A human readable description</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line"><tt class="py-docstring">    defualt_color : Color           --</tt> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line"><tt class="py-docstring">    groups : list of color groups </tt> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line"><tt class="py-docstring">    alphabet : string               -- The set of colored symbols</tt> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line"><tt class="py-docstring">    color -- A map between a symbol and a Coloring</tt> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line"><tt class="py-docstring">    </tt> </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line">     </tt>
+<a name="ColorScheme.__init__"></a><div id="ColorScheme.__init__-def"><a name="L70"></a><tt class="py-lineno"> 70</tt> <a class="py-toggle" href="#" id="ColorScheme.__init__-toggle" onclick="return toggle('ColorScheme.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="weblogolib.colorscheme.ColorScheme-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt>  </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line">                <tt class="py-param">groups</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt><tt class="py-op">,</tt>  </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line">                <tt class="py-param">title</tt> <tt class="py-op">=</tt> <tt class="py-string">""</tt><tt class="py-op">,</tt>  </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line">                <tt class="py-param">description</tt> <tt class="py-op">=</tt> <tt class="py-string">""</tt><tt class="py-op">,</tt> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line">                <tt class="py-param">default_color</tt> <tt class="py-op">=</tt> <tt class="py-string">"black"</tt><tt class="py-op">,</tt>  </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line">                <tt class="py-param">alphabet</tt> <tt class="py-op">=</tt> <tt class="py-name">seq</tt><tt class="py-op">.</tt><tt class="py-name">generic_alphabet</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="ColorScheme.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ColorScheme.__init__-expanded"><a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line">        <tt class="py-docstring">"""  """</tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">title</tt><tt class="py-op">=</tt> <tt class="py-name">title</tt> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Variable weblogolib.description=weblogolib-module.html#description"><a title="weblogolib.description" class="py-name" href="#" onclick="return doclink('link-2', 'description', 'link-2');">description</a></tt> <tt class="py-op">=</tt> <tt id="link-3" class="py-name"><a title="weblogolib.description" class="py-name" href="#" onclick="return doclink('link-3', 'description', 'link-2');">description</a></tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">default_color</tt> <tt class="py-op">=</tt> <tt id="link-4" class="py-name"><a title="weblogolib.color.Color" class="py-name" href="#" onclick="return doclink('link-4', 'Color', 'link-1');">Color</a></tt><tt class="py-op">.</tt><tt id="link-5" class="py-name" targets="Class Method weblogolib.color.Color.from_string()=weblogolib.color.Color-class.html#from_string"><a title="weblogolib.color.Color.from_string" class="py-name" href="#" onclick="return doclink('link-5', 'from_string', 'link-5');">from_string</a></tt><tt class="py-op">(</tt><tt class="py-name">default_color</tt><tt class="py-op">)</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">groups</tt> <tt class="py-op">=</tt> <tt class="py-name">groups</tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">alphabet</tt> <tt class="py-op">=</tt> <tt class="py-name">alphabet</tt> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line">             </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line">        <tt id="link-6" class="py-name"><a title="weblogolib.color
+weblogolib.colorscheme.ColorScheme.color" class="py-name" href="#" onclick="return doclink('link-6', 'color', 'link-0');">color</a></tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt><tt class="py-op">}</tt> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-name">cg</tt> <tt class="py-keyword">in</tt> <tt class="py-name">groups</tt> <tt class="py-op">:</tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line">            <tt class="py-keyword">for</tt> <tt class="py-name">s</tt> <tt class="py-keyword">in</tt> <tt class="py-name">cg</tt><tt class="py-op">.</tt><tt class="py-name">symbols</tt> <tt class="py-op">:</tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line">                <tt id="link-7" class="py-name"><a title="weblogolib.color
+weblogolib.colorscheme.ColorScheme.color" class="py-name" href="#" onclick="return doclink('link-7', 'color', 'link-0');">color</a></tt><tt class="py-op">[</tt><tt class="py-name">s</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">cg</tt><tt class="py-op">.</tt><tt id="link-8" class="py-name"><a title="weblogolib.color
+weblogolib.colorscheme.ColorScheme.color" class="py-name" href="#" onclick="return doclink('link-8', 'color', 'link-0');">color</a></tt> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">s</tt> <tt class="py-keyword">not</tt> <tt class="py-keyword">in</tt> <tt class="py-name">alphabet</tt> <tt class="py-op">:</tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line">                    <tt class="py-keyword">raise</tt> <tt class="py-name">KeyError</tt><tt class="py-op">(</tt><tt class="py-string">"Colored symbol does not exist in alphabet."</tt><tt class="py-op">)</tt> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_color</tt> <tt class="py-op">=</tt> <tt id="link-9" class="py-name"><a title="weblogolib.color
+weblogolib.colorscheme.ColorScheme.color" class="py-name" href="#" onclick="return doclink('link-9', 'color', 'link-0');">color</a></tt> </tt>
+</div><a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line"> </tt>
+<a name="ColorScheme.color"></a><div id="ColorScheme.color-def"><a name="L91"></a><tt class="py-lineno"> 91</tt> <a class="py-toggle" href="#" id="ColorScheme.color-toggle" onclick="return toggle('ColorScheme.color');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="weblogolib.colorscheme.ColorScheme-class.html#color">color</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">symbol</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="ColorScheme.color-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ColorScheme.color-expanded"><a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">symbol</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_color</tt> <tt class="py-op">:</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_color</tt><tt class="py-op">[</tt><tt class="py-name">symbol</tt><tt class="py-op">]</tt> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">default_color</tt> </tt>
+</div></div><a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line">         </tt>
+<a name="ColorGroup"></a><div id="ColorGroup-def"><a name="L96"></a><tt class="py-lineno"> 96</tt> <a class="py-toggle" href="#" id="ColorGroup-toggle" onclick="return toggle('ColorGroup');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="weblogolib.colorscheme.ColorGroup-class.html">ColorGroup</a><tt class="py-op">(</tt><tt class="py-base-class">object</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="ColorGroup-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="ColorGroup-expanded"><a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line">    <tt class="py-docstring">"""Associate a group of symbols with a color"""</tt> </tt>
+<a name="ColorGroup.__init__"></a><div id="ColorGroup.__init__-def"><a name="L98"></a><tt class="py-lineno"> 98</tt> <a class="py-toggle" href="#" id="ColorGroup.__init__-toggle" onclick="return toggle('ColorGroup.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="weblogolib.colorscheme.ColorGroup-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">symbols</tt><tt class="py-op">,</tt> <tt class="py-param">color</tt><tt class="py-op">,</tt> <tt class="py-param">description</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="ColorGroup.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="ColorGroup.__init__-expanded"><a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">symbols</tt> <tt class="py-op">=</tt> <tt class="py-name">symbols</tt>               </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-10" class="py-name"><a title="weblogolib.color
+weblogolib.colorscheme.ColorScheme.color" class="py-name" href="#" onclick="return doclink('link-10', 'color', 'link-0');">color</a></tt> <tt class="py-op">=</tt>  <tt id="link-11" class="py-name"><a title="weblogolib.color.Color" class="py-name" href="#" onclick="return doclink('link-11', 'Color', 'link-1');">Color</a></tt><tt class="py-op">.</tt><tt id="link-12" class="py-name"><a title="weblogolib.color.Color.from_string" class="py-name" href="#" onclick="return doclink('link-12', 'from_string', 'link-5');">from_string</a></tt><tt class="py-op">(</tt><tt id="link-13" class="py-name"><a title="weblogolib.color
+weblogolib.colorscheme.ColorScheme.color" class="py-name" href="#" onclick="return doclink('link-13', 'color', 'link-0');">color</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-14" class="py-name"><a title="weblogolib.description" class="py-name" href="#" onclick="return doclink('link-14', 'description', 'link-2');">description</a></tt> <tt class="py-op">=</tt> <tt id="link-15" class="py-name"><a title="weblogolib.description" class="py-name" href="#" onclick="return doclink('link-15', 'description', 'link-2');">description</a></tt> </tt>
+</div></div><a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line"> </tt>
+<a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line"> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line">          </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line"><tt id="link-16" class="py-name" targets="Variable weblogolib.colorscheme.monochrome=weblogolib.colorscheme-module.html#monochrome"><a title="weblogolib.colorscheme.monochrome" class="py-name" href="#" onclick="return doclink('link-16', 'monochrome', 'link-16');">monochrome</a></tt> <tt class="py-op">=</tt> <tt id="link-17" class="py-name" targets="Class weblogolib.colorscheme.ColorScheme=weblogolib.colorscheme.ColorScheme-class.html"><a title="weblogolib.colorscheme.ColorScheme" class="py-name" href="#" onclick="return doclink('link-17', 'ColorScheme', 'link-17');">ColorScheme</a></tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> <tt class="py-comment"># This list intentionally left blank</tt> </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line">                </tt>
+<a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line"><tt class="py-comment"># From makelogo</tt> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt id="link-18" class="py-name" targets="Variable weblogolib.colorscheme.nucleotide=weblogolib.colorscheme-module.html#nucleotide"><a title="weblogolib.colorscheme.nucleotide" class="py-name" href="#" onclick="return doclink('link-18', 'nucleotide', 'link-18');">nucleotide</a></tt> <tt class="py-op">=</tt> <tt id="link-19" class="py-name"><a title="weblogolib.colorscheme.ColorScheme" class="py-name" href="#" onclick="return doclink('link-19', 'ColorScheme', 'link-17');">ColorScheme</a></tt><tt class="py-op">(</tt><tt class="py-op">[</tt> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line">    <tt id="link-20" class="py-name" targets="Class weblogolib.colorscheme.ColorGroup=weblogolib.colorscheme.ColorGroup-class.html"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-20', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt><tt class="py-string">"G"</tt><tt class="py-op">,</tt> <tt class="py-string">"orange"</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line">    <tt id="link-21" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-21', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt><tt class="py-string">"TU"</tt><tt class="py-op">,</tt> <tt class="py-string">"red"</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line">    <tt id="link-22" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-22', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt><tt class="py-string">"C"</tt><tt class="py-op">,</tt>  <tt class="py-string">"blue"</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line">    <tt id="link-23" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-23', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt><tt class="py-string">"A"</tt><tt class="py-op">,</tt>  <tt class="py-string">"green"</tt><tt class="py-op">)</tt>  </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line">    <tt class="py-op">]</tt><tt class="py-op">)</tt>  </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line"> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line"><tt id="link-24" class="py-name" targets="Variable weblogolib.colorscheme.base_pairing=weblogolib.colorscheme-module.html#base_pairing"><a title="weblogolib.colorscheme.base_pairing" class="py-name" href="#" onclick="return doclink('link-24', 'base_pairing', 'link-24');">base_pairing</a></tt> <tt class="py-op">=</tt> <tt id="link-25" class="py-name"><a title="weblogolib.colorscheme.ColorScheme" class="py-name" href="#" onclick="return doclink('link-25', 'ColorScheme', 'link-17');">ColorScheme</a></tt><tt class="py-op">(</tt><tt class="py-op">[</tt> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line">    <tt id="link-26" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-26', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt><tt class="py-string">"TAU"</tt><tt class="py-op">,</tt>  <tt class="py-string">"darkorange"</tt><tt class="py-op">,</tt> <tt class="py-string">"Weak (2 Watson-Crick hydrogen bonds)"</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line">    <tt id="link-27" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-27', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt><tt class="py-string">"GC"</tt><tt class="py-op">,</tt>    <tt class="py-string">"blue"</tt><tt class="py-op">,</tt> <tt class="py-string">"Strong (3 Watson-Crick hydrogen bonds)"</tt><tt class="py-op">)</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line">    <tt class="py-op">)</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line"> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line"><tt class="py-comment"># From Crooks2004c-Proteins-SeqStr.pdf</tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt id="link-28" class="py-name" targets="Variable weblogolib.colorscheme.hydrophobicity=weblogolib.colorscheme-module.html#hydrophobicity"><a title="weblogolib.colorscheme.hydrophobicity" class="py-name" href="#" onclick="return doclink('link-28', 'hydrophobicity', 'link-28');">hydrophobicity</a></tt> <tt class="py-op">=</tt> <tt id="link-29" class="py-name"><a title="weblogolib.colorscheme.ColorScheme" class="py-name" href="#" onclick="return doclink('link-29', 'ColorScheme', 'link-17');">ColorScheme</a></tt><tt class="py-op">(</tt><tt class="py-op">[</tt> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line">    <tt id="link-30" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-30', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">"RKDENQ"</tt><tt class="py-op">,</tt>   <tt class="py-string">"black"</tt><tt class="py-op">,</tt> <tt class="py-string">"hydrophilic"</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line">    <tt id="link-31" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-31', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">"SGHTAP"</tt><tt class="py-op">,</tt>   <tt class="py-string">"green"</tt><tt class="py-op">,</tt> <tt class="py-string">"neutral"</tt>  <tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line">    <tt id="link-32" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-32', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">"YVMCLFIW"</tt><tt class="py-op">,</tt> <tt class="py-string">"blue"</tt><tt class="py-op">,</tt>  <tt class="py-string">"hydrophobic"</tt><tt class="py-op">)</tt> <tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line">    <tt class="py-name">alphabet</tt> <tt class="py-op">=</tt> <tt class="py-name">seq</tt><tt class="py-op">.</tt><tt class="py-name">unambiguous_protein_alphabet</tt> </tt>
+<a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line">    <tt class="py-op">)</tt> </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line"> </tt>
+<a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line"><tt class="py-comment"># from makelogo</tt> </tt>
+<a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt id="link-33" class="py-name" targets="Variable weblogolib.colorscheme.chemistry=weblogolib.colorscheme-module.html#chemistry"><a title="weblogolib.colorscheme.chemistry" class="py-name" href="#" onclick="return doclink('link-33', 'chemistry', 'link-33');">chemistry</a></tt> <tt class="py-op">=</tt> <tt id="link-34" class="py-name"><a title="weblogolib.colorscheme.ColorScheme" class="py-name" href="#" onclick="return doclink('link-34', 'ColorScheme', 'link-17');">ColorScheme</a></tt><tt class="py-op">(</tt><tt class="py-op">[</tt> </tt>
+<a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line">  <tt id="link-35" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-35', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">"GSTYC"</tt><tt class="py-op">,</tt>  <tt class="py-string">"green"</tt><tt class="py-op">,</tt>   <tt class="py-string">"polar"</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line">  <tt id="link-36" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-36', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">"NQ"</tt><tt class="py-op">,</tt>      <tt class="py-string">"purple"</tt><tt class="py-op">,</tt> <tt class="py-string">"neutral"</tt><tt class="py-op">)</tt><tt class="py-op">,</tt>  </tt>
+<a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line">  <tt id="link-37" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-37', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">"KRH"</tt><tt class="py-op">,</tt>     <tt class="py-string">"blue"</tt><tt class="py-op">,</tt>   <tt class="py-string">"basic"</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line">  <tt id="link-38" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-38', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">"DE"</tt><tt class="py-op">,</tt>      <tt class="py-string">"red"</tt><tt class="py-op">,</tt>    <tt class="py-string">"acidic"</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line">  <tt id="link-39" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-39', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt><tt class="py-string">"PAWFLIMV"</tt><tt class="py-op">,</tt> <tt class="py-string">"black"</tt><tt class="py-op">,</tt>  <tt class="py-string">"hydrophobic"</tt><tt class="py-op">)</tt> <tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L135"></a><tt class="py-lineno">135</tt>  <tt class="py-line">  <tt class="py-name">alphabet</tt> <tt class="py-op">=</tt> <tt class="py-name">seq</tt><tt class="py-op">.</tt><tt class="py-name">unambiguous_protein_alphabet</tt> </tt>
+<a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line">  <tt class="py-op">)</tt>    </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line"> </tt>
+<a name="L138"></a><tt class="py-lineno">138</tt>  <tt class="py-line"><tt id="link-40" class="py-name" targets="Variable weblogolib.colorscheme.charge=weblogolib.colorscheme-module.html#charge"><a title="weblogolib.colorscheme.charge" class="py-name" href="#" onclick="return doclink('link-40', 'charge', 'link-40');">charge</a></tt> <tt class="py-op">=</tt> <tt id="link-41" class="py-name"><a title="weblogolib.colorscheme.ColorScheme" class="py-name" href="#" onclick="return doclink('link-41', 'ColorScheme', 'link-17');">ColorScheme</a></tt><tt class="py-op">(</tt><tt class="py-op">[</tt> </tt>
+<a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line">    <tt id="link-42" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-42', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt><tt class="py-string">"KRH"</tt><tt class="py-op">,</tt> <tt class="py-string">"blue"</tt><tt class="py-op">,</tt> <tt class="py-string">"Positive"</tt> <tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line">    <tt id="link-43" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-43', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">"DE"</tt><tt class="py-op">,</tt> <tt class="py-string">"red"</tt><tt class="py-op">,</tt> <tt class="py-string">"Negative"</tt><tt class="py-op">)</tt> <tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line">    <tt class="py-name">alphabet</tt> <tt class="py-op">=</tt> <tt class="py-name">seq</tt><tt class="py-op">.</tt><tt class="py-name">unambiguous_protein_alphabet</tt> </tt>
+<a name="L142"></a><tt class="py-lineno">142</tt>  <tt class="py-line">    <tt class="py-op">)</tt> </tt>
+<a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line"> </tt>
+<a name="L144"></a><tt class="py-lineno">144</tt>  <tt class="py-line"> </tt>
+<a name="L145"></a><tt class="py-lineno">145</tt>  <tt class="py-line"><tt id="link-44" class="py-name" targets="Variable weblogolib.colorscheme.taylor=weblogolib.colorscheme-module.html#taylor"><a title="weblogolib.colorscheme.taylor" class="py-name" href="#" onclick="return doclink('link-44', 'taylor', 'link-44');">taylor</a></tt> <tt class="py-op">=</tt> <tt id="link-45" class="py-name"><a title="weblogolib.colorscheme.ColorScheme" class="py-name" href="#" onclick="return doclink('link-45', 'ColorScheme', 'link-17');">ColorScheme</a></tt><tt class="py-op">(</tt><tt class="py-op">[</tt> </tt>
+<a name="L146"></a><tt class="py-lineno">146</tt>  <tt class="py-line">    <tt id="link-46" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-46', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">'A'</tt><tt class="py-op">,</tt> <tt class="py-string">'#CCFF00'</tt> <tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line">    <tt id="link-47" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-47', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">'C'</tt><tt class="py-op">,</tt> <tt class="py-string">'#FFFF00'</tt> <tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L148"></a><tt class="py-lineno">148</tt>  <tt class="py-line">    <tt id="link-48" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-48', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">'D'</tt><tt class="py-op">,</tt> <tt class="py-string">'#FF0000'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L149"></a><tt class="py-lineno">149</tt>  <tt class="py-line">    <tt id="link-49" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-49', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">'E'</tt><tt class="py-op">,</tt> <tt class="py-string">'#FF0066'</tt> <tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L150"></a><tt class="py-lineno">150</tt>  <tt class="py-line">    <tt id="link-50" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-50', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">'F'</tt><tt class="py-op">,</tt> <tt class="py-string">'#00FF66'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line">    <tt id="link-51" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-51', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">'G'</tt><tt class="py-op">,</tt> <tt class="py-string">'#FF9900'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L152"></a><tt class="py-lineno">152</tt>  <tt class="py-line">    <tt id="link-52" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-52', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">'H'</tt><tt class="py-op">,</tt> <tt class="py-string">'#0066FF'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line">    <tt id="link-53" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-53', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">'I'</tt><tt class="py-op">,</tt> <tt class="py-string">'#66FF00'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line">    <tt id="link-54" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-54', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">'K'</tt><tt class="py-op">,</tt> <tt class="py-string">'#6600FF'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L155"></a><tt class="py-lineno">155</tt>  <tt class="py-line">    <tt id="link-55" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-55', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">'L'</tt><tt class="py-op">,</tt> <tt class="py-string">'#33FF00'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line">    <tt id="link-56" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-56', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">'M'</tt><tt class="py-op">,</tt> <tt class="py-string">'#00FF00'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L157"></a><tt class="py-lineno">157</tt>  <tt class="py-line">    <tt id="link-57" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-57', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">'N'</tt><tt class="py-op">,</tt> <tt class="py-string">'#CC00FF'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L158"></a><tt class="py-lineno">158</tt>  <tt class="py-line">    <tt id="link-58" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-58', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">'P'</tt><tt class="py-op">,</tt> <tt class="py-string">'#FFCC00'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L159"></a><tt class="py-lineno">159</tt>  <tt class="py-line">    <tt id="link-59" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-59', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">'Q'</tt><tt class="py-op">,</tt> <tt class="py-string">'#FF00CC'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L160"></a><tt class="py-lineno">160</tt>  <tt class="py-line">    <tt id="link-60" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-60', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">'R'</tt><tt class="py-op">,</tt> <tt class="py-string">'#0000FF'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L161"></a><tt class="py-lineno">161</tt>  <tt class="py-line">    <tt id="link-61" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-61', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">'S'</tt><tt class="py-op">,</tt> <tt class="py-string">'#FF3300'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L162"></a><tt class="py-lineno">162</tt>  <tt class="py-line">    <tt id="link-62" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-62', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">'T'</tt><tt class="py-op">,</tt> <tt class="py-string">'#FF6600'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L163"></a><tt class="py-lineno">163</tt>  <tt class="py-line">    <tt id="link-63" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-63', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">'V'</tt><tt class="py-op">,</tt> <tt class="py-string">'#99FF00'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L164"></a><tt class="py-lineno">164</tt>  <tt class="py-line">    <tt id="link-64" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-64', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">'W'</tt><tt class="py-op">,</tt> <tt class="py-string">'#00CCFF'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L165"></a><tt class="py-lineno">165</tt>  <tt class="py-line">    <tt id="link-65" class="py-name"><a title="weblogolib.colorscheme.ColorGroup" class="py-name" href="#" onclick="return doclink('link-65', 'ColorGroup', 'link-20');">ColorGroup</a></tt><tt class="py-op">(</tt> <tt class="py-string">'Y'</tt><tt class="py-op">,</tt> <tt class="py-string">'#00FFCC'</tt><tt class="py-op">)</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L166"></a><tt class="py-lineno">166</tt>  <tt class="py-line">    <tt class="py-name">title</tt> <tt class="py-op">=</tt> <tt class="py-string">"Taylor"</tt><tt class="py-op">,</tt> </tt>
+<a name="L167"></a><tt class="py-lineno">167</tt>  <tt class="py-line">    <tt id="link-66" class="py-name"><a title="weblogolib.description" class="py-name" href="#" onclick="return doclink('link-66', 'description', 'link-2');">description</a></tt> <tt class="py-op">=</tt> <tt class="py-string">"W. Taylor, Protein Engineering, Vol 10 , 743-746 (1997)"</tt><tt class="py-op">,</tt> </tt>
+<a name="L168"></a><tt class="py-lineno">168</tt>  <tt class="py-line">    <tt class="py-name">alphabet</tt> <tt class="py-op">=</tt> <tt class="py-name">seq</tt><tt class="py-op">.</tt><tt class="py-name">unambiguous_protein_alphabet</tt> </tt>
+<a name="L169"></a><tt class="py-lineno">169</tt>  <tt class="py-line">    <tt class="py-op">)</tt> </tt>
+<a name="L170"></a><tt class="py-lineno">170</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="weblogolib-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://code.google.com/p/weblogo/">WebLogo</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Mon Jan 30 17:27:18 2012
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

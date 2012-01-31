@@ -1,0 +1,350 @@
+# ssearch34 -Q single.fa testset.fa
+SSEARCH searches a sequence data bank
+ version 3.4t24 June 23, 2004
+Please cite:
+ T. F. Smith and M. S. Waterman, (1981) J. Mol. Biol. 147:195-197; 
+ W.R. Pearson (1991) Genomics 11:635-650
+
+Query library single.fa vs testset.fa library
+searching testset.fa library
+
+  1>>>d1pfsa_ 2.24.6.1.2 Gene V protein [Pseudomonas phage pf3] - 78 aa
+ vs  testset.fa library
+
+       opt      E()
+< 20     0     0:
+  22     0     0:           one = represents 1 library sequences
+  24     0     0:
+  26     0     0:
+  28     0     0:
+  30     0     0:
+  32     2     0:==
+  34     0     1:*
+  36     2     3:==*
+  38     3     5:=== *
+  40     4     6:==== *
+  42     2     8:==     *
+  44     9     8:=======*=
+  46    10     9:========*=
+  48     8     8:=======*
+  50     8     8:=======*
+  52     5     7:===== *
+  54     8     6:=====*==
+  56     5     5:====*
+  58     7     4:===*===
+  60     2     3:==*
+  62     4     3:==*=
+  64     3     2:=*=
+  66     2     2:=*
+  68     1     1:*
+  70     1     1:*
+  72     1     1:*
+  74     1     1:*
+  76     1     0:=
+  78     2     0:==
+  80     1     0:=
+  82     0     0:
+  84     0     0:
+  86     0     0:
+  88     0     0:
+  90     0     0:
+  92     0     0:
+  94     0     0:
+  96     0     0:
+  98     0     0:
+ 100     0     0:
+ 102     0     0:
+ 104     0     0:
+ 106     0     0:
+ 108     0     0:
+ 110     0     0:
+ 112     0     0:
+ 114     0     0:
+ 116     0     0:
+ 118     0     0:
+>120     1     0:=
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= 7.2437+/-0.0204; mu= -3.4950+/- 0.925
+ mean_var=32.6334+/- 9.107, 0's: 0 Z-trim: 1  B-trim: 0 in 0/19
+ Lambda= 0.224514
+ Kolmogorov-Smirnov  statistic: 0.1096 (N=24) at  42
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.020
+The best scores are:                                      s-w bits E(93)
+d1pfsa_ 2.24.6.1.2 Gene V protein [Pseudomonas ph  (  78)  534 177.3 2.4e-48
+d1fus__ 4.1.1.1.2 RNase F1 [Fusarium moniliforme]  ( 106)   48  19.6    0.97
+d4ptp__ 2.29.1.2.1 Trypsin(ogen) [bovine (Bos tau  ( 223)   52  20.2     1.3
+d1jbc__ 2.18.1.1.1 Concanavalin A [jack bean (Can  ( 237)   52  20.2     1.5
+d1cyo__ 4.62.1.1.1 Cytochrome b5 [bovine (Bos tau  (  88)   44  18.5     1.8
+d1ckaa_ 2.20.2.1.1 C-Crk, N-terminal SH3 domain [  (  57)   40  17.6     2.1
+d1rgea_ 4.1.1.1.1 RNase Sa [Streptomyces aureofac  (  96)   42  17.7     3.1
+d2sga__ 2.29.1.1.2 Protease A [Streptomyces grise  ( 181)   46  18.5     3.6
+d1pls__ 2.35.1.1.5 Pleckstrin, N-terminal domain   ( 113)   42  17.6     4.1
+d1burs_ 4.35.1.1.2 Ribulose 1,5-bisphosphate carb  ( 123)   41  17.2     5.8
+d8rxna_ 7.34.3.1.1 Rubredoxin [Desulfovibrio vulg  (  52)   34  15.7     6.9
+d2olba_ 3.68.1.1.1 Oligo-peptide binding protein   ( 517)   50  18.8     7.9
+d1xsoa_ 2.1.7.1.3 Cu,Zn superoxide dismutase, SOD  ( 150)   41  17.0     7.9
+d1ifc__ 2.39.1.2.2 Intestinal fatty acid binding   ( 131)   40  16.8       8
+d1lkka_ 4.47.1.1.1 p56-lck tyrosine kinase [human  ( 105)   38  16.4     8.7
+d3sdhb_ 1.1.1.1.1 Hemoglobin I [ark clam (Scaphar  ( 145)   40  16.7     9.3
+
+>>d1pfsa_ 2.24.6.1.2 Gene V protein [Pseudomonas phage p  (78 aa)
+ s-w opt: 534  Z-score: 935.7  bits: 177.3 E(): 2.4e-48
+Smith-Waterman score: 534;  100.000% identity (100.000% similar) in 78 aa overlap (1-78:1-78)
+
+               10        20        30        40        50        60
+d1pfsa MNIQITFTDSVRQGTSAKGNPYTFQEGFLHLEDKPHPLQCQFFVESVIPAGSYQVPYRIN
+       ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+d1pfsa MNIQITFTDSVRQGTSAKGNPYTFQEGFLHLEDKPHPLQCQFFVESVIPAGSYQVPYRIN
+               10        20        30        40        50        60
+
+               70        
+d1pfsa VNNGRPELAFDFKAMKRA
+       ::::::::::::::::::
+d1pfsa VNNGRPELAFDFKAMKRA
+               70        
+
+>>d1fus__ 4.1.1.1.2 RNase F1 [Fusarium moniliforme]       (106 aa)
+ s-w opt:  48  Z-score: 81.0  bits: 19.6 E(): 0.97
+Smith-Waterman score: 48;  33.333% identity (51.515% similar) in 33 aa overlap (40-72:24-50)
+
+      10        20        30        40        50        60         
+d1pfsa SVRQGTSAKGNPYTFQEGFLHLEDKPHPLQCQFFVESVIPAGSYQVPYRINVNNGRPELA
+                                     ::.. ..   :::   :.  :  .:     
+d1fus_        XSATTCGSTNYSASQVRAAANAACQYY-QNDDTAGSSTYPHTYNNYEG-----
+                      10        20         30        40            
+
+      70                                                          
+d1pfsa FDFKAMKRA                                                  
+       :::                                                        
+d1fus_ FDFPVDGPYQEFPIKSGGVYTGGSPGADRVVINTNCEYAGAITHTGASGNNFVGCSGTN
+        50        60        70        80        90       100      
+
+>>d4ptp__ 2.29.1.2.1 Trypsin(ogen) [bovine (Bos taurus)]  (223 aa)
+ s-w opt:  52  Z-score: 78.6  bits: 20.2 E():  1.3
+Smith-Waterman score: 52;  42.857% identity (85.714% similar) in 14 aa overlap (51-64:8-21)
+
+               30        40        50        60        70          
+d1pfsa PYTFQEGFLHLEDKPHPLQCQFFVESVIPAGSYQVPYRINVNNGRPELAFDFKAMKRA  
+                                     :.  :::....:.:                
+d4ptp_                        IVGGYTCGANTVPYQVSLNSGYHFCGGSLINSQWVVS
+                                      10        20        30       
+
+d4ptp_ AAHCYKSGIQVRLGEDNINVVEGNEQFISASKSIVHPSYNSNTLNNDIMLIKLKSAASLN
+        40        50        60        70        80        90       
+
+>>d1jbc__ 2.18.1.1.1 Concanavalin A [jack bean (Canavali  (237 aa)
+ s-w opt:  52  Z-score: 77.8  bits: 20.2 E():  1.5
+Smith-Waterman score: 52;  36.111% identity (55.556% similar) in 36 aa overlap (23-52:190-225)
+
+                       10        20        30           40         
+d1pfsa         MNIQITFTDSVRQGTSAKGNPYTFQEGFLHLEDKP--HPLQ-CQFFV---ES
+                                     .:.  :  :  .:  :: .   ::.   .:
+d1jbc_ SSNGSPQGSSVGRALFYAPVHIWESSAVVASFEATFTFLIKSPDSHPADGIAFFISNIDS
+     160       170       180       190       200       210         
+
+         50        60        70        
+d1pfsa VIPAGSYQVPYRINVNNGRPELAFDFKAMKRA
+        ::.::                          
+d1jbc_ SIPSGSTGRLLGLFPDAN              
+     220       230                     
+
+>>d1cyo__ 4.62.1.1.1 Cytochrome b5 [bovine (Bos taurus)]  (88 aa)
+ s-w opt:  44  Z-score: 76.4  bits: 18.5 E():  1.8
+Smith-Waterman score: 44;  39.286% identity (60.714% similar) in 28 aa overlap (7-34:58-84)
+
+                                       10        20        30      
+d1pfsa                         MNIQITFTDSVRQGTSAKGNPYTFQEGFLHLEDKPH
+                                     : : : ..:.:.    ::  : :: .:.  
+d1cyo_ KVYDLTKFLEEHPGGEEVLREQAGGDATENFED-VGHSTDARELSKTFIIGELHPDDRSK
+        30        40        50        60         70        80      
+
+         40        50        60        70        
+d1pfsa PLQCQFFVESVIPAGSYQVPYRINVNNGRPELAFDFKAMKRA
+                                                 
+d1cyo_ IT                                        
+                                                 
+
+>>d1ckaa_ 2.20.2.1.1 C-Crk, N-terminal SH3 domain [mouse  (57 aa)
+ s-w opt:  40  Z-score: 74.9  bits: 17.6 E():  2.1
+Smith-Waterman score: 40;  34.286% identity (57.143% similar) in 35 aa overlap (24-57:20-53)
+
+               10        20         30        40        50         
+d1pfsa MNIQITFTDSVRQGTSAKGNPYTFQEG-FLHLEDKPHPLQCQFFVESVIPAGSYQVPYRI
+                              :..: .:...:::.  :     .:    :   :::  
+d1ckaa     AEYVRALFDFNGNDEEDLPFKKGDILRIRDKPEE-QWWNAEDSEGKRGMIPVPYVE
+                   10        20        30         40        50     
+
+      60        70        
+d1pfsa NVNNGRPELAFDFKAMKRA
+                          
+d1ckaa KY                 
+                          
+
+>>d1rgea_ 4.1.1.1.1 RNase Sa [Streptomyces aureofaciens]  (96 aa)
+ s-w opt:  42  Z-score: 71.8  bits: 17.7 E():  3.1
+Smith-Waterman score: 42;  40.000% identity (56.000% similar) in 25 aa overlap (33-53:25-49)
+
+             10        20        30        40            50        
+d1pfsa IQITFTDSVRQGTSAKGNPYTFQEGFLHLEDKPHPLQCQFFV----ESVIPAGSYQVPYR
+                                     : : : . .  :    :::.:. ::     
+d1rgea       DVSGTVCLSALPPEATDTLNLIASDGPFPYSQDGVVFQNRESVLPTQSYGYYHE
+                     10        20        30        40        50    
+
+       60        70                              
+d1pfsa INVNNGRPELAFDFKAMKRA                      
+                                                 
+d1rgea YTVITPGARTRGTRRIITGEATQEDYYTGDHYATFSLIDQTC
+           60        70        80        90      
+
+>>d2sga__ 2.29.1.1.2 Protease A [Streptomyces griseus, s  (181 aa)
+ s-w opt:  46  Z-score: 70.7  bits: 18.5 E():  3.6
+Smith-Waterman score: 46;  38.095% identity (71.429% similar) in 21 aa overlap (2-22:36-56)
+
+                                            10        20        30 
+d1pfsa                              MNIQITFTDSVRQGTSAKGNPYTFQEGFLHL
+                                     ::. ... ..: :::  .: :         
+d2sga_ AITTGGSRCSLGFNVSVNGVAHALTAGHCTNISASWSIGTRTGTSFPNNDYGIIRHSNPA
+          10        20        30        40        50        60     
+
+              40        50        60        70                     
+d1pfsa EDKPHPLQCQFFVESVIPAGSYQVPYRINVNNGRPELAFDFKAMKRA             
+                                                                   
+d2sga_ AADGRVYLYNGSYQDITTAGNAFVGQAVQRSGSTTGLRSGSVTGLNATVNYGSSGIVYGM
+          70        80        90       100       110       120     
+
+>>d1pls__ 2.35.1.1.5 Pleckstrin, N-terminal domain [Huma  (113 aa)
+ s-w opt:  42  Z-score: 69.7  bits: 17.6 E():  4.1
+Smith-Waterman score: 42;  36.842% identity (73.684% similar) in 19 aa overlap (15-33:72-90)
+
+                               10        20        30        40    
+d1pfsa                 MNIQITFTDSVRQGTSAKGNPYTFQEGFLHLEDKPHPLQCQFFV
+                                     :..: . . :: .::. .:           
+d1pls_ NSPKGMIPLKGSTLTSPCQDFGKRMFVFKITTTKQQDHFFQAAFLEERDAWVRDINKAIK
+              50        60        70        80        90       100 
+
+           50        60        70        
+d1pfsa ESVIPAGSYQVPYRINVNNGRPELAFDFKAMKRA
+                                         
+d1pls_ CIEGLEHHHHHH                      
+             110                         
+
+>>d1burs_ 4.35.1.1.2 Ribulose 1,5-bisphosphate carboxyla  (123 aa)
+ s-w opt:  41  Z-score: 66.9  bits: 17.2 E():  5.8
+Smith-Waterman score: 41;  35.714% identity (53.571% similar) in 28 aa overlap (49-73:20-47)
+
+       20        30        40        50        60           70     
+d1pfsa GNPYTFQEGFLHLEDKPHPLQCQFFVESVIPAGSYQVPYRIN---VNNGRPELAFDFKAM
+                                     :  . :.  ..:   :::  : : :. :  
+d1burs            MQVWPILGMKKYETLSYLPPLTTEQLLAEVNYLLVNNWIPCLEFEVKDG
+                          10        20        30        40         
+
+                                                                   
+d1pfsa KRA                                                         
+                                                                   
+d1burs FVYREHLKSPGYYDGRYWTMWKLPMFGCTDPAQVLNELEECKKAYPDAFIRIIGFDNKRQ
+      50        60        70        80        90       100         
+
+>>d8rxna_ 7.34.3.1.1 Rubredoxin [Desulfovibrio vulgaris]  (52 aa)
+ s-w opt:  34  Z-score: 65.5  bits: 15.7 E():  6.9
+Smith-Waterman score: 34;  35.294% identity (64.706% similar) in 17 aa overlap (56-71:15-31)
+
+          30        40        50        60         70              
+d1pfsa EGFLHLEDKPHPLQCQFFVESVIPAGSYQVPYRINVNNG-RPELAFDFKAMKRA      
+                                     : . . .:: .:  .::             
+d8rxna                 MKKYVCTVCGYEYDPAEGDPDNGVKPGTSFDDLPADWVCPVCGA
+                               10        20        30        40    
+
+d8rxna PKSEFEAA
+           50  
+
+>>d2olba_ 3.68.1.1.1 Oligo-peptide binding protein (OPPA  (517 aa)
+ s-w opt:  50  Z-score: 64.4  bits: 18.8 E():  7.9
+Smith-Waterman score: 50;  36.667% identity (63.333% similar) in 30 aa overlap (48-77:312-340)
+
+        20        30        40        50        60        70       
+d1pfsa KGNPYTFQEGFLHLEDKPHPLQCQFFVESVIPAGSYQVPYRINVNNGRPELAFDFKAMKR
+                                     .:: ::  ::  ...  .::  : .. .::
+d2olba APFNDVRVRTALKLALDRDIIVNKVKNQGDLPAYSYTPPYTDGAKLVEPEW-FKWSQQKR
+             290       300       310       320       330        340
+
+                                                                   
+d1pfsa A                                                           
+                                                                   
+d2olba NEEAKKLLAEAGFTADKPLTFDLLYNTSDLHKKLAIAVASIWKKNLGVNVNLENQEWKTF
+              350       360       370       380       390       400
+
+>>d1xsoa_ 2.1.7.1.3 Cu,Zn superoxide dismutase, SOD [Afr  (150 aa)
+ s-w opt:  41  Z-score: 64.4  bits: 17.0 E():  7.9
+Smith-Waterman score: 41;  30.769% identity (53.846% similar) in 39 aa overlap (31-66:36-72)
+
+               10        20        30        40           50       
+d1pfsa MNIQITFTDSVRQGTSAKGNPYTFQEGFLHLEDKPHPLQCQFFVESV---IPAGSYQVPY
+                                     : :  : .. . : ...   . :::.  : 
+d1xsoa VLAGSGDVKGVVHFEQQDEGAVSVEGKIEGLTDGLHGFHIHVFGDNTNGCMSAGSHFNPE
+          10        20        30        40        50        60     
+
+        60        70                                               
+d1pfsa RINVNNGRPELAFDFKAMKRA                                       
+         : :.: :                                                   
+d1xsoa --NKNHGAPGDTDRHVGDLGNVTAEGGVAQFKITDSLISLKGPNSIIGRTAVVHEKADDL
+            70        80        90       100       110       120   
+
+>>d1ifc__ 2.39.1.2.2 Intestinal fatty acid binding prote  (131 aa)
+ s-w opt:  40  Z-score: 64.3  bits: 16.8 E():    8
+Smith-Waterman score: 40;  27.778% identity (66.667% similar) in 18 aa overlap (9-26:34-51)
+
+                                     10        20        30        
+d1pfsa                       MNIQITFTDSVRQGTSAKGNPYTFQEGFLHLEDKPHPL
+                                     :...   . .:: .: .:            
+d1ifc_ GTWKVDRNENYEKFMEKMGINVVKRKLGAHDNLKLTITQEGNKFTVKESSNFRNIDVVFE
+            10        20        30        40        50        60   
+
+       40        50        60        70                            
+d1pfsa QCQFFVESVIPAGSYQVPYRINVNNGRPELAFDFKAMKRA                    
+                                                                   
+d1ifc_ LGVDFAYSLADGTELTGTWTMEGNKLVGKFKRVDNGKELIAVREISGNELIQTYTYEGVE
+            70        80        90       100       110       120   
+
+>>d1lkka_ 4.47.1.1.1 p56-lck tyrosine kinase [human (Hom  (105 aa)
+ s-w opt:  38  Z-score: 63.6  bits: 16.4 E():  8.7
+Smith-Waterman score: 38;  31.250% identity (62.500% similar) in 32 aa overlap (35-64:23-54)
+
+           10        20        30        40         50         60  
+d1pfsa ITFTDSVRQGTSAKGNPYTFQEGFLHLEDKPHPLQCQFFV-ESVIPAGSYQVPYR-INVN
+                                     :   . .:.. ::   :::...  : .. :
+d1lkka         LEPEPWFFKNLSRKDAERQLLAPGNTHGSFLIRESESTAGSFSLSVRDFDQN
+                       10        20        30        40        50  
+
+             70                                             
+d1pfsa NGRPELAFDFKAMKRA                                     
+       .:                                                   
+d1lkka QGEVVKHYKIRNLDNGGFYISPRITFPGLHELVRHYTNASDGLCTRLSRPCQT
+             60        70        80        90       100     
+
+>>d3sdhb_ 1.1.1.1.1 Hemoglobin I [ark clam (Scapharca in  (145 aa)
+ s-w opt:  40  Z-score: 63.0  bits: 16.7 E():  9.3
+Smith-Waterman score: 40;  27.027% identity (54.054% similar) in 37 aa overlap (10-40:55-91)
+
+                                    10           20           30   
+d1pfsa                      MNIQITFTDSVRQGTSA---KGNPYTFQ---EGFLHLED
+                                     .: :: .    .:.  :..   ..:.   :
+d3sdhb GSDKKGNGVALMTTLFADNQETIGYFKRLGNVSQGMANDKLRGHSITLMYALQNFIDQLD
+           30        40        50        60        70        80    
+
+            40        50        60        70                       
+d1pfsa KPHPLQCQFFVESVIPAGSYQVPYRINVNNGRPELAFDFKAMKRA               
+       .:  : :                                                     
+d3sdhb NPDDLVCVVEKFAVNHITRKISAAEFGKINGPIKKVLASKNFGDKYANAWAKLVAVVQAA
+           90       100       110       120       130       140    
+
+
+
+78 residues in 1 query   sequences
+13355 residues in 93 library sequences
+ Scomplib [34t24]
+ start: Tue Aug 15 22:46:28 2006 done: Tue Aug 15 22:46:28 2006
+ Total Scan time:  0.020 Total Display time:  0.010
+
+Function used was SSEARCH [version 3.4t24 June 23, 2004]

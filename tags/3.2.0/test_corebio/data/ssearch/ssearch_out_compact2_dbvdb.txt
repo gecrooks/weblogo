@@ -1,0 +1,675 @@
+# ssearch34 -H -m 9 -d 0 -Q shortset.fa testset.fa
+SSEARCH searches a sequence data bank
+ version 3.4t24 June 23, 2004
+Please cite:
+ T. F. Smith and M. S. Waterman, (1981) J. Mol. Biol. 147:195-197; 
+ W.R. Pearson (1991) Genomics 11:635-650
+
+Query library shortset.fa vs testset.fa library
+searching testset.fa library
+
+  1>>>d1cbn__ 7.11.1.1.1 Crambin [abyssinian cabbage (Crambe abyssinica)] - 46 aa
+ vs  testset.fa library
+
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= 2.3138+/-0.0438; mu= 18.9049+/- 2.176
+ mean_var=37.1184+/-10.107, 0's: 0 Z-trim: 3  B-trim: 0 in 0/18
+ Lambda= 0.210513
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.010
+The best scores are:                                      s-w bits E(93)	%_id  %_sim   sw  alen  an0  ax0  pn0  px0  an1  ax1 pn1 px1 gapq gapl  fs 
+d1cbn__ 7.11.1.1.1 Crambin [abyssinian cabbage (C  (  46)  338 106.1 2.3e-27	1.000 1.000  338   46    1   46    1   46    1   46    1   46   0   0   0
+d1isua_ 7.29.1.1.1 HIPIP (high potential iron pro  (  62)   55  20.4     0.2	0.370 0.556   55   27   22   46    1   46   30   56    1   62   2   0   0
+d2erl__ 1.10.1.1.1 ER-1 [Euplotes raikovi]         (  40)   51  18.8    0.37	0.364 0.591   51   22   23   41    1   46   16   37    1   40   3   0   0
+d1arb__ 2.29.1.1.1 Achromobacter protease [Achrom  ( 263)   53  20.8     0.6	0.364 0.568   53   44    6   45    1   46   68  110    1  263   4   1   0
+d2eng__ 2.33.1.1.1 Endoglucanase V [Humicola inso  ( 205)   47  18.8     1.9	0.333 0.519   47   27   18   44    1   46  137  163    1  205   0   0   0
+d1fus__ 4.1.1.1.2 RNase F1 [Fusarium moniliforme]  ( 106)   45  17.7     2.1	0.244 0.511   45   45    2   46    1   46    4   44    1  106   0   4   0
+d1rie__ 7.35.1.2.1 The rieske iron-sulfur protein  ( 127)   44  17.6     2.8	0.400 0.600   44   20   25   44    1   46   69   87    1  127   0   1   0
+d3ebx__ 7.5.1.1.1 Erabutoxin B (also neurotoxin B  (  62)   42  16.4       3	0.357 0.464   42   28   19   41    1   46   19   44    1   62   5   2   0
+e1ben.2c1 7.1.1.1.2 Insulin [human (Homo sapiens)  (  21)   38  14.4       4	0.400 0.600   38   15    3   16    1   46    6   20    1   21   1   0   0
+d3pte__ 5.3.1.1.1 D-ala carboxypeptidase/transpep  ( 347)   43  18.0     5.5	0.346 0.538   43   26   21   46    1   46  189  211    1  347   0   3   0
+d5p21__ 3.24.1.3.1 cH-p21 Ras protein [human (Hom  ( 166)   41  16.8     5.8	0.385 0.615   41   13   28   40    1   46   39   51    1  166   0   0   0
+d1tpg_1 7.10.1.1.13 (51-91) Plasminogen activator  (  41)   37  14.6     6.8	0.375 0.625   37   16    4   19    1   46   12   26    1   41   0   1   0
+d2sn3__ 7.3.6.1.1 scorpion toxin [Centruroides sc  (  65)   37  14.9     8.4	0.320 0.480   37   25   16   40    1   46   46   65    1   65   0   5   0
+d2sga__ 2.29.1.1.2 Protease A [Streptomyces grise  ( 181)   39  16.3     9.1	0.714 0.714   39    7   14   20    1   46  129  135    1  181   0   0   0
+d1lcpa2 3.50.1.3.1 (160-484) Leucine aminopeptida  ( 325)   40  17.0     9.7	0.409 0.636   40   22   23   42    1   46  182  203    1  325   2   0   0
+d1tgxc_ 7.5.1.1.2 gamma-Cardiotoxin [snake (Naja   (  60)   36  14.6     9.9	0.241 0.448   36   29   14   41    1   46   19   43    1   60   1   4   0
+
+>>>d1cbn__, 46 aa vs testset.fa library
+
+  2>>>d2erl__ 1.10.1.1.1 ER-1 [Euplotes raikovi] - 40 aa
+ vs  testset.fa library
+
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= 3.3544+/-0.0208; mu= 9.6709+/- 0.998
+ mean_var=41.9829+/-15.940, 0's: 0 Z-trim: 1  B-trim: 5 in 1/17
+ Lambda= 0.197942
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.010
+The best scores are:                                      s-w bits E(93)	%_id  %_sim   sw  alen  an0  ax0  pn0  px0  an1  ax1 pn1 px1 gapq gapl  fs 
+d2erl__ 1.10.1.1.1 ER-1 [Euplotes raikovi]         (  40)  297  90.0 1.2e-22	1.000 1.000  297   40    1   40    1   40    1   40    1   40   0   0   0
+d2sn3__ 7.3.6.1.1 scorpion toxin [Centruroides sc  (  65)   58  22.0   0.058	0.257 0.686   58   35    1   34    1   40   10   43    1   65   1   1   0
+d1cbn__ 7.11.1.1.1 Crambin [abyssinian cabbage (C  (  46)   51  19.8    0.19	0.364 0.591   51   22   16   37    1   40   23   41    1   46   0   3   0
+e1ben.2c1 7.1.1.1.2 Insulin [human (Homo sapiens)  (  21)   46  18.0     0.3	0.333 0.667   46   18   11   28    1   40    3   20    1   21   0   0   0
+d7rsa__ 4.4.1.1.1 Ribonuclease A (also ribonuclea  ( 124)   46  18.9    0.96	0.375 0.583   46   24    6   29    1   40   52   73    1  124   0   2   0
+d1tpg_1 7.10.1.1.13 (51-91) Plasminogen activator  (  41)   42  17.2       1	0.308 0.538   42   26    3   28    1   40   12   34    1   41   0   3   0
+d1lit__ 4.88.1.1.1 Lithostathine, inhibitor of st  ( 131)   44  18.3     1.5	0.400 0.667   44   15   19   31    1   40    1   15    1  131   2   0   0
+d3ebx__ 7.5.1.1.1 Erabutoxin B (also neurotoxin B  (  62)   41  17.1     1.6	0.259 0.519   41   27    9   35    1   40    7   31    1   62   0   2   0
+d1bpi__ 7.6.1.1.1 Pancreatic trypsin inhibitor [b  (  58)   40  16.8     1.9	0.333 0.778   40    9   28   36    1   40   30   38    1   58   0   0   0
+d1ptx__ 7.3.6.1.4 scorpion toxin [Androctonus aus  (  64)   39  16.5     2.5	0.324 0.588   39   34   10   39    1   40   16   49    1   64   4   0   0
+d1isua_ 7.29.1.1.1 HIPIP (high potential iron pro  (  62)   38  16.2     2.9	0.250 0.625   38   16   22   37    1   40   19   34    1   62   0   0   0
+d1poa__ 1.80.1.2.1 Snake phospholipase A2 [taiwan  ( 118)   40  17.1       3	0.323 0.516   40   31    1   31    1   40   41   63    1  118   0   8   0
+d1amm_1 2.9.1.1.1 (1-85) gamma-Crystallin [bovine  (  85)   38  16.4     3.6	0.300 0.500   38   30    9   30    1   40   14   43    1   85   8   0   0
+d1amm_2 2.9.1.1.1 (86-174) gamma-Crystallin [bovi  (  89)   38  16.4     3.7	0.353 0.588   38   17   21   37    1   40    9   25    1   89   0   0   0
+d1mla_2 4.31.18.1.1 (126-195) Probable ACP-bindin  (  70)   36  15.7     4.7	0.833 1.000   36    6    2    7    1   40   19   24    1   70   0   0   0
+d4ptp__ 2.29.1.2.1 Trypsin(ogen) [bovine (Bos tau  ( 223)   39  17.2     5.5	0.417 0.750   39   12    2   13    1   40  108  119    1  223   0   0   0
+d1rcf__ 3.13.4.1.3 Flavodoxin [Anabaena 7120]      ( 169)   38  16.7     5.6	0.364 0.727   38   11   29   39    1   40   47   57    1  169   0   0   0
+d1arb__ 2.29.1.1.1 Achromobacter protease [Achrom  ( 263)   39  17.2     6.1	0.353 0.647   39   17   11   25    1   40    2   18    1  263   2   0   0
+d1pls__ 2.35.1.1.5 Pleckstrin, N-terminal domain   ( 113)   35  15.7     7.7	0.667 1.000   35    6    7   12    1   40   99  104    1  113   0   0   0
+d1tgxc_ 7.5.1.1.2 gamma-Cardiotoxin [snake (Naja   (  60)   32  14.5     9.1	0.263 0.526   32   19   19   37    1   40   14   30    1   60   0   2   0
+d2eng__ 2.33.1.1.1 Endoglucanase V [Humicola inso  ( 205)   36  16.3     9.3	0.462 0.538   36   13   25   37    1   40  191  203    1  205   0   0   0
+
+>>>d2erl__, 40 aa vs testset.fa library
+
+  3>>>d8rxna_ 7.34.3.1.1 Rubredoxin [Desulfovibrio vulgaris] - 52 aa
+ vs  testset.fa library
+
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= 2.0499+/-0.0385; mu= 21.9713+/- 1.974
+ mean_var=38.1093+/-11.756, 0's: 0 Z-trim: 1  B-trim: 2 in 1/17
+ Lambda= 0.207758
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.010
+The best scores are:                                      s-w bits E(93)	%_id  %_sim   sw  alen  an0  ax0  pn0  px0  an1  ax1 pn1 px1 gapq gapl  fs 
+d8rxna_ 7.34.3.1.1 Rubredoxin [Desulfovibrio vulg  (  52)  392 120.7 1.2e-31	1.000 1.000  392   52    1   52    1   52    1   52    1   52   0   0   0
+d1bbo_1 7.30.1.1.8 (1-27) Enhancer binding protei  (  27)   55  19.2    0.22	0.429 0.643   55   14    3   16    1   52    1   14    1   27   0   0   0
+d8tlne1 1.47.1.1.2 (156-316) Thermolysin [Bacillu  ( 161)   53  20.0    0.72	0.500 0.700   53   20   14   32    1   52   52   71    1  161   1   0   0
+d1utg__ 1.60.1.1.1 Uteroglobin [Rabbit (Oryctolag  (  70)   49  18.2     1.2	0.304 0.609   49   23   12   34    1   52   27   49    1   70   0   0   0
+d1rie__ 7.35.1.2.1 The rieske iron-sulfur protein  ( 127)   44  17.1     4.1	0.391 0.478   44   23    4   26    1   52   87  108    1  127   0   1   0
+d1ra9__ 3.51.1.1.1 Dihydrofolate reductase, proka  ( 159)   44  17.3     4.5	0.444 0.500   44   18   21   37    1   52  116  133    1  159   1   0   0
+d2ctb__ 3.50.1.1.1 Carboxypeptidase A [bovine (Bo  ( 307)   45  18.2     4.9	0.364 0.636   45   22   17   38    1   52   43   64    1  307   0   0   0
+d1igd__ 4.11.1.1.1 Immunoglobulin-binding protein  (  61)   40  15.3     6.8	0.500 0.667   40   12   21   32    1   52   41   52    1   61   0   0   0
+d2eng__ 2.33.1.1.1 Endoglucanase V [Humicola inso  ( 205)   42  16.9     7.5	0.235 0.500   42   34    9   42    1   52  130  162    1  205   0   1   0
+d1hms__ 2.39.1.2.1 Muscle fatty acid binding prot  ( 131)   41  16.3     7.7	0.364 0.636   41   22   10   31    1   52   67   87    1  131   0   1   0
+d1ptx__ 7.3.6.1.4 scorpion toxin [Androctonus aus  (  64)   39  15.1     8.5	0.375 0.500   39   16   24   39    1   52    1   16    1   64   0   0   0
+d1ctj__ 1.3.1.1.1 Cytochrome c6 (synonym: cytochr  (  89)   39  15.4     9.7	0.400 0.600   39   15    5   19    1   52   73   87    1   89   0   0   0
+
+>>>d8rxna_, 52 aa vs testset.fa library
+
+  4>>>d1lkka_ 4.47.1.1.1 p56-lck tyrosine kinase [human (Homo sapiens)] - 105 aa
+ vs  testset.fa library
+
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= 5.7678+/-0.0487; mu= 6.0174+/- 2.315
+ mean_var=43.5373+/-14.195, 0's: 0 Z-trim: 2  B-trim: 3 in 1/18
+ Lambda= 0.194376
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.020
+The best scores are:                                      s-w bits E(93)	%_id  %_sim   sw  alen  an0  ax0  pn0  px0  an1  ax1 pn1 px1 gapq gapl  fs 
+d1lkka_ 4.47.1.1.1 p56-lck tyrosine kinase [human  ( 105)  719 206.7 6.3e-57	1.000 1.000  719  105    1  105    1  105    1  105    1  105   0   0   0
+d1bpi__ 7.6.1.1.1 Pancreatic trypsin inhibitor [b  (  58)   68  24.2   0.029	0.370 0.630   68   27   70   96    1  105    4   30    1   58   0   0   0
+d1cus__ 3.13.7.1.1 Cutinase [fungus (Fusarium sol  ( 197)   64  22.9    0.25	0.250 0.587   64   92    7   97    1  105   85  163    1  197   1  13   0
+d1hms__ 2.39.1.2.1 Muscle fatty acid binding prot  ( 131)   55  20.4     0.9	0.349 0.674   55   43   26   68    1  105   53   89    1  131   0   6   0
+d2ctb__ 3.50.1.1.1 Carboxypeptidase A [bovine (Bo  ( 307)   59  21.4     1.1	0.222 0.556   59   72   15   83    1  105  228  292    1  307   3   7   0
+d1plc__ 2.5.1.1.2 Plastocyanin [poplar (Populus n  (  99)   51  19.4     1.4	0.306 0.667   51   36   39   74    1  105   52   86    1   99   0   1   0
+d1xsoa_ 2.1.7.1.3 Cu,Zn superoxide dismutase, SOD  ( 150)   51  19.3     2.3	0.395 0.684   51   38   39   72    1  105    8   45    1  150   4   0   0
+d3pte__ 5.3.1.1.1 D-ala carboxypeptidase/transpep  ( 347)   53  19.7     3.9	0.462 0.692   53   13   70   82    1  105  197  209    1  347   0   0   0
+d1burd1 3.1.9.1.2 (137-460) Ribulose 1,5-bisphosp  ( 324)   52  19.4     4.4	0.368 0.579   52   19   83  101    1  105   86  104    1  324   0   0   0
+d3sdhb_ 1.1.1.1.1 Hemoglobin I [ark clam (Scaphar  ( 145)   47  18.2     4.7	0.247 0.584   47   89   15   96    1  105    4   91    1  145   7   1   0
+d1ycc__ 1.3.1.1.4 Mitochondrial cytochrome c [bak  ( 108)   45  17.7       5	0.253 0.506   45   83   25  104    1  105   36  108    1  108   3  10   0
+d1ifc__ 2.39.1.2.2 Intestinal fatty acid binding   ( 131)   46  17.9     5.1	0.379 0.655   46   29   61   89    1  105   92  118    1  131   0   2   0
+d1lam_1 3.33.1.1.1 (1-159) Leucine aminopeptidase  ( 159)   47  18.2     5.2	0.275 0.549   47   51   33   83    1  105   11   59    1  159   0   2   0
+d8tlne1 1.47.1.1.2 (156-316) Thermolysin [Bacillu  ( 161)   46  17.9     6.3	0.304 0.536   46   56   25   76    1  105   26   81    1  161   4   0   0
+d2prk__ 3.26.1.1.6 Proteinase K [fungus (Tritirac  ( 279)   49  18.6     6.5	0.277 0.523   49   65   31   94    1  105   10   66    1  279   1   8   0
+d1aab__ 1.17.1.1.1 HMG1, fragments A and B [rat/h  (  83)   41  16.6     7.9	0.304 0.696   41   23    8   30    1  105   37   59    1   83   0   0   0
+d2eng__ 2.33.1.1.1 Endoglucanase V [Humicola inso  ( 205)   46  17.8     8.2	0.304 0.739   46   23   24   46    1  105   97  119    1  205   0   0   0
+d1hfc__ 4.46.1.5.1 Fibroblast collagenase [human   ( 157)   44  17.3     8.9	0.288 0.525   44   59    2   53    1  105   93  151    1  157   7   0   0
+d1eco__ 1.1.1.1.13 Erythrocruorin [Midge (Chirono  ( 136)   43  17.1     9.2	0.237 0.537   43   80    8   80    1  105   38  116    1  136   7   1   0
+
+>>>d1lkka_, 105 aa vs testset.fa library
+
+  5>>>d1ctj__ 1.3.1.1.1 Cytochrome c6 (synonym: cytochrome c553) [(Monoraphidium braunii)] - 89 aa
+ vs  testset.fa library
+
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= 7.3875+/-0.0341; mu= -0.5633+/- 1.525
+ mean_var=44.4193+/-13.668, 0's: 0 Z-trim: 1  B-trim: 9 in 1/18
+ Lambda= 0.192437
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.010
+The best scores are:                                      s-w bits E(93)	%_id  %_sim   sw  alen  an0  ax0  pn0  px0  an1  ax1 pn1 px1 gapq gapl  fs 
+d1ctj__ 1.3.1.1.1 Cytochrome c6 (synonym: cytochr  (  89)  613 174.9 1.6e-47	1.000 1.000  613   89    1   89    1   89    1   89    1   89   0   0   0
+d1ezm_1 1.47.1.1.1 (154-298) Elastase [Pseudomona  ( 145)   68  23.3    0.11	0.333 0.593   68   54   19   67    1   89    5   55    1  145   5   3   0
+d1ycc__ 1.3.1.1.4 Mitochondrial cytochrome c [bak  ( 108)   57  20.4    0.63	0.346 0.577   57   26    7   29    1   89   11   36    1  108   3   0   0
+d1cpq__ 1.20.3.2.5 Cytochrome c' [(Rhodobacter ca  ( 129)   53  19.2     1.7	0.471 0.706   53   17    5   19    1   89  106  122    1  129   2   0   0
+d1mla_2 4.31.18.1.1 (126-195) Probable ACP-bindin  (  70)   47  17.9     2.3	0.462 0.923   47   13   16   28    1   89   54   66    1   70   0   0   0
+d1tca__ 3.48.1.7.1 Triacylglycerol lipase [yeast   ( 317)   58  20.1     2.4	0.267 0.533   58   75   17   87    1   89   89  161    1  317   4   2   0
+d1rcf__ 3.13.4.1.3 Flavodoxin [Anabaena 7120]      ( 169)   48  17.7     6.5	0.262 0.541   48   61   23   79    1   89   27   85    1  169   4   2   0
+d8rxna_ 7.34.3.1.1 Rubredoxin [Desulfovibrio vulg  (  52)   39  15.9     6.8	0.400 0.600   39   15   73   87    1   89    5   19    1   52   0   0   0
+d1fus__ 4.1.1.1.2 RNase F1 [Fusarium moniliforme]  ( 106)   44  16.8     7.2	0.360 0.640   44   25    8   27    1   89   76  100    1  106   5   0   0
+e1ben.2d1 7.1.1.1.2 Insulin [human (Homo sapiens)  (  28)   34  14.9     7.4	0.304 0.652   34   23   37   59    1   89    2   23    1   28   0   1   0
+d1isua_ 7.29.1.1.1 HIPIP (high potential iron pro  (  62)   39  15.8     8.7	0.667 0.889   39    9   20   28    1   89   36   44    1   62   0   0   0
+e1ben.2c1 7.1.1.1.2 Insulin [human (Homo sapiens)  (  21)   31  14.2     8.7	0.667 1.000   31    6   51   56    1   89   13   18    1   21   0   0   0
+d1amm_1 2.9.1.1.1 (1-85) gamma-Crystallin [bovine  (  85)   41  16.1     9.2	0.357 0.571   41   14   11   24    1   89   11   24    1   85   0   0   0
+d1xsoa_ 2.1.7.1.3 Cu,Zn superoxide dismutase, SOD  ( 150)   45  16.9     9.6	0.224 0.653   45   49   41   86    1   89    7   54    1  150   3   1   0
+d1cus__ 3.13.7.1.1 Cutinase [fungus (Fusarium sol  ( 197)   47  17.3     9.6	0.278 0.557   47   97    5   88    1   89   46  140    1  197  13   2   0
+
+>>>d1ctj__, 89 aa vs testset.fa library
+
+  6>>>d1bpi__ 7.6.1.1.1 Pancreatic trypsin inhibitor [bovine (Bos taurus)] - 58 aa
+ vs  testset.fa library
+
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= -0.4844+/-0.0241; mu= 31.2372+/- 1.074
+ mean_var=51.5607+/-17.615, 0's: 0 Z-trim: 2  B-trim: 0 in 0/19
+ Lambda= 0.178614
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.000
+The best scores are:                                      s-w bits E(93)	%_id  %_sim   sw  alen  an0  ax0  pn0  px0  an1  ax1 pn1 px1 gapq gapl  fs 
+d1bpi__ 7.6.1.1.1 Pancreatic trypsin inhibitor [b  (  58)  434 116.8 2.1e-30	1.000 1.000  434   58    1   58    1   58    1   58    1   58   0   0   0
+d1lkka_ 4.47.1.1.1 p56-lck tyrosine kinase [human  ( 105)   68  23.5   0.049	0.370 0.630   68   27    4   30    1   58   70   96    1  105   0   0   0
+d1burd1 3.1.9.1.2 (137-460) Ribulose 1,5-bisphosp  ( 324)   58  22.6    0.27	0.345 0.586   58   29    4   31    1   58   72  100    1  324   1   0   0
+d1ifc__ 2.39.1.2.2 Intestinal fatty acid binding   ( 131)   49  18.9     1.4	0.571 0.786   49   14   29   42    1   58  113  126    1  131   0   0   0
+d2prk__ 3.26.1.1.6 Proteinase K [fungus (Tritirac  ( 279)   46  19.3     2.3	0.250 0.611   46   36   21   54    1   58   23   58    1  279   2   0   0
+d2olba_ 3.68.1.1.1 Oligo-peptide binding protein   ( 517)   44  19.8     3.1	0.429 0.500   44   14    2   15    1   58  313  326    1  517   0   0   0
+d1isua_ 7.29.1.1.1 HIPIP (high potential iron pro  (  62)   44  16.4     3.7	0.333 0.556   44   27    8   34    1   58   34   59    1   62   0   1   0
+d2eng__ 2.33.1.1.1 Endoglucanase V [Humicola inso  ( 205)   43  18.1     3.9	0.269 0.500   43   52    3   50    1   58  128  174    1  205   4   5   0
+d1ezm_1 1.47.1.1.1 (154-298) Elastase [Pseudomona  ( 145)   42  17.3     4.8	0.297 0.541   42   37   20   53    1   58  103  135    1  145   3   4   0
+d2mhr__ 1.20.4.1.4 Myohemerythin [sipunculan worm  ( 118)   40  16.4       7	0.556 0.778   40    9   45   53    1   58   29   37    1  118   0   0   0
+d2erl__ 1.10.1.1.1 ER-1 [Euplotes raikovi]         (  40)   40  14.7     7.6	0.333 0.778   40    9   30   38    1   58   28   36    1   40   0   0   0
+d4ptp__ 2.29.1.2.1 Trypsin(ogen) [bovine (Bos tau  ( 223)   39  17.2     7.8	0.211 0.447   39   38    2   37    1   58  132  169    1  223   2   0   0
+d1ezm_2 4.46.1.1.1 (1-153) Elastase [Pseudomonas   ( 153)   39  16.6     8.1	0.207 0.483   39   29    9   37    1   58   53   81    1  153   0   0   0
+d1flp__ 1.1.1.1.2 Hemoglobin I [clam (Lucina pect  ( 142)   39  16.5     8.1	0.308 0.462   39   39   25   57    1   58   84  122    1  142   6   0   0
+d1tca__ 3.48.1.7.1 Triacylglycerol lipase [yeast   ( 317)   38  17.5       9	0.538 0.615   38   13   46   58    1   58   13   25    1  317   0   0   0
+
+>>>d1bpi__, 58 aa vs testset.fa library
+
+  7>>>d1rgea_ 4.1.1.1.1 RNase Sa [Streptomyces aureofaciens] - 96 aa
+ vs  testset.fa library
+
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= 8.4282+/-0.0346; mu= -7.1760+/- 1.706
+ mean_var=26.6967+/- 8.972, 0's: 0 Z-trim: 1  B-trim: 2 in 1/17
+ Lambda= 0.248225
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.010
+The best scores are:                                      s-w bits E(93)	%_id  %_sim   sw  alen  an0  ax0  pn0  px0  an1  ax1 pn1 px1 gapq gapl  fs 
+d1rgea_ 4.1.1.1.1 RNase Sa [Streptomyces aureofac  (  96)  643 233.1 5.9e-65	1.000 1.000  643   96    1   96    1   96    1   96    1   96   0   0   0
+d1burs_ 4.35.1.1.2 Ribulose 1,5-bisphosphate carb  ( 123)   50  20.3    0.84	0.340 0.528   50   53    8   52    1   96   15   62    1  123   8   5   0
+d1jbc__ 2.18.1.1.1 Concanavalin A [jack bean (Can  ( 237)   55  21.1    0.96	0.410 0.590   55   39   14   50    1   96  192  227    1  237   2   3   0
+d1aac__ 2.5.1.1.1 Amicyanin [Paracoccus denitrifi  ( 105)   48  19.8    0.99	0.250 0.482   48   56   33   85    1   96   41   95    1  105   3   1   0
+d1fus__ 4.1.1.1.2 RNase F1 [Fusarium moniliforme]  ( 106)   45  18.8     2.1	0.239 0.630   45   46   23   67    1   96   33   71    1  106   1   7   0
+d1pfsa_ 2.24.6.1.2 Gene V protein [Pseudomonas ph  (  78)   42  18.2     2.3	0.400 0.560   42   25   25   49    1   96   33   53    1   78   0   4   0
+d1whi__ 2.23.1.1.1 Ribosomal protein L14 [Bacillu  ( 122)   44  18.2     3.6	0.319 0.553   44   47   35   78    1   96   61  105    1  122   3   2   0
+d1cbn__ 7.11.1.1.1 Crambin [abyssinian cabbage (C  (  46)   35  16.5     4.4	0.360 0.440   35   25   44   66    1   96   18   42    1   46   2   0   0
+e1ben.2c1 7.1.1.1.2 Insulin [human (Homo sapiens)  (  21)   27  14.9     6.1	0.333 0.833   27    6   91   96    1   96    2    7    1   21   0   0   0
+d8tlne1 1.47.1.1.2 (156-316) Thermolysin [Bacillu  ( 161)   44  17.7     6.3	0.232 0.482   44   56   34   86    1   96   41   96    1  161   3   0   0
+d1mla_1 3.12.1.1.1 (1-125,196-305) Catalytic doma  ( 236)   47  18.2     6.7	0.371 0.486   47   35   38   71    1   96  185  218    1  236   1   1   0
+d1ezm_1 1.47.1.1.1 (154-298) Elastase [Pseudomona  ( 145)   42  17.2     8.3	0.318 0.636   42   22   75   96    1   96  123  144    1  145   0   0   0
+d1arb__ 2.29.1.1.1 Achromobacter protease [Achrom  ( 263)   47  18.0     8.3	0.286 0.657   47   35    2   36    1   96    2   34    1  263   0   2   0
+d1xyzb_ 3.1.1.3.1 Xylanase XynZ (family F) [Clost  ( 320)   48  18.1     9.7	0.357 0.571   48   28   11   38    1   96  179  206    1  320   0   0   0
+d1igd__ 4.11.1.1.1 Immunoglobulin-binding protein  (  61)   34  15.7     9.8	0.200 0.600   34   35   55   85    1   96    8   42    1   61   4   0   0
+
+>>>d1rgea_, 96 aa vs testset.fa library
+
+  8>>>d1cus__ 3.13.7.1.1 Cutinase [fungus (Fusarium solani, subsp. pisi)] - 197 aa
+ vs  testset.fa library
+
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= 12.6187+/-0.0302; mu= -19.9093+/- 1.294
+ mean_var=61.1400+/-18.142, 0's: 0 Z-trim: 1  B-trim: 0 in 0/19
+ Lambda= 0.164026
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.030
+The best scores are:                                      s-w bits E(93)	%_id  %_sim   sw  alen  an0  ax0  pn0  px0  an1  ax1 pn1 px1 gapq gapl  fs 
+d1cus__ 3.13.7.1.1 Cutinase [fungus (Fusarium sol  ( 197) 1291 310.5 1.2e-87	1.000 1.000 1291  197    1  197    1  197    1  197    1  197   0   0   0
+d1lkka_ 4.47.1.1.1 p56-lck tyrosine kinase [human  ( 105)   64  21.1    0.84	0.272 0.543   64   92   85  163    1  197    7   97    1  105  13   1   0
+d8tlne1 1.47.1.1.2 (156-316) Thermolysin [Bacillu  ( 161)   61  19.8     3.3	0.235 0.523   61  153   32  181    1  197   17  159    1  161   3  10   0
+d1aab__ 1.17.1.1.1 HMG1, fragments A and B [rat/h  (  83)   52  18.7     3.6	0.275 0.525   52   40   66  105    1  197    3   42    1   83   0   0   0
+d1rcf__ 3.13.4.1.3 Flavodoxin [Anabaena 7120]      ( 169)   60  19.4     4.2	0.250 0.558   60  104   38  133    1  197   17  119    1  169   8   1   0
+d1cpq__ 1.20.3.2.5 Cytochrome c' [(Rhodobacter ca  ( 129)   55  18.7     5.5	0.298 0.544   55   57   17   69    1  197   50  105    1  129   4   1   0
+d1ptf__ 4.48.1.1.2 Histidine-containing phosphoca  (  87)   50  18.1     5.5	0.216 0.608   50   51   67  117    1  197   32   81    1   87   0   1   0
+d2mcm__ 2.1.6.1.1 Macromycin [Streptomyces macrom  ( 112)   52  18.2     6.6	0.231 0.596   52   52   28   79    1  197   40   90    1  112   0   1   0
+d2alp__ 2.29.1.1.3 alpha-Lytic protease [Lysobact  ( 198)   59  19.0     6.8	0.233 0.586   59  116   11  107    1  197   12  127    1  198  19   0   0
+d1mla_1 3.12.1.1.1 (1-125,196-305) Catalytic doma  ( 236)   61  19.2     7.1	0.272 0.570   61  114   20  122    1  197    4  110    1  236  11   7   0
+d1tgxc_ 7.5.1.1.2 gamma-Cardiotoxin [snake (Naja   (  60)   43  17.0     7.9	0.333 0.444   43   27  155  181    1  197   14   37    1   60   0   3   0
+d1ctj__ 1.3.1.1.1 Cytochrome c6 (synonym: cytochr  (  89)   47  17.4     9.2	0.278 0.557   47   97   46  140    1  197    5   88    1   89   2  13   0
+
+>>>d1cus__, 197 aa vs testset.fa library
+
+  9>>>d1arb__ 2.29.1.1.1 Achromobacter protease [Achromobacter lyticus, strain m497-1] - 263 aa
+ vs  testset.fa library
+
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= 8.5459+/-0.0158; mu= 0.2421+/- 0.678
+ mean_var=65.7440+/-19.828, 0's: 0 Z-trim: 3  B-trim: 0 in 0/18
+ Lambda= 0.158178
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.030
+The best scores are:                                      s-w bits E(93)	%_id  %_sim   sw  alen  an0  ax0  pn0  px0  an1  ax1 pn1 px1 gapq gapl  fs 
+d1arb__ 2.29.1.1.1 Achromobacter protease [Achrom  ( 263) 1803 417.4 1.4e-119	1.000 1.000 1803  263    1  263    1  263    1  263    1  263   0   0   0
+d4ptp__ 2.29.1.2.1 Trypsin(ogen) [bovine (Bos tau  ( 223)   93  27.3   0.033	0.207 0.502   93  217   31  234    1  263   20  215    1  223  13  21   0
+d2sga__ 2.29.1.1.2 Protease A [Streptomyces grise  ( 181)   89  26.5   0.047	0.189 0.576   89  132   95  221    1  263   36  163    1  181   5   4   0
+d2prk__ 3.26.1.1.6 Proteinase K [fungus (Tritirac  ( 279)   73  22.6     1.1	0.228 0.495   73  206    4  178    1  263   32  230    1  279  31   7   0
+d2sn3__ 7.3.6.1.1 scorpion toxin [Centruroides sc  (  65)   59  20.2     1.3	0.312 0.562   59   32  206  237    1  263   19   50    1   65   0   0   0
+d1xnb__ 2.18.1.8.1 Xylanase II [Bacillus circulan  ( 185)   66  21.2     1.8	0.193 0.500   66  166   90  247    1  263    1  164    1  185   8   2   0
+d1epne_ 2.32.1.2.1 Endothiapepsin [chestnut bligh  ( 330)   70  21.8     2.1	0.275 0.541   70  109  162  261    1  263   25  125    1  330   9   8   0
+d1cbn__ 7.11.1.1.1 Crambin [abyssinian cabbage (C  (  46)   53  19.0     2.2	0.364 0.568   53   44   68  110    1  263    6   45    1   46   1   4   0
+d1lit__ 4.88.1.1.1 Lithostathine, inhibitor of st  ( 131)   61  20.3     2.5	0.229 0.505   61  105   74  176    1  263    6   96    1  131   2  14   0
+d8tlne1 1.47.1.1.2 (156-316) Thermolysin [Bacillu  ( 161)   59  19.7     4.5	0.177 0.522   59  113  119  231    1  263    9  112    1  161   0   9   0
+d2alp__ 2.29.1.1.3 alpha-Lytic protease [Lysobact  ( 198)   60  19.8     5.1	0.209 0.516   60  182   52  230    1  263   31  184    1  198   3  28   0
+d1fus__ 4.1.1.1.2 RNase F1 [Fusarium moniliforme]  ( 106)   54  18.8     5.6	0.194 0.548   54   93  108  196    1  263    5   97    1  106   4   0   0
+d1cus__ 3.13.7.1.1 Cutinase [fungus (Fusarium sol  ( 197)   57  19.1       8	0.500 0.857   57   14   28   41    1  263  154  167    1  197   0   0   0
+d1csee_ 3.26.1.1.1 Subtilisin Carlsberg [Bacillus  ( 274)   59  19.4       9	0.254 0.522   59   67  102  165    1  263  201  253    1  274   3  14   0
+d3pte__ 5.3.1.1.1 D-ala carboxypeptidase/transpep  ( 347)   61  19.8       9	0.229 0.534   61  118   70  181    1  263  140  245    1  347   6  12   0
+
+>>>d1arb__, 263 aa vs testset.fa library
+
+ 10>>>d1igd__ 4.11.1.1.1 Immunoglobulin-binding protein G, separate domains [group G streptococcus (Streptomyces griseus)] - 61 aa
+ vs  testset.fa library
+
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= 8.6855+/-0.0218; mu= -12.1134+/- 1.039
+ mean_var=48.1471+/-14.933, 0's: 0 Z-trim: 1  B-trim: 0 in 0/19
+ Lambda= 0.184837
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.010
+The best scores are:                                      s-w bits E(93)	%_id  %_sim   sw  alen  an0  ax0  pn0  px0  an1  ax1 pn1 px1 gapq gapl  fs 
+d1igd__ 4.11.1.1.1 Immunoglobulin-binding protein  (  61)  383 108.5 7.4e-28	1.000 1.000  383   61    1   61    1   61    1   61    1   61   0   0   0
+d1mnta_ 1.32.1.1.2 Mnt repressor [Salmonella bact  (  66)   47  18.9    0.78	0.235 0.529   47   34    8   41    1   61   21   54    1   66   0   0   0
+d4lzm__ 4.2.1.3.1 Phage T4 lysozyme [Escherichia   ( 162)   51  19.1     1.6	0.308 0.615   51   39   19   57    1   61   30   67    1  162   0   1   0
+d1flp__ 1.1.1.1.2 Hemoglobin I [clam (Lucina pect  ( 142)   49  18.7     1.8	0.308 0.615   49   39   15   49    1   61   90  128    1  142   4   0   0
+d8rxna_ 7.34.3.1.1 Rubredoxin [Desulfovibrio vulg  (  52)   40  17.2     1.9	0.500 0.667   40   12   41   52    1   61   21   32    1   52   0   0   0
+d1fus__ 4.1.1.1.2 RNase F1 [Fusarium moniliforme]  ( 106)   46  18.2       2	0.314 0.629   46   35   16   50    1   61    4   38    1  106   0   0   0
+d8tlne2 4.46.1.1.2 (1-155) Thermolysin [Bacillus   ( 155)   49  18.7     2.1	0.450 0.650   49   20   38   56    1   61   29   48    1  155   1   0   0
+d1epne_ 2.32.1.2.1 Endothiapepsin [chestnut bligh  ( 330)   54  19.3     2.8	0.302 0.674   54   43    5   47    1   61   89  125    1  330   0   6   0
+d1lam_1 3.33.1.1.1 (1-159) Leucine aminopeptidase  ( 159)   46  17.8     3.8	0.438 0.750   46   16   37   52    1   61  117  132    1  159   0   0   0
+d1cpq__ 1.20.3.2.5 Cytochrome c' [(Rhodobacter ca  ( 129)   43  17.2     4.7	0.450 0.800   43   20   14   32    1   61   18   37    1  129   1   0   0
+d2alp__ 2.29.1.1.3 alpha-Lytic protease [Lysobact  ( 198)   45  17.4     6.4	0.357 0.571   45   28   19   46    1   61  112  139    1  198   0   0   0
+d193l__ 4.2.1.2.1 Lysozyme [chicken (Gallus gallu  ( 129)   41  16.7     6.7	0.273 0.545   41   33   18   50    1   61   21   53    1  129   0   0   0
+d1isua_ 7.29.1.1.1 HIPIP (high potential iron pro  (  62)   34  15.5     7.5	0.250 0.432   34   44    1   44    1   61    6   49    1   62   0   0   0
+d1aab__ 1.17.1.1.1 HMG1, fragments A and B [rat/h  (  83)   36  15.7     8.2	0.226 0.613   36   31   15   45    1   61    6   36    1   83   0   0   0
+d1cbn__ 7.11.1.1.1 Crambin [abyssinian cabbage (C  (  46)   30  14.6     9.6	0.353 0.588   30   17    4   20    1   61   27   43    1   46   0   0   0
+d1hms__ 2.39.1.2.1 Muscle fatty acid binding prot  ( 131)   39  16.1     9.8	0.357 0.571   39   28    6   33    1   61  103  130    1  131   0   0   0
+
+>>>d1igd__, 61 aa vs testset.fa library
+
+ 11>>>d1csee_ 3.26.1.1.1 Subtilisin Carlsberg [Bacillus subtilis] - 274 aa
+ vs  testset.fa library
+
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= 15.0570+/- 0.049; mu= -31.6935+/- 2.248
+ mean_var=78.9700+/-28.401, 0's: 0 Z-trim: 2  B-trim: 3 in 1/18
+ Lambda= 0.144326
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.040
+The best scores are:                                      s-w bits E(93)	%_id  %_sim   sw  alen  an0  ax0  pn0  px0  an1  ax1 pn1 px1 gapq gapl  fs 
+d1csee_ 3.26.1.1.1 Subtilisin Carlsberg [Bacillus  ( 274) 1717 363.5 2.6e-103	1.000 1.000 1717  274    1  274    1  274    1  274    1  274   0   0   0
+d2prk__ 3.26.1.1.6 Proteinase K [fungus (Tritirac  ( 279)  481 106.2 7.9e-26	0.373 0.688  481  260    1  246    1  274    2  250    1  279  14  11   0
+d3chy__ 3.13.2.1.1 CheY protein [Escherichia coli  ( 128)   79  23.8    0.23	0.227 0.667   79   66   92  156    1  274   39  104    1  128   1   0   0
+d2alp__ 2.29.1.1.3 alpha-Lytic protease [Lysobact  ( 198)   81  23.4    0.44	0.266 0.597   81  154   42  184    1  274   21  168    1  198  11   6   0
+d2sga__ 2.29.1.1.2 Protease A [Streptomyces grise  ( 181)   71  21.5     1.5	0.277 0.605   71  119   38  149    1  274   77  181    1  181   7  14   0
+d1epne_ 2.32.1.2.1 Endothiapepsin [chestnut bligh  ( 330)   76  21.5     2.7	0.223 0.518   76  220   48  265    1  274   67  267    1  330   2  19   0
+d1xsoa_ 2.1.7.1.3 Cu,Zn superoxide dismutase, SOD  ( 150)   64  20.4     2.8	0.281 0.562   64   89   17   97    1  274   22  108    1  150   8   2   0
+d2mcm__ 2.1.6.1.1 Macromycin [Streptomyces macrom  ( 112)   59  19.8       3	0.250 0.598   59  112   40  138    1  274    2  109    1  112  13   4   0
+d2eng__ 2.33.1.1.1 Endoglucanase V [Humicola inso  ( 205)   68  20.7     3.1	0.256 0.610   68   82  126  204    1  274   50  124    1  205   3   7   0
+d1cpq__ 1.20.3.2.5 Cytochrome c' [(Rhodobacter ca  ( 129)   61  20.0     3.1	0.275 0.550   61  109   52  160    1  274    9  106    1  129   0  11   0
+d1whi__ 2.23.1.1.1 Ribosomal protein L14 [Bacillu  ( 122)   57  19.3     4.8	0.429 0.810   57   21  136  156    1  274    9   29    1  122   0   0   0
+d1fus__ 4.1.1.1.2 RNase F1 [Fusarium moniliforme]  ( 106)   54  18.9     5.4	0.297 0.649   54   37  126  160    1  274   69  105    1  106   2   0   0
+d1ptf__ 4.48.1.1.2 Histidine-containing phosphoca  (  87)   50  18.4     6.3	0.286 0.714   50   28   60   87    1  274   54   81    1   87   0   0   0
+d1bbo_1 7.30.1.1.8 (1-27) Enhancer binding protei  (  27)   29  16.0      10	0.231 0.769   29   13  234  246    1  274    9   21    1   27   0   0   0
+
+>>>d1csee_, 274 aa vs testset.fa library
+
+ 12>>>d1csei_ 4.21.1.1.1 Eglin C [leech (Hirudo medicinalis)] - 63 aa
+ vs  testset.fa library
+
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= 7.8456+/-0.0273; mu= -7.1289+/- 1.319
+ mean_var=23.3126+/- 5.964, 0's: 0 Z-trim: 1  B-trim: 9 in 1/18
+ Lambda= 0.265631
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.010
+The best scores are:                                      s-w bits E(93)	%_id  %_sim   sw  alen  an0  ax0  pn0  px0  an1  ax1 pn1 px1 gapq gapl  fs 
+d1csei_ 4.21.1.1.1 Eglin C [leech (Hirudo medicin  (  63)  435 169.8 2.9e-46	1.000 1.000  435   63    1   63    1   63    1   63    1   63   0   0   0
+d1ezm_1 1.47.1.1.1 (154-298) Elastase [Pseudomona  ( 145)   53  22.1    0.19	0.289 0.658   53   38    4   35    1   63   50   87    1  145   6   0   0
+d1cbn__ 7.11.1.1.1 Crambin [abyssinian cabbage (C  (  46)   36  17.4     1.6	0.444 0.611   36   18   25   42    1   63   13   29    1   46   0   1   0
+d1cyo__ 4.62.1.1.1 Cytochrome b5 [bovine (Bos tau  (  88)   41  18.3     1.6	0.310 0.552   41   29    5   32    1   63   10   38    1   88   1   0   0
+d8tlne2 4.46.1.1.2 (1-155) Thermolysin [Bacillus   ( 155)   44  18.5     2.4	0.293 0.561   44   41   19   58    1   63  103  142    1  155   1   1   0
+d1bpi__ 7.6.1.1.1 Pancreatic trypsin inhibitor [b  (  58)   36  17.0     2.6	0.375 0.500   36   16   35   50    1   63    9   24    1   58   0   0   0
+d1xnb__ 2.18.1.8.1 Xylanase II [Bacillus circulan  ( 185)   44  18.2     3.4	0.283 0.543   44   46   10   55    1   63  117  160    1  185   0   2   0
+e6rlx.2c1 7.1.1.1.4 Relaxin [human (Homo sapiens)  (  24)   27  14.9     4.4	0.364 0.727   27   11   53   63    1   63    4   14    1   24   0   0   0
+d1aab__ 1.17.1.1.1 HMG1, fragments A and B [rat/h  (  83)   36  16.4     5.4	0.269 0.654   36   26    8   33    1   63   57   82    1   83   0   0   0
+d2sn3__ 7.3.6.1.1 scorpion toxin [Centruroides sc  (  65)   33  15.7     7.1	0.667 1.000   33    6   30   35    1   63   51   56    1   65   0   0   0
+e1ben.2d1 7.1.1.1.2 Insulin [human (Homo sapiens)  (  28)   26  14.3     7.8	0.750 1.000   26    4   48   51    1   63   25   28    1   28   0   0   0
+d1burd2 4.31.9.1.2 (1-136) Ribulose 1,5-bisphosph  ( 136)   38  16.4     8.6	0.320 0.480   38   25   28   52    1   63   13   36    1  136   0   1   0
+d1rie__ 7.35.1.2.1 The rieske iron-sulfur protein  ( 127)   37  16.1     9.7	0.381 0.619   37   21    9   27    1   63   35   55    1  127   2   0   0
+
+>>>d1csei_, 63 aa vs testset.fa library
+
+ 13>>>d1jbc__ 2.18.1.1.1 Concanavalin A [jack bean (Canavalia ensiformis)] - 237 aa
+ vs  testset.fa library
+
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= 9.7867+/-0.0517; mu= -7.7514+/- 2.455
+ mean_var=61.9080+/-15.905, 0's: 0 Z-trim: 1  B-trim: 0 in 0/18
+ Lambda= 0.163005
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.030
+The best scores are:                                      s-w bits E(93)	%_id  %_sim   sw  alen  an0  ax0  pn0  px0  an1  ax1 pn1 px1 gapq gapl  fs 
+d1jbc__ 2.18.1.1.1 Concanavalin A [jack bean (Can  ( 237) 1539 367.8  1e-104	1.000 1.000 1539  237    1  237    1  237    1  237    1  237   0   0   0
+d3pte__ 5.3.1.1.1 D-ala carboxypeptidase/transpep  ( 347)   74  22.9    0.96	0.306 0.565   74   62   56  110    1  237   62  123    1  347   7   0   0
+d1ezm_1 1.47.1.1.1 (154-298) Elastase [Pseudomona  ( 145)   62  20.9     1.7	0.254 0.563   62   71  133  202    1  237   24   87    1  145   1   7   0
+d1rgea_ 4.1.1.1.1 RNase Sa [Streptomyces aureofac  (  96)   55  19.6     2.7	0.410 0.590   55   39  192  227    1  237   14   50    1   96   3   2   0
+d2cba__ 2.47.1.1.2 Carbonic anhydrase [human (Hom  ( 258)   64  20.8       3	0.232 0.512   64  125   91  210    1  237   29  143    1  258   5  10   0
+d1pfsa_ 2.24.6.1.2 Gene V protein [Pseudomonas ph  (  78)   52  19.0     3.2	0.361 0.556   52   36  190  225    1  237   23   52    1   78   0   6   0
+d2sga__ 2.29.1.1.2 Protease A [Streptomyces grise  ( 181)   60  20.2     3.3	0.215 0.508   60  130  103  227    1  237   35  156    1  181   5   8   0
+d1ckaa_ 2.20.2.1.1 C-Crk, N-terminal SH3 domain [  (  57)   48  18.4     3.7	0.333 0.533   48   30   28   54    1  237   24   53    1   57   3   0   0
+d1cus__ 3.13.7.1.1 Cutinase [fungus (Fusarium sol  ( 197)   58  19.6     5.1	0.333 0.667   58   33  209  237    1  237   58   90    1  197   4   0   0
+d2eng__ 2.33.1.1.1 Endoglucanase V [Humicola inso  ( 205)   57  19.4     6.4	0.270 0.510   57  100  145  234    1  237   42  132    1  205  10   9   0
+d1amm_2 2.9.1.1.1 (86-174) gamma-Crystallin [bovi  (  89)   48  18.0     7.3	0.267 0.567   48   30   20   49    1  237   52   81    1   89   0   0   0
+d1rcf__ 3.13.4.1.3 Flavodoxin [Anabaena 7120]      ( 169)   54  18.8     7.6	0.292 0.584   54   89   34  115    1  237    1   82    1  169   7   7   0
+
+>>>d1jbc__, 237 aa vs testset.fa library
+
+ 14>>>d1hms__ 2.39.1.2.1 Muscle fatty acid binding protein (m-fabp) [human (Homo sapiens)] - 131 aa
+ vs  testset.fa library
+
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= 7.2177+/-0.0472; mu= 0.4442+/- 2.290
+ mean_var=40.8305+/-12.223, 0's: 0 Z-trim: 2  B-trim: 0 in 0/19
+ Lambda= 0.200716
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.020
+The best scores are:                                      s-w bits E(93)	%_id  %_sim   sw  alen  an0  ax0  pn0  px0  an1  ax1 pn1 px1 gapq gapl  fs 
+d1hms__ 2.39.1.2.1 Muscle fatty acid binding prot  ( 131)  836 246.7 8.9e-69	1.000 1.000  836  131    1  131    1  131    1  131    1  131   0   0   0
+d1ifc__ 2.39.1.2.2 Intestinal fatty acid binding   ( 131)  253  77.8 5.9e-18	0.321 0.679  253  131    3  131    1  131    1  131    1  131   2   0   0
+d1lkka_ 4.47.1.1.1 p56-lck tyrosine kinase [human  ( 105)   55  20.7    0.78	0.349 0.674   55   43   53   89    1  131   26   68    1  105   6   0   0
+d5p21__ 3.24.1.3.1 cH-p21 Ras protein [human (Hom  ( 166)   56  20.6     1.2	0.205 0.551   56   78    2   79    1  131   76  150    1  166   0   3   0
+d1rcf__ 3.13.4.1.3 Flavodoxin [Anabaena 7120]      ( 169)   54  20.1     1.9	0.290 0.581   54   31   84  114    1  131  109  139    1  169   0   0   0
+d2cba__ 2.47.1.1.2 Carbonic anhydrase [human (Hom  ( 258)   53  19.5     4.2	0.350 0.675   53   40   66  100    1  131   64  101    1  258   5   2   0
+d8rxna_ 7.34.3.1.1 Rubredoxin [Desulfovibrio vulg  (  52)   41  17.1     4.5	0.364 0.636   41   22   67   87    1  131   10   31    1   52   1   0   0
+d1pls__ 2.35.1.1.5 Pleckstrin, N-terminal domain   ( 113)   46  18.0     5.1	0.320 0.640   46   25   67   91    1  131   32   55    1  113   0   1   0
+d8tlne2 4.46.1.1.2 (1-155) Thermolysin [Bacillus   ( 155)   46  17.8       8	0.333 0.593   46   27   97  123    1  131  115  139    1  155   0   2   0
+d1igd__ 4.11.1.1.1 Immunoglobulin-binding protein  (  61)   39  16.4     8.4	0.357 0.571   39   28  103  130    1  131    6   33    1   61   0   0   0
+d1tpg_1 7.10.1.1.13 (51-91) Plasminogen activator  (  41)   36  15.8     8.6	0.292 0.583   36   24   16   39    1  131   18   41    1   41   0   0   0
+
+>>>d1hms__, 131 aa vs testset.fa library
+
+ 15>>>d7rsa__ 4.4.1.1.1 Ribonuclease A (also ribonuclease B, S) [bovine (Bos taurus)] - 124 aa
+ vs  testset.fa library
+
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= 4.3765+/-0.0433; mu= 15.1441+/- 2.201
+ mean_var=54.1475+/-14.359, 0's: 0 Z-trim: 2  B-trim: 0 in 0/19
+ Lambda= 0.174295
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.020
+The best scores are:                                      s-w bits E(93)	%_id  %_sim   sw  alen  an0  ax0  pn0  px0  an1  ax1 pn1 px1 gapq gapl  fs 
+d7rsa__ 4.4.1.1.1 Ribonuclease A (also ribonuclea  ( 124)  840 216.9 7.5e-60	1.000 1.000  840  124    1  124    1  124    1  124    1  124   0   0   0
+d1poa__ 1.80.1.2.1 Snake phospholipase A2 [taiwan  ( 118)   80  25.7   0.024	0.226 0.604   80   53   58  110    1  124   71  118    1  118   0   5   0
+d1xyzb_ 3.1.1.3.1 Xylanase XynZ (family F) [Clost  ( 320)   61  21.3     1.4	0.242 0.560   61   91   30  114    1  124  193  272    1  320   6  11   0
+d3ebx__ 7.5.1.1.1 Erabutoxin B (also neurotoxin B  (  62)   53  18.7     1.6	0.218 0.582   53   55   26   75    1  124    3   57    1   62   5   0   0
+d1tpg_1 7.10.1.1.13 (51-91) Plasminogen activator  (  41)   49  17.6     2.4	0.326 0.512   49   43   58   99    1  124    1   38    1   41   1   5   0
+d1aab__ 1.17.1.1.1 HMG1, fragments A and B [rat/h  (  83)   52  18.6     2.4	0.225 0.675   52   40    2   41    1  124   20   58    1   83   0   1   0
+d2erl__ 1.10.1.1.1 ER-1 [Euplotes raikovi]         (  40)   46  16.8     3.9	0.375 0.583   46   24   52   73    1  124    6   29    1   40   2   0   0
+d1krn__ 7.12.1.1.1 Plasminogen kringle 4 [human (  (  79)   46  17.0     6.5	0.263 0.579   46   38   65  101    1  124    2   39    1   79   1   0   0
+d193l__ 4.2.1.2.1 Lysozyme [chicken (Gallus gallu  ( 129)   47  17.5     7.9	0.295 0.526   47   78    5   68    1  124   31  104    1  129  14   4   0
+d2eng__ 2.33.1.1.1 Endoglucanase V [Humicola inso  ( 205)   49  18.1     7.9	0.233 0.567   49   30   93  122    1  124   14   43    1  205   0   0   0
+d1lit__ 4.88.1.1.1 Lithostathine, inhibitor of st  ( 131)   47  17.5       8	0.292 0.479   47   48   65  112    1  124    1   46    1  131   0   2   0
+
+>>>d7rsa__, 124 aa vs testset.fa library
+
+ 16>>>d2sn3__ 7.3.6.1.1 scorpion toxin [Centruroides sculpturatus ewing, variant 3] - 65 aa
+ vs  testset.fa library
+
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= 2.5987+/-0.0426; mu= 19.6281+/- 2.089
+ mean_var=53.8270+/-16.497, 0's: 0 Z-trim: 2  B-trim: 2 in 1/18
+ Lambda= 0.174813
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.010
+The best scores are:                                      s-w bits E(93)	%_id  %_sim   sw  alen  an0  ax0  pn0  px0  an1  ax1 pn1 px1 gapq gapl  fs 
+d2sn3__ 7.3.6.1.1 scorpion toxin [Centruroides sc  (  65)  495 130.0 2.8e-34	1.000 1.000  495   65    1   65    1   65    1   65    1   65   0   0   0
+d1ptx__ 7.3.6.1.4 scorpion toxin [Androctonus aus  (  64)  124  36.5 4.1e-06	0.403 0.581  124   62    1   57    1   65    2   57    1   64   5   6   0
+d2erl__ 1.10.1.1.1 ER-1 [Euplotes raikovi]         (  40)   58  19.4    0.34	0.257 0.686   58   35   10   43    1   65    1   34    1   40   1   1   0
+d1isua_ 7.29.1.1.1 HIPIP (high potential iron pro  (  62)   56  19.3    0.59	0.326 0.512   56   43    7   44    1   65   17   58    1   62   5   1   0
+d1arb__ 2.29.1.1.1 Achromobacter protease [Achrom  ( 263)   59  21.2    0.67	0.312 0.562   59   32   19   50    1   65  206  237    1  263   0   0   0
+d4ptp__ 2.29.1.2.1 Trypsin(ogen) [bovine (Bos tau  ( 223)   51  19.0     2.5	0.250 0.442   51   52    3   47    1   65  164  215    1  223   7   0   0
+d1pls__ 2.35.1.1.5 Pleckstrin, N-terminal domain   ( 113)   47  17.5     3.7	0.875 1.000   47    8    1    8    1   65    7   14    1  113   0   0   0
+d1amm_1 2.9.1.1.1 (1-85) gamma-Crystallin [bovine  (  85)   44  16.5     5.4	0.375 0.562   44   16   36   51    1   65   10   25    1   85   0   0   0
+e6rlx.2c1 7.1.1.1.4 Relaxin [human (Homo sapiens)  (  24)   40  14.5     6.1	0.357 0.571   40   14   12   25    1   65   11   24    1   24   0   0   0
+d1poa__ 1.80.1.2.1 Snake phospholipase A2 [taiwan  ( 118)   43  16.5     7.4	0.389 0.667   43   18   34   51    1   65   79   95    1  118   0   1   0
+d2sga__ 2.29.1.1.2 Protease A [Streptomyces grise  ( 181)   44  17.1     7.5	0.271 0.500   44   48    3   50    1   65   90  135    1  181   0   2   0
+d1rie__ 7.35.1.2.1 The rieske iron-sulfur protein  ( 127)   43  16.6     7.6	0.368 0.526   43   19   24   42    1   65   74   92    1  127   0   0   0
+d1utg__ 1.60.1.1.1 Uteroglobin [Rabbit (Oryctolag  (  70)   41  15.6     8.2	0.421 0.579   41   19   39   57    1   65    1   19    1   70   0   0   0
+d1fus__ 4.1.1.1.2 RNase F1 [Fusarium moniliforme]  ( 106)   42  16.2     8.3	0.240 0.540   42   50   17   64    1   65   16   63    1  106   2   2   0
+d1tpg_1 7.10.1.1.13 (51-91) Plasminogen activator  (  41)   39  14.7     9.1	0.346 0.500   39   26   40   65    1   65   17   34    1   41   0   8   0
+d1lit__ 4.88.1.1.1 Lithostathine, inhibitor of st  ( 131)   42  16.3     9.1	0.300 0.433   42   30   30   58    1   65   72  101    1  131   1   0   0
+d2eng__ 2.33.1.1.1 Endoglucanase V [Humicola inso  ( 205)   43  16.9     9.3	0.241 0.517   43   29   31   58    1   65    1   29    1  205   1   0   0
+
+>>>d2sn3__, 65 aa vs testset.fa library
+
+ 17>>>d1ifc__ 2.39.1.2.2 Intestinal fatty acid binding protein [rat (Rattus rattus)] - 131 aa
+ vs  testset.fa library
+
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= 14.8304+/-0.0272; mu= -33.6391+/- 1.257
+ mean_var=76.1984+/-23.253, 0's: 0 Z-trim: 2  B-trim: 0 in 0/19
+ Lambda= 0.146927
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.010
+The best scores are:                                      s-w bits E(93)	%_id  %_sim   sw  alen  an0  ax0  pn0  px0  an1  ax1 pn1 px1 gapq gapl  fs 
+d1ifc__ 2.39.1.2.2 Intestinal fatty acid binding   ( 131)  844 185.6 2.1e-50	1.000 1.000  844  131    1  131    1  131    1  131    1  131   0   0   0
+d1hms__ 2.39.1.2.1 Muscle fatty acid binding prot  ( 131)  253  60.3 1.1e-12	0.321 0.679  253  131    1  131    1  131    3  131    1  131   0   2   0
+d3sdhb_ 1.1.1.1.1 Hemoglobin I [ark clam (Scaphar  ( 145)   64  20.1     1.6	0.234 0.596   64   47   74  120    1  131   31   77    1  145   0   0   0
+d1bpi__ 7.6.1.1.1 Pancreatic trypsin inhibitor [b  (  58)   49  18.5     1.9	0.571 0.786   49   14  113  126    1  131   29   42    1   58   0   0   0
+e6rlx.2d1 7.1.1.1.4 Relaxin [human (Homo sapiens)  (  25)   34  16.7     2.8	0.417 0.583   34   12   81   92    1  131    1   12    1   25   0   0   0
+d1ptf__ 4.48.1.1.2 Histidine-containing phosphoca  (  87)   50  18.0       4	0.227 0.636   50   66   18   81    1  131    1   64    1   87   2   2   0
+d1pls__ 2.35.1.1.5 Pleckstrin, N-terminal domain   ( 113)   52  18.0     5.2	0.246 0.594   52   69   42  106    1  131    7   70    1  113   4   5   0
+
+>>>d1ifc__, 131 aa vs testset.fa library
+
+ 18>>>d1ptx__ 7.3.6.1.4 scorpion toxin [Androctonus australius hector, toxin II] - 64 aa
+ vs  testset.fa library
+
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= 1.9648+/-0.0186; mu= 22.4573+/- 0.787
+ mean_var=41.7970+/-11.623, 0's: 0 Z-trim: 2  B-trim: 0 in 0/19
+ Lambda= 0.198382
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.010
+The best scores are:                                      s-w bits E(93)	%_id  %_sim   sw  alen  an0  ax0  pn0  px0  an1  ax1 pn1 px1 gapq gapl  fs 
+d1ptx__ 7.3.6.1.4 scorpion toxin [Androctonus aus  (  64)  500 147.2 1.9e-39	1.000 1.000  500   64    1   64    1   64    1   64    1   64   0   0   0
+d2sn3__ 7.3.6.1.1 scorpion toxin [Centruroides sc  (  65)  124  39.6 4.7e-07	0.403 0.581  124   62    2   57    1   64    1   57    1   65   6   5   0
+d1amm_1 2.9.1.1.1 (1-85) gamma-Crystallin [bovine  (  85)   54  19.8    0.57	0.234 0.489   54   47    9   54    1   64   38   84    1   85   1   0   0
+d1poa__ 1.80.1.2.1 Snake phospholipase A2 [taiwan  ( 118)   50  18.9     1.4	0.350 0.500   50   40    4   42    1   64   34   63    1  118   1  10   0
+d1tpg_1 7.10.1.1.13 (51-91) Plasminogen activator  (  41)   45  16.6     2.5	0.345 0.621   45   29   22   48    1   64    1   25    1   41   2   4   0
+d4ptp__ 2.29.1.2.1 Trypsin(ogen) [bovine (Bos tau  ( 223)   47  18.6     3.2	0.268 0.500   47   56    4   58    1   64  154  208    1  223   1   1   0
+d2cba__ 2.47.1.1.2 Carbonic anhydrase [human (Hom  ( 258)   47  18.7     3.4	0.250 0.469   47   32   28   59    1   64  111  142    1  258   0   0   0
+d193l__ 4.2.1.2.1 Lysozyme [chicken (Gallus gallu  ( 129)   45  17.6     3.9	0.258 0.452   45   31    5   29    1   64   53   83    1  129   6   0   0
+d2eng__ 2.33.1.1.1 Endoglucanase V [Humicola inso  ( 205)   45  18.0     4.6	0.444 0.611   45   18   43   60    1   64   84   98    1  205   0   3   0
+d1lit__ 4.88.1.1.1 Lithostathine, inhibitor of st  ( 131)   44  17.3     4.7	0.308 0.769   44   13   26   38    1   64  102  114    1  131   0   0   0
+d1isua_ 7.29.1.1.1 HIPIP (high potential iron pro  (  62)   42  16.1     5.3	0.278 0.444   42   36   28   63    1   64   21   55    1   62   0   1   0
+e6rlx.2c1 7.1.1.1.4 Relaxin [human (Homo sapiens)  (  24)   38  14.1     7.9	0.333 0.611   38   18   19   36    1   64    8   24    1   24   0   1   0
+d2erl__ 1.10.1.1.1 ER-1 [Euplotes raikovi]         (  40)   39  14.8     7.9	0.324 0.588   39   34   16   49    1   64   10   39    1   40   0   4   0
+d2olba_ 3.68.1.1.1 Oligo-peptide binding protein   ( 517)   44  18.5     7.9	0.538 0.769   44   13   23   35    1   64  341  353    1  517   0   0   0
+d8rxna_ 7.34.3.1.1 Rubredoxin [Desulfovibrio vulg  (  52)   39  15.0     8.7	0.375 0.500   39   16    1   16    1   64   24   39    1   52   0   0   0
+e1ben.2c1 7.1.1.1.2 Insulin [human (Homo sapiens)  (  21)   37  13.7     9.1	0.400 0.600   37   15   12   23    1   64    7   21    1   21   3   0   0
+d1epne_ 2.32.1.2.1 Endothiapepsin [chestnut bligh  ( 330)   42  17.5     9.8	0.321 0.500   42   28   17   44    1   64   55   81    1  330   0   1   0
+
+>>>d1ptx__, 64 aa vs testset.fa library
+
+ 19>>>d3sdhb_ 1.1.1.1.1 Hemoglobin I [ark clam (Scapharca inaequivalvis)] - 145 aa
+ vs  testset.fa library
+
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= 9.5459+/-0.0148; mu= -9.4798+/- 0.616
+ mean_var=45.9478+/-18.806, 0's: 0 Z-trim: 3  B-trim: 0 in 0/19
+ Lambda= 0.189209
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.010
+The best scores are:                                      s-w bits E(93)	%_id  %_sim   sw  alen  an0  ax0  pn0  px0  an1  ax1 pn1 px1 gapq gapl  fs 
+d3sdhb_ 1.1.1.1.1 Hemoglobin I [ark clam (Scaphar  ( 145)  933 259.5 1.5e-72	1.000 1.000  933  145    1  145    1  145    1  145    1  145   0   0   0
+d1bvc__ 1.1.1.1.4 Myoglobin [sperm whale (Physete  ( 153)  121  37.8 8.7e-06	0.256 0.562  121  121   21  137    1  145   14  131    1  153   4   3   0
+d1flp__ 1.1.1.1.2 Hemoglobin I [clam (Lucina pect  ( 142)  116  36.5   2e-05	0.232 0.641  116  142    9  145    1  145    2  138    1  142   5   5   0
+d1ifc__ 2.39.1.2.2 Intestinal fatty acid binding   ( 131)   64  22.4    0.32	0.234 0.596   64   47   31   77    1  145   74  120    1  131   0   0   0
+d1eco__ 1.1.1.1.13 Erythrocruorin [Midge (Chirono  ( 136)   58  20.7     1.1	0.188 0.580   58  112   27  134    1  145   14  121    1  136   4   4   0
+e1ben.2c1 7.1.1.1.2 Insulin [human (Homo sapiens)  (  21)   34  16.3     3.4	0.455 0.727   34   11   69   79    1  145    9   19    1   21   0   0   0
+d1aab__ 1.17.1.1.1 HMG1, fragments A and B [rat/h  (  83)   47  18.3     3.4	0.259 0.741   47   27    4   30    1  145   32   57    1   83   0   1   0
+d2mcm__ 2.1.6.1.1 Macromycin [Streptomyces macrom  ( 112)   48  18.2     4.8	0.400 0.880   48   25    4   27    1  145   57   79    1  112   1   2   0
+d1lkka_ 4.47.1.1.1 p56-lck tyrosine kinase [human  ( 105)   47  18.0     5.2	0.247 0.584   47   89    4   91    1  145   15   96    1  105   1   7   0
+d2mhr__ 1.20.4.1.4 Myohemerythin [sipunculan worm  ( 118)   48  18.2     5.3	0.286 0.653   48   49   84  129    1  145   38   83    1  118   3   3   0
+d2hbg__ 1.1.1.1.3 Glycera globin [marine bloodwor  ( 147)   50  18.4     5.4	0.218 0.545   50   55    9   61    1  145    2   56    1  147   2   0   0
+d3pte__ 5.3.1.1.1 D-ala carboxypeptidase/transpep  ( 347)   58  19.6     5.6	0.480 0.600   58   25   56   80    1  145  165  187    1  347   0   2   0
+d8rxna_ 7.34.3.1.1 Rubredoxin [Desulfovibrio vulg  (  52)   38  16.4     7.9	0.600 0.600   38   10   84   93    1  145   32   41    1   52   0   0   0
+d1whi__ 2.23.1.1.1 Ribosomal protein L14 [Bacillu  ( 122)   45  17.3     9.7	0.353 0.618   45   34  114  144    1  145   13   46    1  122   3   0   0
+
+>>>d3sdhb_, 145 aa vs testset.fa library
+
+ 20>>>d1aac__ 2.5.1.1.1 Amicyanin [Paracoccus denitrificans] - 105 aa
+ vs  testset.fa library
+
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= 6.1827+/-0.0359; mu= 2.5332+/- 1.711
+ mean_var=32.8707+/-10.781, 0's: 0 Z-trim: 2  B-trim: 0 in 0/18
+ Lambda= 0.223702
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.020
+The best scores are:                                      s-w bits E(93)	%_id  %_sim   sw  alen  an0  ax0  pn0  px0  an1  ax1 pn1 px1 gapq gapl  fs 
+d1aac__ 2.5.1.1.1 Amicyanin [Paracoccus denitrifi  ( 105)  700 230.1 5.7e-64	1.000 1.000  700  105    1  105    1  105    1  105    1  105   0   0   0
+d1plc__ 2.5.1.1.2 Plastocyanin [poplar (Populus n  (  99)  109  39.4 1.4e-06	0.242 0.582  109   91   24  104    1  105    8   98    1   99  10   0   0
+d1whi__ 2.23.1.1.1 Ribosomal protein L14 [Bacillu  ( 122)   53  21.2     0.5	0.275 0.627   53   51    5   55    1  105    2   51    1  122   0   1   0
+d1rgea_ 4.1.1.1.1 RNase Sa [Streptomyces aureofac  (  96)   48  19.7     1.1	0.250 0.482   48   56   41   95    1  105   33   85    1   96   1   3   0
+d1ezm_2 4.46.1.1.1 (1-153) Elastase [Pseudomonas   ( 153)   50  20.1     1.3	0.283 0.509   50   53   15   62    1  105   31   83    1  153   5   0   0
+d8tlne2 4.46.1.1.2 (1-155) Thermolysin [Bacillus   ( 155)   48  19.4     2.1	0.273 0.545   48   44   18   61    1  105   37   79    1  155   0   1   0
+d2prk__ 3.26.1.1.6 Proteinase K [fungus (Tritirac  ( 279)   50  19.8       3	0.226 0.538   50   93    3   90    1  105   15  104    1  279   5   3   0
+d1eco__ 1.1.1.1.13 Erythrocruorin [Midge (Chirono  ( 136)   45  18.5     3.4	0.226 0.548   45   84    1   82    1  105   45  125    1  136   2   3   0
+d4ptp__ 2.29.1.2.1 Trypsin(ogen) [bovine (Bos tau  ( 223)   47  18.9     4.3	0.208 0.542   47   48    1   48    1  105  171  218    1  223   0   0   0
+d1mla_1 3.12.1.1.1 (1-125,196-305) Catalytic doma  ( 236)   47  18.9     4.7	0.237 0.605   47   38    2   37    1  105  120  157    1  236   2   0   0
+d4lzm__ 4.2.1.3.1 Phage T4 lysozyme [Escherichia   ( 162)   43  17.8     6.7	0.250 0.544   43   68   39  104    1  105   87  150    1  162   2   4   0
+d2olba_ 3.68.1.1.1 Oligo-peptide binding protein   ( 517)   50  19.4       7	0.289 0.644   50   45   13   57    1  105  351  392    1  517   0   3   0
+d1epne_ 2.32.1.2.1 Endothiapepsin [chestnut bligh  ( 330)   47  18.7     7.3	0.222 0.519   47   81    9   89    1  105   46  123    1  330   0   3   0
+d1isua_ 7.29.1.1.1 HIPIP (high potential iron pro  (  62)   36  16.1     8.4	0.556 0.778   36    9    5   13    1  105   29   37    1   62   0   0   0
+d1ptx__ 7.3.6.1.4 scorpion toxin [Androctonus aus  (  64)   36  16.0     8.8	0.600 0.700   36   10   16   25    1  105    1   10    1   64   0   0   0
+d1lit__ 4.88.1.1.1 Lithostathine, inhibitor of st  ( 131)   40  16.9     9.6	0.212 0.538   40   52   41   91    1  105   18   62    1  131   1   7   0
+
+>>>d1aac__, 105 aa vs testset.fa library
+
+ 21>>>d256bb_ 1.20.3.1.1 Cytochrome b562 [Escherichia coli] - 106 aa
+ vs  testset.fa library
+
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= 5.5511+/-0.0312; mu= 5.1418+/- 1.499
+ mean_var=31.5876+/-10.079, 0's: 0 Z-trim: 1  B-trim: 0 in 0/19
+ Lambda= 0.228200
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.020
+The best scores are:                                      s-w bits E(93)	%_id  %_sim   sw  alen  an0  ax0  pn0  px0  an1  ax1 pn1 px1 gapq gapl  fs 
+d256bb_ 1.20.3.1.1 Cytochrome b562 [Escherichia c  ( 106)  676 226.6 6.3e-63	1.000 1.000  676  106    1  106    1  106    1  106    1  106   0   0   0
+d2olba_ 3.68.1.1.1 Oligo-peptide binding protein   ( 517)   65  24.9    0.17	0.348 0.674   65   46   48   93    1  106  431  471    1  517   0   5   0
+d1cpq__ 1.20.3.2.5 Cytochrome c' [(Rhodobacter ca  ( 129)   53  21.4    0.45	0.274 0.435   53   62   45  106    1  106   65  126    1  129   0   0   0
+d4xis__ 3.1.11.1.4 D-xylose isomerase [streptomyc  ( 386)   51  20.4     2.8	0.288 0.576   51   59   19   76    1  106  143  199    1  386   1   2   0
+d1hfc__ 4.46.1.5.1 Fibroblast collagenase [human   ( 157)   46  19.1     2.8	0.279 0.605   46   43   47   89    1  106   11   51    1  157   0   2   0
+d1flp__ 1.1.1.1.2 Hemoglobin I [clam (Lucina pect  ( 142)   44  18.4     3.8	0.353 0.588   44   34   54   85    1  106   57   90    1  142   2   0   0
+d1jbc__ 2.18.1.1.1 Concanavalin A [jack bean (Can  ( 237)   46  18.9     4.6	0.265 0.647   46   34   51   84    1  106  200  229    1  237   0   4   0
+d2phy__ 4.57.2.1.1 Photoactive yellow protein [Ec  ( 125)   42  17.8     5.1	0.243 0.527   42   74    2   64    1  106   10   82    1  125  11   1   0
+d1lam_1 3.33.1.1.1 (1-159) Leucine aminopeptidase  ( 159)   43  18.1     5.5	0.250 0.688   43   32   49   79    1  106   11   42    1  159   1   0   0
+d2mhr__ 1.20.4.1.4 Myohemerythin [sipunculan worm  ( 118)   41  17.5     5.9	0.236 0.491   41   55   21   73    1  106   38   92    1  118   2   0   0
+d1rro__ 1.31.1.4.1 Oncomodulin [rat (Rattus norve  ( 108)   40  17.2     6.7	0.204 0.612   40   49   38   83    1  106    6   54    1  108   3   0   0
+d1mnta_ 1.32.1.1.2 Mnt repressor [Salmonella bact  (  66)   37  16.4     7.1	0.429 0.786   37   14   68   81    1  106   48   61    1   66   0   0   0
+d1eco__ 1.1.1.1.13 Erythrocruorin [Midge (Chirono  ( 136)   41  17.5     7.1	0.303 0.667   41   33   14   46    1  106   24   54    1  136   0   2   0
+d1utg__ 1.60.1.1.1 Uteroglobin [Rabbit (Oryctolag  (  70)   37  16.4     7.6	0.333 0.521   37   48   13   56    1  106   24   67    1   70   4   4   0
+d1xsoa_ 2.1.7.1.3 Cu,Zn superoxide dismutase, SOD  ( 150)   41  17.4       8	0.412 0.647   41   17   66   82    1  106  122  138    1  150   0   0   0
+d1amm_2 2.9.1.1.1 (86-174) gamma-Crystallin [bovi  (  89)   38  16.7     8.1	0.241 0.621   38   29   47   70    1  106   16   44    1   89   5   0   0
+
+>>>d256bb_, 106 aa vs testset.fa library
+
+ 22>>>d1plc__ 2.5.1.1.2 Plastocyanin [poplar (Populus nigra variant italica)] - 99 aa
+ vs  testset.fa library
+
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= 7.0280+/-0.0276; mu= 0.7782+/- 1.266
+ mean_var=33.2037+/- 9.619, 0's: 0 Z-trim: 2  B-trim: 3 in 1/17
+ Lambda= 0.222578
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.020
+The best scores are:                                      s-w bits E(93)	%_id  %_sim   sw  alen  an0  ax0  pn0  px0  an1  ax1 pn1 px1 gapq gapl  fs 
+d1plc__ 2.5.1.1.2 Plastocyanin [poplar (Populus n  (  99)  648 211.6 1.9e-58	1.000 1.000  648   99    1   99    1   99    1   99    1   99   0   0   0
+d1aac__ 2.5.1.1.1 Amicyanin [Paracoccus denitrifi  ( 105)  109  38.4 2.6e-06	0.242 0.582  109   91    8   98    1   99   24  104    1  105   0  10   0
+d2eng__ 2.33.1.1.1 Endoglucanase V [Humicola inso  ( 205)   57  21.2    0.79	0.273 0.489   57   88   22   97    1   99   22  109    1  205  12   0   0
+d1lkka_ 4.47.1.1.1 p56-lck tyrosine kinase [human  ( 105)   51  19.8     1.1	0.306 0.667   51   36   52   86    1   99   39   74    1  105   1   0   0
+d4xis__ 3.1.11.1.4 D-xylose isomerase [streptomyc  ( 386)   58  21.0     1.7	0.311 0.600   58   45    2   39    1   99  189  231    1  386   7   2   0
+d193l__ 4.2.1.2.1 Lysozyme [chicken (Gallus gallu  ( 129)   47  18.3     3.5	0.217 0.600   47   60    6   65    1   99   49  107    1  129   0   1   0
+d3ebx__ 7.5.1.1.1 Erabutoxin B (also neurotoxin B  (  62)   41  17.0     4.2	0.273 0.545   41   44   22   64    1   99   18   61    1   62   1   0   0
+d1isua_ 7.29.1.1.1 HIPIP (high potential iron pro  (  62)   40  16.7     5.2	0.333 0.733   40   15   10   24    1   99   38   52    1   62   0   0   0
+d1rie__ 7.35.1.2.1 The rieske iron-sulfur protein  ( 127)   45  17.7     5.3	0.353 0.706   45   17   72   87    1   99   76   92    1  127   1   0   0
+e1ben.2d1 7.1.1.1.2 Insulin [human (Homo sapiens)  (  28)   34  15.4     5.7	0.444 0.778   34    9   78   86    1   99   20   28    1   28   0   0   0
+d2mhr__ 1.20.4.1.4 Myohemerythin [sipunculan worm  ( 118)   44  17.5     5.8	0.391 0.739   44   23   50   71    1   99   91  113    1  118   1   0   0
+d1ycc__ 1.3.1.1.4 Mitochondrial cytochrome c [bak  ( 108)   43  17.2     6.3	0.239 0.609   43   46   21   66    1   99   33   77    1  108   0   1   0
+d1cpq__ 1.20.3.2.5 Cytochrome c' [(Rhodobacter ca  ( 129)   44  17.4     6.7	0.230 0.554   44   74   25   91    1   99   44  115    1  129   7   2   0
+d1lit__ 4.88.1.1.1 Lithostathine, inhibitor of st  ( 131)   44  17.4     6.8	0.350 0.700   44   20   16   35    1   99   94  111    1  131   0   2   0
+d1ckaa_ 2.20.2.1.1 C-Crk, N-terminal SH3 domain [  (  57)   38  16.1     7.1	0.275 0.600   38   40   59   98    1   99   15   51    1   57   0   3   0
+d1mnta_ 1.32.1.1.2 Mnt repressor [Salmonella bact  (  66)   39  16.3     7.1	0.309 0.471   39   68    8   63    1   99    3   66    1   66  12   4   0
+d1mla_2 4.31.18.1.1 (126-195) Probable ACP-bindin  (  70)   38  16.0     9.6	0.500 0.900   38   10    4   13    1   99    8   17    1   70   0   0   0
+
+>>>d1plc__, 99 aa vs testset.fa library
+
+ 23>>>d1amm_1 2.9.1.1.1 (1-85) gamma-Crystallin [bovine (Bos taurus) isoform II (B)] - 85 aa
+ vs  testset.fa library
+
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= -2.4987+/-0.0228; mu= 46.6892+/- 0.998
+ mean_var=58.5007+/-15.993, 0's: 0 Z-trim: 2  B-trim: 0 in 0/19
+ Lambda= 0.167685
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.010
+The best scores are:                                      s-w bits E(93)	%_id  %_sim   sw  alen  an0  ax0  pn0  px0  an1  ax1 pn1 px1 gapq gapl  fs 
+d1amm_1 2.9.1.1.1 (1-85) gamma-Crystallin [bovine  (  85)  657 164.0 2.9e-44	1.000 1.000  657   85    1   85    1   85    1   85    1   85   0   0   0
+d1amm_2 2.9.1.1.1 (86-174) gamma-Crystallin [bovi  (  89)  218  57.9 2.7e-12	0.390 0.683  218   82    2   81    1   85    4   85    1   89   2   0   0
+d1poa__ 1.80.1.2.1 Snake phospholipase A2 [taiwan  ( 118)   54  18.8     2.1	0.260 0.500   54   50    6   54    1   85   27   73    1  118   1   3   0
+d1ptx__ 7.3.6.1.4 scorpion toxin [Androctonus aus  (  64)   54  17.5     2.6	0.234 0.489   54   47   38   84    1   85    9   54    1   64   0   1   0
+d3ebx__ 7.5.1.1.1 Erabutoxin B (also neurotoxin B  (  62)   52  17.0     3.7	0.346 0.615   52   26   11   34    1   85   32   57    1   62   2   0   0
+d1lit__ 4.88.1.1.1 Lithostathine, inhibitor of st  ( 131)   50  18.0     3.8	0.200 0.453   50   75   22   79    1   85    1   75    1  131  17   0   0
+d2olba_ 3.68.1.1.1 Oligo-peptide binding protein   ( 517)   46  19.9     4.2	0.205 0.500   46   44   34   77    1   85  389  432    1  517   0   0   0
+d1xnb__ 2.18.1.8.1 Xylanase II [Bacillus circulan  ( 185)   47  18.0     5.4	0.196 0.510   47   51   26   76    1   85   89  136    1  185   0   3   0
+d1ckaa_ 2.20.2.1.1 C-Crk, N-terminal SH3 domain [  (  57)   48  15.8     7.4	0.385 0.615   48   26   57   82    1   85   26   50    1   57   0   1   0
+d1krn__ 7.12.1.1.1 Plasminogen kringle 4 [human (  (  79)   47  16.3     7.6	0.259 0.519   47   27   23   49    1   85   42   68    1   79   0   0   0
+d2eng__ 2.33.1.1.1 Endoglucanase V [Humicola inso  ( 205)   44  17.5     8.4	0.391 0.522   44   23   18   34    1   85   12   33    1  205   6   1   0
+d2prk__ 3.26.1.1.6 Proteinase K [fungus (Tritirac  ( 279)   43  17.9     8.7	0.333 0.611   43   18    2   19    1   85   57   74    1  279   0   0   0
+d1ycc__ 1.3.1.1.4 Mitochondrial cytochrome c [bak  ( 108)   45  16.4     9.3	0.323 0.581   45   31    4   31    1   85   13   43    1  108   3   0   0
+
+>>>d1amm_1, 85 aa vs testset.fa library
+
+
+
+2636 residues in 23 query   sequences
+13355 residues in 93 library sequences
+ Scomplib [34t24]
+ start: Tue Aug 15 22:56:22 2006 done: Tue Aug 15 22:56:23 2006
+ Total Scan time:  0.370 Total Display time:  0.170
+
+Function used was SSEARCH [version 3.4t24 June 23, 2004]
