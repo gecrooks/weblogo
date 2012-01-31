@@ -2,8 +2,17 @@
 
 WebLogo Release Notes
 
+WebLogo Release Notes
 
-3.1 (2011-08-16) [GEC]
+
+3.2 (2012-01-30) [Gavin Crooks, David Sivak]
+
+* Graphical interface now accepts transfac format motif files.
+* New output format option: SVG (Scalable Vector Graphics)
+* Miscellaneous minor bug fixes and refactoring.
+
+
+3.1 (2011-08-16) [Gavin Crooks, David Sivak]
 
 Mostly bug fixes, code improvements and minor user enhancements.
 
