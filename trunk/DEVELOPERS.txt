@@ -33,6 +33,11 @@ svn rm apidocs/...      # Remove any obsolete html files
 svn add apidocs/...     # Add any new html files
 svn commit -m "Updating apidocs" apidocs
 
+
+# 4. Update manual.html with the latest --help text.
+
+
+
 # 4. Run webpage tests.
 ./weblogo --serve
 # then goto localhost:8080/test.html and try tests
