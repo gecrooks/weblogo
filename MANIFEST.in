@@ -1,4 +1,4 @@
-include LICENSE.txt README.txt  
+include LICENSE.txt README.txt MANIFEST.in
 recursive-include weblogolib/htdocs/ *.html *.cgi *.*
 include weblogolib/template.eps
 recursive-include test_weblogo/data/ *.*

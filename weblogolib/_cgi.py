@@ -79,7 +79,7 @@ extension = {
     'svg': 'svg',
     'png_print': 'png',
     'logodata' : 'txt',        
-    'jpeg'  : 'png'
+    'jpeg'  : 'jpeg'
 }
 
 
