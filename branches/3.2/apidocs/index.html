@@ -1,0 +1,702 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>weblogolib</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://code.google.com/p/weblogo/">WebLogo</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;weblogolib
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PACKAGE DESCRIPTION ==================== -->
+<h1 class="epydoc">Package weblogolib</h1><p class="nomargin-top"><span class="codelink"><a href="weblogolib-pysrc.html">source&nbsp;code</a></span></p>
+<pre class="literalblock">
+
+WebLogo (http://code.google.com/p/weblogo/) is a tool for creating sequence 
+logos from biological sequence alignments.  It can be run on the command line,
+as a standalone webserver, as a CGI webapp, or as a python library.
+
+The main WebLogo webserver is located at http://weblogo.threeplusone.com
+
+Please consult the manual for installation instructions and more information:
+(Also located in the weblogolib/htdocs subdirectory.)
+
+    http://weblogo.threeplusone.com/manual.html
+
+For help on the command line interface run
+    ./weblogo --help
+
+To build a simple logo run
+    ./weblogo  &lt; cap.fa &gt; logo0.eps
+    
+To run as a standalone webserver at localhost:8080 
+    ./weblogo --serve
+
+To create a logo in python code:
+    &gt;&gt;&gt; from weblogolib import *
+    &gt;&gt;&gt; fin = open('cap.fa')
+    &gt;&gt;&gt; seqs = read_seq_data(fin) 
+    &gt;&gt;&gt; data = LogoData.from_seqs(seqs)
+    &gt;&gt;&gt; options = LogoOptions()
+    &gt;&gt;&gt; options.title = &quot;A Logo Title&quot;
+    &gt;&gt;&gt; format = LogoFormat(data, options)
+    &gt;&gt;&gt; fout = open('cap.eps', 'w') 
+    &gt;&gt;&gt; eps_formatter( data, format, fout)
+
+
+-- Distribution and Modification --
+This package is distributed under the new BSD Open Source License. 
+Please see the LICENSE.txt file for details on copyright and licensing.
+The WebLogo source code can be downloaded from 
+http://code.google.com/p/weblogo/
+
+WebLogo requires Python 2.5, 2.6 or 2.7, and the python
+array package 'numpy' (http://www.scipy.org/Download)
+
+Generating logos in PDF or bitmap graphics formats require that the ghostscript
+program 'gs' be installed. Scalable Vector Graphics (SVG) format also requires 
+the program 'pdf2svg'.
+
+</pre>
+
+<hr />
+<div class="fields">      <p><strong>Version:</strong>
+        3.2
+      </p>
+</div><!-- ==================== SUBMODULES ==================== -->
+<a name="section-Submodules"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Submodules</span></td>
+</tr>
+  <tr><td class="summary">
+  <ul class="nomargin">
+    <li class="private"> <strong class="uidlink"><a href="weblogolib._cgi-module.html">weblogolib._cgi</a></strong>    </li>
+    <li class="private"> <strong class="uidlink"><a href="weblogolib._cli-module.html">weblogolib._cli</a></strong>    </li>
+    <li> <strong class="uidlink"><a href="weblogolib.color-module.html">weblogolib.color</a></strong>: <em class="summary">Color specifications using CSS2 (Cascading Style Sheet) syntax.</em>    </li>
+    <li> <strong class="uidlink"><a href="weblogolib.colorscheme-module.html">weblogolib.colorscheme</a></strong>: <em class="summary">Popular color codings for nucleic and amino acids.</em>    </li>
+    <li> <strong class="uidlink"><a href="weblogolib.logomath-module.html">weblogolib.logomath</a></strong>    </li>
+  </ul></td></tr>
+</table>
+
+<br />
+<!-- ==================== CLASSES ==================== -->
+<a name="section-Classes"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Classes</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="weblogolib.GhostscriptAPI-class.html" class="summary-name">GhostscriptAPI</a><br />
+      Interface to the command line program Ghostscript ('gs')
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="weblogolib.LogoOptions-class.html" class="summary-name">LogoOptions</a><br />
+      A container for all logo formatting options.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="weblogolib.LogoFormat-class.html" class="summary-name">LogoFormat</a><br />
+      Specifies the format of the logo.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="weblogolib.LogoData-class.html" class="summary-name">LogoData</a><br />
+      The data needed to generate a sequence logo.
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Functions</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="pdf_formatter"></a><span class="summary-sig-name">pdf_formatter</span>(<span class="summary-sig-arg">data</span>,
+        <span class="summary-sig-arg">format</span>,
+        <span class="summary-sig-arg">fout</span>)</span><br />
+      Generate a logo in PDF format.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="weblogolib-pysrc.html#pdf_formatter">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="jpeg_formatter"></a><span class="summary-sig-name">jpeg_formatter</span>(<span class="summary-sig-arg">data</span>,
+        <span class="summary-sig-arg">format</span>,
+        <span class="summary-sig-arg">fout</span>)</span><br />
+      Generate a logo in JPEG format.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="weblogolib-pysrc.html#jpeg_formatter">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="png_formatter"></a><span class="summary-sig-name">png_formatter</span>(<span class="summary-sig-arg">data</span>,
+        <span class="summary-sig-arg">format</span>,
+        <span class="summary-sig-arg">fout</span>)</span><br />
+      Generate a logo in PNG format.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="weblogolib-pysrc.html#png_formatter">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="png_print_formatter"></a><span class="summary-sig-name">png_print_formatter</span>(<span class="summary-sig-arg">data</span>,
+        <span class="summary-sig-arg">format</span>,
+        <span class="summary-sig-arg">fout</span>)</span><br />
+      Generate a logo in PNG format with print quality (600 DPI) resolution.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="weblogolib-pysrc.html#png_print_formatter">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="txt_formatter"></a><span class="summary-sig-name">txt_formatter</span>(<span class="summary-sig-arg">logodata</span>,
+        <span class="summary-sig-arg">format</span>,
+        <span class="summary-sig-arg">fout</span>)</span><br />
+      Create a text representation of the logo data.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="weblogolib-pysrc.html#txt_formatter">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="eps_formatter"></a><span class="summary-sig-name">eps_formatter</span>(<span class="summary-sig-arg">logodata</span>,
+        <span class="summary-sig-arg">format</span>,
+        <span class="summary-sig-arg">fout</span>)</span><br />
+      Generate a logo in Encapsulated Postscript (EPS)</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="weblogolib-pysrc.html#eps_formatter">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="default_formatter"></a><span class="summary-sig-name">default_formatter</span>(<span class="summary-sig-arg">logodata</span>,
+        <span class="summary-sig-arg">format</span>,
+        <span class="summary-sig-arg">fout</span>)</span><br />
+      Generate a logo in Encapsulated Postscript (EPS)</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="weblogolib-pysrc.html#eps_formatter">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="base_distribution"></a><span class="summary-sig-name">base_distribution</span>(<span class="summary-sig-arg">percentCG</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="weblogolib-pysrc.html#base_distribution">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="equiprobable_distribution"></a><span class="summary-sig-name">equiprobable_distribution</span>(<span class="summary-sig-arg">length</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="weblogolib-pysrc.html#equiprobable_distribution">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="weblogolib-module.html#read_seq_data" class="summary-sig-name">read_seq_data</a>(<span class="summary-sig-arg">fin</span>,
+        <span class="summary-sig-arg">input_parser</span>=<span class="summary-sig-default">seq_io.read</span>,
+        <span class="summary-sig-arg">alphabet</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">ignore_lower_case</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">max_file_size</span>=<span class="summary-sig-default">0</span>)</span><br />
+      Read sequence data from the input stream and return a seqs object.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="weblogolib-pysrc.html#read_seq_data">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Variables</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="weblogolib-module.html#description" class="summary-name">description</a> = <code title="&quot;Create sequence logos from biological sequence alignments.&quot;">&quot;Create sequence logos from biological sequence <code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="weblogolib-module.html#classic" class="summary-name">classic</a> = <code title="ColorScheme([ColorGroup(&quot;G&quot;, &quot;orange&quot;), ColorGroup(&quot;TU&quot;, &quot;red&quot;), Color\
+Group(&quot;C&quot;, &quot;blue&quot;), ColorGroup(&quot;A&quot;, &quot;green&quot;)])">ColorScheme([ColorGroup(&quot;G&quot;, &quot;orange&quot;), ColorGroup(&quot;<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="weblogolib-module.html#std_color_schemes" class="summary-name">std_color_schemes</a> = <code title="{&quot;auto&quot;: None, &quot;monochrome&quot;: monochrome, &quot;base pairing&quot;: base_pairing,\
+ &quot;classic&quot;: classic, &quot;hydrophobicity&quot;: hydrophobicity, &quot;chemistry&quot;: ch\
+emistry, &quot;charge&quot;: charge,}">{&quot;auto&quot;: None, &quot;monochrome&quot;: monochrome, &quot;<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="weblogolib-module.html#default_color_schemes" class="summary-name">default_color_schemes</a> = <code title="{unambiguous_protein_alphabet: hydrophobicity, unambiguous_rna_alphabe\
+t: base_pairing, unambiguous_dna_alphabet: base_pairing}">{unambiguous_protein_alphabet: hydroph<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="weblogolib-module.html#std_units" class="summary-name">std_units</a> = <code title="{&quot;bits&quot;: 1./ log(2), &quot;nats&quot;: 1., &quot;digits&quot;: 1./ log(10), &quot;kT&quot;: 1., &quot;kJ/\
+mol&quot;: 8.314472* 298.15/ 1000., &quot;kcal/mol&quot;: 1.987* 298.15/ 1000., &quot;prob\
+ability&quot;: None,}">{&quot;bits&quot;: 1./ log(2), &quot;nats&quot;: 1., &quot;digits&quot;: 1./ log<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="std_sizes"></a><span class="summary-name">std_sizes</span> = <code title="{&quot;small&quot;: 5.4, &quot;medium&quot;: 5.4* 2, &quot;large&quot;: 5.4* 3}">{&quot;small&quot;: 5.4, &quot;medium&quot;: 5.4* 2, &quot;large&quot;: 5.4* 3}</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="weblogolib-module.html#std_alphabets" class="summary-name">std_alphabets</a> = <code title="{'protein': unambiguous_protein_alphabet, 'rna': unambiguous_rna_alpha\
+bet, 'dna': unambiguous_dna_alphabet}">{'protein': unambiguous_protein_alphabet, 'rna<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="weblogolib-module.html#std_percentCG" class="summary-name">std_percentCG</a> = <code title="{'H. sapiens': 40., 'E. coli': 50.5, 'S. cerevisiae': 38., 'C. elegans\
+': 36., 'D. melanogaster': 43., 'M. musculus': 42., 'T. thermophilus':\
+ 69.4,}">{'H. sapiens': 40., 'E. coli': 50.5, 'S. cerev<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="weblogolib-module.html#formatters" class="summary-name">formatters</a> = <code title="{'eps': eps_formatter, 'pdf': pdf_formatter, 'png': png_formatter, 'pn\
+g_print': png_print_formatter, 'jpeg': jpeg_formatter, 'svg': svg_form\
+atter, 'logodata': txt_formatter,}">{'eps': eps_formatter, 'pdf': pdf_formatter, 'png<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Function Details</span></td>
+</tr>
+</table>
+<a name="read_seq_data"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">read_seq_data</span>(<span class="sig-arg">fin</span>,
+        <span class="sig-arg">input_parser</span>=<span class="sig-default">seq_io.read</span>,
+        <span class="sig-arg">alphabet</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">ignore_lower_case</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">max_file_size</span>=<span class="sig-default">0</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="weblogolib-pysrc.html#read_seq_data">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+Read sequence data from the input stream and return a seqs object. 
+
+The environment variable WEBLOGO_MAX_FILE_SIZE overides the max_file_size argument.
+Used to limit the load on the WebLogo webserver.
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Variables Details</span></td>
+</tr>
+</table>
+<a name="description"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">description</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&quot;Create sequence logos from biological sequence alignments.&quot;
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="classic"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">classic</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+ColorScheme([ColorGroup(&quot;G&quot;, &quot;orange&quot;), ColorGroup(&quot;TU&quot;, &quot;red&quot;), Color<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+Group(&quot;C&quot;, &quot;blue&quot;), ColorGroup(&quot;A&quot;, &quot;green&quot;)])
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="std_color_schemes"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">std_color_schemes</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+{&quot;auto&quot;: None, &quot;monochrome&quot;: monochrome, &quot;base pairing&quot;: base_pairing,<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+ &quot;classic&quot;: classic, &quot;hydrophobicity&quot;: hydrophobicity, &quot;chemistry&quot;: ch<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+emistry, &quot;charge&quot;: charge,}
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="default_color_schemes"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">default_color_schemes</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+{unambiguous_protein_alphabet: hydrophobicity, unambiguous_rna_alphabe<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+t: base_pairing, unambiguous_dna_alphabet: base_pairing}
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="std_units"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">std_units</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+{&quot;bits&quot;: 1./ log(2), &quot;nats&quot;: 1., &quot;digits&quot;: 1./ log(10), &quot;kT&quot;: 1., &quot;kJ/<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+mol&quot;: 8.314472* 298.15/ 1000., &quot;kcal/mol&quot;: 1.987* 298.15/ 1000., &quot;prob<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+ability&quot;: None,}
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="std_alphabets"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">std_alphabets</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+{'protein': unambiguous_protein_alphabet, 'rna': unambiguous_rna_alpha<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+bet, 'dna': unambiguous_dna_alphabet}
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="std_percentCG"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">std_percentCG</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+{'H. sapiens': 40., 'E. coli': 50.5, 'S. cerevisiae': 38., 'C. elegans<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+': 36., 'D. melanogaster': 43., 'M. musculus': 42., 'T. thermophilus':<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+ 69.4,}
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="formatters"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">formatters</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+{'eps': eps_formatter, 'pdf': pdf_formatter, 'png': png_formatter, 'pn<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+g_print': png_print_formatter, 'jpeg': jpeg_formatter, 'svg': svg_form<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+atter, 'logodata': txt_formatter,}
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://code.google.com/p/weblogo/">WebLogo</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Mon Jan 30 17:27:18 2012
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

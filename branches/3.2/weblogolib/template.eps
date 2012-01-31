@@ -1,0 +1,669 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%Title:        Sequence Logo: ${logo_title}
+%%Creator:      ${creator_text}
+%%CreationDate: ${creation_date}
+%%BoundingBox:  0  0  ${logo_width}  ${logo_height} 
+%%Pages: 0
+%%DocumentFonts: 
+%%EndComments
+
+
+% ---- VARIABLES ----
+
+/True   true def
+/False  false def
+
+/debug              ${debug}        def
+
+/logo_height        ${logo_height}  def
+/logo_width         ${logo_width}  def
+/logo_title         (${logo_title}) def
+/show_title         ${show_title} def
+
+/logo_margin        ${logo_margin} def
+/xaxis_label_height ${xaxis_label_height} def
+/title_height       ${title_height} def
+/stroke_width       ${stroke_width} def
+/tic_length         ${tic_length} def
+
+/lines_per_logo     ${lines_per_logo} def
+/line_width         ${line_width} def
+/line_height        ${line_height} def
+/line_margin_left   ${line_margin_left} def
+/line_margin_right  ${line_margin_right} def
+/line_margin_bottom ${line_margin_bottom} def
+/line_margin_top    ${line_margin_top} def
+
+/stack_width         ${stack_width} def
+/stack_height        ${stack_height} def
+/stacks_per_line     ${stacks_per_line} def
+/stack_margin        ${stack_margin} def
+
+/show_yaxis             ${show_yaxis} def      
+/show_yaxis_label       ${show_yaxis_label} def
+/yaxis_label            (${yaxis_label}) def
+/yaxis_scale          ${yaxis_scale} def              % height in units 
+/yaxis_tic_interval     ${yaxis_tic_interval} def           % in units
+/yaxis_minor_tic_interval ${yaxis_minor_tic_interval} def   % in units
+
+/show_xaxis_label       ${show_xaxis_label} def             % True or False
+/show_xaxis             ${show_xaxis} def                   % True or False
+/xaxis_label            (${xaxis_label}) def
+/xaxis_tic_interval     ${xaxis_tic_interval} def
+/rotate_numbers         ${rotate_numbers} def               % True or False
+/number_interval        ${number_interval} def
+/show_ends              ${show_ends} def          
+/end_type               (${end_type}) def          % d: DNA, p: PROTEIN, -: none
+
+/show_fineprint         ${show_fineprint} def
+/fineprint              (${fineprint}) def
+/logo_label             (${logo_label}) def
+
+/show_boxes             ${show_boxes} def    % True or False
+/shrink                 ${shrink} def    % True or False
+/shrink_fraction        ${shrink_fraction} def               
+
+/show_errorbars         ${show_errorbars} def      % True or False
+/errorbar_fraction      ${errorbar_fraction} def
+/errorbar_width_fraction  ${errorbar_width_fraction} def
+/errorbar_gray          ${errorbar_gray} def
+
+/fontsize               ${fontsize} def
+/small_fontsize         ${small_fontsize} def
+/title_fontsize         ${title_fontsize} def
+/number_fontsize        ${number_fontsize} def
+
+
+/UseCIEColor true def       % Fix for issue 4
+/default_color ${default_color} def 
+/color_dict << 
+${color_dict}
+>> def
+
+
+
+% ---- DERIVED PARAMETERS ----
+
+/char_width stack_width 2 stack_margin mul sub def
+/char_width2 char_width 2 div def
+/char_width4 char_width 4 div def
+
+% movements to place 5'/N and 3'/C symbols
+/leftEndDeltaX  fontsize neg         def
+/leftEndDeltaY  fontsize 1.25 mul neg def
+/rightEndDeltaX fontsize 0.25 mul     def
+/rightEndDeltaY leftEndDeltaY        def
+
+
+% ---- PROCEDURES ----
+
+
+/SetTitleFont {/${title_font} findfont title_fontsize scalefont setfont} bind def
+/SetLogoFont  {/${logo_font} findfont char_width  scalefont setfont} bind def
+/SetStringFont{/${text_font} findfont fontsize scalefont setfont} bind def
+/SetPrimeFont {/Symbol findfont fontsize scalefont setfont} bind def
+/SetSmallFont {/${text_font} findfont small_fontsize scalefont setfont} bind def
+/SetNumberFont {/${text_font} findfont number_fontsize scalefont setfont} bind def
+
+/DrawBox { % width height 
+    /hh exch def
+    /ww exch def
+    gsave
+        0.2 setlinewidth
+        %0.5 setgray
+        
+        %0 0 moveto 
+        hh 0 rlineto
+        0 ww rlineto
+        hh neg 0 rlineto
+        0 ww neg rlineto
+        stroke
+    grestore
+} bind def
+
+
+/StartLogo { 
+  %save 
+  gsave 
+
+  
+  debug { 
+    logo_margin logo_margin moveto
+    logo_height logo_margin 2 mul sub
+    logo_width logo_margin 2 mul sub
+    DrawBox } if
+    
+  show_title { DrawTitle } if
+  show_xaxis_label { DrawXaxisLable } if
+  show_fineprint { DrawFineprint } if
+  DrawLogoLabel
+  
+  
+  MoveToFirstLine
+} bind def
+
+
+/DrawLogoLabel {
+  gsave 
+    SetTitleFont
+    
+    logo_margin
+    logo_height title_fontsize sub logo_margin sub
+    moveto
+    
+    debug { title_fontsize logo_label stringwidth pop DrawBox } if
+    0 title_fontsize 4 div rmoveto % Move up to baseline (approximatly)
+    logo_label show
+    
+  grestore
+} bind def
+
+/DrawTitle {
+  gsave 
+    SetTitleFont
+    
+    logo_width 2 div logo_title stringwidth pop 2 div sub 
+    logo_height title_fontsize sub logo_margin sub
+    moveto
+    
+    debug { title_fontsize logo_title stringwidth pop DrawBox } if
+    
+    0 title_fontsize 4 div rmoveto % Move up to baseline (approximatly)
+    logo_title show
+    
+  grestore
+} bind def
+
+/DrawXaxisLable {
+  % Print X-axis label, bottom center
+  gsave
+    SetStringFont
+
+    logo_width 2 div xaxis_label stringwidth pop 2 div sub
+    xaxis_label_height logo_margin add fontsize sub
+    moveto
+    %fontsize 3 div
+    
+    debug { fontsize xaxis_label stringwidth pop DrawBox } if
+
+    xaxis_label show
+
+  grestore
+} bind def
+
+
+/DrawFineprint {
+    gsave
+    
+    SetSmallFont
+
+    logo_width fineprint stringwidth pop sub 
+        logo_margin sub line_margin_right sub
+    logo_margin 
+    moveto
+    
+    debug { small_fontsize fineprint stringwidth pop DrawBox } if
+        
+    fineprint show
+    grestore
+} bind def
+
+/MoveToFirstLine {
+    logo_margin 
+    logo_height logo_margin sub title_height sub line_height sub
+    moveto
+} bind def
+
+/EndLogo { 
+  grestore 
+  %showpage 
+  %restore 
+} bind def
+
+
+/StartLine{ 
+    gsave 
+  
+    % Draw outer box
+    debug { line_height line_width DrawBox } if  
+
+    % Move to lower left corner of content area
+    line_margin_left line_margin_bottom rmoveto
+
+    % Draw inner content box
+    debug { 
+        line_height line_margin_bottom sub line_margin_top sub
+        line_width line_margin_left sub line_margin_right sub
+        DrawBox
+    } if  
+  
+    show_yaxis { DrawYaxis } if
+    show_xaxis { DrawLeftEnd } if
+    
+} bind def
+
+/EndLine{ 
+    show_xaxis { DrawRightEnd } if
+    grestore 
+    0 line_height neg rmoveto 
+} bind def
+
+
+/DrawYaxis {
+  gsave    
+    stack_margin neg 0 translate
+    DrawYaxisBar
+    DrawYaxisLabel
+  grestore
+} bind def
+
+
+/DrawYaxisBar { 
+  gsave  
+    stack_margin neg 0 rmoveto
+    
+    SetNumberFont
+    stroke_width setlinewidth
+    
+    /str 10 string def % string to hold number  
+    /smallgap stack_margin  def
+
+    % Draw first tic and bar
+    gsave    
+      tic_length neg 0 rmoveto 
+      tic_length 0 rlineto 
+      0 stack_height rlineto
+      stroke
+    grestore
+
+    % Draw the tics
+    % initial increment limit proc for
+    0 yaxis_tic_interval yaxis_scale abs 
+    {/loopnumber exch def
+
+      % convert the number coming from the loop to a string
+      % and find its width
+      loopnumber 10 str cvrs
+      /stringnumber exch def % string representing the number
+
+      stringnumber stringwidth pop
+      /numberwidth exch def % width of number to show
+
+      /halfnumberheight
+         stringnumber CharBoxHeight 2 div
+      def
+
+      gsave
+        numberwidth % move back width of number
+        neg loopnumber stack_height yaxis_scale div mul % shift on y axis
+        halfnumberheight sub % down half the digit
+        rmoveto % move back the width of the string
+
+        tic_length neg smallgap sub % Move back a bit more  
+        0 rmoveto % move back the width of the tic  
+
+        stringnumber show
+        smallgap 0 rmoveto % Make a small gap  
+
+        % now show the tic mark
+        0 halfnumberheight rmoveto % shift up again
+        tic_length 0 rlineto
+        stroke
+     grestore
+    } for
+    
+    % Draw the minor tics
+    % initial increment limit proc for
+    0 yaxis_minor_tic_interval yaxis_scale abs 
+    {/loopnumber2 exch def
+      gsave
+        0
+        loopnumber2 stack_height yaxis_scale div mul 
+        rmoveto 
+
+        tic_length 2 div neg 0 rlineto
+        stroke
+     grestore
+    } for    
+    
+  grestore
+} bind def
+
+/DrawYaxisLabel {
+  gsave
+    SetStringFont
+
+    % How far we move left depends on the size of
+    % the tic labels.
+    /str 10 string def % string to hold number  
+    yaxis_scale yaxis_tic_interval div cvi yaxis_tic_interval mul 
+    str cvs stringwidth pop
+    tic_length 1.25 mul  add neg  
+
+    stack_height
+    yaxis_label stringwidth pop
+    sub 2 div
+
+    rmoveto
+    90 rotate
+    
+    yaxis_label show
+  grestore
+} bind def
+
+
+%Take a single character and return the bounding box
+/CharBox { % <char> CharBox <lx> <ly> <ux> <uy>
+  gsave
+    newpath
+    0 0 moveto
+    % take the character off the stack and use it here:
+    true charpath 
+    flattenpath 
+    pathbbox % compute bounding box of 1 pt. char => lx ly ux uy
+    % the path is here, but toss it away ...
+  grestore
+} bind def
+
+
+% The height of a characters bounding box
+/CharBoxHeight { % <char> CharBoxHeight <num>
+  CharBox
+  exch pop sub neg exch pop
+} bind def
+
+
+% The width of a characters bounding box
+/CharBoxWidth { % <char> CharBoxHeight <num>
+  CharBox
+  pop exch pop sub neg 
+} bind def
+
+
+/DrawLeftEnd {
+  gsave
+    SetStringFont
+    leftEndDeltaX leftEndDeltaY rmoveto
+    
+    show_ends {
+        debug { leftEndDeltaY neg leftEndDeltaX neg DrawBox } if
+        end_type (d) eq {(5) show DrawPrime} if
+        end_type (p) eq {(N) show} if
+    } if
+  grestore
+} bind def
+
+/DrawRightEnd { 
+  gsave
+    SetStringFont
+    rightEndDeltaX rightEndDeltaY rmoveto
+    
+    show_ends {
+        debug { rightEndDeltaY neg leftEndDeltaX neg  DrawBox } if
+        end_type (d) eq {(3) show DrawPrime} if
+        end_type (p) eq {(C) show} if
+    } if
+  grestore
+} bind def
+
+/DrawPrime {
+  gsave
+    SetPrimeFont
+    (\242) show 
+  grestore
+} bind def
+
+
+/StartStack {  % <stackNumber> startstack
+  show_xaxis {DrawNumber}{pop} ifelse
+  gsave
+  debug { stack_height stack_width DrawBox } if
+    
+} bind def
+
+/EndStack {
+  grestore
+  stack_width 0 rmoveto
+} bind def
+
+
+/DrawNumber { % number MakeNumber
+    /n exch def
+    
+    
+  gsave
+    %0 stack_margin neg rmoveto
+    stroke_width setlinewidth
+    stack_width  0 rlineto
+    stack_width 2 div neg 0 rmoveto
+    
+    n () eq 
+    {  0 tic_length 4 div neg rlineto  } 
+    { 0 tic_length 2 div neg rlineto } 
+    ifelse
+
+    stroke
+  grestore   
+
+
+
+  gsave
+    n
+    SetNumberFont
+    stack_width 2 div tic_length 2 div neg rmoveto 
+
+    rotate_numbers {
+        90 rotate     
+        dup stringwidth pop neg % find the length of the number
+        stack_margin sub        % Move down a bit
+        (0) CharBoxHeight 2 div neg % left half height of numbers
+        rmoveto 
+        show
+    } {
+        dup stringwidth pop neg 2 div number_fontsize neg  rmoveto
+        show
+    } ifelse
+    
+    
+
+  grestore
+} bind def
+
+
+
+% Draw a character whose height is proportional to symbol bits
+/ShowSymbol{ % interval character ShowSymbol
+    /char exch def
+    /interval exch def
+    /fraction_width exch def
+    
+    /char_height 
+       interval yaxis_scale div stack_height mul
+       stack_margin sub
+       dup 
+       % if char_height is negative or very small replace with zero 
+       % BUG FIX: This used to be '0.0 gt' but it seems that DrawHeight
+       % has a finite, non-zero minimum, which results in a rangecheck error
+       0.01 gt {}{pop 0.0} ifelse 
+    def 
+
+    char_height 0.0 gt {
+        show_boxes {
+            gsave
+                /ww char_height stack_margin add def
+                /hh stack_width def
+                stroke_width setlinewidth
+                hh 0 rlineto
+                0 ww rlineto
+                hh neg 0 rlineto
+                0 ww neg rlineto
+                stroke
+            grestore     
+        } if
+
+        gsave
+            stack_margin stack_margin rmoveto
+            debug { char_height char_width DrawBox } if
+            1 fraction_width sub char_width mul 2 div  0 rmoveto
+            fraction_width char_width mul char_height char DrawChar
+        grestore
+        
+    } if
+    0 interval yaxis_scale div stack_height mul rmoveto
+} bind def
+
+
+/DrawChar { % <width> <height> <char> ShowChar
+    /tc exch def    % The character
+    /ysize exch def % the y size of the character
+    /xsize exch def % the x size of the character
+    /xmulfactor 1 def 
+    /ymulfactor 1 def
+    
+    gsave
+        SetLogoFont    
+        tc SetColor
+
+        % IReplacementHack
+        % Deal with the lack of bars on the letter 'I' in Arial and Helvetica
+        % by replacing with 'I' from Courier.
+        tc (I) eq {
+            /Courier findfont char_width  scalefont setfont    
+        } if
+
+
+        shrink {
+            xsize 1 shrink_fraction sub 2 div mul
+            ysize 1 shrink_fraction sub 2 div mul rmoveto 
+            shrink_fraction shrink_fraction scale
+        } if
+        
+        % Calculate the font scaling factors
+        % Loop twice to catch small correction due to first scaling
+        2 {
+            gsave
+            xmulfactor ymulfactor scale
+      
+            ysize % desired size of character in points
+            tc CharBoxHeight 
+            dup 0.0 ne {
+                div % factor by which to scale up the character
+                /ymulfactor exch def
+            } {pop pop} ifelse
+
+            xsize % desired size of character in points
+            tc CharBoxWidth  
+            dup 0.0 ne {
+                div % factor by which to scale up the character
+                /xmulfactor exch def
+            } {pop pop} ifelse
+            grestore
+        } repeat
+
+
+  
+        % Draw the character
+        xmulfactor ymulfactor scale
+        % Move lower left corner of character to start point
+        tc CharBox pop pop % llx lly : Lower left corner
+        exch neg exch neg
+        rmoveto
+        
+        tc show    
+
+    grestore
+} bind def
+
+/SetColor{ % <char> SetColor
+  dup color_dict exch known {
+    color_dict exch get aload pop setrgbcolor
+  } {
+    pop
+    default_color aload pop setrgbcolor
+  } ifelse 
+} bind def
+
+
+/DrawErrorbar{ % interval_down interval_up DrawErrorbar
+    
+    gsave
+    /points_per_unit stack_height yaxis_scale div def 
+    /height_up   exch points_per_unit mul def 
+    /height_down exch points_per_unit mul def
+    
+    show_errorbars {
+    
+    stroke_width setlinewidth
+    errorbar_gray setgray     
+    stack_width 2 div 0 rmoveto
+    
+    /errorbar_width char_width errorbar_width_fraction mul def
+    /errorbar_width2 errorbar_width 2 div def
+    
+    gsave 
+        0 height_down neg rmoveto
+        errorbar_width2 neg 0 rlineto
+        errorbar_width 0 rlineto
+        errorbar_width2 neg 0 rlineto
+        0 height_down errorbar_fraction mul rlineto 
+        stroke
+    grestore
+
+    gsave 
+        0 height_up  rmoveto
+        errorbar_width2 neg 0 rlineto
+        errorbar_width 0 rlineto
+        errorbar_width2 neg 0 rlineto
+        0 height_up neg errorbar_fraction mul rlineto 
+        stroke
+    grestore
+    } if
+           
+    grestore
+    
+} bind def
+
+/DrawErrorbarFirst{ % interval_down interval_up center DrawErrorbarFirst
+    gsave
+    /points_per_unit stack_height yaxis_scale div def 
+    /center   exch points_per_unit mul def 
+
+    0 center rmoveto
+    DrawErrorbar
+    grestore
+} bind def
+
+%%EndProlog
+
+%%Page: 1 1
+
+% Example Data
+%StartLogo
+%    StartLine
+%        (1) StartStack
+%            1.2 (C) ShowSymbol
+%            2.2 (I) ShowSymbol
+%            0.5 0.5 DrawErrorbar
+%        EndStack
+%        (2) StartStack
+%            0.5 (I) ShowSymbol
+%            0.9 (L) ShowSymbol
+%            1.0 (G) ShowSymbol
+%            
+%            0.5 0.5 DrawErrorbar        
+%        EndStack
+%        (234) StartStack
+%        EndStack
+%        (235) StartStack
+%        EndStack
+%    EndLine
+%EndLogo
+
+StartLogo
+
+${logo_data}
+
+EndLogo
+
+
+%%EOF
