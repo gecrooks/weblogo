@@ -56,7 +56,7 @@ DEVELOPING WEBLOGO
 
 11. Switch to release branch. 
 	
-	svn switch https://corebio.googlecode.com/svn/branches/0.x
+	svn switch https://weblogo.googlecode.com/svn/branches/0.x
 	./build.sh
 
 12. Tag
