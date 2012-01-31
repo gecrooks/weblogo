@@ -1,0 +1,216 @@
+
+
+WebLogo Release Notes
+
+WebLogo Release Notes
+
+
+3.2 (2012-01-30) [Gavin Crooks, David Sivak]
+
+* Graphical interface now accepts transfac format motif files.
+* New output format option: SVG (Scalable Vector Graphics)
+* Miscellaneous minor bug fixes and refactoring.
+
+
+3.1 (2011-08-16) [Gavin Crooks, David Sivak]
+
+Mostly bug fixes, code improvements and minor user enhancements.
+
+* Command line: Add parsing of transfac PWM files
+* Command line: Add reverse and complement transformations
+* Improve clustal file parsing
+* Currently compatible with python 2.5, 2.6 and 2.7
+* Deprecate support for python 2.3 and 2.4
+* Migrate corebio library into weblogo for easier maintenance and development.
+* Add new annotate option for custom annotation line
+* Miscellaneous minor bug fixes and refactoring.
+
+* Incorporates bug fixes and feedback from Gavin Crooks, John Gilman, 
+Kevin Schutz and Perry Evan.
+
+
+
+3.0 (2008-10-14) [GEC]
+
+A significant update of WebLogo.
+
+New and improved feature include:
+
+* Simplified GUI. More useful options, less obscure options that are rarely
+  used.
+* Several choices of unit including bits and nats, and corresponding energy 
+  measures such as kJ/mol.
+* Error bars are smaller and more discrete.
+* The size of logo stacks is consistent (Does not change with sequence length.)
+* The width of the characters in a stack are scaled by the fraction of non-gaps.
+  Therefore gappy columns are visually less important than columns with gaps.
+* Three standard logo sizes.
+* Can now read many multiple sequence alignment formats, including
+  CLUSTALW, FASTA, plain flatfile, MSF, NBRF, PIR, NEXUS and PHYLIP.
+* High resolution PNG output.
+* New, rational, easy to use command line client.
+* Python based API library.
+* New color schemes, including Watson-Crick pairing, hydrophobicity and charge.
+* I (Isolucine) now shows crossbars, so that the letter is distinguishable
+  from a line.
+* Colors can be specified using CSS2 syntax.
+* Optional figure label.
+* Conservation is now calculated as the Bayesian posterior mean relative
+  entropy. (This is the most significant change scientifically. The math
+  needed to get this right is very interesting.)
+* Similarly, we now display Bayesian 95% confidence intervals for error bars.
+* Compositional adjustment.
+
+* Includes contributions from Clare Gollnick, David Ding, John Gilman.
+* Incorporates bug fixes and feedback from John Reid, Gordon Robertson, 
+  Eric Odell, Krisztina Gabor, ...
+* Incorporates or adapts ideas and code from Gary Hon, Steven Brenner,      
+     John-Marc Chandonia, Liana Lareau, Ed Green, James Casbon, Jeffrey Chang,
+     Frank Kauff, Cymon J. Cox,   ...
+
+
+
+
+-----------------------------------------------------------------------
+
+2.8.2 (2005-09-08)  [LL, GEC]
+  Various Bug fixes:
+    * Fixed Yellow (Was orange)
+    * Various improvements in handling malformed input.
+    * Fixed the fineprint checkbox option, which was stuck on.
+    * Renamed "Uniform Height Logo" option to a more descriptive
+      "Frequency Plot", and removed deceptive y-axis.
+
+2.8.1 (2004-10-18) (Minor bug fix release) [GEC]
+
+Bug fixes:
+ * Made weblogo compatibly with ghostscript version 8.1x.
+    This release is known to work with ghostscript version 7.05, 8.00 & 8.14
+
+Kudos for bug reports and suggestions to:
+ * Lei Shen   
+
+
+2.8 (2004-10-01) [GEC]
+
+Bug fixes:
+ * Fixed another form data parsing bug whose only apparent effect was to
+    fill up the webserver's error log.
+ * Fixed an issue with using double slashes in weblogo's url.
+
+Kudos for bug reports and suggestions to:
+ * Eric Odell    
+ * Scot Wolfe
+ * Alban Mancheron
+ * Ed Green
+
+ 
+2.7 (2004-06-09)  [GEC]
+
+Bug fixes :
+ * Fixed logo.cgi's parsing of checkbox form data.
+ 
+Kudos for bug reports and suggestions to:
+ * Eric Odell
+
+
+2.6 (2004-03-15)  [GEC, GH]
+
+Bug fixes:
+ * Resolved an issue with hard coded paths within the 
+    seqlogo command line client
+ * Improved the parsing of clustalw files
+
+Kudos for bug reports and suggestions to:
+ * Allen Liu
+ * Guo Anyaun
+ * Harald Weber
+
+
+2.5 (2004-02-19)  [GEC, GH]
+
+New features and enhancements :
+ * Added multiline logos.
+
+
+2.4 (2004-01-29) [GEC, GH]
+
+New features and enhancements :
+ * Added file upload for sequence data.
+ * Updated main page to reflect updated publication status
+
+
+2.3 (2003-11-03) [GEC, GH]
+
+New features and enhancements
+ * Added ability to parse CLUSTALW and flat file multiple sequence
+   alignment formats.
+
+Bug fixes:
+ * Antialiasing PNGs now works with recent versions of ghostscript
+ * Can now change output file type when using Mozilla.
+
+
+Kudos for bug reports and suggestions to:
+ * Stefanie Lager
+ * Ed Green
+ * Michael Galperin 
+
+
+2.2 (2003-08-01) [GEC, GH]
+
+Several minor bug fixes and changes to the web pages.
+ * Fixed various buggy command line options
+ * A request for an empty yaxis label is now respected
+ * Fixed a major bug in temporary file name assignment
+   that prevented weblogo from running on some unix variants
+
+New features and enhancements 
+ * Made error bars darker
+ * Added option to control distance between tic marks
+
+Kudos for bug reports and suggestions to
+ * Stefanie Lager
+ * Arlin Stoltzfus
+ * JP Cartailler  
+ * Peter G. Warren
+
+
+2.1 (2003-01-08) [GEC]
+
+Several minor bug fixes and changes to the web pages.
+
+2.0 (2002) [GEC, GH, JMC, SEB]
+
+This second version of WebLogo is a complete rewrite of both
+the user interface and the backend. Many new features and
+options have been provided.
+
+1.0 (1995) [SEB]
+
+The original version of WebLogo was written in 1995 by Steven 
+Brenner, and was hosted by the School of Biological Science, 
+University of Cambridge
+
+
+WebLogo change log
+-----------------------     
++ New feature
+* Changed/Improved feature
+! Fixed bug
+- Removed feature
+
+Versions : major.minor.patch. 
+
+The WebLogo Team 
+------------------
+
+LL:  Liana Lareau
+GEC: Gavin E. Crooks
+GH:  Gary Hon
+JMC: John-Marc Chandonia
+SEB: Steven E. Brenner 
+
+
+
+

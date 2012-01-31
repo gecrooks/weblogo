@@ -1,0 +1,2220 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+ 
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="logo.css" >
+<title>WebLogo 3 - Examples</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+<meta name="author" content="Gavin E. Crooks" >
+<meta name="author" content="Steven E. Brenner" >
+<meta name="ID" content="$ID:" >
+
+<style type="text/css">
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto }
+
+</style>
+</head>
+
+<body>
+
+<table width="80%" border = '0' cellspacing='0' cellpadding='1' align="center">
+<tr><td >
+<h1> WebLogo 3: Examples</h1>
+
+</td><td align = "right"> 
+    &middot; 
+  <a href="./">about</a>&nbsp;&middot;
+  <a href="create.cgi">create</a>&nbsp;&middot; 
+  <a class="selected" href="examples.html">examples</a>&nbsp;&middot; 
+  <a href="manual.html">manual</a>&nbsp;&middot; 
+<br>
+&nbsp;
+</td></tr>
+
+
+<tr><td colspan="2" class="discourse" >
+
+<ul>
+  <li> <a href="#CAP">CAP HTH motif</a> </li>
+ <li>  <a href="#trans">Transcription Factor Binding Sites</a> </li>
+  <li> <a href="#promoters"><i>E. coli</i> Promoters</a> </li> 
+  <li> <a href="#globins">Globins</a>  </li>
+  <li> <a href="#HTH">HTH motif</a>  </li>
+  <li> <a href="#splice">Human Splice Sites</a> </li> 
+</ul>
+<p> 
+The <strong>Edit Logo</strong> buttons will transfer the relevant
+sequence data to the <a class="in" href="create.cgi">Logo creation form</a>. 
+There you can examine the sequence data and recreate the logo for 
+yourself. Additional examples can be found at the 
+<a href="http://www.lecb.ncifcrf.gov/~toms/sequencelogo.html">Sequence Logo
+Gallery</a>.
+</p>
+
+
+<hr >
+<a name="CAP"></a>
+<a name="CAP_HTH"></a>
+<h2>Catobolite Activator Protein (CAP)</h2>
+
+<img  alt="Catobolite Activator Protein (CAP) Logo"  src="examples/cap_hth.png"
+ >
+<p>
+The helix-turn-helix motif from the CAP family of homodimeric DNA
+binding proteins.  CAP (Catabolite Activator Protein, also known as
+CRP for cAMP Receptor Protein) is a transcription promoter that binds
+at more than 100 sites within the <i>E.&nbsp;coli</i> genome.  Residues 1-7
+form the first helix, 8-11 the turn and 12-20 the DNA recognition
+helix.  The glycine at position 9 appears to be
+critical in forming the turn.  Positions 4, 8, 10, 15 and 19 are
+partially or completely buried, and therefore tend to be populated by
+hydrophobic amino acids, which are colored black.  Positions 11-14, 17
+and 20 interact directly with bases in the major groove
+and are critical to the sequence specific binding of the
+protein.  The data for this logo consists of 100 sequences from the
+full Pfam alignment of this family (Accession number
+PF00325).  A few sequences with rare insertions were removed for
+convenience.  
+</p>
+
+<!--
+# Pfam 7.1 crp
+# Accession number: PF00325
+# Bacterial regulatory proteins, crp family
+#
+# Description 
+# Numerous bacterial transcription regulatory
+#  proteins bind DNA via a helix-turn-helix (HTH)
+# motif. These proteins are very diverse, but 
+# for convenience may be grouped into subfamilies on
+# the basis of sequence similarity. One such 
+# family groups together a range of proteins, including
+# anr, crp, clp, cysR, fixK, flp, fnr, fnrN, hlyX and 
+# ntcA [MEDLINE:91064083], [MEDLINE:93181282], 
+# [MEDLINE:91008963]. Within this family, the HTH motif is situated
+# towards the C-terminus.                      
+# This is the full Pfam alignment, less a couple of inserts
+# 102 sequences.
+#
+# http://pfam.wustl.edu/cgi-bin/getdesc?name=crp
+#
+# Introduction to protein structure, 1st edition, contains
+# some more information.
+# First number is sequence number is -5
+# First Helix: 1-7, Turn: 8-11, 2nd (DNA recognition) 12-20
+#
+-->
+
+
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_edit" value="Edit Logo" >
+<input type="hidden" name="logo_title" value="The DNA-binding helix-turn-helix motif of the CAP family" >
+<input type="hidden" name="first_index" value="-5" >
+<input type="hidden" name="logo_start" value="1" >
+<input type="hidden" name="logo_end" value="20" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_errorbars" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="scale_width" value="true" >
+<input type="hidden" name="stack_width" value="large" >
+<input type="hidden" name="sequences" value=">Q9EXQ1/196-227 
+LTMT.-RGDIGNYLGLTVETISRLLGRFQKLGVL
+>Q46158/72-92 
+LTMT.-RGDIGNYLGLTVETISR-----------
+>Q46157/72-92 
+LTMT.-RGDIGNYLGLTVETISR-----------
+>Q46159/72-92 
+LTMT.-RGDIGNYLGLTVETISR-----------
+>Q47948/72-92 
+LTMT.-RGDIGNYLGLTVETISR-----------
+>FNR_HAEIN/196-227 
+LTMT.-RGDIGNYLGLTVETISRLLGRFQKLGVI
+>ETRA_SHEPU/193-224 
+LTMT.-RGDIGNYLGLTVETISRLLGRFQKSGLI
+>FNR_SALTY/193-224 
+LTMT.-RGDIGNYLGLTVETISRLLGRFQKSGML
+>Q9LA24/207-238 
+LTMT.-RGDIGNYLGLTVETISRLLGRFQKSGML
+>Q9AQ50/193-224 
+LTMT.-RGDIGNYLGLTVETISRLLGRFQKSGML
+>FNR_ECOLI/193-224 
+LTMT.-RGDIGNYLGLTVETISRLLGRFQKSGML
+>HLYX_ACTPL/192-223 
+LTMT.-RGDIGNYLGLTIETISRLLGRFQKSGMI
+>O31204/192-223 
+LTMT.-RGDIGNYLGLTIETISRLLGRFQKSGMI
+>Q9L801/192-223 
+LTMT.-RGDIGNYLGLTIETISRLLGRFQKSGMI
+>Q9KS27/193-224 
+LTMT.-RGDIGNYLGLTVETISRLLGRFQKSEIL
+>Q9CMY2/212-243 
+LTMT.-RGDIGNYLGLTVETISRLLGRLQKMGIL
+>Q44500/188-219 
+LAMS.-RNEIGNYLGLAVETVSRVFSRFQQNELI
+>ANR_PSEAE/188-219 
+LAMS.-RNEIGNYLGLAVETVSRVFTRFQQNGLI
+>O85222/188-219 
+LSMS.-RNEIGNYLGLAVETVSRVFTRFQQNELI
+>FNRA_PSEST/188-219 
+LPMS.-RNEIGNYLGLAVETVSRVFTRFQQNGLL
+>BTR_BORPE/186-217 
+VRMS.-REEIGNYLGLTLETVSRLFSRFGREGLI
+>Q9JQQ8/187-218 
+LRMS.-REEIGSYLGLKLETVSRTLSKFHQEGLI
+>O69245/180-211 
+LPMC.-RRDIGDYLGLTLETVSRALSQLHTQGIL
+>Q9AMR4/161-192 
+LPMS.-RRDIADYLGLTVETVSRAVSQLHTDGVL
+>FIXK_BRAJA/185-216 
+LPMS.-RQDIADYLGLTIETVSRTFTKLERHGAI
+>AADR_RHOPA/187-218 
+LPMG.-RQDIADFLGLTIETVSRTFTKLEREKLI
+>FIXK_RHIME/159-190 
+LPMS.-RQDIADYLGLTIETVSRVVTKLKERSLI
+>FIXK_AZOCA/196-227 
+LAMS.-RQDIADFLGLTIETVSRTLTYLEEQGTI
+>Q9AA54/164-195 
+VPMS.-RQDMADYLGLTIETVSRTLTSLQDEGLI
+>Q988V4/163-194 
+LPMS.-RMDIGDYLGLTIETVSRVFTRLKDKGVI
+>Q53170/175-206 
+LPMT.-RLDVADYLGMTIETVSRTITKLAGSGVI
+>Q989I4/189-220 
+LPLT.-RADISDFLGLTNETVSRQLTRLRADGVI
+>Q988R0/189-220 
+LPLT.-RADIADFLGLTIETVSRQLTRLRTDGLI
+>O06655/187-218 
+LPLS.-RAEIADFLGLTIETVSRKLTKLRKSGVI
+>O86069/185-216 
+LPLS.-RAEIADFLGLTIETVSRQLTRLRKEGVI
+>O86067/187-218 
+LPLS.-RAEIADFLGLTIETVSRQMTRLRKWGVI
+>Q52775/187-218 
+LPLS.-RAEIADFLGLTIETVSRQMTRLRKSGVI
+>FX24_RHILV/187-218 
+LPLS.-RAEIADFLGLTIETVSRQMTRLRKIGVI
+>FNRL_RHOSH/187-218 
+LPLT.-REEMADYLGLTLETVSRQVSALKRDGVI
+>Q51677/188-219 
+LPLT.-REAMADYLGLTLETVSRQMSALKREGVI
+>O33961/187-218 
+LPLT.-REAMADYLGLTLETVSRQMSALKRDGVI
+>O87372/155-185 
+-SIS.-RADMADFLGLTTETVSRLLSAFHREQLI
+>P95599/188-221 
+LRVSmNRQDIADHLGLTIETLAHTVTKLASRNIV
+>Q52823/185-216 
+VPMS.-RQDIADHLGLTIETVSRTLTKLASRNVV
+>Q9FDG3/192-223 
+VPMN.-RQDIADHLGLTIETVSRTITKLAARNIV
+>O84975/207-238 
+LRMS.-REDIASYLGLRLETVCRSVARLRAQDVV
+>Q53240/186-217 
+FPIT.-RQNISEMTGTTLHTVSRLLSAWEREGIV
+>O52578/162-191 
+--IS.-RQDIAEMTGTTLHTVSRILSAWEQLGFV
+>Q9KWP8/153-184 
+FPIT.-KQDIAEMTGTTLHTVSRILTGWEAQGFV
+>O66781/189-220 
+LPLT.-RQDIAEMTGTTVETTIRVMSKWKKQGII
+>Q982N1/28-58 
+-PIA.-RGEIASRVGLTVQTVSTIVRELEEQGYI
+>P96094/179-210 
+LPAK.-KAMIAARLGLTPETFSRVLKRLREEHLI
+>FLP_LACCA/168-199 
+VPMA.-WTQLADYLGTTPETVSRTLKRLAEEKLI
+>Q97IX9/173-206 
+INMElSITYLADMLGSKRETVSRQLKLLTEKNLV
+>Q9CE44/171-202 
+IPMK.-LKELANYIGTSPETISRKIKVFEENKII
+>Q9S392/178-209 
+IPMK.-MKDLATFIGTTPETISRKFKILEEKGFI
+>Q9S393/178-209 
+IPMT.-LKDLSAFIGTTPETISRKLRLLEEKGLV
+>Q98GX3/209-240 
+LPLS.-QAELADVLGLSVVHMNRVIGALRKVGVV
+>Q9XDD3/182-213 
+CPLT.-QGELADALGLTPIHINRMLRELREDNLL
+>NTCA_ANASP/172-203 
+LKLS.-HQAIAEAIGSTRVTVTRLLGDLREKKMI
+>NTCA_SYNP7/171-202 
+LKLS.-HQAIAEAIGSTRVTVTRLLGDLRESKLI
+>NTCA_SYNY3/174-205 
+LKLS.-HQAIAEAIGSTRVTVTRLLGDLREGNMI
+>P94611/175-206 
+LKLS.-HQAIAEAIGSTRVTVTRLLGDLRQEEMI
+>Q9L627/170-201 
+LKLS.-HQAIAEAIGSTRVTVTRLLGDLRQDEMI
+>Q9AG80/172-203 
+LKLS.-HQAIAEAIGSTRVTVTRLLGDLRQDKMI
+>O30778/173-204 
+LRLS.-HQAIAEAIGSTRVTITRLLGDLRNSGLV
+>Q9KI45/189-220 
+FPLT.-HAQIGSAIGSTRVTVTRLMGKLRQRGLI
+>CYSR_SYNP7/152-183 
+IPLT.-HQVIAELSGSTRVTTTRLLGEFRQAGRI
+>CYSR_SYNY3/160-191 
+VRLT.-HQMLANAIGTTRVTVTRLLGEFQTQGKV
+>Q55322/177-208 
+LRLT.-HQEMASALSTTRVTVTRVIGLLRDEGWL
+>Q9RTV7/201-231 
+-RIS.-HQDLAHSVGSTRETITKLLGDFRTRGLL
+>Q9TLZ6/157-188 
+IYIS.-QHDIASILSTTRSTITRLINQLRKDNII
+>FNR_BACSU/174-205 
+IVLT.-NQDLAKFCAAARESVNRMLGDLRKKGVI
+>O86128/173-204 
+IVLT.-NQDLAKFCAAARESINRMLSDLRKNGVI
+>Q9KG81/173-204 
+IVLT.-NQELANFCAAARESVNRMLGELRKLGVI
+>CRP_PASMU/165-196 
+IKIT.-RQEIGQMVGCSRETVGRILKMLEDQHLI
+>Q48301/170-201 
+IKIT.-RQEIGQMVGCSRETVGRILKMLEDQHLI
+>CRP_HAEIN/180-211 
+IKIT.-RQEIGQMVGCSRETVGRIIKMLEDQNLI
+>Q51859/180-211 
+IKIT.-RQEIGQMVGCSRETVGRIIKMLEDEGLI
+>Q9F435/166-197 
+IKIT.-RQEIGQIVGCSRETVGHILKMLEDQNLI
+>CRP_ECOLI/166-197 
+IKIT.-RQEIGQIVGCSRETVGRILKMLEDQNLI
+>CRP_SALTY/166-197 
+IKIT.-RQEIGQIVGCSRETVGRILKMLEDQNLI
+>O07097/166-197 
+IKIT.-RQEIGQIVGCSRETVGRILKMLEDQNLI
+>Q9ALY5/166-197 
+IKIT.-RQEIGQIVGCSRETVGRILKMLEEQNLI
+>O34015/166-197 
+IKIT.-RQEIGQIVGCSRETVGRILKMLEEQNLI
+>Q9KNW6/166-197 
+IKIT.-RQEIGQIVGCSRETVGRILKMLEEQNLI
+>CLP_XANCP/186-217 
+LRVS.-RQELARLVGCCAQMAGRVLKKLQADGLL
+>Q9PD39/185-216 
+LRVS.-RQELARLVGCSREMAGRVLKKLQADGLL
+>Q9S6B5/186-217 
+LRVS.-RQELARLVGCSREMAGRVLKKLQADGLL
+>P71977/33-62 
+--LS.-QAEIGERVGMARSTVSRILNALEDEGLV
+>O28174/36-67 
+VKIS.-SKELAEHIGQSLQTAARKLKELEDEGLI
+>Q9CB91/174-204 
+-DLT.-QEEIAQLVGASRETVNKALADFAHRGWI
+>O69644/174-204 
+-DLT.-QEEIAQLVGASRETVNKALADFAHRGWI
+>Q9XA42/174-204 
+-DLT.-QEELAQLVGASRETVNKALADFAQRGWL
+>Q97TL8/136-167 
+INCT.-HEDIGKAVGVSRVTVSRTLNKFSQYQWI
+>Q99YT6/175-206 
+FQLT.-TTDIAQISGTTRETVSHVLRDLKKQELI
+>Q9RRX0/176-209 
+LNLKlNQEDIARMVGATRETVSHSLSRLKKGGAI
+>Q9K5F3/178-209 
+CPIT.-AAEIAKISGTSRETVSAVLKKLRCEGVI
+>P73234/185-215 
+-NLP.-HRETAMLSGVTRETVTRTLGKLEKKGLI
+>P74171/182-212 
+-NLP.-HRELSSISGLARETVTRCLTKLEKRGLI
+>Q981X4/78-109 
+AKVT.-HDQIAAMVGSTRQWVTMMMKRFQKEGLV
+" >
+</form>
+
+
+
+<img alt="CAP Binding Site Logo" 
+src="examples/cap_dna.png" >
+<p>
+The two DNA recognition helixes of the CAP homodimer insert
+themselves into consecutive turns of the major groove.  Several
+consequences can be observed in this CAP binding site logo.  The logo
+is approximately palindromic, which provides two very similar
+recognition sites, one for each subunit of the dimer.  
+However, the binding
+site is not perfectly symmetric, possible due to the 
+inherent asymmetry of the operon promoter region.
+The displacement of the two parts is 11 base pairs, or approximately
+one full turn of the DNA helix.  Additional interactions between the
+protein and the first and last two bases occur within the DNA minor
+groove, where it is difficult for the protein to distinguish A from T,
+or G from C.
+The data for this logo consists of 59 binding sites determined by 
+DNA footprinting: 
+<cite>
+Robison, K., McGuire, A. M., Church, G. M. A comprehensive library of 
+DNA-binding site matrices for 55 proteins applied to the
+complete <i>Escherichia coli</i> K12 genome. Journal of Molecular Biology 
+(1998) 284, 241-254. 
+</cite>
+</p>
+
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_edit" value="Edit Logo" >
+<input type="hidden" name="first_index" value="-10" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_errorbars" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="scale_width" value="true" >
+<input type="hidden" name="logo_title" value="58 CAP Binding Sites" >
+<input type="hidden" name="stack_width" value="large" >
+<input type="hidden" name="sequences" value="
+>aldB -18->4
+attcgtgatagctgtcgtaaag
+>ansB 103->125
+ttttgttacctgcctctaactt
+>araB1 109->131
+aagtgtgacgccgtgcaaataa
+>araB2 147->169 
+tgccgtgattatagacactttt
+>cdd 1 107->129
+atttgcgatgcgtcgcgcattt
+>cdd 2 57->79
+taatgagattcagatcacatat
+>crp 1 115->137
+taatgtgacgtcctttgcatac
+>crp 2
+gaaggcgacctgggtcatgctg
+>cya 151->173 
+aggtgttaaattgatcacgttt
+>cytR 1 125->147
+cgatgcgaggcggatcgaaaaa
+>cytR 2 106->128
+aaattcaatattcatcacactt
+>dadAX 1 95->117
+agatgtgagccagctcaccata
+>dadAX 2 32->54
+agatgtgattagattattattc
+>deoP2 1 75->97
+aattgtgatgtgtatcgaagtg
+>deoP2 2 128->150 
+ttatttgaaccagatcgcatta
+>fur 136->158
+aaatgtaagctgtgccacgttt
+>gal 56->78
+aagtgtgacatggaataaatta
+>glpACB (glpTQ) 1 54->76  
+ttgtttgatttcgcgcatattc
+>glpACB (glpTQ) 2 94->116
+aaacgtgatttcatgcgtcatt
+>glpACB (glpTQ) 144->166 
+atgtgtgcggcaattcacattt
+>glpD (glpE) 95->117 
+taatgttatacatatcactcta
+>glpFK 1 120->142
+ttttatgacgaggcacacacat
+>glpFK 2 95->117
+aagttcgatatttctcgttttt
+>gut (srlA) 72->94
+ttttgcgatcaaaataacactt
+>ilvB 87->109
+aaacgtgatcaacccctcaatt
+>lac 1 (lacZ) 88->110
+taatgtgagttagctcactcat
+>lac 2 (lacZ) 16->38 
+aattgtgagcggataacaattt
+>malEpKp1 110->132
+ttgtgtgatctctgttacagaa
+>malEpKp2 139->161
+TAAtgtggagatgcgcacaTAA
+>malEpKp3 173->195
+TTTtgcaagcaacatcacgAAA
+>malEpKp4 205->227
+GACctcggtttagttcacaGAA
+>malT 121->143
+aattgtgacacagtgcaaattc
+>melR 52->74
+aaccgtgctcccactcgcagtc
+>mtl 302->324
+TCTTGTGATTCAGATCACAAAG
+>nag 156->178
+ttttgtgagttttgtcaccaaa
+>nupG2 97->119
+aaatgttatccacatcacaatt
+>nupG1 47->69
+ttatttgccacaggtaacaaaa
+>ompA 166->188
+atgcctgacggagttcacactt
+>ompR 161->183
+taacgtgatcatatcaacagaa
+>ptsH A 316->338
+Ttttgtggcctgcttcaaactt
+>ptsH B 188->210
+ttttatgatttggttcaattct
+>rhaS (rhaB) 161->183 
+aattgtgaacatcatcacgttc
+>rot 1 (ppiA) 182->204 
+ttttgtgatctgtttaaatgtt
+>rot 2 (ppiA) 129->151
+agaggtgattttgatcacggaa
+>tdcA 60->82
+atttgtgagtggtcgcacatat
+>tnaL 73->95
+gattgtgattcgattcacattt
+>tsx 2 146->168
+gtgtgtaaacgtgaacgcaatc
+>tsx 1 107->129
+aactgtgaaacgaaacatattt
+>uxuAB 165->187
+TCTTGTGATGTGGTTAACCAAT
+" >
+</form>
+
+<hr ><a name="trans"></a>
+<h2><i>E. coli</i> Transcription Factor Binding Sites</h2>
+
+<p>
+The following logos (along with the <a href="#CAP">CAP logo</a> above) display
+a selection of <i>E. coli</i> transcription factor binding sites determined 
+by DNA footprinting. This data has been collated in the 
+<a href="http://arep.med.harvard.edu/dpinteract/">DPInteract</a>
+database and has been used to 
+<a href="http://arep.med.harvard.edu/ecoli_matrices/">search for 
+additional binding sites</a> within the <i>E. coli</i> genome.
+</p>
+<p>
+<a name="footprinting"></a>
+<cite>
+Robison, K., McGuire, A. M., Church, G. M. A comprehensive library of 
+DNA-binding site matrices for 55 proteins applied to the
+complete <i>Escherichia coli</i> K12 genome. Journal of Molecular Biology 
+(1998) 284, 241-254. 
+</cite>
+</p>
+
+<a name="LexA"></a>
+<img alt ="" src="examples/lexA.png"  ><br >
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_edit" value="Edit Logo" >
+LexA repressor is closely related to CAP, and has similar DNA protein 
+interactions.
+<input type="hidden" name="logo_title" value="19 LexA Binding Sites" >
+<input type="hidden" name="stack_width" value="large" >
+<input type="hidden" name="first_index" value="-9" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_errorbars" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="scale_width" value="true" >
+<input type="hidden" name="sequences" value="
+>dinD 32->52
+aactgtatataaatacagtt
+>dinG 15->35 
+tattggctgtttatacagta
+>dinH 77->97
+tcctgttaatccatacagca
+>dinI 19->39
+acctgtataaataaccagta
+>lexA-1 28->48
+tgctgtatatactcacagca
+>lexA-2 7->27
+aactgtatatacacccaggg
+>polB(dinA) 53->73
+gactgtataaaaccacagcc
+>recA 59->79
+tactgtatgagcatacagta
+>recN-1 49->69
+tactgtatataaaaccagtt
+>recN-2 27->47
+tactgtacacaataacagta
+>recN-3 9-29
+TCCTGTATGAAAAACCATTA
+>ruvAB 49->69
+cgctggatatctatccagca
+>sosC 18->38
+tactgatgatatatacaggt
+>sosD 14->34
+cactggatagataaccagca
+>sulA 22->42
+tactgtacatccatacagta
+>umuDC 20->40
+tactgtatataaaaacagta
+>uvrA 83->103 
+tactgtatattcattcaggt
+>uvrB 75->95
+aactgtttttttatccagta
+>uvrD 57->77
+atctgtatatatacccagct" >
+</form>
+
+<a name="hns"></a>
+<!--<img alt ="" src="examples/hns.png" >-->
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_edit" value="Edit Logo" >
+H-NS: Histone like, nucleoid-associated DNA-binding protein.
+<input type="hidden" name="logo_title" value="15 hns Binding Sites" >
+<input type="hidden" name="stack_width" value="large" >
+<input type="hidden" name="first_index" value="-1" >
+<input type="hidden" name="logo_start" value="1" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_errorbars" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="scale_width" value="true" >
+<input type="hidden" name="sequences" value="
+>hns1
+tAGGCTGATTT
+>hns2
+gAAAATTATTT
+>hns3
+gGGAGTTATTC
+>hns4
+aCAAATTATTT
+>hns5
+gCAACAGAGTA
+>hns6
+aCGCCTGAATA
+>hns7
+tCGAGAAAGTT
+>hns8
+tCGCCGGAATT
+>hns9
+tGGCATGAATA
+>hns10
+aTAAAGGAATC
+>hns11
+cTAATTTAATT
+>hns12
+gCAATTAAATT
+>hns13
+tGACATGAATC
+>hns14
+cTGGCTAATTT
+>hns15
+aCAACTGAATT" >
+</form>
+
+
+<a name="dnaA"></a>
+<!--<img alt="" src="examples/dnaA.png" >-->
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_edit" value="Edit Logo" >
+DNA biosynthesis initiation binding protein.
+<input type="hidden" name="logo_title" value="8 dnaA Binding Sites" >
+<input type="hidden" name="stack_width" value="large" >
+<input type="hidden" name="logo_end" value="14" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_errorbars" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="scale_width" value="true" >
+<input type="hidden" name="sequences" value="
+>dnaA_1 rpoH-1
+aatttattcacaagc
+>dnaA_2 rpoH-2
+attttatccacaagt
+>dnaA_3 nrd
+gagttatccacaaag
+>dnaA_4 oriC-R1
+ttgttatccacaggg
+>dnaA_5 oriC-R2
+ggggttatacacaac
+>dnaA_6 oriC-R3
+ttctttggataacta
+>dnaA_7 oriC-R4
+gagttatccacagta
+>dnaA_10   dnaA
+gatttatccacagga" > 
+</form>
+
+
+<a name="argR"></a>
+<!--<img alt ="" src="examples/argR.png" >-->
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_edit" value="Edit Logo" >
+Arginine Repressor.
+<input type="hidden" name="logo_title" value="17 ArgR Binding Sites" >
+<input type="hidden" name="stack_width" value="large" >
+<input type="hidden" name="first_index" value="-8" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_errorbars" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="scale_width" value="true" >
+<input type="hidden" name="sequences" value="
+>argA-1 32->50
+acagaataaaaatacact
+>argA-2 11->29 
+ttcgaataatcatgcaaa
+>argD-1 51->69
+agtgattttttatgcata
+>argD-2 30->48
+tgtggttataatttcaca
+>argECBH-1 26->44, argC 110->128
+tatcaatattcatgcagt
+>argECBH-2 47->65, argC 89->107
+tatgaataaaaatacact
+>argF-1 48->66
+aatgaataattacacata
+>argF-2 27->45
+agtgaattttaattcaat
+>argG-1 73->91
+attaaatgaaaactcatt
+>argG-2 52->70
+tttgcataaaaattcagt
+>argG-3 192->210
+tgtgaatgaatatccagt
+>argI-1 46->64
+aatgaataatcatccata
+>argI-2 25->43
+attgaattttaattcatt
+>argR-1 45->63
+tttgcataaaaattcatc
+>argR-2 24->42
+tatgcacaataatgttgt
+>carAB-1 32->50
+tgtgaattaatatgcaaa
+>carAB-2 11->29
+agtgagtgaatattctct" >
+</form>
+
+
+
+<hr >
+<a name="promoters"></a>
+<h2><i>E. coli</i> Promoters (Transcription Start Signals)</h2>
+
+<p>
+<img alt="" src="examples/ecoli10.png"><br >
+In prokaryotes the DNA sequence just upstream of the transcription start point
+contains two important conserved regions. The first such region is centered
+at around 35bp upstream and is involved in the initial recognition of the 
+gene by RNA polymerase. 
+<!--The consensus sequence is TTGACAT, but the logo
+indicates that a great deal of variation occurs. --> 
+The second region, sometimes
+referred to as the Pribnow box, is centered at about 10bp upstream. The typical
+separation between the -35 and -10 sites is 15-18 bp. 
+See 
+<a class="out" href="http://www.lecb.ncifcrf.gov/~toms/papers/baseflip/">baseflip: 
+Strong Minor Groove Base Conservation in Sequence Logos
+implies DNA Distortion or Base Flipping during Replication and
+Transcription Initiation</a> for more information. This sequence data was kindly provided by Prof. Julia Brettschneider &lt;juliab@stat.berkeley.edu&gt;
+</p>
+
+
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_edit" value="Edit Logo" >
+ The -10 region of 350 E. coli promoters
+<input type="hidden" name="logo_title" value="-10 region of 3E. coli promoters" >
+<input type="hidden" name="stack_width" value="large" >
+<input type="hidden" name="first_index" value="-21" >
+<input type="hidden" name="logo_start" value="0" >
+<input type="hidden" name="logo_end" value="7" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_errorbars" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="scale_width" value="true" >
+<input type="hidden" name="sequences" value="> The -10 hexamers of 350 E.coli promoters
+gatgacgtggtttacgaccccaTTTAGTagtcaaccgcagtgagtgagtc
+>
+ttgaaaccagacgtttcgccccTATTACagactcacaaccacatgatgac
+>
+ctggcggcgtagcgatgcgctgGTTACTctgaaaacggtctatgcaaatt
+>
+tgacttttagcgcccatatctcCAGAATgccgccgtttgccagaaattcg
+>
+gatttacgtcatcattgtgaatTAATATgcaaataaagtgagtgaatatt
+>
+agaatacagcttattgaataccCATTATgagttagccattaacgcgtcca
+>
+cgacgacggtttacgctttacgTATAGTggcgacaattttttttatcggg
+>
+ctgacgctttttatcgcaactcTCTACTgtttctccatacccgttttttt
+>
+atccgtttttgtatccagtaacTCTAAAagcatatcgcattcatctggag
+>
+ttttttattgaatgtagaatttTATTCTgaatgtgtgggctctctatttt
+>
+tattctgaatgtgtgggctctcTATTTTaggattaattaaaaaaatagag
+>
+tcttttcacctttcctcctgttTATTCTtattaccccgtgtttatgtctc
+>
+attgcttaagcaagatcggacgGTTAATgtgttttacacattttttccgt
+>
+gcgccacactaaggtaattcctTATGCTggcaatgtcgtgaccagtgata
+>
+tgcagcctgtgctcagcgcgtgTTTCATacgcaagtgcgtatcggcgcgc
+>
+tgcattcgctgccgcataccatTATTCTtgatctgacggaagtctttttg
+>
+ggacataaggtgaatactttgtTACTTTagcgtcacagacatgaaattgg
+>
+ttattgagctttccggcgagagTTCAATgggacaggttccagaaaactca
+>
+ttaaaaattgttaacaattttgTAAAATaccgacggatagaacgacccgg
+>
+taacacctcgtcaaaatcctgcTATTCTgcccgttgcggtactgggcatt
+>
+tctattttatattattccctgtTTTAATtaactctatcagggatggttta
+>
+gacagaggccctcaatccaaacGATAAAgggtgatgtgtttactgatatg
+>
+tgctatctcgctgacggacaggCAAATTgatgaccagcttttaaaccgac
+>
+tttgacatttcttttgcactggTAAACTaaatcacttttttttgtcccag
+>
+ttttctcgcgtccgcgatagcgTAAAATagcgccgtaacccccaggtcct
+>
+aatttctacctgtttaagcatcTCTGGTagacttcctgtaattgaatcga
+>
+tgcagtgctcatagcggtcattTATGTCagacttgtcgttttacagttcg
+>
+aacatatctcgcaagcctgtctTGTGTTgacaacattttctgctaaccct
+>
+ctctccctgacgcgggataaagTGGTATtctcaaacatatctcgcaagcc
+>
+tatatctttaacaatctcaggtTAAAAActttcctgttttcaacgggact
+>
+gttgcaaatgaataattacacaTATAAAgtgaattttaattcaataagtg
+>
+tgaacgtccaatcaataaccgcTTTAATagataaacaccgctgatgaatg
+>
+ttgctttttatcttcagatgaaTAGAATgcggcggattttttgggtttca
+>
+gtcataaggtaaaagtctcattTATGATgagttccattggatttacttat
+>
+ttaccttatgacaatcggcgagTAGTCTgcctctcattccagagacagac
+>
+tacactttatgcttccggctcgTATGTTgtgtggaattgtgagcggataa
+>
+cgcaaaacctttcgcggtatggCATGATagcgcccggaagagagtcaatt
+>
+taaagttgtcacggccgagactTATAGTcgctttgtttttattttttaat
+>
+ttcattcttgaatatttattggTATAGTaaggggtgtattgagattttca
+>
+atctcttggccttgctggtcgtTATCCTgcaagctatcactttattggct
+>
+taaatctgtcataaatctgacgCATAATgacgtcgcattaatgatcgcaa
+>
+tgcagggagagcgccccggcacTAGACTacccgcctcttattttagtctg
+>
+acatatttttgtgagcaatgatTTTTATaataggctcctctgtatacgaa
+>
+ttacagtaatgtaaccttcccgTAAAATgcccacacactttaaacgccac
+>
+tagcgtaacaacaaaagattgtTATGCTtgaaatatggtgatgccgtacc
+>
+tcccttgtccccatctctcccaCATCCTgtttttaaccttaaaatggcat
+>
+tgaggcaatcgcctgttggtggTATCGTttatcgctttttcaaaaaattc
+>
+gattgcagaaatatattgataaTATTATtgataactatttgcatttgcaa
+>
+aaatgcaaatagttatcaataaTATTATcaatatatttctgcaatcaatg
+>
+tgctggaaaattaatgtgctttTATAGTggcgcttattgttgtcaatatt
+>
+attatcactcccttttactggcTAAACCagaaaacttattttatcattca
+>
+tcacacactctgtagcagatgaTCTAACaatctgattacagaacatcggc
+>
+tgtcagcctgtcccgcttataaGATCATacgccgttatacgttgtttacg
+>
+tttcatttaggcgtggcaattcTATAATgatacgcattatctcaagagca
+>
+acagttattagtggtagacaagTTTAATaattcggattgctaagtacttg
+>
+acaaacattaccaggaaaagcaTATAATgcgtaaaagttatgaagtcggt
+>
+tgtaatgattttgtgaacagccTATACTgccgccaggtctccggaacacc
+>
+tgggcagcttcttcgtcaaattTATCATgtggggcatccttaccgctctg
+>
+ctttaaaaactgcccctgacacTAAGACagtttttaaaggttccttcgcg
+>
+ggaaatgggcatcaaaaagagaTAAATTgttctcgatcaaattggctgaa
+>
+ttacacattctgacggaagataTAGATTggaagtattgcattcactaaga
+>
+gtcacacttttcgcatctttgtTATGCTatggttatttcataccataagc
+>
+gtcacacttttcgcatctttgtTATGCTatggttatttcataccataagc
+>
+gttttttgttgttaattcggtgTAGACTtgtaaacctaaatcttttcaat
+>
+tgtaaaccaaattgaaaagattTAGGTTtacaagtctacaccgaattaac
+>
+caaaactggcacgattttttcaTATATGtgaatgtcacgcaggggatcgt
+>
+tttttcatcaggttttacgctaAATAATcactgtgttgagtgcacaattt
+>
+ttgacggctcgccctaattctcTAAATTgtatttctagagttggcgaggt
+>
+cgtgttacaaaaattcttttctTATGATgtagaacgtgcaacgcaattga
+>
+caaaaattcttttcttatgatgTAGAACgtgcaacgcaattgatgctcgc
+>
+gatggtgaacaagtacgcgaggGAGAATgagcatccattgctgtgtacgc
+>
+actcctcacttacacgtaatacTACTTTcgagtgaaaatctacctatctc
+>
+ggtggtggtttgttggttgggtTGACATactgggtcatttacctgcgtga
+>
+tatggtgctgccggtcgcgatgTTTGTTgccagcggttttgagcacagta
+>
+gcaaacctgatggtatgtctggCAGTATggatgagttattctggccgcag
+>
+tttctcatctataatgctttgtTAGTATctcgtcgccgacttaataaaga
+>
+tttctcatctataatgctttgtTAGTATctcgtcgccgacttaataaaga
+>
+tgataaaaccgatagccacaggAATAATgtattacctgtggtcgcaatcg
+>
+gagcaagtgattgaaaaagcgcTACAATacgcgcgccagaaattggctct
+>
+tggaattttgtaaatctcccgtTACCCTgatagcggacttcccttctgta
+>
+ttcaataaattgcgaaacaaggTATACTccagcagttcctgaagatgttt
+>
+acgcagcagtagcaaactaagcTATAAAttgcagcgcgaactggagcagc
+>
+tgttcagcgtacacgtgttagcTATCCTgcgtgcttcaataaaataaggc
+>
+ttgtaagttttcaactacgttgTAGACTttacatcgccaggggtgctcgg
+>
+ttcacacttgtaagttttcaacTACGTTgtagactttacatcgccagggg
+>
+gttgatctttgttgtcactggaTGTACTgtacatccatacagtaactcac
+>
+attagcatcgcatcaggcaatcAATAATgtcagatatgaaaagcggaaac
+>
+tggcatatgaaattttgaggatTACCCTacacttataggagttaccttac
+>
+acatggttgcacaaagttgcaaCATCATggatatttcacgataacgttaa
+>
+aaaatttaatgtaaatggtgtgTTAAATcgattgtgaataaccagcgctt
+>
+aaaatttaatgtaaatggtgtgTTAAATcgattgtgaataaccagcgctt
+>
+tgtgaataaccagcgcttccggCAGGATacggtcgccctggtaaaacata
+>
+aacggcaagtttcgacattgccGATAATaattttttggagactttagatg
+>
+catcactctgtcatctttccagTAGAAActaatgtcactgaaatggtgtt
+>
+gtcggaatggctggttatccatTAAAATagatcggatcgatataagcaca
+>
+tgcaaaggaaaacgtttccgctTATCCTttgtgtccggcaaaaacatccc
+>
+tgactctatgacgttacaaagtTAATATgcgcgccctatgcaaaaggtaa
+>
+tttcagagattatgaattgccgCATTATagcctaataacgcgcatctttc
+>
+ttcatgacggcaaacaatagggTAGTATtgacaagccaattacaaatcat
+>
+tgatctgctggcaagaacagacTACTGTatataaaaacagtataacttca
+>
+tgaataatattttcaactgagtTATCAAgatgtgattagattattattct
+>
+gatcatgcagctagtgcgatccTGAACTaaggttttctgatacttgaata
+>
+gatgcggtgctttcctggctgtTAGAATacgccccgtcgcgcctgactgg
+>
+agcgttaccgtccgctatcgtcTATGTTcaagttgtcttaattgccagaa
+>
+tttattgatcttacgcatcctgTATGATgcaagcagactaaccctatcaa
+>
+catcaaattgcctttagctacaGACACTaaggtggcagacatcgaaacga
+>
+gtttcagagcgttaccttgcccTTAAACattagcaatgtcgatttatcag
+>
+tgcacaactgaatttaaggctcTATTATtacctcaacaaaccaccccaat
+>
+taatgtagccaccaaatcatacTACAATttattaactgttagctataatg
+>
+tgctgaagaataattgaaatgaTATTATtaattccactgcctttggtaga
+>
+gaatatgattgctatttgcattTAAAATcgagacctggtttttctactga
+>
+cgtgacattttaacacgtttgtTACAAGgtaaaggcgacgccgcccatga
+>
+tgacaattaatcatcgaactagTTAACTagtacgcaagttcacgtaaaaa
+>
+ttgcgtatcggattttatcaggTACAGTgtgacgctttcgtcaatctggc
+>
+gacgctttcgtcaatctggcaaTAGATTtgcttgacattcgaccaaaatt
+>
+acattcgaccaaaattccgtcgTGCTATagcgcctgtaggccaagacctg
+>
+ggtgaaccccttctcgttatggCAAAATaagccaatacagaaccagcatt
+>
+gacagatttgtgccattccgtgAACGATcgacgcgtcgtgattaggtgaa
+>
+tttcaccagacttattcttagcTATTATagttatagagagcttacttccg
+>
+tcctgctatccaaatagtgtcaTATCATcatattaattgttcttttttca
+>
+gctgtgttattgacagttagcaTAAACTaggtgtgacgttaactatatgt
+>
+cgattccgtctctctgatgattGATGTTaattaacaatgtattcaccgaa
+>
+tgtccttgttcgataaacacaaTAAACTtgatcatgaaattgccagaaag
+>
+tatcctcgtgctgtttctcacgTAGTCTataatttcctttttaagcccac
+>
+tttgttaaaaaagtgtgtaggaTATTGTtactcgcttttaacagggcaac
+>
+ttacttcccgtaggattcttgcTTTAATagtgggattaatttccacatta
+>
+attacgcaacgataatagcgggTATAAGataaataaaaggtaaaacgttt
+>
+tttgtctcaccttttaatttgcTACCCTatccatacgcacaataaggcta
+>
+tccccttttcgtcaagatcggcCAAAATtccacgcttacactatttgcgt
+>
+attctcaacataaaaaactttgTGTAATacttgtaacgctacatggagat
+>
+ttcatccggttaaatatgcaaaGATAAAtgcgcagaaatgtgtttctcaa
+>
+gtgcattagcttatttttttgtTATCATgctaaccacccggcgaggtgtg
+>
+tgacttttatcgccgtagccttTTCAATaaaggtcttttgaagagtacca
+>
+ttaacgtttttaactttttaatTAGAATatagatacaggagagcacatat
+>
+taacggatgtatccgtttagtcTATGATatgtacagcacttttggcttcg
+>
+tcactttccgctgattcggtgcCAGACTgaaatcagcctataggaggaaa
+>
+gggcttgaaaaagcgcccaatgTATTCCaggcttatctaacacgctgata
+>
+cttaccgtcacattcttgatggTATAGTcgaaaactgcaaaagcacatga
+>
+accaactggcaaaattttgtccTAAACTtgatctcgacgaaatggctgca
+>
+catttttatcgtaattgcccttTAAAATtcggggcgccgaccccatgtgg
+>
+aaaattcggggcgccgaccccaTGTGGTctcaagcccaaaggaagagtga
+>
+ttgacgctgcgtaaggtttttgTAATTTtacaggcaaccttttattcact
+>
+ataaaataattttttcgatatcTAAAATaaatcgcgaaacgcaggggttt
+>
+ttgaaaatagtcgcgtaacccaTACGATgtgggtatcgcatattgcgttt
+>
+tttcgcaagctcgtaaaagcagTACAGTgcaccgtaagaaaattacaagt
+>
+tcttcatccttcgctggatatcTATCCAgcatttttttatcatacagcat
+>
+gacgagtacagttgcgtcgattTAGGAAaaatcttagataagtgtaaaga
+>
+cttcatgaccgtgaatagagtcCATCGTccctcctcaaaaaaagcctagc
+>
+tgacgaagcagccgttatgcctTAACCTgcgccgcagatatcactcataa
+>
+tgaaacattgatgtctctgtagCAACATaggggtaatcttactgacaaca
+>
+tgtctgaacgtgaattgcagatTATGCTgatgatcaccaagggccagaag
+>
+tcaaagttgcaataaaaaccgcTAATATacgaatgactaactatcagtag
+>
+gattaaaaaccctgcagaaacgGATAATcatgccgataactcatataacg
+>
+ctttgttgcgctcaagacgcagGATAATtagccgataagcagtagcgaca
+>
+tactttaagacaattccaggcaAATTATacaacactttacgggatagtaa
+>
+tttgtttcacatttctgtgacaTACTATcggatgtgcggtaattgtatgg
+>
+ttcacatttctgtgacatactaTCGGATgtgcggtaattgtatggaacag
+>
+ttcacatttctgtgacatactaTCGGATgtgcggtaattgtatggaacag
+>
+tgtgacatactatcggatgtgcGGTAATtgtatggaacaggagacacaca
+>
+tgtgacatactatcggatgtgcGGTAATtgtatggaacaggagacacaca
+>
+gctgattagcacggtgatatttGATACTctggcagacagcagaaataacg
+>
+taataaatagttaattaacgctCATCATtgtacaatgaactgtacaaaag
+>
+ttaaatctttgtgggatcagggCATTATcttacgtgatcagaataaacaa
+>
+ttatactttaataagtactttgTATACTtatttgcgaacattccaggccg
+>
+atataaagccacaacgggttcgTAAACTgttatcccattacatgattatg
+>
+gaagtcctgtattcagtgctgaCAAAATagccgccagcaagcagtcattt
+>
+tgataattgttatcgtttgcatTATCGTtacgccgcaatcaaaaaaggct
+>
+taacatttggattgataattgtTATCGTttgcattatcgttacgccgcaa
+>
+tggattattctgcatttttgggGAGAATggacttgccgactgattaatga
+>
+acctcaaactgcgcggctgtgtTATAATttgcgacctttgaatccgggat
+>
+tgcaagagggtcattttcacacTATCTTgcagtgaatcccaaacataccc
+>
+atttaatttatgaatgttttctTAACATcgcggcaactcaagaaacggca
+>
+aaatcacgtttcactttcgaatTATGAGcgaatatgcgcgaaatcaaaca
+>
+attagctgtataaaagaatttcTACAGTgattgtaaggttttttttattc
+>
+ccaaagtttcgggctgttatgtTTTAATgtgcaacattcatggtctgttg
+>
+acgagagttaaccggacaagtgTGCCATaatctcgcggccaggcatactt
+>
+tgttcggcgtacaagtgtacgcTATTGTgcattcgaaacttactctatgt
+>
+caacattccagctggtccgaccTATACTctcgccactggtctgatttcta
+>
+ggcgctacgctcaatgaaacatTTAAATactatacgacagcgacatttat
+>
+ttgaggaatcaggcgggagtgaTAGAATatcgcccacttaatttttccag
+>
+tgtcaacgaaaacaataatgcgTAAGGTagaaacccgaactacattgagg
+>
+tgcgcaatttgtcaacgaaaacAATAATgcgtaaggtagaaacccgaact
+>
+ttccgcatattctctgagcgggTATGCTacctgttgtatcccaatttcat
+>
+attcagcctgtcggaactggtaTTTAACcagactaattattttgatgcgc
+>
+attcagcctgtcggaactggtaTTTAACcagactaattattttgatgcgc
+>
+ggttcaattcttcctttagcggCATAATgtttaatgacgtacgaaacgtc
+>
+ttcttcctttagcggcataatgTTTAATgacgtacgaaacgtcagcggtc
+>
+tggcagttgaccgtggtaatgaTATGATttcacacctttaccagccaatg
+>
+gcttttaatgccataccaaacgTACCATtgagacacttgtttgcacagag
+>
+attgttgtatgcatgtttttttTATGCTttccttaagaacaactcacccc
+>
+cagaactcaatgcacaaggcagTATTAAcgtcgtcaattattcccaacat
+>
+ttgccgccttgaagaaaggaggTATAATccgtcgattttttttgtggctg
+>
+cgcaaacgtttgctttccctgtTAGAATtgcgccgaattttatttttcta
+>
+ccggaagctggttgcgtgaaatTAGAAAtttcgccgctgatccaaacctg
+>
+gggaagcgcctcgcttcccgtgTATGATtgaacccgcatggctcccgaaa
+>
+ttcccttcgccatttccttgagCAAACTttagctattcttatcaattatg
+>
+tgttatcgcacaatgattcggtTATACTgttcgccgttgtccaacaggac
+>
+ggaatgaattggcgttatgtgtTACGTTtagcagatcaaaagacaggcga
+>
+ggggcgcaaccggacagaatttTATAAActgctttcccgacacgagctgg
+>
+ttcgtcagcgcatcagattcttTATAATgacgcccgtttcccccccttgg
+>
+ttgtagtgtagaatgcggcgttTCTATTaatacagacgttaagctcagaa
+>
+gaataattgagggatgacctcaTTTAATctccagtagcaactttgatccg
+>
+gacagcgtgaaaacagtacgggTACTGTactaaagtcacttaaggaaaca
+>
+ttgaaaactttactttatgtgtTATCGTtacgtcatcctcgctgaggatc
+>
+ttgaaaccctgaaactgatcccCATAATaagcgaagttagcgagatgaat
+>
+ggaaatataataagtgatcgctTACACTacgcgacgaaatactttttttg
+>
+acgcaaataatttgtggtgatcTACACTgatactctgttgcattattcgc
+>
+tgcattattcgcctgaaaccacAATATTcaggcgttttttcgctatcttt
+>
+ttgcctcagattctcagtatgtTAGGGTagaaaaaagtgactatttccat
+>
+ttactttatttgtcactgtcgtTACTATatcggctgaaattaatgaggtc
+>
+taccttcccagtcaagaaaactTATCTTattcccacttttcagttaccag
+>
+ttgatactgtatgagcatacagTATAATtgcttcaacagaacatattgac
+>
+cttttaaatctttcaatctgatTAGATTaggttgccgtttggtaataaaa
+>
+gcggcagcgtggcggaaggttgTAAACTgcacctcgaagaacaagaggcc
+>
+tgcgtcgcaaccgacaattacgTATTCTgagtcttcgggtgaacagagtg
+>
+gttattttgccgcaggtcagcgTATCGTgaacatcttttccagtgttcag
+>
+tcattcgttctcttacgctcccTATAGTcgaaacatctgatggcaagaaa
+>
+taatccacaccgtttgccccgtTAACCTtaccttctcttctgttttatgg
+>
+tgtggcacaggtcatgttcgggTATACTgctttcccgtcttggttattcc
+>
+aaaacatttaccccaaaggggcTATTTTctcactcctgatttcaatagtg
+>
+tattacagagcgttttttatttGAAAATgaatccatgagttcatttcaga
+>
+ggtagaagctcaacggacaattTATAATggctcagattaaaaaaactaat
+>
+tgcgcaatctatccgcttacttTATGATgcgcaccagtcacggactgatg
+>
+acacctgcgtgagttgttcacgTATTTTttcactatgtcttactctctgc
+>
+tccttttattccacgtttcgctTATCCTagctgaagcgtttcagtcgatt
+>
+gttcgaggcaggtttgtacggtTATACTtatcttgaagatgagtaagtcc
+>
+aatttcccatacagagctaaggGATAATgcgtagcgttcacgtaactgga
+>
+tctccaaaatatattcacgttgTAAATTgtttaacgtcaaatttcccata
+>
+taacaaaaaaccagtccgcgaaGTTGATagaatcccatcatctcgcacgg
+>
+acaacagtaaaatcagagcgttTCTGCTtttactgatgtctggcggtcgg
+>
+ttacatcaacccgcattggtccTACACTgcgcggtaataaagcgaggtaa
+>
+cgcccctggagaaagcctcgtgTATACTcctcacccttataaaagtccct
+>
+tacaaagcagcagcaattgcagTAAAATtccgcaccattttgaaataagc
+>
+caccgggcaacttttagagcacTATCGTggtacaaataatgctgccaccc
+>
+aaaaactgtcgatgtgggacgaTATAGCagataagaatattgctgagcaa
+>
+gcacatatcctgttcatttcatTTTGATacacttcatgccgtcaatgagg
+>
+gtcttttgtactcgtgtactggTACAGTgcaatgcataacaacgcagtcg
+>
+tgcgataacaggtcgctacgagTAGAATactgccgcttaacgtcgcgtaa
+>
+tgcattttttacccaaaacgagTAGAATttgccacgtttcaggcgcgggg
+>
+tgacctgtatcagctttcccgaTAAGTTggaaatccgctggaagctttct
+>
+gtttctcaataacgaaatttgaTAAAATcccgctctttcataacattatt
+>
+ataaaaattcatctgtatgcacAATAATgttgtatcaaccaccatatcgg
+>
+tgattatcttccctgataagacCAGTATttagctgccaattgctacgaaa
+>
+acccatatccttgaagcggtgtTATAATgccgcgccctcgatatggggat
+>
+ttgcgttcggtggttaagtatgTATAATgcgcgggcttgtcgtagttgac
+>
+tgacaccttttcggcatcgcccTAAAATtcggcgtcctcatattgtgtga
+>
+agacacaaagcgaaagctatgcTAAAACagtcaggatgctacagtaatac
+>
+gccaaacccgctggagtattgaGATAATtttcagtctgactctcgcaata
+>
+tgacgcgcgcaggtatttagcaTACAAGgagtaccgatttgagagttggt
+>
+acacctaaaatgctatttctgcGATAATagcaaccgtttcgtgacaggaa
+>
+attgtatacttaagctgctgttTAATATgctttgtaacaatttaggctga
+>
+ggaaggtcaacatcgagcctggCAAACTagcgataacgttgtgttgaaaa
+>
+taacgccacgcttgaggtaacaGAGATTgttttacctgctggggagtggc
+>
+tttttctgtaattcgagcatgtCATGTTaccccgcgagcataaaacgcgt
+>
+tgtcatctttctgacaccttacTATCTTacaaatgtaacaaaaaagttat
+>
+ttttatgctgacaaaggcacttTTTTCTgtttatctatcaataaattcag
+>
+ttccaatatcataaaaatcgggTATGTTttagcagagtatgctgctaaag
+>
+ggtctgataaaacagtgaatgaTAACCTcgttgctcttaagctctggcac
+>
+gaacttgtggataaaatcacggTCTGATaaaacagtgaatgataacctcg
+>
+gaacttgtggataaaatcacggTCTGATaaaacagtgaatgataacctcg
+>
+cgcctgaataataaaagcgtgtTATACTctttccctgcaatgggttccgt
+>
+attgacggatcatccgggtcgcTATAAGgtaaggatggtcttaacactga
+>
+tgacttatccgcttcgaagagaGACACTacctgcaacaatcaggagcgca
+>
+tgacgttttcacattctgttgaCAGATTgtaggtcacgaggggcatttta
+>
+tgcatcacccgccaatgcgtggCTTAATgcacatcaacggtttgacgtac
+>
+gttttgtttggcttatcgctggCAAACTgtctgaaatcgcagcaataagg
+>
+ggacagttaaccgattcagtgcCAGATTtcgcagtatctacaaggtccgg
+>
+tgcggaaaaaacgcgcgcgaggCAGCATtgactttactaggtcgtgcacg
+>
+cgtcgcgacctataagtttgggTAATATgtgctggaatttgccctgtctg
+>
+atctcaggcctgatttgctgctGATTTTtacaatgcatgcctcacgcagg
+>
+ttgaaaagttcatttccagaccCATTTTtacatcgtagccgatgaggacg
+>
+agatgtttaccgtggaaaagggTAAAATaacggattaacccaagtataaa
+>
+gcatcaggacgttcgctattacTTAAATggtatgctgtttgaaaccgaag
+>
+tatgaaatttaccgtagaacgtGAGCATttattaaaaccgctacaacagg
+>
+tcagaagacggtggcggagtacTACAAGatcaaagtcgcggatctccttt
+>
+gcaggaaaaactggtcaccatcGACAATattcagaagacggtggcggagt
+>
+gcgttctttatcgccaagcgtcTACGATctaacgtacgtgagctggaagg
+>
+cccgcctcgcggcaggatcgttTACACTtagcgagttctggaaagtcctg
+>
+agacaaaaattggcttaatcgaTCTAATaaagatccaggacgatccttgc
+>
+ttgcgctttacccatcagcccgTATAATcctccacccggcgcgccatgct
+>
+tgactccggagtgtacaattatTACAATccggcctctttaatcacccatg
+>
+gttttttcaaggtgaagcggttTAAATTcgttctcaaattacagtcagga
+>
+gacaaaaggcgtgacgatggtcGAAAATggcgctttcgtcagcggggata
+>
+tggcagtctttctgcctaacgtTTTGTTtatgatatttgcctggcgtcac
+>
+ttgaaatcacgggggcgcaccgTATAATttgaccgctttttgatgcttga
+>
+gttttcccaactcagtcaggatTAAACTgtgggtcagcgaaacgtttcgc
+>
+ttatttttaaaaaacaacaattTATATTgaaattattaaacgcatcataa
+>
+ttgccagcccacggtcggtcgaCTTACTgtttagtcagttaaataaactg
+>
+ggaaatttattgcggaaattgaTATATTcacaacgtcacattgcaatttt
+>
+atatatcaatttccgcaataaaTTTCCTgtcatatagtgaattcaatctc
+>
+tcacattcaaatgcgattctgcTACAATcctccccccgttcgaagattga
+>
+ggacgcccggcgtgagtcatgcTAACTTagtgttgacttcgtattaaaca
+>
+ttacggtcaatcagcaaggtgtTAAATTgatcacgttttagaccattttt
+>
+ttggcatctctgacctcgctgaTATAATcagcaaatctgtatatataccc
+>
+gaaaaaatgttaaacccttcggTAAAGTgtctttttgcttcttctgacta
+>
+tgcatatttttaacacaaaataCACACTtcgactcatctggtacgaccag
+>
+gcgctttttatccgtaaaaagcTATAATgcactaaaatggtgcaacctgt
+>
+gcaccaacatggtgcttaatgtTTCCATtgaagcactatattggtgcaac
+>
+ggtaagaacctgacctcgtgatTACTATttcgccgtgttgacgacatcag
+>
+ttttcaatatcatttaattaacTATAATgaaccaactgcttacgcggcat
+>
+tctcgtttttgctcgttaacgaTAAGTTtacagcatgcctacaagcatcg
+>
+attgacgtccattaacacaatgTTTACTctggtgcctgacatttcaccga
+>
+tttcggttgacgcccttcggctTTTCCTtcatctttacatctggacgtct
+>
+gttgacacacctctggtcatgaTAGTATcaatattcatgcagtatttatg
+>
+tttattacgctcaacgttagtgTATTTTtattcataaatactgcatgaat
+>
+gcgctgaaacagtcaaagcggtTATGTTcatatgcggatggcgatttaca
+>
+gatagggataatcgttcattgcTATTCTacctatcgccatgaactatcgt
+>
+tggacatctgatgagcaatcccTACAATcgccgcgtactttaatttttca
+>
+gacagtaacttgttacaacctgTAGCATccacttgccggtcctgtgagtt
+>
+tgcatgaactcgcatgtctccaTAGAATgcgcgctacttgatgccgactt
+>
+gacgcaatgcgcactaaaagggCATCATttgatgccctttttgcacgctt
+>
+tgcacaaggcgtgagattggaaTACAATttcgcgccttttgtttttatgg
+>
+ttacgtgggcggtgattttgtcTACAATcttacccccacgtataatgctt
+>
+tttgactactgctgtgcctttcAATGCTtgtttctatcgacgacttaata
+>
+ttcgcgagcgttgcgcaaacgtTTTCGTtacaatgcgggcgaaaaataag
+>
+cgacattggcaaattttctggtTATCTTcagctatctggatgtctaaacg
+>
+ttgattttgcattttaaatgagTAGTCTtagttgtgctgaacgaaaagag
+>
+accacagatgcgtttatgccagTATGGTttgttgaatttttattaaatct
+>
+ttgacaaccgccccgctcacccTTTATTtataaatgtactacctgcgcta
+>
+tggaaagaggttgccgtataaaGAAACTagagtccgtttaggtgttttca
+>
+tttaagccatctcctgatgacgCATAGTcagcccatcatgaatgttgctg
+>
+tccaaaatcgccttttgctgtaTATACTcacagcataactgtatatacac
+>
+attcattcaggtcaatttgtgtCATAATtaaccgtttgtgatcgccggta
+>
+gaatgcattacccggagtgttgTGTAACaatgtctggccaggtttgtttc
+>
+ggtaatggtacaatcgcgcgttTACACTtattcagaacgatttttttcag
+>
+acctcaagttaacttgaggaatTATACTccccaacagatgaattaacgaa
+>
+ataaaatgtggcataaaagatgCATACTgtagtcgagagcgcgtatgcgt
+>
+tgatcacaaatttaaacactggTAGGGTaaaaaggtcattaactgcccaa
+>
+agtcatcctccctcactcctgcCATAATtctgatattccaggaaagagag
+>
+ctgtgatctattcagcaaaaatTTAAATaggattatcgcgagggttcaca
+>
+gtaagcgttagtttcgataagaTAAACTgagttactaatagtcgaggcag
+>
+ttgaggtaagcgttagtttcgaTAAGATaaactgagttactaatagtcga
+>
+ggattaatccttttttcgtgagTAATCTtatcgccagtttggtctggtca
+>
+cggtagaaatcctcaagcagcaTATGATctcgggtattcggtcgatgcag
+>
+ttgtcacgctgattggtgtcgtTACAATctaacgcatcgccaatgtaaat
+>
+gtcatgaatccatggcagtgacCATACTaatggtgactgccattgatgga
+>
+ttttcaaagcgtaaaattgtggCATTCTtcactgttctataagtaagacg
+>
+ggcattcacaaatgcgcaggggTAAAACgtttcctgtagcaccgtgagtt
+>
+tttcctgtagcaccgtgagttaTACTTTgtataacttaaggaggtgcaga
+>
+ttgcgccgcttctgacgatgagTATAATgccggacaatttgccgggagga
+>
+gccaccgctttcacagaagtggTAGACTtcgttccttatgaagattctct
+>
+taaggaaaataattcttatttcGATTGTcctttttacccttctcgttcga
+>
+tggaaacaattttatttccaatTGTAATgataaccattctcatattaata
+>
+ggcgtttgtatggcaacgttatTATAATtaacagttgctactccatttaa
+>
+gaacatcgatctcgtcttgtgtTAGAATtctaacatacggttgcaacaac
+>
+aagtgtgttgcggagtagatgtTAGAATactaacaaactcgcaaggtgaa
+>
+tcgccgtatcagcgaataacggTATACTgatctgatcatttaaatttgaa
+>
+ttgcttctggcaacattaagtcTCAAATtttcaaagggtggaagatggct
+>
+gccagaagcaatggatacaaggTAGCCTcatgcgttattttccctgcttc
+>
+ttactgatccgcacgtttatgaTATGCTatcgtactctttagcgagtaca
+" >
+</form>
+
+
+
+<hr >
+<a name="globins"></a>
+<h2>Globins</h2>
+<img  alt="" src="examples/globins.png" ><br >
+The end of the B helix through the beginning of the D helix of 34 globins. This 
+sequence data was taken from 
+<a href="http://www.lecb.ncifcrf.gov/~toms/paper/logopaper/">Sequence Logos: A New Way to Display Consensus Sequences</a>.<br ><br >
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_edit" value="Edit Logo" >
+<input type="hidden" name="logo_start" value="61" >
+<input type="hidden" name="logo_end" value="83" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_errorbars" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="scale_width" value="true" >
+<input type="hidden" name="sequences" value="
+>Lamprey GLOBIN V - SEA LAMPREY
+PIVDTGSVA-P------------------LSAAEKTKIRSAWAPVYSTY---ETSGVDILVKFFTSTPAAQEFFPKFKGL
+TT-----ADQLKKSA---DVRWHA-ERIINAVNDAVASMDDTEKMS--MKL-RDLSGKH----AKSFQV-----DPQYFK
+VLAAVI-AD-TVAAGD--AGFEKLMSM------I---CILLR----S-----A-----Y------------
+>Hagfish GLOBIN III - ATLANTIC HAGFISH
+PITDHGQPP-T------------------LSEGDKKAIRESWPQIYKNF---EQNSLAVLLEFLKKFPKAQDSFPKFSAK
+KS-------HLEQDP---AVKLQA-EVIINAVNHTIGLMDKEAAMK--KYL-KDLSTKH----STEFQV-----NPDMFK
+ELSAVF-VS-TMG-GK--AAYEKLFSI------I---ATLLR----S-----T-----YDA----------
+>Frog HEMOGLOBIN BETA CHAIN - EDIBLE FROG
+----------GS-----------------------DLVSGFWGKV--DA---HKIGGEALARLLVVYPWTQRYFTTFGNL
+GSADAIC-----HNA---KVLAHG-EKVLAAIGEGLKHPENLKAHY--AKL-SEYHSNK----LHVDPANFRLLGNVFIT
+VLARHF-QH-EFTPELQ-HALEAHFCA------V---GDALA----K-----A-----YH-----------
+>African Elephant HEMOGLOBIN BETA CHAIN - AFRICAN ELEPHANT
+----------VN-----------------LTAAEKTQVTNLWGKV--NV---KELGGEALSRLLVVYPWTRRFFEHFGDL
+STAEAVL-----HNA---KVLAHG-EKVLTSFGEGLKHLDNLKGTF--ADL-SELHCDK----LHVDPENFRLLGNVLVI
+VLARHF-GK-EFTPDVQ-AAYEKVVAG------V---ANALA----H-----K-----YH-----------
+>Goat HEMOGLOBIN BETA-A CHAIN - GOAT
+----------M------------------LTAEEKAAVTGFWGKV--KV---DEVGAEALGRLLVVYPWTQRFFEHFGDL
+SSADAVM-----NNA---KVKAHG-KKVLDSFSNGMKHLDDLKGTF--AQL-SELHCDK----LHVDPENFKLLGNVLVV
+VLARHH-GS-EFTPLLQ-AEFQKVVAG------V---ANALA----H-----R-----YH-----------
+>Primate HEMOGLOBIN BETA CHAIN - HUMAN, CHIMPANZEES, AND GORILLA
+----------VH-----------------LTPEEKSAVTALWGKV--NV---DEVGGEALGRLLVVYPWTQRFFESFGDL
+STPDAVM-----GNP---KVKAHG-KKVLGAFSDGLAHLDNLKGTF--ATL-SELHCDK----LHVDPENFRLLGNVLVC
+VLAHHF-GK-EFTPPVQ-AAYQKVVAG------V---ANALA----H-----K-----YH-----------
+>Gibbon HEMOGLOBIN BETA CHAIN - COMMON GIBBON (TENTATIVE SEQUENCE)
+----------VH-----------------LTPEEKSAVTALWGKV--NV---DEVGGEALGRLLVVYPWTQRFFESFGDL
+STPDAVM-----GNP---KVKAHG-KKVLGAFSDGLAHLDNLKGTF--AQL-SELHCDK----LHVDPENFRLLGNVLVC
+VLAHHF-GK-EFTPQVQ-AAYQKVVAG------V---ANALA----H-----K-----YH-----------
+>Dog HEMOGLOBIN BETA CHAIN - DOG AND COYOTE
+----------VH-----------------LTAEEKSLVSGLWGKV--NV---DEVGGEALGRLLIVYPWTQRFFDSFGDL
+STPDAVM-----SNA---KVKAHG-KKVLNSFSDGLKNLDNLKGTF--AKL-SELHCDK----LHVDPENFKLLGNVLVC
+VLAHHF-GK-EFTPQVQ-AAYQKVVAG------V---ANALA----H-----K-----YH-----------
+>Horse HEMOGLOBIN BETA CHAIN - HORSE
+----------VQ-----------------LSGEEKAAVLALWDKV--NE---EEVGGEALGRLLVVYPWTQRFFDSFGDL
+SNPGAVM-----GNP---KVKAHG-KKVLHSFGEGVHHLDNLKGTF--AAL-SELHCDK----LHVDPENFRLLGNVLVV
+VLARHF-GK-DFTPELQ-ASYQKVVAG------V---ANALA----H-----K-----YH-----------
+>Human, Chimp HEMOGLOBIN GAMMA CHAINS - HUMAN AND CHIMPANZEE
+----------GH-----------------FTEEDKATITSLWGKV--NV---EDAGGETLGRLLVVYPWTQRFFDSFGNL
+SSASAIM-----GNP---KVKAHG-KKVLTSLGDAIKHLDDLKGTF--AQL-SELHCDK----LHVDPENFKLLGNVLVT
+VLAIHF-GK-EFTPEVQ-ASWQKMVTA------V---ASALS----S-----R-----YH-----------
+>Nile Crocodile HEMOGLOBIN BETA CHAIN - NILE CROCODILE
+----------AS-----------------FDPHEKQLIGDLWHKV--DV---AHCGGEALSRMLIVYPWKRRYFENFGDI
+SNAQAIM-----HNE---KVQAHG-KKVLASFGEAVCHLDGIRAHF--ANL-SKLHCEK----LHVDPENFKLLGDIIII
+VLAAHY-PK-DFGLECH-AAYQKLVRQ------V---AAALA----A-----E-----YH-----------
+>Chicken HEMOGLOBIN BETA CHAIN - CHICKEN
+----------VH-----------------WTAEEKQLITGLWGKV--NV---AECGAEALARLLIVYPWTQRFFASFGNL
+SSPTAIL-----GNP---MVRAHG-KKVLTSFGDAVKNLDNIKNTF--SQL-SELHCDK----LHVDPENFRLLGDILII
+VLAAHF-SK-DFTPECQ-AAWQKLVRV------V---AHALA----R-----K-----YH-----------
+>NA Opossum HEMOGLOBIN BETA CHAIN - NORTH AMERICAN OPOSSUM
+----------VH-----------------LTSEEKNCITTIWSKV--QV---DQTGGEALGRMLVVYPWTTRFFGSFGDL
+SSPGAVM-----SNS---KVQAHG-AKVLTSFGEAVKHLDDLKGTY--AKL-SELHCDK----LHVDPENFKMLG-IIVI
+CLAEHF-GK-DFTPECV-A--WKLVAG------V---AHALA----H-----K-----YH-----------
+>Carp HEMOGLOBIN BETA CHAINS - CARP
+----------VE-----------------WTDAERSAIIALWGKL--NP---DELGPEALARCLIVYPWTQRFFASYGNL
+SSPAAIM-----GNP---KVAAHG-RTVEGGLMRAIKDMDNIKATY--APL-SVMHSEK----LHVDPDNFRLLADCITV
+CAAMKFGPS-GFSPNVQ-EAWQKFLSV------V---VNALK----R-----Q-----YH-----------
+>Shark HEMOGLOBIN BETA CHAIN - PORT JACKSON SHARK
+----------VH-----------------WSEVELHEITTTWKSI--DK---HSLGAKALARMFIVYPWTTRYFGNLKEF
+TA----------CSY---GVKEHA-KKVTGALGVAVTHLGDVKSQF--TDL-SKKHAEE----LHVDVESFKLLAKCFVV
+ELGILL-KD-KFAPQTQ-AIWEKYFGV------V---VDAIS----K-----E-----YH-----------
+>Shark HEMOGLOBIN ALPHA CHAIN - PORT JACKSON SHARK
+----------S-TSTSTSD----------YSAADRAELAALSKVLAQNA---EAFGAEALARMFTVYAATKSYFKDYKDF
+TA----------AAP---SIKAHG-AKVVTALAKACDHLDDLKTHL--HKL-ATFHGSE----LKVDPANFQYLSYCLEV
+ALAVHL--T-EFSPETH-CALDKFLTN------V---CHELS----S-----R-----YR-----------
+>Carp HEMOGLOBIN ALPHA CHAIN - CARP
+----------S------------------LSDKDKAAVKIAWAKISPKA---DDIGAEALGRMLTVYPQTKTYFAHWADL
+SP----------GSG---PVKHGK-KVIMGAVGDAVSKIDDLVGGL--ASL-SELHASK----LRVDPANFKILANHIVV
+GIMFYL-PG-DFPPEVH-MSVDKFFQN------L---ALALS----E-----K-----YR-----------
+>Bullfrog HEMOGLOBIN ALPHA CHAIN - BULLFROG TADPOLE
+----------S------------------LSASEKAAVLSIVGKIGSQG---SALGSEALTRLFLSFPQTKTYFPHF-DL
+TP----------GSA---DLNTHG-GKIINALAGAANHLDDLAGNL--SSL-SDLHAYN----LRVDPGNFPLLAHIIQV
+VLATHF-PG-DFTAEVQ-AAWDKFLAL------V---SAVLT----S-----K-----YR-----------
+>Nile Crocodile HEMOGLOBIN ALPHA CHAIN - NILE CROCODILE
+----------V------------------LSSDDKCNVKAVWSKVAGHL---EEYGAEALERMFCAYPQTKIYFPHF-DL
+SH----------GSA---QIRAHG-KKVFAALHEAVNHIDDLPGAL--CRL-SELHAHS----LRVDPVNFKFLAQCVLV
+VVAIHH-PG-SLTPEVH-ASLDKFLCA------V---SSVLT----S-----K-----YR-----------
+>Ostrich HEMOGLOBIN ALPHA CHAIN - OSTRICH
+----------V------------------LSGTDKTNVKGIFSKISSHA---EEYGAETLERMFITYPQTKTYFPHF-DL
+HH----------GSA---QIKAHG-KKVANALIEAVNHIDDISGAL--SKL-SDLHAQK----LRVDPVNFKLLGQCFLV
+VVAIHH-PS-ALTPEVH-ASLDKFLCA------V---GAVLT----A-----K-----YR-----------
+>Kangaroo HEMOGLOBIN ALPHA CHAIN - EASTERN GRAY KANGAROO
+----------V------------------LSAADKGHVKAIWGKVGGHA---GEYAAEGLERTFHSFPTTKTYFPHF-DL
+SH----------GSA---QIQAHG-KKIADALGQAVEHIDDLPGTL--SKL-SDLHAHK----LRVDPVNFKLLSHCLLV
+TFAAHL-GD-AFTPEVH-ASLDKFLAA------V---STVLT----S-----K-----YR-----------
+>Armadillo HEMOGLOBIN ALPHA CHAIN - NINE-BANDED ARMADILLO
+----------V------------------LSAADKTHVKAFWGKVGGHA---AEFGAEALERMFASFPPTKTYFSHM-DL
+SH----------GSA---QVKAHG-KKVADALTLAVGHLDDLPGAL--STL-SDLHAHK----LRVDPVNFKFLSHCLLV
+TLACHL-PD-DFTPAVH-ASMDKFMAG------V---STVLV----S-----K-----YR-----------
+>Horse HEMOGLOBIN ALPHA CHAINS - HORSE
+----------V------------------LSAADKTNVKAAWSKVGGHA---GEYGAEALERMFLGFPTTKTYFPHF-DL
+SH----------GSA---QVKAHG-KKVGDALTLAVGHLDDLPGAL--SNL-SDLHAHK----LRVDPVNFKLLSHCLLS
+TLAVHL-PN-DFTPAVH-ASLDKFLSS------V---STVLT----S-----K-----YR-----------
+>Primate HEMOGLOBIN ALPHA CHAIN - HUMAN AND CHIMPANZEES
+----------V------------------LSPADKTNVKAAWGKVGAHA---GEYGAEALERMFLSFPTTKTYFPHF-DL
+SH----------GSA---QVKGHG-KKVADALTNAVAHVDDMPNAL--SAL-SDLHAHK----LRVDPVNFKLLSHCLLV
+TLAAHL-PA-EFTPAVH-ASLDKFLAS------V---STVLT----S-----K-----YR-----------
+>Macaque HEMOGLOBIN ALPHA CHAIN - RHESUS MACAQUE AND JAPANESE MACAQUE
+----------V------------------LSPADKSNVKAAWGKVGGHA---GEYGAEALERMFLSFPTTKTYFPHF-DL
+SH----------GSA---QVKGHG-KKVADALTLAVGHVDDMPNAL--SAL-SDLHAHK----LRVDPVNFKLLSHCLLV
+TLAAHL-PA-EFTPAVH-ASLDKFLAS------V---STVLT----S-----K-----YR-----------
+>Badger HEMOGLOBIN ALPHA CHAIN - EURASIAN BADGER
+----------V------------------LSPADKANIKATWDKIGGHA---GEYGGEALERTFASFPTTKTYFPHF-DL
+SH----------GSA---QVKGHG-KKVADALTNAVAHLDDLPGAL--SAL-SDLHAYK----LRVDPVNFKLLSHCLLV
+TLACHH-PA-EFTPAVH-ASLDKFLSS------V---STVLT----S-----K-----YR-----------
+>Ind Elephant HEMOGLOBIN ALPHA CHAIN - INDIAN ELEPHANT
+----------V------------------LSDKDKTNVKATWSKVGDHA---SDYVAEALERMFFSFPTTKTYFPHF-DL
+SH----------GSG---QVKGHG-KKVGEALTQAVGHLDDLPSAL--SAL-SDLHAHK----LRVDPVNFKLLSHCLLV
+TLSSHQ-PT-EFTPEVH-ASLDKFLSN------V---STVLT----S-----K-----YR-----------
+>Hyrax HEMOGLOBIN ALPHA CHAIN - ABYSSINIAN HYRAX
+----------V------------------LSAADKNNVKGAWEKVGTHA---GEYGAEALERMFLSFPTTKTYFPHF-DL
+TH----------GSA---QVKAHG-QKVGAALTKAVGHLDDLPNAL--SDL-SDLHAHK----LRVDPVNFKLLSHCLLV
+TLSRHL-PEQEFTPAVH-ASLDKFFSN------V---STVLT----S-----K-----YR-----------
+>Tuna MYOGLOBIN - YELLOWFIN TUNA
+----------A----------------------DFDAVLKCWGPVEADY---TTMGGLVLTRLFKEHPETQKLFPKFAGI
+-A-----QADIAGNA---AISAHG-ATVLKKLGELLKAKGSHAAIL--KPL-ANSHATK----HKIPINNFKLISEVLVK
+VMHEK---A-GLDAGGQ-TALRNVMGI------I---IADLE----ANYKELG-----FSG----------
+>Shark MYOGLOBIN - PORT JACKSON SHARK
+----------T----------------------EWEHVNKVWAVVEPDI---PAVGLAILLRLFKEHKETKDLFPKFKEI
+-P-----VQQLGNNE---DLRKHG-VTVLRALGNILKQKGKHSTNV--KEL-ADTHINK----HKIPPKNFVLITNIAVK
+VLTEMY-PS-DMTGPMQ-ESFSKVFTV------I---CSDLE----TLYKEAN-----FQG----------
+>Turtle MYOGLOBIN - MAP TURTLE
+----------G------------------LSDDEWHHVLGIWAKVEPDL---SAHGQEVIIRLFQVHPETQERFAKFKNL
+KT-----IDELRSSE---EVKKHG-TTVLTALGRILKLKNNHEPEL--KPL-AESHATK----HKIPVKYLEFICEIIVK
+VIAEKH-PS-DFGADSQ-AAMRKALEL------F---RNDMA----SKYKEFG-----FQG----------
+>Chicken MYOGLOBIN - CHICKEN
+----------G------------------LSDQEWQQVLTIWGKVEADI---AGHGHEVLMRLFHDHPETLDRFDKFKGL
+KT-----EPDMKGSE---DLKKHG-QTVLTALGAQLKKKGHHEADL--KPL-AQTHATK----HKIPVKYLEFISEVIIK
+VIAEKH-AA-DFGADSQ-AAMKKALEL------F---RDDMA----SKYKEFG-----FQG----------
+>Dog MYOGLOBIN - DOG, BAT-EARED FOX, AFRICAN HUNTING DOG, AND CAPE FOX
+----------G------------------LSDGEWQIVLNIWGKVETDL---AGHGQEVLIRLFKNHPETLDKFDKFKHL
+KT-----EDEMKGSE---DLKKHG-NTVLTALGGILKKKGHHEAEL--KPL-AQSHATK----HKIPVKYLEFISDAIIQ
+VLQSKH-SG-DFHADTE-AAMKKALEL------F---RNDIA----AKYKELG-----FQG----------
+>Badger MYOGLOBIN - EURASIAN BADGER
+----------G------------------LSDGEWQLVLNVWGKVEADL---AGHGQEVLIRLFKGHPETLEKFDKFKHL
+KS-----EDEMKGSE---DLKKHG-NTVLTALGGILKKKGHQEAEL--KPL-AQSHATK----HKIPVKYLEFISDAIAQ
+VLQSKH-PG-NFAAEAQ-GAMKKALEL------F---RNDIA----AKYKELG-----FQG----------
+>Dolphin MYOGLOBIN - SADDLEBACK DOLPHIN
+----------G------------------LSDGEWQLVLNVWGKVEADV---AGHGQDILIRLFKGHPETLEKFDKFKHL
+KT-----EADMKASE---DLKKHG-DTVLTALGAILKKKGHHDAEL--KPL-AQSHATK----HKIPIKYLEFISEAIIH
+VLHSRH-PA-QFGADAQ-GAMNKALEL------F---RKDIA----AKYKELG-----FHG----------
+>Horse, Zebra MYOGLOBIN - HORSE AND PLAINS ZEBRA
+----------G------------------LSDGEWQQVLNVWGKVEADI---AGHGQEVLIRLFTGHPETLEKFDKFKHL
+KT-----EAEMKASE---DLKKHG-TVVLTALGGILKKKGHHEAEL--KPL-AQSHATK----HKIPIKYLEFISDAIIH
+VLHSKH-PG-NFGADAQ-GAMTKALEL------F---RNDIA----AKYKELG-----FQG----------
+>African Elephant MYOGLOBIN - AFRICAN ELEPHANT
+----------G------------------LSDGEWELVLKTWGKVEADI---PGHGEFVLVRLFTGHPETLEKFDKFKHL
+KT-----EGEMKASE---DLKKQG-VTVLTALGGILKKKGHHEAEI--QPL-AQSHATK----HKIPIKYLEFISDAIIH
+VLQSKH-PA-EFGADAQ-AAMKKALEL------F---RNDIA----AKYKELG-----FQG----------
+>Aardvark MYOGLOBIN - AARDVARK
+----------G------------------LSDAEWQLVLNVWGKVEADI---PGHGQDVLIRLFKGHPETLEKFDRFKHL
+KT-----EDEMKASE---DLKKHG-TTVLTALGGILKKKGQHEAEI--QPL-AQSHATK----HKIPVKYLEFISEAIIQ
+VIQSKH-SG-DFGADAQ-GAMSKALEL------F---RNDIA----AKYKELG-----FQG----------
+>Human MYOGLOBIN - HUMAN
+----------G------------------LSDGEWQLVLNVWGKVEADI---PGHGQEVLIRLFKGHPETLEKFDKFKHL
+KS-----EDEMKASE---DLKKHG-ATVLTALGGILKKKGHHEAEI--KPL-AQSHATK----HKIPVKYLEFISECIIQ
+VLQSKH-PG-DFGADAQ-GAMNKALEL------F---RKDMA----SNYKELG-----FQG----------
+>Macaque MYOGLOBIN - CRAB-EATING MACAQUE (TENTATIVE SEQUENCE)
+----------G------------------LSDGEWQLVLNVWGKVEADI---PSHGQEVLIRLFKGHPETLEKFDKFKHL
+KS-----EDEMKASE---DLKKHG-VTVLTALGGILKKKGHHEAEI--KPL-AQSHATK----HKIPVKYLELISESIIQ
+VLQSKH-PG-DFGADAQ-GAMNKALEL------F---RNDMA----AKYKELG-----FQG----------
+>NA Opossum MYOGLOBIN - NORTH AMERICAN OPOSSUM
+----------G------------------LSDGEWQLVLNAWGKVEADI---PGHGQEVLIRLFKGHPETLEKFDKFKHL
+KS-----EDEMKASE---DLKKHG-ATVLTALGNILKKKGNHEAEL--KPL-AQSHATK----HKISVQFLEFISEAIIQ
+VIQSKH-PG-DFGGDAQ-AAMGKALEL------F---RNDMA----AKYKELG-----FQG----------
+>Earthworm GLOBIN AIII - COMMON EARTHWORM
+---------KK------------------QCGVLEGLKVKSEWGRAYGS---GHDREAFSQAIWRATFAQVPESRSLFKR
+VH-----GDH-TSDP---AFIAHA-ERVLGGLDIAISTLDQPATLK--EEL-DHLQVQHEG--RKIPDNYFDAFKTAILH
+VVAAQL-GE-RCYSNN--EEIHDAIACDGFARVL---PQVLE----R-----G-----IKGHH--------
+> SMALL CHAIN - TYLORRHYNCHUS HETEROCHAETUS
+----------T------------------DCGILQRIKVKQQWAQVYSV---GESRTDFAIDVFNNFFRTNPD-RSLFNR
+VN-----GDN-VYSP---EFKAHM-VRVFAGFDILISVLDDKPVLD--QAL-AHYAAFH----KQFGTIPFKAFGQTMFQ
+TIAEHI--------HG--ADIGAWRAC------Y---AEQIV----T-----G-----ITA----------
+>BloodwormGLOBIN, MAJOR MONOMERIC COMPONENT - BLOODWORM
+----------G------------------LSAAQRQVIAATWKDIAGND---NGAGVGKDCLI--KHLSAHPQMAAVFGF
+SG-----ASD-PAVA---DLGAKV-LAIGVAVSHLGDGKMVAQMKA--VGV-RHKGYGN----KHIKGQYFEPLGASLLS
+AMEHRI-GG-KMNAAA-KDAWAAAYAD------I---SGALI----S-----G-----LQS----------
+>Whelk GLOBIN - WHELK
+----------G------------------LDGAQKTALKESWKVLGADGPTMMKNGSLLFGLLFKTYPDTKKHFKHFDDA
+TF-----AAM-DTTG---VGKAHG-VAVFSGLGSMICSIDDDDCV---GLA-KKLSRNH--LARGVSAADF-KLLEAVFK
+FLDEAT-QR-KATDAQ-KDADGALLTM------L---IKA------------H-----V------------
+>Snail GLOBIN - WATER SNAIL
+----------S------------------LQPASKSALASSWKTLAKDAATIQNNGATLFSLLFKQFPDTRNYFTHFGNM
+SD-----AEM-KTTG---VGKAHS-MAVFAGIGSMIDSMDDADCMN--GLA-LKLSRNH--IQRKIGASRFGEMRQVFPN
+FLDEAL-GG-GASGDV-KGAWDALLAY------LQDNKQA------------Q-----A----L-------
+>Clam GLOBIN I - BLOOD CLAM
+----------P--------SVQGAAAQ--LTADVKKDLRDSWKVIGSDK---KGNGVALMTTLFADNQETIGYFKRLGNV
+SQ-----GM---AND---KLRGHS-ITLMYALQNFIDQLDNTDDLV--CVV-EKFAVNH--ITRKISAAEFGKINGP---
+-IKKVL-AS-KNFGDK-YANAWAKLVA------V---VQA------------A-----L------------
+>Midge larvaGLOBIN CTT-II BETA - MIDGE LARVA
+----------A------------------PLSADEASLV---RGSWAQV---KHSEVDILYYIFKANPDIMAKFPQFAGK
+DL-----ETL-KGTGQFATHAGRI-VGFVSEIVALMGNSANMPAME--TLI-KDMAANH--KARGIPKAQFNEFRASLVS
+YLQSKV----SWNDSL-GAAWTQGLDN------V---FNMMF----S-----Y-----L------------
+>Midge larva GLOBINS CTT-I AND CTT-IA - MIDGE LARVA
+----------G------------------P-SGDQIAAA---KASWNTV---KNNQVDILYAVFKANPDIQTAFSQFAGK
+DL-----DSI-KGTPDFSKHAGRV-VGLFSEVMDLLGNDANTPTIL--AKA-KDFGKSH--KSRASP-AQLDNFRKSLVV
+YLKGAT----KWDSAV-ESSWAPVLDF------V---FSTLK----N-----E-----L------------
+>Bacteria BACTERIAL HEMOGLOBIN - VITREOSCILLA SP
+-----------------------------MLDQQTINII---KATVPVL---KEHGVTITTTFYKNLFAKHPEVRPLFDM
+GR-----Q---ESLEQ-------P-KALAMTVLAAAQNIENLPAIL--PAV-KKIAVKH--CQAGVAAAHYPIVGQELLG
+AIKEVL-GD-AATDDI-LDAWGKAYGV------I---ADVFI----Q-----VEADLYA-----Q-AVE--
+>P andersonii ONLEGUME HEMOGLOBIN I - PARASPONIA ANDERSONII
+----------V----------------NKVFTEEQEALV---VKAWAVM---KKNSAELGLQFLK-IFEIAPSAKNLFSY
+LK-----DSP-VPLEQNPKLKPHA-TTFVMTTESAVQLRKAGKVTVK-ESDLKRIGAIH--FKTGVVNEHFEVTRFALLE
+TIKEAV-PE-MWSPEM-KNAWGVAYDQ------L---VAAIK----F-----E-----M-----KPSST--
+>Yellow Lupin LEGHEMOGLOBIN I - YELLOW LUPIN
+----------G------------------VLTDVQVALV---KSSFEEF---NANIPKNTHRFFTLVLEIAPGAKDLFSF
+LK-----GSS-EVPQNNPDLQAHAGKVFKLTYEAAIQLEVNGAVAS--DATLKSLGSVH--VSKGVVDAHFPVVKEAILK
+TIKEVV-GD-KWSEEL-NTAWTIAYDE------L---AIIIK----K-----E-----M-----K-DAA--
+>Garden Pea LEGHEMOGLOBIN I - GARDEN PEA
+----------G-------------------FTDKQEALV---NSSSE-F---KQNLPGYSILFYTIVLEKAPAAKGLFSF
+LK-----DTA-GVE-DSPKLQAHAEQVFGLVRDSAAQLRTKGEVVL-GNATL---GAIH--VQKGVTNPHFVVVKEALLQ
+TIKKAS-GN-NWSEEL-NTAWEVAYDG------L---ATAIKKAMKT---------------------A--
+>Broad Bean LEGHEMOGLOBIN I - BROAD BEAN
+----------G-------------------FTEKQEALV---NSSSQLF---KQNPSNYSVLFYTIILQKAPTAKAMFSF
+LK-----DSA-GVV-DSPKLGAHAEKVFGMVRDSAVQLRATGEVVL--DGKD---GSIH--IQKGVLDPHFVVVKEALLK
+TIKEAS-GD-KWSEEL-SAAWEVAYDG------L---ATAIK----A---------------------A--
+>Soybean LEGHEMOGLOBIN C1 - SOYBEAN
+----------G------------------AFTEKQEALV---SSSFEAF---KANIPQYSVVFYNSILEKAPAAKDLFSF
+LA-----NGV-DPT--NPKLTGHAEKLFALVRDSAGQLKTNGTVVA--DAAL---VSIH--AQKAVTDPQFVVVKEALLK
+TIKEAV-GG-NWSDEL-SSAWEVAYDE------L---AAAIK----K---------------------A--
+>Kidney Bean LEGHEMOGLOBIN A - KIDNEY BEAN
+----------G------------------AFTEKQEALV---NSSWEAF---KGNIPQYSVVFYTSILEKAPAAKNLFSF
+LA-----NGV-DPT--NPKLTAHAESLFGLVRDSAAQLRANGAVVA--DAAL---GSIH--SQKGVSNDQFLVVKEALLK
+TLKQAV-GD-KWTDQL-STALELAYDE------L---AAAIK----K---------------------AYA
+" >
+</form>
+<br >
+<br >
+
+
+
+
+<hr >
+<a name="HTH"></a>
+<h2>HTH Proteins</h2>
+<img alt="" src="examples/hth.png" > <br >
+Helix-Turn-Helix DNA binding motifs found by the
+Gibbs
+sampling system. Compared to the <a href="#CAP_HTH">CAP HTH logo</a> 
+there is much less sequence conservation within the DNA binding helix (11-17),
+as might be expected for a diverse sample of proteins.
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_edit" value="Edit Logo" >
+<input type="hidden" name="logo_title" value ="Helix-Turn-Helix Motifs" >
+<input type="hidden" name="stack_width" value="large" >
+<input type="hidden" name="first_index" value ="-11" >
+<input type="hidden" name="logo_start" value ="1" >
+<input type="hidden" name="logo_end" value ="17" >
+<input type="hidden" name="yaxis_scale" value ="2.0" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_errorbars" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="scale_width" value="true" >
+<input type="hidden" name="sequences" value=">A25944 DNA-directed RNA polymerase sigma-37 chain - Bacillu 223-240
+iidltyiqnk SQKETGDILGISQMHVSR lqrkavkklr  
+>A28627 spoIIIC protein - Bacillus subtilis  94-111
+rfgldlkkek TQREIAKELGISRSYVSR iekralmkmf  
+>A32837 *Transcriptional activator nahR - Pseudomonas putida  22-39
+vvfnqllvdr RVSITAENLGLTQPAVSN alkrlrtslq   
+>A23450 Antennapedia homeotic protein - Fruit fly (Drosophil 326-343
+fhfnryltrr RRIEIAHALCLTERQIKI wfqnrrmkwk  
+>B26499 Regulatory protein ntrC - Bradyrhizobium sp. 449-466
+ltaalaatrg NQIRAADLLGLNRNTLRK kirdldiqvy  
+>BVECDA dicA protein - Escherichia coli | 1551.0 1.0 1.0 1.0  22-39
+iryrrknlkh TQRSLAKALKISHVSVSQ wergdseptg   
+>C29010 Mercuric resistance operon regulatory merD protein -   5-22
+------mnay TVSRLALDAGVSVHIVRD yllrgllrpv   
+>DNECFS DNA-binding protein fis - Escherichia coli | 928.0 1  73-90
+ldmvmqytrg NQTRAALMMGINRGTLRK klkkygmn--     
+>JEBY1 Mating hormone a1 - Yeast (Saccharomyces cerevisiae)   99-116
+frrkqslnsk EKEEVAKKCGITPLQVRV wfinkrmrsk  
+>QCBP2L Regulatory protein cII - Phage lambda | 1559.0 2.0 1  25-42
+sallnkiaml GTEKTAEAVGVDKSQISR wkrdwipkfs   
+>QRECC cAMP receptor protein (CAP) - Escherichia coli | 1507 169-186
+thpdgmqiki TRQEIGQIVGCSRETVGR ilkmledqnl  
+>RCBPL Regulatory protein cro - Phage lambda | 1555.0 1.0 1.  15-32
+itlkdyamrf GQTKTAKDLGVYQSAINK aihagrkifl   
+>RGBP22 Regulatory protein cro - Phage P22 | 1556.0 1.0 1.0   12-29
+ykkdvidhfg TQRAVAKALGISDAAVSQ wkevipekda   
+>RGECA Arabinose operon regulatory protein - Escherichia col 196-213
+isdhladsnf DIASVAQHVCLSPSRLSH lfrqqlgisv  
+>RGECF Regulatory protein fnr - Escherichia coli | 1507.0 1. 196-213
+fsprefrltm TRGDIGNYLGLTVETISR llgrfqksgm  
+>RGECH Heat shock regulatory protein - Escherichia coli | 30 252-269
+arwldednks TLQELADRYGVSAERVRQ leknamkklr  
+>RGKBCP Nitrogen assimilation regulatory protein - Klebsiell 444-461
+lttalrhtqg HKQEAARLLGWGRNTLTR klkelgme--    
+>RPECCT cyt repressor - Escherichia coli | 1291.0 3.0 1.0 1.  11-28
+mkakkqetaa TMKDVALKAKVSTATVSR almnpdkvsq   
+>RPECDO Deo operon repressor - Escherichia coli | 1536.0 1.0  23-40
+lqelkrsdkl HLKDAAALLGVSEMTIRR dlnnhsapvv   
+>RPECG gal repressor - Escherichia coli | 1291.0 4.0 1.0 1.0   3-20
+--------ma TIKDVARLAGVSVATVSR vinnspkase   
+>RPECL lac repressor - Escherichia coli | 1291.0 2.0 1.0 1.0   5-22
+------mkpv TLYDVAEYAGVSYQTVSR vvnqashvsa   
+>RPECTN TetR repressor - Escherichia coli transposon Tn10 |   26-43
+llnevgiegl TTRKLAQKLGVEQPTLYW hvknkralld   
+>RPECW trp repressor - Escherichia coli | 1534.0 1.0 1.0 1.0  67-84
+iveellrgem SQRELKNELGAGIATITR gsnslkaapv   
+>S02513 Regulatory protein nifA - Klebsiella pneumoniae 495-512
+liaalekagw VQAKAARLLGMTPRQVAY riqimditmp  
+>S07337 *spoIIG protein - Bacillus subtilis 205-222
+rfglvgeeek TQKDVADMMGISQSYISR lekriikrlr  
+>S07958 *DNA-invertase - Escherichia coli 160-177
+qagrliaagt PRQKVAIIYDVGVSTLYK tfpagdk---     
+>S08477 Regulatory protein purR - Escherichia coli   3-20
+-------ma TIKDVAKRANVSTTTVSH vinktrfvae-   
+>S09205 *ebgR protein - Escherichia coli   3-20
+--------ma TLKDIAIEAGVSLATVSR vlnddptlnv   
+>S11945 *lexA repressor - Escherichia coli  27-44
+dhisqtgmpp TRAEIAQRLGFRSPNAAE ehlkalarkg   
+>Z1BPC2 Regulatory protein cI - Phage P22 | 1559.0 1.0 1.0 1  25-42
+ssilnriair GQRKVADALGINESQISR wkgdfipkmg
+" >
+</form>
+
+<br ><br >
+<hr >
+<a name="splice"></a>
+<h2>Human Splice Sites</h2>
+
+<img   alt="" src="examples/exon-intron.png" ><img   alt="" src="examples/intron-exon.png" > <br >
+<br >
+These logos show a small sample of Human intron-exon 
+splice boundaries. Sequences of experimentally 
+confirmed genes were extracted from 
+EID: the Exon-Intron database.
+Additional discussion of the features in this logo can be found in 
+the paper
+<a href="http://www.lecb.ncifcrf.gov/~toms/paper/splice/">
+Features of spliceosome evolution...</a>
+
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_edit" value="Edit Logo" >
+Exon-Intron (Donor) Sites
+<input type="hidden" name="logo_title" value="exon | intron" >
+<input type="hidden" name="stack_width" value="large" >
+<input type="hidden" name="first_index" value="-11" >
+<input type="hidden" name="logo_start" value="-6" >
+<input type="hidden" name="logo_end" value="8" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_errorbars" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="scale_width" value="true" >
+<input type="hidden" name="sequences" value="
+> 19082_AF115399
+GGATCGACCCTgtaagtttt
+> 45328_AB000381
+GCGCGCTCAGTgtaagtatc
+> 45328_AB000381
+AATCTCCATTCgtaagtacc
+> 45330_AB001517
+ACTGGACGCTGgtaaggact
+> 45331_AB001517
+TCGCTTACCGGgtgagcgcg
+> 45331_AB001517
+GACCTTAAAAAgtaagtatg
+> 45331_AB001517
+CGTCGATGAAGgtacttgcc
+> 45331_AB001517
+CCTGATGGCAGgtaaggggg
+> 45331_AB001517
+GATGACTCCAGgtgcggcct
+> 45331_AB001517
+ACAGCCTGGACgtatgtccc
+> 45331_AB001517
+CGGCTGGCCAAgtaggtctc
+> 45331_AB001517
+CACTCCCTGAGgtaagcctt
+> 45331_AB001517
+TGGCTGTTCAGgtttgtccc
+> 45331_AB001517
+ACGACGGCAAGgtaggctcc
+> 45331_AB001517
+GACCTTCACAGgtgatgttt
+> 45331_AB001517
+GGCTCCTTGATgtaagcacc
+> 45331_AB001517
+GACCTCTGATGgtgagcacg
+> 45331_AB001517
+GCCAAGGGGAAgtgagtgtc
+> 45331_AB001517
+ACGCCATGGAGgtgagccgc
+> 45331_AB001517
+CGTCAGGAAAGgtgagcaga
+> 45331_AB001517
+CTCTCCCACTGgtgagcact
+> 45331_AB001517
+CAGGGGCGAGAgtgagttgg
+> 45331_AB001517
+CTGAAGTCCAGgtagagggt
+> 45331_AB001517
+CTGTCGAAACTgtacgtgtg
+> 45332_AB001517
+GGGTCGCGCTGgtgagtgga
+> 45332_AB001517
+GAGGCCTCGGCgtaagtcct
+> 45332_AB001517
+GGCGAGAGCAGgtgtggggg
+> 45332_AB001517
+GCTAAAAACCTgtgcgtatt
+> 45332_AB001517
+AAGCCCATCGGgtgtgtaca
+> 45333_AB001517
+GGGTCGCGCTGgtgagtgga
+> 45333_AB001517
+GAGGCCTCGGCgtaagtcct
+> 45333_AB001517
+GGCGAGAGCAGgtgtggggg
+> 45333_AB001517
+GCTAAAAACCTgtgcgtatt
+> 45334_AB001523
+CATCGTCACCTgtgagtgcc
+> 45334_AB001523
+GAATGGAGAAGgtatgagtt
+> 45334_AB001523
+CAGAGTGCTGTgtgagtacc
+> 45334_AB001523
+CAGAGTGACAGgtaagtgta
+> 45334_AB001523
+TCATGGTTCAGgtacttgac
+> 45334_AB001523
+CGGGGCCGGGGgtgagtagt
+> 45334_AB001523
+AGCTCTTAGAAgtgagtcgg
+> 45334_AB001523
+CCACAGAAAAGgtgcctacc
+> 45334_AB001523
+ACCAGAAACAGgtacttttt
+> 45334_AB001523
+AACACTACTTAgtaagtatt
+> 45334_AB001523
+GAGTTTTACATgtaattgat
+> 45334_AB001523
+CAAATTGAAAAgtatccttt
+> 45334_AB001523
+AGACAGCCCAGgtaagacca
+> 45334_AB001523
+TCAGGACTCAGgtatgcgtt
+> 45334_AB001523
+GCCGCTGGCTGgtgagtggg
+> 45334_AB001523
+CAACACGAGAGgtgaggtgc
+> 45334_AB001523
+CAGACCACAAAgtgagtagg
+> 45334_AB001523
+TCAGGAACACGgtaacggag
+> 45334_AB001523
+AGTCCCAGCAGgtaaacatt
+> 45334_AB001523
+AAAATTTTTTTgtaagtgat
+> 45334_AB001523
+TATGTATGAAGgtaggtggt
+> 45334_AB001523
+ACTGGACGCTGgtaaggact
+> 45335_AB001523
+TCGCTTACCGGgtgagcgcg
+> 45337_AB00189S
+TGTGGTACCTGgtgagtagg
+> 45337_AB00189S
+CCCCAAATTATgtaagtcaa
+> 45337_AB00189S
+AATGAAAATAAgtacgtcac
+> 45338_AB00189S
+TGTGGTACCTGgtgagtagg
+> 45338_AB00189S
+CCCCAAATTATgtaagtcaa
+> 45338_AB00189S
+AATGAAAATAAgtacgtcac
+> 45338_AB00189S
+GGAGAAGCAAGgtcagtggc
+> 45339_AB00189S
+TGTGGTACCTGgtgagtagg
+> 45339_AB00189S
+CCCCAAATTATgtaagtcaa
+> 45339_AB00189S
+AATGAAAATAAgtacgtcac
+> 45339_AB00189S
+GGAGAAGCAAGgtcagtggc
+> 45340_AB00189S
+TGTGGTACCTGgtgagtagg
+> 45340_AB00189S
+CCCCAAATTATgtaagtcaa
+> 45340_AB00189S
+AATGAAAATAAgtacgtcac
+> 45341_AB00189S
+TGTGGTACCTGgtgagtagg
+> 45341_AB00189S
+CCCCAAATTATgtaagtcaa
+> 45341_AB00189S
+AATGAAAATAAgtacgtcac
+> 45341_AB00189S
+AAGACCAGCAGgtaatgcat
+> 45342_AB00189S
+TGTGGTACCTGgtgagtagg
+> 45342_AB00189S
+CCCCAAATTATgtaagtcaa
+> 45342_AB00189S
+AATGAAAATAAgtacgtcac
+> 45342_AB00189S
+AGATTACACAGgtaatgagc
+> 45342_AB00189S
+AAGACCAGCAGgtaatgcat
+> 45342_AB00189S
+GTGTGTCGAAGgtacggtcc
+> 45342_AB00189S
+GTGCAGCAACGgtgagcagc
+> 45343_AB00189S
+TGTGGTACCTGgtgagtagg
+> 45343_AB00189S
+CCCCAAATTATgtaagtcaa
+> 45343_AB00189S
+AATGAAAATAAgtacgtcac
+> 45343_AB00189S
+AAGACCAGCAGgtaatgcat
+> 45343_AB00189S
+GTGTGTCGAAGgtacggtcc
+> 45343_AB00189S
+GTGCAGCAACGgtgagcagc
+> 45344_AB00189S
+TGTGGTACCTGgtgagtagg
+> 45344_AB00189S
+CCCCAAATTATgtaagtcaa
+> 45344_AB00189S
+AATGAAAATAAgtacgtcac
+> 45344_AB00189S
+AGATTACACAGgtaatgagc
+> 45344_AB00189S
+AAGACCAGCAGgtaatgcat
+> 45345_AB002059
+TATGTGGTAGGgtaagagag
+> 45345_AB002059
+AGCCACCTCAGgtgggggcc
+> 45345_AB002059
+GATGCCCAGAGgtgagttta
+> 45345_AB002059
+ACACAGCCACGgtaactgtg
+> 45345_AB002059
+GTTGTGCCCTCgtaagtgtc
+> 45345_AB002059
+AACTTCTCTAAgtaagcaga
+> 45345_AB002059
+TGGCGTTGCTGgtgggtccc" >
+</form>
+
+
+
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_edit" value="Edit Logo" >
+Intron-Exon (Acceptor) Sites
+<input type="hidden" name="logo_title" value="intron | exon" >
+<input type="hidden" name="stack_width" value="large" >
+<input type="hidden" name="first_index" value="-21" >
+<input type="hidden" name="logo_start" value="-20" >
+<input type="hidden" name="logo_end" value="3" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_errorbars" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="scale_width" value="true" >
+<input type="hidden" name="sequences" value="
+> 19082_AF115399
+ttctctgaaatatgaatttagACTGGTACTTATCATGGAG
+> 45328_AB000381
+gcctgctttctcccctctcagGGACTTACAGTTTGAGATG
+> 45328_AB000381
+cattgctgcttctttttttagGCATAAATTCTCGTGAACT
+> 45330_AB001517
+aacttcctgtgtgttttgcagACAGCTGGATAGAAAACGA
+> 45331_AB001517
+acaattttgttttcttcacagTTTTCAAATTTGCTGGGTA
+> 45331_AB001517
+tgtggtttttgtctttatcagCAACAAATCTGACACGCTG
+> 45331_AB001517
+gtgacctctggcgtcctgcagGGGGCGATGCGCTGCTGGT
+> 45331_AB001517
+atgtccgcgttccttccatagGAAGTTTGTTGTCACAAAG
+> 45331_AB001517
+tgccatctccctcttttccagGTGCTTTGTGGTTGGGAGC
+> 45331_AB001517
+accctgtgcttccccttgcagCTGTACTCACTCAGCCAGG
+> 45331_AB001517
+tcttctctctcgtcaattcagGTACTTCTTCAATAAAGAA
+> 45331_AB001517
+ttacaggcccgttctctgcagCATTTCAGATCAGAGCATC
+> 45331_AB001517
+cagcttcccccgtgtgcacagGCCTGGGCCAGCTGCTGGT
+> 45331_AB001517
+gcccctcctgtcctgcctcagGTCAAGGTGTGGAACACCC
+> 45331_AB001517
+gaccttgcctcttctctgcagGTACCGAAACTTCCGCACC
+> 45331_AB001517
+cgcctccttgctctacggtagGTTTTGTCTGGACACGAAG
+> 45331_AB001517
+ttactttgcatctctgtttagCTCTGGCTGTGACTTTTCG
+> 45331_AB001517
+ccatgtctcctctccacccagGGCCTTCACCGCCCTGTGC
+> 45331_AB001517
+ccactgcttttgctgttctagGAATTTTTGAACCGAAGAA
+> 45331_AB001517
+taacggttcttttttccccagGTGACATGAGTTCTCGGCA
+> 45331_AB001517
+aagcactgcttaatttcccagGGCGCTGCTGGGCGGCCAC
+> 45331_AB001517
+tgattttttctccttttgcagTTGAAGTGGTCACCTCCTC
+> 45331_AB001517
+cttagggagtctccctttcagAGCCGGGACGCTGCTGCCT
+> 45331_AB001517
+catcccctgtgtgattgacagCTGTAGCTGGAACCACTAT
+> 45332_AB001517
+cagctcccgctcctctcgcagGTGCTGTCTGGATGCGGAG
+> 45332_AB001517
+ctctggttttcccccgtgcagGATCCTGGTGCACCTGAGC
+> 45332_AB001517
+ttgccctgtgctctttcccagGAATGTTTTGACCGAGTCT
+> 45332_AB001517
+aggccttttgtctcccggtagGAGCACGTTTGCCGTGGAC
+> 45332_AB001517
+cgtgttcttttcgcctttcagCTTGTGCTGCATTGCACCT
+> 45333_AB001517
+cagctcccgctcctctcgcagGTGCTGTCTGGATGCGGAG
+> 45333_AB001517
+ctctggttttcccccgtgcagGATCCTGGTGCACCTGAGC
+> 45333_AB001517
+ttgccctgtgctctttcccagGAATGTTTTGACCGAGTCT
+> 45333_AB001517
+cgtgttcttttcgcctttcagCTTGTGCTGCATTGCACCT
+> 45334_AB001523
+atttctttcttcccttcatagGTGCTGGAGATCAGAATTT
+> 45334_AB001523
+acttcaaacaattgtttacagGTCCTATGGCCGGGCTCCG
+> 45334_AB001523
+cagtgacttgtttgtttttagGATACCGAAGTGTATAAAG
+> 45334_AB001523
+agtctgttcatgtctttgcagGTGTGTTGTGCTCTCCGAC
+> 45334_AB001523
+aaacgtatcttgggcgaatagGAGGAGCTTGCCTTTGTTT
+> 45334_AB001523
+tcatgatgtgtgtttgtttagATGGTGCCAACTGGCTGAC
+> 45334_AB001523
+ttcgcatttgcacccccacagGTCTCTGTCCCACCTGGTG
+> 45334_AB001523
+attgtggatttatcttaacagTTAAAGTCCTTGGGCTATC
+> 45334_AB001523
+tctcgtttctttctgtttaagCCAACACAGCTCAGAGTCC
+> 45334_AB001523
+tgtgtttttacttccccacagGATTTGTCCCATGCCACCA
+> 45334_AB001523
+actgtttgttgactttgcaagGAGGAAAAAGGCTCCACAA
+> 45334_AB001523
+ctccttacctctccgctccagCTACCTGCAGACCAGCAGC
+> 45334_AB001523
+tacgataatgtctatttacagGTCATAAGATAGTGCTACC
+> 45334_AB001523
+tgcctgattctttgactctagGCCAAGGAACCTGGAACGT
+> 45334_AB001523
+ccacgatctcttttcctttagATAGCCTTCTGGCAGGCAT
+> 45334_AB001523
+gactttttctgtccttcgtagAACAGTCTTCTGAGGCCGC
+> 45334_AB001523
+gtctttgtgcttcctcctcagGTGTCGATTGACTGCCCGT
+> 45334_AB001523
+ctttttgtttttccactttagGAAATATGTTCAAGTTTGT
+> 45334_AB001523
+gacccccaactctctttccagCCCATCTACAGCAAGCAGT
+> 45334_AB001523
+ttctctccctttcctgcccagACATTATACAACGTGAAGG
+> 45334_AB001523
+catcgcttcctctcgtttcagTTGTCGACAACAGTAGCAA
+> 45334_AB001523
+aacttcctgtgtgttttgcagACAGCTGGATAGAAAACGA
+> 45335_AB001523
+acaattttgttttcttcacagTTTTCAAATTTGCTGGGTA
+> 45337_AB00189S
+ttgtgtctttcgtgcttacagCATTGTGGCGACAAGAACA
+> 45337_AB00189S
+caccacgattccatttcttagGATTCCTACGCCAGCTACG
+> 45337_AB00189S
+tggttttttcctttgtttcagACACGGCACTCGTTGTGCG
+> 45338_AB00189S
+ttgtgtctttcgtgcttacagCATTGTGGCGACAAGAACA
+> 45338_AB00189S
+caccacgattccatttcttagGATTCCTACGCCAGCTACG
+> 45338_AB00189S
+tggttttttcctttgtttcagACACGGCACTCGTTGTGCG
+> 45338_AB00189S
+aatgcattctttacccattagGTGATCTTGAGACTCCTGT
+> 45339_AB00189S
+ttgtgtctttcgtgcttacagCATTGTGGCGACAAGAACA
+> 45339_AB00189S
+caccacgattccatttcttagGATTCCTACGCCAGCTACG
+> 45339_AB00189S
+tggttttttcctttgtttcagACACGGCACTCGTTGTGCG
+> 45339_AB00189S
+aatgcattctttacccattagGTGATCTTGAGACTCCTGT
+> 45340_AB00189S
+ttgtgtctttcgtgcttacagCATTGTGGCGACAAGAACA
+> 45340_AB00189S
+caccacgattccatttcttagGATTCCTACGCCAGCTACG
+> 45340_AB00189S
+tggttttttcctttgtttcagACACGGCACTCGTTGTGCG
+> 45341_AB00189S
+ttgtgtctttcgtgcttacagCATTGTGGCGACAAGAACA
+> 45341_AB00189S
+caccacgattccatttcttagGATTCCTACGCCAGCTACG
+> 45341_AB00189S
+tggttttttcctttgtttcagACACGGCACTCGTTGTGCG
+> 45341_AB00189S
+ctcctgcctttgctcctacagGAAGTGCGTGAGTGTGTGC
+> 45342_AB00189S
+ttgtgtctttcgtgcttacagCATTGTGGCGACAAGAACA
+> 45342_AB00189S
+caccacgattccatttcttagGATTCCTACGCCAGCTACG
+> 45342_AB00189S
+tggttttttcctttgtttcagACACGGCACTCGTTGTGCG
+> 45342_AB00189S
+-ggcaatttgcactcacacagCTCAATCCACCCCAGGCTC
+> 45342_AB00189S
+ctcctgcctttgctcctacagGAAGTGCGTGAGTGTGTGC
+> 45342_AB00189S
+aggaacggtatcttcccacagGTGTGACGAGAACTGCTTG
+> 45342_AB00189S
+tttcctgatgcggggccccagCTGACGAGACATTCTGCGA
+> 45343_AB00189S
+ttgtgtctttcgtgcttacagCATTGTGGCGACAAGAACA
+> 45343_AB00189S
+caccacgattccatttcttagGATTCCTACGCCAGCTACG
+> 45343_AB00189S
+tggttttttcctttgtttcagACACGGCACTCGTTGTGCG
+> 45343_AB00189S
+ctcctgcctttgctcctacagGAAGTGCGTGAGTGTGTGC
+> 45343_AB00189S
+aggaacggtatcttcccacagGTGTGACGAGAACTGCTTG
+> 45343_AB00189S
+tttcctgatgcggggccccagCTGACGAGACATTCTGCGA
+> 45344_AB00189S
+ttgtgtctttcgtgcttacagCATTGTGGCGACAAGAACA
+> 45344_AB00189S
+caccacgattccatttcttagGATTCCTACGCCAGCTACG
+> 45344_AB00189S
+tggttttttcctttgtttcagACACGGCACTCGTTGTGCG
+> 45344_AB00189S
+-ggcaatttgcactcacacagCTCAATCCACCCCAGGCTC
+> 45344_AB00189S
+ctcctgcctttgctcctacagGAAGTGCGTGAGTGTGTGC
+> 45345_AB002059
+tgcccgacttctcctccccagGTGGGCGCTCCTCGCCAAA
+> 45345_AB002059
+accttgagacttgcctcctagGGAGAGAACGTGTTCTTCT
+> 45345_AB002059
+ctgctctctctcccacctcagCACCCGTCCGTCCCACTGG
+> 45345_AB002059
+agttcatcttttgttttctagGTGTAAAAACAGGCCAGTG
+> 45345_AB002059
+tcacctcccttccacctgcagGAGGCCCCTGCTGGCCCAG
+> 45345_AB002059
+gacctttcccactcctcccagGTCCAATGCCTTGGAGACC
+> 45345_AB002059
+aaagctatgtgctatgtgcagGGTGGCTCTGTAGGCATCA
+> 45345_AB002059
+agccttctttcctgcccacagGACAGCCACTCACTGGTGG
+" >
+</form>
+
+</td></tr>
+
+
+
+
+
+</table>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-5951066-1");
+pageTracker._trackPageview();
+</script>
+</body></html>
