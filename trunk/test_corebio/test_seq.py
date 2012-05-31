@@ -120,6 +120,7 @@ class test_alphabet(unittest.TestCase) :
              (seq_io.read(testdata_stream('cap.fa')), unambiguous_dna_alphabet),
              (seq_io.read(testdata_stream('cox2.msf')), unambiguous_protein_alphabet),
              (seq_io.read(testdata_stream('Rv3829c.fasta')), unambiguous_protein_alphabet),
+             (seq_io.read(testdata_stream('chain_B.fasta')), unambiguous_protein_alphabet),
              )
         for t in tests :
             self.failUnlessEqual(Alphabet.which(t[0]), t[1])

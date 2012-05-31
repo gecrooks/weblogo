@@ -318,7 +318,7 @@ class Alphabet(object) :
         is selected from that list.
 
         The heuristic is to count the occurrences of letters for each alphabet and 
-        downweight longer alphabets by the square root of the alphabet length. Ties
+        downweight longer alphabets by the log of the alphabet length. Ties
         go to the first alphabet in the list.
 
         """
@@ -327,7 +327,8 @@ class Alphabet(object) :
                     unambiguous_rna_alphabet,
                     unambiguous_protein_alphabet,
                     )
-        score= [sum(seqs.tally(a))/sqrt(len(a)) for a in alphabets]
+        import math
+        score= [sum(seqs.tally(a))/math.log(len(a)) for a in alphabets]
         best = score.index(max(score))
         a = alphabets[best]
         return a
