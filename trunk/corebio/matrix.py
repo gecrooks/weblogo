@@ -183,6 +183,8 @@ class AlphabeticArray(object) :
         keys =  self._ordkey( keys)
         outerkeys = []
         for i, k in enumerate(keys) :
+            if k is None: 
+                k = range(0,self.array.shape[i])
             k = na.asarray(k)
             for j in range(len(keys)-i-1) : 
                 k = k[...,na.newaxis]
@@ -363,7 +365,7 @@ class Motif(AlphabeticArray) :
         
         
     def reindex(self, alphabet) :
-        return  AlphabeticArray.reindex(self, (alphabet, alphabet))
+        return  Motif(alphabet, AlphabeticArray.reindex(self, (None, alphabet)))
         
       
     @staticmethod #TODO: should be classmethod?
@@ -371,7 +373,7 @@ class Motif(AlphabeticArray) :
         """ Parse a sequence matrix from a file. 
         Returns a tuple of (alphabet, matrix)
         """
-
+   
         items = []
 
         start=True
@@ -434,16 +436,17 @@ class Motif(AlphabeticArray) :
         defacto_alphabet = Alphabet(defacto_alphabet)
 
         if alphabet :
-            if not alphabet.alphabetic(defacto_alphabet) :
-                raise ValueError, "Incompatible alphabets: %s , %d (defacto)"% (
+            alphabet = Alphabet(alphabet)
+            if not defacto_alphabet.alphabetic(alphabet) :
+                raise ValueError, "Incompatible alphabets: %s , %s (defacto)"% (
                     alphabet, defacto_alphabet)
         else :            
-            alphabets = (unambiguous_dna_alphabet,
-                      unambiguous_rna_alphabet,
-                      unambiguous_protein_alphabet,
+            alphabets = (unambiguous_rna_alphabet,
+                        unambiguous_dna_alphabet,                      
+                        unambiguous_protein_alphabet,
                       )
             for a in alphabets :
-                if a.alphabetic(defacto_alphabet) :
+                if defacto_alphabet.alphabetic(a) :
                     alphabet = a
                     break
             if not alphabet :
@@ -466,8 +469,7 @@ class Motif(AlphabeticArray) :
         if position_header :
             matrix.transpose() 
 
-        return  Motif(alphabet, matrix)
-        
+        return Motif(defacto_alphabet, matrix).reindex(alphabet)
 
         
 
