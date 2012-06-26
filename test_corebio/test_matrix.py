@@ -39,6 +39,20 @@ class test_Motif(unittest.TestCase) :
         assert m[0, 'G']==152.0         
         assert shape(m.array) == (15,4)
 
+    def test_reindex(self):
+        f = testdata_stream("transfac_matrix.txt")
+        m = Motif.read_transfac(f)
+
+        m2 = m.reindex("TCGA")
+        
+        assert( str(m2.alphabet) == "TCGA")
+        
+        for k in range(0, 10) :
+            for i,a in enumerate("AGCT") :
+                assert m[k,a] == m2[k,a]
+
+
+        
 
 
 class test_SubMatrix(unittest.TestCase) :
