@@ -119,9 +119,9 @@ base_pairing = ColorScheme([
 
 # From Crooks2004c-Proteins-SeqStr.pdf
 hydrophobicity = ColorScheme([
-    ColorGroup( "RKDENQ",   "black", "hydrophilic"),
+    ColorGroup( "RKDENQ",   "blue", "hydrophilic"),
     ColorGroup( "SGHTAP",   "green", "neutral"  ),
-    ColorGroup( "YVMCLFIW", "blue",  "hydrophobic") ],
+    ColorGroup( "YVMCLFIW", "black",  "hydrophobic") ],
     alphabet = seq.unambiguous_protein_alphabet
     )
 
