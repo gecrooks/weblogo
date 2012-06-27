@@ -133,9 +133,26 @@ def httpd_serve_forever(port=8080) :
     
 
 def _build_logodata(options) :
+    motif_flag=False
     
-    if options.input_parser != "transfac":
-        seqs = read_seq_data(options.fin, 
+    fin = options.fin;
+    if fin is None : 
+        from StringIO import StringIO 
+        fin = StringIO(sys.stdin.read())
+    
+    try:
+        # Try reading data in transfac format first.     
+        from corebio.matrix import Motif
+        motif = Motif.read_transfac(fin, alphabet=options.alphabet)
+        motif_flag = True
+        if options.reverse: motif.reverse()
+        if options.complement: motif.complement()
+
+        prior = parse_prior( options.composition,motif.alphabet, options.weight)
+        data = LogoData.from_counts(motif.alphabet, motif, prior)
+ 
+    except ValueError, motif_err :
+        seqs = read_seq_data(fin, 
             options.input_parser.read,
             alphabet=options.alphabet,
             ignore_lower_case = options.ignore_lower_case)   
@@ -146,31 +163,17 @@ def _build_logodata(options) :
         if options.complement :
             seqs= SeqList( [Seq(s,seqs.alphabet).complement() for s in seqs], seqs.alphabet)
 
-          
-        
         prior = parse_prior( options.composition,seqs.alphabet, options.weight)
         data = LogoData.from_seqs(seqs, prior)
 
-    else :
-        from corebio.matrix import Motif
-    
-        if options.ignore_lower_case:
-            raise ValueError("error: option --ignore-lower-case incompatible with matrix input")
-        
-        #FIXME : implement
-        if options.reverse:
-            raise ValueError("error: option --reverse incompatible with matrix input")
-        
-        #FIXME : implement
-        if options.complement:
-            raise ValueError("error: option --complement incompatible with matrix input")
-                      
-        motif = Motif.read_transfac(options.fin, alphabet=options.alphabet)
-        prior = parse_prior( options.composition,motif.alphabet, options.weight)
-        data = LogoData.from_counts(motif.alphabet, motif, prior)
-        
+
+    if motif_flag and options.ignore_lower_case:
+        raise ValueError("error: option --ignore-lower-case incompatible with matrix input")
+
+
     return data
      
+ 
              
 def _build_logoformat( logodata, opts) :
     """ Extract and process relevant option values and return a 
@@ -287,7 +290,7 @@ def _build_option_parser() :
         dest="fin",
         action="store",
         type="file_in",
-        default=sys.stdin,
+        default=None,
         help="Sequence input file (default: stdin)",
         metavar="FILENAME")
 

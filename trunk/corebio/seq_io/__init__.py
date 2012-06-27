@@ -234,6 +234,8 @@ def read(fin, alphabet=None) :
     If that fails, then we attempt to parse the file using several common   
     formats.
     
+    Note, fin cannot be unseekable stream such as sys.stdin
+    
     returns :
         SeqList
     raises :
@@ -245,11 +247,11 @@ def read(fin, alphabet=None) :
     parsers =  _get_parsers(fin)
     
     for p in _get_parsers(fin) :
+        fin.seek(0)
         try:    
             return p.read(fin, alphabet)
         except ValueError:
             pass
-        fin.seek(0)             # FIXME. Non seakable stdin? 
             
     names = ", ".join([ p.names[0] for p in parsers])
     raise ValueError("Cannot parse sequence file: Tried %s " % names)
