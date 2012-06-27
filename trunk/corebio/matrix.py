@@ -191,6 +191,7 @@ class AlphabeticArray(object) :
             outerkeys.append(k)
         return self.array.__getitem__(  tuple(outerkeys) ) 
  
+ 
     def reindex(self, new_alphabets) :
         """Create a new AlphabeticArray with the given alphabets. The new 
         alphabet must be a subset of the current alphabet. Useful for
@@ -358,15 +359,47 @@ class Motif(AlphabeticArray) :
     def __init__(self, alphabet, array=None, dtype=None, name=None,
             description = None, scale=None) :
         AlphabeticArray.__init__(self, (None, alphabet), array, dtype)
-        self.alphabet = alphabet
         self.name = name
         self.description = description
         self.scale = scale    
-        
+
+    @property
+    def alphabet(self):
+        return self.alphabets[1]
         
     def reindex(self, alphabet) :
         return  Motif(alphabet, AlphabeticArray.reindex(self, (None, alphabet)))
+  
+    # These methods alter self, and therefore do not return a value.
+    # (Compare to Seq objects, where the data is immutable and therefore methods return a new Seq.)
+    # TODO: Should reindex (above) also act on self?
+    
+    def reverse(self):
+        """Reverse sequence data"""
+#        self.array = na.array(self.array[::-1]) # This is a view into the origional numpy array.
+        self.array = self.array[::-1] # This is a view into the origional numpy array.
+    
+    def complement(self) :
+        """Complement nucleic acid sequence."""
+        from corebio.seq import Seq, Alphabet
+        alphabet = self.alphabet
+        complement_alphabet = Alphabet(Seq(alphabet, alphabet).complement())
+        self.alphabets = (None, complement_alphabet) 
         
+        m = self.reindex(alphabet)
+        self.alphabets = (None, alphabet)
+        self.array = m.array
+        
+
+    def reverse_complement(self):
+         """Complements and reverses nucleic acid sequence (i.e. the other strand
+         of a DNA sequence.) 
+         """
+         self.reverse()
+         self.complement()
+     
+      
+      
       
     @staticmethod #TODO: should be classmethod?
     def read_transfac( fin, alphabet = None) :
@@ -436,7 +469,6 @@ class Motif(AlphabeticArray) :
         defacto_alphabet = Alphabet(defacto_alphabet)
 
         if alphabet :
-            alphabet = Alphabet(alphabet)
             if not defacto_alphabet.alphabetic(alphabet) :
                 raise ValueError, "Incompatible alphabets: %s , %s (defacto)"% (
                     alphabet, defacto_alphabet)

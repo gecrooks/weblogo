@@ -4,6 +4,16 @@ WebLogo Release Notes
 
 3.3 (2012-??-??) [Gavin Crooks, David Sivak]
 
+* Improved the algorithm that guesses the sequence type (DNA, RNA or protein) 
+	(Kudos: Bug report, Roland Pache <Roland.Pache@ucsf.edu>)
+* Fixed an issue with reading transfac matrices with alternative alphabets 
+	(Kudos: Bug report, Nima Emami <emami.nima@gmail.com>)
+* Fixed Motif.reindex()
+* Implemented Motif.reverse() and Motif.complement() 
+	(Can now reverse complement transfac matrix input on the command line.)
+	(Kudos: Feature request, Seth P Boudreaux <spboudre@bcm.edu>)
+* Miscellaneous minor bug fixes and refactoring.
+
 
 3.2 (2012-01-30) [Gavin Crooks, David Sivak]
 

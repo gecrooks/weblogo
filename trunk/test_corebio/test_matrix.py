@@ -47,14 +47,54 @@ class test_Motif(unittest.TestCase) :
         
         assert( str(m2.alphabet) == "TCGA")
         
-        for k in range(0, 10) :
+        for k in range(0, 12) :
             for i,a in enumerate("AGCT") :
                 assert m[k,a] == m2[k,a]
 
 
+    def test_reverse(self):
+        f = testdata_stream("transfac_matrix.txt")
+        m = Motif.read_transfac(f)
+        f2 = testdata_stream("transfac_matrix.txt")
+        m2 = Motif.read_transfac(f2)
+        m2.reverse()
+        
+        (K,N) = shape(m2)
+        for k in range(0,K):
+            for n in range(0,N):
+                assert( m[k,n] == m2[K-k-1,n])
+
+    
+    def test_complement(self):
+         f = testdata_stream("transfac_matrix.txt")
+         m = Motif.read_transfac(f)
+         f2 = testdata_stream("transfac_matrix.txt")
+         m2 = Motif.read_transfac(f2)
+         m2.complement()
+         
+         (K,N) = shape(m2)
+         for k in range(0,K):
+             assert(m[k, 'A'] == m2[k, 'T'])
+             assert(m[k, 'G'] == m2[k, 'C'])    
+             assert(m[k, 'C'] == m2[k, 'G'])                      
+             assert(m[k, 'T'] == m2[k, 'A'])
+
+    def test_reverse_complement(self):
+        f = testdata_stream("transfac_matrix.txt")
+        m = Motif.read_transfac(f)
+ 
+        f2 = testdata_stream("transfac_matrix.txt")
+        m2 = Motif.read_transfac(f2)
         
 
-
+        m.complement()
+        m.reverse()
+        
+        m2.reverse_complement()
+        
+        assert (m.array == m2.array).all()
+        
+        
 class test_SubMatrix(unittest.TestCase) :
 
     def test_create(self):
