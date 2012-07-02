@@ -938,7 +938,10 @@ def parse_prior(composition, alphabet, weight=None) :
     
     if comp.lower() == 'none': return None
     
+    
     if weight is None and alphabet is not None: weight = float(len(alphabet))
+    if weight<0 : raise ValueError("Weight cannot be negative.")
+    
     
     if comp.lower() == 'equiprobable' :
         prior = weight * equiprobable_distribution(len(alphabet)) 
@@ -1074,7 +1077,7 @@ class LogoData(object) :
         
         if prior is not None: prior = array(prior, float64)
         
-        if prior is None :
+        if prior is None or sum(prior)==0.0:
             R = log(A)
             ent = zeros(  seq_length, float64)
             entropy_interval = None    

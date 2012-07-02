@@ -140,23 +140,28 @@ def _build_logodata(options) :
         from StringIO import StringIO 
         fin = StringIO(sys.stdin.read())
     
+   
     try:
         # Try reading data in transfac format first.     
         from corebio.matrix import Motif
         motif = Motif.read_transfac(fin, alphabet=options.alphabet)
         motif_flag = True
+    except ValueError, motif_err :
+        # Failed reading Motif, try reading as multiple sequence data.
+        seqs = read_seq_data(fin, 
+            options.input_parser.read,
+            alphabet=options.alphabet,
+            ignore_lower_case = options.ignore_lower_case)   
+
+    if motif_flag :
+        if options.ignore_lower_case:
+            raise ValueError("error: option --ignore-lower-case incompatible with matrix input")
         if options.reverse: motif.reverse()
         if options.complement: motif.complement()
 
         prior = parse_prior( options.composition,motif.alphabet, options.weight)
         data = LogoData.from_counts(motif.alphabet, motif, prior)
- 
-    except ValueError, motif_err :
-        seqs = read_seq_data(fin, 
-            options.input_parser.read,
-            alphabet=options.alphabet,
-            ignore_lower_case = options.ignore_lower_case)   
-            
+    else :
         if options.reverse: 
             seqs = SeqList([s.reverse() for s in seqs], seqs.alphabet)
         
@@ -167,8 +172,6 @@ def _build_logodata(options) :
         data = LogoData.from_seqs(seqs, prior)
 
 
-    if motif_flag and options.ignore_lower_case:
-        raise ValueError("error: option --ignore-lower-case incompatible with matrix input")
 
 
     return data
