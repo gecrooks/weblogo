@@ -873,7 +873,7 @@ def eps_formatter( logodata, format, fout) :
                 data.append(" %f %f (%s) ShowSymbol" % (fraction_width, c[0]*stack_height/C, c[1]) )
 
         # Draw error bar on top of logo. Replaced by DrawErrorbarFirst above.
-        if logodata.entropy_interval is not None and conv_factor:
+        if logodata.entropy_interval is not None and conv_factor and C>0.0:
 
             low, high = logodata.entropy_interval[seq_index]
             center = logodata.entropy[seq_index]
