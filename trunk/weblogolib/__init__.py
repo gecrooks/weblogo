@@ -874,11 +874,16 @@ def eps_formatter( logodata, format, fout) :
 
         # Draw error bar on top of logo. Replaced by DrawErrorbarFirst above.
         if logodata.entropy_interval is not None and conv_factor:
+
             low, high = logodata.entropy_interval[seq_index]
             center = logodata.entropy[seq_index]
+            low *= conv_factor
+            high *= conv_factor
+            center *=conv_factor
+            if high> format.yaxis_scale : high = format.yaxis_scale 
 
-            down = (center - low) * conv_factor
-            up   = (high - center) * conv_factor
+            down = (center - low) 
+            up   = (high - center) 
             data.append(" %f %f DrawErrorbar" % (down, up) )
             
         data.append("EndStack")
