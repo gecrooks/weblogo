@@ -370,7 +370,7 @@ def _build_option_parser() :
         action="store",
         type="float",
         default = None,
-        help="The weight of prior data.  Default: total pseudocounts equal to the number of monomer types.",
+        help="The weight of prior data.  Default depends on alphabet length",
         metavar="NUMBER")
 
     data_grp.add_option( "-i", "--first-index",
