@@ -7,7 +7,7 @@ date ="$Date$".split()[1]
 revision = "$Revision$".split()[1]
 
 
-__version__ = '3.3' 
+__version__ = '3.4' 
 
 
 description = "CoreBio %s (%s)" % (__version__,  date)
