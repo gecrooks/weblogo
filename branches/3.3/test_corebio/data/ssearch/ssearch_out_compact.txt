@@ -1,0 +1,102 @@
+# ssearch34 -m 9 -d 0 -Q single.fa testset.fa
+SSEARCH searches a sequence data bank
+ version 3.4t24 June 23, 2004
+Please cite:
+ T. F. Smith and M. S. Waterman, (1981) J. Mol. Biol. 147:195-197; 
+ W.R. Pearson (1991) Genomics 11:635-650
+
+Query library single.fa vs testset.fa library
+searching testset.fa library
+
+  1>>>d1pfsa_ 2.24.6.1.2 Gene V protein [Pseudomonas phage pf3] - 78 aa
+ vs  testset.fa library
+
+       opt      E()
+< 20     0     0:
+  22     0     0:           one = represents 1 library sequences
+  24     0     0:
+  26     0     0:
+  28     0     0:
+  30     0     0:
+  32     2     0:==
+  34     0     1:*
+  36     2     3:==*
+  38     3     5:=== *
+  40     4     6:==== *
+  42     2     8:==     *
+  44     9     8:=======*=
+  46    10     9:========*=
+  48     8     8:=======*
+  50     8     8:=======*
+  52     5     7:===== *
+  54     8     6:=====*==
+  56     5     5:====*
+  58     7     4:===*===
+  60     2     3:==*
+  62     4     3:==*=
+  64     3     2:=*=
+  66     2     2:=*
+  68     1     1:*
+  70     1     1:*
+  72     1     1:*
+  74     1     1:*
+  76     1     0:=
+  78     2     0:==
+  80     1     0:=
+  82     0     0:
+  84     0     0:
+  86     0     0:
+  88     0     0:
+  90     0     0:
+  92     0     0:
+  94     0     0:
+  96     0     0:
+  98     0     0:
+ 100     0     0:
+ 102     0     0:
+ 104     0     0:
+ 106     0     0:
+ 108     0     0:
+ 110     0     0:
+ 112     0     0:
+ 114     0     0:
+ 116     0     0:
+ 118     0     0:
+>120     1     0:=
+  13355 residues in    93 sequences
+  Expectation_n fit: rho(ln(x))= 7.2437+/-0.0204; mu= -3.4950+/- 0.925
+ mean_var=32.6334+/- 9.107, 0's: 0 Z-trim: 1  B-trim: 0 in 0/19
+ Lambda= 0.224514
+ Kolmogorov-Smirnov  statistic: 0.1096 (N=24) at  42
+
+ Smith-Waterman (PGopt) (4.2 Mar 2004) function [BL50 matrix (15:-5)], gap-penalty: -12/-2
+ Scan time:  0.020
+The best scores are:                                      s-w bits E(93)	%_id  %_sim   sw  alen  an0  ax0  pn0  px0  an1  ax1 pn1 px1 gapq gapl  fs 
+d1pfsa_ 2.24.6.1.2 Gene V protein [Pseudomonas ph  (  78)  534 177.3 2.4e-48	1.000 1.000  534   78    1   78    1   78    1   78    1   78   0   0   0
+d1fus__ 4.1.1.1.2 RNase F1 [Fusarium moniliforme]  ( 106)   48  19.6    0.97	0.333 0.515   48   33   40   72    1   78   24   50    1  106   0   6   0
+d4ptp__ 2.29.1.2.1 Trypsin(ogen) [bovine (Bos tau  ( 223)   52  20.2     1.3	0.429 0.857   52   14   51   64    1   78    8   21    1  223   0   0   0
+d1jbc__ 2.18.1.1.1 Concanavalin A [jack bean (Can  ( 237)   52  20.2     1.5	0.361 0.556   52   36   23   52    1   78  190  225    1  237   6   0   0
+d1cyo__ 4.62.1.1.1 Cytochrome b5 [bovine (Bos tau  (  88)   44  18.5     1.8	0.393 0.607   44   28    7   34    1   78   58   84    1   88   0   1   0
+d1ckaa_ 2.20.2.1.1 C-Crk, N-terminal SH3 domain [  (  57)   40  17.6     2.1	0.343 0.571   40   35   24   57    1   78   20   53    1   57   1   1   0
+d1rgea_ 4.1.1.1.1 RNase Sa [Streptomyces aureofac  (  96)   42  17.7     3.1	0.400 0.560   42   25   33   53    1   78   25   49    1   96   4   0   0
+d2sga__ 2.29.1.1.2 Protease A [Streptomyces grise  ( 181)   46  18.5     3.6	0.381 0.714   46   21    2   22    1   78   36   56    1  181   0   0   0
+d1pls__ 2.35.1.1.5 Pleckstrin, N-terminal domain   ( 113)   42  17.6     4.1	0.368 0.737   42   19   15   33    1   78   72   90    1  113   0   0   0
+d1burs_ 4.35.1.1.2 Ribulose 1,5-bisphosphate carb  ( 123)   41  17.2     5.8	0.357 0.536   41   28   49   73    1   78   20   47    1  123   3   0   0
+d8rxna_ 7.34.3.1.1 Rubredoxin [Desulfovibrio vulg  (  52)   34  15.7     6.9	0.353 0.647   34   17   56   71    1   78   15   31    1   52   1   0   0
+d2olba_ 3.68.1.1.1 Oligo-peptide binding protein   ( 517)   50  18.8     7.9	0.367 0.633   50   30   48   77    1   78  312  340    1  517   0   1   0
+d1xsoa_ 2.1.7.1.3 Cu,Zn superoxide dismutase, SOD  ( 150)   41  17.0     7.9	0.308 0.538   41   39   31   66    1   78   36   72    1  150   3   2   0
+d1ifc__ 2.39.1.2.2 Intestinal fatty acid binding   ( 131)   40  16.8       8	0.278 0.667   40   18    9   26    1   78   34   51    1  131   0   0   0
+d1lkka_ 4.47.1.1.1 p56-lck tyrosine kinase [human  ( 105)   38  16.4     8.7	0.312 0.625   38   32   35   64    1   78   23   54    1  105   2   0   0
+d3sdhb_ 1.1.1.1.1 Hemoglobin I [ark clam (Scaphar  ( 145)   40  16.7     9.3	0.270 0.541   40   37   10   40    1   78   55   91    1  145   6   0   0
+
+>>>d1pfsa_, 78 aa vs testset.fa library
+
+
+
+78 residues in 1 query   sequences
+13355 residues in 93 library sequences
+ Scomplib [34t24]
+ start: Tue Aug 15 22:53:20 2006 done: Tue Aug 15 22:53:20 2006
+ Total Scan time:  0.020 Total Display time:  0.010
+
+Function used was SSEARCH [version 3.4t24 June 23, 2004]
