@@ -2,7 +2,7 @@
 
 WebLogo Release Notes
 
-3.3 (2012-??-??) [Gavin Crooks, David Sivak]
+3.3 (2012-07-02) [Gavin Crooks, David Sivak]
 
 * Improved the algorithm that guesses the sequence type (DNA, RNA or protein) 
 	(Kudos: Bug report, Roland Pache <Roland.Pache@ucsf.edu>)
