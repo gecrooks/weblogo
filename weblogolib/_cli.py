@@ -211,7 +211,8 @@ def _build_logoformat( logodata, opts) :
         "scale_width", 
         "annotate",
         "stack_width",
-        "stack_aspect_ratio"
+        "stack_aspect_ratio",
+        "reverse_stacks"
         ]
   
     for k in direct_from_opts:
@@ -534,6 +535,15 @@ def _build_option_parser() :
         metavar = "YES/NO",
         help="Display error bars? (default: %default)")
      
+    format_grp.add_option( "", "--reverse-stacks",
+        dest = "reverse_stacks",
+        action="store",
+        type = "boolean",
+        default= defaults.show_errorbars,
+        metavar = "YES/NO",
+        help="Draw stacks with largest letters on top? (default: %default)")
+ 
+ 
        
         
     # ========================== Color OPTIONS ==========================

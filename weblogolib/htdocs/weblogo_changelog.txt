@@ -12,7 +12,16 @@ WebLogo Release Notes
 * Implemented Motif.reverse() and Motif.complement() 
 	(Can now reverse complement transfac matrix input on the command line.)
 	(Kudos: Feature request, Seth P Boudreaux <spboudre@bcm.edu>)
+* Command line interface now automagically recognizes transfac files. 
+* Add command line option "--reverse-stacks NO" which inverts the logo stacks
+	so that the most conserved monomers are at the bottom of the stack, rather than
+	the top. This ordering is consistent with the standard ordering for histograms,
+	and is arguably a better representation.
+	(Kudos: Luke Hutchison <luke.hutch@mit.edu>)
+* Fixed an issue so that the correct color scheme is chosen 
+	for the specified sequence type.
 * Miscellaneous minor bug fixes and refactoring.
+
 
 
 3.2 (2012-01-30) [Gavin Crooks, David Sivak]

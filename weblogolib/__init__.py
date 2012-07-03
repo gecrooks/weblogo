@@ -466,6 +466,8 @@ class LogoOptions(object) :
         self.logo_end=None          
         self.scale_width = True
 
+        self.reverse_stacks = True       # If true, draw stacks with largest letters on top.
+
         from corebio.utils import update
         update(self, **kwargs)
 
@@ -831,7 +833,6 @@ def eps_formatter( logodata, format, fout) :
     conv_factor = std_units[format.unit_name]
     
     data.append("StartLine")
-    
 
     seq_from = format.logo_start- format.first_index
     seq_to = format.logo_end - format.first_index +1
@@ -863,6 +864,7 @@ def eps_formatter( logodata, format, fout) :
             return cmp(c1[0], c2[0])
         
         s.sort(mycmp)
+        if not format.reverse_stacks: s.reverse()
 
         C = float(sum(logodata.counts[seq_index])) 
         if C > 0.0 :
