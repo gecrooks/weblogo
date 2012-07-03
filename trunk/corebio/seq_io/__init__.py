@@ -246,7 +246,7 @@ def read(fin, alphabet=None) :
     alphabet = Alphabet(alphabet)
     parsers =  _get_parsers(fin)
     
-    for p in _get_parsers(fin) :
+    for p in parsers :
         fin.seek(0)
         try:    
             return p.read(fin, alphabet)
