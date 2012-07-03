@@ -48,7 +48,7 @@ from corebio.utils import *
 from string import Template
 
 from corebio import seq_io
-
+from corebio.seq import Seq, SeqList
 
 
 import os 
