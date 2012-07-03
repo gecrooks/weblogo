@@ -1,0 +1,12 @@
+include LICENSE.txt README.txt MANIFEST.in
+recursive-include weblogolib/htdocs/ *.html *.cgi *.*
+include weblogolib/template.eps
+recursive-include test_weblogo/data/ *.*
+recursive-include test_corebio/ *.*
+recursive-include test_corebio/data/ *.*
+include test_weblogo.py
+include test_corebio.py
+include build_test.sh
+include cap.fa
+recursive-include apidocs/ *.html
+recursive-include corebio/data/ * *.*
