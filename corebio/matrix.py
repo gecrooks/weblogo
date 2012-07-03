@@ -429,7 +429,7 @@ class Motif(AlphabeticArray) :
             raise ValueError, "Missing header line!"
 
         # Do all lines (except the first) contain the same number of items?
-        cols = len(items[1])
+        cols = len(items[0])
         for i in range(1, len(items)) :
             if cols != len(items[i]) :
                 raise ValueError, "Inconsistant length, row %d: " % i
