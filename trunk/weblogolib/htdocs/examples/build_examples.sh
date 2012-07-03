@@ -31,20 +31,20 @@ echo -n '.'
     
 echo -n '.'
 ../../../weblogo --format PNG --size large \
-    -l 63 -u 83 --yaxis 3.0 \
+    -l 63 -u 83  \
     < globins.fa    \
     > globins.png || exit
 
 #echo -n '.'
 #../../../weblogo --format PNG --size large \
-#    -l 31 -u 150 --yaxis 3.0 \
+#    -l 31 -u 150  \
 #    < globins.fa    \
 #    > more_globins.png || exit
     
 echo -n '.'
 ../../../weblogo --format PNG --size large \
     --title "Helix-Turn-Helix Motifs" \
-    -i -11 -l 1 -u 17 --yaxis 2.0 \
+    -i -11 -l 1 -u 17  --yaxis 3.5 \
     < hth.fa    \
     > hth.png || exit
 
