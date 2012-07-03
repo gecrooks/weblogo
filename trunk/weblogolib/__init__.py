@@ -118,6 +118,8 @@ from corebio.moremath import *
 from corebio.data import amino_acid_composition
 from corebio.seq import unambiguous_rna_alphabet, unambiguous_dna_alphabet, unambiguous_protein_alphabet
 
+import corebio
+
 from logomath import Dirichlet
 
 
@@ -154,7 +156,7 @@ __all__ = [ 'LogoOptions',
 
 description  = "Create sequence logos from biological sequence alignments." 
 
-__version__ = "3.3"
+__version__ = corebio.__version__
 
 # These keywords are substituted by subversion.
 # The date and revision will only tell the truth after a branch or tag,

@@ -15,9 +15,9 @@ echo
 echo "## Lines of code" 
 wc -l *.py weblogolib/*.py corebio/*.py corebio/*/*.py test_corebio/*.py weblogo transformseq | grep 'total' 
 
-echo 
-echo "## Code Tags" 
-grep 'FIXME\|TODO' *.py weblogolib/*.* weblogolib/htdocs/*.* 
+#echo 
+#echo "## Code Tags" 
+#grep 'FIXME\|TODO' *.py weblogolib/*.* weblogolib/htdocs/*.* corebio/*.* corebio/*/*.*
 
 
 echo
@@ -25,13 +25,15 @@ echo "# Cleaning previous "
 rm -rd dist/_extract_/
 
 
-echo 
-echo "## Rebuild API docs :" 
-epydoc -q -o apidocs/ -n WebLogo -u http://code.google.com/p/weblogo/ --parse-only --docformat plaintext --no-frames --no-private weblogolib    || exit
+# Moved to refresh_apidocs.sh
+#echo 
+#echo "## Rebuild API docs :" 
+#epydoc -q -o apidocs/ -n WebLogo -u http://code.google.com/p/weblogo/ --parse-only --docformat plaintext --no-frames --no-private weblogolib    || exit
 
-echo 
-echo "## Check documentation coverage :"
-epydoc --parse-only check weblogolib || exit
+
+#echo 
+#echo "## Check documentation coverage :"
+#epydoc --parse-only check weblogolib || exit
 
 echo 
 echo "## Rebuild examples :" 
