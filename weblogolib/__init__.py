@@ -93,6 +93,7 @@ import copy
 import os
 from datetime import datetime
 from StringIO import StringIO
+from math import sqrt
 
 from  corebio.data import rna_letters, dna_letters, amino_acid_letters
 
@@ -939,7 +940,9 @@ def parse_prior(composition, alphabet, weight=None) :
     if comp.lower() == 'none': return None
     
     
-    if weight is None and alphabet is not None: weight = float(len(alphabet))
+    if weight is None and alphabet is not None: 
+        weight = sqrt(float(len(alphabet)))
+
     if weight<0 : raise ValueError("Weight cannot be negative.")
     
     

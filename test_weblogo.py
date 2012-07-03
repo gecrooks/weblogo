@@ -88,7 +88,7 @@ class test_parse_prior(unittest.TestCase) :
 
     def test_parse_prior_equiprobable(self) :            
         self.assertTrue( all(20.*equiprobable_distribution(20)  ==
-            parse_prior( 'equiprobable',  unambiguous_protein_alphabet ) ) )
+            parse_prior( 'equiprobable',  unambiguous_protein_alphabet, weight=20.) ) )
                         
         self.assertTrue( 
             all( 1.2* equiprobable_distribution(3) 
@@ -116,20 +116,20 @@ class test_parse_prior(unittest.TestCase) :
             == parse_prior( ' 0.40 ', unambiguous_dna_alphabet, 1. )  ) )
 
     def test_auto(self) :
-        self.assertTrue( all(4.*equiprobable_distribution(4)  ==
+        self.assertTrue( all(2.*equiprobable_distribution(4)  ==
             parse_prior( 'auto',  unambiguous_dna_alphabet ) ) )
-        self.assertTrue( all(4.*equiprobable_distribution(4)  ==
+        self.assertTrue( all(2.*equiprobable_distribution(4)  ==
             parse_prior( 'automatic',  unambiguous_dna_alphabet ) ) )
        
     def test_weight(self) :
-        self.assertTrue( all(4.*equiprobable_distribution(4)  ==
+        self.assertTrue( all(2.*equiprobable_distribution(4)  ==
             parse_prior( 'automatic',  unambiguous_dna_alphabet ) ) )
         self.assertTrue( all(123.123*equiprobable_distribution(4)  ==
             parse_prior( 'auto',  unambiguous_dna_alphabet , 123.123) ) )
  
     def test_explicit(self) :
         s = "{'A':10, 'C':40, 'G':40, 'T':10}"
-        p = array( (10, 40, 40,10), float64)*4./100.
+        p = array( (10, 40, 40,10), float64)*2./100.
         self.assertTrue( all(
             p == parse_prior( s,  unambiguous_dna_alphabet ) ) )
         
