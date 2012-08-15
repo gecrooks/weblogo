@@ -141,6 +141,9 @@ echo  -n '.'
 ./weblogo --format pdf --fineprint "kcal/mol" --unit kcal/mol \
     > tmp/logo14f.pdf < cap.fa || exit
 
+echo  -n '.'
+./weblogo --format pdf --alphabet 'AGTC' > tmp/logo15.pdf < cap.fa || exit
+
 echo
 
 
