@@ -1046,7 +1046,7 @@ def read_seq_data(fin,
 
     # Add alphabet to seqs.
     if alphabet :
-        seqs.alphabet = alphabet 
+        seqs.alphabet = Alphabet(alphabet) 
     else :
         seqs.alphabet = Alphabet.which(seqs)
     return seqs
