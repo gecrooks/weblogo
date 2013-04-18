@@ -39,6 +39,11 @@ class test_Motif(unittest.TestCase) :
         assert m[0, 'G']==152.0         
         assert shape(m.array) == (15,4)
 
+        # this one has extra Ps on start of each line
+        f = testdata_stream("transfac_matrix3.txt")
+        m = Motif.read_transfac(f)
+
+
     def test_reindex(self):
         f = testdata_stream("transfac_matrix.txt")
         m = Motif.read_transfac(f)
