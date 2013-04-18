@@ -22,13 +22,7 @@ DEVELOPING WEBLOGO
 4. 	Update manual.html with the latest --help text.
 
 
-5. 	Rebuild apidocs.
-	
-	rm apidocs/*.html
-	./build.sh
-	svn status |grep '!'    # Check for any html files removed
-	svn rm apidocs/...      # Remove any obsolete html files
-	svn add apidocs/...     # Add any new html files
+5. 	Rebuild apidocs. Rebuild examples.
 	
 
 6.  Commit final changes.
@@ -51,7 +45,7 @@ DEVELOPING WEBLOGO
 
 
 10. Update version number in trunk, 
-	(Add new entry to changelog, change in corebio._version.py and weblogolib/__init__.py)
+	(Add new entry to changelog, change in corebio._version.py)
 
 
 11. Switch to release branch. 
@@ -60,24 +54,33 @@ DEVELOPING WEBLOGO
 	./build.sh
 
 12. Tag
-	svn copy -m "Tag 3.2.0" https://weblogo.googlecode.com/svn/trunk https://weblogo.googlecode.com/svn/tags/3.2.0 
+	svn copy -m "Tag 3.2.0" https://weblogo.googlecode.com/svn/branches/3.2 https://weblogo.googlecode.com/svn/tags/3.2.0 
 
 
 13. Upload distribution tarball
 
 	svn import -m "Dist 0.x.0" dist/weblogo-3.x.0.tar.gz  https://weblogo.googlecode.com/svn/dist/weblogo-3.x.0.tar.gz
 
-14. Update project page. (Currently, just download link text) (http://code.google.com/p/corebio/admin)
+14. Update project page.  (http://code.google.com/p/weblogo/admin)
 	
+	Upload distribution tar file.
+	Add featured tag (so current download shows on front page)
+	Update links
 	The README.txt file should match the googlecode front page and the comments in weblogo cmd.
 
+15. Update server :login to weblogo.threeplusone.com, weblogo directory and switch branches 
+	
+	svn switch https://weblogo.googlecode.com/svn/branches/3.2
 
-15. Resister
+
+16. Resister with Python Packakge Index PyPI
 	
 	python setup.py register
- 
+	python setup.py sdist upload
+ 	sudo easy_install weblogo
 
-16. Post announcement. (http://groups.google.com/group/WebLogo)
+
+17. Post announcement. (http://groups.google.com/group/WebLogo)
 
 
 
