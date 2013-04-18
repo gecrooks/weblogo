@@ -454,14 +454,14 @@ class Motif(AlphabeticArray) :
         if alphabet_header :
             for i,r in enumerate(items) :
                 if not isint(r[0]) : 
-                    raise ValueError, "Expected position as first item on line %d", i
+                    raise ValueError, "Expected position as first item on line %d"% i
                 r.pop(0)
                 defacto_alphabet = ''.join(header)
         else :
             a = []
             for i,r in enumerate(items) :
                 if not ischar(r[0]) : 
-                    raise ValueError, "Expected position as first item on line %d", i
+                    raise ValueError, "Expected position as first item on line %d"% i
                 a.append(r.pop(0))
             defacto_alphabet = ''.join(a)                
 
