@@ -148,6 +148,7 @@ def _build_logodata(options) :
         motif_flag = True
     except ValueError, motif_err :
         # Failed reading Motif, try reading as multiple sequence data.
+        if options.input_parser == "transfac": raise motif_err # Adding transfac as str insted of parser is a bit of a ugly kludge
         seqs = read_seq_data(fin, 
             options.input_parser.read,
             alphabet=options.alphabet,
