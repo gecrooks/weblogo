@@ -38,7 +38,7 @@ class Astraltest(unittest.TestCase):
         try:
             dom = parse_domain("Totally wrong")
             assert 0, "Should never get here"
-        except ValueError, e :
+        except ValueError as e :
             pass
 
 

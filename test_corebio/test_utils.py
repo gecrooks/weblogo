@@ -161,13 +161,13 @@ class test_utils(unittest.TestCase) :
 
         try:
             raise ArgumentError(message, component)
-        except ArgumentError, err:
+        except ArgumentError as err:
             assert err.msg == message
             assert err.key == component
             
         try:
             raise ArgumentError(message, component, 10)
-        except ValueError, err:
+        except ValueError as err:
             assert err.msg == message
             assert err.key == component
             assert err.value ==10

@@ -57,8 +57,8 @@ def read(fin):
 
     try :
         parser.parse(fin)
-    except xml.sax.SAXParseException, e :
-        raise ValueError( "Cannot parse file; "+str(e))
+    except xml.sax.SAXParseException as e :
+        raise ValueError("Cannot parse file; " + str(e))
     return handler.report
 
 class _BlastHandler( ContentHandler) :

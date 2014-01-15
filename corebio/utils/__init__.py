@@ -423,7 +423,7 @@ def find_command(command, path=None):
 
     try :
         match =_which.whichgen(command, path).next()
-    except StopIteration, _which.WhichError:
+    except (StopIteration, _which.WhichError):
         raise EnvironmentError("Could not find '%s' on the path." % command)
     return match
 

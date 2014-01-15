@@ -75,7 +75,7 @@ def read(fin) :
     for p in parsers:
         try:    
             return p.read(fin)
-        except ValueError, e:
+        except ValueError as e:
             pass
         fin.seek(0)             # FIXME. Non seakable stdin?
             
