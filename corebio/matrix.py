@@ -418,7 +418,7 @@ class Motif(AlphabeticArray) :
             start = False
             items.append(stuff)
         if len(items) < 2  :
-            raise ValueError, "Vacuous file."
+            raise ValueError("Vacuous file.")
 
         # Is the first line a header line?
         header = items.pop(0)
@@ -426,13 +426,13 @@ class Motif(AlphabeticArray) :
         rows = len(items)
         cols = len(items[0])
         if not( header[0] == 'PO' or header[0] =='P0' or hcols == cols-1 or hcols == cols-2) :
-            raise ValueError, "Missing header line!"
+            raise ValueError("Missing header line!")
 
         # Do all lines (except the first) contain the same number of items?
         cols = len(items[0])
         for i in range(1, len(items)) :
             if cols != len(items[i]) :
-                raise ValueError, "Inconsistant length, row %d: " % i
+                raise ValueError("Inconsistant length, row %d: " % i)
 
         # Vertical or horizontal arrangement?
         if header[0] == 'PO' or header[0] == 'P0': header.pop(0)
@@ -444,24 +444,26 @@ class Motif(AlphabeticArray) :
             if not str.isalpha(h) : alphabet_header = False
 
         if not position_header and not alphabet_header :
-            raise ValueError, "Can't parse header: %s" % str(header)
+            raise ValueError("Can't parse header: %s" % str(header))
 
         if position_header and alphabet_header :
-            raise ValueError, "Can't parse header"        
+            raise ValueError("Can't parse header")
 
 
         # Check row headers
         if alphabet_header :
             for i,r in enumerate(items) :
                 if not isint(r[0]) and r[0][0]!='P' : 
-                    raise ValueError, "Expected position as first item on line %d"% i
+                    raise ValueError(
+                        "Expected position as first item on line %d" % i)
                 r.pop(0)
                 defacto_alphabet = ''.join(header)
         else :
             a = []
             for i,r in enumerate(items) :
                 if not ischar(r[0]) and r[0][0]!='P' : 
-                    raise ValueError, "Expected position as first item on line %d"% i
+                    raise ValueError(
+                        "Expected position as first item on line %d" % i)
                 a.append(r.pop(0))
             defacto_alphabet = ''.join(a)                
 
@@ -470,8 +472,8 @@ class Motif(AlphabeticArray) :
 
         if alphabet :
             if not defacto_alphabet.alphabetic(alphabet) :
-                raise ValueError, "Incompatible alphabets: %s , %s (defacto)"% (
-                    alphabet, defacto_alphabet)
+                raise ValueError("Incompatible alphabets: %s , %s (defacto)"
+                                 % (alphabet, defacto_alphabet))
         else :            
             alphabets = (unambiguous_rna_alphabet,
                         unambiguous_dna_alphabet,                      

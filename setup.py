@@ -13,8 +13,8 @@ warnings.simplefilter('ignore', UserWarning, lineno =236)
 
 # check dependencies
 if not hasattr(sys, 'version_info') or sys.version_info < (2,5,0,'final'):
-    raise SystemExit,  \
-        "Dependency error: WebLogo requires Python 2.5 or later."
+    raise SystemExit(
+        "Dependency error: WebLogo requires Python 2.5 or later.")
  
  
 from weblogolib import __version__

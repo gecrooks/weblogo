@@ -144,7 +144,7 @@ def mask_low_complexity(seq, width =12, trigger=1.8, extension=2.0, mask='X') :
     
     lg20 = log2(20)
     if trigger<0 or trigger>lg20 :
-        raise ValueError("Invalid trigger complexity: %f"% trigger) 
+        raise ValueError("Invalid trigger complexity: %f" % trigger)
     if extension<0 or extension>lg20 or extension<trigger:
         raise ValueError("Invalid extension complexity: %f"% extension)
     if width<0 :
