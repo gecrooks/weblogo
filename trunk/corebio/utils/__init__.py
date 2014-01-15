@@ -282,12 +282,14 @@ def crc64(string):
             for j in range(8):
                 rflag = l & 1
                 l >>= 1
-                if part_h & 1: l |= (1L << 31)
-                part_h >>= 1L
-                if rflag: part_h ^= 0xd8000000L
+                if part_h & 1:
+                    l |= (1 << 31)
+                part_h >>= 1
+                if rflag:
+                    part_h ^= 0xd8000000
             table.append(part_h)
-        _crc64_table= tuple(table)
-    
+        _crc64_table = tuple(table)
+
     crcl = 0
     crch = 0
     for c in string:
