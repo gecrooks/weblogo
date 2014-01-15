@@ -49,6 +49,7 @@ Environment Variables:
         by corebio.utils.find_command
     
 """ 
+from __future__ import absolute_import
 
 __all__ = [ 'data',
             'matrix',
@@ -62,14 +63,8 @@ __all__ = [ 'data',
             'secstruc',
             ]
 
-from _version import __version__
-from _version import description
-user_agent = "corebio/"+__version__+ " (http://code.google.com/p/corebio/)"
+from corebio._version import __version__, description
+user_agent = "corebio/" + __version__ + " (http://code.google.com/p/corebio/)"
 
 __doc__  = description +' : ' + __doc__
-
-
-
-
-
 

@@ -33,12 +33,10 @@ Reference:
 'NEXUS: An extensible file format for systematic information'
 Maddison, Swofford, Maddison. 1997. Syst. Biol. 46(4):590-621
 """
+from __future__ import absolute_import
 
-from corebio.seq import Seq, SeqList, Alphabet
-from corebio.seq_io._nexus import Nexus, safename
-
-
-
+from ..seq import Seq, SeqList, Alphabet
+from ._nexus import Nexus, safename
 
 
 names = ( 'nexus', 'paup')

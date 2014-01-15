@@ -29,9 +29,11 @@
 This very simple format has two columns per line. The first column is a sequence name, the second column is the sequence itself. The columns are separated by a single tab ("\\t") character.
 
 """
-from corebio.utils import *
-from corebio.seq import *
-from corebio.seq_io import *
+from __future__ import absolute_import
+
+from ..utils import *
+from ..seq import *
+from . import *
 
 
 names = ( 'table', 'tab')

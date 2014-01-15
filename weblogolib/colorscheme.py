@@ -53,7 +53,7 @@ Status : Beta - Needs documentation.
 
 
 from corebio import seq
-from color import Color
+from .color import Color
 
 class ColorScheme(object):
     """ A coloring of an alphabet.

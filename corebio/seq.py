@@ -119,6 +119,7 @@ Status:
 Authors:
     GEC 2004,2005
 """
+from __future__ import absolute_import
 
 # TODO: Add this to docstring somewhere.
 # To replace all ambiguous nucleic code by 'N', replace alphabet and then n 
@@ -129,7 +130,7 @@ Authors:
     
 from array import array
 from string import maketrans
-from corebio.moremath import argmax, sqrt
+from .moremath import argmax, sqrt
 
 __all__ = [
     'Alphabet', 
@@ -541,7 +542,7 @@ class Seq(str):
         details and more options.
         """
         # Note: masks str.translate
-        from transform import GeneticCode
+        from .transform import GeneticCode
         return GeneticCode.std().translate(self)
 
     def back_translate(self) :
@@ -549,7 +550,7 @@ class Seq(str):
         standard genetic code. See corebio.transform.GeneticCode for
         details and more options.
         """
-        from transform import GeneticCode
+        from .transform import GeneticCode
         return GeneticCode.std().back_translate(self)
 
        
@@ -593,7 +594,7 @@ class Seq(str):
         >>> Seq("abcabc").word_count(3)
         [('abc', 2), ('bca', 1), ('cab', 1)]
         """
-        from corebio.utils import group_count
+        from .utils import group_count
         words = sorted(self.words(k,alphabet))
         return group_count(words)
  
@@ -676,9 +677,8 @@ class SeqList(list):
             if len(o)!=L : raise ValueError("Sequences are of incommensurate lengths. Cannot tally.")
             for j,n in enumerate(o) :
                 if n<N : counts[ j][n] +=1
- 
-		from corebio.matrix import Motif
 
+        from .matrix import Motif
         return Motif(alphabet, counts)
 # end class SeqList
 

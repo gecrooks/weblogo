@@ -40,9 +40,10 @@ of characters. Blank lines and white space are ignored.
 -SPC-MLETETLNKYVVIIAYALVFLLSLLGNSLVMLVILYSRVGRSVTDVYLLNLALAD
 -EPC-RDENVHFNRIFLPTIYFIIFLTGIVGNGLVILVMGYQKKLRSMTDKYRLHLSVAD
 """
+from __future__ import absolute_import
 
-from corebio.seq import *
-from corebio.utils import *
+from ..seq import *
+from ..utils import *
 
 example = """
 --------------------------LENSTSPYDYGENESD-------FSDSPPCPQDF

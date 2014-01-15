@@ -133,21 +133,25 @@ Attributes :
 #    - http://www.cse.ucsc.edu/research/compbio/a2m-desc.html (a2m)
 #    - http://www.genomatix.de/online_help/help/sequence_formats.html
 
-from corebio.seq import *
+from __future__ import absolute_import
 
-import clustal_io
-import fasta_io
-import msf_io
-import nbrf_io
-import nexus_io
-import plain_io
-import phylip_io
-#import null_io
-import stockholm_io
-import intelligenetics_io
-import table_io
-import array_io
-import genbank_io
+from ..seq import *
+
+from . import (
+    clustal_io,
+    fasta_io,
+    msf_io,
+    nbrf_io,
+    nexus_io,
+    plain_io,
+    phylip_io,
+    # null_io,
+    stockholm_io,
+    intelligenetics_io,
+    table_io,
+    array_io,
+    genbank_io,
+)
 
 __all__ = [
     'clustal_io', 

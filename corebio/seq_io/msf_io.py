@@ -33,6 +33,15 @@ This is a file format for biological sequence data. The sequences are interweave
 3. the word MSF on the first line of the file, and the characters ".." at the end of this line (optional)
 4. A header containing sequence information followed by a line with the characters "//"
 """
+from __future__ import absolute_import
+
+import re
+
+from ..seq import *
+from ..utils import *
+from . import *
+
+
 example= """
 
  PileUp
@@ -68,12 +77,6 @@ Chicken  S.SNTVDAQE VELIWTILPA IVLVLLALPS LQILYMMDEI DEPDLTLKAI
   Mouse  THTSTMDAQE VETIWTILPA VILIMIALPS LRILYMMDEI NNPVLTVKTM 
  
    """
-
-import re
-
-from corebio.seq import *
-from corebio.seq_io import *
-from corebio.utils import *
 
 names = ('msf', 'gcg-msf', 'gcg', 'PileUp')
 extensions = ('msf')

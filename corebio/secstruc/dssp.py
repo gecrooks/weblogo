@@ -29,11 +29,13 @@ See also :
 - http://swift.cmbi.ru.nl/gv/dssp/
 
 """
+from __future__ import absolute_import
 
-from corebio.seq import Seq, protein_alphabet, Alphabet
-from corebio.utils import stdrepr, find_command
 from subprocess import * 
 from StringIO import StringIO
+
+from ..seq import Seq, protein_alphabet, Alphabet
+from ..utils import stdrepr, find_command
 
 # alphabet for stride secondary structure
 dssp_alphabet = Alphabet("HBEGITS ")

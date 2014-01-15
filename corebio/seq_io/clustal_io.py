@@ -35,15 +35,16 @@ Ref :
     sequence alignment through sequence weighting, position-specific gap
     penalties and weight matrix choice. Nucleic Acids Res. 22:4673-4680.
 """
+from __future__ import absolute_import
 
 # TODO: What happens if CLUSTAL is not the first line of the file?
 
 
 import re
 
-from corebio.utils import *
-from corebio.seq import *
-from corebio.seq_io import *
+from ..utils import *
+from ..seq import *
+from . import *
 
 __all__ = ('example', 'names', 'extensions', 'read')
 
