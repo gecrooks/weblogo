@@ -101,7 +101,7 @@ def read(fin, alphabet=None) :
                 seqs.append([])
         elif token.typeof == "seq":
             if not alphabet.alphabetic(token.data) :
-                raise ValueError (
+                raise ValueError(
                     "Character on line: %d not in alphabet: %s : %s" % (
                     token.lineno, alphabet, token.data) )
             seqs[block_count].append(token.data)

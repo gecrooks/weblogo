@@ -455,7 +455,7 @@ class frozendict(dict):
     # See: http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/414283
     
     def _blocked_attribute(obj):
-        raise AttributeError, "A frozendict cannot be modified."
+        raise AttributeError("A frozendict cannot be modified.")
     _blocked_attribute = property(_blocked_attribute)
 
     __delitem__ =   _blocked_attribute

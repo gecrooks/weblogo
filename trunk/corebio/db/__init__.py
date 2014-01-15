@@ -91,7 +91,7 @@ class Dbxref(object) :
             return
         m = _dbxref.match(ref)
         if m is None : 
-            raise ValueError, "Cannot parse database cross-reference."
+            raise ValueError("Cannot parse database cross-reference.")
         self.database = m.group(1)
         self.identifier = m.group(2)
     
@@ -105,7 +105,7 @@ class Dbxref(object) :
         if registry is None: registry = default_registry
         database = self.database.lower()
         if not (database in registry) :
-            raise ValueError, "Unknown database: %s" % self.database
+            raise ValueError("Unknown database: %s" % self.database)
         return registry[database]
         
     def data_url(self) :
@@ -146,7 +146,7 @@ class DataSource(object) :
     def data_url(self, identifier) :    
         url = self.resource_url
         if url is None : 
-            raise ValueError, "Cannot resolve resource."
+            raise ValueError("Cannot resolve resource.")
         url = url % identifier # Fixme
         return url
         
@@ -160,7 +160,7 @@ class DataSource(object) :
     def data_object(self, identifier) :
         parser =  self.parser
         if parser == None :    
-            raise ValueError, "No parser for resource."
+            raise ValueError("No parser for resource.")
         stream = self.data_stream(identifier)
         return parser(stream)
   
