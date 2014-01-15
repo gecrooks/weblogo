@@ -45,14 +45,15 @@ Other:
 
     
 """
+from __future__ import absolute_import
 
-
-from corebio.data import dna_extended_letters, dna_ambiguity
-from corebio.seq import Seq, protein_alphabet, nucleic_alphabet, dna_alphabet, Alphabet
-
-from corebio.seq import reduced_protein_alphabet as std_protein_alphabet 
 from string import maketrans
-from corebio.moremath import log2 , entropy
+
+from .data import dna_extended_letters, dna_ambiguity
+from .seq import Seq, protein_alphabet, nucleic_alphabet, dna_alphabet, Alphabet
+
+from .seq import reduced_protein_alphabet as std_protein_alphabet
+from .moremath import log2, entropy
 
 __all__ = [
     'Transform',

@@ -52,12 +52,13 @@ Status: Beta
 # Dev. References :
 #   Inspired by Bioperl's searchIO system
 #       http://www.bioperl.org/wiki/HOWTO:SearchIO
+from __future__ import absolute_import
 
 __all__ = ['read', 'Report', 'Result', 
             'Hit','Annotation', 'Alignment']
 
 
-from corebio.utils import stdrepr
+from ..utils import stdrepr
 
 def read(fin) :
     """ Read and parse an analysis report. 
@@ -68,8 +69,8 @@ def read(fin) :
         ValueError - If the file cannot be parsed
     """
 
-    import fasta    
-    import blastxml
+    from . import fasta, blastxml
+
     parsers = (fasta, blastxml)
     for p in parsers:
         try:    

@@ -35,6 +35,7 @@
 #  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 #  POSSIBILITY OF SUCH DAMAGE. 
+from __future__ import absolute_import
 
 import sys
 import cgi as cgilib
@@ -463,7 +464,7 @@ def send_form(controls, errors=[], htdocs_directory=None) :
 
 
 if __name__=="__main__" :
-    import _cli
+    from . import _cli
     _cli.main()
 
 

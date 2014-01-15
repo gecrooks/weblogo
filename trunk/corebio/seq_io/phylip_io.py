@@ -62,8 +62,9 @@ GTCGTCGTTG GTGGTGGTGG TGTTG
 
 
 """
+from __future__ import absolute_import
 
-from corebio.seq import *
+from ..seq import *
 
 names = ( 'phylip',)
 extensions = ('phy',)

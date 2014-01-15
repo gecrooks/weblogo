@@ -27,15 +27,17 @@
 """ 
 Arrays indexed by alphabetic strings.
 """
+from __future__ import absolute_import
 
-
-from corebio.seq import Alphabet
-from corebio.seq import unambiguous_dna_alphabet, unambiguous_rna_alphabet, unambiguous_protein_alphabet
-
-from corebio.utils import isint
 
 import numpy as na
 from itertools import izip
+
+from .seq import Alphabet
+from .seq import (unambiguous_dna_alphabet, unambiguous_rna_alphabet,
+                  unambiguous_protein_alphabet)
+
+from .utils import isint
 
 __all__= 'AlphabeticArray', 'submatrix_alphabet', 'SubMatrix', 'Motif'
 

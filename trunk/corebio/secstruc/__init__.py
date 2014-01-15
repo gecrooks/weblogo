@@ -33,12 +33,13 @@ Usage :
 'LEELLLHHHHHHHHHHHLLLLLHHHHHHHHLLEELLLLLLLLLLLL' 
 
 """ 
+from __future__ import absolute_import
 
 __all__ = ['dssp', 'stride','secstruc_alphabet','secstruc_ehl_alphabet', 
     'fa_reduce_secstruc_to_ehl', 'ehl_reduce_secstruc_to_ehl']
 
-from corebio.seq import Alphabet, Seq
-from corebio.transform import Transform
+from ..seq import Alphabet, Seq
+from ..transform import Transform
 
 # ------------------- SECONDARY STRUCTURE ALPHABETS -------------------
 secstruc_alphabet = Alphabet("HGIEBbTSC _-L?X")

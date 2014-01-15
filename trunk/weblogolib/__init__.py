@@ -87,40 +87,35 @@ program 'gs' be installed. Scalable Vector Graphics (SVG) format also requires
 the program 'pdf2svg'.
 
 """
+from __future__ import absolute_import
 
 import sys
 import copy
 import os
 from datetime import datetime
 from StringIO import StringIO
-from math import sqrt
-
-from  corebio.data import rna_letters, dna_letters, amino_acid_letters
-
-
+from math import log, sqrt, exp
 from string import Template
 from subprocess import *
-from corebio.utils import resource_string, resource_filename
-
-from math import log, sqrt, exp
 
 # Avoid 'from numpy import *' since numpy has lots of names defined
 from numpy import array, asarray, float64, ones, zeros, int32,all,any, shape
 import numpy as na
 
-
-from color import *
-from colorscheme import *
-from corebio.seq import Alphabet, Seq, SeqList
-from corebio import seq_io
-from corebio.utils import isfloat, find_command, ArgumentError, stdrepr
-from corebio.moremath import *
-from corebio.data import amino_acid_composition
-from corebio.seq import unambiguous_rna_alphabet, unambiguous_dna_alphabet, unambiguous_protein_alphabet
+from .color import *
+from .colorscheme import *
+from .logomath import Dirichlet
 
 import corebio
+from corebio import seq_io
+from corebio.data import (amino_acid_composition, amino_acid_letters,
+                          dna_letters, rna_letters)
+from corebio.moremath import *
+from corebio.seq import (Alphabet, Seq, SeqList, unambiguous_dna_alphabet,
+                         unambiguous_rna_alphabet, unambiguous_protein_alphabet)
+from corebio.utils import (isfloat, find_command, ArgumentError, stdrepr,
+                           resource_string, resource_filename)
 
-from logomath import Dirichlet
 
 
 # ------ META DATA ------

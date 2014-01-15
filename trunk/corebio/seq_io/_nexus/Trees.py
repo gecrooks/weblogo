@@ -13,9 +13,10 @@
 #
 # Bug reports welcome: fkauff@duke.edu
 #
+from __future__ import absolute_import
 
 import sys, random
-import Nodes
+from . import Nodes
 
 # Python 2.3 compatability
 try:

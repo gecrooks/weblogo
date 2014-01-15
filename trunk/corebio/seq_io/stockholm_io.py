@@ -33,12 +33,13 @@ See:
     - HMMER manual
 
 """
+from __future__ import absolute_import
 
 import re
 
-from corebio.utils import *
-from corebio.seq import *
-from corebio.seq_io import *
+from ..utils import *
+from ..seq import *
+from . import *
 
 
 

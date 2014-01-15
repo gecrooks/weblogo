@@ -29,14 +29,13 @@ The DTD is available at
 http://www.ncbi.nlm.nih.gov/dtd/NCBI_BlastOutput.mod.dtd
 
 """
-
 # See also
 # 
 # http://bugzilla.open-bio.org/show_bug.cgi?id=1933
 #http://portal.open-bio.org/pipermail/biojava-dev/2004-December/002513.html
+from __future__ import absolute_import
 
-
-from corebio.ssearch_io import Report, Result, Hit, Annotation, Alignment
+from . import Report, Result, Hit, Alignment
 
 import xml.sax
 from xml.sax.handler import ContentHandler

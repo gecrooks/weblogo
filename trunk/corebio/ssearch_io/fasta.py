@@ -39,13 +39,13 @@ Refs:
     ftp.virginia.edu/pub/fasta
     http://en.wikipedia.org/wiki/FASTA
 """
+from __future__ import absolute_import
 
-
-
-from corebio.utils import Reiterate, Token, isblank
-from corebio.ssearch_io import Report, Result, Hit, Annotation, Alignment
-from math import floor
 import re
+from math import floor
+
+from ..utils import Reiterate, Token, isblank
+from . import Report, Result, Hit, Alignment
 
 __all__ = 'read'
 

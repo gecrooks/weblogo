@@ -6,8 +6,10 @@
 Currently only reads sequence data and not annotations.
 
 """
-from corebio.utils import *
-from corebio.seq import *
+from __future__ import absolute_import
+
+from ..utils import *
+from ..seq import *
 
   
 names = ( 'genbank',)

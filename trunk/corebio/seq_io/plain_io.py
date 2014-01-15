@@ -39,9 +39,10 @@ in as a sequence.  Whitespace is removed.
 -SPC-MLETETLNKYVVIIAYALVFLLSLLGNSLVMLVILYSRVGRSVTDVYLLNLALAD
 -EPC-RDENVHFNRIFLPTIYFIIFLTGIVGNGLVILVMGYQKKLRSMTDKYRLHLSVAD
 """
+from __future__ import absolute_import
 
-from corebio.seq import *
-from corebio.utils import remove_whitespace
+from ..seq import *
+from ..utils import remove_whitespace
 
 example = """
 --------------------------LENSTSPYDYGENESD-------FSDSPPCPQDF

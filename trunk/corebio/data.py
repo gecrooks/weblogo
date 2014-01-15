@@ -135,6 +135,7 @@ Attributes:
 
 Status: Beta (Data needs to be proof checked.)    
 """
+from __future__ import absolute_import
 
 # FIXME: Proof check data
 # FIXME: Add __all__
@@ -144,7 +145,7 @@ Status: Beta (Data needs to be proof checked.)
 
 from StringIO import StringIO
 from corebio.utils import resource_string, resource_stream,resource_filename
-import utils
+from . import utils
 
 # Explicitly list set of available data resources. We want to be able to access
 # these resources in, for example, a webapp, without inadvertently allowing

@@ -42,17 +42,18 @@ Usage:
     data = ref.
 
 """
+from __future__ import absolute_import
 
 import re
 import urllib
 
-from corebio.data import data_stream
-from corebio.utils import update, stdrepr
+from ..data import data_stream
+from ..utils import update, stdrepr
 
 
 
 
-__all__ = ['Dbxref','DataSource', 'default_registry', 
+__all__ = ['Dbxref', 'DataSource', 'default_registry',
             'astral', 'scop' ]
 
 _dbxref = re.compile(r'\s*(?:/db_xref\s*=\s*\")?(\w+):(\w+)\"?\s*')

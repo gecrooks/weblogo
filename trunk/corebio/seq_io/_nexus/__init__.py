@@ -31,9 +31,9 @@ except NameError:
 #from Bio.Seq import Seq
 
 
-from corebio.seq import Seq, Alphabet, protein_alphabet
 import corebio.data as data
-from corebio.utils import Struct
+from ...seq import Seq, Alphabet, protein_alphabet
+from ...utils import Struct
 
 IUPACData = Struct( 
     ambiguous_dna_letters = data.dna_extended_letters,
@@ -56,7 +56,7 @@ IUPAC = Struct(
 # End Changes
 
 
-from Trees import Tree,NodeData
+from .Trees import Tree,NodeData
 
 C = False
 

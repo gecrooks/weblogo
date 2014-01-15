@@ -32,12 +32,14 @@ secondary structural elements in proteins from their atomic coordinates.
 Refs:
     - http://wolf.bi.umist.ac.uk/unix/stride.html
 """
+from __future__ import absolute_import
 
-from corebio.seq import Seq, protein_alphabet, Alphabet
-from corebio.db.astral import to_one_letter_code
 from subprocess import * 
 from StringIO import StringIO
-from corebio.utils import stdrepr, find_command
+
+from ..db.astral import to_one_letter_code
+from ..seq import Seq, protein_alphabet, Alphabet
+from ..utils import stdrepr, find_command
 
 # alphabet for stride secondary structure
 stride_alphabet = Alphabet("HGIEBC12345678@&T")
