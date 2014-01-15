@@ -186,7 +186,7 @@ class DesTests(unittest.TestCase):
         try:
             rec = DesRecord(corruptRec)
             assert 0, "Should never get here"
-        except ValueError, e :
+        except ValueError as e :
             pass
 
     def testRecord(self) :
@@ -234,7 +234,7 @@ class test_scop_cla(unittest.TestCase):
         try:
             rec = ClaRecord(corruptRec)
             assert 0, "Should never get here"
-        except ValueError, e :
+        except ValueError as e :
             pass
 
     def testRecord(self) :
@@ -353,7 +353,7 @@ class ResiduesTests(unittest.TestCase):
         try:
             r = Residues("09324923423hh./;,.389")
             assert 0, "Should never get here: "+str(r)
-        except ValueError, e :
+        except ValueError as e :
             pass
         
 class HieTests(unittest.TestCase):
@@ -387,7 +387,7 @@ class HieTests(unittest.TestCase):
         try:
             rec = HieRecord(corruptRec)
             assert 0, "Should never get here"
-        except ValueError, e :
+        except ValueError as e :
             pass
 
 

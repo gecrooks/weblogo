@@ -280,7 +280,7 @@ def main(argv):
     try:
         optlist, args = getopt.getopt(argv[1:], 'haVvqp:e:',
             ['help', 'all', 'version', 'verbose', 'quiet', 'path=', 'exts='])
-    except getopt.GetoptError, msg:
+    except getopt.GetoptError as msg:
         sys.stderr.write("which: error: %s. Your invocation was: %s\n"\
                          % (msg, argv))
         sys.stderr.write("Try 'which --help'.\n")

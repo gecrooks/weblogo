@@ -120,17 +120,17 @@ class Field(object) :
     def get_value(self) :
         if self.options :
             if not self.value in self.options :
-                raise ValueError, (self.name, self.errmsg)
+                raise ValueError(str((self.name, self.errmsg)))
                 
         if self.conversion :
             try :
                 return self.conversion(self.value)
-            except ValueError, e :
-                raise ValueError, (self.name, self.errmsg)
+            except ValueError as e :
+                raise ValueError(str((self.name, self.errmsg)))
         else:
             return self.value
-    
-    
+
+
 def string_or_none(value) :
     if value is None or value == 'auto':
         return None
@@ -258,7 +258,7 @@ def main(htdocs_directory = None) :
         try :
             value =  form[optname].get_value()
             if value!=None : setattr(logooptions, optname, value)
-        except ValueError, err :
+        except ValueError as err :
             errors.append(err.args)            
 
     
@@ -272,7 +272,7 @@ def main(htdocs_directory = None) :
         if color :
             try :
                 custom.groups.append(weblogolib.ColorGroup(symbols, color, desc))
-            except ValueError, e : 
+            except ValueError as e:
                 errors.append( ('color%d'%i, "Invalid color: %s" % color) )
     
     if form["color_scheme"].value == 'color_custom' :
@@ -280,7 +280,7 @@ def main(htdocs_directory = None) :
     else :
         try :
             logooptions.color_scheme = form["color_scheme"].get_value()
-        except ValueError, err :
+        except ValueError as err:
             errors.append(err.args)            
 
     sequences = None
@@ -327,24 +327,24 @@ def main(htdocs_directory = None) :
             motif = Motif.read_transfac(StringIO( sequences), alphabet=logooptions.alphabet)
             prior = weblogolib.parse_prior( comp,motif.alphabet)  
             data = weblogolib.LogoData.from_counts(motif.alphabet, motif, prior)          
-        except ValueError, motif_err :
+        except ValueError as motif_err:
             seqs = weblogolib.read_seq_data(StringIO( sequences), 
                                         alphabet=logooptions.alphabet,
                                         ignore_lower_case=ignore_lower_case
                                         )
-            prior = weblogolib.parse_prior(comp, seqs.alphabet)                        
+            prior = weblogolib.parse_prior(comp, seqs.alphabet)
             data = weblogolib.LogoData.from_seqs(seqs, prior) 
             
         logoformat =  weblogolib.LogoFormat(data, logooptions)
         format = form["format"].value
         weblogolib.formatters[format](data, logoformat, logo)            
-    except ValueError, err :
-        errors.append( err.args )
-    except IOError, err :
-        errors.append( err.args)
-    except RuntimeError, err :
-        errors.append( err.args )
-              
+    except ValueError as err:
+        errors.append(err.args)
+    except IOError as err:
+        errors.append(err.args)
+    except RuntimeError as err:
+        errors.append(err.args)
+
     if form_values.has_key("cmd_validate") or errors :
         send_form(controls, errors, htdocs_directory) 
         return    

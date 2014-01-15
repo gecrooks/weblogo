@@ -82,13 +82,13 @@ def main():
         formatter = opts.formatter
         formatter(data, format, opts.fout)
 
-    except ValueError, err :
+    except ValueError as err :
         print >>sys.stderr, 'Error:', err
         sys.exit(2)
-    except KeyboardInterrupt, err:
+    except KeyboardInterrupt as err:
         sys.exit(0)
 # End main()            
-        
+
 
 def httpd_serve_forever(port=8080) :
     """ Start a webserver on a local port."""
@@ -146,9 +146,10 @@ def _build_logodata(options) :
         from corebio.matrix import Motif
         motif = Motif.read_transfac(fin, alphabet=options.alphabet)
         motif_flag = True
-    except ValueError, motif_err :
+    except ValueError as motif_err :
         # Failed reading Motif, try reading as multiple sequence data.
-        if options.input_parser == "transfac": raise motif_err # Adding transfac as str insted of parser is a bit of a ugly kludge
+        if options.input_parser == "transfac":
+            raise motif_err # Adding transfac as str insted of parser is a bit of a ugly kludge
         seqs = read_seq_data(fin, 
             options.input_parser.read,
             alphabet=options.alphabet,
