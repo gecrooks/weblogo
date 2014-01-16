@@ -139,28 +139,28 @@ class test_logooptions(unittest.TestCase) :
         options = repr(opt)
         
         opt = LogoOptions(title="sometitle")
-        assert opt.title == "sometitle"
-        
-        
-class test_seqlogo(unittest.TestCase) :
+        self.assertEqual(opt.title, "sometitle")
+
+
+class test_seqlogo(unittest.TestCase):
     # FIXME: The version of python used by Popen may not be the
     # same as that used to run this test.
     def _exec(self,  args, outputtext, returncode =0, stdin=None) :
-        if not stdin : 
+        if not stdin:
             stdin = testdata_stream("cap.fa")
         args = ["./weblogo"] + args
-        p = Popen(args,stdin=stdin,stdout=PIPE, stderr=PIPE)    
+        p = Popen(args, stdin=stdin, stdout=PIPE, stderr=PIPE)
         (out, err) = p.communicate()
         if returncode ==0 and p.returncode >0 :
             print(err)
         self.assertEquals(returncode, p.returncode)
-        if returncode == 0 : self.assertEquals( len(err), 0)
-    
+        if returncode == 0:
+            self.assertEquals(len(err), 0)
+
         for item in outputtext :
-            self.failUnless(item in out)  
+            self.failUnless(item in out)
 
 
-                 
     def test_malformed_options(self) :
         self._exec( ["--notarealoption"], [], 2)
         self._exec( ["extrajunk"], [], 2)

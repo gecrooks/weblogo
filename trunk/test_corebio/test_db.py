@@ -8,27 +8,26 @@ from corebio.db  import *
 from test_corebio import *
 
 class DBTest(unittest.TestCase):
-   
-   
+
     def test_dbxref(self):
         ref = Dbxref('/db_xref="GDB:39999"')
-        assert ref.database == 'GDB'
-        assert ref.identifier == '39999'
+        self.assertEqual(ref.database, 'GDB')
+        self.assertEqual(ref.identifier, '39999')
 
         ref = Dbxref("GDB:39999")
-        assert ref.database == 'GDB'
-        assert ref.identifier == '39999'
-        
+        self.assertEqual(ref.database, 'GDB')
+        self.assertEqual(ref.identifier, '39999')
+
         ref = Dbxref('GDB','39999')
-        assert ref.database == 'GDB'
-        assert ref.identifier == '39999'
-        
+        self.assertEqual(ref.database, 'GDB')
+        self.assertEqual(ref.identifier, '39999')
+
         s = repr(ref)
         s2 = str(ref)
-       
+
     def test_datasource(self) :
         ds = DataSource(
-            abbrev='abbrev', 
+            abbrev='abbrev',
             alt_abbrev=('a','b') ,
             url = 'abc',
             resource_url = 'abc%s',

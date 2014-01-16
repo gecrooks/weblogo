@@ -54,13 +54,13 @@ class test_stride_io(unittest.TestCase) :
         self.assertEquals(g.residues[0].secstruc, "C")
         self.assertEquals(g.residues[0].solvent_acc_area, float(95.4))
         self.assertEquals(g.residues[0].phi, float(360.00))
-        self.assertEquals(g.residues[0].psi, float(157.13))  
+        self.assertEquals(g.residues[0].psi, float(157.13))
         self.assertEquals(g.residues[0].resid, "1")
         self.assertEquals(g.primary(), Seq("QIVNSVDTMT", protein_alphabet))
-        self.assertEquals(g.secondary(), Seq("CEETTEEEEE",stride_alphabet))
+        self.assertEquals(g.secondary(), Seq("CEETTEEEEE", stride_alphabet))
         self.assertEquals(g.total_area(), float(483.6))
-        assert(g.get_residue('A','1') is g.residues[0] ) 
-        
+        self.assertTrue(g.get_residue('A','1') is g.residues[0])
+
     def test_2(self) :
         g = StrideRecord(testdata_stream("stride/stride_test_2.txt"))
         self.assertEquals(g.pdbid, "1A59")
@@ -68,13 +68,13 @@ class test_stride_io(unittest.TestCase) :
         self.assertEquals(g.residues[1].secstruc, "C")
         self.assertEquals(g.residues[1].solvent_acc_area, float(85.3))
         self.assertEquals(g.residues[1].phi, float(-78.20))
-        self.assertEquals(g.residues[1].psi, float(165.31))  
+        self.assertEquals(g.residues[1].psi, float(165.31))
         self.assertEquals(g.residues[1].resid, "3")
         self.assertEquals(g.primary(), Seq("EPTIH", protein_alphabet))
         self.assertEquals(g.secondary(), Seq("CCCCC",stride_alphabet))
         self.assertEquals(g.total_area(), float(610.9))
-        assert(g.get_residue(' ','3') is g.residues[1] ) 
-    
+        self.assertTrue(g.get_residue(' ','3') is g.residues[1])
+
     def test_3(self):
         g = StrideRecord(testdata_stream("stride/stride_test_3.txt"))
         self.assertEquals(g.pdbid, "1A59")
@@ -82,13 +82,13 @@ class test_stride_io(unittest.TestCase) :
         self.assertEquals(g.residues[0].secstruc, "T")
         self.assertEquals(g.residues[3].solvent_acc_area, float(60.4))
         self.assertEquals(g.residues[4].phi, float(-103.84))
-        self.assertEquals(g.residues[2].psi, float(-27.45))  
+        self.assertEquals(g.residues[2].psi, float(-27.45))
         self.assertEquals(g.residues[0].resid, "12")
         self.assertEquals(g.primary(), Seq("VTADV", protein_alphabet))
         self.assertEquals(g.secondary(), Seq("TCCCC",stride_alphabet))
         self.assertEquals(g.total_area(), float(404))
-        assert(g.get_residue(' ','12') is g.residues[0] ) 
-   
+        self.assertTrue(g.get_residue(' ','12') is g.residues[0])
+
 
 
 if __name__ == '__main__':
