@@ -37,6 +37,7 @@
 #  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 #  POSSIBILITY OF SUCH DAMAGE. 
+from __future__ import print_function
 
 from math import log, sqrt, exp
 
@@ -330,7 +331,7 @@ def find_root(f, x, y=None, fprime=None, tolerance=1.48e-8, max_iterations=50):
         x2 = 0
         
         for i in range(max_iterations):
-            # print x0, x1, v0, v1, x2-x0
+            # print(x0, x1, v0, v1, x2-x0)
             x2 = x1 - v1*(x1-x0)/(v1-v0)
             if abs(x2-x1) < tolerance : return x2        
             x0 = x1
@@ -354,7 +355,7 @@ def find_root(f, x, y=None, fprime=None, tolerance=1.48e-8, max_iterations=50):
             raise ArithmeticError("Start points do not bracket root.")
         
         for i in range(max_iterations):
-            #print a,b, fa, fb
+            #print(a, b, fa, fb)
             delta = b-a
             xm = a + 0.5*delta # Minimize roundoff in computing the midpoint
             fm = f(xm)

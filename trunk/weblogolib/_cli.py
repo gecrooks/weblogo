@@ -40,25 +40,25 @@
 
 # WebLogo Command Line Interface
 
-import sys
+from __future__ import absolute_import, print_function
 
-from color import *
-from colorscheme import ColorScheme, ColorGroup
-from corebio.utils import *
+import os
+import sys
+from optparse import OptionGroup
 from string import Template
 
 from corebio import seq_io
 from corebio.seq import Seq, SeqList
-
-
-import os 
+from corebio.utils import *
 from corebio.utils.deoptparse import DeOptionParser
-from optparse import OptionGroup
 
-from weblogolib import LogoOptions, LogoData, LogoFormat
-from weblogolib import parse_prior, description, release_description, formatters, default_formatter
-from weblogolib import std_alphabets, std_units, std_sizes, std_color_schemes
-from weblogolib import read_seq_data
+from .color import *
+from .colorscheme import ColorScheme, ColorGroup
+from . import (LogoOptions, LogoData, LogoFormat,
+               parse_prior, description, release_description, formatters,
+               default_formatter,
+               std_alphabets, std_units, std_sizes, std_color_schemes,
+               read_seq_data)
 
 # ====================== Main: Parse Command line =============================
 def main(): 
@@ -83,7 +83,7 @@ def main():
         formatter(data, format, opts.fout)
 
     except ValueError as err :
-        print >>sys.stderr, 'Error:', err
+        print('Error:', err, file=sys.stderr)
         sys.exit(2)
     except KeyboardInterrupt as err:
         sys.exit(0)
@@ -122,7 +122,7 @@ def httpd_serve_forever(port=8080) :
     HandlerClass = __HTTPRequestHandler
     ServerClass = BaseHTTPServer.HTTPServer
     httpd = ServerClass(('', port), HandlerClass)
-    print "WebLogo server running at http://localhost:%d/" % port
+    print("WebLogo server running at http://localhost:%d/" % port)
     
     try :
         httpd.serve_forever()

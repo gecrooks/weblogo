@@ -5,7 +5,7 @@ echo
 echo "## Build a WebLogo release" 
 echo "# Use setup.py to install from a built distribution."
 echo "# Requires epydoc to build documentation. "
-python -c "import weblogolib; print weblogolib.description"  
+python -c "import weblogolib; print(weblogolib.description)"
 
 echo 
 echo "## Check Subversion status (working copy checked in and up to date?) " 
@@ -44,7 +44,7 @@ cd ../../..     ls
 
 echo
 echo "## CoreBio version"
-python -c 'import corebio; print corebio.__version__'
+python -c 'import corebio; print(corebio.__version__)'
 
 echo
 echo "## Build source distribution :"

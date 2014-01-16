@@ -39,7 +39,7 @@ in as a sequence.  Whitespace is removed.
 -SPC-MLETETLNKYVVIIAYALVFLLSLLGNSLVMLVILYSRVGRSVTDVYLLNLALAD
 -EPC-RDENVHFNRIFLPTIYFIIFLTGIVGNGLVILVMGYQKKLRSMTDKYRLHLSVAD
 """
-from __future__ import absolute_import
+from __future__ import absolute_import, print_function
 
 from ..seq import *
 from ..utils import remove_whitespace
@@ -117,7 +117,7 @@ def write(afile, seqs):
     for s in seqs :
         writeseq(afile, s)
 
-    
+
 def writeseq(afile, seq):
     """ Write a single sequence in raw format.
 
@@ -125,6 +125,4 @@ def writeseq(afile, seq):
         afile -- A writable stream.
         seq  -- A Seq instance
     """
-    print >>afile, seq
-
-            
+    print(seq, file=afile)

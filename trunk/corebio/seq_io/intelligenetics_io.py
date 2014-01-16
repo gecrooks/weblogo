@@ -49,7 +49,7 @@ accggttctccatccccgcagcgtagcccggaacatggtagctgccatct
 ttacctgctacgccagccttctgtgcgcgcaactgtctggtcccgcccc2
 
 """
-from __future__ import absolute_import
+from __future__ import absolute_import, print_function
 
 from ..utils import *
 from ..seq import *
@@ -166,7 +166,7 @@ def write(fout, seqs):
     for s in seqs :
         writeseq(fout, s)
 
-    
+
 def writeseq(fout, seq):
     """ Write a single sequence in IG format.
 
@@ -176,29 +176,16 @@ def writeseq(fout, seq):
     Raises:
         ValueError -- If a sequence is missing a name        
     """
-
     desc = seq.description or ''
-    
     # We prepend ';' to each line
-    for h in desc.splitlines()  :
-        print >> fout, ';' +h
-
-    if not seq.name :
+    for h in desc.splitlines():
+        print(';' + h, file=fout)
+    if not seq.name:
         raise ValueError(
             "Write failed with missing sequence name: %s"% str(seq) )
-    print >>fout, seq.name
-    L = len(seq) 
+    print(seq.name, file=fout)
+    L = len(seq)
     line_length = 80
     for n in range (1+ int(L/line_length)) :
-        print >>fout, seq[n * line_length: (n+1) * line_length] 
-    print >>fout
-    
-    
-    
-    
-     
-
-
-    
-    
-    
+        print(seq[n * line_length : (n+1) * line_length], file=fout)
+    print(file=fout)

@@ -42,6 +42,7 @@ nodeCodeDict  -- A mapping between known 2 letter node codes and a longer
                   'sp' (species), 'px' (domain). Additional node types may
                   be added in the future.
 """
+from __future__ import print_function
 
 import os, re
 
@@ -202,7 +203,7 @@ class Scop(object):
         # Glue all of the Nodes together using the HIE file
         for rec in HieRecord.records(hie_file):
             if not rec.sunid in sunidDict :
-                # print rec.sunid 
+                # print(rec.sunid)
                 raise ValueError("Incomplete data?")
 
                     

@@ -29,7 +29,7 @@
 This very simple format has two columns per line. The first column is a sequence name, the second column is the sequence itself. The columns are separated by a single tab ("\\t") character.
 
 """
-from __future__ import absolute_import
+from __future__ import absolute_import, print_function
 
 from ..utils import *
 from ..seq import *
@@ -112,17 +112,6 @@ def writeseq(fout, seq):
         afile -- A writable stream.
         seq  -- A Seq instance
     """
-    
     name = seq.name or ''
-    print >>fout, name, '\t', seq
+    print(name, seq, sep='\t', file=fout)
 
-    
-    
-    
-    
-     
-
-
-    
-    
-    

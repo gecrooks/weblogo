@@ -23,7 +23,7 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
 #  THE SOFTWARE.
 #
-
+from __future__ import print_function
 
 from corebio import *
 from corebio.seq import *
@@ -39,7 +39,7 @@ class test_array_io(unittest.TestCase) :
     def test_read_example(self) :
         f = StringIO(array_io.example)
         seqs = array_io.read(f)
-        #print seqs
+        #print(seqs)
         self.assertEquals(len(seqs), 8)
         self.assertEquals(seqs[0].name, None)
         self.assertEquals(len(seqs[1]), 60)

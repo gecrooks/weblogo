@@ -40,7 +40,7 @@ of characters. Blank lines and white space are ignored.
 -SPC-MLETETLNKYVVIIAYALVFLLSLLGNSLVMLVILYSRVGRSVTDVYLLNLALAD
 -EPC-RDENVHFNRIFLPTIYFIIFLTGIVGNGLVILVMGYQKKLRSMTDKYRLHLSVAD
 """
-from __future__ import absolute_import
+from __future__ import absolute_import, print_function
 
 from ..seq import *
 from ..utils import *
@@ -129,6 +129,6 @@ def writeseq(afile, seq):
         afile -- A writable stream.
         seq  -- A Seq instance
     """
-    print >>afile, seq
+    print(seq, file=afile)
 
             

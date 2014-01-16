@@ -33,31 +33,29 @@
 #  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 #  POSSIBILITY OF SUCH DAMAGE. 
-
+from __future__ import print_function
 
 import unittest
+# import sys
 
-import weblogolib
-from weblogolib import  *
-from weblogolib import  parse_prior, GhostscriptAPI
-from weblogolib.color import *
-from weblogolib.colorscheme import *
-from StringIO import StringIO
-import sys
+from math import log, sqrt
+from subprocess import *
+from pkg_resources import resource_stream
 
 from numpy import array, asarray, float64, ones, zeros, int32,all,any, shape
 import numpy as na
 
-from corebio import seq_io
-from corebio.seq import *
-
-from subprocess import *
-from pkg_resources import resource_stream
-
-from corebio.moremath import entropy
-from math import log, sqrt
-
+import weblogolib
+from weblogolib import *
+from weblogolib import parse_prior, GhostscriptAPI
+from weblogolib.color import *
+from weblogolib.colorscheme import *
 from weblogolib.logomath import Dirichlet, Gamma
+
+# from corebio import seq_io
+from corebio.seq import *
+from corebio.moremath import entropy
+
 
 def testdata_stream( name ): 
     return resource_stream(__name__, 'test_weblogo/data/'+name)    
@@ -95,7 +93,7 @@ class test_parse_prior(unittest.TestCase) :
             == parse_prior( ' equiprobablE  ',  Alphabet('123'), 1.2 )  ) )
 
     def test_parse_prior_percentage(self) :  
-        #print       parse_prior( '50%', unambiguous_dna_alphabet, 1. )          
+        #print(parse_prior('50%', unambiguous_dna_alphabet, 1.))
         self.assertTrue( all( equiprobable_distribution(4) 
             == parse_prior( '50%', unambiguous_dna_alphabet, 1. )  ) )
  
@@ -154,7 +152,7 @@ class test_seqlogo(unittest.TestCase) :
         p = Popen(args,stdin=stdin,stdout=PIPE, stderr=PIPE)    
         (out, err) = p.communicate()
         if returncode ==0 and p.returncode >0 :
-            print err
+            print(err)
         self.assertEquals(returncode, p.returncode)
         if returncode == 0 : self.assertEquals( len(err), 0)
     
@@ -415,7 +413,7 @@ class test_gamma(unittest.TestCase) :
         m = 10.0
         v = 2.0
         g = Gamma.from_mean_variance(m, v)
-        #print g.alpha, g.beta
+        #print(g.alpha, g.beta)
         S = 1000
         total = 0.0
         for s in range(S):
@@ -425,7 +423,7 @@ class test_gamma(unittest.TestCase) :
         # The estimated mean will differ from true mean by a small amount
 
         error = 4. * sqrt( g.variance()/S)
-        # print mean, m, error
+        # print(mean, m, error)
         self.assertTrue( abs(mean - m) < error)
 
         
@@ -462,7 +460,7 @@ class test_gamma(unittest.TestCase) :
             p = g.pdf(x) *M/S
             total_p += (last-p) /2.0
             last = p
-            #print x, total_p, g.cdf(x)
+            #print(x, total_p, g.cdf(x))
             
             self.assertTrue( (total_p - g.cdf(x)) <epsilon )
 
@@ -503,11 +501,11 @@ class test_Dirichlet(unittest.TestCase) :
             d = Dirichlet(alpha)
             for s in range(samples) :
                 p = d.sample()
-                #print p
+                #print(p)
                 #pt +=p
                 ent[s] = entropy(p)
             
-            #print pt/samples
+            #print(pt/samples)
             
             m = mean(ent)
             v = var(ent)
@@ -515,7 +513,7 @@ class test_Dirichlet(unittest.TestCase) :
             dm = d.mean_entropy()
             dv = d.variance_entropy()
 
-           #print alpha, ':', m, v, dm, dv 
+           #print(alpha, ':', m, v, dm, dv)
             error = 4. * sqrt(v/samples)
             self.assertTrue( abs(m-dm) < error)
             self.assertTrue( abs(v-dv) < error) # dodgy error estimate 
@@ -571,7 +569,7 @@ class test_Dirichlet(unittest.TestCase) :
         alpha = (1.0, 2.0, 3.0, 4.0)
         xx = (2.0, 0.0, 1.0, 10.0)
         v = Dirichlet(alpha).variance_x(xx)
-        #print v
+        #print(v)
         # TODO: Don't actually know if this is correct
         
     def test_relative_entropy(self):
@@ -583,8 +581,8 @@ class test_Dirichlet(unittest.TestCase) :
         vrent = d.variance_relative_entropy(pvec)
         low, high = d.interval_relative_entropy(pvec, 0.95)
         
-        #print
-        #print '> ', rent, vrent, low, high
+        #print()
+        #print('> ', rent, vrent, low, high)
      
         # This test can fail randomly, but the precision from a few
         # thousand samples is low. Increasing samples, 1000->2000
@@ -603,7 +601,7 @@ class test_Dirichlet(unittest.TestCase) :
         self.assertTrue( abs(low-sent[ int( samples *0.025)])<0.2 )
         self.assertTrue( abs(high-sent[ int( samples *0.975)])<0.2 )
         
-        #print '>>', mean(sent), var(sent), sent[ int( samples *0.025)] ,sent[ int( samples *0.975)] 
+        #print('>>', mean(sent), var(sent), sent[ int( samples *0.025)] ,sent[ int( samples *0.975)])
        
        
    

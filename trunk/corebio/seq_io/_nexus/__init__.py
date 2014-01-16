@@ -593,7 +593,7 @@ class Nexus(object):
                 else:
                     self.filename='Unknown_nexus_file'
             else:
-                print input.strip()[:6]
+                print(input.strip()[:6])
                 raise NexusError, 'Unrecognized input: %s ...' % input[:100]
         if C:
             decommented=cnexus.scanfile(file_contents)
@@ -672,7 +672,7 @@ class Nexus(object):
             self.nchar=eval(options['nchar'])
 
     def _format(self,options):
-        # print options
+        # print(options)
         # we first need to test respectcase, then symbols (which depends on respectcase)
         # then datatype (which, if standard, depends on symbols and respectcase in order to generate
         # dicts for ambiguous values and alphabet
@@ -808,7 +808,7 @@ class Nexus(object):
 
     def _statelabels(self,options):
         #self.charlabels=options
-        #print 'Command statelabels is not supported and will be ignored.'
+        #print('Command statelabels is not supported and will be ignored.')
         pass
 
     def _matrix(self,options):
@@ -833,7 +833,7 @@ class Nexus(object):
                     break
             # count the taxa and check for interleaved matrix
             taxcount+=1
-            ##print taxcount
+            ##print(taxcount)
             if taxcount>self.ntax:
                 if not self.interleave:
                     raise NexusError, 'Too many taxa in matrix - should matrix be interleaved?'
@@ -849,7 +849,7 @@ class Nexus(object):
             chars=''
             if self.interleave:
                 #interleaved matrix
-                #print 'In interleave'
+                #print('In interleave')
                 if l:
                     chars=''.join(l.split())
                 else:
@@ -1386,9 +1386,9 @@ class Nexus(object):
         for taxon in undelete[1:]:
             newconstant=[]
             for site in constant:
-                #print '%d (paup=%d)' % (site[0],site[0]+1),
+                #print('%d (paup=%d)' % (site[0],site[0]+1), end='')
                 seqsite=matrix[taxon][site[0]].upper()
-                #print seqsite,'checked against',site[1],'\t',
+                #print(seqsite,'checked against',site[1],'\t', end='')
                 if seqsite==self.missing or (seqsite==self.gap and self.options['gapmode'].lower()=='missing') or seqsite==site[1]: 
                     # missing or same as before  -> ok
                     newconstant.append(site)
@@ -1399,11 +1399,11 @@ class Nexus(object):
                     intersect=set(self.ambiguous_values[seqsite]).intersection(set(site[1]))
                     if intersect:
                         newconstant.append((site[0],''.join(intersect)))
-                    #    print 'ok'
+                    #    print('ok')
                     #else:
-                    #    print 'failed'
+                    #    print('failed')
                 #else:
-                #    print 'failed'
+                #    print('failed')
             constant=newconstant
         cpos=[s[0] for s in constant]
         return constant
