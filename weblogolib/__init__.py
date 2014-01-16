@@ -733,12 +733,12 @@ def svg_formatter(data, format, fout) :
     fpdf.seek(0)
     
     try:
-   	    command = find_command('pdf2svg') 
+        command = find_command('pdf2svg')
     except EnvironmentError:
-    	raise EnvironmentError("Scalable Vector Graphics (SVG) format requires the program 'pdf2svg'. "
-    	                        "Cannot find 'pdf2svg' on search path.")
+        raise EnvironmentError("Scalable Vector Graphics (SVG) format requires the program 'pdf2svg'. "
+                               "Cannot find 'pdf2svg' on search path.")
 
-    import tempfile, os
+    import tempfile
     fpdfi, fname_pdf = tempfile.mkstemp(suffix=".pdf")
     fsvgi, fname_svg = tempfile.mkstemp(suffix=".svg")
     try:
