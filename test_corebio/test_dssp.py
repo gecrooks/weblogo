@@ -26,16 +26,14 @@ class test_dssp_io(unittest.TestCase) :
         self.assertEquals(res.secstruc, "H")
         self.assertEquals(res.solvent_acc_area, float(82))
         self.assertEquals(res.phi, float(-64.9))
-        self.assertEquals(res.psi, float(-39.5))  
-        self.assertEquals(res.coord, (float( 3.5 ), float(3.9),float(6.8) )  )  
-
+        self.assertEquals(res.psi, float(-39.5))
+        self.assertEquals(res.coord, (float(3.5), float(3.9), float(6.8)))
 
         self.assertEquals(str(r.primary()),
-                            "TTabPSIVARSNFNVcRLPGTPEAIcATYTGbIIIPGATaPGDYAN")
-        self.assertEquals(str(r.secondary()), 
-                            " EE SSHHHHHHHHHHHTTT  HHHHHHHHS EE SSS   GGG  ")
+                          "TTabPSIVARSNFNVcRLPGTPEAIcATYTGbIIIPGATaPGDYAN")
+        self.assertEquals(str(r.secondary()),
+                          " EE SSHHHHHHHHHHHTTT  HHHHHHHHS EE SSS   GGG  ")
         self.assertEquals(r.total_area(), float(3010.0))
-        
 
 
 
