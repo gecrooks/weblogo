@@ -34,17 +34,16 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 #  POSSIBILITY OF SUCH DAMAGE. 
 
+from __future__ import print_function
+
+import unittest
 
 from corebio import *
 from corebio.seq import *
 from corebio.seq_io import *
-from corebio.seq import *
 from corebio.secstruc.stride import *
 from test_corebio import *
 
-
-
-import unittest
 
 class test_stride_io(unittest.TestCase) :
 
@@ -92,23 +91,17 @@ class test_stride_io(unittest.TestCase) :
    
 
 
-             
-             
 if __name__ == '__main__':
-    
-    print "Running additional tests of RunStride. These require that the STRIDE program is installed locally"
-    try :
+    print("Running additional tests of RunStride. These require that the STRIDE program is installed locally")
+    try:
         stride = RunStride()
         fn = testdata_filename('1CGP.pdb')
-        #print fn
+        #print(fn)
         data = stride.process_pdb(fn)
-        #print data
+        #print(data)
         record = stride.record(fn)
-        #print record
-        # Now run standard unittests
-    except e:
-        print e
-    
+        #print(record)
+    except Exception as exc:
+        print(exc)
+    # Now run standard unittests
     unittest.main()
-    
-    

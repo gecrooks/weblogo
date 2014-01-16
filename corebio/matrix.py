@@ -27,7 +27,7 @@
 """ 
 Arrays indexed by alphabetic strings.
 """
-from __future__ import absolute_import
+from __future__ import absolute_import, print_function
 
 
 import numpy as na
@@ -289,10 +289,10 @@ class SubMatrix(AlphabeticArray) :
         
         i = 0 
         
-        #print ">", alphabet
+        #print(">", alphabet)
         
         for linenum,line in enumerate(fin) :
-            #print ">>", linenum, i, line,
+            #print(">>", linenum, i, line)
             if line.isspace() or line[0] =='#' or line[0]=='*': 
                 continue
                 

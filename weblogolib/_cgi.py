@@ -35,7 +35,7 @@
 #  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 #  POSSIBILITY OF SUCH DAMAGE. 
-from __future__ import absolute_import
+from __future__ import absolute_import, print_function
 
 import sys
 import cgi as cgilib
@@ -354,24 +354,21 @@ def main(htdocs_directory = None) :
     #  RETURN LOGO OVER HTTP
     #
 
-    print "Content-Type:", mime_type[format]
+    print("Content-Type:", mime_type[format])
     # Content-Disposition: inline       Open logo in browser window
-    # Content-Disposition: attachment   Download logo  
-    if form_values.has_key("download") :
-        print 'Content-Disposition: attachment; ' \
-            'filename="logo.%s"' % extension[format] 
-    else :       
-        print 'Content-Disposition: inline; ' \
-            'filename="logo.%s"' % extension[format]        
-    
-        
+    # Content-Disposition: attachment   Download logo
+    if form_values.has_key("download"):
+        print('Content-Disposition: attachment; ' \
+              'filename="logo.%s"' % extension[format])
+    else:
+        print('Content-Disposition: inline; ' \
+              'filename="logo.%s"' % extension[format])
     # Separate header from data
-    print 
-        
+    print()
     # Finally, and at last, send the logo.
-    print logo.getvalue()        
+    print(logo.getvalue())
 
-  
+
 def send_form(controls, errors=[], htdocs_directory=None) :
     if htdocs_directory is None :
         htdocs_directory = os.path.join(
@@ -421,7 +418,7 @@ def send_form(controls, errors=[], htdocs_directory=None) :
        
     
     if errors :
-        print >>sys.stderr, errors
+        print(errors, file=sys.stderr)
         error_message = []
         for e in errors :
             if type(e) is str :
@@ -447,26 +444,22 @@ def send_form(controls, errors=[], htdocs_directory=None) :
     template = resource_string( "create_html_template.html", htdocs_directory)
     html = Template(template).safe_substitute(substitutions) #FIXME
 
-    print "Content-Type: text/html\n\n"
-    print html
+    print("Content-Type: text/html\n\n")
+    print(html)
 
     # DEBUG
     #keys = substitutions.keys()
     #keys.sort()
     #for k in keys :
-    #    print k,"=", substitutions[k], " <br />" 
+    #    print(k, "=", substitutions[k], " <br />")
 
-    #print " <br />"
-    #print " <br />"
+    #print(" <br />")
+    #print(" <br />")
     #for k in controls :
-    #    print k.name,"=", k.get_value(), " <br />" 
+    #    print(k.name, "=", k.get_value(), " <br />")
 
 
 
 if __name__=="__main__" :
     from . import _cli
     _cli.main()
-
-
-
-

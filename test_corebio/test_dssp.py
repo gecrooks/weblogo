@@ -1,17 +1,15 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 
+import unittest
 
 from corebio import *
 from corebio.seq import *
 from corebio.seq_io import *
-from corebio.seq import *
 from corebio.secstruc.dssp import *
 from test_corebio import *
 
-
-
-import unittest
 
 class test_dssp_io(unittest.TestCase) :
 
@@ -39,24 +37,20 @@ class test_dssp_io(unittest.TestCase) :
         self.assertEquals(r.total_area(), float(3010.0))
         
 
-  
-             
+
+
 if __name__ == '__main__':
-    
-    print "Running additional tests of RunDSSP. These require that the DSSP program is installed locally"
-    try :
+    print("Running additional tests of RunDSSP. These require that the DSSP program is installed locally")
+    try:
         dssp = RunDssp()
-        print dssp.version()
+        print(dssp.version())
         fin = testdata_stream('1CGP.pdb')
         data = dssp.process_pdb(fin)
         #print data
         fin = testdata_stream('1CGP.pdb')
         record = dssp.record(fin)
         #print record
-    except e:
-        print e
-    
+    except Exception as exc:
+        print(exc)
     # Now run standard unittests
     unittest.main()
-    
-

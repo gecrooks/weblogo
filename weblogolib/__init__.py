@@ -87,7 +87,7 @@ program 'gs' be installed. Scalable Vector Graphics (SVG) format also requires
 the program 'pdf2svg'.
 
 """
-from __future__ import absolute_import
+from __future__ import absolute_import, print_function
 
 import sys
 import copy
@@ -234,8 +234,8 @@ class GhostscriptAPI(object) :
             error_msg += '\nReturn code: %i\n' % p.returncode 
             if err is not None : error_msg += err
             raise RuntimeError(error_msg)
-        
-        print >>fout, out
+
+        print(out, file=fout)
 # end class Ghostscript
 
 
@@ -769,10 +769,10 @@ def png_print_formatter(data, format, fout) :
     _bitmap_formatter(data, format, fout, device="png")
 
 
-def txt_formatter( logodata, format, fout) :
+def txt_formatter(logodata, format, fout):
     """ Create a text representation of the logo data. 
     """
-    print >>fout, str(logodata)
+    print(str(logodata), file=fout)
 
    
 
@@ -868,7 +868,7 @@ def eps_formatter( logodata, format, fout) :
             fraction_width = 1.0
             if format.scale_width :
                 fraction_width = logodata.weight[seq_index] 
-            # print >>sys.stderr, fraction_width
+            # print(fraction_width, file=sys.stderr)
             for c in s:
                 data.append(" %f %f (%s) ShowSymbol" % (fraction_width, c[0]*stack_height/C, c[1]) )
 
@@ -896,7 +896,7 @@ def eps_formatter( logodata, format, fout) :
     # Create and output logo
     template = resource_string( __name__, 'template.eps', __file__)
     logo = Template(template).substitute(substitutions)
-    print >>fout, logo
+    print(logo, file=fout)
  
 
 # map between output format names and logo  
@@ -967,7 +967,7 @@ def parse_prior(composition, alphabet, weight=None) :
         explicit = explicit.replace(',',' ').replace("'", ' ').replace('"',' ').replace(':', ' ').split()
         
         if len(explicit) != len(alphabet)*2 :
-            #print explicit
+            #print(explicit)
             raise ValueError("Explicit prior does not match length of alphabet")
         prior = - ones(len(alphabet), float64) 
         try :
@@ -1122,7 +1122,7 @@ class LogoData(object) :
         # Check sequence lengths    
         seq_length = len(seqs[0])
         for i,s in enumerate(seqs) :
-            #print i,s, len(s)
+            #print(i, s, len(s))
             #TODO: Redundant? Should be checked in SeqList?
             if seq_length != len(s) :
                 raise ArgumentError(
@@ -1137,35 +1137,35 @@ class LogoData(object) :
 
     def __str__(self) :
         out = StringIO()
-        print >>out, '## LogoData'
-        print >>out, '# First column is position number, counting from zero'
-        print >>out, '# Subsequent columns are raw symbol counts'
-        print >>out, '# Entropy is mean entropy measured in nats.' 
-        print >>out, '# Low and High are the 95% confidence limits.'
-        print >>out, '# Weight is the fraction of non-gap symbols in the column.'
-        print >>out, '#\t'
-        print >>out, '#\t',
+        print('## LogoData', file=out)
+        print('# First column is position number, counting from zero', file=out)
+        print('# Subsequent columns are raw symbol counts', file=out)
+        print('# Entropy is mean entropy measured in nats.' , file=out)
+        print('# Low and High are the 95% confidence limits.', file=out)
+        print('# Weight is the fraction of non-gap symbols in the column.', file=out)
+        print('#\t', file=out)
+        # Show column names
+        print('#', end='\t', file=out)
         for a in self.alphabet :
-            print >>out, a, '\t',
-        print >>out, 'Entropy\tLow\tHigh\tWeight'
-        
+            print(a, end=' \t', file=out)
+        print('Entropy\tLow\tHigh\tWeight', file=out)
+
+        # Write the data table
         for i in range(self.length) :
-            print >>out, i+1, '\t',
-            for c in self.counts[i] : print >>out, c, '\t',
-            print >>out, "%6.4f" % self.entropy[i], '\t',
+            print(i + 1, end=' \t', file=out)
+            for c in self.counts[i]:
+                print(c, end=' \t', file=out)
+            print("%6.4f" % self.entropy[i], end=' \t', file=out)
             if self.entropy_interval is not None:
-                print >>out, "%6.4f" % self.entropy_interval[i][0], '\t', 
-                print >>out, "%6.4f" % self.entropy_interval[i][1], '\t',
+                print("%6.4f" % self.entropy_interval[i][0], end=' \t',
+                      file=out)
+                print("%6.4f" % self.entropy_interval[i][1], end=' \t',
+                      file=out)
             else :
-                print >>out, '\t','\t',
+                print('\t', '\t', end='', file=out)
             if self.weight is not None :
-                print >>out, "%6.4f" % self.weight[i],
-            print >>out, ''
-        print >>out, '# End LogoData'
-        
+                print("%6.4f" % self.weight[i], end='', file=out)
+            print('', file=out)
+        print('# End LogoData', file=out)
+
         return out.getvalue()
-
-
-
-
-

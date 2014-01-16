@@ -23,6 +23,7 @@
 #
 
 """Custom extensions to OptionParse for parsing command line options."""
+from __future__ import print_function
 # FIXME: Docstring
 
 # TODO: Add profiling option
@@ -54,12 +55,12 @@ import random
 
 def _copyright_callback(option, opt, value, parser):
     if option or  opt or  value or parser: pass # Shut up lint checker
-    print parser.copyright
+    print(parser.copyright)
     sys.exit()
 
 def _doc_callback(option, opt, value, parser):
     if option or  opt or  value or parser: pass # Shut up lint checker
-    print parser.long_description
+    print(parser.long_description)
     sys.exit()
 
 

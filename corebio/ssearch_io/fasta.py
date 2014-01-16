@@ -39,7 +39,7 @@ Refs:
     ftp.virginia.edu/pub/fasta
     http://en.wikipedia.org/wiki/FASTA
 """
-from __future__ import absolute_import
+from __future__ import absolute_import, print_function
 
 import re
 from math import floor
@@ -68,7 +68,7 @@ def read(fin) :
     
     
     for token in scanner :
-        #print token
+        #print(token)
         typeof = token.typeof
         value = token.data
         
@@ -243,7 +243,7 @@ def _scan(fin) :
                 yield Token("target_length", int(L[52:56]), lineno, 52)
                 fields = L[57:].split()
                 raw, bit, sig  = fields[0], fields[1], fields[2]
-                #print raw, bit, sig 
+                #print(raw, bit, sig)
                 yield Token("raw_score",    float(raw), lineno, 57)
                 yield Token("bit_score",    float(bit), lineno)
                 yield Token("significance", float(sig), lineno)
@@ -252,7 +252,7 @@ def _scan(fin) :
     
             # Optimal alignment information
             L = next_nonempty(lines)
-            #print ">>>", L, L.startswith('>>')
+            #print(">>>", L, L.startswith('>>'))
             while L.startswith('>>'):
                 if  L.startswith('>>>') : break
                 
@@ -334,7 +334,7 @@ def _scan(fin) :
         
         # "13355 residues in 93 query   sequences"
         # "13355 residues in 93 library sequences"
-        #print '>>', L
+        #print('>>', L)
         LL = L.split()
         yield Token("database_letters",int(LL[0]), lines.index() )
         yield Token("database_entries", int(LL[3]), lines.index() )
@@ -342,8 +342,4 @@ def _scan(fin) :
         yield Token("end_report", lineno= lines.index())
     except StopIteration :
         raise ValueError("Premature end of file ")
-
-
-    
-
 

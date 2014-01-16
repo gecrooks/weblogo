@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-
+from __future__ import print_function
 
 import unittest
 
@@ -36,43 +36,39 @@ class DBTest(unittest.TestCase):
             description = 'blah',
             name = 'somename'
             )
-            
+
     def test_databases(self):
         db = default_registry['pdb']
 
-        
+
 if __name__ == '__main__':
-    
-    print "## Know databases."
-    print
-    print default_registry
-    print
-    print
-    
-    print "## Running Non-unit tests."
-    print
-    
+    print("## Know databases.")
+    print()
+    print(default_registry)
+    print()
+    print()
+
+    print("## Running Non-unit tests.")
+    print()
+
     tests = [
         ('embl', 'ab050095'),
         ('pdb', '1hlb'),
-        ('swissprot', 'p50105'),        
+        ('swissprot', 'p50105'),
     ]
-    
+
     for t in tests:
         ref = Dbxref(t[0], t[1])
-        print ref, ref.data_url()
+        print(ref, ref.data_url())
 
         data = ref.data_stream()
-        print data.readline(),
-        print data.readline(),
-        print data.readline(),
-        print data.readline(),
-        print
+        print(data.readline(), end='')
+        print(data.readline(), end='')
+        print(data.readline(), end='')
+        print(data.readline(), end='')
+        print()
 
-    print
-    print
-    print '# Running Unittests'
+    print()
+    print()
+    print('# Running Unittests')
     unittest.main()
-
-
-

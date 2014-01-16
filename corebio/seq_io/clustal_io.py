@@ -35,7 +35,7 @@ Ref :
     sequence alignment through sequence weighting, position-specific gap
     penalties and weight matrix choice. Nucleic Acids Res. 22:4673-4680.
 """
-from __future__ import absolute_import
+from __future__ import absolute_import, print_function
 
 # TODO: What happens if CLUSTAL is not the first line of the file?
 
@@ -202,29 +202,20 @@ def _scan( fin ):
     yield Token("end")     
     return
 
+
 def write(fout, seqs) :
     """Write 'seqs' to 'fout' as text in clustal format"""
     header = "CLUSTAL W (1.81) multiple sequence alignment"
     name_width = 17
     seq_width = 60
-    
-    print >>fout, header
-    print >>fout
-    print >>fout 
-    
-    L = 0
-    for s in seqs: L = max(L, len(s))
-    
+
+    print(header, end='\n\n', file=fout)
+    L = max(len(s) for s in seqs)
     for block in range(0, L, seq_width):
-        for s  in seqs :
+        for s in seqs:
             start = min(block, len(s))
-            end = min( start+seq_width, len(s))
-            print  >>fout, s.name.ljust(name_width),
-            print  >>fout, s[start:end]
-        print  >>fout 
-        
-        
-        
-
-
+            end = min(start + seq_width, len(s))
+            print(s.name.ljust(name_width), end='', file=fout)
+            print(s[start:end], file=fout)
+        print(file=fout)
 

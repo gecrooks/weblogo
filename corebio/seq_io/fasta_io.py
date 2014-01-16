@@ -52,7 +52,7 @@ VLARHF-QH-EFTPELQ-HALEAHFCA------V---GDALA----K-----A-----YH-----------
 
 
 """
-from __future__ import absolute_import
+from __future__ import absolute_import, print_function
 
 import re
 from ..utils import *
@@ -170,11 +170,11 @@ def write(fout, seqs):
     """ 
     if seqs.description :
         for line in seqs.description.splitlines():
-            print >>fout, ';'+ line        
-    for s in seqs :
+            print(';' + line, file=fout)
+    for s in seqs:
         writeseq(fout, s)
 
-    
+
 def writeseq(afile, seq):
     """ Write a single sequence in fasta format.
 
@@ -182,27 +182,24 @@ def writeseq(afile, seq):
         afile -- A writable stream.
         seq  -- A Seq instance
     """
-
     header = seq.description or seq.name or ''
-    
     # We prepend '>' to the first header line
     # Additional lines start with ';' to indicate comment lines
-    if header :
-        header = header.splitlines()  
-        print >>afile, '>'+header[0]
-        if len(header) > 1 :
-            for h in header[1:] :
-                print >>afile, ';' +h
-    else :
-        print >>afile, '>'
-    
-    L = len(seq) 
+    if header:
+        header = header.splitlines()
+        print('>' + header[0], file=afile)
+        if len(header) > 1:
+            for h in header[1:]:
+                print(';' + h, file=afile)
+    else:
+        print('>', file=afile)
+    L = len(seq)
     line_length = 80
     for n in range (1+ L/line_length) :
-        print >>afile, seq[n * line_length: (n+1) * line_length] 
-    print >>afile
-    
-    
+        print(seq[n * line_length : (n+1) * line_length], file=afile)
+    print(file=afile)
+
+
 def index(afile, alphabet=None) :
     """Return a FileIndex for the fasta file. Sequences can be retrieved
     by item number or name.
@@ -217,16 +214,3 @@ def index(afile, alphabet=None) :
         return k.group(1)
         
     return FileIndex(afile, linekey, parser)
-
-                
-        
-        
-        
-        
-        
-         
-
-
-    
-    
-    

@@ -33,7 +33,7 @@ See:
     - HMMER manual
 
 """
-from __future__ import absolute_import
+from __future__ import absolute_import, print_function
 
 import re
 
@@ -127,7 +127,7 @@ def _scan( fin ):
             m = header_line.match(line)
             state = body
             if m is not None :
-                # print "header: ", m.group() 
+                # print("header: ", m.group())
                 yield Token("header", m.group() )
                 continue
             else :
@@ -164,10 +164,4 @@ def _scan( fin ):
 
         # END state blocks. If I ever get here something has gone terrible wrong
         raise RuntimeError()
-    
-
-
-
-
-
 
