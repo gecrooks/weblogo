@@ -31,7 +31,7 @@ from __future__ import absolute_import, print_function
 
 
 import numpy as na
-from itertools import izip
+from corebio._py3k import zip
 
 from .seq import Alphabet
 from .seq import (unambiguous_dna_alphabet, unambiguous_rna_alphabet,
@@ -133,9 +133,9 @@ class AlphabeticArray(object) :
             vshape = values.shape
             if len(shape) != len(vshape) :
                 raise ValueError("The values array is the wrong shape.")
-            for s1,s2 in izip(shape, vshape) :
-                if s1 is not None and s1 != s2 :  
-                    raise ValueError("The values array is the wrong shape.")        
+            for s1, s2 in zip(shape, vshape):
+                if s1 is not None and s1 != s2:
+                    raise ValueError("The values array is the wrong shape.")
         self.array = values
         self.alphabets = tuple(alpha)
              
@@ -169,7 +169,7 @@ class AlphabeticArray(object) :
                 return key            
             
         if isinstance(key, tuple) :
-            return tuple([norm(k,a) for k, a in izip(key, self.alphabets)])
+            return tuple([norm(k,a) for k, a in zip(key, self.alphabets)])
         else :
             return norm(key, self.alphabets[0])
  
