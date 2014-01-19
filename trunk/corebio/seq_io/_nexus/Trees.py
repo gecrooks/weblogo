@@ -849,7 +849,7 @@ def consensus(trees, threshold=0.5,outgroup=None):
             if consensus.node(parent).data.taxon.issuperset(consensus.node(current).data.taxon):
                 break
         else:
-            sys.exit('corrupt tree structure?')
+            raise TreeError('corrupt tree structure?')
         # internal nodes don't have taxa
         if len(consensus.node(current).data.taxon)==1:
             consensus.node(current).data.taxon=consensus.node(current).data.taxon.pop()
