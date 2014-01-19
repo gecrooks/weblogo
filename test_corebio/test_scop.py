@@ -25,14 +25,14 @@
 
 """Unit test for Scop"""
 
+import os.path
 import unittest
-from StringIO import *
 
 from corebio.db.scop import *
+from corebio._py3k import StringIO
+
 from test_corebio import *
 
-import sys
-import os.path 
 
 class test_scop(unittest.TestCase):
     assertFalse = assertFalse   # py 2.3 compatability
