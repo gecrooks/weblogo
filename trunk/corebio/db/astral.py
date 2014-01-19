@@ -26,13 +26,14 @@ Ref:
     - normalize_letters -- Normalize RAF amino acid codes.
 
 """
+from __future__ import absolute_import
 
 import re
 from copy import copy
 
-from corebio.db.scop import Domain, Residues
-from corebio.data import extended_three_to_one as to_one_letter_code
-from corebio.utils import FileIndex
+from .scop import Domain, Residues
+from ..data import extended_three_to_one as to_one_letter_code
+from ..utils import FileIndex
 
 __all__ = ('astral_evalues', 'astral_percent_identities', 
             'astral_evalues_filenames', 'normalize_letters', 'parse_domain', 
