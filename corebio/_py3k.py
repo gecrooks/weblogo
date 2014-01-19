@@ -49,6 +49,9 @@ if sys.version_info[0] >= 3:
     basestring = str
     unicode = str
 
+    # maketrans and translate work differently in Python 3
+    maketrans = str.maketrans
+
     _bytes_to_string = lambda b: b.decode() # bytes to unicode string
     _string_to_bytes = lambda s: s.encode() # unicode string to bytes
 
@@ -134,6 +137,8 @@ else:
     from future_builtins import zip, map, filter
     from __builtin__ import xrange as range
     from __builtin__ import raw_input as input
+
+    from string import maketrans
 
     _bytes_to_string = lambda b: b # bytes to string, i.e. do nothing
     _string_to_bytes = lambda s: str(s) # str (or unicode) to bytes string

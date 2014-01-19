@@ -129,8 +129,10 @@ from __future__ import absolute_import
 # 'ACGT-NNNN'
     
 from array import array
-from string import maketrans
+
 from .moremath import argmax, sqrt
+
+from ._py3k import maketrans
 
 __all__ = [
     'Alphabet', 
