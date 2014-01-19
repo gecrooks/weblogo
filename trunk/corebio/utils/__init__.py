@@ -47,6 +47,7 @@ except ImportError :
 
 from .._py3k import iteritems
 
+
 def isblank( string) :
     """Is this whitespace or an empty string?"""
     if string == '' : return True
@@ -199,36 +200,36 @@ class Reiterate(object):
         return new
 
     def __init__(self, *args, **kw):
-        pass   
+        pass
 
-            
     def __iter__(self):
         return self
-        
-    def next(self): 
+
+    def __next__(self):
         """Return the next item in the iteration."""
-        self._index +=1
-        if self._stack : 
+        self._index += 1
+        if self._stack:
             return self._stack.pop()
-        else: 
-            return self._iterator.next()
+        else:
+            return next(self._iterator)
+    next = __next__
 
     def index(self) :
         """The number of items returned. Incremented by next(), decremented
         by push(), unchanged by peek()  """
         return self._index
-        
+
     def push(self, item) :
         """Push an item back onto the top of the iterator,"""
         self._index -=1
         self._stack.append(item)
-        
+
     def peek(self) :
         """Returns the next item, but does not advance the iteration.
         Returns None if no more items. (Bit may also return None as the
         next item.)"""
         try :
-            item = self.next()
+            item = next(self)
             self.push(item)
             return item
         except StopIteration:
@@ -236,19 +237,21 @@ class Reiterate(object):
 
     def has_item(self) :
         """More items to return?"""
-        try :
-            item = self.next()
+        try:
+            item = next(self)
             self.push(item)
             return True
         except StopIteration:
-            return False    
-            
+            return False
+
     def filter(self, predicate):
-        """Return the next item in the iteration that satisfied the 
+        """Return the next item in the iteration that satisfied the
         predicate."""
-        next = self.next()
-        while not predicate(next) : next = self.next()
-        return next
+        next_item = next(self)
+        while not predicate(next_item):
+            next_item = next(self)
+        return next_item
+
 # End class Reiterate
 
 
@@ -528,10 +531,5 @@ def resource_filename( modulename, resource, basefilename = None):
     if basefilename is None :
         raise NotImplementedError(
             "Require either basefilename or pkg_resources")
-    
-    import os
+
     return os.path.join(os.path.dirname(basefilename), resource)
-
-
-
-          
