@@ -22,6 +22,9 @@ import math
 import os.path
 import random
 import sys
+
+# Python 3 compatibility
+from ..._py3k import zip, range, basestring
 from functools import reduce
 
 # --- Changes from Bio.Nexus ---
@@ -32,19 +35,9 @@ from functools import reduce
 #from Bio.Data import IUPACData
 #from Bio.Seq import Seq
 
-import corebio.data as data
+from ... import data
 from ...seq import Seq, Alphabet, protein_alphabet
 from ...utils import Struct
-
-# Python 3 compatibility (without Bio._py3k)
-if sys.version_info[0] < 3:
-    # Python 2 definitions
-    from future_builtins import zip
-    range = xrange
-else:
-    # Python 3 definitions
-    basestring = str
-
 
 IUPACData = Struct(
     ambiguous_dna_letters = data.dna_extended_letters,
