@@ -30,7 +30,7 @@ from corebio.seq import *
 from corebio.seq_io import null_io
 from corebio.seq_io import *
 
-from StringIO import StringIO
+from corebio._py3k import StringIO
 
 import unittest
 

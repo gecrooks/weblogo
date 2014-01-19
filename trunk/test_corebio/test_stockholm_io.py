@@ -34,16 +34,16 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 #  POSSIBILITY OF SUCH DAMAGE. 
 
+import unittest
 
 from corebio import *
 from corebio.seq import *
 from corebio.seq_io import *
 from corebio.seq_io import stockholm_io
+from corebio._py3k import StringIO
+
 from test_corebio import *
 
-from StringIO import StringIO
-
-import unittest
 
 class test_stockholm_io(unittest.TestCase) :
 

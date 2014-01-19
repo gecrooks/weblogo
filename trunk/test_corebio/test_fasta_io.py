@@ -28,10 +28,9 @@
 from corebio import *
 from corebio.seq import *
 from corebio.seq_io import *
+from corebio._py3k import StringIO
 
 from test_corebio import *
-
-from StringIO import StringIO
 
 import unittest
 import time

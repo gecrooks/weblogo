@@ -34,13 +34,13 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 #  POSSIBILITY OF SUCH DAMAGE. 
 
-from test_corebio import *
 from corebio import *
 from corebio.utils import *
 from corebio.seq import *
 from corebio.seq_io import *
+from corebio._py3k import StringIO
 
-from StringIO import StringIO
+from test_corebio import *
 
 import unittest
 

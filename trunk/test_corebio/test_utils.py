@@ -33,14 +33,12 @@
 #  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 #  POSSIBILITY OF SUCH DAMAGE. 
- 
+
+import re
+import unittest
 
 from corebio.utils import *
-import unittest
-from StringIO import StringIO
-import re
-
-
+from corebio._py3k import StringIO
 
 
 class test_utils(unittest.TestCase) :

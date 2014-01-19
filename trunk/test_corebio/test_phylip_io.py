@@ -41,7 +41,7 @@ from corebio.seq_io import *
 from test_corebio import *
 from corebio.seq_io import phylip_io
 
-from StringIO import StringIO
+from corebio._py3k import StringIO
 
 import unittest
 

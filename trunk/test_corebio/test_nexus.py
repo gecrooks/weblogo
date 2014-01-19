@@ -1,12 +1,9 @@
 #!/usr/bin/env python
 
-import os
-import sys
-import StringIO
 import unittest
 
-
 from corebio.seq_io._nexus import Nexus
+
 from test_corebio import *
 
 class test_nexus(unittest.TestCase):

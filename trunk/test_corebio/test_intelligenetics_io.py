@@ -24,19 +24,16 @@
 #  THE SOFTWARE.
 #
 
-
 from corebio import *
 from corebio.seq import *
 from corebio.seq_io import *
+import corebio.seq_io.intelligenetics_io as ig_io
+from corebio._py3k import StringIO
+
 from test_corebio import *
 
-from StringIO import StringIO
-
-import corebio.seq_io.intelligenetics_io as ig_io
-
 import unittest
-import time
-import sys
+
 
 class test_ig_io(unittest.TestCase) :
 

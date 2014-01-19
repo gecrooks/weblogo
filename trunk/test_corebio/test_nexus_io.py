@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
-
 from corebio import *
 from corebio.seq import *
 from corebio.seq_io import *
 from corebio.utils import *
-from test_corebio import *
+from corebio._py3k import StringIO
 
-from StringIO import StringIO
+from test_corebio import *
 
 import unittest
 
