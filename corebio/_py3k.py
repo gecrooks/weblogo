@@ -52,6 +52,9 @@ if sys.version_info[0] >= 3:
     # maketrans and translate work differently in Python 3
     maketrans = str.maketrans
 
+    # Dictionary iteration methods changed names in Python 3
+    iteritems = dict.items
+
     _bytes_to_string = lambda b: b.decode() # bytes to unicode string
     _string_to_bytes = lambda s: s.encode() # unicode string to bytes
 
@@ -139,6 +142,8 @@ else:
     from __builtin__ import raw_input as input
 
     from string import maketrans
+
+    iteritems = dict.iteritems
 
     _bytes_to_string = lambda b: b # bytes to string, i.e. do nothing
     _string_to_bytes = lambda s: str(s) # str (or unicode) to bytes string

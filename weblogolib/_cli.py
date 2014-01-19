@@ -51,6 +51,7 @@ from corebio import seq_io
 from corebio.seq import Seq, SeqList
 from corebio.utils import *
 from corebio.utils.deoptparse import DeOptionParser
+from corebio._py3k import iteritems
 
 from .color import *
 from .colorscheme import ColorScheme, ColorGroup
@@ -243,13 +244,12 @@ def _build_logoformat( logodata, opts) :
  
     if opts.annotate:
         args["annotate"] = opts.annotate.split(',')
- 
-    
-    logooptions = LogoOptions() 
-    for a, v in args.iteritems() :
-        setattr(logooptions,a,v)
 
-    
+
+    logooptions = LogoOptions()
+    for a, v in iteritems(args):
+        setattr(logooptions, a, v)
+
     theformat =  LogoFormat(logodata, logooptions )
     return theformat
 

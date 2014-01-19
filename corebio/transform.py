@@ -43,7 +43,6 @@ Other:
         Ref: Li et al Reduction of protein sequence complexity by residue grouping, 
             Prot. Eng. 16 323-330 (2003)  
 
-    
 """
 from __future__ import absolute_import
 
@@ -333,7 +332,7 @@ class GeneticCode(object):
         
         # Build the back table.
         back_table = {}
-        items = table.items()
+        items = list(table.items())
         items.sort()
         for codon, aa in items[::-1] :
             back_table[aa] = codon   # Use first codon, alphabetically.
