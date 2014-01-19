@@ -312,6 +312,9 @@ class Alphabet(object) :
     def __getitem__(self, key) :
         return self._letters[key]
 
+    def __hash__(self):
+        return hash(self._ord_table)
+
     @staticmethod 
     def which(seqs, alphabets=None) :
         """ Returns the most appropriate unambiguous protein, RNA or DNA alphabet
