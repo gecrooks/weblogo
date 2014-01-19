@@ -59,7 +59,7 @@ Special Functions :
 
 
 """
-
+from __future__ import division
 
 
 __all__ = ('euler_gamma', 'catalan', 'golden_ratio', 'bits_per_nat', 'sqrt_2pi',
@@ -73,8 +73,10 @@ __all__ = ('euler_gamma', 'catalan', 'golden_ratio', 'bits_per_nat', 'sqrt_2pi',
 from math import *
 import cmath as cm
 
-import random
-from itertools import izip, count
+from itertools import count
+
+from ._py3k import zip
+
 
 # Some mathematical constants
 euler_gamma  = 0.57721566490153286060651
@@ -449,21 +451,13 @@ def entropy( pvec, base= exp(1) ) :
     ent /= log(base)
 
     return ent
-   
-    
 
 
-    
 def argmax( alist) :
     """Return the index of the last occurrence of the maximum value in the list."""
-    return max(izip(alist, count() ))[1]
+    return max(zip(alist, count()))[1]
+
 
 def argmin( alist) :
     """Return the index of the first occurrence of the minimum value in the list."""
-    return min(izip(alist, count() ))[1]
-
-     
-    
-           
-
-
+    return min(zip(alist, count()))[1]
