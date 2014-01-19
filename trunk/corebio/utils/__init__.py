@@ -45,6 +45,7 @@ try :
 except ImportError :
     pkg_resources = None
 
+from .._py3k import iteritems
 
 def isblank( string) :
     """Is this whitespace or an empty string?"""
@@ -88,7 +89,7 @@ def invert_dict( dictionary) :
     unique then only one of the original keys will be included in the new
     dictionary.
     """
-    return dict( [(value, key) for key, value in dictionary.iteritems()] )
+    return dict((value, key) for key, value in iteritems(dictionary))
 
 
 def update(obj, **entries):
@@ -98,9 +99,9 @@ def update(obj, **entries):
     {'a': 10, 'b': 20}
     """
     if hasattr(obj, 'update') :
-        obj.update( entries) 
-    else :
-        for k, v in entries.iteritems() :
+        obj.update(entries)
+    else:
+        for k, v in iteritems(entries):
             setattr(obj, k, v)
     return obj
 
@@ -170,11 +171,11 @@ def Struct(**kwargs) :
     
     """
     name = 'Struct'
-    
-    def _init(obj,  **kwargs) :
-        for k, v in kwargs.iteritems() :
+
+    def _init(obj,  **kwargs):
+        for k, v in iteritems(kwargs):
             setattr( obj, k, v)
-    
+
     def _repr(obj) :
         return stdrepr( obj,  obj.__slots__, name)
 

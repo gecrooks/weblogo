@@ -46,12 +46,13 @@ from __future__ import print_function
 
 import os, re
 
+from .._py3k import iteritems
 
 nodeCodeDict = { 'cl':'class', 'cf':'fold', 'sf':'superfamily',
                  'fa':'family', 'dm':'protein', 'sp':'species', 'px':'domain'}
 
 
-_nodetype_to_code= dict([[v,k] for k,v in nodeCodeDict.items()])
+_nodetype_to_code = dict((v, k) for k, v in iteritems(nodeCodeDict))
 
 
 nodeCodeOrder = [ 'ro', 'cl', 'cf', 'sf', 'fa', 'dm', 'sp', 'px' ] 
