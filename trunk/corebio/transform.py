@@ -47,7 +47,7 @@ Other:
 """
 from __future__ import absolute_import
 
-from string import maketrans
+from ._py3k import maketrans
 
 from .data import dna_extended_letters, dna_ambiguity
 from .seq import Seq, protein_alphabet, nucleic_alphabet, dna_alphabet, Alphabet
