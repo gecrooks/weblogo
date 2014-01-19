@@ -1,19 +1,17 @@
 #!/usr/bin/env python
- 
-
-
-from StringIO import StringIO
 
 from corebio import *
+from corebio.matrix import *
 from corebio.seq import *
 from corebio.utils import *
 from corebio import data
+from corebio._py3k import StringIO
 
 import unittest
-from test_corebio import *
 from numpy import *
 
-from corebio.matrix import *
+from test_corebio import *
+
 
 class test_AlphabeticArray(unittest.TestCase) :
     def test_create(self): 

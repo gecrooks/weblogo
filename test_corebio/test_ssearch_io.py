@@ -23,13 +23,14 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
 #  THE SOFTWARE.
 
+import unittest
 
 from corebio.ssearch_io import *
 from corebio.ssearch_io import fasta, blastxml
 from corebio.utils import *
+from corebio._py3k import StringIO
+
 from test_corebio import testdata_stream
-import unittest
-from StringIO import StringIO
 
 class test_search_io(unittest.TestCase) :    
    # def test_report(self) :

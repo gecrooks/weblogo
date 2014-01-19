@@ -29,7 +29,7 @@ from corebio import *
 from corebio.seq import *
 from corebio.seq_io import array_io
 
-from StringIO import StringIO
+from corebio._py3k import StringIO
 
 from test_corebio import *
 import unittest
@@ -65,10 +65,7 @@ class test_array_io(unittest.TestCase) :
         f = StringIO(example)
         self.failUnlessRaises(ValueError, array_io.read, f)
 
-        
-        
 
 
-             
 if __name__ == '__main__':
     unittest.main()

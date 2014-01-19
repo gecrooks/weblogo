@@ -27,13 +27,11 @@
 
 from corebio import *
 from corebio.seq import *
-
-import corebio.seq_io 
+import corebio.seq_io
 from corebio.seq_io import genbank_io
+from corebio._py3k import StringIO
 
 from test_corebio import *
-
-from StringIO import StringIO
 
 import unittest
 import time
