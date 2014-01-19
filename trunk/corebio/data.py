@@ -143,8 +143,7 @@ from __future__ import absolute_import
 # The ExPasy ProtScale tool is a great source of amino acid properties.
 # http://au.expasy.org/cgi-bin/protscale.pl       
 
-from StringIO import StringIO
-from corebio.utils import resource_string, resource_stream,resource_filename
+from .utils import resource_string, resource_stream, resource_filename
 from . import utils
 
 # Explicitly list set of available data resources. We want to be able to access
