@@ -33,7 +33,7 @@
 #  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 #  POSSIBILITY OF SUCH DAMAGE. 
-from __future__ import print_function
+from __future__ import division, print_function
 
 import unittest
 # import sys
@@ -43,7 +43,6 @@ from subprocess import *
 from pkg_resources import resource_stream
 
 from numpy import array, asarray, float64, ones, zeros, int32,all,any, shape
-import numpy as na
 
 import weblogolib
 from weblogolib import *
@@ -52,7 +51,6 @@ from weblogolib.color import *
 from weblogolib.colorscheme import *
 from weblogolib.logomath import Dirichlet, Gamma
 
-# from corebio import seq_io
 from corebio.seq import *
 from corebio.moremath import entropy
 
@@ -65,26 +63,24 @@ class test_logoformat(unittest.TestCase) :
     def test_options(self) :
         options = LogoOptions()
 
-           
+
 class test_ghostscript(unittest.TestCase) :
     def test_version(self) :
         version = GhostscriptAPI().version
-    
 
-    
+
+
 class test_parse_prior(unittest.TestCase) :
-    def assertTrue(self, bool) :
-        self.assertEquals( bool, True)
-    
-    def test_parse_prior_none(self) :
-        self.assertEquals( None, 
-            parse_prior(None, unambiguous_protein_alphabet ) )
-        self.assertEquals( None, 
-            parse_prior( 'none', unambiguous_protein_alphabet ) )        
-        self.assertEquals( None, 
-            parse_prior( 'noNe', None) )                
 
-    def test_parse_prior_equiprobable(self) :            
+    def test_parse_prior_none(self) :
+        self.assertEqual(None,
+            parse_prior(None, unambiguous_protein_alphabet))
+        self.assertEqual(None,
+            parse_prior('none', unambiguous_protein_alphabet))
+        self.assertEqual(None,
+            parse_prior('noNe', None))
+
+    def test_parse_prior_equiprobable(self):
         self.assertTrue( all(20.*equiprobable_distribution(20)  ==
             parse_prior( 'equiprobable',  unambiguous_protein_alphabet, weight=20.) ) )
                         
@@ -130,8 +126,8 @@ class test_parse_prior(unittest.TestCase) :
         p = array( (10, 40, 40,10), float64)*2./100.
         self.assertTrue( all(
             p == parse_prior( s,  unambiguous_dna_alphabet ) ) )
-        
-        
+
+
 class test_logooptions(unittest.TestCase) :
     def test_create(self) :
         opt = LogoOptions()
@@ -151,14 +147,14 @@ class test_seqlogo(unittest.TestCase):
         args = ["./weblogo"] + args
         p = Popen(args, stdin=stdin, stdout=PIPE, stderr=PIPE)
         (out, err) = p.communicate()
-        if returncode ==0 and p.returncode >0 :
+        if returncode == 0 and p.returncode >0:
             print(err)
-        self.assertEquals(returncode, p.returncode)
+        self.assertEqual(returncode, p.returncode)
         if returncode == 0:
-            self.assertEquals(len(err), 0)
+            self.assertEqual(len(err), 0)
 
         for item in outputtext :
-            self.failUnless(item in out)
+            self.assertTrue(item in out)
 
 
     def test_malformed_options(self) :
@@ -214,7 +210,7 @@ class test_colorscheme(unittest.TestCase) :
     
     def test_colorgroup(self) :
         cr = ColorGroup( "ABC", "black", "Because")
-        self.assertEquals( cr.description, "Because")       
+        self.assertEqual(cr.description, "Because")
 
     def test_colorscheme(self) :
         cs = ColorScheme([
@@ -227,8 +223,8 @@ class test_colorscheme(unittest.TestCase) :
             description = "description",
             ) 
 
-        self.assertEquals( cs.color('A'), Color.by_name("green"))
-        self.assertEquals( cs.color('X'), cs.default_color)
+        self.assertEqual(cs.color('A'), Color.by_name("green"))
+        self.assertEqual(cs.color('X'), cs.default_color)
 
 
 
@@ -236,40 +232,36 @@ class test_color(unittest.TestCase) :
 
     def test_color_names(self) :
         names = Color.names()
-        self.failUnlessEqual( len(names), 147)
-        
+        self.assertEqual(len(names), 147)
         for n in names:
             c = Color.by_name(n)
             self.assertTrue( c != None )
 
-       
     def test_color_components(self) :
         white = Color.by_name("white")
-        self.failUnlessEqual( 1.0, white.red)
-        self.failUnlessEqual( 1.0, white.green)
-        self.failUnlessEqual( 1.0, white.blue)
-    
-    
-        c = Color(0.3, 0.4, 0.2)
-        self.failUnlessEqual( 0.3, c.red)
-        self.failUnlessEqual( 0.4, c.green)
-        self.failUnlessEqual( 0.2, c.blue)
+        self.assertEqual(1.0, white.red)
+        self.assertEqual(1.0, white.green)
+        self.assertEqual(1.0, white.blue)
 
-        c = Color(0,128,0)
-        self.failUnlessEqual( 0.0, c.red)
-        self.failUnlessEqual( 128./255., c.green)
-        self.failUnlessEqual( 0.0, c.blue)
+        c = Color(0.3, 0.4, 0.2)
+        self.assertEqual(0.3, c.red)
+        self.assertEqual(0.4, c.green)
+        self.assertEqual(0.2, c.blue)
+
+        c = Color(0, 128, 0)
+        self.assertEqual(0.0, c.red)
+        self.assertEqual(128./255., c.green)
+        self.assertEqual(0.0, c.blue)
 
 
     def test_color_from_rgb(self) :
         white = Color.by_name("white")
-        
-        self.failUnlessEqual(white, Color(1.,1.,1.) )        
-        self.failUnlessEqual(white, Color(255,255,255) )        
-        self.failUnlessEqual(white, Color.from_rgb(1.,1.,1.) )        
-        self.failUnlessEqual(white, Color.from_rgb(255,255,255) )        
+        self.assertEqual(white, Color(1., 1., 1.))
+        self.assertEqual(white, Color(255, 255, 255))
+        self.assertEqual(white, Color.from_rgb(1., 1., 1.))
+        self.assertEqual(white, Color.from_rgb(255, 255, 255))
 
-    
+
     def test_color_from_hsl(self) :
         red = Color.by_name("red")
         lime = Color.by_name("lime")
@@ -277,76 +269,63 @@ class test_color(unittest.TestCase) :
         darkgreen = Color.by_name("darkgreen")
         blue = Color.by_name("blue")
         green = Color.by_name("green")
-            
-        self.failUnlessEqual(red, Color.from_hsl(0, 1.0,0.5) )          
-        self.failUnlessEqual(lime, Color.from_hsl(120, 1.0, 0.5) ) 
-        self.failUnlessEqual(blue, Color.from_hsl(240, 1.0, 0.5) )
-        self.failUnlessEqual(Color.by_name("gray"), Color.from_hsl(0,0,0.5) )
+        self.assertEqual(red, Color.from_hsl(0, 1.0, 0.5))
+        self.assertEqual(lime, Color.from_hsl(120, 1.0, 0.5))
+        self.assertEqual(blue, Color.from_hsl(240, 1.0, 0.5))
+        self.assertEqual(Color.by_name("gray"), Color.from_hsl(0, 0, 0.5))
+        self.assertEqual(saddlebrown, Color.from_hsl(25, 0.76, 0.31))
+        self.assertEqual(darkgreen, Color.from_hsl(120, 1.0, 0.197))
 
-        self.failUnlessEqual(saddlebrown, Color.from_hsl(25, 0.76, 0.31) ) 
-
-        self.failUnlessEqual(darkgreen, Color.from_hsl(120, 1.0, 0.197) )           
-                    
-    
     def test_color_by_name(self):
         white = Color.by_name("white")
-        self.failUnlessEqual(white, Color.by_name("white"))
-        self.failUnlessEqual(white, Color.by_name("WHITE"))
-        self.failUnlessEqual(white, Color.by_name(" wHiTe \t\n\t"))
-        
-        
-        self.failUnlessEqual(Color(255,255,240), Color.by_name("ivory"))
-        self.failUnlessEqual(Color(70,130,180), Color.by_name("steelblue"))        
-        
-        self.failUnlessEqual(Color(0,128,0), Color.by_name("green"))        
-        
+        self.assertEqual(white, Color.by_name("white"))
+        self.assertEqual(white, Color.by_name("WHITE"))
+        self.assertEqual(white, Color.by_name(" wHiTe \t\n\t"))
+        self.assertEqual(Color(255, 255, 240), Color.by_name("ivory"))
+        self.assertEqual(Color(70, 130, 180), Color.by_name("steelblue"))
+        self.assertEqual(Color(0, 128, 0), Color.by_name("green"))
 
     def test_color_from_invalid_name(self):
-        self.failUnlessRaises( ValueError, Color.by_name, "not_a_color")            
-
+        self.assertRaises(ValueError, Color.by_name, "not_a_color")
 
     def test_color_clipping(self):
         red = Color.by_name("red")
-        self.failUnlessEqual(red, Color(255,0,0) ) 
-        self.failUnlessEqual(red, Color(260,-10,0) ) 
-        self.failUnlessEqual(red, Color(1.1,-0.,-1.) )        
+        self.assertEqual(red, Color(255, 0, 0))
+        self.assertEqual(red, Color(260, -10, 0))
+        self.assertEqual(red, Color(1.1, -0., -1.))
+        self.assertEqual(Color(1.0001,   213.0,  1.2).red, 1.0)
+        self.assertEqual(Color(-0.001, -2183.0, -1.0).red, 0.0)
+        self.assertEqual(Color(1.0001,   213.0,  1.2).green, 1.0)
+        self.assertEqual(Color(-0.001, -2183.0, -1.0).green, 0.0)
+        self.assertEqual(Color(1.0001,   213.0,  1.2).blue, 1.0)
+        self.assertEqual(Color(-0.001, -2183.0, -1.0).blue, 0.0)
 
-        self.failUnlessEqual( Color(1.0001,   213.0,  1.2).red, 1.0 )
-        self.failUnlessEqual( Color(-0.001, -2183.0, -1.0).red, 0.0 )
-        self.failUnlessEqual( Color(1.0001,   213.0,  1.2).green, 1.0 )
-        self.failUnlessEqual( Color(-0.001, -2183.0, -1.0).green, 0.0 )        
-        self.failUnlessEqual( Color(1.0001,   213.0,  1.2).blue, 1.0 )
-        self.failUnlessEqual( Color(-0.001, -2183.0, -1.0).blue, 0.0 )
-    
-    
     def test_color_fail_on_mixed_type(self):
-        self.failUnlessRaises( TypeError, Color.from_rgb, 1,1,1.0 )            
-        self.failUnlessRaises( TypeError, Color.from_rgb, 1.0,1,1.0 )            
-    
+        self.assertRaises(TypeError, Color.from_rgb, 1, 1, 1.0)
+        self.assertRaises(TypeError, Color.from_rgb, 1.0, 1, 1.0)
+
     def test_color_red(self) :
         # Check Usage comment in Color
         red = Color.by_name("red")
-        self.failUnlessEqual( red , Color(255,0,0) )
-        self.failUnlessEqual( red,  Color(1., 0., 0.) )
-    
-        self.failUnlessEqual( red , Color.from_rgb(1.,0.,0.) )
-        self.failUnlessEqual( red , Color.from_rgb(255,0,0) )
-        self.failUnlessEqual( red , Color.from_hsl(0.,1., 0.5) )
-    
-        self.failUnlessEqual( red , Color.from_string("red") )
-        self.failUnlessEqual( red , Color.from_string("RED") )
-        self.failUnlessEqual( red , Color.from_string("#F00") )
-        self.failUnlessEqual( red , Color.from_string("#FF0000") ) 
-        self.failUnlessEqual( red , Color.from_string("rgb(255, 0, 0)") )
-        self.failUnlessEqual( red , Color.from_string("rgb(100%, 0%, 0%)") )
-        self.failUnlessEqual( red , Color.from_string("hsl(0, 100%, 50%)") )
+        self.assertEqual(red, Color(255, 0, 0))
+        self.assertEqual(red, Color(1., 0., 0.))
+        self.assertEqual(red, Color.from_rgb(1., 0., 0.))
+        self.assertEqual(red, Color.from_rgb(255, 0, 0))
+        self.assertEqual(red, Color.from_hsl(0., 1., 0.5))
+        self.assertEqual(red, Color.from_string("red"))
+        self.assertEqual(red, Color.from_string("RED"))
+        self.assertEqual(red, Color.from_string("#F00"))
+        self.assertEqual(red, Color.from_string("#FF0000"))
+        self.assertEqual(red, Color.from_string("rgb(255, 0, 0)"))
+        self.assertEqual(red, Color.from_string("rgb(100%, 0%, 0%)"))
+        self.assertEqual(red, Color.from_string("hsl(0, 100%, 50%)"))
 
-    
+
     def test_color_from_string(self) :
-        purple = Color(128,0,128)
-        red    = Color(255,0,0)
-        skyblue = Color(135,206,235)
-        
+        purple = Color(128, 0, 128)
+        red    = Color(255, 0, 0)
+        skyblue = Color(135, 206, 235)
+
         red_strings = ("red", 
                         "ReD", 
                         "RED", 
@@ -356,29 +335,24 @@ class test_color(unittest.TestCase) :
                         "rgb(255, 0, 0)",
                         "rgb(100%, 0%, 0%)",
                         "hsl(0, 100%, 50%)")
-                     
-        for s in red_strings:        
-            self.failUnlessEqual( red, Color.from_string(s) ) 
-            
+        for s in red_strings:
+            self.assertEqual(red, Color.from_string(s))
+
         skyblue_strings = ("skyblue", 
                         "SKYBLUE", 
                         "  \t\n SkyBlue  \t", 
                         "#87ceeb", 
                         "rgb(135,206,235)"
                         )
-                      
-        for s in skyblue_strings:        
-            self.failUnlessEqual( skyblue, Color.from_string(s) ) 
-    
-    
-    
-    def test_color_equality(self):
-        c1 = Color(123,99,12)
-        c2 = Color(123,99,12)
+        for s in skyblue_strings:
+            self.assertEqual( skyblue, Color.from_string(s))
 
-        self.failUnlessEqual(c1,c2)        
-        
-        
+
+    def test_color_equality(self):
+        c1 = Color(123, 99, 12)
+        c2 = Color(123, 99, 12)
+        self.assertEqual(c1, c2)
+
 #
 
 class test_gamma(unittest.TestCase) :
@@ -386,27 +360,27 @@ class test_gamma(unittest.TestCase) :
         a = 1.213
         b = 3.210
         g = Gamma(a, b)
-        self.assertEquals( g.alpha, a)
-        self.assertEquals( g.beta, b)
-        
+        self.assertEqual(g.alpha, a)
+        self.assertEqual(g.beta, b)
+
     def test_mean_variance(self) :
         g = Gamma.from_mean_variance(2.0, 3.0)
-        self.assertEquals( g.mean(), 2.0)
-        self.assertEquals( g.variance(), 3.0)
-                
+        self.assertEqual(g.mean(), 2.0)
+        self.assertEqual(g.variance(), 3.0)
+
         g = Gamma.from_mean_variance(2.0123, 3.01283)
-        self.assertEquals( g.mean(), 2.0123)
-        self.assertEquals( g.variance(), 3.01283)
-        
+        self.assertEqual(g.mean(), 2.0123)
+        self.assertEqual(g.variance(), 3.01283)
+
     def test_from_shape_scale(self):
         g = Gamma.from_shape_scale(1.0, 8.0)
-        self.assertEquals( g.alpha, 1.0)
-        self.assertEquals( g.beta, 1.0/8.0)
+        self.assertEqual(g.alpha, 1.0)
+        self.assertEqual(g.beta, 1.0/8.0)
 
     def test_invalid_args(self):
-        self.failUnlessRaises( ValueError, Gamma, 1.0, -1.0   )
-        self.failUnlessRaises( ValueError, Gamma, 0.0,  1.0   )
-        self.failUnlessRaises( ValueError, Gamma, 1.0, 0.0   )
+        self.assertRaises(ValueError, Gamma, 1.0, -1.0)
+        self.assertRaises(ValueError, Gamma, 0.0,  1.0)
+        self.assertRaises(ValueError, Gamma, 1.0, 0.0)
 
         
     def test_sample(self) :
@@ -448,7 +422,7 @@ class test_gamma(unittest.TestCase) :
     def test_cdf(self) :
         m = 3.0
         v = 2.0
-        g = Gamma.from_mean_variance(m, v)    
+        g = Gamma.from_mean_variance(m, v)
         # Numerical integration
         S = 1000
         M = 10.
@@ -465,25 +439,24 @@ class test_gamma(unittest.TestCase) :
             self.assertTrue( (total_p - g.cdf(x)) <epsilon )
 
     def test_inverse_cdf(self) :
-        g = Gamma.from_mean_variance( 2.34, 4)   
-        self.assertAlmostEquals( 3.9, g.inverse_cdf(g.cdf(3.9) ) )
-        self.assertAlmostEquals( 1.92, g.inverse_cdf(g.cdf(1.92) ) )
+        g = Gamma.from_mean_variance(2.34, 4)
+        self.assertAlmostEqual(3.9, g.inverse_cdf(g.cdf(3.9)))
+        self.assertAlmostEqual(1.92, g.inverse_cdf(g.cdf(1.92)))
 
-        g = Gamma.from_mean_variance( 10.34, 2)   
-        self.assertAlmostEquals( 3.9, g.inverse_cdf(g.cdf(3.9) ) )
-        self.assertAlmostEquals( 10.92, g.inverse_cdf(g.cdf(10.92) ) )
+        g = Gamma.from_mean_variance(10.34, 2)
+        self.assertAlmostEqual(3.9, g.inverse_cdf(g.cdf(3.9) ) )
+        self.assertAlmostEqual(10.92, g.inverse_cdf(g.cdf(10.92) ) )
 
-        g = Gamma.from_mean_variance( 10.34, 2)  
-        self.assertAlmostEquals( 0.975, g.cdf(g.inverse_cdf(0.975) ) )
-        self.assertAlmostEquals( 0.025, g.cdf(g.inverse_cdf(0.025) ) )
+        g = Gamma.from_mean_variance(10.34, 2)
+        self.assertAlmostEqual(0.975, g.cdf(g.inverse_cdf(0.975)))
+        self.assertAlmostEqual(0.025, g.cdf(g.inverse_cdf(0.025)))
 
-        g = Gamma.from_mean_variance( 1.34, 4)  
-        self.assertAlmostEquals( 0.975, g.cdf(g.inverse_cdf(0.975) ) )
-        self.assertAlmostEquals( 0.025, g.cdf(g.inverse_cdf(0.025) ) )
-       
-       
-       
-   
+        g = Gamma.from_mean_variance(1.34, 4)
+        self.assertAlmostEqual(0.975, g.cdf(g.inverse_cdf(0.975)))
+        self.assertAlmostEqual(0.025, g.cdf(g.inverse_cdf(0.025)))
+
+
+
 class test_Dirichlet(unittest.TestCase) :
     
     def test_init(self) :
@@ -545,7 +518,7 @@ class test_Dirichlet(unittest.TestCase) :
         alpha = ones( ( 4,), float64 ) 
         d = Dirichlet(alpha)
         cv = d.covariance()
-        self.assertEqual( cv.shape, (4,4)  )
+        self.assertEqual(cv.shape, (4, 4))
         self.assertAlmostEqual( cv[0,0], 1.0 * (1.0 - 1./4.0)/ (4.0 * 5.0)  )
         self.assertAlmostEqual( cv[0,1],  - 1 / ( 4. * 4. * 5.) )
 
@@ -553,18 +526,18 @@ class test_Dirichlet(unittest.TestCase) :
         alpha = (1.0, 2.0, 3.0, 4.0)
         xx = (2.0, 2.0, 2.0, 2.0)
         m = Dirichlet(alpha).mean_x(xx)
-        self.assertEquals( m, 2.0)
-        
+        self.assertEqual(m, 2.0)
+
         alpha = (1.0, 1.0, 1.0, 1.0)
         xx = (2.0, 3.0, 4.0, 3.0)
         m = Dirichlet(alpha).mean_x(xx)
-        self.assertEquals( m, 3.0)        
+        self.assertEqual(m, 3.0)
 
     def test_variance_x(self) :
         alpha = (1.0, 1.0, 1.0, 1.0)
         xx = (2.0, 2.0, 2.0, 2.0)
         v = Dirichlet(alpha).variance_x(xx)
-        self.assertAlmostEquals( v, 0.0)        
+        self.assertAlmostEqual(v, 0.0)
 
         alpha = (1.0, 2.0, 3.0, 4.0)
         xx = (2.0, 0.0, 1.0, 10.0)
