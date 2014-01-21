@@ -87,7 +87,7 @@ program 'gs' be installed. Scalable Vector Graphics (SVG) format also requires
 the program 'pdf2svg'.
 
 """
-from __future__ import absolute_import, print_function
+from __future__ import absolute_import, division, print_function
 
 import sys
 import copy
@@ -971,7 +971,7 @@ def parse_prior(composition, alphabet, weight=None) :
             raise ValueError("Explicit prior does not match length of alphabet")
         prior = - ones(len(alphabet), float64) 
         try :
-            for r in range(len(explicit)/2) :
+            for r in range(len(explicit) // 2):
                 letter = explicit[r*2]
                 index = alphabet.ord(letter)
                 value = float(explicit[r*2 +1])
