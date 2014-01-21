@@ -35,20 +35,15 @@ from test_corebio import *
 
 
 class test_scop(unittest.TestCase):
-    assertFalse = assertFalse   # py 2.3 compatability
-    assertTrue = assertTrue     # py 2.3 compatability
 
     def testParse(self):
-  
         f = testdata_stream('scop/dir.cla.scop.txt_test')
         try:
             cla = f.read()
             f.close()
-            
             f = testdata_stream('scop/dir.des.scop.txt_test')
             des = f.read()
             f.close()
-
             f = testdata_stream('scop/dir.hie.scop.txt_test')
             hie = f.read()
         finally:
@@ -69,90 +64,80 @@ class test_scop(unittest.TestCase):
         assert hie_out.getvalue() == hie, hie_out.getvalue()
 
         domain = scop.domains_by_sid["d1hbia_"]
-        assert domain.sunid == 14996
+        self.assertEqual(domain.sunid, 14996)
 
         domains = scop.domains
-        assert len(domains)==14
-        assert domains[4].sunid == 14988
+        self.assertEqual(len(domains), 14)
+        self.assertEqual(domains[4].sunid, 14988)
 
         self.assertFalse(-111 in scop.nodes_by_sunid)
         self.assertFalse("no such domain" in scop.domains_by_sid )
 
-                
-
 
     def testSccsOrder(self) :
-        assert cmp_sccs("a.1.1.1", "a.1.1.1") == 0
-        assert cmp_sccs("a.1.1.2", "a.1.1.1") == 1
-        assert cmp_sccs("a.1.1.2", "a.1.1.11") == -1
-        assert cmp_sccs("a.1.2.2", "a.1.1.11") == 1
-        assert cmp_sccs("a.1.2.2", "a.5.1.11") == -1         
-        assert cmp_sccs("b.1.2.2", "a.5.1.11") == 1
-        assert cmp_sccs("b.1.2.2", "b.1.2") == 1        
+        self.assertEqual(cmp_sccs("a.1.1.1", "a.1.1.1"), 0)
+        self.assertEqual(cmp_sccs("a.1.1.2", "a.1.1.1"), 1)
+        self.assertEqual(cmp_sccs("a.1.1.2", "a.1.1.11"), -1)
+        self.assertEqual(cmp_sccs("a.1.2.2", "a.1.1.11"), 1)
+        self.assertEqual(cmp_sccs("a.1.2.2", "a.5.1.11"), -1)
+        self.assertEqual(cmp_sccs("b.1.2.2", "a.5.1.11"), 1)
+        self.assertEqual(cmp_sccs("b.1.2.2", "b.1.2"), 1)
 
     def test_sccs_relations(self):
-        assert sccs_relation("a.1.1.1", "a.1.1.1") == 1
-        assert sccs_relation("a.1.1.2", "a.1.1.1") == 1
-        assert sccs_relation("a.1.1.2", "a.1.1.11") == 1
-        assert sccs_relation("a.1.2.2", "a.1.1.11") == 0
-        assert sccs_relation("a.1.2.2", "a.5.1.11") == -1         
-        assert sccs_relation("b.1.2.2", "a.5.1.11") == -1
-        assert sccs_relation("b.1.2.2", "b.1.2") == 1        
+        self.assertEqual(sccs_relation("a.1.1.1", "a.1.1.1"), 1)
+        self.assertEqual(sccs_relation("a.1.1.2", "a.1.1.1"), 1)
+        self.assertEqual(sccs_relation("a.1.1.2", "a.1.1.11"), 1)
+        self.assertEqual(sccs_relation("a.1.2.2", "a.1.1.11"), 0)
+        self.assertEqual(sccs_relation("a.1.2.2", "a.5.1.11"), -1)
+        self.assertEqual(sccs_relation("b.1.2.2", "a.5.1.11"), -1)
+        self.assertEqual(sccs_relation("b.1.2.2", "b.1.2"), 1)
 
 
 
     def testConstructFromDirectory(self):
-         dir_path = os.path.join( os.path.split(__file__)[0], 'data/scop')
-         scop = Scop.parse(dir_path= dir_path, version="test")
-         assert isinstance(scop, Scop)
-         
-         domain = scop.domains_by_sid["d1hbia_"]
-         assert domain.sunid == 14996
-         
+        dir_path = os.path.join( os.path.split(__file__)[0], 'data/scop')
+        scop = Scop.parse(dir_path= dir_path, version="test")
+        self.assertTrue(isinstance(scop, Scop))
+        domain = scop.domains_by_sid["d1hbia_"]
+        self.assertEqual(domain.sunid, 14996)
+
     def testGetAscendent(self):
         dir_path = os.path.join( os.path.split(__file__)[0], 'data/scop')
         scop = Scop.parse(dir_path=dir_path, version="test")
         domain = scop.domains_by_sid["d1hbia_"]
-
         # get the fold
         fold = domain.ascendent('cf')
-        assert fold.sunid == 46457
-        
+        self.assertEqual(fold.sunid, 46457)
         #get the superfamily
         sf = domain.ascendent('superfamily')
-        assert sf.sunid == 46458
-
+        self.assertEqual(sf.sunid, 46458)
         # px has no px ascendent
         px = domain.ascendent('px')
-        assert px is None
-
+        self.assertTrue(px is None)
         # an sf has no px ascendent
         px2 = sf.ascendent('px')
-        assert px2 is None
+        self.assertTrue(px2 is None)
 
 
     def test_get_descendents(self):
         """Test getDescendents method"""
         dir_path = os.path.join( os.path.split(__file__)[0], 'data/scop')
-       
         scop = Scop.parse(dir_path=dir_path, version="test")
         fold = scop.nodes_by_sunid[46457]
-
         # get px descendents
         domains = fold.descendents('px')
-        assert len(domains) == 14
+        self.assertEqual(len(domains), 14)
         for d in domains:
-            assert d.type == 'px'
-            
+            self.assertEqual(d.type, 'px')
         sfs = fold.descendents('superfamily')
-        assert len(sfs) == 1
+        self.assertEqual(len(sfs), 1)
         for d in sfs:
-            assert d.type == 'sf'
-
+            self.assertEqual(d.type, 'sf')
         # cl has no cl descendent
         cl = fold.descendents('cl')
-        assert cl == []
-        
+        self.assertEqual(cl, [])
+
+
 class DesTests(unittest.TestCase):
 
     def setUp(self) :
@@ -160,45 +145,32 @@ class DesTests(unittest.TestCase):
         self.filename = file.name
 
     def test_parse(self):
-       f = open(self.filename)
-       try: 
+        with open(self.filename) as f:
             count = 0
-            for rec in DesRecord.records(f) :
-               count +=1
-            self.assertEquals( count, 20, "Wrong number of records?!")
-       finally:
-           f.close()
-    
+            for rec in DesRecord.records(f):
+                count +=1
+            self.assertEqual(count, 20)
+
     def testStr(self):
-        f = open(self.filename)
-        try: 
+        with open(self.filename) as f:
             for line in f :
                 rec = DesRecord(line)
                 #End of line is platform dependent. Strip it off
-                assert str(rec).rstrip() == line.rstrip()
-        finally:
-            f.close()        
-     
+                self.assertEqual(str(rec).rstrip(), line.rstrip())
 
     def testError(self) :
         corruptRec = "49268\tsp\tb.1.2.1\t-\n"
-
-        try:
-            rec = DesRecord(corruptRec)
-            assert 0, "Should never get here"
-        except ValueError as e :
-            pass
+        self.assertRaises(ValueError, DesRecord, corruptRec)
 
     def testRecord(self) :
         recLine = '49268\tsp\tb.1.2.1\t-\tHuman (Homo sapiens)    \n'
-        recFields = (49268,'sp','b.1.2.1','','Human (Homo sapiens)')
-
+        recFields = (49268, 'sp', 'b.1.2.1', '', 'Human (Homo sapiens)')
         rec = DesRecord(recLine)
-        assert rec.sunid == recFields[0]
-        assert rec.nodetype == recFields[1]
-        assert rec.sccs == recFields[2]
-        assert rec.name == recFields[3]                
-        assert rec.description == recFields[4]
+        self.assertEqual(rec.sunid, recFields[0])
+        self.assertEqual(rec.nodetype, recFields[1])
+        self.assertEqual(rec.sccs, recFields[2])
+        self.assertEqual(rec.name, recFields[3])
+        self.assertEqual(rec.description, recFields[4])
 
 
 class test_scop_cla(unittest.TestCase):
@@ -207,48 +179,37 @@ class test_scop_cla(unittest.TestCase):
         file = testdata_stream("scop/dir.cla.scop.txt_test")
         self.filename = file.name
 
-
     def testParse(self):
         """Can we parse a CLA file?"""
-        f=open(self.filename)
-        try: 
+        with open(self.filename) as f:
             count = 0
-            for rec in ClaRecord.records(f) :
-               count +=1
-            assert count == 14, "Wrong number of records?!"
-        finally:
-            f.close()
-    
+            for rec in ClaRecord.records(f):
+                count +=1
+            self.assertEqual(count, 14)
+
     def testStr(self):
-        f = open(self.filename)
-        try: 
+        with open(self.filename) as f:
             for line in f :
                 rec = ClaRecord(line)
                 #End of line is platform dependent. Strip it off
-                assert str(rec).rstrip() == line.rstrip()
-        finally:
-            f.close()        
+                self.assertEqual(str(rec).rstrip(), line.rstrip())
 
     def testError(self) :
         corruptRec = "49268\tsp\tb.1.2.1\t-\n"
-        try:
-            rec = ClaRecord(corruptRec)
-            assert 0, "Should never get here"
-        except ValueError as e :
-            pass
+        self.assertRaises(ValueError, ClaRecord, corruptRec)
 
     def testRecord(self) :
         recLine = 'd1dan.1\t1dan\tT:,U:91-106\tb.1.2.1\t21953\tcl=48724,cf=48725,sf=49265,fa=49266,dm=49267,sp=49268,px=21953'
 
         rec = ClaRecord(recLine)
-        assert rec.sid =='d1dan.1'
-        assert rec.residues.pdbid =='1dan'
-        assert rec.residues.fragments ==(('T','',''),('U','91','106'))
-        assert rec.sccs == 'b.1.2.1'
-        assert rec.sunid == 21953
-        assert rec.hierarchy == [['cl',48724],['cf',48725],['sf',49265],
-             ['fa',49266],['dm',49267],['sp',49268],
-             ['px',21953]], rec.hierarchy
+        self.assertEqual(rec.sid, 'd1dan.1')
+        self.assertEqual(rec.residues.pdbid, '1dan')
+        self.assertEqual(rec.residues.fragments, (('T','',''),('U','91','106')))
+        self.assertEqual(rec.sccs, 'b.1.2.1')
+        self.assertEqual(rec.sunid, 21953)
+        self.assertEqual(rec.hierarchy, [
+            ['cl',48724], ['cf',48725], ['sf',49265], ['fa',49266],
+            ['dm',49267], ['sp',49268], ['px',21953]])
 
 
 class DomTests(unittest.TestCase):
@@ -256,41 +217,33 @@ class DomTests(unittest.TestCase):
         file = testdata_stream('scop/domtest.txt')
         self.filename = file.name
 
-
     def testParse(self):
-        f = open(self.filename)
-        try: 
-           count = 0
-           for rec in DomRecord.records(f):
-               count +=1
-           self.assertEquals(count,10)
-        finally:
-           f.close()
-    
+        with open(self.filename) as f:
+            count = 0
+            for rec in DomRecord.records(f):
+                count +=1
+            self.assertEquals(count, 10)
+
     def testStr(self):
-        f = open(self.filename)
-        try: 
-            for line in f :
-                if line :
+        with open(self.filename) as f:
+            for line in f:
+                if line:
                     rec = DomRecord(line)
-                    self.assertEquals(str(rec).rstrip(),line.rstrip())
-        finally:
-           f.close()        
+                    self.assertEquals(str(rec).rstrip(), line.rstrip())
 
     def testError(self) :
         corruptDom = "49xxx268\tsp\tb.1.2.1\t-\n"
         self.assertRaises(ValueError, DomRecord, corruptDom)
 
-
     def testRecord(self) :
         recLine = 'd7hbib_\t7hbi\tb:\t1.001.001.001.001.001'
-
         rec = DomRecord(recLine)
         self.assertEquals(rec.sid, 'd7hbib_')
         self.assertEquals(rec.residues.pdbid,'7hbi')
-        self.assertEquals(rec.residues.fragments,(('b','',''),) )        
+        self.assertEquals(rec.residues.fragments, (('b','',''),))
         self.assertEquals(rec.hierarchy,'1.001.001.001.001.001')
-        
+
+
 class ResiduesTests(unittest.TestCase):
     res = (
         ( "-",           () ),
@@ -316,7 +269,7 @@ class ResiduesTests(unittest.TestCase):
     def testStr(self):
         for loc in self.res :
             r = Residues(loc[0])
-            assert str(r) == loc[0], str(r)+" is not "+loc[0]
+            self.assertEqual(str(r), loc[0])
 
     def testAstralParse(self) :
         """Astral encloses residue subsets in brackets. Lets make sure we
@@ -330,32 +283,27 @@ class ResiduesTests(unittest.TestCase):
         pdbid ="1ddf"
         for loc in self.res :
             r = Residues("\t 1ddf \t"+loc[0]+"\t\n\n\n")
-            assert r.pdbid == pdbid
-            assert str(r) == pdbid+" "+loc[0]
+            self.assertEqual(r.pdbid, pdbid)
+            self.assertEqual(str(r), pdbid+" "+loc[0])
 
             r = Residues(pdbid+" "+loc[0])
-            assert r.pdbid == pdbid
-            assert str(r) == pdbid+" "+loc[0]
-
+            self.assertEqual(r.pdbid, pdbid)
+            self.assertEqual(str(r), pdbid+" "+loc[0])
 
             r = Residues("104l A:112-113")
-            assert r.pdbid == "104l"
-            assert r.fragments == (('A', '112', '113'),)
+            self.assertEqual(r.pdbid, "104l")
+            self.assertEqual(r.fragments, (('A', '112', '113'),))
 
-            
     def testJustPdbId(self) :
         r = Residues("1sds")
-        assert r.pdbid == "1sds"
-        assert not r.fragments 
+        self.assertEqual(r.pdbid, "1sds")
+        assert not r.fragments
 
 
     def testParseError(self) :
-        try:
-            r = Residues("09324923423hh./;,.389")
-            assert 0, "Should never get here: "+str(r)
-        except ValueError as e :
-            pass
-        
+        self.assertRaises(ValueError, Residues, "09324923423hh./;,.389")
+
+
 class HieTests(unittest.TestCase):
 
     def setUp(self) :
@@ -363,39 +311,24 @@ class HieTests(unittest.TestCase):
         self.filename = file.name
 
     def testParse(self):
-       f = open(self.filename)
-       try: 
+        with open(self.filename) as f:
             count = 0
-            for rec in HieRecord.records(f) :
-               count +=1
-            self.assertEquals( count, 21, "Wrong number of records?!")
-       finally:
-           f.close()
-    
+            for rec in HieRecord.records(f):
+                count += 1
+            self.assertEquals(count, 21, "Wrong number of records?!")
+
     def testStr(self):
-        f = open(self.filename)
-        try: 
+        with open(self.filename) as f:
             for line in f :
                 rec = HieRecord(line)
                 #End of line is platform dependent. Strip it off
-                assert str(rec).rstrip() == line.rstrip()
-        finally:
-            f.close()        
+                self.assertEqual(str(rec).rstrip(), line.rstrip())
 
-    def testError(self) :
+    def testError(self):
         corruptRec = "4926sdfhjhfgyjdfyg"
-        try:
-            rec = HieRecord(corruptRec)
-            assert 0, "Should never get here"
-        except ValueError as e :
-            pass
+        self.assertRaises(ValueError, HieRecord, corruptRec)
 
 
 
 if __name__ == '__main__':
     unittest.main()
-
-
-
-
-

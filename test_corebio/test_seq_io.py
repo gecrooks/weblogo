@@ -23,6 +23,9 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
 #  THE SOFTWARE.
 #
+from __future__ import absolute_import
+
+import unittest
 
 from corebio import *
 from corebio.seq import *
@@ -30,9 +33,8 @@ from corebio.seq_io import *
 from corebio._py3k import StringIO
 
 from test_corebio import *
-import test_genbank_io
+from . import test_genbank_io
 
-import unittest
 
 class test_seq_io(unittest.TestCase) :
 
@@ -56,7 +58,7 @@ class test_seq_io(unittest.TestCase) :
     def test_parse_error(self) :
         """ Wrong alphabet should throw a parsing error """
         f = testdata_stream("clustal.aln")
-        self.failUnlessRaises(ValueError, 
+        self.assertRaises(ValueError,
             seq_io.read, f , nucleic_alphabet )
 
     def test_parse_clustal181(self) :
@@ -171,7 +173,7 @@ class test_seq_io(unittest.TestCase) :
                 for f in examples[parsers[j]] :
                     #print parsers[i].names[0], parsers[j].names[0]
                     f.seek(0)
-                    self.failUnlessRaises(ValueError, parsers[i].read, f)
+                    self.assertRaises(ValueError, parsers[i].read, f)
 
  
         # When fed an empty file, the parser should either raise a ValueError
@@ -180,7 +182,7 @@ class test_seq_io(unittest.TestCase) :
         for p in seq_io._parsers :    
             try :
                 s = p.read(e)
-                assert len(s) == 0 
+                self.assertEqual(len(s), 0)
             except ValueError:
                 pass
             

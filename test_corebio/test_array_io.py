@@ -40,21 +40,18 @@ class test_array_io(unittest.TestCase) :
         f = StringIO(array_io.example)
         seqs = array_io.read(f)
         #print(seqs)
-        self.assertEquals(len(seqs), 8)
-        self.assertEquals(seqs[0].name, None)
-        self.assertEquals(len(seqs[1]), 60)
-  
+        self.assertEqual(len(seqs), 8)
+        self.assertEqual(seqs[0].name, None)
+        self.assertEqual(len(seqs[1]), 60)
+
     def test_write_seq(self) :
         f = StringIO(array_io.example)
         seqs = array_io.read(f)
-        
         fout = StringIO()
         array_io.write(fout,seqs)
-        
         fout.seek(0)
         seqs2 = array_io.read(fout)
-        
-        self.assertEquals(seqs, seqs2)  
+        self.assertEqual(seqs, seqs2)
 
     def test_fail(self) :
         # Lengths differ
@@ -63,7 +60,7 @@ class test_array_io(unittest.TestCase) :
 -EPC-RDEN
 """
         f = StringIO(example)
-        self.failUnlessRaises(ValueError, array_io.read, f)
+        self.assertRaises(ValueError, array_io.read, f)
 
 
 
