@@ -132,7 +132,7 @@ from array import array
 
 from .moremath import argmax, sqrt
 
-from ._py3k import maketrans
+from ._py3k import maketrans, _as_bytes
 
 __all__ = [
     'Alphabet', 
@@ -268,7 +268,7 @@ class Alphabet(object) :
         """Convert an alphabetic string into a byte array of ordinals."""
         string = str(string)
         s = string.translate(self._ord_table)
-        a = array('B',s)
+        a = array('B', _as_bytes(s))
         return a
 
     
@@ -514,7 +514,9 @@ class Seq(str):
          removed.
         """
         cls = self.__class__
-        return cls( str(self).translate(maketrans('',''), delchars), self.alphabet) 
+        cleanseq = ''.join(char for char in str(self)
+                           if char not in set(delchars))
+        return cls(cleanseq.translate(maketrans('', '')), self.alphabet)
 
     def lower(self) :
         """Return a lower case copy of the sequence. """
