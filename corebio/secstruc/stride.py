@@ -35,11 +35,11 @@ Refs:
 from __future__ import absolute_import
 
 from subprocess import * 
-from StringIO import StringIO
 
 from ..db.astral import to_one_letter_code
 from ..seq import Seq, protein_alphabet, Alphabet
 from ..utils import stdrepr, find_command
+from .._py3k import StringIO
 
 # alphabet for stride secondary structure
 stride_alphabet = Alphabet("HGIEBC12345678@&T")

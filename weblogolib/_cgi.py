@@ -41,13 +41,13 @@ import sys
 import cgi as cgilib
 import cgitb; cgitb.enable()
 
-from StringIO import StringIO
 from color import *
 from colorscheme import ColorScheme, ColorGroup
+from string import Template
 
 import weblogolib
 from corebio.utils import *
-from string import Template
+from corebio._py3k import StringIO
 
 
 # TODO: Check units
