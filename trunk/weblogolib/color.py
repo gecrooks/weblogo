@@ -25,7 +25,7 @@
 
 """ Color specifications using CSS2 (Cascading Style Sheet) syntax."""
 
-class Color:    
+class Color(object):
     """ Color specifications using CSS2 (Cascading Style Sheet) syntax.
     
     http://www.w3.org/TR/REC-CSS2/syndata.html#color-units
@@ -161,10 +161,11 @@ class Color:
     from_string = classmethod(from_string)
 
     def __eq__(self, other) :
+        if not isinstance(other, self.__class__):
+            return False
         req = int(0.5+255.*self.red) == int(0.5+255.*other.red)
         beq = int(0.5+255.*self.blue) == int(0.5+255.*other.blue)
         geq = int(0.5+255.*self.green) == int(0.5+255.*other.green)
-        
         return req and beq and geq
 
     def __repr__(self):
