@@ -241,7 +241,14 @@ class RafSeqMap(object) :
                 return i
         raise KeyError("No such residue "+chainid+resid)
 
-    def __getslice__(self, i, j) :
+    def __getitem__(self, idx):
+        if isinstance(idx, slice):
+            s = copy(self)
+            s.res = s.res[idx]
+            return s
+
+    # Deprecated
+    def __getslice__(self, i, j):
         s = copy(self)
         s.res = s.res[i:j]
         return s
