@@ -93,7 +93,6 @@ import sys
 import copy
 import os
 from datetime import datetime
-from StringIO import StringIO
 from math import log, sqrt, exp
 from string import Template
 from subprocess import *
@@ -115,6 +114,8 @@ from corebio.seq import (Alphabet, Seq, SeqList, unambiguous_dna_alphabet,
                          unambiguous_rna_alphabet, unambiguous_protein_alphabet)
 from corebio.utils import (isfloat, find_command, ArgumentError, stdrepr,
                            resource_string, resource_filename)
+
+from corebio._py3k import StringIO
 
 
 

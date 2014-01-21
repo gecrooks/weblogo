@@ -51,7 +51,7 @@ from corebio import seq_io
 from corebio.seq import Seq, SeqList
 from corebio.utils import *
 from corebio.utils.deoptparse import DeOptionParser
-from corebio._py3k import iteritems
+from corebio._py3k import iteritems, StringIO
 
 from .color import *
 from .colorscheme import ColorScheme, ColorGroup
@@ -135,13 +135,11 @@ def httpd_serve_forever(port=8080) :
 
 def _build_logodata(options) :
     motif_flag=False
-    
-    fin = options.fin;
-    if fin is None : 
-        from StringIO import StringIO 
+
+    fin = options.fin
+    if fin is None:
         fin = StringIO(sys.stdin.read())
-    
-   
+
     try:
         # Try reading data in transfac format first.     
         from corebio.matrix import Motif
