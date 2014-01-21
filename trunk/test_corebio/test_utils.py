@@ -42,60 +42,53 @@ from corebio._py3k import StringIO
 
 
 class test_utils(unittest.TestCase) :
-    assertTrue  = unittest.TestCase.failUnless
-    assertFalse = unittest.TestCase.failIf
-    
-    def test_isfloat(self) :
-        self.failUnless( isfloat('0.5'))
-        self.failUnless( isfloat( ' 0') )
-        self.failUnless( isfloat( '+1000000000  ') ) 
-        self.failUnless( isfloat( '2') )
-        self.failUnless( isfloat( '0000.2323') )
-        self.failUnless( isfloat( '0.1e-23') )
-        self.failUnless( isfloat( ' -0.5e+23') )
 
-        self.assertFalse( isfloat( None) ) 
-        self.assertFalse( isfloat( '') )
-        self.assertFalse( isfloat( 'asdad') )
-        self.assertFalse( isfloat( 'q34sd') )
-        self.assertFalse( isfloat( '92384.kjdfghiksw')) 
-        self.assertFalse( isfloat( 'adf!@#nn') )
-                
+    def test_isfloat(self) :
+        self.assertTrue(isfloat('0.5'))
+        self.assertTrue(isfloat(' 0'))
+        self.assertTrue(isfloat('+1000000000  '))
+        self.assertTrue(isfloat('2'))
+        self.assertTrue(isfloat('0000.2323'))
+        self.assertTrue(isfloat('0.1e-23'))
+        self.assertTrue(isfloat(' -0.5e+23'))
+        self.assertFalse(isfloat(None))
+        self.assertFalse(isfloat(''))
+        self.assertFalse(isfloat('asdad'))
+        self.assertFalse(isfloat('q34sd'))
+        self.assertFalse(isfloat('92384.kjdfghiksw'))
+        self.assertFalse(isfloat('adf!@#nn'))
+
     def test_isint(self) :
-        self.failUnless( isint('0'))
-        self.failUnless( isint('-1')) 
-        self.failUnless( isint('10'))
-        self.failUnless( isint('100101012234')) 
-        self.failUnless( isint('000'))      
-        
-        self.assertFalse( isint( None) ) 
-        self.assertFalse( isint( '') )
-        self.assertFalse( isint( 'asdad') )
-        self.assertFalse( isint( 'q34sd') )
-        self.assertFalse( isint( '0.23')) 
-        self.assertFalse( isint( 'adf!@#nn') )
-               
+        self.assertTrue(isint('0'))
+        self.assertTrue(isint('-1'))
+        self.assertTrue(isint('10'))
+        self.assertTrue(isint('100101012234'))
+        self.assertTrue(isint('000'))
+        self.assertFalse(isint(None))
+        self.assertFalse(isint(''))
+        self.assertFalse(isint('asdad'))
+        self.assertFalse(isint('q34sd'))
+        self.assertFalse(isint('0.23'))
+        self.assertFalse(isint('adf!@#nn'))
+
     def test_remove_whitespace(self) :
-        self.assertEquals( remove_whitespace("  kjashd askjdh askjdh\tasdf"),
-        "kjashdaskjdhaskjdhasdf"),
-   
+        self.assertEqual(remove_whitespace("  kjashd askjdh askjdh\tasdf"),
+                         "kjashdaskjdhaskjdhasdf")
+
     def test_isblank(self) :
         blank = ('', ' ', '\n', '\t \n\n')
         not_blank = (' a',)
-        
-        for s in blank :
-            self.assertTrue( isblank(s))
+        for s in blank:
+            self.assertTrue(isblank(s))
         for s in not_blank:
-            self.assertFalse( isblank(s))
- 
+            self.assertFalse(isblank(s))
+
     def test_group_count(self):
         test = 'aaabbbbcccddea'
-        out = group_count(test)     
-        self.assertTrue( tuple(out) == (('a',3),('b',4),('c',3),('d',2),('e',1),('a',1)) )    
+        out = group_count(test)
+        self.assertEqual(tuple(out),
+                         (('a',3),('b',4),('c',3),('d',2),('e',1),('a',1)))
 
-
-
-        
     def test_reiterate(self) :
         i = Reiterate( iter("123456") )
         for item in i :
@@ -106,124 +99,117 @@ class test_utils(unittest.TestCase) :
         
         # pushback
         i = Reiterate( iter("123456") )
-        i.next()
+        next(i)
         i.push("0")
-        self.assertEquals( "0", i.next())
+        self.assertEquals( "0", next(i))
         p = i.peek()
-        n = i.next()
+        n = next(i)
         self.assertEquals(p,n)
         self.assertEquals( i.index() ,2)
         self.assertTrue( i.has_item() )
         
         # Repeated application of Reiterate should return same iterator.
-        assert i is iter(i)
-        assert i is Reiterate(i)
-        
-        
-        
+        self.assertTrue(i is iter(i))
+        self.assertTrue(i is Reiterate(i))
+
     def test_token(self) :
         t = Token( 'kind', 'some data', 4, 3)
         s = str(t)
         r = repr(t)
         t2 = eval(r)
-        assert t2.typeof == 'kind'
+        self.assertEqual(t2.typeof, 'kind')
 
         
     def test_struct(self) :
-        s = Struct(a=3,b=4)
+        s = Struct(a=3, b=4)
         s2 = eval(repr(s))
-        assert s2.a == 3
-    
+        self.assertEqual(s2.a, 3)
+
     def test_invert_dict(self) :
         d = dict( a=3, b=4)
         invd =invert_dict(d)
-        assert 3 in invd
-        assert invd[3] == 'a'
-    
-    def test_crc64(self) :     
-        assert crc64("IHATEMATH") == "E3DCADD69B01ADD1"
+        self.assertTrue(3 in invd)
+        self.assertEqual(invd[3], 'a')
+
+    def test_crc64(self):
+        self.assertEqual(crc64("IHATEMATH"), "E3DCADD69B01ADD1")
 
     def test_crc32(self) :
-        assert crc32("Test the CRC-32 of this string.") == "%08X"%1571220330
+        self.assertEqual(crc32("Test the CRC-32 of this string."),
+                         "%08X"%1571220330)
 
     def test_find_command(self) :
         p = find_command('more')
         p = find_command('python')
-        
         self.assertRaises( EnvironmentError, find_command, 'NOSUCH')
         #print p
 
     def test_ArgumentValueError(self):
         message = "Some message"
         component = "whatsit"
-
         try:
             raise ArgumentError(message, component)
         except ArgumentError as err:
-            assert err.msg == message
-            assert err.key == component
-            
+            self.assertEqual(err.msg, message)
+            self.assertEqual(err.key, component)
         try:
             raise ArgumentError(message, component, 10)
         except ValueError as err:
-            assert err.msg == message
-            assert err.key == component
-            assert err.value ==10
-  
+            self.assertEqual(err.msg, message)
+            self.assertEqual(err.key, component)
+            self.assertEqual(err.value, 10)
+
     def test_frozendict(self) :
         d = frozendict( a='b', c='c')
-        assert d['a'] == 'b'
-
+        self.assertEqual(d['a'], 'b')
         self.assertRaises(AttributeError, lambda D: D.pop(), d)
 
     def test_file_index(self):
         stream = StringIO(tfile)
-        
         idx = FileIndex(stream)
-        assert idx[0].startswith('line 0')
-        assert idx[4].startswith('line 4')
+        self.assertTrue(idx[0].startswith('line 0'))
+        self.assertTrue(idx[4].startswith('line 4'))
 
         def parser(f) :
             return int(f.readline().split()[1])
 
         idx = FileIndex(stream, parser=parser)
-        assert len(idx) == 5
-        assert idx[0] == 0
-        assert idx[4] == 4
-
+        self.assertEqual(len(idx), 5)
+        self.assertEqual(idx[0], 0)
+        self.assertEqual(idx[4], 4)
 
         key = re.compile(r"(line \d)")
         def linekey(line) :
             k = key.search(line)
-            if k is None: return None
+            if k is None:
+                return None
             return k.group(1)
-            
+
         idx = FileIndex(stream, linekey=linekey, parser=parser)
         self.assertEquals(len(idx), 4)
-        assert idx[0] == 0
-        assert idx[3] == 4
-        self.assertRaises(IndexError, idx.__getitem__, 5)  
-        
+        self.assertEqual(idx[0], 0)
+        self.assertEqual(idx[3], 4)
+        self.assertRaises(IndexError, idx.__getitem__, 5)
+
         #print idx._key_dict
-        assert idx['line 1'] == 1
-        assert idx['line 4'] == 4  
-        assert 'line 1' in idx
-        assert not ('Blah' in idx)
-        assert not (20 in idx)
+        self.assertEqual(idx['line 1'], 1)
+        self.assertEqual(idx['line 4'], 4)
+        self.assertTrue('line 1' in idx)
+        self.assertFalse('Blah' in idx)
+        self.assertFalse(20 in idx)
 
         # Test iteration over values
         t = 0
-        for v in idx : t+=v
-        assert t == 8
+        for v in idx:
+            t += v
+        self.assertEqual(t, 8)
 
-
-
-        def test_resource(self) :
-            fn = resource_filename(__name__, 'data/cap.fa', __file__)
-            assert fn.endswith('test_corebio/data/cap.fa')
-            f = resource_stream(__name__, 'data/cap.fa', __file__)
-            s = resource_string(__name__, 'data/cap.fa', __file__)
-            assert s.startswith('>aldB')
+    def test_resource(self):
+        fn = resource_filename(__name__, 'data/cap.fa', __file__)
+        self.assertTrue(fn.endswith('test_corebio/data/cap.fa'))
+        f = resource_stream(__name__, 'data/cap.fa', __file__)
+        s = resource_string(__name__, 'data/cap.fa', __file__)
+        self.assertTrue(s.startswith('>aldB'))
 
 
 
