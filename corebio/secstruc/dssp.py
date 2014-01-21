@@ -108,11 +108,11 @@ class DsspRecord(object) :
         res =[]
         lines = iter(dssp_file)
 
-        header = lines.next()
+        header = next(lines)
         if not header.startswith(_dssp_header) :
             raise ValueError("Unrecognized file type: "+ header)
-        line = lines.next()
-        line = lines.next()
+        line = next(lines)
+        line = next(lines)
         self.pdbid = line[62:66].lower()
 
         for line in lines:

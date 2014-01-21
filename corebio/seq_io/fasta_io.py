@@ -103,7 +103,7 @@ def read(fin, alphabet=None):
 def readseq(fin, alphabet=None) :
     """Read one sequence from the file, starting 
     from the current file position."""
-    return iterseq(fin, alphabet).next()
+    return next(iterseq(fin, alphabet))
     
      
 def iterseq(fin, alphabet=None):

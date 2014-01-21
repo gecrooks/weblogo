@@ -21,9 +21,6 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
 #  THE SOFTWARE.
 
-
-
-
 """Read the output of a fasta sequence similarity search. 
 
 FASTA is a DNA and Protein sequence alignment software package first described
@@ -174,53 +171,54 @@ def read(fin) :
 def _scan(fin) :
 
     def next_nonempty(i) :
-        L = i.next()
-        while L.strip() == '':  L = i.next()
+        L = next(i)
+        while L.strip() == '':
+            L = next(i)
         return L
-    
 
     lines = Reiterate(iter(fin))
-    try :    
-    
-        yield Token("begin_report", lineno= lines.index())
-        
+    try:
+        yield Token("begin_report", lineno=lines.index())
+
         # find header line : "SSEARCH searches a sequence data bank"
-        L = lines.next()
-        
+        L = next(lines)
         if L[0] == '#' :
             yield Token("parameter", ("command", L[1:].strip()), lines.index())
-            L = lines.next()
-            
-        while not L : L= lines.next()
+            L = next(lines)
+
+        while not L:
+            L = next(lines)
         algorithm = L.split()[0]
-        expected = [ "SSEARCH", "FASTA","TFASTA","FASTX",
-                        "FASTY","TFASTX","TFASTY"]          
+        expected = ["SSEARCH", "FASTA", "TFASTA", "FASTX", "FASTY",
+                    "TFASTX", "TFASTY"]
         if algorithm not in expected:
-            raise ValueError("Parse failed: line %d" % lines.index() ) 
+            raise ValueError("Parse failed: line %d" % lines.index())
         yield Token ("algorithm", algorithm, lines.index() )
-              
+
         # Next line should be the version
-        L = lines.next()
-        if not L.startswith(" version") : 
+        L = next(lines)
+        if not L.startswith(" version"):
             raise ValueError("Parse failed: Cannot find version.")
         yield Token( "algorithm_version", L[8:].split()[0].strip(), lines.index())
-        
-        # Algorithm reference        
-        L = lines.next()
-        if not L.startswith("Please cite:") : 
+
+        # Algorithm reference
+        L = next(lines)
+        if not L.startswith("Please cite:"):
             raise ValueError("Parse failed: Expecting citation" + L)
-        cite = lines.next().strip() + ' ' + lines.next().strip()            
+        cite = next(lines).strip() + ' ' + next(lines).strip()
         yield Token( "algorithm_reference", cite)
 
         # Find line "searching testset.fa library"
-        L = lines.next()
-        while not L.startswith("searching") : L = lines.next()
-        yield Token("database_name", L[10:-8], lines.index() )
-        
+        L = next(lines)
+        while not L.startswith("searching"):
+            L = next(lines)
+        yield Token("database_name", L[10:-8], lines.index())
+
         # Results 
-        L = lines.next()
-        while isblank(L) : L = lines.next()
-        if ">>>" not in L :
+        L = next(lines)
+        while isblank(L):
+            L = next(lines)
+        if ">>>" not in L:
             raise ValueError("Parse failed on line %d: " % lines.index())
 
         while ">>>" in L :
@@ -230,11 +228,11 @@ def _scan(fin) :
             yield Token("query_name", name, lines.index())
             yield Token("query_description", description, lines.index())
 
-            while not L.startswith("The best scores are:") :
-                L = lines.next()
-            L = lines.next()
+            while not L.startswith("The best scores are:"):
+                L = next(lines)
+            L = next(lines)
             # hits
-            while not isblank(L) :
+            while not isblank(L):
                 lineno = lines.index()
                 desc = L[0:49]
                 yield Token("begin_hit", lineno= lineno)
@@ -248,7 +246,7 @@ def _scan(fin) :
                 yield Token("bit_score",    float(bit), lineno)
                 yield Token("significance", float(sig), lineno)
                 yield Token("end_hit", lineno=lineno)
-                L = lines.next()
+                L = next(lines)
     
             # Optimal alignment information
             L = next_nonempty(lines)
@@ -261,7 +259,7 @@ def _scan(fin) :
                 #          1         2         3         4
                 #01234567890123456789012345678901234567890123456789
                 # s-w opt:  46  Z-score: 70.7  bits: 18.5 E():  3.6
-                L = lines.next()
+                L = next(lines)
                 fields = L.split()
                 raw, bit, sig = fields[2], fields[6], fields[8]
                 yield Token("alignment_raw_score",    float(raw), lineno)
@@ -269,7 +267,7 @@ def _scan(fin) :
                 yield Token("alignment_significance", float(sig), lineno)
 
                 #Smith-Waterman score: 46;  38.095% identity (71.429% similar) in 21 aa overlap (2-22:36-56)
-                L = lines.next()
+                L = next(lines)
                 lineno = lines.index()
                 fields = L.split()
                 assert( len(fields) ==12)
@@ -288,11 +286,9 @@ def _scan(fin) :
                 
                 count = 1                
                 while True:
-                    L = lines.next()
+                    L = next(lines)
                     count += 1
 
-
-                    
                     if L.startswith('>>'): break
                     if '>>>' in L:
                         lines.push(L)
@@ -300,9 +296,9 @@ def _scan(fin) :
                     if 'residues' in L and 'sequences' in L :
                         lines.push(L)
                         break
-                    if not L or L[0].isspace() : continue
-  
-  
+                    if not L or L[0].isspace():
+                        continue
+
                     # there are 2 lines before the first query sequence (but
                     # we started the count at 1). There is 1 line between query
                     # and target, 3 lines between target and query, unless the
