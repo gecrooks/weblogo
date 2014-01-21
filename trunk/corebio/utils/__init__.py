@@ -28,6 +28,7 @@
 """Extra utilities and core classes not in standard python.
 """
 # private submodules, such as _which, are for internal corebio use.
+from __future__ import absolute_import
 
 
 
@@ -420,10 +421,11 @@ def find_command(command, path=None):
     Author: Adapted from code by Trent Mick (TrentM@ActiveState.com)
     See: http://trentm.com/projects/which/
     """
-    import _which
+    from . import _which
     if path is None :
         path = os.environ.get("COREBIOPATH", "").split(os.pathsep)
-        if path==['']: path = None   
+        if path == ['']:
+            path = None
 
     try :
         match = next(_which.whichgen(command, path))
