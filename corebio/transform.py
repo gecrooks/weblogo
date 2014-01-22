@@ -282,20 +282,17 @@ class GeneticCode(object):
         self._table = None
         self._back_table = None
 
-    #@staticmethod
+    @staticmethod
     def std_list():
         "Return a list of standard genetic codes."
         return _codon_tables
-    std_list = staticmethod(std_list)
 
-    #@staticmethod
+    @staticmethod
     def std():
         "The standard 'universal' genetic code."
         return _codon_tables[0]
-    std = staticmethod(std)
 
-    
-    #@staticmethod
+    @staticmethod
     def by_name(name) :
         """Find a genetic code in the code list by name or identifier.
         """
@@ -303,20 +300,20 @@ class GeneticCode(object):
             if t.ident == name or t.description == name :
                 return t
         raise ValueError("No such translation table: %s" % str(name) )
-    by_name = staticmethod(by_name)        
-    
-  
-    def _get_table(self) :
-        if self._table is None : self._create_table() 
-        return self._table  
-    table = property(_get_table, None, "A map between codons and amino acids")
 
-    def _get_back_table(self) :
+    @property
+    def table(self):
+        """A map between codons and amino acids"""
+        if self._table is None:
+            self._create_table()
+        return self._table
+
+    @property
+    def back_table(self) :
+        """A map between amino acids and codons"""
         if self._back_table is None : 
             self._create_table() 
         return self._back_table  
-    back_table = property(_get_back_table, None, "A map between amino acids and codons")
-
 
     def _create_table(self) :
         aa = self.amino_acid

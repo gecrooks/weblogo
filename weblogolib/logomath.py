@@ -261,18 +261,16 @@ class Gamma(object) :
             raise ValueError("beta must be positive")
         self.alpha = alpha
         self.beta = beta
-        
 
+    @classmethod
     def from_shape_scale(cls, shape, scale) :
         return cls( shape, 1./scale)
-    from_shape_scale = classmethod(from_shape_scale)
-    
 
+    @classmethod
     def from_mean_variance(cls, mean, variance) :
         alpha = mean **2 / variance
         beta = alpha/mean
         return cls(alpha, beta)
-    from_mean_variance = classmethod(from_mean_variance)
 
     def mean(self) :
         return self.alpha / self.beta
@@ -280,7 +278,6 @@ class Gamma(object) :
     def variance(self) :
         return self.alpha / (self.beta**2)
 
-        
     def sample(self) :
         return random.gammavariate(self.alpha, 1./self.beta) 
 

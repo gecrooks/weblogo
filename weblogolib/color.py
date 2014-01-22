@@ -65,18 +65,16 @@ class Color(object):
         self.green = max(0., min(green, 1.0))
         self.blue = max(0., min(blue, 1.0))
 
-    #@staticmethod
+    @staticmethod
     def names():
         "Return a list of standard color names."
         return _std_colors.keys()
-    names = staticmethod(names)
 
-    #@classmethod
+    @classmethod
     def from_rgb(cls, r, g, b):
         return cls(r,g,b)
-    from_rgb = classmethod(from_rgb)
- 
-    #@classmethod
+
+    @classmethod
     def from_hsl(cls, hue_angle, saturation, lightness ):
         def hue_to_rgb( v1, v2, vH) :
             if vH < 0.0 : vH += 1.0
@@ -108,20 +106,17 @@ class Color(object):
         b = hue_to_rgb( v1, v2, hue - (1./3.) )
 
         return cls(r,g,b)
-    from_hsl = classmethod(from_hsl)  
- 
-    
-    #@staticmethod
+
+
+    @staticmethod
     def by_name(string):
         s = string.strip().lower().replace(' ', '')
-        
         try:
             return _std_colors[s]
         except KeyError:
             raise ValueError("Unknown color name: %s"%  s) 
-    by_name = staticmethod(by_name)
-       
-    #@classmethod
+
+    @classmethod
     def from_string(cls, string):
         def to_frac(string) :
             # string can be "255" or "100%"
@@ -162,7 +157,6 @@ class Color(object):
             return cls.from_hsl( int(hsl[0]), to_frac(hsl[1]), to_frac(hsl[2]))
         
         raise ValueError("Cannot parse string: %s" % s)
-    from_string = classmethod(from_string)
 
     def __eq__(self, other) :
         if not isinstance(other, self.__class__):
@@ -174,8 +168,8 @@ class Color(object):
 
     def __repr__(self):
         return "Color(%f,%f,%f)" % (self.red, self.green, self.blue)
-        
-    
+
+
 _std_colors = dict(
     aliceblue = Color(240,248,255),     #f0f8ff
     antiquewhite = Color(250,235,215),     #faebd7
@@ -325,5 +319,3 @@ _std_colors = dict(
     yellow = Color(255,255,0),     #ffff00
     yellowgreen = Color(154,205,50)     #9acd32
     )
-    
-    

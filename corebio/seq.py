@@ -422,9 +422,9 @@ class Seq(str):
     # BEGIN PROPERTIES
             
     # Make alphabet constant 
-    def _get_alphabet(self):
+    @property
+    def alphabet(self):
         return self._alphabet
-    alphabet = property(_get_alphabet)     
 
     # END PROPERTIES        
 
@@ -625,8 +625,7 @@ class SeqList(list):
     #@classmethod
     #def read(cls, afile, alphabet = None):
     #    return corebio.seq_io.read(afile, alphabet)
-    #read = classmethod(read)    
-     
+
     def isaligned(self) :
         """Are all sequences of the same length and alphabet?"""
         if len(self)==0: return True
