@@ -119,7 +119,7 @@ Status:
 Authors:
     GEC 2004,2005
 """
-from __future__ import absolute_import
+from __future__ import absolute_import, division
 
 # TODO: Add this to docstring somewhere.
 # To replace all ambiguous nucleic code by 'N', replace alphabet and then n 

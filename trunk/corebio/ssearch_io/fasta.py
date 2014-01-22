@@ -36,7 +36,7 @@ Refs:
     ftp.virginia.edu/pub/fasta
     http://en.wikipedia.org/wiki/FASTA
 """
-from __future__ import absolute_import, print_function
+from __future__ import absolute_import, division, print_function
 
 import re
 from math import floor

@@ -49,7 +49,7 @@ accggttctccatccccgcagcgtagcccggaacatggtagctgccatct
 ttacctgctacgccagccttctgtgcgcgcaactgtctggtcccgcccc2
 
 """
-from __future__ import absolute_import, print_function
+from __future__ import absolute_import, division, print_function
 
 from ..utils import *
 from ..seq import *
@@ -186,6 +186,6 @@ def writeseq(fout, seq):
     print(seq.name, file=fout)
     L = len(seq)
     line_length = 80
-    for n in range (1+ int(L/line_length)) :
+    for n in range(1 + L // line_length):
         print(seq[n * line_length : (n+1) * line_length], file=fout)
     print(file=fout)
