@@ -227,7 +227,7 @@ def main(htdocs_directory = None) :
     form_values = cgilib.FieldStorage()
     
     # Send default form?
-    if len(form_values) ==0 or form_values.has_key("cmd_reset"):
+    if len(form_values) == 0 or "cmd_reset" in form_values:
         # Load default truth values now.
         form['show_errorbars'].value = logooptions.show_errorbars
         form['show_xaxis'].value = logooptions.show_xaxis
@@ -288,7 +288,7 @@ def main(htdocs_directory = None) :
     # FIXME: Ugly fix: Must check that sequence_file key exists
     # FIXME: Sending malformed or missing form keys should not cause a crash
     # sequences_file = form["sequences_file"]
-    if form_values.has_key("sequences_file") :
+    if "sequences_file" in form_values:
         sequences = form_values.getvalue("sequences_file") 
         assert type(sequences) == str
 
@@ -305,7 +305,7 @@ def main(htdocs_directory = None) :
     # We do not proceed to the time consuming logo creation step unless
     # required by a 'create' or 'validate' command, and no errors have been
     # found yet.
-    if form_values.has_key("cmd_edit") or errors :
+    if errors or "cmd_edit" in form_values:
         send_form(controls, errors, htdocs_directory)
         return    
  
@@ -316,9 +316,10 @@ def main(htdocs_directory = None) :
     try :
         comp = form["composition"].get_value()
         percentCG = form["percentCG"].get_value()
-        ignore_lower_case = form_values.has_key("ignore_lower_case") 
-        if comp=='percentCG': comp = str(percentCG/100)     
-        
+        ignore_lower_case = ("ignore_lower_case" in form_values)
+        if comp == 'percentCG':
+            comp = str(percentCG / 100)
+
         from corebio.matrix import Motif
          
         try:
@@ -345,11 +346,10 @@ def main(htdocs_directory = None) :
     except RuntimeError as err:
         errors.append(err.args)
 
-    if form_values.has_key("cmd_validate") or errors :
-        send_form(controls, errors, htdocs_directory) 
-        return    
- 
- 
+    if errors or "cmd_validate" in form_values:
+        send_form(controls, errors, htdocs_directory)
+        return
+
     #
     #  RETURN LOGO OVER HTTP
     #
@@ -357,7 +357,7 @@ def main(htdocs_directory = None) :
     print("Content-Type:", mime_type[format])
     # Content-Disposition: inline       Open logo in browser window
     # Content-Disposition: attachment   Download logo
-    if form_values.has_key("download"):
+    if "download" in form_values:
         print('Content-Disposition: attachment; ' \
               'filename="logo.%s"' % extension[format])
     else:
