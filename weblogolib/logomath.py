@@ -37,15 +37,16 @@
 #  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 #  POSSIBILITY OF SUCH DAMAGE. 
-from __future__ import print_function
-
-from math import log, sqrt, exp
-
-from numpy import array, asarray, float64, ones, zeros, int32,all,any, shape
-import numpy as na
-from corebio.moremath import *
+from __future__ import division, print_function
 
 import random
+from math import log, sqrt, exp
+
+import numpy as na
+from numpy import array, asarray, float64, ones, zeros, int32, all, any, shape
+
+from corebio.moremath import *
+
 
 class Dirichlet(object) :
     """The Dirichlet probability distribution. The Dirichlet is a continuous 

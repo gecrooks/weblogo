@@ -52,7 +52,7 @@ VLARHF-QH-EFTPELQ-HALEAHFCA------V---GDALA----K-----A-----YH-----------
 
 
 """
-from __future__ import absolute_import, print_function
+from __future__ import absolute_import, division, print_function
 
 import re
 from ..utils import *
@@ -195,7 +195,7 @@ def writeseq(afile, seq):
         print('>', file=afile)
     L = len(seq)
     line_length = 80
-    for n in range (1+ L/line_length) :
+    for n in range(1 + L // line_length) :
         print(seq[n * line_length : (n+1) * line_length], file=afile)
     print(file=afile)
 

@@ -49,17 +49,19 @@ class Color(object):
 
     """
     def __init__(self, red, green, blue) :
-        
-        if ( type(red) is not type(green) ) or (type(red) is not type(blue)):
+        if not (type(red) == type(green) == type(blue)):
             raise TypeError("Mixed floats and integers?")
-
-        if type(red) is type(1) : red = float(red)/255.
-        if type(green) is type(1) : green = float(green)/255.                  
-        if type(blue) is type(1) : blue = float(blue)/255.
-
-        self.red = max(0., min(float(red), 1.0))
-        self.green = max(0., min(float(green), 1.0))
-        self.blue = max(0., min(float(blue), 1.0))
+        # Convert integer RBG values in [0, 255] to floats in [0, 1]
+        if isinstance(red, int):
+            red /= 255.
+        if isinstance(green, int):
+            green /= 255.
+        if isinstance(blue, int):
+            blue /= 255.
+        # Clip RBG values to [0, 1]
+        self.red = max(0., min(red, 1.0))
+        self.green = max(0., min(green, 1.0))
+        self.blue = max(0., min(blue, 1.0))
 
     #@staticmethod
     def names():
