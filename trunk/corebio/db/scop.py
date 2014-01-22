@@ -137,7 +137,7 @@ class Scop(object):
         self.nodes_by_sunid = dict()
         self.domains_by_sid = dict()
 
-    #@classmethod
+    @classmethod
     def parse(cls, dir_path, version) :
         """Build the SCOP hierarchy from the SCOP parsable files.
             
@@ -162,9 +162,8 @@ class Scop(object):
             if hie_file : hie_file.close()
         
         return scop
-    parse = classmethod(parse)
-    
-    #@classmethod
+
+    @classmethod
     def parse_files(cls, cla_file, des_file, hie_file):
         """Build the SCOP hierarchy from the SCOP parsable files.
         
@@ -235,7 +234,6 @@ class Scop(object):
         self.domains = tuple(domains)
 
         return self
-    parse_files = classmethod(parse_files)
 
 
     def write_hie(self, stream) :
@@ -477,15 +475,16 @@ class DesRecord(object):
         s.append(self.description)        
         return "\t".join(map(str,s)) + "\n"
 
-    #@staticmethod
+    @staticmethod
     def records(des_file):
         """Iterates over a DES file, generating DesRecords """
         for line in des_file:
             if line[0] =='#':  continue  # A comment 
             if line.isspace() : continue
             yield DesRecord(line)
-    records = staticmethod(records)
+
 # End DesRecord        
+
 
 class HieRecord(object):
     """Handle the SCOP HIErarchy files, which describe the SCOP hierarchy in
@@ -558,14 +557,14 @@ class HieRecord(object):
         return "\t".join(s) + "\n"
 
 
-    #@staticmethod
+    @staticmethod
     def records(hie_file):
         """Iterates over a DOM file, generating DomRecords """
         for line in hie_file:
             if line[0] =='#':  continue  # A comment 
             if line.isspace() : continue
             yield HieRecord(line)
-    records = staticmethod(records)
+
 # End HieRecord
 
 
@@ -627,19 +626,17 @@ class ClaRecord(object):
        
         return "\t".join(map(str,s)) + "\n"
 
-    #@staticmethod
+    @staticmethod
     def records(cla_file):
         """Iterates over a DOM file, generating DomRecords """
         for line in cla_file:
             if line[0] =='#':  continue  # A comment 
             if line.isspace() : continue
             yield ClaRecord(line)
-    records = staticmethod(records)
 
 # End ClaRecord
    
    
-
 
 class DomRecord(object):
     """Handle the SCOP DOMain file.
@@ -682,15 +679,15 @@ class DomRecord(object):
         s.append(str(self.residues).replace(" ","\t") )
         s.append(self.hierarchy)
         return "\t".join(s) + "\n"
-        
-    #@staticmethod
+
+    @staticmethod
     def records(dom_file):
         """Iterates over a DOM file, generating DomRecords """
         for line in dom_file:
             if line[0] =='#':  continue  # A comment 
             if line.isspace() : continue
             yield DomRecord(line)
-    records = staticmethod(records)
+
 # End DomRecord
     
 

@@ -226,15 +226,14 @@ class RafSeqMap(object) :
             self.res.append(r)
     # end __init__
 
-    #@staticmethod
+    @staticmethod
     def records(raf_file) :
         """Iterates over a Raf file, generating RafSeqMaps """
         for line in raf_file:
             if line[0] =='#':  continue  # A comment 
             if line.isspace() : continue
             yield RafSeqMap(line)        
-    records = staticmethod(records)      
-        
+
     def index(self, resid, chainid="_") :
         for i in range(0, len(self.res)) :
             if self.res[i].resid == resid and self.res[i].chainid == chainid :
