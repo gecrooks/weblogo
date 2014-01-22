@@ -132,9 +132,13 @@ if sys.version_info[0] >= 3:
     from urllib.parse import urlencode, quote
     from urllib.error import HTTPError
 
+    # Python 3 removed cmp()
+    def cmp(a, b):
+        return (a > b) - (a < b)
+
 else:
     #Python 2 code
-    from __builtin__ import open, basestring, unicode
+    from __builtin__ import open, basestring, unicode, cmp
 
     #Import Python3 like iterator functions:
     from future_builtins import zip, map, filter

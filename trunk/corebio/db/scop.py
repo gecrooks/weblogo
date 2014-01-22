@@ -46,7 +46,7 @@ from __future__ import print_function
 
 import os, re
 
-from .._py3k import iteritems
+from .._py3k import iteritems, cmp
 
 nodeCodeDict = { 'cl':'class', 'cf':'fold', 'sf':'superfamily',
                  'fa':'family', 'dm':'protein', 'sp':'species', 'px':'domain'}
@@ -68,16 +68,15 @@ def cmp_sccs(sccs1, sccs2) :
     superfamily, and family, respectively.
 
     """
-
     s1 = sccs1.split(".")
     s2 = sccs2.split(".")
+    if s1[0] != s2[0]:
+        return cmp(s1[0], s2[0])
 
-    if s1[0] != s2[0]: return cmp(s1[0], s2[0])
+    s1 = tuple(map(int, s1[1:]))
+    s2 = tuple(map(int, s2[1:]))
+    return cmp(s1, s2)
 
-    s1 = map(int, s1[1:])
-    s2 = map(int, s2[1:])
-
-    return cmp(s1,s2)
 
 def sccs_relation(sccs1, sccs2) :
     """Are two SCOP domains related? Returns +1 if homologous , -1 if not homologous, 
@@ -241,20 +240,16 @@ class Scop(object):
 
     def write_hie(self, stream) :
         """Build an HIE SCOP parsable file from this object"""
-        nodes = self.nodes_by_sunid.values()
         # We order nodes to ease comparison with original file
-        nodes.sort(lambda n1,n2: cmp(n1.sunid, n2.sunid))
-
+        nodes = sorted(self.nodes_by_sunid.values(), key=lambda n: n.sunid)
         for n in nodes :
             stream.write(str(n.to_hie_record()))
 
 
     def write_des(self, stream) :
         """Build a DES SCOP parsable file from this object""" 
-        nodes = self.nodes_by_sunid.values()
         # Origional SCOP file is not ordered?
-        nodes.sort(lambda n1,n2: cmp(n1.sunid, n2.sunid))
-
+        nodes = sorted(self.nodes_by_sunid.values(), key=lambda n: n.sunid)
         for n in nodes :
             if n != self.root :
                 stream.write(str(n.to_des_record()))
@@ -262,10 +257,8 @@ class Scop(object):
 
     def write_cla(self, stream) :
         """Build a CLA SCOP parsable file from this object"""                
-        nodes = self.domains_by_sid.values()
         # We order nodes to ease comparison with original file
-        nodes.sort(lambda n1,n2: cmp(n1.sunid, n2.sunid))
-
+        nodes = sorted(self.domains_by_sid.values(), key=lambda n: n.sunid)
         for n in nodes :
             stream.write(str(n.to_cla_record()))
 # End Scop
