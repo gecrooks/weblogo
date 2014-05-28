@@ -41,8 +41,8 @@ import sys
 import cgi as cgilib
 import cgitb; cgitb.enable()
 
-from color import *
-from colorscheme import ColorScheme, ColorGroup
+from weblogolib.color import *
+from weblogolib.colorscheme import ColorScheme, ColorGroup
 from string import Template
 
 import weblogolib
