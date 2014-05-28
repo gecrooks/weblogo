@@ -38,10 +38,10 @@ class test_plain_io(unittest.TestCase) :
         f = StringIO(plain_io.example)
         seqs = plain_io.read(f)
         #print seqs
-        self.assertEquals(len(seqs), 1)
-        self.assertEquals(seqs[0].name, None)
+        self.assertEqual(len(seqs), 1)
+        self.assertEqual(seqs[0].name, None)
         #print seqs[0]
-        self.assertEquals(len(seqs[0]), 450)
+        self.assertEqual(len(seqs[0]), 450)
   
   
     def test_write_seq(self) :
@@ -55,9 +55,9 @@ class test_plain_io(unittest.TestCase) :
         seqs2 = plain_io.read(fout)
         
         #print seqs[0].alphabet !=seqs2[0].alphabet
-        self.assertEquals(seqs[0].alphabet, seqs2[0].alphabet)  
-        self.assertEquals(seqs[0], seqs2[0])  
-        self.assertEquals(seqs, seqs2)  
+        self.assertEqual(seqs[0].alphabet, seqs2[0].alphabet)  
+        self.assertEqual(seqs[0], seqs2[0])  
+        self.assertEqual(seqs, seqs2)  
 
              
 if __name__ == '__main__':

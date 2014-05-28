@@ -165,55 +165,55 @@ class test_SubMatrix(unittest.TestCase) :
 
     def test_read_asymmetric_fail(self) :
         f = StringIO(test_matrix4)
-        self.failUnlessRaises(ValueError, SubMatrix.read, f )
+        self.assertRaises(ValueError, SubMatrix.read, f )
 
     def test_read_alphabets(self) :
 
         # incompatable alphabets
         f = StringIO(test_matrix3)
-        self.failUnlessRaises(ValueError, 
+        self.assertRaises(ValueError, 
             SubMatrix.read, f )
 
         f = StringIO(test_matrix3)
         mat = SubMatrix.read(f, alphabet = Alphabet('ARNDCQEGHILKMFPSTWYV'))
         
         f2 = StringIO(test_matrix1)
-        self.failUnlessRaises(ValueError, 
+        self.assertRaises(ValueError, 
             SubMatrix.read, f2 , unambiguous_protein_alphabet)
 
     def test_read_corrupt(self) :
         f = StringIO(test_matrix2)
-        self.failUnlessRaises(ValueError, 
+        self.assertRaises(ValueError, 
             SubMatrix.read, f )
  
     def test_read_pam(self):
         mat = SubMatrix.read( data.data_stream("pam250") )
-        self.assertEquals(mat[0,0], 2.0)
+        self.assertEqual(mat[0,0], 2.0)
 
         mat = SubMatrix.read( data.data_stream("pam120") )
-        self.assertEquals(mat[4,5], -7)
+        self.assertEqual(mat[4,5], -7)
 
     def test_read_blosum(self):
         mat = SubMatrix.read( data.data_stream("blosum80") )
-        self.assertEquals(mat[0,10], -3)
+        self.assertEqual(mat[0,10], -3)
 
         mat = SubMatrix.read( data.data_stream("blosum62") )
-        self.assertEquals(mat[4,5], -4)
+        self.assertEqual(mat[4,5], -4)
 
     def test_read_blast(self):
          # New style blast matrices have letters at beginning of lines and a '*'
         mat = SubMatrix.read(testdata_stream("blosum35.blast.new") )
-        self.assertEquals(mat[4,5], -3)
+        self.assertEqual(mat[4,5], -3)
         
         # Matrices formatted for old blast have a '*' (stop)
         # column and no letters at the beggining of lines 
         mat = SubMatrix.read(testdata_stream("blosum35.blast") )
-        self.assertEquals(mat[0,10], -2)
-        self.assertEquals(mat.array.shape, (23,23))
+        self.assertEqual(mat[0,10], -2)
+        self.assertEqual(mat.array.shape, (23,23))
 
         # For comparison, we'll also parse a matrix without '*'
         mat = SubMatrix.read(testdata_stream("pam250.mat") )
-        self.assertEquals(mat[4,5], -5)
+        self.assertEqual(mat[4,5], -5)
         
 
     

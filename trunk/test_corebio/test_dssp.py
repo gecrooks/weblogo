@@ -15,25 +15,25 @@ class test_dssp_io(unittest.TestCase) :
 
     def test_1(self) :
         r = DsspRecord(testdata_stream('1crn.dssp'))
-        self.assertEquals(r.pdbid, "1crn")
-        self.assertEquals(len(r.residues), 46 )
+        self.assertEqual(r.pdbid, "1crn")
+        self.assertEqual(len(r.residues), 46 )
 
         res = r.residues[11]
-        self.assertEquals(res.num, 12)
-        self.assertEquals(res.resid, '12')
-        self.assertEquals(res.chainid, ' ')
-        self.assertEquals(res.aa, 'N')
-        self.assertEquals(res.secstruc, "H")
-        self.assertEquals(res.solvent_acc_area, float(82))
-        self.assertEquals(res.phi, float(-64.9))
-        self.assertEquals(res.psi, float(-39.5))
-        self.assertEquals(res.coord, (float(3.5), float(3.9), float(6.8)))
+        self.assertEqual(res.num, 12)
+        self.assertEqual(res.resid, '12')
+        self.assertEqual(res.chainid, ' ')
+        self.assertEqual(res.aa, 'N')
+        self.assertEqual(res.secstruc, "H")
+        self.assertEqual(res.solvent_acc_area, float(82))
+        self.assertEqual(res.phi, float(-64.9))
+        self.assertEqual(res.psi, float(-39.5))
+        self.assertEqual(res.coord, (float(3.5), float(3.9), float(6.8)))
 
-        self.assertEquals(str(r.primary()),
+        self.assertEqual(str(r.primary()),
                           "TTabPSIVARSNFNVcRLPGTPEAIcATYTGbIIIPGATaPGDYAN")
-        self.assertEquals(str(r.secondary()),
+        self.assertEqual(str(r.secondary()),
                           " EE SSHHHHHHHHHHHTTT  HHHHHHHHS EE SSS   GGG  ")
-        self.assertEquals(r.total_area(), float(3010.0))
+        self.assertEqual(r.total_area(), float(3010.0))
 
 
 

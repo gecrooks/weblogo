@@ -51,71 +51,71 @@ class test_phylip_io(unittest.TestCase) :
         f = testdata_stream("phylip_test_1.phy")
         seqs = phylip_io.read(f)
         #print seqs
-        self.assertEquals(len(seqs), 10)
-        self.assertEquals(seqs[0].name, "Cow")
-        self.assertEquals(len(seqs[1]), 234)
+        self.assertEqual(len(seqs), 10)
+        self.assertEqual(seqs[0].name, "Cow")
+        self.assertEqual(len(seqs[1]), 234)
     
     def test_parse_plain_fail(self) :
         # should fail with parse error
         f = StringIO(plain_io.example)
-        self.failUnlessRaises(ValueError, 
+        self.assertRaises(ValueError, 
             phylip_io.read, f  )
     
     def test_parse_phylip_test_2(self):
         f = testdata_stream('phylip_test_2.phy')
         seqs = phylip_io.read(f)
-        self.assertEquals(len(seqs), 6)
-        self.assertEquals(len(seqs[0]), 20)
-        self.assertEquals(str(seqs[1]), "CGTTACTCGTTGTCGTTACT")
-        self.assertEquals(seqs[1].name, "Hesperorni")
+        self.assertEqual(len(seqs), 6)
+        self.assertEqual(len(seqs[0]), 20)
+        self.assertEqual(str(seqs[1]), "CGTTACTCGTTGTCGTTACT")
+        self.assertEqual(seqs[1].name, "Hesperorni")
     
     def test_parse_clustal_fail(self) :
         # should fail with parse error
         f = StringIO(clustal_io.example)
-        self.failUnlessRaises(ValueError, 
+        self.assertRaises(ValueError, 
             phylip_io.read, f , protein_alphabet )
     
     def test_parse_phylip_test_3(self):
         f = testdata_stream('phylip_test_3.phy')
         seqs = phylip_io.read(f)
-        self.assertEquals(len(seqs), 6)
-        self.assertEquals(len(seqs[0]), 20)
-        self.assertEquals(str(seqs[1]), "CGTTACTCGTTGTCGTTACT")
-        self.assertEquals(seqs[1].name, "Hesperorni")
+        self.assertEqual(len(seqs), 6)
+        self.assertEqual(len(seqs[0]), 20)
+        self.assertEqual(str(seqs[1]), "CGTTACTCGTTGTCGTTACT")
+        self.assertEqual(seqs[1].name, "Hesperorni")
     
     def test_parse_phylip_test_4(self):
         f = testdata_stream('phylip_test_4.phy')
         seqs = phylip_io.read(f)
-        self.assertEquals(len(seqs), 6)
-        self.assertEquals(len(seqs[0]), 25)
-        self.assertEquals(str(seqs[1]), "GTGGTGGTGGGCGCCGGCCGTGTGG")
-        self.assertEquals(seqs[2].name, "ddrasa")
+        self.assertEqual(len(seqs), 6)
+        self.assertEqual(len(seqs[0]), 25)
+        self.assertEqual(str(seqs[1]), "GTGGTGGTGGGCGCCGGCCGTGTGG")
+        self.assertEqual(seqs[2].name, "ddrasa")
     
     def test_parse_phylip_test_5(self):
         f = testdata_stream('phylip_test_5.phy')
         seqs = phylip_io.read(f)
-        self.assertEquals(len(seqs), 6)
-        self.assertEquals(len(seqs[0]), 50)
-        self.assertEquals(str(seqs[1]), "GTGGTGGTGGGCGCCGGCCGTGTGGGTGGTGGTGGGCGCCGGCCGTGTGG")
-        self.assertEquals(seqs[2].name, "ddrasa")
+        self.assertEqual(len(seqs), 6)
+        self.assertEqual(len(seqs[0]), 50)
+        self.assertEqual(str(seqs[1]), "GTGGTGGTGGGCGCCGGCCGTGTGGGTGGTGGTGGGCGCCGGCCGTGTGG")
+        self.assertEqual(seqs[2].name, "ddrasa")
         
     def test_parse_wrong_phylip_codes_1(self):
         f = testdata_stream('phylip_test_6.corrupt.phy')
-        self.failUnlessRaises(ValueError, 
+        self.assertRaises(ValueError, 
             phylip_io.read, f , protein_alphabet )
             
     def test_parse_wrong_phylip_codes_2(self):
         f = testdata_stream('phylip_test_7.corrupt.phy')
-        self.failUnlessRaises(ValueError, 
+        self.assertRaises(ValueError, 
             phylip_io.read, f , protein_alphabet )
 
     def test_parse_phylip_dna(self):
         f = testdata_stream('dna.phy')
         seqs = phylip_io.read(f)
-        self.assertEquals(len(seqs), 10)
-        self.assertEquals(len(seqs[0]), 705)
-        self.assertEquals( str(seqs[1][0:10]), "ATGGCACACC")
-        self.assertEquals(seqs[2].name, "Chicken")
+        self.assertEqual(len(seqs), 10)
+        self.assertEqual(len(seqs[0]), 705)
+        self.assertEqual( str(seqs[1][0:10]), "ATGGCACACC")
+        self.assertEqual(seqs[2].name, "Chicken")
   
    
              

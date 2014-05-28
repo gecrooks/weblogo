@@ -10,7 +10,7 @@ class test_data(unittest.TestCase) :
 
     def test_amino_acid_composition(self) :
         cl = [ amino_acid_composition[k] for k in "ARNDCQEGHILKMFPSTWYV"]
-        self.assertAlmostEquals( sum(cl), 1)
+        self.assertAlmostEqual( sum(cl), 1)
     
    
     def test_resources(self) :

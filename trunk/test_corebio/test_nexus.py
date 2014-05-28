@@ -24,7 +24,7 @@ class test_nexus(unittest.TestCase):
             "one should be punished, for (that)!",
             "t5","t6","t7","t8","t9"]
         taxa = n.taxlabels
-        self.assertEquals( taxa, expected)
+        self.assertEqual( taxa, expected)
 
     
     def test_parse_protein(self) :
@@ -37,9 +37,9 @@ class test_nexus(unittest.TestCase):
         
         taxa = n.taxlabels
         taxa.sort()
-        self.assertEquals( len(taxa) ,10)
-        self.assertEquals( taxa[0], "Carp")
-        self.assertEquals( taxa[-1], "Whale")
+        self.assertEqual( len(taxa) ,10)
+        self.assertEqual( taxa[0], "Carp")
+        self.assertEqual( taxa[-1], "Whale")
 
     
     def test_TreeTest1(self):
@@ -52,7 +52,7 @@ class test_nexus(unittest.TestCase):
         
         # Return node_id of common ancestor if
         # taxon_list is monophyletic, -1 otherwise.        
-        self.assertEquals( t3.is_monophyletic(['t1','t5']), 13)
+        self.assertEqual( t3.is_monophyletic(['t1','t5']), 13)
  
         t3.split(parent_id=t3.search_taxon('t9'))
         

@@ -101,11 +101,11 @@ class test_utils(unittest.TestCase) :
         i = Reiterate( iter("123456") )
         next(i)
         i.push("0")
-        self.assertEquals( "0", next(i))
+        self.assertEqual( "0", next(i))
         p = i.peek()
         n = next(i)
-        self.assertEquals(p,n)
-        self.assertEquals( i.index() ,2)
+        self.assertEqual(p,n)
+        self.assertEqual( i.index() ,2)
         self.assertTrue( i.has_item() )
         
         # Repeated application of Reiterate should return same iterator.
@@ -186,7 +186,7 @@ class test_utils(unittest.TestCase) :
             return k.group(1)
 
         idx = FileIndex(stream, linekey=linekey, parser=parser)
-        self.assertEquals(len(idx), 4)
+        self.assertEqual(len(idx), 4)
         self.assertEqual(idx[0], 0)
         self.assertEqual(idx[3], 4)
         self.assertRaises(IndexError, idx.__getitem__, 5)

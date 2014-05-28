@@ -41,16 +41,16 @@ class test_ig_io(unittest.TestCase) :
         f = StringIO(ig_io.example)
         seqs = ig_io.read(f)
   
-        self.assertEquals(len(seqs), 2)        
-        self.assertEquals(seqs[0].description, "H.sapiens fau mRNA, 518 bases")
-        self.assertEquals(seqs[1].name, "HSFAU1")
-        self.assertEquals(len(seqs[1]), 299)
+        self.assertEqual(len(seqs), 2)        
+        self.assertEqual(seqs[0].description, "H.sapiens fau mRNA, 518 bases")
+        self.assertEqual(seqs[1].name, "HSFAU1")
+        self.assertEqual(len(seqs[1]), 299)
 
     def test_read2(self):
         f = testdata_stream("intelligenetics.txt")
         seqs = ig_io.read(f)
-        self.assertEquals(len(seqs[0]), 518)
-        self.assertEquals(len(seqs[1]), 2016)
+        self.assertEqual(len(seqs[0]), 518)
+        self.assertEqual(len(seqs[1]), 2016)
        
     def test_write_seq(self) :
         f = StringIO(ig_io.example)
@@ -63,7 +63,7 @@ class test_ig_io(unittest.TestCase) :
 
         seqs2 = ig_io.read(fout)
         
-        self.assertEquals(seqs, seqs2)
+        self.assertEqual(seqs, seqs2)
     
    
    
