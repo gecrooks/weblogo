@@ -40,14 +40,14 @@ class test_table_io(unittest.TestCase) :
     def test_read(self) :
         f = StringIO(table_io.example)
         seqs = table_io.read(f)
-        self.assertEquals(len(seqs), 10)
-        self.assertEquals(seqs[2].name, "EC0003")
-        self.assertEquals(len(seqs[1]), 50)
+        self.assertEqual(len(seqs), 10)
+        self.assertEqual(seqs[2].name, "EC0003")
+        self.assertEqual(len(seqs[1]), 50)
   
     def test_read_fail(self) :
         f = StringIO(plain_io.example)
         # Wrong alphabet
-        self.failUnlessRaises(ValueError, table_io.read, f)
+        self.assertRaises(ValueError, table_io.read, f)
    
     def test_write_seq(self) :
         f = StringIO(table_io.example)
@@ -59,7 +59,7 @@ class test_table_io(unittest.TestCase) :
         fout.seek(0)
         seqs2 = table_io.read(fout)
         
-        self.assertEquals(seqs, seqs2)
+        self.assertEqual(seqs, seqs2)
    
    
    

@@ -61,7 +61,7 @@ class test_read(unittest.TestCase) :
             testdata_stream("ssearch/ssearch_out_compact_dbvdb.txt"),    
         ]
         results = [read(f) for f in files]
-        self.assertEquals( len(files), len(results) )
+        self.assertEqual( len(files), len(results) )
       
 
 
@@ -84,30 +84,30 @@ class test_blastxml_read(unittest.TestCase) :
     def test_scan(self) :
         files = self.examples()
         reports = [blastxml.read(f) for f in files]
-        self.assertEquals( len(files), len(reports) )
+        self.assertEqual( len(files), len(reports) )
         
         # First report
         r = reports[0]
-        self.assertEquals( r.algorithm, "blastp" )           
-        self.assertEquals( r.algorithm_version, "2.2.12" )  
-        self.assertEquals( len(r.results[0].hits), 212 )
+        self.assertEqual( r.algorithm, "blastp" )           
+        self.assertEqual( r.algorithm_version, "2.2.12" )  
+        self.assertEqual( len(r.results[0].hits), 212 )
         hit = r.results[0].hits[6]
-        self.assertEquals( hit.target.name, "gi|49609685|emb|CAG73118.1|" )
-        self.assertEquals( hit.target.length, 86 )
-        self.assertAlmostEquals( hit.alignments[0].raw_score, 219 )
-        self.assertAlmostEquals( hit.alignments[0].bit_score, 88.9669 )
-        self.assertAlmostEquals( hit.alignments[0].significance, 4.10205e-17 )
+        self.assertEqual( hit.target.name, "gi|49609685|emb|CAG73118.1|" )
+        self.assertEqual( hit.target.length, 86 )
+        self.assertAlmostEqual( hit.alignments[0].raw_score, 219 )
+        self.assertAlmostEqual( hit.alignments[0].bit_score, 88.9669 )
+        self.assertAlmostEqual( hit.alignments[0].significance, 4.10205e-17 )
         
-        self.assertEquals("MGGISIWQXXXXXXXXXXXFGTKKLGSIGSDLGASIKGFKKAMSDDEP--KQDKTSQDADFTAKTIADKQADTNQEQAKTEDAKRHDKEQV", hit.alignments[0].query_seq)
+        self.assertEqual("MGGISIWQXXXXXXXXXXXFGTKKLGSIGSDLGASIKGFKKAMSDDEP--KQDKTSQDADFTAKTIADKQADTNQEQAKTEDAKRHDKEQV", hit.alignments[0].query_seq)
 
-        self.assertEquals( "MGGISIWQLLI+AVIVVLLFGTKKLGSIGSDLGASIKGFKKAMSDD+ KQDKTSQDADFTAK+IADKQ      +AK EDAK  DKEQV", r.results[0].hits[5].alignments[0].mid_seq)
+        self.assertEqual( "MGGISIWQLLI+AVIVVLLFGTKKLGSIGSDLGASIKGFKKAMSDD+ KQDKTSQDADFTAK+IADKQ      +AK EDAK  DKEQV", r.results[0].hits[5].alignments[0].mid_seq)
 
         
         # Test megablast parseing with two queroes.
         r = reports[5] 
-        self.assertEquals( r.algorithm, "blastn" )           
-        self.assertEquals( r.algorithm_version, "2.2.14" ) 
-        self.assertEquals( len(r.results), 2)
+        self.assertEqual( r.algorithm, "blastn" )           
+        self.assertEqual( r.algorithm_version, "2.2.14" ) 
+        self.assertEqual( len(r.results), 2)
         
 
 class test_fasta_read(unittest.TestCase) :  
@@ -129,55 +129,55 @@ class test_fasta_read(unittest.TestCase) :
         files = self.examples()
 
         reports = [fasta.read(f) for f in files]
-        self.assertEquals( len(files), len(reports) )
+        self.assertEqual( len(files), len(reports) )
  
         # First report
         r = reports[0]
         #print repr(report)
         
         
-        self.assertEquals( r.algorithm, "SSEARCH" )           
-        self.assertEquals( r.algorithm_version, "3.4t24" )  
-        self.assertEquals( len(r.results[0].hits), 16 )
+        self.assertEqual( r.algorithm, "SSEARCH" )           
+        self.assertEqual( r.algorithm_version, "3.4t24" )  
+        self.assertEqual( len(r.results[0].hits), 16 )
         # d8rxna_ 7.34.3.1.1 Rubredoxin [Desulfovibrio vulg  (  52)   34  15.7     6.9
         hit = r.results[0].hits[10]
-        self.assertEquals( hit.target.name, "d8rxna_" )
-        self.assertEquals( hit.target.length, 52 )
-        self.assertAlmostEquals( hit.raw_score, 34 )
-        self.assertAlmostEquals( hit.bit_score, 15.7 )
-        self.assertAlmostEquals( hit.significance, 6.9 )
+        self.assertEqual( hit.target.name, "d8rxna_" )
+        self.assertEqual( hit.target.length, 52 )
+        self.assertAlmostEqual( hit.raw_score, 34 )
+        self.assertAlmostEqual( hit.bit_score, 15.7 )
+        self.assertAlmostEqual( hit.significance, 6.9 )
         #print repr(hit)
-        self.assertEquals( hit.alignments[0].target_seq, 'EGFLHLEDKPHPLQCQFFVESVIPAGSYQVPYRINVNNG-RPELAFDFKAMKRA..............')
+        self.assertEqual( hit.alignments[0].target_seq, 'EGFLHLEDKPHPLQCQFFVESVIPAGSYQVPYRINVNNG-RPELAFDFKAMKRA..............')
 
         # Compact report
         r = reports[1]
-        self.assertEquals( r.algorithm, "SSEARCH" )           
-        self.assertEquals( r.algorithm_version, "3.4t24" )  
-        self.assertEquals( len(r.results[0].hits), 16 )
+        self.assertEqual( r.algorithm, "SSEARCH" )           
+        self.assertEqual( r.algorithm_version, "3.4t24" )  
+        self.assertEqual( len(r.results[0].hits), 16 )
         # d8rxna_ 7.34.3.1.1 Rubredoxin [Desulfovibrio vulg  (  52)   34  15.7     6.9
         hit = r.results[0].hits[10]
-        self.assertEquals( hit.target.name, "d8rxna_" )
-        self.assertEquals( hit.target.length, 52 )
-        self.assertAlmostEquals( hit.raw_score, 34 )
-        self.assertAlmostEquals( hit.bit_score, 15.7 )
-        self.assertAlmostEquals( hit.significance, 6.9 )
+        self.assertEqual( hit.target.name, "d8rxna_" )
+        self.assertEqual( hit.target.length, 52 )
+        self.assertAlmostEqual( hit.raw_score, 34 )
+        self.assertAlmostEqual( hit.bit_score, 15.7 )
+        self.assertAlmostEqual( hit.significance, 6.9 )
 
 
 
         # DBvDB report
         #result = reports[4][1]
         r = reports[4]
-        self.assertEquals( r.algorithm, "SSEARCH" )           
-        self.assertEquals( r.algorithm_version, "3.4t24" )  
-        self.assertEquals( len(r.results), 23 )
-        self.assertEquals( len(r.results[1].hits), 21 )
+        self.assertEqual( r.algorithm, "SSEARCH" )           
+        self.assertEqual( r.algorithm_version, "3.4t24" )  
+        self.assertEqual( len(r.results), 23 )
+        self.assertEqual( len(r.results[1].hits), 21 )
         # d2sn3__ 7.3.6.1.1 scorpion toxin [Centruroides sc  (  65)   58  22.0   0.058 ...
         hit = r.results[1].hits[1]
-        self.assertEquals( hit.target.name, "d2sn3__" )
-        self.assertEquals( hit.target.length, 65 )
-        self.assertAlmostEquals( hit.raw_score, 58 )
-        self.assertAlmostEquals( hit.bit_score, 22 )
-        self.assertAlmostEquals( hit.significance, 0.058  )
+        self.assertEqual( hit.target.name, "d2sn3__" )
+        self.assertEqual( hit.target.length, 65 )
+        self.assertAlmostEqual( hit.raw_score, 58 )
+        self.assertAlmostEqual( hit.bit_score, 22 )
+        self.assertAlmostEqual( hit.significance, 0.058  )
 
 
    # def test_this(self) :

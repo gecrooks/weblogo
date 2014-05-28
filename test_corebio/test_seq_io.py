@@ -50,9 +50,9 @@ class test_seq_io(unittest.TestCase) :
     def test_parse_clustal(self) :
         f = testdata_stream("clustal.aln")
         seqs = seq_io.read(f)
-        self.assertEquals(len(seqs), 7)
-        self.assertEquals(seqs[1].name, "CATH_HUMAN")
-        self.assertEquals(len(seqs[1]), 395)
+        self.assertEqual(len(seqs), 7)
+        self.assertEqual(seqs[1].name, "CATH_HUMAN")
+        self.assertEqual(len(seqs[1]), 395)
   
    
     def test_parse_error(self) :
@@ -77,22 +77,22 @@ class test_seq_io(unittest.TestCase) :
         f = StringIO(array_io.example)
         seqs = seq_io.read(f)
         #print seqs
-        self.assertEquals(len(seqs), 8)
-        self.assertEquals(seqs[0].name, None)
-        self.assertEquals(len(seqs[1]), 60)
+        self.assertEqual(len(seqs), 8)
+        self.assertEqual(seqs[0].name, None)
+        self.assertEqual(len(seqs[1]), 60)
   
     def test_read_fasta(self) :
         f = StringIO(fasta_io.example)
         seqs = seq_io.read(f)
         #print seqs
-        self.assertEquals(len(seqs), 3)
-        self.assertEquals(seqs[0].description, "Lamprey GLOBIN V - SEA LAMPREY")
-        self.assertEquals(len(seqs[1]), 231)
+        self.assertEqual(len(seqs), 3)
+        self.assertEqual(seqs[0].description, "Lamprey GLOBIN V - SEA LAMPREY")
+        self.assertEqual(len(seqs[1]), 231)
   
     def test_parse_globin_fasta(self) :
         f = testdata_stream("globin.fa")
         seqs = seq_io.read(f)
-        self.assertEquals(len(seqs), 56)
+        self.assertEqual(len(seqs), 56)
     
     def test_parsers(self) :
         # seq_io._parsers is an ordered  list of sequence parsers that are 

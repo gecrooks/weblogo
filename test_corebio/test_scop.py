@@ -222,14 +222,14 @@ class DomTests(unittest.TestCase):
             count = 0
             for rec in DomRecord.records(f):
                 count +=1
-            self.assertEquals(count, 10)
+            self.assertEqual(count, 10)
 
     def testStr(self):
         with open(self.filename) as f:
             for line in f:
                 if line:
                     rec = DomRecord(line)
-                    self.assertEquals(str(rec).rstrip(), line.rstrip())
+                    self.assertEqual(str(rec).rstrip(), line.rstrip())
 
     def testError(self) :
         corruptDom = "49xxx268\tsp\tb.1.2.1\t-\n"
@@ -238,10 +238,10 @@ class DomTests(unittest.TestCase):
     def testRecord(self) :
         recLine = 'd7hbib_\t7hbi\tb:\t1.001.001.001.001.001'
         rec = DomRecord(recLine)
-        self.assertEquals(rec.sid, 'd7hbib_')
-        self.assertEquals(rec.residues.pdbid,'7hbi')
-        self.assertEquals(rec.residues.fragments, (('b','',''),))
-        self.assertEquals(rec.hierarchy,'1.001.001.001.001.001')
+        self.assertEqual(rec.sid, 'd7hbib_')
+        self.assertEqual(rec.residues.pdbid,'7hbi')
+        self.assertEqual(rec.residues.fragments, (('b','',''),))
+        self.assertEqual(rec.hierarchy,'1.001.001.001.001.001')
 
 
 class ResiduesTests(unittest.TestCase):
@@ -315,7 +315,7 @@ class HieTests(unittest.TestCase):
             count = 0
             for rec in HieRecord.records(f):
                 count += 1
-            self.assertEquals(count, 21, "Wrong number of records?!")
+            self.assertEqual(count, 21, "Wrong number of records?!")
 
     def testStr(self):
         with open(self.filename) as f:

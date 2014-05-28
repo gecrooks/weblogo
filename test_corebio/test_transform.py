@@ -40,25 +40,25 @@ class test_mask_low_complexity(unittest.TestCase):
         xseq = Seq( 'X' * len(bseq), protein_alphabet)
         
         sseq = mask_low_complexity(bseq)
-        self.assertEquals(aseq, sseq)
+        self.assertEqual(aseq, sseq)
 
         # Nothing should be segged
         sseq = mask_low_complexity(bseq, 12, 0,0)
-        self.assertEquals(bseq, sseq)
+        self.assertEqual(bseq, sseq)
      
      
         # Everthing should be segged
         sseq = mask_low_complexity(bseq, 12, 4.3,4.3)
-        self.assertEquals(sseq, xseq)
+        self.assertEqual(sseq, xseq)
 
 
 
     def test_seg_invalid(self):
         seq = Seq("KTHCGKYLSIGDHKQVYLSHH", protein_alphabet)
-        self.failUnlessRaises(ValueError, mask_low_complexity,seq, 12, -1, 0 )
-        self.failUnlessRaises(ValueError, mask_low_complexity, seq, 12, 1, 10 )
-        self.failUnlessRaises(ValueError, mask_low_complexity, seq, 6, 12, 13 )
-        self.failUnlessRaises(ValueError, mask_low_complexity, seq, 6, 2.0, 1.9 )
+        self.assertRaises(ValueError, mask_low_complexity,seq, 12, -1, 0 )
+        self.assertRaises(ValueError, mask_low_complexity, seq, 12, 1, 10 )
+        self.assertRaises(ValueError, mask_low_complexity, seq, 6, 12, 13 )
+        self.assertRaises(ValueError, mask_low_complexity, seq, 6, 2.0, 1.9 )
 
 
 class test_transform(unittest.TestCase):
@@ -67,15 +67,15 @@ class test_transform(unittest.TestCase):
                            Seq("ACGTTNNNNNNNNNNN", dna_alphabet) )
         s0 = Seq("AAAAAR",nucleic_alphabet)
         s1 = trans(s0)              # Callable ob
-        self.assertEquals(s1.alphabet, dna_alphabet)
-        self.assertEquals(s1 ,Seq("AAAAAN",  dna_alphabet))
+        self.assertEqual(s1.alphabet, dna_alphabet)
+        self.assertEqual(s1 ,Seq("AAAAAN",  dna_alphabet))
 
       
    # def test_translations(self) :
    #     s  = Seq("ACGTURYSWKMBDHVNACGTURYSWKMBDHVN", nucleic_alphabet )
    #     s2 = dna_ext_to_std(s)
    #     s3 = Seq("ACGTTNNNNNNNNNNNACGTTNNNNNNNNNNN", dna_alphabet )
-   #     self.assertEquals(s2, s3)
+   #     self.assertEqual(s2, s3)
     
     def test_reduced_protein_alphabets(self):
         seq = Seq("ENHGGKVALKTHCGKYLSIGDHKQVYLSHHLHGDHSLFHLEHHGGKVSIKGHHHHYISADHHGHVSTKEHHDHDTTFEEIII", reduced_protein_alphabet)
@@ -92,8 +92,8 @@ class test_geneticcode(unittest.TestCase) :
         for t in GeneticCode.std_list() :
             r = repr(t)
             gc = eval(r)
-            self.assertEquals( r, repr(gc) )
-            self.assertEquals( str(gc), str(t) )
+            self.assertEqual( r, repr(gc) )
+            self.assertEqual( str(gc), str(t) )
             #print r
             #print t
             #print gc
@@ -102,7 +102,7 @@ class test_geneticcode(unittest.TestCase) :
         dna = 'GCCATTGTAATGGGCCGCTGAAAGGGTGCCCGA'
         t = GeneticCode.std()     
         s = t.translate(dna)             
-        self.assertEquals( str(s), 'AIVMGR*KGAR')
+        self.assertEqual( str(s), 'AIVMGR*KGAR')
         
 
         for t in GeneticCode.std_list() :
@@ -121,7 +121,7 @@ class test_geneticcode(unittest.TestCase) :
         for code, dna, protein in cft :                                                                    
             c = GeneticCode.by_name(code)
             trans = c.translate(dna)
-            self.assertEquals( str(trans), protein)    
+            self.assertEqual( str(trans), protein)    
 
         
     def test_back_translate(self) :
@@ -129,7 +129,7 @@ class test_geneticcode(unittest.TestCase) :
         t = GeneticCode.std()
         t.table['CGA']
         s = t.back_translate(prot)
-        self.assertEquals( prot, str( t.translate(s) ) )
+        self.assertEqual( prot, str( t.translate(s) ) )
 
 
 

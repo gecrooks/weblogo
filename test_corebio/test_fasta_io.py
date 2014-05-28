@@ -82,10 +82,10 @@ class test_fasta_io(unittest.TestCase) :
         f = StringIO(fasta_io.example)
         seqs = fasta_io.read(f)
         #print seqs
-        self.assertEquals(len(seqs), 3)
-        self.assertEquals(seqs[0].description, "Lamprey GLOBIN V - SEA LAMPREY")
-        self.assertEquals(seqs[0].name, "Lamprey")
-        self.assertEquals(len(seqs[1]), 231)
+        self.assertEqual(len(seqs), 3)
+        self.assertEqual(seqs[0].description, "Lamprey GLOBIN V - SEA LAMPREY")
+        self.assertEqual(seqs[0].name, "Lamprey")
+        self.assertEqual(len(seqs[1]), 231)
 
 #    def test_read_long(self):
 #        f = testdata_stream("NC_000913.ffn")
@@ -96,7 +96,7 @@ class test_fasta_io(unittest.TestCase) :
 #        end = time.time()
 #        t = end-start
 #        
-#        self.assertEquals(count, 4243)
+#        self.assertEqual(count, 4243)
 #        
 #        # Timing is 3s 1.67 GHz G4
 #        # print t
@@ -104,25 +104,25 @@ class test_fasta_io(unittest.TestCase) :
     def test_read_fail(self) :
         f = StringIO(fasta_io.example)
         # Wrong alphabet
-        self.failUnlessRaises(ValueError, fasta_io.read, f, nucleic_alphabet)
+        self.assertRaises(ValueError, fasta_io.read, f, nucleic_alphabet)
           
     def test_parse_globin(self) :
         #f = open_resource(__file__, "test_data","globin.fa")
         f = testdata_stream("globin.fa")
         seqs = fasta_io.read(f,protein_alphabet)
-        self.assertEquals(len(seqs), 56)
+        self.assertEqual(len(seqs), 56)
 
 
     def test_parse_clustal_fail(self) :
         # should fail with parse error
         f = StringIO(clustal_io.example)
-        self.failUnlessRaises(ValueError, 
+        self.assertRaises(ValueError, 
             fasta_io.read, f , protein_alphabet )
    
     def test_parse_plain_fail(self) :
         # should fail with parse error
         f = StringIO(plain_io.example)
-        self.failUnlessRaises(ValueError, 
+        self.assertRaises(ValueError, 
             fasta_io.read, f  )
    
    
@@ -135,7 +135,7 @@ class test_fasta_io(unittest.TestCase) :
         fout.seek(0)
         seqs2 = fasta_io.read(fout)
         
-        self.assertEquals(seqs, seqs2)
+        self.assertEqual(seqs, seqs2)
     
     def test_write_with_header(self) :
         f = StringIO(fasta_io.example)
@@ -149,9 +149,9 @@ class test_fasta_io(unittest.TestCase) :
     def test_read_comments(self)   :
         f = StringIO(example_with_optional_comments)
         seqs = fasta_io.read(f)             
-        self.assertEquals(len(seqs), 2)
-        self.assertEquals( seqs[1].startswith("SATVSEI"), True)
-        self.assertEquals( seqs[1].description.splitlines()[1] , 
+        self.assertEqual(len(seqs), 2)
+        self.assertEqual( seqs[1].startswith("SATVSEI"), True)
+        self.assertEqual( seqs[1].description.splitlines()[1] , 
                 ("comment line 1 (optional)"))
         
     def test_write_comments(self)   :
@@ -161,15 +161,15 @@ class test_fasta_io(unittest.TestCase) :
         fasta_io.write(fout, seqs)
         fout.seek(0)
         seqs2 = fasta_io.read(fout)
-        self.assertEquals(seqs, seqs2)
+        self.assertEqual(seqs, seqs2)
         
-        self.assertEquals(seqs[1].description, seqs2[1].description)
+        self.assertEqual(seqs[1].description, seqs2[1].description)
    
     def test_read_headerless(self) :
         # This example has blank headers.
         f = StringIO(example3)
         seqs = fasta_io.read(f)             
-        self.assertEquals(len(seqs), 4)
+        self.assertEqual(len(seqs), 4)
         #print seqs
         
         fout = StringIO()
@@ -180,11 +180,11 @@ class test_fasta_io(unittest.TestCase) :
         f = StringIO(fasta_io.example)
         idx = fasta_io.index(f)
         #print idx._key_dict
-        self.assertEquals(len(idx), 3)
-        self.assertEquals(idx[0].description, "Lamprey GLOBIN V - SEA LAMPREY")
-        self.assertEquals(idx[0].name, "Lamprey")
-        self.assertEquals(idx['Lamprey'].name, "Lamprey")
-        self.assertEquals(len(idx['Hagfish']), 231)
+        self.assertEqual(len(idx), 3)
+        self.assertEqual(idx[0].description, "Lamprey GLOBIN V - SEA LAMPREY")
+        self.assertEqual(idx[0].name, "Lamprey")
+        self.assertEqual(idx['Lamprey'].name, "Lamprey")
+        self.assertEqual(len(idx['Hagfish']), 231)
 
     def test_read_empty(self) :
         f = StringIO()
@@ -203,7 +203,7 @@ class test_fasta_io(unittest.TestCase) :
         f=StringIO(example4)
         seqs = fasta_io.read(f)
         assert not seqs.isaligned()
-        self.assertEquals(len(seqs), 3)
+        self.assertEqual(len(seqs), 3)
         
         
         

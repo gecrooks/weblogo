@@ -16,10 +16,10 @@ class test_fasta_io(unittest.TestCase) :
         f = testdata_stream("nexus/protein.nex")  
         seqs = nexus_io.read(f)
         #print seqs
-        self.assertEquals(len(seqs), 10)
-        self.assertEquals(seqs[0].name, "Cow")
-        self.assertEquals(len(seqs[1]), 234)
-        self.assertEquals( str(seqs[0][0:10]), 'MAYPMQLGFQ')
+        self.assertEqual(len(seqs), 10)
+        self.assertEqual(seqs[0].name, "Cow")
+        self.assertEqual(len(seqs[1]), 234)
+        self.assertEqual( str(seqs[0][0:10]), 'MAYPMQLGFQ')
         
   
    
@@ -31,20 +31,20 @@ class test_fasta_io(unittest.TestCase) :
           
     def test_parse_fasta_fail(self) :
         f = testdata_stream("globin.fa")
-        self.failUnlessRaises(ValueError, 
+        self.assertRaises(ValueError, 
             nexus_io.read, f  )
             
 
     def test_parse_clustal_fail(self) :
         # should fail with parse error
         f = StringIO(clustal_io.example)
-        self.failUnlessRaises(ValueError, 
+        self.assertRaises(ValueError, 
             nexus_io.read, f , protein_alphabet )
    
     def test_parse_plain_fail(self) :
         # should fail with parse error
         f = StringIO(plain_io.example)
-        self.failUnlessRaises(ValueError, 
+        self.assertRaises(ValueError, 
             nexus_io.read, f  )
    
              

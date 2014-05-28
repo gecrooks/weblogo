@@ -50,18 +50,18 @@ class test_msf_io(unittest.TestCase) :
     def test_parse_msf(self) :
         f = testdata_stream("dna.msf")
         seqs = msf_io.read(f)
-        self.assertEquals(len(seqs), 10)
-        self.assertEquals(seqs[1].name, "Carp")
-        self.assertEquals(len(seqs[1]), 705)
-        self.assertEquals( str(seqs[2][0:10]), 'ATGGCCAACC')
+        self.assertEqual(len(seqs), 10)
+        self.assertEqual(seqs[1].name, "Carp")
+        self.assertEqual(len(seqs[1]), 705)
+        self.assertEqual( str(seqs[2][0:10]), 'ATGGCCAACC')
         
     def test_parse_msf2(self) :
         f = testdata_stream("cox2.msf")
         seqs = msf_io.read(f)
-        self.assertEquals(len(seqs), 5)
-        self.assertEquals(seqs[1].name, "cox2_crifa")
-        self.assertEquals(len(seqs[1]), 166)
-        self.assertEquals( str(seqs[2][0:10]), 'MSFILTFWMI')
+        self.assertEqual(len(seqs), 5)
+        self.assertEqual(seqs[1].name, "cox2_crifa")
+        self.assertEqual(len(seqs[1]), 166)
+        self.assertEqual( str(seqs[2][0:10]), 'MSFILTFWMI')
            
     def test_parse_1beo(self) :
         f = testdata_stream("1beo.msf")
@@ -71,26 +71,26 @@ class test_msf_io(unittest.TestCase) :
     """ Wrong alphabet should throw a parsing error """
     def test_parse_error(self) :
         f = testdata_stream("cox2.msf")
-        self.failUnlessRaises(ValueError, 
+        self.assertRaises(ValueError, 
             msf_io.read, f, nucleic_alphabet )
             
     def test_parse_fasta_fail2(self) :
         # should fail with parse error
         f = testdata_stream("globin.fa")
-        self.failUnlessRaises(ValueError, 
+        self.assertRaises(ValueError, 
             msf_io.read, f )
             
     def test_parse_plain_fail(self) :
         # should fail with parse error
         f = StringIO(plain_io.example)
-        self.failUnlessRaises(ValueError, 
+        self.assertRaises(ValueError, 
             msf_io.read, f  )
             
     
     def test_parse_phylip_fail(self) :
         # should fail with parse error
         f = testdata_stream("phylip_test_2.phy")
-        self.failUnlessRaises(ValueError, 
+        self.assertRaises(ValueError, 
             msf_io.read, f )
                                                  
 if __name__ == '__main__':

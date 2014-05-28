@@ -47,7 +47,7 @@ class test_null_io(unittest.TestCase) :
         fout = StringIO()
         null_io.write(fout,seqs)
         fout.seek(0)
-        self.assertEquals(fout.read(), '')  
+        self.assertEqual(fout.read(), '')  
 
              
 if __name__ == '__main__':

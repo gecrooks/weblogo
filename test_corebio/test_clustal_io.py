@@ -40,9 +40,9 @@ class test_clustal_parser(unittest.TestCase) :
     def test_parse_clustal(self) :
         f = testdata_stream("clustal.aln")
         seqs = clustal_io.read(f)
-        self.assertEquals(len(seqs), 7)
-        self.assertEquals(seqs[1].name, "CATH_HUMAN")
-        self.assertEquals(len(seqs[1]), 395)
+        self.assertEqual(len(seqs), 7)
+        self.assertEqual(seqs[1].name, "CATH_HUMAN")
+        self.assertEqual(len(seqs[1]), 395)
  
     def test_parse_clustal2_newline(self) :
         # Bug regession test. Clustal barfed on windows line endings, sometimes
@@ -57,16 +57,16 @@ class test_clustal_parser(unittest.TestCase) :
     def test_parse_headerless(self):
         f = testdata_stream("clustal_headerless.aln")
         seqs = clustal_io.read(f)
-        self.assertEquals(len(seqs), 21)
-        self.assertEquals(seqs[2].name, "O16386_CAEEL")
-        self.assertEquals(len(seqs[1]), 137)
+        self.assertEqual(len(seqs), 21)
+        self.assertEqual(seqs[2].name, "O16386_CAEEL")
+        self.assertEqual(len(seqs[1]), 137)
         
         
 
     """ Wrong alphabet should throw a parsing error """
     def test_parse_error(self) :
         f = testdata_stream("clustal.aln")
-        self.failUnlessRaises(ValueError, 
+        self.assertRaises(ValueError, 
             clustal_io.read, f, nucleic_alphabet )
 
     def test_parse_clustal181(self) :
@@ -84,15 +84,15 @@ class test_clustal_parser(unittest.TestCase) :
     def test_parse_fasta_fail(self) :
         # should fail with parse error
         f = StringIO(fasta_io.example)
-        self.failUnlessRaises(ValueError, 
+        self.assertRaises(ValueError, 
             clustal_io.read, f , protein_alphabet )
-        self.failUnlessRaises(ValueError, 
+        self.assertRaises(ValueError, 
             clustal_io.read, f )
                     
     def test_parse_fasta_fail2(self) :
         # should fail with parse error
         f = testdata_stream("globin.fa")
-        self.failUnlessRaises(ValueError, 
+        self.assertRaises(ValueError, 
             clustal_io.read, f )
 
     def test_parse_clustal_example(self) :
@@ -109,14 +109,14 @@ class test_clustal_parser(unittest.TestCase) :
         fout.seek(0)
         seqs2 = clustal_io.read(fout)
         
-        self.assertEquals(seqs, seqs2)
+        self.assertEqual(seqs, seqs2)
 
   
     def test_parse_table_fail(self) :
         # should fail with parse error
         f = StringIO(table_io.example)
        
-        self.failUnlessRaises(ValueError, 
+        self.assertRaises(ValueError, 
             clustal_io.read, f  )
 
 

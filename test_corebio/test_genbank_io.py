@@ -78,20 +78,20 @@ class test_genbank_io(unittest.TestCase) :
         seqs = genbank_io.read(f)
         #print seqs
 
-        self.assertEquals(len(seqs), 5)
-        self.assertEquals(len(seqs[1]), 210)
+        self.assertEqual(len(seqs), 5)
+        self.assertEqual(len(seqs[1]), 210)
         
         f.seek(0)
         seqs = seq_io.read(f)
-        self.assertEquals(len(seqs), 5)
-        self.assertEquals(len(seqs[1]), 210)
+        self.assertEqual(len(seqs), 5)
+        self.assertEqual(len(seqs[1]), 210)
         
 
          
         f = testdata_stream('genbank/NT_019265.gb') 
         seqs = genbank_io.read(f)
-        self.assertEquals(len(seqs), 1)
-        self.assertEquals(len(seqs[0]), 0)
+        self.assertEqual(len(seqs), 1)
+        self.assertEqual(len(seqs[0]), 0)
         
 
 
