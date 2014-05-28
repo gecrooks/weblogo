@@ -610,7 +610,7 @@ class LogoFormat(LogoOptions) :
             else :
                 self.color_scheme = monochrome
 
-        self.lines_per_logo = 1+ ( (self.total_stacks-1) / self.stacks_per_line)
+        self.lines_per_logo = 1+ ( (self.total_stacks-1) // self.stacks_per_line)
     
         if self.lines_per_logo==1 and not self.pad_right:
             self.stacks_per_line = min(self.stacks_per_line, self.total_stacks)
