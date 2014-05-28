@@ -206,6 +206,8 @@ class GhostscriptAPI(object) :
             "-dPDFSETTINGS=/printer",
             #"-q",   # Quite: Do not dump messages to stdout.
             "-sstdout=%stderr", # Redirect messages and errors to stderr
+            # fix issue 36, problems with ghostscript 9.10
+            "-dColorConversionStrategy=/LeaveColorUnchanged", 
             "-sOutputFile=-", # Stdout
             "-dDEVICEWIDTHPOINTS=%s" % str(width),  
             "-dDEVICEHEIGHTPOINTS=%s" % str(height),  
