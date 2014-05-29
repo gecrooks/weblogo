@@ -63,6 +63,7 @@ class test_read(unittest.TestCase) :
         results = [read(f) for f in files]
         self.assertEqual( len(files), len(results) )
       
+        for f in files: f.close()
 
 
 class test_blastxml_read(unittest.TestCase) : 
@@ -109,6 +110,7 @@ class test_blastxml_read(unittest.TestCase) :
         self.assertEqual( r.algorithm_version, "2.2.14" ) 
         self.assertEqual( len(r.results), 2)
         
+        for f in files: f.close()
 
 class test_fasta_read(unittest.TestCase) :  
     def examples(self) :
@@ -179,6 +181,7 @@ class test_fasta_read(unittest.TestCase) :
         self.assertAlmostEqual( hit.bit_score, 22 )
         self.assertAlmostEqual( hit.significance, 0.058  )
 
+        for f in files: f.close()
 
    # def test_this(self) :
     #    files = self.examples()

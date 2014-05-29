@@ -25,14 +25,15 @@ class test_Motif(unittest.TestCase) :
     def test_read_transfac(self):
         f = testdata_stream("transfac_matrix.txt")
         m = Motif.read_transfac(f)
-
+        f.close()
         assert m[3, 'A']==0.0
         assert m[0, 'G']==2.0         
         assert shape(m.array) == (12,4)
-
+        f.close()
+        
         f = testdata_stream("transfac_matrix2.txt")
         m = Motif.read_transfac(f)
-
+        f.close()
         assert m[3, 'A']==3.0
         assert m[0, 'G']==152.0         
         assert shape(m.array) == (15,4)
@@ -40,12 +41,13 @@ class test_Motif(unittest.TestCase) :
         # this one has extra Ps on start of each line
         f = testdata_stream("transfac_matrix3.txt")
         m = Motif.read_transfac(f)
+        f.close()
 
 
     def test_reindex(self):
         f = testdata_stream("transfac_matrix.txt")
         m = Motif.read_transfac(f)
-
+        f.close()
         m2 = m.reindex("TCGA")
         
         assert( str(m2.alphabet) == "TCGA")
@@ -66,6 +68,9 @@ class test_Motif(unittest.TestCase) :
         for k in range(0,K):
             for n in range(0,N):
                 assert( m[k,n] == m2[K-k-1,n])
+        
+        f.close()
+        f2.close()
 
     
     def test_complement(self):
@@ -81,6 +86,8 @@ class test_Motif(unittest.TestCase) :
              assert(m[k, 'G'] == m2[k, 'C'])    
              assert(m[k, 'C'] == m2[k, 'G'])                      
              assert(m[k, 'T'] == m2[k, 'A'])
+         f.close()
+         f2.close()
 
     def test_reverse_complement(self):
         f = testdata_stream("transfac_matrix.txt")
@@ -96,6 +103,8 @@ class test_Motif(unittest.TestCase) :
         m2.reverse_complement()
         
         assert (m.array == m2.array).all()
+        f.close()
+        f2.close()
         
         
 class test_SubMatrix(unittest.TestCase) :
@@ -187,34 +196,47 @@ class test_SubMatrix(unittest.TestCase) :
             SubMatrix.read, f )
  
     def test_read_pam(self):
-        mat = SubMatrix.read( data.data_stream("pam250") )
+        f = data.data_stream("pam250")
+        mat = SubMatrix.read(f)
         self.assertEqual(mat[0,0], 2.0)
+        f.close()
 
-        mat = SubMatrix.read( data.data_stream("pam120") )
+        f = data.data_stream("pam120")
+        mat = SubMatrix.read(f)
         self.assertEqual(mat[4,5], -7)
+        f.close()
 
     def test_read_blosum(self):
-        mat = SubMatrix.read( data.data_stream("blosum80") )
+        f = data.data_stream("blosum80")
+        mat = SubMatrix.read(f)
         self.assertEqual(mat[0,10], -3)
+        f.close()
 
-        mat = SubMatrix.read( data.data_stream("blosum62") )
+        f = data.data_stream("blosum62")
+        mat = SubMatrix.read( f )
         self.assertEqual(mat[4,5], -4)
+        f.close()
 
     def test_read_blast(self):
          # New style blast matrices have letters at beginning of lines and a '*'
-        mat = SubMatrix.read(testdata_stream("blosum35.blast.new") )
+        f = testdata_stream("blosum35.blast.new")
+        mat = SubMatrix.read(f )
         self.assertEqual(mat[4,5], -3)
+        f.close()
         
         # Matrices formatted for old blast have a '*' (stop)
         # column and no letters at the beggining of lines 
-        mat = SubMatrix.read(testdata_stream("blosum35.blast") )
+        f = testdata_stream("blosum35.blast")
+        mat = SubMatrix.read(f )
         self.assertEqual(mat[0,10], -2)
         self.assertEqual(mat.array.shape, (23,23))
-
-        # For comparison, we'll also parse a matrix without '*'
-        mat = SubMatrix.read(testdata_stream("pam250.mat") )
-        self.assertEqual(mat[4,5], -5)
+        f.close()
         
+        # For comparison, we'll also parse a matrix without '*'
+        f = testdata_stream("pam250.mat")
+        mat = SubMatrix.read(f)
+        self.assertEqual(mat[4,5], -5)
+        f.close()
 
     
              

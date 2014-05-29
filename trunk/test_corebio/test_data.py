@@ -17,6 +17,7 @@ class test_data(unittest.TestCase) :
         for n in resource_names :
             s = data_string(n)
             f = data_stream(n)
+            f.close()
             fn = data_filename(n)
                     
 if __name__ == '__main__':

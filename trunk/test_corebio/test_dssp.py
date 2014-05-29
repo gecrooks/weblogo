@@ -14,7 +14,8 @@ from test_corebio import *
 class test_dssp_io(unittest.TestCase) :
 
     def test_1(self) :
-        r = DsspRecord(testdata_stream('1crn.dssp'))
+        f = testdata_stream('1crn.dssp')
+        r = DsspRecord(f)
         self.assertEqual(r.pdbid, "1crn")
         self.assertEqual(len(r.residues), 46 )
 
@@ -35,7 +36,7 @@ class test_dssp_io(unittest.TestCase) :
                           " EE SSHHHHHHHHHHHTTT  HHHHHHHHS EE SSS   GGG  ")
         self.assertEqual(r.total_area(), float(3010.0))
 
-
+        f.close()
 
 if __name__ == '__main__':
     print("Running additional tests of RunDSSP. These require that the DSSP program is installed locally")

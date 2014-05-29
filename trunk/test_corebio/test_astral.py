@@ -94,7 +94,9 @@ class RafTest(unittest.TestCase):
         assert len(r.res) ==12
 
     def test_SeqMapIndex(self) :
-        filename = testdata_stream("scop/raftest.txt").name
+        fs= testdata_stream("scop/raftest.txt")
+        filename = fs.name
+        fs.close()
         f = open(filename)
         index = Raf(f)
         r = index.get_seqmap("103m")
@@ -125,6 +127,7 @@ class RafTest(unittest.TestCase):
         r = index["103m_"]
         assert r.pdbid == "103m", r.pdbid
 
+        f.close()
 
     def test_Parse_error(self):
         self.assertRaises(ValueError, RafSeqMap, "tooshort")
@@ -134,6 +137,7 @@ class RafTest(unittest.TestCase):
         i=0
         for rsm in RafSeqMap.records(f) : i +=1
         assert i == 16
+        f.close()
 
 if __name__ == '__main__':
     unittest.main()

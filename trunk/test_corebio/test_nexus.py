@@ -11,6 +11,7 @@ class test_nexus(unittest.TestCase):
     def test_create(self) :
         n = Nexus()
         self.assertNotEqual( n , None)
+        
 
 
     def test_parse_f0(self) :
@@ -25,11 +26,13 @@ class test_nexus(unittest.TestCase):
             "t5","t6","t7","t8","t9"]
         taxa = n.taxlabels
         self.assertEqual( taxa, expected)
+        f.close()
 
     
     def test_parse_protein(self) :
         f = testdata_stream("nexus/protein.nex")    
         n = Nexus(f)
+        f.close()
         
     def test_parse_dna(self) :
         f = testdata_stream("nexus/dna.nex")    
@@ -40,6 +43,7 @@ class test_nexus(unittest.TestCase):
         self.assertEqual( len(taxa) ,10)
         self.assertEqual( taxa[0], "Carp")
         self.assertEqual( taxa[-1], "Whale")
+        f.close()
 
     
     def test_TreeTest1(self):
@@ -55,6 +59,7 @@ class test_nexus(unittest.TestCase):
         self.assertEqual( t3.is_monophyletic(['t1','t5']), 13)
  
         t3.split(parent_id=t3.search_taxon('t9'))
+        f.close()
         
        
 if __name__ == '__main__':

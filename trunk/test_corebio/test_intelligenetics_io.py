@@ -51,6 +51,7 @@ class test_ig_io(unittest.TestCase) :
         seqs = ig_io.read(f)
         self.assertEqual(len(seqs[0]), 518)
         self.assertEqual(len(seqs[1]), 2016)
+        f.close()
        
     def test_write_seq(self) :
         f = StringIO(ig_io.example)

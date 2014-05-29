@@ -54,6 +54,7 @@ class test_phylip_io(unittest.TestCase) :
         self.assertEqual(len(seqs), 10)
         self.assertEqual(seqs[0].name, "Cow")
         self.assertEqual(len(seqs[1]), 234)
+        f.close()
     
     def test_parse_plain_fail(self) :
         # should fail with parse error
@@ -68,6 +69,7 @@ class test_phylip_io(unittest.TestCase) :
         self.assertEqual(len(seqs[0]), 20)
         self.assertEqual(str(seqs[1]), "CGTTACTCGTTGTCGTTACT")
         self.assertEqual(seqs[1].name, "Hesperorni")
+        f.close()
     
     def test_parse_clustal_fail(self) :
         # should fail with parse error
@@ -82,6 +84,7 @@ class test_phylip_io(unittest.TestCase) :
         self.assertEqual(len(seqs[0]), 20)
         self.assertEqual(str(seqs[1]), "CGTTACTCGTTGTCGTTACT")
         self.assertEqual(seqs[1].name, "Hesperorni")
+        f.close()
     
     def test_parse_phylip_test_4(self):
         f = testdata_stream('phylip_test_4.phy')
@@ -90,6 +93,8 @@ class test_phylip_io(unittest.TestCase) :
         self.assertEqual(len(seqs[0]), 25)
         self.assertEqual(str(seqs[1]), "GTGGTGGTGGGCGCCGGCCGTGTGG")
         self.assertEqual(seqs[2].name, "ddrasa")
+        f.close()
+    
     
     def test_parse_phylip_test_5(self):
         f = testdata_stream('phylip_test_5.phy')
@@ -98,16 +103,19 @@ class test_phylip_io(unittest.TestCase) :
         self.assertEqual(len(seqs[0]), 50)
         self.assertEqual(str(seqs[1]), "GTGGTGGTGGGCGCCGGCCGTGTGGGTGGTGGTGGGCGCCGGCCGTGTGG")
         self.assertEqual(seqs[2].name, "ddrasa")
+        f.close()
         
     def test_parse_wrong_phylip_codes_1(self):
         f = testdata_stream('phylip_test_6.corrupt.phy')
         self.assertRaises(ValueError, 
             phylip_io.read, f , protein_alphabet )
-            
+        f.close()
+        
     def test_parse_wrong_phylip_codes_2(self):
         f = testdata_stream('phylip_test_7.corrupt.phy')
         self.assertRaises(ValueError, 
             phylip_io.read, f , protein_alphabet )
+        f.close()
 
     def test_parse_phylip_dna(self):
         f = testdata_stream('dna.phy')
@@ -116,7 +124,7 @@ class test_phylip_io(unittest.TestCase) :
         self.assertEqual(len(seqs[0]), 705)
         self.assertEqual( str(seqs[1][0:10]), "ATGGCACACC")
         self.assertEqual(seqs[2].name, "Chicken")
-  
+        f.close()
    
              
 if __name__ == '__main__':

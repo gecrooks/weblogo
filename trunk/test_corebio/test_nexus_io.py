@@ -20,7 +20,7 @@ class test_fasta_io(unittest.TestCase) :
         self.assertEqual(seqs[0].name, "Cow")
         self.assertEqual(len(seqs[1]), 234)
         self.assertEqual( str(seqs[0][0:10]), 'MAYPMQLGFQ')
-        
+        f.close()
   
    
     def test_parse_StringIO(self) :
@@ -28,11 +28,13 @@ class test_fasta_io(unittest.TestCase) :
         f0 = testdata_stream("nexus/protein.nex")
         f = StringIO(f0.read() )
         n = nexus_io.read(f)  
+        f0.close()
           
     def test_parse_fasta_fail(self) :
         f = testdata_stream("globin.fa")
         self.assertRaises(ValueError, 
             nexus_io.read, f  )
+        f.close()
             
 
     def test_parse_clustal_fail(self) :

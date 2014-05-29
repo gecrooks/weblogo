@@ -54,6 +54,7 @@ class test_nbrf_io(unittest.TestCase) :
         self.assertEqual( len( seqs[1]), 210)
         self.assertEqual( str(seqs[0]), "MAFILSFWMIFLLDSVIVLLSFVCFVCVWICALLFSTVLLVSKLNNIYCTWDFTASKFIDVYWFTIGGMFSLGLLLRLCLLLYFGHLNFVSFDLCKVVGFQWYWVYFIFGETTIFSNLILESDYMIGDLRLLQCNHVLTLLSLVIYKLWLSAVDVIHSFAISSLGVKVENLVAVMK")
         self.assertEqual( seqs[0].alphabet, protein_alphabet)
+        f.close()
         
 
     def test_parse_crab(self) :
@@ -64,24 +65,28 @@ class test_nbrf_io(unittest.TestCase) :
         self.assertEqual(seqs[2].name, "CRAB_CHICK")
         self.assertEqual(seqs[2].description, 
             "ALPHA CRYSTALLIN B CHAIN (ALPHA(B)-CRYSTALLIN).")
+        f.close()
 
     def test_parse_dna(self):
         f = testdata_stream('dna.pir')
         seqs = nbrf_io.read(f)
         self.assertEqual( seqs[0].alphabet, dna_alphabet)
         self.assertEqual(len(seqs), 10)
+        f.close()
 
     def test_parse_examples(self) :
         f = testdata_stream('rhod.pir')
         seqs = nbrf_io.read(f)
         self.assertEqual( seqs[0].alphabet, protein_alphabet)
         self.assertEqual(len(seqs), 3)
+        f.close()
     
     def test_parse_protein(self) :
         f = testdata_stream('protein.pir')
         seqs = nbrf_io.read(f)
         self.assertEqual( seqs[0].alphabet, protein_alphabet)
         self.assertEqual(len(seqs), 10)
+        f.close()
 
 
     def test_parse_clustal_fail(self) :
@@ -90,18 +95,20 @@ class test_nbrf_io(unittest.TestCase) :
         self.assertRaises(ValueError, 
             nbrf_io.read, f , protein_alphabet )
    
+   
     def test_parse_plain_fail(self) :
         # should fail with parse error
         f = StringIO(plain_io.example)
         self.assertRaises(ValueError, 
             nbrf_io.read, f  )
+        
    
     def test_pir_file_from_clustal(self):
         f = testdata_stream('clustalw.pir')
         seqs = nbrf_io.read(f)
         self.assertEqual(len(seqs), 2)
         self.assertEqual( seqs[1].endswith('C-AATC-G-CAATG-G--CTTGAACCGGGTAAAAGTCGT-A---------------------------------------------------------------------------------'), True)
-
+        f.close()
    
              
 if __name__ == '__main__':

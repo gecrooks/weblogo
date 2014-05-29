@@ -48,14 +48,14 @@ from test_corebio import *
 class test_stockholm_io(unittest.TestCase) :
 
     def test_parse1(self) :
-        f = testdata_stream("pfam.txt")
-        seqs = stockholm_io.read(f)
+        with testdata_stream("pfam.txt") as f:
+            seqs = stockholm_io.read(f)
         #self.assertEqual(len(seqs), 7)
         self.assertEqual(seqs[1].name, "O61132/1-232")
         self.assertEqual(len(seqs[1]), 265)
   
     def test_parse2(self) :
-        f = StringIO(stockholm_io.example)
+        f= StringIO(stockholm_io.example)
         seqs = stockholm_io.read(f)
         self.assertEqual(len(seqs), 5)
         self.assertEqual(seqs[1].name, "O83071/259-312")
@@ -67,8 +67,8 @@ class test_stockholm_io(unittest.TestCase) :
   
   
     def test_parse3(self) :
-        f = testdata_stream("pfam_example.txt")
-        seqs = stockholm_io.read(f)
+        with testdata_stream("pfam_example.txt") as f:
+            seqs = stockholm_io.read(f)
         self.assertEqual(len(seqs), 24)
         self.assertEqual(seqs[5].name, "ENV_HV2BE/24-510")
         self.assertEqual(len(seqs[1]), 606)
@@ -89,9 +89,8 @@ class test_stockholm_io(unittest.TestCase) :
         
     def test_parse_fasta_fail2(self) :
         # should fail with parse error
-        f = testdata_stream("globin.fa")
-        self.assertRaises(ValueError, 
-            stockholm_io.read, f )
+        with testdata_stream("globin.fa") as f:
+            self.assertRaises(ValueError, stockholm_io.read, f )
 
 
     def test_parse_fail(self) :
