@@ -118,16 +118,24 @@ class test_alphabet(unittest.TestCase) :
         a = Alphabet.which(Seq("ARNDCQEGHILKMFPSTWYVX"))
         assert  a == unambiguous_protein_alphabet
         
+        f1=testdata_stream('cap.fa')
+        f2=testdata_stream('cox2.msf')
+        f3=testdata_stream('Rv3829c.fasta')
+        f4=testdata_stream('chain_B.fasta')
+        
         tests = ( 
-             (seq_io.read(testdata_stream('cap.fa')), unambiguous_dna_alphabet),
-             (seq_io.read(testdata_stream('cox2.msf')), unambiguous_protein_alphabet),
-             (seq_io.read(testdata_stream('Rv3829c.fasta')), unambiguous_protein_alphabet),
-             (seq_io.read(testdata_stream('chain_B.fasta')), unambiguous_protein_alphabet),
+             (seq_io.read(f1), unambiguous_dna_alphabet),
+             (seq_io.read(f2), unambiguous_protein_alphabet),
+             (seq_io.read(f3), unambiguous_protein_alphabet),
+             (seq_io.read(f4), unambiguous_protein_alphabet),
              )
         for t in tests :
             self.assertEqual(Alphabet.which(t[0]), t[1])
 
-
+        f1.close()
+        f2.close()
+        f3.close()
+        f4.close()
       
 
 class test_seq(unittest.TestCase):
@@ -183,7 +191,7 @@ class test_seq(unittest.TestCase):
     def test_words2(self) :
         s = Seq("AGTCAGCTACGACGCGC", unambiguous_dna_alphabet)
         wc = s.word_count(2)
-        count = zip(*wc)[1]
+        count = list(zip(*wc))[1]
         self.assertEqual(count, (2,2,1,3,1,1,3,1,1,1) )
                 
     def test_getslice(self):
