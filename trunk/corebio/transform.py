@@ -82,7 +82,7 @@ class Transform(object) :
     __slots__ = ["table", "source", "target","name","description"]
     def __init__(self, source, target, name=None,description=None) :
 
-        self.table = maketrans(source, target)
+        self.table = maketrans(source.tostring(), target.tostring())
         self.source = source
         self.target = target
         self.name = name

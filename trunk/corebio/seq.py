@@ -209,7 +209,7 @@ class Alphabet(object) :
                 raise ValueError("Alphabet cannot contain null character \\0")
             if ord_table[ n ] != 0xff:
                 raise ValueError("Repetitive alphabet")
-            ord_table[ n ] = i#chr(i)
+            ord_table[ n ] = i
 
         # Add alternatives
         _from = []
@@ -223,9 +223,9 @@ class Alphabet(object) :
                     _to.append(c)
         self._alternatives = (''.join(_from), ''.join(_to))
                                 
-        #ord_table = "".join(ord_table)
         assert( ord_table[0] == 0xff)
         self._ord_table = ord_table
+        
 
         # The chr_table maps between ordinal position in the alphabet letters
         # and the ordinal position in ascii. This map is not the inverse of
@@ -233,7 +233,6 @@ class Alphabet(object) :
         chr_table = bytearray([0x00,]*256)
         for i,a in enumerate(letters) :
             chr_table[ i ] = ord(a)
-        #chr_table = "".join(chr_table)
         self._chr_table = chr_table.decode()
 
         return self
@@ -256,21 +255,12 @@ class Alphabet(object) :
         or 255 if no such character.
         """
         return self._ord_table[ord(c)]
-       
+ 
     def chrs(self, sequence_of_ints) :
         """Convert a sequence of ordinals into an alphabetic string."""
         c = [ self._chr_table[n] for n in sequence_of_ints]
         s = "".join(c)
         return Seq(s,self)
-        
-        i = bytearray(sequence_of_ints)
-        s= i.translate(self._chr_table)
-
-        if not isinstance(sequence_of_ints, array) :
-            sequence_of_ints = array('B', sequence_of_ints)
-        s = sequence_of_ints.tostring().translate(self._chr_table)
-
-        return Seq(s, self)
 
     def ords(self, string) :
         """Convert an alphabetic string into a byte array of ordinals."""
@@ -323,7 +313,7 @@ class Alphabet(object) :
         return self._letters[key]
 
     def __hash__(self):
-        return hash(self._ord_table)
+        return hash( tuple(self._ord_table))
 
     @staticmethod 
     def which(seqs, alphabets=None) :
