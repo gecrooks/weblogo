@@ -262,7 +262,7 @@ class Reiterate(object):
 def crc32(string):
     """Return the standard CRC32 checksum as a hexidecimal string."""
     import binascii
-    return "%08X"% binascii.crc32(string)
+    return "%08X"% binascii.crc32(string.encode())
 
 _crc64_table =None
 
@@ -510,10 +510,7 @@ def resource_string( modulename, resource, basefilename = None):
 def resource_stream( modulename, resource, basefilename = None):
     """Locate and return a resource as a stream.
     >>> f = resource_stream( __name__, 'somedatafile', __file__)
-    """    
-    if pkg_resources :  
-        return pkg_resources.resource_stream(modulename, resource)    
-    
+    """     
     return open( resource_filename( modulename, resource, basefilename) )
 
 def resource_filename( modulename, resource, basefilename = None): 

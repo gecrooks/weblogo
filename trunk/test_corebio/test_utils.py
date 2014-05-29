@@ -208,7 +208,8 @@ class test_utils(unittest.TestCase) :
         fn = resource_filename(__name__, 'data/cap.fa', __file__)
         self.assertTrue(fn.endswith('test_corebio/data/cap.fa'))
         f = resource_stream(__name__, 'data/cap.fa', __file__)
-        s = resource_string(__name__, 'data/cap.fa', __file__)
+        f.close()
+        s = resource_string(__name__, 'data/cap.fa', __file__).decode()
         self.assertTrue(s.startswith('>aldB'))
 
 
