@@ -202,14 +202,14 @@ class Alphabet(object) :
         # and the ordinal position in this alphabet. Characters not in the
         # alphabet are given a position of 255. The ord_table is stored as a 
         # string. 
-        ord_table = ["\xff",] * 256
+        ord_table = bytearray([0xff,] * 256)
         for i,a in enumerate(letters) :
             n = ord(a)
             if n == 0 :
                 raise ValueError("Alphabet cannot contain null character \\0")
-            if ord_table[ n ] != "\xff":
+            if ord_table[ n ] != 0xff:
                 raise ValueError("Repetitive alphabet")
-            ord_table[ n ] = chr(i)
+            ord_table[ n ] = i#chr(i)
 
         # Add alternatives
         _from = []
@@ -217,24 +217,24 @@ class Alphabet(object) :
         for e, c in alternatives :
             if c in letters :
                 n = ord(e)
-                if ord_table[ n ] == "\xff" : # empty  
+                if ord_table[ n ] == 0xff : # empty  
                     ord_table[ n ] = ord_table[ ord(c)]     
                     _from.append(e)
                     _to.append(c)
         self._alternatives = (''.join(_from), ''.join(_to))
                                 
-        ord_table = "".join(ord_table)
-        assert( ord_table[0] == "\xff")
+        #ord_table = "".join(ord_table)
+        assert( ord_table[0] == 0xff)
         self._ord_table = ord_table
 
         # The chr_table maps between ordinal position in the alphabet letters
         # and the ordinal position in ascii. This map is not the inverse of
         # ord_table if there are alternatives.
-        chr_table = ["\x00"]*256
+        chr_table = bytearray([0x00,]*256)
         for i,a in enumerate(letters) :
-            chr_table[ i ] = a
-        chr_table = "".join(chr_table)
-        self._chr_table = chr_table
+            chr_table[ i ] = ord(a)
+        #chr_table = "".join(chr_table)
+        self._chr_table = chr_table.decode()
 
         return self
 
@@ -243,7 +243,7 @@ class Alphabet(object) :
         """True if all characters of the string are in this alphabet."""
         table = self._ord_table
         for s in str(string):
-            if table[ord(s)] == "\xff" :
+            if table[ord(s)] == 0xff :
                 return False
         return True
         
@@ -255,13 +255,21 @@ class Alphabet(object) :
         """The ordinal position of the character c in this alphabet,
         or 255 if no such character.
         """
-        return ord(self._ord_table[ord(c)])
+        return self._ord_table[ord(c)]
        
     def chrs(self, sequence_of_ints) :
         """Convert a sequence of ordinals into an alphabetic string."""
+        c = [ self._chr_table[n] for n in sequence_of_ints]
+        s = "".join(c)
+        return Seq(s,self)
+        
+        i = bytearray(sequence_of_ints)
+        s= i.translate(self._chr_table)
+
         if not isinstance(sequence_of_ints, array) :
             sequence_of_ints = array('B', sequence_of_ints)
         s = sequence_of_ints.tostring().translate(self._chr_table)
+
         return Seq(s, self)
 
     def ords(self, string) :
