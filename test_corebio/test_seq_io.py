@@ -48,8 +48,8 @@ class test_seq_io(unittest.TestCase) :
         
         
     def test_parse_clustal(self) :
-        f = testdata_stream("clustal.aln")
-        seqs = seq_io.read(f)
+        with testdata_stream("clustal.aln") as f:
+            seqs = seq_io.read(f)
         self.assertEqual(len(seqs), 7)
         self.assertEqual(seqs[1].name, "CATH_HUMAN")
         self.assertEqual(len(seqs[1]), 395)
@@ -57,21 +57,21 @@ class test_seq_io(unittest.TestCase) :
    
     def test_parse_error(self) :
         """ Wrong alphabet should throw a parsing error """
-        f = testdata_stream("clustal.aln")
-        self.assertRaises(ValueError,
-            seq_io.read, f , nucleic_alphabet )
+        with testdata_stream("clustal.aln") as f:
+            self.assertRaises(ValueError,
+                seq_io.read, f , nucleic_alphabet )
 
     def test_parse_clustal181(self) :
-        f = testdata_stream("clustal181.aln")
-        seqs = seq_io.read(f, protein_alphabet)
+        with testdata_stream("clustal181.aln") as f:
+            seqs = seq_io.read(f, protein_alphabet)
 
     def test_parse_clustal_glualign(self) :
-        f = testdata_stream("clustal_glualign.aln")
-        seqs = seq_io.read(f, nucleic_alphabet)
+        with testdata_stream("clustal_glualign.aln") as f:
+            seqs = seq_io.read(f, nucleic_alphabet)
 
     def test_parse_clustalw182(self) :
-        f = testdata_stream("clustalw182.aln")
-        seqs = seq_io.read(f,protein_alphabet)
+        with testdata_stream("clustalw182.aln") as f:
+            seqs = seq_io.read(f,protein_alphabet)
 
     def test_read_example_array(self) :
         f = StringIO(array_io.example)
@@ -90,8 +90,8 @@ class test_seq_io(unittest.TestCase) :
         self.assertEqual(len(seqs[1]), 231)
   
     def test_parse_globin_fasta(self) :
-        f = testdata_stream("globin.fa")
-        seqs = seq_io.read(f)
+        with testdata_stream("globin.fa") as f:
+            seqs = seq_io.read(f)
         self.assertEqual(len(seqs), 56)
     
     def test_parsers(self) :
@@ -186,7 +186,9 @@ class test_seq_io(unittest.TestCase) :
             except ValueError:
                 pass
             
-        
+        for e in examples.values():
+            for f in e:
+                f.close()
      
      
              

@@ -111,7 +111,7 @@ class test_fasta_io(unittest.TestCase) :
         f = testdata_stream("globin.fa")
         seqs = fasta_io.read(f,protein_alphabet)
         self.assertEqual(len(seqs), 56)
-
+        f.close()
 
     def test_parse_clustal_fail(self) :
         # should fail with parse error

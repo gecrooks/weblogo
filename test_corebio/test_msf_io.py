@@ -54,6 +54,7 @@ class test_msf_io(unittest.TestCase) :
         self.assertEqual(seqs[1].name, "Carp")
         self.assertEqual(len(seqs[1]), 705)
         self.assertEqual( str(seqs[2][0:10]), 'ATGGCCAACC')
+        f.close()
         
     def test_parse_msf2(self) :
         f = testdata_stream("cox2.msf")
@@ -62,10 +63,12 @@ class test_msf_io(unittest.TestCase) :
         self.assertEqual(seqs[1].name, "cox2_crifa")
         self.assertEqual(len(seqs[1]), 166)
         self.assertEqual( str(seqs[2][0:10]), 'MSFILTFWMI')
+        f.close()
            
     def test_parse_1beo(self) :
         f = testdata_stream("1beo.msf")
         seqs = msf_io.read(f) 
+        f.close()
    
         
     """ Wrong alphabet should throw a parsing error """
@@ -73,18 +76,21 @@ class test_msf_io(unittest.TestCase) :
         f = testdata_stream("cox2.msf")
         self.assertRaises(ValueError, 
             msf_io.read, f, nucleic_alphabet )
+        f.close()
             
     def test_parse_fasta_fail2(self) :
         # should fail with parse error
         f = testdata_stream("globin.fa")
         self.assertRaises(ValueError, 
             msf_io.read, f )
+        f.close()
             
     def test_parse_plain_fail(self) :
         # should fail with parse error
         f = StringIO(plain_io.example)
         self.assertRaises(ValueError, 
             msf_io.read, f  )
+        f.close()
             
     
     def test_parse_phylip_fail(self) :
@@ -92,6 +98,7 @@ class test_msf_io(unittest.TestCase) :
         f = testdata_stream("phylip_test_2.phy")
         self.assertRaises(ValueError, 
             msf_io.read, f )
+        f.close()
                                                  
 if __name__ == '__main__':
     unittest.main()

@@ -143,6 +143,7 @@ class DesTests(unittest.TestCase):
     def setUp(self) :
         file = testdata_stream("scop/dir.des.scop.txt_test")
         self.filename = file.name
+        file.close()
 
     def test_parse(self):
         with open(self.filename) as f:
@@ -178,6 +179,7 @@ class test_scop_cla(unittest.TestCase):
     def setUp(self) :
         file = testdata_stream("scop/dir.cla.scop.txt_test")
         self.filename = file.name
+        file.close()
 
     def testParse(self):
         """Can we parse a CLA file?"""
@@ -216,7 +218,8 @@ class DomTests(unittest.TestCase):
     def setUp(self) :
         file = testdata_stream('scop/domtest.txt')
         self.filename = file.name
-
+        file.close()
+    
     def testParse(self):
         with open(self.filename) as f:
             count = 0
@@ -309,6 +312,7 @@ class HieTests(unittest.TestCase):
     def setUp(self) :
         file = testdata_stream("scop/dir.hie.scop.txt_test")
         self.filename = file.name
+        file.close()
 
     def testParse(self):
         with open(self.filename) as f:

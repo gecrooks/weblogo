@@ -48,7 +48,8 @@ from test_corebio import *
 class test_stride_io(unittest.TestCase) :
 
     def test_1(self) :
-        g = StrideRecord(testdata_stream("stride/stride_test_1.txt"))
+        f = testdata_stream("stride/stride_test_1.txt")
+        g = StrideRecord(f)
         self.assertEqual(g.pdbid, "1A65")
         self.assertEqual(g.residues[0].chainid, "A")
         self.assertEqual(g.residues[0].secstruc, "C")
@@ -60,9 +61,11 @@ class test_stride_io(unittest.TestCase) :
         self.assertEqual(g.secondary(), Seq("CEETTEEEEE", stride_alphabet))
         self.assertEqual(g.total_area(), float(483.6))
         self.assertTrue(g.get_residue('A','1') is g.residues[0])
+        f.close()
 
     def test_2(self) :
-        g = StrideRecord(testdata_stream("stride/stride_test_2.txt"))
+        f = testdata_stream("stride/stride_test_2.txt")
+        g = StrideRecord(f)
         self.assertEqual(g.pdbid, "1A59")
         self.assertEqual(g.residues[1].chainid, " ")
         self.assertEqual(g.residues[1].secstruc, "C")
@@ -74,9 +77,11 @@ class test_stride_io(unittest.TestCase) :
         self.assertEqual(g.secondary(), Seq("CCCCC",stride_alphabet))
         self.assertEqual(g.total_area(), float(610.9))
         self.assertTrue(g.get_residue(' ','3') is g.residues[1])
+        f.close()
 
     def test_3(self):
-        g = StrideRecord(testdata_stream("stride/stride_test_3.txt"))
+        f = testdata_stream("stride/stride_test_3.txt")
+        g = StrideRecord(f)
         self.assertEqual(g.pdbid, "1A59")
         self.assertEqual(g.residues[0].chainid, " ")
         self.assertEqual(g.residues[0].secstruc, "T")
@@ -88,7 +93,7 @@ class test_stride_io(unittest.TestCase) :
         self.assertEqual(g.secondary(), Seq("TCCCC",stride_alphabet))
         self.assertEqual(g.total_area(), float(404))
         self.assertTrue(g.get_residue(' ','12') is g.residues[0])
-
+        f.close()
 
 
 if __name__ == '__main__':

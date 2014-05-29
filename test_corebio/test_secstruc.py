@@ -14,7 +14,9 @@ import unittest
 class test_secstruc(unittest.TestCase) :
 
     def test_1(self) :
-        record = dssp.DsspRecord( testdata_stream('1crn.dssp') )
+        
+        with testdata_stream('1crn.dssp') as f:
+            record = dssp.DsspRecord(f)
         reduced = fa_reduce_secstruc_to_ehl(record.secondary())
         assert str(reduced) == 'LEELLLHHHHHHHHHHHLLLLLHHHHHHHHLLEELLLLLLLLLLLL'
              
