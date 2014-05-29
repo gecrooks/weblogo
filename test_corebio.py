@@ -32,13 +32,19 @@ def suite():
         'test_corebio.test_table_io',
         'test_corebio.test_transform',
         'test_corebio.test_utils',
-        
+        'test_weblogo'  
     ) 
+
 
     alltests = unittest.TestSuite()
     for module in modules_to_test : 
         alltests.addTest(unittest.defaultTestLoader.loadTestsFromName(module))
     return alltests
 
+# Can run single tests as
+# > python3.4 -m unittest test_corebio.test_utils
 if __name__ == '__main__':
+    import sys
     unittest.main(defaultTest='suite')
+  
+  

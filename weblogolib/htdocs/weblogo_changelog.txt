@@ -2,8 +2,15 @@
 
 WebLogo Release Notes
 
-3.4
+3.4  (????)  [Gavin Crooks, Eric Talevich]
+Mostly bug fixes and code improvements. Requires python 2.6 or 2.7
 
+* Many code changes for future Python 3 compatability
+	Kudos: Eric Talevic
+* Fix bug with using Ghostscipt 9.10 (Issue 36)
+	Kudos: Michael Imbeault, Estienne Swart, FiReaNG3L
+* Fix various bugs in transfac parsing.
+	Kudos: Promita Bose, Christopher Lamantia
 * Miscellaneous minor bug fixes and refactoring.
 	Kudos: Kamil Slowikowski, Jacob Engelbrecht
 

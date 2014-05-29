@@ -93,10 +93,17 @@ def main():
 
 def httpd_serve_forever(port=8080) :
     """ Start a webserver on a local port."""
-    import BaseHTTPServer
-    import CGIHTTPServer 
+
+    if sys.version_info[0] >= 3:
+        import http.server as server
+        import http.server as cgiserver
     
-    class __HTTPRequestHandler(CGIHTTPServer.CGIHTTPRequestHandler):
+    else:
+        import BaseHTTPServer as server
+        import CGIHTTPServer as cgiserver
+
+    
+    class __HTTPRequestHandler(cgiserver.CGIHTTPRequestHandler):
         # Modify CGIHTTPRequestHandler so that it will run the cgi script directly, instead of exec'ing
         # This bypasses the need for the cgi script to have execute permissions set,
         # since distutils install does not preserve permissions.
@@ -121,7 +128,7 @@ def httpd_serve_forever(port=8080) :
     os.chdir(htdocs) 
 
     HandlerClass = __HTTPRequestHandler
-    ServerClass = BaseHTTPServer.HTTPServer
+    ServerClass = server.HTTPServer
     httpd = ServerClass(('', port), HandlerClass)
     print("WebLogo server running at http://localhost:%d/" % port)
     
@@ -351,7 +358,7 @@ def _build_option_parser() :
     data_grp.add_option( "-U", "--units",
         dest="unit_name",
         action="store",
-        choices = std_units.keys(),    
+        choices = list(std_units.keys()),    
         type="choice",
         default = defaults.unit_name,
         help="A unit of entropy ('bits' (default), 'nats', 'digits'), or a unit of free energy ('kT', 'kJ/mol', 'kcal/mol'), or 'probability' for probabilities",
@@ -557,7 +564,7 @@ def _build_option_parser() :
     #    help="Display a color key (default: %default)")
         
         
-    color_scheme_choices = std_color_schemes.keys()    
+    color_scheme_choices = list(std_color_schemes.keys())
     color_scheme_choices.sort()    
     color_grp.add_option( "-c", "--color-scheme",
         dest="color_scheme",
