@@ -290,7 +290,7 @@ def main(htdocs_directory = None) :
     # sequences_file = form["sequences_file"]
     if "sequences_file" in form_values:
         sequences = form_values.getvalue("sequences_file") 
-        assert type(sequences) == str
+        #assert type(sequences) == str
 
     if not sequences or len(sequences)  ==0:
         sequences = form["sequences"].get_value()

@@ -226,7 +226,7 @@ class GhostscriptAPI(object) :
         error_msg = "Unrecoverable error : Ghostscript conversion failed " \
                     "(Invalid postscript?). %s" % " ".join(args) 
 
-        source = fin.read()
+        source = fin.read().encode("utf-8")
         try :
             p = Popen(args, stdin=PIPE, stdout = PIPE, stderr= PIPE) 
             (out,err) = p.communicate(source) 
@@ -238,7 +238,12 @@ class GhostscriptAPI(object) :
             if err is not None : error_msg += err
             raise RuntimeError(error_msg)
 
-        print(out, file=fout)
+        
+        if sys.version_info[0] >= 3:
+            fout.buffer.write(out)
+        else:
+            print(out, file=fout)
+
 # end class Ghostscript
 
 
@@ -476,7 +481,7 @@ class LogoOptions(object) :
         return stdrepr( self) 
 
     def __repr__(self) :
-        attributes = vars(self).keys()
+        attributes = list(vars(self).keys())
         attributes.sort()
         return stdrepr(self, attributes )
  
@@ -857,13 +862,15 @@ def eps_formatter( logodata, format, fout) :
         else :
             stack_height = 1.0 # Probability
 
-        s = zip(logodata.counts[seq_index], logodata.alphabet)
-        def mycmp( c1, c2 ) :
-            # Sort by frequency. If equal frequency then reverse alphabetic
-            if c1[0] == c2[0] : return cmp(c2[1], c1[1])
-            return cmp(c1[0], c2[0])
+        # Sort by frequency. If equal frequency then reverse alphabetic
+        # (So sort reverse alphabetic first, then frequencty)
+        # TODO: doublecheck this actual works
+        s = list(zip(logodata.counts[seq_index], logodata.alphabet))
+        s.sort(key= lambda x: x[1])
+        s.reverse()
+        s.sort(key= lambda x: x[0])
         
-        s.sort(mycmp)
+        
         if not format.reverse_stacks: s.reverse()
 
         C = float(sum(logodata.counts[seq_index])) 
@@ -897,7 +904,7 @@ def eps_formatter( logodata, format, fout) :
 
 
     # Create and output logo
-    template = resource_string( __name__, 'template.eps', __file__)
+    template = resource_string( __name__, 'template.eps', __file__).decode()
     logo = Template(template).substitute(substitutions)
     print(logo, file=fout)
  

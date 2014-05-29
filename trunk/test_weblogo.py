@@ -57,6 +57,7 @@ from corebio.moremath import entropy
 
 def testdata_stream( name ): 
     return resource_stream(__name__, 'test_weblogo/data/'+name)    
+    
 
 class test_logoformat(unittest.TestCase) :
 
@@ -153,9 +154,12 @@ class test_seqlogo(unittest.TestCase):
         if returncode == 0:
             self.assertEqual(len(err), 0)
 
+        out = out.decode()
+
         for item in outputtext :
             self.assertTrue(item in out)
-
+        
+        stdin.close()
 
     def test_malformed_options(self) :
         self._exec( ["--notarealoption"], [], 2)
