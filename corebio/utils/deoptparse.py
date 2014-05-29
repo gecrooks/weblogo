@@ -98,7 +98,7 @@ class DeHelpFormatter(IndentedHelpFormatter) :
 def _check_file_in(option, opt, value):
     if option or  opt or  value : pass # Shut up lint checker 
     try:
-        return file(value, "r")
+        return open(value, "r")
     except IOError:
         raise OptionValueError(
             "option %s: cannot open file: %s" % (opt, value) )
@@ -106,7 +106,7 @@ def _check_file_in(option, opt, value):
 def _check_file_out(option, opt, value):
     if option or  opt or  value : pass # Shut up lint checker 
     try:
-        return file(value, "w+")
+        return open(value, "w+")
     except IOError:
         raise OptionValueError(
             "option %s: cannot open file: %s" % (opt, value) )
