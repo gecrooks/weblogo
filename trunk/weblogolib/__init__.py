@@ -69,8 +69,8 @@ To create a logo in python code:
     >>> options = LogoOptions()
     >>> options.title = "A Logo Title"
     >>> format = LogoFormat(data, options)
-    >>> fout = open('cap.eps', 'w') 
-    >>> eps_formatter( data, format, fout)
+    >>> eps = eps_formatter( data, format)
+   
 
 
 -- Distribution and Modification --
@@ -193,7 +193,7 @@ class GhostscriptAPI(object) :
             raise RuntimeError("Cannot communicate with ghostscript.")  
         return out.strip()
        
-    def convert(self, format, fin, fout,  width,  height, resolution=300) :
+    def convert(self, format, postscript,  width,  height, resolution=300) :
         device_map = { 'png':'png16m',  'pdf':'pdfwrite', 'jpeg':'jpeg'}
        
         try :
@@ -226,10 +226,9 @@ class GhostscriptAPI(object) :
         error_msg = "Unrecoverable error : Ghostscript conversion failed " \
                     "(Invalid postscript?). %s" % " ".join(args) 
 
-        source = fin.read().encode("utf-8")
         try :
             p = Popen(args, stdin=PIPE, stdout = PIPE, stderr= PIPE) 
-            (out,err) = p.communicate(source) 
+            (out,err) = p.communicate(postscript.encode()) 
         except OSError :
             raise RuntimeError(error_msg)
     
@@ -238,11 +237,16 @@ class GhostscriptAPI(object) :
             if err is not None : error_msg += err
             raise RuntimeError(error_msg)
 
-        
-        if sys.version_info[0] >= 3:
-            fout.buffer.write(out)
-        else:
-            print(out, file=fout)
+        # Python 2: out is a 'str', python 3 out is 'bytes'
+        return out
+#        print( str(type(out)), file=sys.stderr)
+#        print( str(type(fout)), file=sys.stderr)
+#        
+#        if sys.version_info[0] >= 3:
+#            #fout.buffer.write(out)  # If file
+#            fout.write(out)     #if bytesIO. But mangles outputsomehow
+#        else:
+#            print(out, file=fout)
 
 # end class Ghostscript
 
@@ -700,45 +704,36 @@ class LogoFormat(LogoOptions) :
 
 
 # ------ Logo Formaters ------
-# Each formatter is a function f(LogoData, LogoFormat, output file).
-# that draws a representation of the logo into the given file.
+# Each formatter is a function f(LogoData, LogoFormat).
+# that draws a representation of the logo.
 # The main graphical formatter is eps_formatter. A mapping 'formatters'
 # containing all available formatters is located after the formatter
 # definitions. 
+# Each formatter returns binary data. The eps and data formats can decoded
+# to strings, e.g. eps_as_string = eps_data.decode()
 
-def pdf_formatter(data, format, fout) :
+def pdf_formatter(data, format) :
     """ Generate a logo in PDF format."""
-    
-    feps = StringIO()
-    eps_formatter(data, format, feps)
-    feps.seek(0)
-    
+    eps = eps_formatter(data, format).decode()
     gs = GhostscriptAPI()    
-    gs.convert('pdf', feps, fout, format.logo_width, format.logo_height)
+    return gs.convert('pdf', eps, format.logo_width, format.logo_height)
 
 
-def _bitmap_formatter(data, format, fout, device) :
-    feps = StringIO()
-    eps_formatter(data, format, feps)
-    feps.seek(0)
-    
+def _bitmap_formatter(data, format, device) :
+    eps = eps_formatter(data, format).decode()   
     gs = GhostscriptAPI()    
-    gs.convert(device, feps, fout, 
+    return gs.convert(device, eps, 
         format.logo_width, format.logo_height, format.resolution)
 
-
-def jpeg_formatter(data, format, fout) : 
+def jpeg_formatter(data, format) : 
     """ Generate a logo in JPEG format."""
-    _bitmap_formatter(data, format, fout, device="jpeg")
+    return _bitmap_formatter(data, format, device="jpeg")
 
-def svg_formatter(data, format, fout) : 
+def svg_formatter(data, format) : 
     """ Generate a logo in Scalable Vector Graphics (SVG) format.
     Requires the program 'pdf2svg' be installed.
     """
-
-    fpdf = StringIO()
-    pdf_formatter(data, format, fpdf)
-    fpdf.seek(0)
+    pdf = pdf_formatter(data, format)
     
     try:
         command = find_command('pdf2svg')
@@ -751,8 +746,13 @@ def svg_formatter(data, format, fout) :
     fsvgi, fname_svg = tempfile.mkstemp(suffix=".svg")
     try:
         
+
         fpdf2 = open(fname_pdf, 'w')
-        fpdf2.write(fpdf.getvalue() )
+        if sys.version_info[0] >= 3:
+            fpdf2.buffer.write(pdf)
+        else: 
+            fpdf2.write(pdf)        
+                    
         fpdf2.seek(0)
   
         args = [command, fname_pdf, fname_svg]
@@ -760,34 +760,32 @@ def svg_formatter(data, format, fout) :
         (out,err) = p.communicate() 
 
         fsvg = open(fname_svg)
-        fout.write(fsvg.read())
+        return fsvg.read().encode()
     finally:
         os.remove(fname_svg)
         os.remove(fname_pdf)
 
 
-def png_formatter(data, format, fout) : 
+def png_formatter(data, format) : 
     """ Generate a logo in PNG format."""
-    _bitmap_formatter(data, format, fout, device="png")
+    return _bitmap_formatter(data, format, device="png")
 
 
-def png_print_formatter(data, format, fout) : 
+def png_print_formatter(data, format) : 
     """ Generate a logo in PNG format with print quality (600 DPI) resolution."""
     format.resolution = 600
-    _bitmap_formatter(data, format, fout, device="png")
+    return _bitmap_formatter(data, format, device="png")
 
 
-def txt_formatter(logodata, format, fout):
+def txt_formatter(logodata, format):
     """ Create a text representation of the logo data. 
     """
-    print(str(logodata), file=fout)
-
+    return str(logodata).encode()
    
 
     
-def eps_formatter( logodata, format, fout) :
+def eps_formatter(logodata, format) :
     """ Generate a logo in Encapsulated Postscript (EPS)"""
-    
     substitutions = {}
     from_format =[
         "creation_date",    "logo_width",           "logo_height",      
@@ -906,7 +904,10 @@ def eps_formatter( logodata, format, fout) :
     # Create and output logo
     template = resource_string( __name__, 'template.eps', __file__).decode()
     logo = Template(template).substitute(substitutions)
-    print(logo, file=fout)
+
+    return logo.encode()
+    
+    
  
 
 # map between output format names and logo  

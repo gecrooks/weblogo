@@ -81,7 +81,15 @@ def main():
         format = _build_logoformat(data, opts)
         
         formatter = opts.formatter
-        formatter(data, format, opts.fout)
+        logo = formatter(data, format)
+        #logo = logo.encode()
+        
+        if sys.version_info[0] >= 3:
+            opts.fout.buffer.write(logo)
+        else: 
+            opts.fout.write(logo)
+#        print(logo, file=opts.fout)
+
 
     except ValueError as err :
         print('Error:', err, file=sys.stderr)
