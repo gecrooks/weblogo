@@ -309,10 +309,7 @@ def main(htdocs_directory = None) :
         send_form(controls, errors, htdocs_directory)
         return    
  
-    # We write the logo into a local buffer so that we can catch and
-    # handle any errors. Once the "Content-Type:" header has been sent
-    # we can't send any useful feedback
-    logo = StringIO()
+        
     try :
         comp = form["composition"].get_value()
         percentCG = form["percentCG"].get_value()
@@ -338,7 +335,7 @@ def main(htdocs_directory = None) :
             
         logoformat =  weblogolib.LogoFormat(data, logooptions)
         format = form["format"].value
-        weblogolib.formatters[format](data, logoformat, logo)            
+        logo = weblogolib.formatters[format](data, logoformat)            
     except ValueError as err:
         errors.append(err.args)
     except IOError as err:
@@ -366,8 +363,12 @@ def main(htdocs_directory = None) :
     # Separate header from data
     print()
     # Finally, and at last, send the logo.
-    print(logo.getvalue())
 
+    if sys.version_info[0] >= 3:
+        sys.stdout.buffer.write(logo)
+    else: 
+        sys.stdout.write(logo)
+        
 
 def send_form(controls, errors=[], htdocs_directory=None) :
     if htdocs_directory is None :
