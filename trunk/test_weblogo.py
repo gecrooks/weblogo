@@ -154,7 +154,7 @@ class test_seqlogo(unittest.TestCase):
         if returncode == 0:
             self.assertEqual(len(err), 0)
 
-        #out = out.decode()
+        out = out.decode()
 
         for item in outputtext :
             self.assertTrue(item in out)
