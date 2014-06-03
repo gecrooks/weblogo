@@ -1,6 +1,6 @@
 WebLogo Release Notes
 
-3.4  (????)  [Gavin Crooks, Eric Talevich]
+3.4  (2014-06-03)  [Gavin Crooks, Eric Talevich]
 
 * Python 3
 	Weblogo now runs under python 2.6, 2.7, 3.2, 3.3 & 3.4 (Python2.5 is no longer
@@ -10,6 +10,8 @@ WebLogo Release Notes
 	(Kudos: Michael Imbeault, Estienne Swart, FiReaNG3L)
 * Fix various bugs in transfac parsing.
 	(Kudos: Promita Bose, Christopher Lamantia)
+* Fix --complement of gapped sequences, added --revcomp option (Issue 36)
+	(Kudos: Jacob Engelbrecht))
 * Miscellaneous minor bug fixes and refactoring.
 	(Kudos: Kamil Slowikowski, Jacob Engelbrecht)
 
