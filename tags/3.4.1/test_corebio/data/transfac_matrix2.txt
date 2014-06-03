@@ -1,0 +1,45 @@
+AC   M00252
+XX
+ID   V$TATA_01
+XX
+DT   25.09.1996 (created); ewi.
+DT   25.09.1996 (updated); ewi.
+XX
+NA   TATA
+XX
+DE   cellular and viral TATA box elements
+XX
+BF   T00794; TBP; Species: human, Homo sapiens.
+BF   T00796; TBP; Species: mouse, Mus musculus.
+BF   T00797; TBP; Species: fruit fly, Drosophila melanogaster.
+XX
+P0      A      C      G      T
+01     61    145    152     31      S
+02     16     46     18    309      T
+03    352      0      2     35      A
+04      3     10      2    374      T
+05    354      0      5     30      A
+06    268      0      0    121      A
+07    360      3     20      6      A
+08    222      2     44    121      W
+09    155     44    157     33      R
+10     56    135    150     48      N
+11     83    147    128     31      N
+12     82    127    128     52      N
+13     82    118    128     61      N
+14     68    107    139     75      N
+15     77    101    140     71      N
+XX
+BA   389 TATA box elements
+XX
+CC   selected sequences from 502 promoters of EPD, mainly from vertebrates
+XX
+RN   [1]
+RX   MEDLINE; 90230299.
+RA   Bucher P.
+RT   Weight matrix descriptions of four eukaryotic RNA 
+RT   polymerase II promoter elements derived from 502 unrelated 
+RT   promoter sequences
+RL   J. Mol. Biol. 212:563-578 (1990).
+XX
+//   

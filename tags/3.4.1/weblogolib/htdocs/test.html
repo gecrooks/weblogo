@@ -1,0 +1,598 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="logo.css" >
+
+<title>WebLogo 3 - Tests </title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+<meta name="author" content="Gavin E. Crooks" >
+<meta name="ID" content="$ID:" >
+
+<style type="text/css">
+td {
+    border-left : white solid 4pt
+}
+.error { 
+    color: #900;
+    border-left: red solid +4pt;
+}
+
+.err_msg { 
+    color: #900;
+}
+
+</style>
+</head>
+
+<body style="align:center">
+
+
+<table width="80%" border = '0' cellspacing='0' cellpadding='1' align="center">
+<tr><td >
+<h1> WebLogo 3: Tests</h1>
+
+</td><td align = "right"> 
+    &middot; 
+  <a href="./">about</a>&nbsp;&middot;
+  <a href="create.cgi">create</a>&nbsp;&middot; 
+  <a href="examples.html">examples</a>&nbsp;&middot; 
+  <a href="manual.html">manual</a>&nbsp;&middot; 
+<br>
+&nbsp;
+</td></tr>
+
+<tr><td colspan='2'>
+
+Various tests of the WebLogo webapp. <br >
+
+<hr >
+
+<dl>
+<dt>Relative Entropy Test</dt>
+<dd>
+The entropy should be 2 bits, 1 bit, 0 bits
+(The small sample correction should be turned off.) 
+<br >
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_edit" value="Edit" >
+<input type="submit" name="cmd_create" value="Create" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="show_errorbars" value="true" >
+<input type="hidden" name="download" value="true" >
+<input type="hidden" name="composition" value="comp_none" >
+
+<input type="hidden" name="sequences" value=
+">
+GTTGTTGTTGTT
+>
+GTCGTCGTCGTC
+>
+GGGGGGGGGGGG
+>
+GGAGGAGGAGGA
+" >
+</form>
+</dd>
+
+
+<dt>Title And Labels Test</dt>
+<dd>
+Replace and display x-label, y-label and title. 
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_edit" value="Edit" >
+<input type="submit" name="cmd_create" value="Create" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="show_errorbars" value="true" >
+<input type="hidden" name="download" value="true" >
+
+<input type="hidden" name="yaxis_label" value="The Y-axis" > 
+<input type="hidden" name="xaxis_label" value="The X-axis" > 
+<input type="hidden" name="logo_title" value="This is the TITLE" > 
+<input type="hidden" name="sequences" value=
+">
+AAAGTGAAAGTGAAAGTGAAAGTG
+>
+AAAGCGAAAGCGAAAGCGAAAGCG
+>
+TGCCCTTGCCCTTGCCCTTGCCCT
+>
+TGCCTTTGCCTTTGCCTTTGCCTT
+" >
+</form>
+
+Same, but do not show axes
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_edit" value="Edit" >
+<input type="submit" name="cmd_create" value="Create" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="show_errorbars" value="true" >
+<input type="hidden" name="download" value="true" >
+
+<input type="hidden" name="yaxis_label" value="This is the Y-axis" > 
+<input type="hidden" name="xaxis_label" value="This is the X-axis" > 
+<input type="hidden" name="logo_title" value="This is the TITLE" > 
+<input type="hidden" name="sequences" value=
+">
+AAAGTGAAAGTGAAAGTGAAAGTG
+>
+AAAGCGAAAGCGAAAGCGAAAGCG
+>
+TGCCCTTGCCCTTGCCCTTGCCCT
+>
+TGCCTTTGCCTTTGCCTTTGCCTT
+" >
+</form>
+</dd>
+
+
+
+<dt>Format Test</dt>
+<dd>
+Ensure that this logo can be created in each of the available formats
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_edit" value="Edit" >
+<input type="submit" name="cmd_create" value="Create" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="show_errorbars" value="true" >
+<input type="hidden" name="download" value="true" >
+
+Format: <select name="format">
+<option value="png_print">PNG</option>
+<option value="png">PNG (low res.)</option>
+<option value="jpeg">JPEG (low res.)</option>
+<option value="eps">EPS (vector)</option>
+<option value="pdf">PDF (vector)</option>
+<option value="logodata">data</option>
+</select> 
+
+<input type="hidden" name="sequences" value=
+">
+AAAGTGAAAGTGAAAGTGAAAGTG
+>
+AAAGCGAAAGCGAAAGCGAAAGCG
+>
+TGCCCTTGCCCTTGCCCTTGCCCT
+>
+TGCCTTTGCCTTTGCCTTTGCCTT
+" >
+</form>
+</dd>
+
+
+
+
+<dt>Test Alphabetic Order</dt>
+<dd>
+Each character in each stack has the same entropy. The letters
+should be alphabetized, top down.
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_edit" value="Edit" >
+<input type="submit" name="cmd_create" value="Create" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="show_errorbars" value="true" >
+<input type="hidden" name="download" value="true" >
+<input type="hidden" name="composition" value="comp_none" >
+(NA)
+<input type="hidden" name="sequences" value=
+">
+AAAGTG
+>
+AAAGCG
+>
+TGCCCT
+>
+TGCCTT
+" >
+</form>
+
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_edit" value="Edit" >
+<input type="submit" name="cmd_create" value="Create" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="composition" value = "comp_none" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="show_errorbars" value="true" > (AA)
+<input type="hidden" name="download" value="true" >
+<input type="hidden" name="sequences" value=
+">
+PK
+>
+PK
+>
+VH
+>
+VH
+>
+KG
+>
+KG
+" >
+</form>
+</dd>
+
+
+
+<dt>One Single Column</dt>
+<dd>
+Should not die just because there is only 1 stack.
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_edit" value="Edit" >
+<input type="submit" name="cmd_create" value="Create" >
+<input type="hidden" name="download" value="true" >
+<input type="hidden" name="sequences" value=
+">
+A
+>
+A
+>
+G
+>
+G
+>
+G
+>
+G
+" >
+</form>
+</dd>
+
+
+<dt> Small Sample Correction Test</dt>
+<dd>
+The samples per column decrease from 32 (left) to 1 (right).
+Before the small sample correction the relative entropy of each stack
+is 2 bits. 
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_edit" value="Edit" >
+<input type="submit" name="cmd_create" value="Create" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="download" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<select name="composition" >
+<option value = "comp_none" >No adjustment for composition</option>
+<option value = "comp_auto" >auto</option>
+</select>
+
+<input type="hidden" name="sequences" value=
+">
+GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+>
+GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG-
+>
+GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG--
+>
+GGGGGGGGGGGGGGGGGGGGGGGGGGGGG---
+>
+GGGGGGGGGGGGGGGGGGGGGGGGGGGG----
+>
+GGGGGGGGGGGGGGGGGGGGGGGGGGG-----
+>
+GGGGGGGGGGGGGGGGGGGGGGGGGG------
+>
+GGGGGGGGGGGGGGGGGGGGGGGGG-------
+>
+GGGGGGGGGGGGGGGGGGGGGGGG--------
+>
+GGGGGGGGGGGGGGGGGGGGGGG---------
+>
+GGGGGGGGGGGGGGGGGGGGGG----------
+>
+GGGGGGGGGGGGGGGGGGGGG-----------
+>
+GGGGGGGGGGGGGGGGGGGG------------
+>
+GGGGGGGGGGGGGGGGGGG-------------
+>
+GGGGGGGGGGGGGGGGGG--------------
+>
+GGGGGGGGGGGGGGGG----------------
+>
+GGGGGGGGGGGGGGG-----------------
+>
+GGGGGGGGGGGGGG------------------
+>
+GGGGGGGGGGGGG-------------------
+>
+GGGGGGGGGGGG--------------------
+>
+GGGGGGGGGGG---------------------
+>
+GGGGGGGGGG----------------------
+>
+GGGGGGGGG-----------------------
+>
+GGGGGGGG------------------------
+>
+GGGGGGG-------------------------
+>
+GGGGGG--------------------------
+>
+GGGGG---------------------------
+>
+GGGG----------------------------
+>
+GGG-----------------------------
+>
+GG------------------------------
+>
+G-------------------------------
+" >
+</form>
+</dd>
+
+
+
+<dt> Test Graceful Failure</dt>
+<dd>
+Each of these tests should result in a polite and informative error message.
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_create" value="Fail: No sequence data" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="download" value="true" >
+<input type="hidden" name="show_errorbars" checked="checked" >
+<input type="hidden" name="sequences" value="" >
+</form>
+
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_create" value="Fail: Malformed sequences" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="download" value="true" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="show_errorbars" checked="checked" >
+<input type="hidden" name="sequences" value="
+asdajksgh
+>
+GGGGGGGGGGGGGG------------------
+>
+GGGGGGGGGGGGG-------------------
+>
+" >
+</form>
+
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_create" value="Fail: Unknown format" >
+<input type="hidden" name="format" value="NO_SUCH_FORMAT" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="show_errorbars" checked="checked" >
+<input type="hidden" name="download" value="true" >
+<input type="hidden" name="sequences" value=">
+GGGGGGGGGGGGGG------------------
+>
+GGGGGGGGGGGGG-------------------
+>
+" >
+</form>
+
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_create" value="Fail: Malformed data" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="download" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="show_errorbars" checked="checked" >
+<input type="hidden" name="sequences" value=">
+GGGGGGGGGGGGGG------------------
+>
+GGGGGGGGGGGGG------------------
+>
+" >
+</form>
+
+
+</dd>
+
+
+
+<dt> Logo Sizes</dt>
+<dd>
+Same sequences, three different sizes.
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_edit" value="Edit" >
+<input type="hidden" name="download" value="true" >
+<input type="submit" name="cmd_create" value="Create" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+Size: 
+<select name="stack_width" >
+<option  selected="selected" >small</option>
+<option >medium</option>
+<option  >large</option>
+</select> 
+
+
+<input type="hidden" name="sequences" value=
+">aldB -18->4
+attcgtgatagctgtcgtaaag
+>ansB 103->125
+ttttgttacctgcctctaactt
+>araB1 109->131
+aagtgtgacgccgtgcaaataa
+>araB2 147->169 
+tgccgtgattatagacactttt
+>cdd 1 107->129
+atttgcgatgcgtcgcgcattt
+>cdd 2 57->79
+taatgagattcagatcacatat
+>crp 1 115->137
+taatgtgacgtcctttgcatac
+>crp 2
+gaaggcgacctgggtcatgctg
+>cya 151->173 
+aggtgttaaattgatcacgttt
+>cytR 1 125->147
+cgatgcgaggcggatcgaaaaa
+>cytR 2 106->128
+aaattcaatattcatcacactt
+>dadAX 1 95->117
+agatgtgagccagctcaccata
+>dadAX 2 32->54
+agatgtgattagattattattc
+>deoP2 1 75->97
+aattgtgatgtgtatcgaagtg
+>deoP2 2 128->150 
+ttatttgaaccagatcgcatta
+>fur 136->158
+aaatgtaagctgtgccacgttt
+>gal 56->78
+aagtgtgacatggaataaatta
+>glpACB (glpTQ) 1 54->76  
+ttgtttgatttcgcgcatattc
+>glpACB (glpTQ) 2 94->116
+aaacgtgatttcatgcgtcatt
+>glpACB (glpTQ) 144->166 
+atgtgtgcggcaattcacattt
+>glpD (glpE) 95->117 
+taatgttatacatatcactcta
+>glpFK 1 120->142
+ttttatgacgaggcacacacat
+>glpFK 2 95->117
+aagttcgatatttctcgttttt
+>gut (srlA) 72->94
+ttttgcgatcaaaataacactt
+>ilvB 87->109
+aaacgtgatcaacccctcaatt
+>lac 1 (lacZ) 88->110
+taatgtgagttagctcactcat
+>lac 2 (lacZ) 16->38 
+aattgtgagcggataacaattt
+>malEpKp1 110->132
+ttgtgtgatctctgttacagaa
+>malEpKp2 139->161
+TAAtgtggagatgcgcacaTAA
+>malEpKp3 173->195
+TTTtgcaagcaacatcacgAAA
+>malEpKp4 205->227
+GACctcggtttagttcacaGAA
+>malT 121->143
+aattgtgacacagtgcaaattc
+>melR 52->74
+aaccgtgctcccactcgcagtc
+>mtl 302->324
+TCTTGTGATTCAGATCACAAAG
+>nag 156->178
+ttttgtgagttttgtcaccaaa
+>nupG2 97->119
+aaatgttatccacatcacaatt
+>nupG1 47->69
+ttatttgccacaggtaacaaaa
+>ompA 166->188
+atgcctgacggagttcacactt
+>ompR 161->183
+taacgtgatcatatcaacagaa
+>ptsH A 316->338
+Ttttgtggcctgcttcaaactt
+>ptsH B 188->210
+ttttatgatttggttcaattct
+>rhaS (rhaB) 161->183 
+aattgtgaacatcatcacgttc
+>rot 1 (ppiA) 182->204 
+ttttgtgatctgtttaaatgtt
+>rot 2 (ppiA) 129->151
+agaggtgattttgatcacggaa
+>tdcA 60->82
+atttgtgagtggtcgcacatat
+>tnaL 73->95
+gattgtgattcgattcacattt
+>tsx 2 146->168
+gtgtgtaaacgtgaacgcaatc
+>tsx 1 107->129
+aactgtgaaacgaaacatattt
+>uxuAB 165->187
+TCTTGTGATGTGGTTAACCAAT
+" >
+</form>
+</dd>
+
+
+
+
+</dl>
+
+
+
+<dl>
+<dt>Transfac test</dt>
+<dd>
+<br >
+<form method="post" action="create.cgi">
+<input type="submit" name="cmd_edit" value="Edit" >
+<input type="submit" name="cmd_create" value="Create" >
+<input type="hidden" name="show_yaxis" value="true" >
+<input type="hidden" name="show_xaxis" value="true" >
+<input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="show_errorbars" value="true" >
+<input type="hidden" name="download" value="true" >
+
+<input type="hidden" name="sequences" value=
+"AC   M00001
+XX
+ID   V$MYOD_01
+XX
+DT   19.10.1992 (created); ewi.
+DT   22.10.1997 (updated); dbo.
+CO   Copyright (C), Biobase GmbH.
+XX
+NA   MyoD
+XX
+DE   myoblast determination gene product
+XX
+BF   T00526 MyoD; Species: mouse, Mus musculus.
+XX
+PO      A      C      G      T
+01      1      2      2      0      S
+02      2      1      2      0      R
+03      3      0      1      1      A
+04      0      5      0      0      C
+05      5      0      0      0      A
+06      0      0      4      1      G
+07      0      1      4      0      G
+08      0      0      0      5      T
+09      0      0      5      0      G
+10      0      1      2      2      K
+11      0      2      0      3      Y
+12      1      0      3      1      G
+XX
+BA   5 functional elements in 3 genes
+XX
+CC   no comment
+XX
+//   
+" >
+</form>
+</dd>
+
+
+
+</td></tr>
+
+
+
+
+</table>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-5951066-1");
+pageTracker._trackPageview();
+</script>
+</body></html>

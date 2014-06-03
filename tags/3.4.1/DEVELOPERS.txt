@@ -1,0 +1,89 @@
+
+
+==================
+DEVELOPING WEBLOGO
+==================
+
+
+---------------------------------------------
+ Procedure to Build and Release new versions 
+---------------------------------------------
+
+1. Check out a fresh copy of trunk.
+	
+	svn checkout https://weblogo.googlecode.com/svn/trunk/ weblogo-VERSION --username USERNAME 
+
+2.  Update version number if necessary (weblogolib/__init__.py and corebio/_version.py )
+
+
+3. 	Update changelog (weblogolib/htdocs/weblogo_changelog.txt)
+
+
+4. 	Update manual.html with the latest --help text.
+
+
+5.  Rebuild examples.
+	
+
+6.  Commit final changes.
+
+	
+7. 	Run build process under all supported python versions.
+	
+	sudo port select python python25	# MacPorts on OS X
+	./build.sh
+
+
+8. 	Run webpage tests.
+
+	./weblogo --serve	# then goto localhost:8080/test.html and try tests
+
+
+9. Branch
+
+	svn copy -m "Branch 0.x" https://weblogo.googlecode.com/svn/trunk/ https://weblogo.googlecode.com/svn/branches/0.x 
+
+
+10. Update version number in trunk, 
+	(Add new entry to changelog, change in corebio._version.py)
+
+
+11. Switch to release branch. 
+	
+	svn switch https://weblogo.googlecode.com/svn/branches/0.x
+	./build.sh
+
+12. Tag
+	svn copy -m "Tag 3.2.0" https://weblogo.googlecode.com/svn/branches/3.2 https://weblogo.googlecode.com/svn/tags/3.2.0 
+
+
+13. Upload distribution tarball
+
+	svn import -m "Dist 0.x.0" dist/weblogo-3.x.0.tar.gz  https://weblogo.googlecode.com/svn/dist/weblogo-3.x.0.tar.gz
+
+
+13.5 'svn update' the distribution directory on weblogo.threeplusone.com
+
+14. Update project page.  (http://code.google.com/p/weblogo/admin)
+	
+	Upload distribution tar file.
+	Add featured tag (so current download shows on front page)
+	Update links
+	The README.txt file should match the googlecode front page and the comments in weblogo cmd.
+
+15. Update server :login to weblogo.threeplusone.com, weblogo directory and switch branches 
+	
+	svn switch https://weblogo.googlecode.com/svn/branches/3.2
+
+
+16. Resister with Python Packakge Index PyPI
+	
+	python setup.py register
+	python setup.py sdist upload
+ 	sudo easy_install weblogo
+
+
+17. Post announcement. (http://groups.google.com/group/WebLogo)
+
+
+
