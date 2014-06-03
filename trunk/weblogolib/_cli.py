@@ -48,7 +48,7 @@ from optparse import OptionGroup
 from string import Template
 
 from corebio import seq_io
-from corebio.seq import Seq, SeqList
+from corebio.seq import Seq, SeqList, nucleic_alphabet
 from corebio.utils import *
 from corebio.utils.deoptparse import DeOptionParser
 from corebio._py3k import iteritems, StringIO
@@ -172,17 +172,22 @@ def _build_logodata(options) :
     if motif_flag :
         if options.ignore_lower_case:
             raise ValueError("error: option --ignore-lower-case incompatible with matrix input")
-        if options.reverse: motif.reverse()
-        if options.complement: motif.complement()
+        if options.reverse or options.revcomp: motif.reverse()
+        if options.complement or options.revcomp: motif.complement()
 
         prior = parse_prior( options.composition,motif.alphabet, options.weight)
         data = LogoData.from_counts(motif.alphabet, motif, prior)
     else :
-        if options.reverse: 
+        if options.reverse or options.revcomp: 
             seqs = SeqList([s.reverse() for s in seqs], seqs.alphabet)
         
-        if options.complement :
+        if options.complement or options.revcomp:
+            if not nucleic_alphabet.alphabetic(seqs.alphabet):
+                raise ValueError('non-nucleic sequence cannot be complemented')
+            aaa = seqs.alphabet
+            seqs.alphabet = nucleic_alphabet
             seqs= SeqList( [Seq(s,seqs.alphabet).complement() for s in seqs], seqs.alphabet)
+            seqs.alphabet = aaa            
 
         prior = parse_prior( options.composition,seqs.alphabet, options.weight)
         data = LogoData.from_seqs(seqs, prior)
@@ -433,7 +438,14 @@ def _build_option_parser() :
         dest="complement",
         action="store_true",
         default=False,
-        help="complement DNA sequences",
+        help="complement nucleic sequences",
+        )
+    
+    trans_grp.add_option( "", "--revcomp",
+        dest="revcomp",
+        action="store_true",
+        default=False,
+        help="reverse complement nucleic sequences",
         )
     
 
