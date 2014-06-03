@@ -286,7 +286,7 @@ The weblogo <a href="#CLI">command line client</a>, <code>weblogo</code>, provid
 
 <h4>Dependencies</h4>
 <p>
-WebLogo version 3 is written in python. It is necessary to have <a href="http://www.python.org/download/">python 2.5, 2.6 or 2.7</a>  and the
+WebLogo version 3 is written in python. It is necessary to have <a href="http://www.python.org/download/">python 2.6, 2.7, 3.2, 3.3 or 3.4</a>  and the
 extension package <a href="http://www.scipy.org/Download">numpy</a>
 installed before WebLogo will run. WebLogo also requires a recent version of  <a href="http://www.cs.wisc.edu/~ghost/">ghostscript</a> to create PNG and PDF output, and <a href="http://www.cityinthesky.co.uk/opensource/pdf2svg">pdf2svg</a> to generate SVG output.
 </p>
@@ -294,10 +294,18 @@ installed before WebLogo will run. WebLogo also requires a recent version of  <a
 
 <h4> Download and Installation</h4>
 <p>
-If the python package <a href="http://peak.telecommunity.com/DevCenter/setuptools"><code>setuptools</code></a> has been installed, then WebLogo and its dependencies can be downloaded and installed with a single command:
-</p>
+WebLogo can be installed using the <a href="https://pypi.python.org/pypi/pip">pip</a> python package manager	
+	
 <pre>
-sudo easy_install weblogo
+sudo pip install weblogo
+</pre>
+To unistall
+<pre>
+sudo pip uninstall weblogo
+</pre>
+To specifically install the weblogo script to /usr/local/bin run
+<pre>
+pip install --install-option "--install-scripts=/usr/local/bin" weblogo
 </pre>
 
 
@@ -335,7 +343,7 @@ sudo python setup.py install
 <p>
 Run <code>python setup.py help</code> for more installation options. For example, to specifically install the weblogo script to /usr/local/bin </p>
 <pre>
-sudo python setup.py install_scripts --install-dir /usr/local/bin
+sudo python setup.py --install-scripts=/usr/local/bin
 </pre>
 
 

@@ -22,7 +22,7 @@ DEVELOPING WEBLOGO
 4. 	Update manual.html with the latest --help text.
 
 
-5. 	Rebuild apidocs. Rebuild examples.
+5.  Rebuild examples.
 	
 
 6.  Commit final changes.
@@ -30,7 +30,7 @@ DEVELOPING WEBLOGO
 	
 7. 	Run build process under all supported python versions.
 	
-	sudo port select python python27	# MacPorts on OS X
+	sudo port select python python25	# MacPorts on OS X
 	./build.sh
 
 
@@ -60,6 +60,9 @@ DEVELOPING WEBLOGO
 13. Upload distribution tarball
 
 	svn import -m "Dist 0.x.0" dist/weblogo-3.x.0.tar.gz  https://weblogo.googlecode.com/svn/dist/weblogo-3.x.0.tar.gz
+
+
+13.5 'svn update' the distribution directory on weblogo.threeplusone.com
 
 14. Update project page.  (http://code.google.com/p/weblogo/admin)
 	
