@@ -1,0 +1,872 @@
+CLUSTAL 2.0.10 multiple sequence alignment
+
+
+sp|P12180|PETL_ORYSJ        --------------------------------------------------
+tr|Q7U572|Q7U572_SYNPX      --------------------------------------------------
+sp|P0C428|PSBT_ORYSI        --------------------------------------------------
+sp|P74787|PSBT_SYNY3        --------------------------------------------------
+sp|P12186|PSAI_ORYSJ        --------------------------------------------------
+tr|Q7UZX5|Q7UZX5_PROMP      --------------------------------------------------
+sp|Q6ENI6|PSBM_ORYNI        --------------------------------------------------
+tr|Q7NCI2|Q7NCI2_GLOVI      --------------------------------------------------
+tr|Q7V6E4|Q7V6E4_PROMM      --------------------------------------------------
+tr|Q7V512|Q7V512_PROMM      --------------------------------------------------
+tr|Q8YRD7|Q8YRD7_ANASP      --------------------------------------------------
+tr|Q93P10|Q93P10_PROMP      --------------------------------------------------
+tr|Q949Q5|Q949Q5_ARATH      --------------------------------------------------
+sp|P0C405|PSBI_ORYSA        --------------------------------------------------
+sp|P0C515|YCF4_ORYSJ        --------------------------------------------------
+sp|Q6ENI5|PETN_ORYNI        --------------------------------------------------
+tr|P73952|P73952_SYNY3      --------------------------------------------------
+tr|Q7TU23|Q7TU23_PROMP      --------------------------------------------------
+sp|P73528|PSBZ_SYNY3        --------------------------------------------------
+sp|Q57038|CYB6_SYNY3        --------------------------------------------------
+sp|P73676|PSBY_SYNY3        --------------------------------------------------
+sp|P27589|PETD_SYNY3        --------------------------------------------------
+sp|P0C390|PETG_ORYSA        --------------------------------------------------
+tr|Q7U8X4|Q7U8X4_SYNPX      --------------------------------------------------
+sp|P0C415|PSBJ_ORYSI        --------------------------------------------------
+sp|P74367|PS11_SYNY3        --------------------------------------------------
+sp|P0C357|PSAB_ORYSI        MELRFPRFSQGLAQDPTTRRIWFGIATAHDFESHDDITEERLYQNIFASH 50
+sp|P0C374|PSAJ_ORYSI        --------------------------------------------------
+tr|Q7V658|Q7V658_PROMM      --------------------------------------------------
+sp|P0C410|PSBK_ORYSJ        --------------------------------------------------
+tr|Q7V2Y4|Q7V2Y4_PROMP      --------------------------------------------------
+tr|Q7NCH9|Q7NCH9_GLOVI      --------------------------------------------------
+sp|Q9LU86|PRXQ_ARATH        --------------------------------------------------
+sp|P0C400|PSBF_ORYSI        --------------------------------------------------
+tr|Q7VDW1|Q7VDW1_PROMA      --------------------------------------------------
+sp|P0C370|PSBE_ORYSJ        --------------------------------------------------
+tr|Q36688|Q36688_ORYSA      --------------------------------------------------
+tr|Q2LIK6|Q2LIK6_9ORYZ      --------------------------------------------------
+sp|Q9S7W1|CB4C_ARATH        --------------------------------------------------
+tr|Q7U9C4|Q7U9C4_SYNPX      --------------------------------------------------
+sp|P80471|LIPC_SOLTU        --------------------------------------------------
+sp|Q55356|PSB28_SYNY3       --------------------------------------------------
+sp|P0C511|RBL_ORYSI         --------------------------------------------------
+sp|P0C421|PSBH_ORYSI        --------------------------------------------------
+sp|P0C516|YCF3_ORYSA        --------------------------------------------------
+sp|P0C389|CYF_ORYSJ         --------------------------------------------------
+tr|Q7VC13|Q7VC13_PROMA      --------------------------------------------------
+tr|Q7NL78|Q7NL78_GLOVI      --------------------------------------------------
+tr|Q7U4P2|Q7U4P2_SYNPX      --------------------------------------------------
+tr|Q9SF54|Q9SF54_ARATH      --------------------------------------------------
+sp|O98679|NDHK_PEA          --------------------------------------------------
+tr|Q7UZS7|Q7UZS7_PROMP      --------------------------------------------------
+sp|P0C359|PSAC_ORYSA        --------------------------------------------------
+tr|Q7V2Z3|Q7V2Z3_PROMP      --------------------------------------------------
+tr|Q9SGH4|Q9SGH4_ARATH      --------------------------------------------------
+sp|Q55013|CY550_SYNY3       --------------------------------------------------
+                                                                              
+
+sp|P12180|PETL_ORYSJ        --------------------------------------------------
+tr|Q7U572|Q7U572_SYNPX      --------------------------------------------------
+sp|P0C428|PSBT_ORYSI        --------------------------------------------------
+sp|P74787|PSBT_SYNY3        --------------------------------------------------
+sp|P12186|PSAI_ORYSJ        --------------------------------------------------
+tr|Q7UZX5|Q7UZX5_PROMP      --------------------------------------------------
+sp|Q6ENI6|PSBM_ORYNI        --------------------------------------------------
+tr|Q7NCI2|Q7NCI2_GLOVI      --------------------------------------------------
+tr|Q7V6E4|Q7V6E4_PROMM      --------------------------------------------------
+tr|Q7V512|Q7V512_PROMM      --------------------------------------------------
+tr|Q8YRD7|Q8YRD7_ANASP      -------------------------MVSLVMSGLTFWAVNTIQQDAQVND 25
+tr|Q93P10|Q93P10_PROMP      --------------------------------------------------
+tr|Q949Q5|Q949Q5_ARATH      --------------------------------------------------
+sp|P0C405|PSBI_ORYSA        --------------------------------------------------
+sp|P0C515|YCF4_ORYSJ        --------------------------------------------------
+sp|Q6ENI5|PETN_ORYNI        --------------------------------------------------
+tr|P73952|P73952_SYNY3      --------------------------------------------------
+tr|Q7TU23|Q7TU23_PROMP      --------------------------------------------------
+sp|P73528|PSBZ_SYNY3        --------------------------------------------------
+sp|Q57038|CYB6_SYNY3        --------------------------------------------------
+sp|P73676|PSBY_SYNY3        --------------------------------------------------
+sp|P27589|PETD_SYNY3        --------------------------------------------------
+sp|P0C390|PETG_ORYSA        --------------------------------------------------
+tr|Q7U8X4|Q7U8X4_SYNPX      --------------------------------------------------
+sp|P0C415|PSBJ_ORYSI        --------------------------------------------------
+sp|P74367|PS11_SYNY3        --------------------------------------------------
+sp|P0C357|PSAB_ORYSI        FGQLAIIFLWTSGNLFHVAWQGNFESWIQDPLHVRPIAHAIWDPHFGQPA 100
+sp|P0C374|PSAJ_ORYSI        --------------------------------------------------
+tr|Q7V658|Q7V658_PROMM      --------------------------------------------------
+sp|P0C410|PSBK_ORYSJ        --------------------------------------------------
+tr|Q7V2Y4|Q7V2Y4_PROMP      -----------------------------MGLPWYRVHTVVINDPGRLLA 21
+tr|Q7NCH9|Q7NCH9_GLOVI      --------------------------------------------------
+sp|Q9LU86|PRXQ_ARATH        --------------------------------------------------
+sp|P0C400|PSBF_ORYSI        --------------------------------------------------
+tr|Q7VDW1|Q7VDW1_PROMA      --------------------------------------------------
+sp|P0C370|PSBE_ORYSJ        --------------------------------------------------
+tr|Q36688|Q36688_ORYSA      --------------------------------------------------
+tr|Q2LIK6|Q2LIK6_9ORYZ      --------------------------------------------------
+sp|Q9S7W1|CB4C_ARATH        --------------------------------------------------
+tr|Q7U9C4|Q7U9C4_SYNPX      --------------------------------------------------
+sp|P80471|LIPC_SOLTU        --------------------------------------------------
+sp|Q55356|PSB28_SYNY3       --------------------------------------------------
+sp|P0C511|RBL_ORYSI         -------------------------------------MSPQTETKASVGF 13
+sp|P0C421|PSBH_ORYSI        --------------------------------------------------
+sp|P0C516|YCF3_ORYSA        --------------------------------------------------
+sp|P0C389|CYF_ORYSJ         --------------------------------------------------
+tr|Q7VC13|Q7VC13_PROMA      --------------------------------------------------
+tr|Q7NL78|Q7NL78_GLOVI      --------------------------------------------------
+tr|Q7U4P2|Q7U4P2_SYNPX      --------------------------------------------------
+tr|Q9SF54|Q9SF54_ARATH      --------------------------------------------------
+sp|O98679|NDHK_PEA          --------------------------------------------------
+tr|Q7UZS7|Q7UZS7_PROMP      --------------------------------------------------
+sp|P0C359|PSAC_ORYSA        --------------------------------------------------
+tr|Q7V2Z3|Q7V2Z3_PROMP      --------------------------------------------------
+tr|Q9SGH4|Q9SGH4_ARATH      --------------------------------------------------
+sp|Q55013|CY550_SYNY3       --------------------------------------------------
+                                                                              
+
+sp|P12180|PETL_ORYSJ        --------------------------------------------------
+tr|Q7U572|Q7U572_SYNPX      --------------------------------------------------
+sp|P0C428|PSBT_ORYSI        --------------------------------------------------
+sp|P74787|PSBT_SYNY3        --------------------------------------------------
+sp|P12186|PSAI_ORYSJ        --------------------------------------------------
+tr|Q7UZX5|Q7UZX5_PROMP      --------------------------------------------------
+sp|Q6ENI6|PSBM_ORYNI        --------------------------------------------------
+tr|Q7NCI2|Q7NCI2_GLOVI      --------------------------------------------------
+tr|Q7V6E4|Q7V6E4_PROMM      --------------------------------------------------
+tr|Q7V512|Q7V512_PROMM      --------------------------------------------------
+tr|Q8YRD7|Q8YRD7_ANASP      TRFGRDLGLLLAANVAPLVADHNLTEVAQFSQRFYSSTSSVRYMLYADET 75
+tr|Q93P10|Q93P10_PROMP      --------------------------------------------------
+tr|Q949Q5|Q949Q5_ARATH      --------------------------------------------------
+sp|P0C405|PSBI_ORYSA        --------------------------------------------------
+sp|P0C515|YCF4_ORYSJ        --------------------------------------------------
+sp|Q6ENI5|PETN_ORYNI        --------------------------------------------------
+tr|P73952|P73952_SYNY3      --------------------------------------------------
+tr|Q7TU23|Q7TU23_PROMP      --------------------------------------------------
+sp|P73528|PSBZ_SYNY3        --------------------------------------------------
+sp|Q57038|CYB6_SYNY3        --------------------------------------------------
+sp|P73676|PSBY_SYNY3        --------------------------------------------------
+sp|P27589|PETD_SYNY3        --------------------------------------------------
+sp|P0C390|PETG_ORYSA        --------------------------------------------------
+tr|Q7U8X4|Q7U8X4_SYNPX      --------------------------------------------------
+sp|P0C415|PSBJ_ORYSI        --------------------------------------------------
+sp|P74367|PS11_SYNY3        --------------------------------------------------
+sp|P0C357|PSAB_ORYSI        VEAFTRGGAAGPVNIAYSGVYQWWYTIGLRTNEDLYTGALFLLFLSTLSL 150
+sp|P0C374|PSAJ_ORYSI        --------------------------------------------------
+tr|Q7V658|Q7V658_PROMM      --------------------------------------------------
+sp|P0C410|PSBK_ORYSJ        --------------------------------------------------
+tr|Q7V2Y4|Q7V2Y4_PROMP      VHLMHTALLAGWAGSMALYELAIFDPSDAVLNPMWRQGMYVMPFMARLGI 71
+tr|Q7NCH9|Q7NCH9_GLOVI      --------------------------------------------------
+sp|Q9LU86|PRXQ_ARATH        --------------------------------------------------
+sp|P0C400|PSBF_ORYSI        --------------------------------------------------
+tr|Q7VDW1|Q7VDW1_PROMA      --------------------------------------------------
+sp|P0C370|PSBE_ORYSJ        --------------------------------------------------
+tr|Q36688|Q36688_ORYSA      --------------------------------------------------
+tr|Q2LIK6|Q2LIK6_9ORYZ      --------------------------------------------------
+sp|Q9S7W1|CB4C_ARATH        ----------------------------------MATTTAAAASGIFGIR 16
+tr|Q7U9C4|Q7U9C4_SYNPX      --------------------------------------------------
+sp|P80471|LIPC_SOLTU        -------------------------------------MASISSLNQIPCK 13
+sp|Q55356|PSB28_SYNY3       --------------------------------------------------
+sp|P0C511|RBL_ORYSI         KAGVKDYKLTYYTPEYETKDTDILAAFRVTPQPGVPPEEAGAAVAAESST 63
+sp|P0C421|PSBH_ORYSI        --------------------------------------------------
+sp|P0C516|YCF3_ORYSA        --------------------------------------------------
+sp|P0C389|CYF_ORYSJ         --------------------------------------------------
+tr|Q7VC13|Q7VC13_PROMA      --------------------------------------------------
+tr|Q7NL78|Q7NL78_GLOVI      --------------------------------------------------
+tr|Q7U4P2|Q7U4P2_SYNPX      ----------------MPIDSVTAALEALDHQDAGVRYHGAWWLGKNRSA 34
+tr|Q9SF54|Q9SF54_ARATH      --------------------------------------------------
+sp|O98679|NDHK_PEA          --------------------------------------------------
+tr|Q7UZS7|Q7UZS7_PROMP      --------------------------------------------------
+sp|P0C359|PSAC_ORYSA        --------------------------------------------------
+tr|Q7V2Z3|Q7V2Z3_PROMP      --------------------------------------------------
+tr|Q9SGH4|Q9SGH4_ARATH      --------------------------------------------------
+sp|Q55013|CY550_SYNY3       --------------------------------------------------
+                                                                              
+
+sp|P12180|PETL_ORYSJ        --------------------------------------------------
+tr|Q7U572|Q7U572_SYNPX      ------------------------------------------------MR 2
+sp|P0C428|PSBT_ORYSI        --------------------------------------------------
+sp|P74787|PSBT_SYNY3        --------------------------------------------------
+sp|P12186|PSAI_ORYSJ        --------------------------------------------------
+tr|Q7UZX5|Q7UZX5_PROMP      --------------------------------------------------
+sp|Q6ENI6|PSBM_ORYNI        --------------------------------------------------
+tr|Q7NCI2|Q7NCI2_GLOVI      --------------------------------------------------
+tr|Q7V6E4|Q7V6E4_PROMM      --------------------------------------------------
+tr|Q7V512|Q7V512_PROMM      --------------------------------------------------
+tr|Q8YRD7|Q8YRD7_ANASP      GKIFFGIPFWEPEVENSLSIERRIQLPEEYPGDGEKPMVRQHMSPDGIVT 125
+tr|Q93P10|Q93P10_PROMP      ---------------------MTIAVGSAPQRGWFDVLDDWLKRDRFVFI 29
+tr|Q949Q5|Q949Q5_ARATH      ----------------------------------------------MAAT 4
+sp|P0C405|PSBI_ORYSA        --------------------------------------------------
+sp|P0C515|YCF4_ORYSJ        ---------------------------------------MNWRSEHIWIE 11
+sp|Q6ENI5|PETN_ORYNI        --------------------------------------------------
+tr|P73952|P73952_SYNY3      ---------------------------------------------MLKKS 5
+tr|Q7TU23|Q7TU23_PROMP      --------------------------------------------------
+sp|P73528|PSBZ_SYNY3        --------------------------------------------------
+sp|Q57038|CYB6_SYNY3        ----------------------------------MFSKEVTESKVFQWFN 16
+sp|P73676|PSBY_SYNY3        --------------------------------------------------
+sp|P27589|PETD_SYNY3        ------------------------------------------------MS 2
+sp|P0C390|PETG_ORYSA        --------------------------------------------------
+tr|Q7U8X4|Q7U8X4_SYNPX      -------------------------------------------------M 1
+sp|P0C415|PSBJ_ORYSI        --------------------------------------------------
+sp|P74367|PS11_SYNY3        ------------------------------------------------MS 2
+sp|P0C357|PSAB_ORYSI        IGGWLHLQPKWKPSLSWFKNAESRLNHHLSGLFGVSSLAWTGHLVHVAIP 200
+sp|P0C374|PSAJ_ORYSI        --------------------------------------------------
+tr|Q7V658|Q7V658_PROMM      --------------------------------------------------
+sp|P0C410|PSBK_ORYSJ        --------------------------------------------------
+tr|Q7V2Y4|Q7V2Y4_PROMP      TSSWNGWDITGATGVDPGFWSFEGVAAAHIVFSGLLMLASIWHWTYWDLD 121
+tr|Q7NCH9|Q7NCH9_GLOVI      --------------------------------------------------
+sp|Q9LU86|PRXQ_ARATH        -------------------------------------------MAASSSS 7
+sp|P0C400|PSBF_ORYSI        --------------------------------------------------
+tr|Q7VDW1|Q7VDW1_PROMA      -------------------------------MRFRPLLALVLAFCLTFIA 19
+sp|P0C370|PSBE_ORYSJ        --------------------------------------------------
+tr|Q36688|Q36688_ORYSA      --------------------------------------------MASSAT 6
+tr|Q2LIK6|Q2LIK6_9ORYZ      --------------------------------------------------
+sp|Q9S7W1|CB4C_ARATH        IQDPRPGTGRVQARFGFSFGKKKPAPPPKKSRQVQDDGDRLVWFPGANPP 66
+tr|Q7U9C4|Q7U9C4_SYNPX      --------------------------------------------------
+sp|P80471|LIPC_SOLTU        TLQITSQYSKPTSKISTLPISSTNFPSKTELHRSISVKEFTNPKPKFTAQ 63
+sp|Q55356|PSB28_SYNY3       --------------------------------------------------
+sp|P0C511|RBL_ORYSI         GTWTTVWTDGLTSLDRYKGRCYHIEPVVGEDNQYIAYVAYPLDLFEEGSV 113
+sp|P0C421|PSBH_ORYSI        --------------------------------------------------
+sp|P0C516|YCF3_ORYSA        -----------------------------------------MPRSRINGN 9
+sp|P0C389|CYF_ORYSJ         --------MENRNTFSWVKEQMTRSISVSIMIYVITRTSISNAYPIFAQQ 42
+tr|Q7VC13|Q7VC13_PROMA      --------------------------------------------------
+tr|Q7NL78|Q7NL78_GLOVI      --------------------------------------------------
+tr|Q7U4P2|Q7U4P2_SYNPX      EGVPRLVECLLDERDKTCTGGYPLRRQAARSLGMIKDSRCLPELLKTLET 84
+tr|Q9SF54|Q9SF54_ARATH      MASPATFQFSRTKLNLQINLVERKSPSKLSFPLLFRDQAKSTPIRFPVIR 50
+sp|O98679|NDHK_PEA          --------------MNSIEFPLLDQKTKNSVISTTLNDLSNWSRLSSLWP 36
+tr|Q7UZS7|Q7UZS7_PROMP      --------------------------------------------------
+sp|P0C359|PSAC_ORYSA        --------------------------------------------------
+tr|Q7V2Z3|Q7V2Z3_PROMP      -----------------------------------------------MTV 3
+tr|Q9SGH4|Q9SGH4_ARATH      -------------------------------MAHFIDLNSLTNTLPSLPK 19
+sp|Q55013|CY550_SYNY3       --------------------------------------------------
+                                                                              
+
+sp|P12180|PETL_ORYSJ        --------------------------------------------------
+tr|Q7U572|Q7U572_SYNPX      RLFAALLSALLVFGFAPVAKADVAGLTPCSESARFQQRAAAATTPQAKAR 52
+sp|P0C428|PSBT_ORYSI        --------------------------------------------------
+sp|P74787|PSBT_SYNY3        --------------------------------------------------
+sp|P12186|PSAI_ORYSJ        --------------------------------------------------
+tr|Q7UZX5|Q7UZX5_PROMP      --------------------------------------------------
+sp|Q6ENI6|PSBM_ORYNI        --------------------------------------------------
+tr|Q7NCI2|Q7NCI2_GLOVI      --------------------------------------------------
+tr|Q7V6E4|Q7V6E4_PROMM      --------------------------------------------------
+tr|Q7V512|Q7V512_PROMM      --------------MTDENLPLGPKTLNEKYRDRGHVEEWAVQPAADPCV 36
+tr|Q8YRD7|Q8YRD7_ANASP      DVFIPLIVDKKYLGVLAIGINPNQTAVISTNFTRDVTIAVFITIWVMVIL 175
+tr|Q93P10|Q93P10_PROMP      GWSGLLLLPCAYLAIGGWFVGTTFVTSWYTHGIASSYLEGANFLTAAVST 79
+tr|Q949Q5|Q949Q5_ARATH      FATPSTVIGLGGSSITTKPFSSSFLKPTLSAKNPLRLAGASGGRVTCFER 54
+sp|P0C405|PSBI_ORYSA        --------------------------------------------------
+sp|P0C515|YCF4_ORYSJ        LLKGSRKRGNFFWACILFLGSLGFLAVGASSYLGKNIISVLPSQQILFFP 61
+sp|Q6ENI5|PETN_ORYNI        --------------------------------------------------
+tr|P73952|P73952_SYNY3      LSTAVVLVTLLLSFTLTACGGVGIASLQRYSDTKDGYEFLYPNGWIGVDV 55
+tr|Q7TU23|Q7TU23_PROMP      --------------------------------------------------
+sp|P73528|PSBZ_SYNY3        --------------------------------------------------
+sp|Q57038|CYB6_SYNY3        DRLEVQAISDDIASKYVPPHVNIFYCLGGLTLTCFLIQFATGFAMTFYYK 66
+sp|P73676|PSBY_SYNY3        --------------------------------------------------
+sp|P27589|PETD_SYNY3        IIKKPDLSDPDLRAKLAKGMGHNYYGEPAWPNDILYMFPICILGALGLIA 52
+sp|P0C390|PETG_ORYSA        --------------------------------------------------
+tr|Q7U8X4|Q7U8X4_SYNPX      SIVSNSIINADAEARYLSPGELDQIKAFVTGGQRRLRVAQVLCESRERIV 51
+sp|P0C415|PSBJ_ORYSI        --------------------------------------------------
+sp|P74367|PS11_SYNY3        FLKNQLSRLLALILVVAIGLTACDSGTGLTGNYSQDTLTVIATLREAIDL 52
+sp|P0C357|PSAB_ORYSI        ASRGEYVRWNNFLDVLPYPQGLGPLLTGQWNLYAQNPDSSNHLFGTTQGA 250
+sp|P0C374|PSAJ_ORYSI        --------------------------------------------------
+tr|Q7V658|Q7V658_PROMM      --------------------------------------------------
+sp|P0C410|PSBK_ORYSJ        --------------------------------------------------
+tr|Q7V2Y4|Q7V2Y4_PROMP      LWEDERTGEPALDLPRIFGIHLLLSGITCFGFGAFHCANVGIWISDPYGL 171
+tr|Q7NCH9|Q7NCH9_GLOVI      --------------------------------------------------
+sp|Q9LU86|PRXQ_ARATH        FTLCNHTTLRTLPLRKTLVTKTQFSVPTKSSESNFFGSTLTHSSYISPVS 57
+sp|P0C400|PSBF_ORYSI        --------------------------------------------------
+tr|Q7VDW1|Q7VDW1_PROMA      APSSVSASGERGNSRFADVVNTGKANDCPTVSAGSQGSLSIDGGLTDICM 69
+sp|P0C370|PSBE_ORYSJ        --------------------------------------------------
+tr|Q36688|Q36688_ORYSA      TVAPFQGLKSTAGMPVARRSNSSFGNVSNGGRIRCMQVWPIEGIKKFETL 56
+tr|Q2LIK6|Q2LIK6_9ORYZ      --------------------------------------------------
+sp|Q9S7W1|CB4C_ARATH        EWLDGSMIGDRGFDPFGLGKPAEYLQYDFDGLDQNLAKNVAGDIIGIIQE 116
+tr|Q7U9C4|Q7U9C4_SYNPX      --------------------------------------------------
+sp|P80471|LIPC_SOLTU        ATNYDKEDEWGPEVEQIRPGGVAVVEEEPPKEPSEIELLKKQLADSLYGT 113
+sp|Q55356|PSB28_SYNY3       --------------------------------MAEIQFSKGVAETVVPEV 18
+sp|P0C511|RBL_ORYSI         TNMFTSIVGNVFGFKALRALRLEDLRIPPTYSKTFQGPPHGIQVERDKLN 163
+sp|P0C421|PSBH_ORYSI        --------------------------------------------------
+sp|P0C516|YCF3_ORYSA        FIDKTFSIVANILLRIIPTTSGEKRAFTYYRDGMLAQSEGNYAEALQNYY 59
+sp|P0C389|CYF_ORYSJ         GYENPREATGRIVCANCHLANKPVDIEVPQAVLPDTVFEAVLRIPYDMQL 92
+tr|Q7VC13|Q7VC13_PROMA      ------------------------------------------------MI 2
+tr|Q7NL78|Q7NL78_GLOVI      --------------------------------------------------
+tr|Q7U4P2|Q7U4P2_SYNPX      DDVQLHEATLRALIQIKSDQCSSSLINYLDRDIPNKPIEALIEALTEQRM 134
+tr|Q9SF54|Q9SF54_ARATH      ASSSSSASNHKPSLLKTTFISLTAAAALFSASFYFVNKRAAMTPVAVVET 100
+sp|O98679|NDHK_PEA          LLYGTSCCFIEFASLIGSRFDFDRYGLVPRSSPRQADLILTAGTVTMKMA 86
+tr|Q7UZS7|Q7UZS7_PROMP      --------------------------MTETLVGQFPKHIGSTGGLLNSAE 24
+sp|P0C359|PSAC_ORYSA        --------------------------------------------------
+tr|Q7V2Z3|Q7V2Z3_PROMP      SKSNQILSNDRDLENISNKNIEDIKEFINTANSRLDAIDSITNNSHAIAA 53
+tr|Q9SGH4|Q9SGH4_ARATH      LPESRKTGKSSGFACRRTEEFQEPDSVQITRRMTLGFAVSIGLTGILGEN 69
+sp|Q55013|CY550_SYNY3       ---------MKRFFLVAIASVLFFFNTMVGSANAVELTESTRTIPLDEAG 41
+                                                                              
+
+sp|P12180|PETL_ORYSJ        -----------------------------------MLTITSYFGF----- 10
+tr|Q7U572|Q7U572_SYNPX      FEMYSQASCGDDGLPHLIVDGRWSHAGDFVYPGIMFLYVAGCIGWAGREY 102
+sp|P0C428|PSBT_ORYSI        ---------------------------------------MEALVY----- 6
+sp|P74787|PSBT_SYNY3        ---------------------------------------MESVAY----- 6
+sp|P12186|PSAI_ORYSJ        -------------------------------M-MDFN--LPSIFV----- 11
+tr|Q7UZX5|Q7UZX5_PROMP      -------------------------------MPSDFSTFLPSIFV----- 14
+sp|Q6ENI6|PSBM_ORYNI        ---------------------------------MEVNI-LAFIAT----- 11
+tr|Q7NCI2|Q7NCI2_GLOVI      -----------------------------------MN--IALLAI----- 8
+tr|Q7V6E4|Q7V6E4_PROMM      ---------------------------------MGITD-IANVDLAG--- 13
+tr|Q7V512|Q7V512_PROMM      GNLATPVNSGYFVKALVNNLPLYREGISANFRGLETGAAIGYFIYGPFLV 86
+tr|Q8YRD7|Q8YRD7_ANASP      AGVVNALTITKPIKELLVGVKQIAAGNFKQRIDLPLGGELGELILNFNEM 225
+tr|Q93P10|Q93P10_PROMP      PGDAMGHSLLFLWGPEAQGSFVRWLQLGGLWNFVALHGVFGLIGFMLRQF 129
+tr|Q949Q5|Q949Q5_ARATH      NWLRRDLNVVGFGLIGWLAPSSIPAINGKSLTGLFFDSIGTELAHFPTPP 104
+sp|P0C405|PSBI_ORYSA        ----------------------------------MLT--LKLFVY----- 9
+sp|P0C515|YCF4_ORYSJ        QGVVMSFYGIAGLFISAYLWCTILWNVGSGYDRFDRKEGVVCIFRWG--- 108
+sp|Q6ENI5|PETN_ORYNI        ---------------------------------------MDIVSL----- 6
+tr|P73952|P73952_SYNY3      KGASPGVDVVFRDLIERDENLSVIISEIPSDKTLTDLGTATDVGYR---- 101
+tr|Q7TU23|Q7TU23_PROMP      -------------------------------MQAVNFFFVNALLFAS--- 16
+sp|P73528|PSBZ_SYNY3        ---------------------------------MSIVFQIALAAL----- 12
+sp|Q57038|CYB6_SYNY3        PTVTEAFASVQYIMNEVNFGWLIRSIHRWSASMMVLMMILHVFRVYLTGG 116
+sp|P73676|PSBY_SYNY3        -------------------------------MDWRVIVVVSPLLIAA--- 16
+sp|P27589|PETD_SYNY3        G-LAILDPAMIGEPADPFATPLEILPEWYLYPTFQILRILPNKLLG---- 97
+sp|P0C390|PETG_ORYSA        ----------------------------------MIEVFLFGIVLG---- 12
+tr|Q7U8X4|Q7U8X4_SYNPX      KQAGGQLFQKRPDVISPGGNAYGEEMTATCLRDMDYYLRLVTYGIVAG-- 99
+sp|P0C415|PSBJ_ORYSI        --------------------------------MADTTGRIPLWLIG---- 14
+sp|P74367|PS11_SYNY3        PQDAPNRQEVQDTARGQINDYISRYRRKGDAGGLKSFTTMQTALN----- 97
+sp|P0C357|PSAB_ORYSI        GTAILTLLGGFHPQTQSLWLTDIAHHHLAIAFIFLIAGHMYRTNFGIGHS 300
+sp|P0C374|PSAJ_ORYSI        ------------------------------MRDIKTYLSVAPVLS----- 15
+tr|Q7V658|Q7V658_PROMM      -----------------------------------MRKFFESWPMA---- 11
+sp|P0C410|PSBK_ORYSJ        -------------MPNILSLTCICFNSVIYPTSFFFAKLPEAYAIFN--- 34
+tr|Q7V2Y4|Q7V2Y4_PROMP      TGHVEQVAPSWGADGFNPFNPGGIVANHIAAGLLGIIGGIFHITNRPGER 221
+tr|Q7NCH9|Q7NCH9_GLOVI      ---------------------------------MGSSG-ITTITYV---- 12
+sp|Q9LU86|PRXQ_ARATH        SSSLKGLIFAKVNKGQAAPDFTLKDQNGKPVSLKKYKGKPVVLYFYP--- 104
+sp|P0C400|PSBF_ORYSI        ---------------------------------MTIDRTYPIFTVR---- 13
+tr|Q7VDW1|Q7VDW1_PROMA      HPTEVYVKVAKSRRSKAEFVPAKIISPRNNTTVEQVYGDVSGSTFKEQGG 119
+sp|P0C370|PSBE_ORYSJ        --------------------------MSGSTGERSFADIITSIRYW---- 20
+tr|Q36688|Q36688_ORYSA      SYLPPLTVEDLLKQIEYLLRSKWVPCLEFSKVGFVYRENHKSPGYYDG-- 104
+tr|Q2LIK6|Q2LIK6_9ORYZ      --------------------------------MTQSNPNEQNVELN---- 14
+sp|Q9S7W1|CB4C_ARATH        SSEIKPTPFQPYTEVFGIQRFRECELIHGRWAMLGTLGAIAVEALTGIAW 166
+tr|Q7U9C4|Q7U9C4_SYNPX      -------------------------------MTPSLSNFLSSLVWG---- 15
+sp|P80471|LIPC_SOLTU        NRGLSASSETRAEIVELITQLESKNPNPAPTEALTLLNGKWILAYTSFSG 163
+sp|Q55356|PSB28_SYNY3       RLSKSKNGQSGMAKFYFLEPTILAKESTDDITGMYLIDDEGEIITR---- 64
+sp|P0C511|RBL_ORYSI         KYGRPLLGCTIKPKLGLSAKNYGRACYECLRGGLDFTKDDENVNSQPFMR 213
+sp|P0C421|PSBH_ORYSI        --------MATQTVEDSSRPGPRQTRVGNLLKPLNSEYGKVAPGWG---- 38
+sp|P0C516|YCF3_ORYSA        EAMRLEIDPYDRSYILYNIGLIHTSNGEHTKALEYYFRALERNPFLP--- 106
+sp|P0C389|CYF_ORYSJ         KQVLANGKKGGLNVGAVLILPEGFELAPPDRISPELKEKIGNLSFQSYRP 142
+tr|Q7VC13|Q7VC13_PROMA      TTLLATAAPEFHWSPKCAAIMILCNVLAYAIARANIAQPNEGFEIPNS-- 50
+tr|Q7NL78|Q7NL78_GLOVI      --------MSRYFKVTACIPSLKRVRTGRELQNTFFTKLVPYENWFTEQ- 41
+tr|Q7U4P2|Q7U4P2_SYNPX      WDVSEKIQPFLNDKSERIAGSAAAFFYSYTGEMTYLNKVISLLDHQNRFI 184
+tr|Q9SF54|Q9SF54_ARATH      TLEKHLETQSNDVNALSLLTEIKFKSDKHEQAIVFLDRLIEIEPYERKWP 150
+sp|O98679|NDHK_PEA          PSLVRLYEQMPEPKYVIAMGACTITGGMFSTDSYSTVRGVDKLIPVDVYL 136
+tr|Q7UZS7|Q7UZS7_PROMP      TEEKYAISWNSSKEQAFELPTGGAAIMHEGDNLMYFARKEQCLALG---- 70
+sp|P0C359|PSAC_ORYSA        --------------MSHSVKIYDTCIGCTQCVRACPTDVLEMIPWDG--- 33
+tr|Q7V2Z3|Q7V2Z3_PROMP      DAVTAMICENQDSVNTKISLDTTNKMSVCLRDGEIILRIVSYLLISDD-- 101
+tr|Q9SGH4|Q9SGH4_ARATH      NVSLAQDNGFWIDGPLPIPPIYNNIVNEKTGTRTFIKKGVYVADIGTKG- 118
+sp|Q55013|CY550_SYNY3       GTTTLTARQFTNGQKIFVDTCTQCHLQGKTKTNNNVSLGLADLAGAE--- 88
+                                                                              
+
+sp|P12180|PETL_ORYSJ        -----------------------------LLAALTLTLALFIGLNKIRLI 31
+tr|Q7U572|Q7U572_SYNPX      LKATRGKNAAMNEIQID-----LGIAFKSLLAAATWPLAAFGEFTSGKLL 147
+sp|P0C428|PSBT_ORYSI        ----------------------------TFLLVSTLGIIFFAIFFREPPK 28
+sp|P74787|PSBT_SYNY3        ----------------------------ILVLTMALAVLFFAIAFREPPR 28
+sp|P12186|PSAI_ORYSJ        -----------------------------PLVGLVFPAIAMASLFLYVQK 32
+tr|Q7UZX5|Q7UZX5_PROMP      -----------------------------PLIGLVTPAVFLVLIGRLITA 35
+sp|Q6ENI6|PSBM_ORYNI        -----------------------------ALFILVPTAFLLIIYVKTVSQ 32
+tr|Q7NCI2|Q7NCI2_GLOVI      -----------------------------ALLVLVCCGFLVIVWVQ--SE 27
+tr|Q7V6E4|Q7V6E4_PROMM      -----------------------------LCLVVVFHCGVLALRLGVTLH 34
+tr|Q7V512|Q7V512_PROMM      MG-----------PLRT-----TDFATTAALLATVGAVHILTALLVLYNV 120
+tr|Q8YRD7|Q8YRD7_ANASP      AERLERYEEQNIEELTA-----EKAKLETLVSTIADGAVLIDNNMQVILV 270
+tr|Q93P10|Q93P10_PROMP      EIAG------------------LVGIRPYNALAFSAVIAVFTSIFLIYPL 161
+tr|Q949Q5|Q949Q5_ARATH      ALTS---------------------QFWLWLVTWHLGLFLCLTFGQIGFK 133
+sp|P0C405|PSBI_ORYSA        -----------------------------TVVIFFVSLFIFGFLSNDPGR 30
+sp|P0C515|YCF4_ORYSJ        ---------------------------FPGIKRRVFLRFLMRDIQSIRIQ 131
+sp|Q6ENI5|PETN_ORYNI        ------------------------------AWAALMVVFTFSLSLVVWGR 26
+tr|P73952|P73952_SYNY3      ---------------------------FMKTVNDASQGDRQAELINAEAR 124
+tr|Q7TU23|Q7TU23_PROMP      -----------------------------LIAVVGVPVLYVTQPSTEDGQ 37
+sp|P73528|PSBZ_SYNY3        -----------------------------VLFSFVMVVGVPVAYASPQNW 33
+sp|Q57038|CYB6_SYNY3        FKKP---------------------RELTWVVGVMLAVTTVTFGVTGYSL 145
+sp|P73676|PSBY_SYNY3        -----------------------------TWAAINIGAAAIRQLQDVLGR 37
+sp|P27589|PETD_SYNY3        ---------------------------IAGMAAIPLGLMLVPFIESVNKF 120
+sp|P0C390|PETG_ORYSA        ------------------------------LIPITLAGLFVTAYLQYRRG 32
+tr|Q7U8X4|Q7U8X4_SYNPX      -----------------------------DVTPIEEIGVIGAKELYRSLG 120
+sp|P0C415|PSBJ_ORYSI        -----------------------------TVTGIAVIGLIGVFFYGSYSG 35
+sp|P74367|PS11_SYNY3        -----------------------------SLAGYYTSYGARPIPEKLKKR 118
+sp|P0C357|PSAB_ORYSI        IKDLLEAHTPPGGRLGRGHKGLYDTINNSIHFQLGLALASLGVITSLVAQ 350
+sp|P0C374|PSAJ_ORYSI        -----------------------------TLWFGALAGLLIEINRLFPDA 36
+tr|Q7V658|Q7V658_PROMM      -----------------------------AVLWVWLTAGIIVEFNRFYPD 32
+sp|P0C410|PSBK_ORYSJ        -----------------------------PIVDFMPVIPVLFFLLAFVWQ 55
+tr|Q7V2Y4|Q7V2Y4_PROMP      LYRALKLG---------------------SLEGVLASALAAVLFVSFVVA 250
+tr|Q7NCH9|Q7NCH9_GLOVI      -----------------------------LILALIILAIFFAVFFPEKKS 33
+sp|Q9LU86|PRXQ_ARATH        ---------------------------ADETPGCTKQACAFRDSYEKFKK 127
+sp|P0C400|PSBF_ORYSI        ---------------------------WLAVHGLAVPTVFFLGSISAMQF 36
+tr|Q7VDW1|Q7VDW1_PROMA      -------------------------IDFQLITVLAPNGEEFPFVFSAKQM 144
+sp|P0C370|PSBE_ORYSJ        -----------------------------VIHSITIPSLFIAGWLFVSTG 41
+tr|Q36688|Q36688_ORYSA      ----------------------------RYWTMWKLPMFGCTDATQVLKE 126
+tr|Q2LIK6|Q2LIK6_9ORYZ      ------------------------------RTSLYWGLLLIFVLAVLFSN 34
+sp|Q9S7W1|CB4C_ARATH        QDAGKVELVEGSSYLG--------QPLPFSLTTLIWIEVLVVGYIEFQRN 208
+tr|Q7U9C4|Q7U9C4_SYNPX      -----------------------------GLIVVVPATIGLILISQTDRL 36
+sp|P80471|LIPC_SOLTU        -----------------------------LFPLLSRGNLPLVRVEEISQT 184
+sp|Q55356|PSB28_SYNY3       -----------------------------EVKGKFINGRPTAIEATVILN 85
+sp|P0C511|RBL_ORYSI         WRDRFVFCAEAIYKSQAETG---------EIKGHYLNATAGTCEEMIKRA 254
+sp|P0C421|PSBH_ORYSI        -----------------------------TTPFMGVAMALFAVFLSIILE 59
+sp|P0C516|YCF3_ORYSA        ----------------------------QAFNNMAVICHYRGEQAILQGD 128
+sp|P0C389|CYF_ORYSJ         NKKNILVIG--------------------PVPGKKYSEIVFPILSPDPAM 172
+tr|Q7VC13|Q7VC13_PROMA      ----------------------------KFFGGMSHASVVAANCLGHILG 72
+tr|Q7NL78|Q7NL78_GLOVI      ----------------------------QRIQKAGGKVLSVKLFTGVQGA 63
+tr|Q7U4P2|Q7U4P2_SYNPX      RQS--------------------AAFDLARIGTIKATDPILTAKIPNNVK 214
+tr|Q9SF54|Q9SF54_ARATH      AMKAR------------------------ILSYHGKSESAIEAFEEILEK 176
+sp|O98679|NDHK_PEA          PG--------------------------CPPKPEAVIDAITKLRKKISRE 160
+tr|Q7UZS7|Q7UZS7_PROMP      ----------------------------TQLRGFKPRIENFKIYRIFPGG 92
+sp|P0C359|PSAC_ORYSA        -----------------------------CKAKQIASAPRTEDCVGCKRC 54
+tr|Q7V2Z3|Q7V2Z3_PROMP      ----------------------------ESVLSKNCLKDLKNTYLALGVP 123
+tr|Q9SGH4|Q9SGH4_ARATH      -----------------------------RMYRVKKNAFDLLAMEDLIGP 139
+sp|Q55013|CY550_SYNY3       -----------------------------PRRDNVLALVEFLKNPKSYDG 109
+                                                                              
+
+sp|P12180|PETL_ORYSJ        --------------------------------------------------
+tr|Q7U572|Q7U572_SYNPX      EDDNKVTVSPR--------------------------------------- 158
+sp|P0C428|PSBT_ORYSI        VPTKKVK------------------------------------------- 35
+sp|P74787|PSBT_SYNY3        IEK----------------------------------------------- 31
+sp|P12186|PSAI_ORYSJ        NKIV---------------------------------------------- 36
+tr|Q7UZX5|Q7UZX5_PROMP      TD------------------------------------------------ 37
+sp|Q6ENI6|PSBM_ORYNI        ND------------------------------------------------ 34
+tr|Q7NCI2|Q7NCI2_GLOVI      NK------------------------------------------------ 29
+tr|Q7V6E4|Q7V6E4_PROMM      EA------------------------------------------------ 36
+tr|Q7V512|Q7V512_PROMM      PGKAPTVPPPDVTVANPPADLFTRKGWADFTSGFWLGGCAGAAFAWFLCN 170
+tr|Q8YRD7|Q8YRD7_ANASP      NPTARHIFGWEGADDVVGSNVLHHLPPAVQMEITRPLYEMAAGECDSAEF 320
+tr|Q93P10|Q93P10_PROMP      GQHSWFFAPSFGVAAIFRYILFIQGFHNITLNPFHMMGVAGILGGALLCA 211
+tr|Q949Q5|Q949Q5_ARATH      GRTEDYF------------------------------------------- 140
+sp|P0C405|PSBI_ORYSA        NPGRDE-------------------------------------------- 36
+sp|P0C515|YCF4_ORYSJ        VKEGLFPRRILYMEIRGQGAIPLTRTDEKFFTPREIEQKAAELAYFLRIP 181
+sp|Q6ENI5|PETN_ORYNI        SGL----------------------------------------------- 29
+tr|P73952|P73952_SYNY3      DEDGQVYYTLEYRVLVGDNVERHDLASVTTNRGKLITFDLSTAEDRWDTV 174
+tr|Q7TU23|Q7TU23_PROMP      KESRRKIYSIAAVWLVLVFATGIVSALV---------------------- 65
+sp|P73528|PSBZ_SYNY3        DRSKPLLYLGSGIWAILVIVVALLNFLVV--------------------- 62
+sp|Q57038|CYB6_SYNY3        PWDQVGYWAVKIVSGVPAAIPVVGDQLVTLMRGSESVGQATLTRFYSLHT 195
+sp|P73676|PSBY_SYNY3        EA------------------------------------------------ 39
+sp|P27589|PETD_SYNY3        QNPFRRPIAMTVFLFGTAAALWLGAGATFPIDKSLTLGLF---------- 160
+sp|P0C390|PETG_ORYSA        DQLDL--------------------------------------------- 37
+tr|Q7U8X4|Q7U8X4_SYNPX      TPLEAMAEAVREMKTVAMGLLTGDDAAEAGTYFDYVVGALA--------- 161
+sp|P0C415|PSBJ_ORYSI        LGSSL--------------------------------------------- 40
+sp|P74367|PS11_SYNY3        LQLEFTQAERSIERGV---------------------------------- 134
+sp|P0C357|PSAB_ORYSI        HMYSLPSYAFIAQDFTTQAALYTHHQYIAGFIMTGAFAHGAIFFIRDYNP 400
+sp|P0C374|PSAJ_ORYSI        LSFPFFSF------------------------------------------ 44
+tr|Q7V658|Q7V658_PROMM      LLFHPMGL------------------------------------------ 40
+sp|P0C410|PSBK_ORYSJ        AAVSFR-------------------------------------------- 61
+tr|Q7V2Y4|Q7V2Y4_PROMP      GTMWYGSATTPIELFGPTRYQWDSGYFKTEINRRVQTAIDNGATKEEAYA 300
+tr|Q7NCH9|Q7NCH9_GLOVI      K------------------------------------------------- 34
+sp|Q9LU86|PRXQ_ARATH        AGAEVIGISGDDSASHKAFASKYKLPYTLLSDEGNKVRKDWGVPGDLFGA 177
+sp|P0C400|PSBF_ORYSI        IQR----------------------------------------------- 39
+tr|Q7VDW1|Q7VDW1_PROMA      AVDFKGKSIAPGAEASGTTYTPSYRTGDFLDPKSRAKDTGVEYAQGLVAL 194
+sp|P0C370|PSBE_ORYSJ        LAYDVFGSPRPNEYFTESRQGIPLITDRFDSLEQLDEFSRSF-------- 83
+tr|Q36688|Q36688_ORYSA      LEEAKKAYPDAFVRIIGFDNVRQVQLISFIAYKPPGCEESGGN------- 169
+tr|Q2LIK6|Q2LIK6_9ORYZ      YFFN---------------------------------------------- 38
+sp|Q9S7W1|CB4C_ARATH        SELDPEKRIYPGGYFDPLGLAADPEKLDTLKLAEIKHSRLAMVAFLIFAL 258
+tr|Q7U9C4|Q7U9C4_SYNPX      DRKL---------------------------------------------- 40
+sp|P80471|LIPC_SOLTU        IDSESFTVQNSVVFAGPLATTSISTNAKFEVRSPKRVQIKFEEGIIGTPQ 234
+sp|Q55356|PSB28_SYNY3       SQPEWDRFMRFMERYGAENGLGFSKSE----------------------- 112
+sp|P0C511|RBL_ORYSI         VFARELGVPIVMHDYLTGGFTANTSLAHYCRDNGLLLHIHRAMHAVIDRQ 304
+sp|P0C421|PSBH_ORYSI        IYNSSVLLDGILMN------------------------------------ 73
+sp|P0C516|YCF3_ORYSA        SEIAEAWFDQAAEYWKQAIALTPGNYIEAQNWLKITKRFEFE-------- 170
+sp|P0C389|CYF_ORYSJ         KKDVHFLKYPIYVGGNRGRGQIYPDGSKSNNTVYNATSTGVVRKILRKEK 222
+tr|Q7VC13|Q7VC13_PROMA      IGSILGLAARGVL------------------------------------- 85
+tr|Q7NL78|Q7NL78_GLOVI      NTGVGA-------------------------------------------- 69
+tr|Q7U4P2|Q7U4P2_SYNPX      MFAIKAILNKSLSRSNQADSIPDTDLASIHSSLFKALDSLARDNFSGNLL 264
+tr|Q9SF54|Q9SF54_ARATH      DPIRVDAYHYLVMEYYNSKPKLTEIEKRINKVIRRCKKEKKTKEILGFRM 226
+sp|O98679|NDHK_PEA          IDEDPISYQRENRSFTTNHKFDVGRSTHTGNSNQGLFYQPSSISEMTSDT 210
+tr|Q7UZS7|Q7UZS7_PROMP      DIEFLHPKDGVFSEKVNEGREKVGHNPRRIGENPNPAGLKFTTKETFE-- 140
+sp|P0C359|PSAC_ORYSA        ESACPTDFLSVRVYLGPETTRSMALSY----------------------- 81
+tr|Q7V2Z3|Q7V2Z3_PROMP      LKNAIRVFELMRDATISDLKSTVNSMKGEKEFLSDLISNTEFQFERIINL 173
+tr|Q9SGH4|Q9SGH4_ARATH      DTLNYVKKYLRLKSTFLFYDFDNLISAAASEDKQPLTDLANRLFDNFEKL 189
+sp|Q55013|CY550_SYNY3       EDDYSELHPNISRPDIYPEMRNYTEDDIFDVAGYTLIAPKLDERWGGTIY 159
+                                                                              
+
+sp|P12180|PETL_ORYSJ        --------------------------------------------------
+tr|Q7U572|Q7U572_SYNPX      --------------------------------------------------
+sp|P0C428|PSBT_ORYSI        --------------------------------------------------
+sp|P74787|PSBT_SYNY3        --------------------------------------------------
+sp|P12186|PSAI_ORYSJ        --------------------------------------------------
+tr|Q7UZX5|Q7UZX5_PROMP      --------------------------------------------------
+sp|Q6ENI6|PSBM_ORYNI        --------------------------------------------------
+tr|Q7NCI2|Q7NCI2_GLOVI      --------------------------------------------------
+tr|Q7V6E4|Q7V6E4_PROMM      --------------------------------------------------
+tr|Q7V512|Q7V512_PROMM      TLHMQPLLNVPMNVWAS--------------------------------- 187
+tr|Q8YRD7|Q8YRD7_ANASP      RLTLNQPSNRTIRILLTTVLNLQRESIKGIAITVQDITREVELNEAKSQF 370
+tr|Q93P10|Q93P10_PROMP      IHGATVQNTLYEDTSVYTDGKVQSSTFRAFDPTQEEETYSMITANRFWSQ 261
+tr|Q949Q5|Q949Q5_ARATH      --------------------------------------------------
+sp|P0C405|PSBI_ORYSA        --------------------------------------------------
+sp|P0C515|YCF4_ORYSJ        MEVF---------------------------------------------- 185
+sp|Q6ENI5|PETN_ORYNI        --------------------------------------------------
+tr|P73952|P73952_SYNY3      KSLFDTVASSFHVY------------------------------------ 188
+tr|Q7TU23|Q7TU23_PROMP      --------------------------------------------------
+sp|P73528|PSBZ_SYNY3        --------------------------------------------------
+sp|Q57038|CYB6_SYNY3        FVLPWAIAVLLLLHFLMIRKQGISGPL----------------------- 222
+sp|P73676|PSBY_SYNY3        --------------------------------------------------
+sp|P27589|PETD_SYNY3        --------------------------------------------------
+sp|P0C390|PETG_ORYSA        --------------------------------------------------
+tr|Q7U8X4|Q7U8X4_SYNPX      --------------------------------------------------
+sp|P0C415|PSBJ_ORYSI        --------------------------------------------------
+sp|P74367|PS11_SYNY3        --------------------------------------------------
+sp|P0C357|PSAB_ORYSI        EQNEDNVLARMLDHKEAIISHLSWASLFLGFHTLGLYVHNDVMLAFGTPE 450
+sp|P0C374|PSAJ_ORYSI        --------------------------------------------------
+tr|Q7V658|Q7V658_PROMM      --------------------------------------------------
+sp|P0C410|PSBK_ORYSJ        --------------------------------------------------
+tr|Q7V2Y4|Q7V2Y4_PROMP      SIPEKLAFYDYVGNSPAKGGLFRVGALVNGDGLPTGWQGHIAFTDKEGND 350
+tr|Q7NCH9|Q7NCH9_GLOVI      --------------------------------------------------
+sp|Q9LU86|PRXQ_ARATH        LPGRQTYVLDKNGVVQLIYNNQFQPEKHIDETLKFLKAA----------- 216
+sp|P0C400|PSBF_ORYSI        --------------------------------------------------
+tr|Q7VDW1|Q7VDW1_PROMA      GGDDEELAKENIKRDLDGKGVITLAIDSVDSDTAEFAGSFVAIQPSDNDL 244
+sp|P0C370|PSBE_ORYSJ        --------------------------------------------------
+tr|Q36688|Q36688_ORYSA      --------------------------------------------------
+tr|Q2LIK6|Q2LIK6_9ORYZ      --------------------------------------------------
+sp|Q9S7W1|CB4C_ARATH        QAAFTGKGPVSFLATFNN-------------------------------- 276
+tr|Q7U9C4|Q7U9C4_SYNPX      --------------------------------------------------
+sp|P80471|LIPC_SOLTU        LTDSIVLPENVEFLGQKIDLSPFKGLITSVQDTASSVAKSISSQPPIKFP 284
+sp|Q55356|PSB28_SYNY3       --------------------------------------------------
+sp|P0C511|RBL_ORYSI         KNHGMHFRVLAKALRMSGGDHIHAGTVVGKLEGEREMTLGFVDLLRDDFI 354
+sp|P0C421|PSBH_ORYSI        --------------------------------------------------
+sp|P0C516|YCF3_ORYSA        --------------------------------------------------
+sp|P0C389|CYF_ORYSJ         GGYEISIVDASDGRQVIDLIPPGPELLVSEGESIKLDQPLTSNPNVGGFG 272
+tr|Q7VC13|Q7VC13_PROMA      --------------------------------------------------
+tr|Q7NL78|Q7NL78_GLOVI      --------------------------------------------------
+tr|Q7U4P2|Q7U4P2_SYNPX      IEQDNQIPETYPGDGSTESDLLSNAFDNLRSPSLTSRKSGIKQLVRGANR 314
+tr|Q9SF54|Q9SF54_ARATH      LIAQIRFIEGKSVEAIRICEELVKEDPNDFTIYLFQGVVYTLMNKGEEAA 276
+sp|O98679|NDHK_PEA          FLKYKKVQYPATNEKVN--------------------------------- 227
+tr|Q7UZS7|Q7UZS7_PROMP      --------------------------------------------------
+sp|P0C359|PSAC_ORYSA        --------------------------------------------------
+tr|Q7V2Z3|Q7V2Z3_PROMP      LR------------------------------------------------ 175
+tr|Q9SGH4|Q9SGH4_ARATH      EDAAKTKNLAETESCYKDTKFLLQEVMTRMA------------------- 220
+sp|Q55013|CY550_SYNY3       F------------------------------------------------- 160
+                                                                              
+
+sp|P12180|PETL_ORYSJ        --------------------------------------------------
+tr|Q7U572|Q7U572_SYNPX      --------------------------------------------------
+sp|P0C428|PSBT_ORYSI        --------------------------------------------------
+sp|P74787|PSBT_SYNY3        --------------------------------------------------
+sp|P12186|PSAI_ORYSJ        --------------------------------------------------
+tr|Q7UZX5|Q7UZX5_PROMP      --------------------------------------------------
+sp|Q6ENI6|PSBM_ORYNI        --------------------------------------------------
+tr|Q7NCI2|Q7NCI2_GLOVI      --------------------------------------------------
+tr|Q7V6E4|Q7V6E4_PROMM      --------------------------------------------------
+tr|Q7V512|Q7V512_PROMM      --------------------------------------------------
+tr|Q8YRD7|Q8YRD7_ANASP      ISNVSHELRTPLFNIKSFIETLHDYGEDLSLEERQEFLQTVNHETDRLTR 420
+tr|Q93P10|Q93P10_PROMP      IFGIAFSNKRFLHFLMLFVPVMGMWTSSIGIVGLALNLRAYDFVSQEIRA 311
+tr|Q949Q5|Q949Q5_ARATH      --------------------------------------------------
+sp|P0C405|PSBI_ORYSA        --------------------------------------------------
+sp|P0C515|YCF4_ORYSJ        --------------------------------------------------
+sp|Q6ENI5|PETN_ORYNI        --------------------------------------------------
+tr|P73952|P73952_SYNY3      --------------------------------------------------
+tr|Q7TU23|Q7TU23_PROMP      --------------------------------------------------
+sp|P73528|PSBZ_SYNY3        --------------------------------------------------
+sp|Q57038|CYB6_SYNY3        --------------------------------------------------
+sp|P73676|PSBY_SYNY3        --------------------------------------------------
+sp|P27589|PETD_SYNY3        --------------------------------------------------
+sp|P0C390|PETG_ORYSA        --------------------------------------------------
+tr|Q7U8X4|Q7U8X4_SYNPX      --------------------------------------------------
+sp|P0C415|PSBJ_ORYSI        --------------------------------------------------
+sp|P74367|PS11_SYNY3        --------------------------------------------------
+sp|P0C357|PSAB_ORYSI        KQILIEPIFAQWIQSAHGKTTYGFDILLSSTSGPAFNAGRTLWLPGWLNA 500
+sp|P0C374|PSAJ_ORYSI        --------------------------------------------------
+tr|Q7V658|Q7V658_PROMM      --------------------------------------------------
+sp|P0C410|PSBK_ORYSJ        --------------------------------------------------
+tr|Q7V2Y4|Q7V2Y4_PROMP      LEVRRIPNFFENFPVILEDKEGNVRADIPFRRAEAKYSFEQTGITATIYG 400
+tr|Q7NCH9|Q7NCH9_GLOVI      --------------------------------------------------
+sp|Q9LU86|PRXQ_ARATH        --------------------------------------------------
+sp|P0C400|PSBF_ORYSI        --------------------------------------------------
+tr|Q7VDW1|Q7VDW1_PROMA      GSKEPVDVKIIGELYGRKA------------------------------- 263
+sp|P0C370|PSBE_ORYSJ        --------------------------------------------------
+tr|Q36688|Q36688_ORYSA      --------------------------------------------------
+tr|Q2LIK6|Q2LIK6_9ORYZ      --------------------------------------------------
+sp|Q9S7W1|CB4C_ARATH        --------------------------------------------------
+tr|Q7U9C4|Q7U9C4_SYNPX      --------------------------------------------------
+sp|P80471|LIPC_SOLTU        ITNNNAQSWLLTTYLDDELRISRGDAGSVFVLIKEGSPLLKP-------- 326
+sp|Q55356|PSB28_SYNY3       --------------------------------------------------
+sp|P0C511|RBL_ORYSI         EKDRARGIFFTQDWVSMPGVIPVASGGIHVWHMPALTEIFGDDSVLQFGG 404
+sp|P0C421|PSBH_ORYSI        --------------------------------------------------
+sp|P0C516|YCF3_ORYSA        --------------------------------------------------
+sp|P0C389|CYF_ORYSJ         QGDAEIVLQDPLRVQGLLFFFASVILAQVFLVLKKKQFEKVQLYEMNF-- 320
+tr|Q7VC13|Q7VC13_PROMA      --------------------------------------------------
+tr|Q7NL78|Q7NL78_GLOVI      --------------------------------------------------
+tr|Q7U4P2|Q7U4P2_SYNPX      FKIDLLDLYFSESDQDITMGLIKAMAELKNPHYANALIDAIGVEIGNHCQ 364
+tr|Q9SF54|Q9SF54_ARATH      KQFEHVARVIPRNHPSRETAARTTNSNEWRVIVAYDNVYCYLSTFARLSM 326
+sp|O98679|NDHK_PEA          --------------------------------------------------
+tr|Q7UZS7|Q7UZS7_PROMP      --------------------------------------------------
+sp|P0C359|PSAC_ORYSA        --------------------------------------------------
+tr|Q7V2Z3|Q7V2Z3_PROMP      --------------------------------------------------
+tr|Q9SGH4|Q9SGH4_ARATH      --------------------------------------------------
+sp|Q55013|CY550_SYNY3       --------------------------------------------------
+                                                                              
+
+sp|P12180|PETL_ORYSJ        --------------------------------------------------
+tr|Q7U572|Q7U572_SYNPX      --------------------------------------------------
+sp|P0C428|PSBT_ORYSI        --------------------------------------------------
+sp|P74787|PSBT_SYNY3        --------------------------------------------------
+sp|P12186|PSAI_ORYSJ        --------------------------------------------------
+tr|Q7UZX5|Q7UZX5_PROMP      --------------------------------------------------
+sp|Q6ENI6|PSBM_ORYNI        --------------------------------------------------
+tr|Q7NCI2|Q7NCI2_GLOVI      --------------------------------------------------
+tr|Q7V6E4|Q7V6E4_PROMM      --------------------------------------------------
+tr|Q7V512|Q7V512_PROMM      --------------------------------------------------
+tr|Q8YRD7|Q8YRD7_ANASP      LVNDVLDLSKLESGRSYSFDGVDLAQAIEQTLRTYQLNARDKGIELIQDV 470
+tr|Q93P10|Q93P10_PROMP      AEDPEFETFYTKNILLNEGMRAWMSSVDQPHENFVFPEEVLPRGNAL--- 358
+tr|Q949Q5|Q949Q5_ARATH      --------------------------------------------------
+sp|P0C405|PSBI_ORYSA        --------------------------------------------------
+sp|P0C515|YCF4_ORYSJ        --------------------------------------------------
+sp|Q6ENI5|PETN_ORYNI        --------------------------------------------------
+tr|P73952|P73952_SYNY3      --------------------------------------------------
+tr|Q7TU23|Q7TU23_PROMP      --------------------------------------------------
+sp|P73528|PSBZ_SYNY3        --------------------------------------------------
+sp|Q57038|CYB6_SYNY3        --------------------------------------------------
+sp|P73676|PSBY_SYNY3        --------------------------------------------------
+sp|P27589|PETD_SYNY3        --------------------------------------------------
+sp|P0C390|PETG_ORYSA        --------------------------------------------------
+tr|Q7U8X4|Q7U8X4_SYNPX      --------------------------------------------------
+sp|P0C415|PSBJ_ORYSI        --------------------------------------------------
+sp|P74367|PS11_SYNY3        --------------------------------------------------
+sp|P0C357|PSAB_ORYSI        VNENSNSLFLTIGPGDFLVHHAIALGLHTTTLILVKGALDARGSKLMPDK 550
+sp|P0C374|PSAJ_ORYSI        --------------------------------------------------
+tr|Q7V658|Q7V658_PROMM      --------------------------------------------------
+sp|P0C410|PSBK_ORYSJ        --------------------------------------------------
+tr|Q7V2Y4|Q7V2Y4_PROMP      GDLNGQTFTDPAVVKRLARKAQLGEAFKFDRETYKSDGVFRSSPRAWFTY 450
+tr|Q7NCH9|Q7NCH9_GLOVI      --------------------------------------------------
+sp|Q9LU86|PRXQ_ARATH        --------------------------------------------------
+sp|P0C400|PSBF_ORYSI        --------------------------------------------------
+tr|Q7VDW1|Q7VDW1_PROMA      --------------------------------------------------
+sp|P0C370|PSBE_ORYSJ        --------------------------------------------------
+tr|Q36688|Q36688_ORYSA      --------------------------------------------------
+tr|Q2LIK6|Q2LIK6_9ORYZ      --------------------------------------------------
+sp|Q9S7W1|CB4C_ARATH        --------------------------------------------------
+tr|Q7U9C4|Q7U9C4_SYNPX      --------------------------------------------------
+sp|P80471|LIPC_SOLTU        --------------------------------------------------
+sp|Q55356|PSB28_SYNY3       --------------------------------------------------
+sp|P0C511|RBL_ORYSI         GTLGHPWGNAPGAAANRVALEACVQARNEGRDLAREGNEIIRSACKWSPE 454
+sp|P0C421|PSBH_ORYSI        --------------------------------------------------
+sp|P0C516|YCF3_ORYSA        --------------------------------------------------
+sp|P0C389|CYF_ORYSJ         --------------------------------------------------
+tr|Q7VC13|Q7VC13_PROMA      --------------------------------------------------
+tr|Q7NL78|Q7NL78_GLOVI      --------------------------------------------------
+tr|Q7U4P2|Q7U4P2_SYNPX      GNIRRVAACALGDINWNAKISSQSLHAVFNKLKWTLHSPEDWGLRYSACL 414
+tr|Q9SF54|Q9SF54_ARATH      ASLFNKFG------------------------------------------ 334
+sp|O98679|NDHK_PEA          --------------------------------------------------
+tr|Q7UZS7|Q7UZS7_PROMP      --------------------------------------------------
+sp|P0C359|PSAC_ORYSA        --------------------------------------------------
+tr|Q7V2Z3|Q7V2Z3_PROMP      --------------------------------------------------
+tr|Q9SGH4|Q9SGH4_ARATH      --------------------------------------------------
+sp|Q55013|CY550_SYNY3       --------------------------------------------------
+                                                                              
+
+sp|P12180|PETL_ORYSJ        --------------------------------------------------
+tr|Q7U572|Q7U572_SYNPX      --------------------------------------------------
+sp|P0C428|PSBT_ORYSI        --------------------------------------------------
+sp|P74787|PSBT_SYNY3        --------------------------------------------------
+sp|P12186|PSAI_ORYSJ        --------------------------------------------------
+tr|Q7UZX5|Q7UZX5_PROMP      --------------------------------------------------
+sp|Q6ENI6|PSBM_ORYNI        --------------------------------------------------
+tr|Q7NCI2|Q7NCI2_GLOVI      --------------------------------------------------
+tr|Q7V6E4|Q7V6E4_PROMM      --------------------------------------------------
+tr|Q7V512|Q7V512_PROMM      --------------------------------------------------
+tr|Q8YRD7|Q8YRD7_ANASP      APGLPLVLGNYDLLLQVLANLVGNALKFTSSGGKIAIRTYVLNTKSNSPN 520
+tr|Q93P10|Q93P10_PROMP      --------------------------------------------------
+tr|Q949Q5|Q949Q5_ARATH      --------------------------------------------------
+sp|P0C405|PSBI_ORYSA        --------------------------------------------------
+sp|P0C515|YCF4_ORYSJ        --------------------------------------------------
+sp|Q6ENI5|PETN_ORYNI        --------------------------------------------------
+tr|P73952|P73952_SYNY3      --------------------------------------------------
+tr|Q7TU23|Q7TU23_PROMP      --------------------------------------------------
+sp|P73528|PSBZ_SYNY3        --------------------------------------------------
+sp|Q57038|CYB6_SYNY3        --------------------------------------------------
+sp|P73676|PSBY_SYNY3        --------------------------------------------------
+sp|P27589|PETD_SYNY3        --------------------------------------------------
+sp|P0C390|PETG_ORYSA        --------------------------------------------------
+tr|Q7U8X4|Q7U8X4_SYNPX      --------------------------------------------------
+sp|P0C415|PSBJ_ORYSI        --------------------------------------------------
+sp|P74367|PS11_SYNY3        --------------------------------------------------
+sp|P0C357|PSAB_ORYSI        KDFGYSFPCDGPGRGGTCDISAWDAFYLAVFWMLNTIGWVTFYWHWKHIT 600
+sp|P0C374|PSAJ_ORYSI        --------------------------------------------------
+tr|Q7V658|Q7V658_PROMM      --------------------------------------------------
+sp|P0C410|PSBK_ORYSJ        --------------------------------------------------
+tr|Q7V2Y4|Q7V2Y4_PROMP      AHLCFGLLFLFGHWWHASRTLYKDSFAGIDSEIGDQVEFGLFKKLGDETT 500
+tr|Q7NCH9|Q7NCH9_GLOVI      --------------------------------------------------
+sp|Q9LU86|PRXQ_ARATH        --------------------------------------------------
+sp|P0C400|PSBF_ORYSI        --------------------------------------------------
+tr|Q7VDW1|Q7VDW1_PROMA      --------------------------------------------------
+sp|P0C370|PSBE_ORYSJ        --------------------------------------------------
+tr|Q36688|Q36688_ORYSA      --------------------------------------------------
+tr|Q2LIK6|Q2LIK6_9ORYZ      --------------------------------------------------
+sp|Q9S7W1|CB4C_ARATH        --------------------------------------------------
+tr|Q7U9C4|Q7U9C4_SYNPX      --------------------------------------------------
+sp|P80471|LIPC_SOLTU        --------------------------------------------------
+sp|Q55356|PSB28_SYNY3       --------------------------------------------------
+sp|P0C511|RBL_ORYSI         LAAACEIWKAIKFEFEPVDKLDS--------------------------- 477
+sp|P0C421|PSBH_ORYSI        --------------------------------------------------
+sp|P0C516|YCF3_ORYSA        --------------------------------------------------
+sp|P0C389|CYF_ORYSJ         --------------------------------------------------
+tr|Q7VC13|Q7VC13_PROMA      --------------------------------------------------
+tr|Q7NL78|Q7NL78_GLOVI      --------------------------------------------------
+tr|Q7U4P2|Q7U4P2_SYNPX      ALEGIGNADSIKLLNEAKAKETDPVLSARLDKAILKSKNKTSIHHIENKK 464
+tr|Q9SF54|Q9SF54_ARATH      --------------------------------------------------
+sp|O98679|NDHK_PEA          --------------------------------------------------
+tr|Q7UZS7|Q7UZS7_PROMP      --------------------------------------------------
+sp|P0C359|PSAC_ORYSA        --------------------------------------------------
+tr|Q7V2Z3|Q7V2Z3_PROMP      --------------------------------------------------
+tr|Q9SGH4|Q9SGH4_ARATH      --------------------------------------------------
+sp|Q55013|CY550_SYNY3       --------------------------------------------------
+                                                                              
+
+sp|P12180|PETL_ORYSJ        --------------------------------------------------
+tr|Q7U572|Q7U572_SYNPX      --------------------------------------------------
+sp|P0C428|PSBT_ORYSI        --------------------------------------------------
+sp|P74787|PSBT_SYNY3        --------------------------------------------------
+sp|P12186|PSAI_ORYSJ        --------------------------------------------------
+tr|Q7UZX5|Q7UZX5_PROMP      --------------------------------------------------
+sp|Q6ENI6|PSBM_ORYNI        --------------------------------------------------
+tr|Q7NCI2|Q7NCI2_GLOVI      --------------------------------------------------
+tr|Q7V6E4|Q7V6E4_PROMM      --------------------------------------------------
+tr|Q7V512|Q7V512_PROMM      --------------------------------------------------
+tr|Q8YRD7|Q8YRD7_ANASP      QPAQVRIEVSDTGIGIAQEDQQAIFDRFFRVENRVHTLEGTGLGLSIVRN 570
+tr|Q93P10|Q93P10_PROMP      --------------------------------------------------
+tr|Q949Q5|Q949Q5_ARATH      --------------------------------------------------
+sp|P0C405|PSBI_ORYSA        --------------------------------------------------
+sp|P0C515|YCF4_ORYSJ        --------------------------------------------------
+sp|Q6ENI5|PETN_ORYNI        --------------------------------------------------
+tr|P73952|P73952_SYNY3      --------------------------------------------------
+tr|Q7TU23|Q7TU23_PROMP      --------------------------------------------------
+sp|P73528|PSBZ_SYNY3        --------------------------------------------------
+sp|Q57038|CYB6_SYNY3        --------------------------------------------------
+sp|P73676|PSBY_SYNY3        --------------------------------------------------
+sp|P27589|PETD_SYNY3        --------------------------------------------------
+sp|P0C390|PETG_ORYSA        --------------------------------------------------
+tr|Q7U8X4|Q7U8X4_SYNPX      --------------------------------------------------
+sp|P0C415|PSBJ_ORYSI        --------------------------------------------------
+sp|P74367|PS11_SYNY3        --------------------------------------------------
+sp|P0C357|PSAB_ORYSI        LWQGNVSQFNESSTYLMGWLRDYLWLNSSQLINGYNPFGMNSLSVWAWMF 650
+sp|P0C374|PSAJ_ORYSI        --------------------------------------------------
+tr|Q7V658|Q7V658_PROMM      --------------------------------------------------
+sp|P0C410|PSBK_ORYSJ        --------------------------------------------------
+tr|Q7V2Y4|Q7V2Y4_PROMP      RRIPGRV------------------------------------------- 507
+tr|Q7NCH9|Q7NCH9_GLOVI      --------------------------------------------------
+sp|Q9LU86|PRXQ_ARATH        --------------------------------------------------
+sp|P0C400|PSBF_ORYSI        --------------------------------------------------
+tr|Q7VDW1|Q7VDW1_PROMA      --------------------------------------------------
+sp|P0C370|PSBE_ORYSJ        --------------------------------------------------
+tr|Q36688|Q36688_ORYSA      --------------------------------------------------
+tr|Q2LIK6|Q2LIK6_9ORYZ      --------------------------------------------------
+sp|Q9S7W1|CB4C_ARATH        --------------------------------------------------
+tr|Q7U9C4|Q7U9C4_SYNPX      --------------------------------------------------
+sp|P80471|LIPC_SOLTU        --------------------------------------------------
+sp|Q55356|PSB28_SYNY3       --------------------------------------------------
+sp|P0C511|RBL_ORYSI         --------------------------------------------------
+sp|P0C421|PSBH_ORYSI        --------------------------------------------------
+sp|P0C516|YCF3_ORYSA        --------------------------------------------------
+sp|P0C389|CYF_ORYSJ         --------------------------------------------------
+tr|Q7VC13|Q7VC13_PROMA      --------------------------------------------------
+tr|Q7NL78|Q7NL78_GLOVI      --------------------------------------------------
+tr|Q7U4P2|Q7U4P2_SYNPX      VL------------------------------------------------ 466
+tr|Q9SF54|Q9SF54_ARATH      --------------------------------------------------
+sp|O98679|NDHK_PEA          --------------------------------------------------
+tr|Q7UZS7|Q7UZS7_PROMP      --------------------------------------------------
+sp|P0C359|PSAC_ORYSA        --------------------------------------------------
+tr|Q7V2Z3|Q7V2Z3_PROMP      --------------------------------------------------
+tr|Q9SGH4|Q9SGH4_ARATH      --------------------------------------------------
+sp|Q55013|CY550_SYNY3       --------------------------------------------------
+                                                                              
+
+sp|P12180|PETL_ORYSJ        --------------------------------------------------
+tr|Q7U572|Q7U572_SYNPX      --------------------------------------------------
+sp|P0C428|PSBT_ORYSI        --------------------------------------------------
+sp|P74787|PSBT_SYNY3        --------------------------------------------------
+sp|P12186|PSAI_ORYSJ        --------------------------------------------------
+tr|Q7UZX5|Q7UZX5_PROMP      --------------------------------------------------
+sp|Q6ENI6|PSBM_ORYNI        --------------------------------------------------
+tr|Q7NCI2|Q7NCI2_GLOVI      --------------------------------------------------
+tr|Q7V6E4|Q7V6E4_PROMM      --------------------------------------------------
+tr|Q7V512|Q7V512_PROMM      --------------------------------------------------
+tr|Q8YRD7|Q8YRD7_ANASP      IVERHRSRVNLVSEVGVGTTFWFDLILFEDEAPKKMVESGEEKAAMPTS- 619
+tr|Q93P10|Q93P10_PROMP      --------------------------------------------------
+tr|Q949Q5|Q949Q5_ARATH      --------------------------------------------------
+sp|P0C405|PSBI_ORYSA        --------------------------------------------------
+sp|P0C515|YCF4_ORYSJ        --------------------------------------------------
+sp|Q6ENI5|PETN_ORYNI        --------------------------------------------------
+tr|P73952|P73952_SYNY3      --------------------------------------------------
+tr|Q7TU23|Q7TU23_PROMP      --------------------------------------------------
+sp|P73528|PSBZ_SYNY3        --------------------------------------------------
+sp|Q57038|CYB6_SYNY3        --------------------------------------------------
+sp|P73676|PSBY_SYNY3        --------------------------------------------------
+sp|P27589|PETD_SYNY3        --------------------------------------------------
+sp|P0C390|PETG_ORYSA        --------------------------------------------------
+tr|Q7U8X4|Q7U8X4_SYNPX      --------------------------------------------------
+sp|P0C415|PSBJ_ORYSI        --------------------------------------------------
+sp|P74367|PS11_SYNY3        --------------------------------------------------
+sp|P0C357|PSAB_ORYSI        LFGHLVWATGFMFLISWRGYWQELIETLAWAHERTPLANLIRWRDKPVAL 700
+sp|P0C374|PSAJ_ORYSI        --------------------------------------------------
+tr|Q7V658|Q7V658_PROMM      --------------------------------------------------
+sp|P0C410|PSBK_ORYSJ        --------------------------------------------------
+tr|Q7V2Y4|Q7V2Y4_PROMP      --------------------------------------------------
+tr|Q7NCH9|Q7NCH9_GLOVI      --------------------------------------------------
+sp|Q9LU86|PRXQ_ARATH        --------------------------------------------------
+sp|P0C400|PSBF_ORYSI        --------------------------------------------------
+tr|Q7VDW1|Q7VDW1_PROMA      --------------------------------------------------
+sp|P0C370|PSBE_ORYSJ        --------------------------------------------------
+tr|Q36688|Q36688_ORYSA      --------------------------------------------------
+tr|Q2LIK6|Q2LIK6_9ORYZ      --------------------------------------------------
+sp|Q9S7W1|CB4C_ARATH        --------------------------------------------------
+tr|Q7U9C4|Q7U9C4_SYNPX      --------------------------------------------------
+sp|P80471|LIPC_SOLTU        --------------------------------------------------
+sp|Q55356|PSB28_SYNY3       --------------------------------------------------
+sp|P0C511|RBL_ORYSI         --------------------------------------------------
+sp|P0C421|PSBH_ORYSI        --------------------------------------------------
+sp|P0C516|YCF3_ORYSA        --------------------------------------------------
+sp|P0C389|CYF_ORYSJ         --------------------------------------------------
+tr|Q7VC13|Q7VC13_PROMA      --------------------------------------------------
+tr|Q7NL78|Q7NL78_GLOVI      --------------------------------------------------
+tr|Q7U4P2|Q7U4P2_SYNPX      --------------------------------------------------
+tr|Q9SF54|Q9SF54_ARATH      --------------------------------------------------
+sp|O98679|NDHK_PEA          --------------------------------------------------
+tr|Q7UZS7|Q7UZS7_PROMP      --------------------------------------------------
+sp|P0C359|PSAC_ORYSA        --------------------------------------------------
+tr|Q7V2Z3|Q7V2Z3_PROMP      --------------------------------------------------
+tr|Q9SGH4|Q9SGH4_ARATH      --------------------------------------------------
+sp|Q55013|CY550_SYNY3       --------------------------------------------------
+                                                                              
+
+sp|P12180|PETL_ORYSJ        ----------------------------------
+tr|Q7U572|Q7U572_SYNPX      ----------------------------------
+sp|P0C428|PSBT_ORYSI        ----------------------------------
+sp|P74787|PSBT_SYNY3        ----------------------------------
+sp|P12186|PSAI_ORYSJ        ----------------------------------
+tr|Q7UZX5|Q7UZX5_PROMP      ----------------------------------
+sp|Q6ENI6|PSBM_ORYNI        ----------------------------------
+tr|Q7NCI2|Q7NCI2_GLOVI      ----------------------------------
+tr|Q7V6E4|Q7V6E4_PROMM      ----------------------------------
+tr|Q7V512|Q7V512_PROMM      ----------------------------------
+tr|Q8YRD7|Q8YRD7_ANASP      ----------------------------------
+tr|Q93P10|Q93P10_PROMP      ----------------------------------
+tr|Q949Q5|Q949Q5_ARATH      ----------------------------------
+sp|P0C405|PSBI_ORYSA        ----------------------------------
+sp|P0C515|YCF4_ORYSJ        ----------------------------------
+sp|Q6ENI5|PETN_ORYNI        ----------------------------------
+tr|P73952|P73952_SYNY3      ----------------------------------
+tr|Q7TU23|Q7TU23_PROMP      ----------------------------------
+sp|P73528|PSBZ_SYNY3        ----------------------------------
+sp|Q57038|CYB6_SYNY3        ----------------------------------
+sp|P73676|PSBY_SYNY3        ----------------------------------
+sp|P27589|PETD_SYNY3        ----------------------------------
+sp|P0C390|PETG_ORYSA        ----------------------------------
+tr|Q7U8X4|Q7U8X4_SYNPX      ----------------------------------
+sp|P0C415|PSBJ_ORYSI        ----------------------------------
+sp|P74367|PS11_SYNY3        ----------------------------------
+sp|P0C357|PSAB_ORYSI        SIVQARLVGLAHFSVGYIFTYAAFLIASTSGKFG 734
+sp|P0C374|PSAJ_ORYSI        ----------------------------------
+tr|Q7V658|Q7V658_PROMM      ----------------------------------
+sp|P0C410|PSBK_ORYSJ        ----------------------------------
+tr|Q7V2Y4|Q7V2Y4_PROMP      ----------------------------------
+tr|Q7NCH9|Q7NCH9_GLOVI      ----------------------------------
+sp|Q9LU86|PRXQ_ARATH        ----------------------------------
+sp|P0C400|PSBF_ORYSI        ----------------------------------
+tr|Q7VDW1|Q7VDW1_PROMA      ----------------------------------
+sp|P0C370|PSBE_ORYSJ        ----------------------------------
+tr|Q36688|Q36688_ORYSA      ----------------------------------
+tr|Q2LIK6|Q2LIK6_9ORYZ      ----------------------------------
+sp|Q9S7W1|CB4C_ARATH        ----------------------------------
+tr|Q7U9C4|Q7U9C4_SYNPX      ----------------------------------
+sp|P80471|LIPC_SOLTU        ----------------------------------
+sp|Q55356|PSB28_SYNY3       ----------------------------------
+sp|P0C511|RBL_ORYSI         ----------------------------------
+sp|P0C421|PSBH_ORYSI        ----------------------------------
+sp|P0C516|YCF3_ORYSA        ----------------------------------
+sp|P0C389|CYF_ORYSJ         ----------------------------------
+tr|Q7VC13|Q7VC13_PROMA      ----------------------------------
+tr|Q7NL78|Q7NL78_GLOVI      ----------------------------------
+tr|Q7U4P2|Q7U4P2_SYNPX      ----------------------------------
+tr|Q9SF54|Q9SF54_ARATH      ----------------------------------
+sp|O98679|NDHK_PEA          ----------------------------------
+tr|Q7UZS7|Q7UZS7_PROMP      ----------------------------------
+sp|P0C359|PSAC_ORYSA        ----------------------------------
+tr|Q7V2Z3|Q7V2Z3_PROMP      ----------------------------------
+tr|Q9SGH4|Q9SGH4_ARATH      ----------------------------------
+sp|Q55013|CY550_SYNY3       ----------------------------------
+                                                              
