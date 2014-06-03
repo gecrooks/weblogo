@@ -30,7 +30,7 @@ DEVELOPING WEBLOGO
 	
 7. 	Run build process under all supported python versions.
 	
-	sudo port select python python25	# MacPorts on OS X
+	sudo port select python python27	# MacPorts on OS X
 	./build.sh
 
 
