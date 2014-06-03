@@ -1039,7 +1039,8 @@ def read_seq_data(fin,
         fin = StringIO(data)
     elif fin == sys.stdin:
         fin = StringIO(fin.read())
-        
+
+    fin.seek(0)    
     seqs = input_parser(fin)
 
     if seqs is None or len(seqs) ==0 :
@@ -1117,7 +1118,9 @@ class LogoData(object) :
                     posterior.interval_relative_entropy(prior/sum(prior), 0.95) 
  
         weight = array( na.sum(counts,axis=1) , float) 
-        weight /= max(weight)
+        max_weight = max(weight)
+        if max_weight ==0.0 : raise ValueError('No counts.')
+        weight /= max_weight
  
         return cls(seq_length, alphabet, counts, ent, entropy_interval, weight)
 
