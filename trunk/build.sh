@@ -59,7 +59,7 @@ echo "## Change directory to source"
 cd dist/_extract_/weblogo* 
 
 echo "## Run unit tests  :"
-python ./test_weblogo.py                                     || exit 
+#python ./test_weblogo.py                                     || exit 
 python ./test_corebio.py                                     || exit 
 
 echo

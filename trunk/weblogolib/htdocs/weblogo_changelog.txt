@@ -1,36 +1,35 @@
-
-
 WebLogo Release Notes
 
 3.4  (????)  [Gavin Crooks, Eric Talevich]
-Mostly bug fixes and code improvements. Requires python 2.6 or 2.7
 
-* Many code changes for future Python 3 compatability
-	Kudos: Eric Talevic
+* Python 3
+	Weblogo now runs under python 2.6, 2.7, 3.2, 3.3 & 3.4 (Python2.5 is no longer
+	supported.) Note that the api for creating a logo has changed. See docs. 
+	(Kudos: Eric Talevic)
 * Fix bug with using Ghostscipt 9.10 (Issue 36)
-	Kudos: Michael Imbeault, Estienne Swart, FiReaNG3L
+	(Kudos: Michael Imbeault, Estienne Swart, FiReaNG3L)
 * Fix various bugs in transfac parsing.
-	Kudos: Promita Bose, Christopher Lamantia
+	(Kudos: Promita Bose, Christopher Lamantia)
 * Miscellaneous minor bug fixes and refactoring.
-	Kudos: Kamil Slowikowski, Jacob Engelbrecht
+	(Kudos: Kamil Slowikowski, Jacob Engelbrecht)
 
 
 3.3 (2012-07-02) [Gavin Crooks, David Sivak]
 
 * Improved the algorithm that guesses the sequence type (DNA, RNA or protein) 
-	(Kudos: Bug report, Roland Pache <Roland.Pache@ucsf.edu>)
+	(Kudos: Bug report, Roland Pache)
 * Fixed an issue with reading transfac matrices with alternative alphabets 
-	(Kudos: Bug report, Nima Emami <emami.nima@gmail.com>)
+	(Kudos: Bug report, Nima Emami)
 * Fixed Motif.reindex()
 * Implemented Motif.reverse() and Motif.complement() 
 	(Can now reverse complement transfac matrix input on the command line.)
-	(Kudos: Feature request, Seth P Boudreaux <spboudre@bcm.edu>)
+	(Kudos: Feature request, Seth P Boudreaux)
 * Command line interface now automagically recognizes transfac files. 
 * Add command line option "--reverse-stacks NO" which inverts the logo stacks
 	so that the most conserved monomers are at the bottom of the stack, rather than
 	the top. This ordering is consistent with the standard ordering for histograms,
 	and is arguably a better representation.
-	(Kudos: Luke Hutchison <luke.hutch@mit.edu>)
+	(Kudos: Luke Hutchison)
 * Fixed an issue so that the correct color scheme is chosen 
 	for the specified sequence type.
 * Miscellaneous minor bug fixes and refactoring.
