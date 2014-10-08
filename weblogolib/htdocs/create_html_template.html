@@ -60,7 +60,8 @@ Sequence data
 
 
 <tr><td colspan='2' ${sequences_err} >
-<textarea name="sequences" rows="12" cols ="100" style="width:100%">${sequences}</textarea>
+<!-- maxlength should be larger than SEQUENCES_MAXLENGTH set in code-->
+<textarea name="sequences" rows="12" cols ="100" maxlength="200000" style="width:100%">${sequences}</textarea>
 </td></tr>
 
 
