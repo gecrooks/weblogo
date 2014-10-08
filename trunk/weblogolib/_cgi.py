@@ -294,6 +294,16 @@ def main(htdocs_directory = None) :
 
     if not sequences or len(sequences)  ==0:
         sequences = form["sequences"].get_value()
+        # If a user tries to paste a very large file into sequence textarea, 
+        # then WebLogo runs very slow for no apparently good reason. (Might be client side bug?)
+        # So we limit the maximum sequence size. 
+        # Form field also limits size, but not necessarly respected. Also can truncate data
+        # without warning, so we'll set textarea maximum to be larger than MAX_SEQUENCE_SIZE 
+        SEQUENCES_MAXLENGTH  = 1000
+        if len(sequences) > SEQUENCES_MAXLENGTH :
+            errors.append( ("sequences", "Sequence data too large for text input. Use file upload instead."))
+            controls[0]  = Field( 'sequences', '')
+        
     
     if not sequences or len(sequences)  ==0:
         errors.append( ("sequences", "Please enter a multiple-sequence alignment in the box above, or select a file to upload."))
