@@ -299,7 +299,7 @@ def main(htdocs_directory = None) :
         # So we limit the maximum sequence size. 
         # Form field also limits size, but not necessarly respected. Also can truncate data
         # without warning, so we'll set textarea maximum to be larger than MAX_SEQUENCE_SIZE 
-        SEQUENCES_MAXLENGTH  = 1000
+        SEQUENCES_MAXLENGTH  = 100000
         if len(sequences) > SEQUENCES_MAXLENGTH :
             errors.append( ("sequences", "Sequence data too large for text input. Use file upload instead."))
             controls[0]  = Field( 'sequences', '')
