@@ -37,7 +37,8 @@ Open Source License
 
 This package is distributed under the new BSD Open Source License. Much of the code was written by Gavin E. Crooks, Gary Hon, Steven Brenner, John-Marc Chandonia, Liana Lareau, David Ding, Clare Gollnick and other contributers.
 
-This software package is distributed under the new <a href=" http://www.opensource.org/licenses/bsd-license.html"> BSD Open Source License</a>
+This software package is distributed under the <a href=" http://www.opensource.org/licenses/bsd-license.html"> new BSD Open Source License</a>, <a href="http://opensource.org/licenses/MIT">The MIT Open Source License</a>, and <a href="http://biopython.org/DIST/LICENSE">The Biopython License</a>.
+
 
 
 
