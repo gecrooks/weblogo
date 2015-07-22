@@ -304,17 +304,17 @@ def find_root(f, x, y=None, fprime=None, tolerance=1.48e-8, max_iterations=50):
     
     f : The function to optimize, f(x)
     x : The initial guess
-    y : An optional second guess that shoudl bracket the root.
+    y : An optional second guess that should bracket the root.
     fprime : The derivate of f'(x) (Optional)
     tolerance : The error bounds 
     max_iterations : Maximum number of iterations
     
     Raises:
         ArithmeticError :
-            Failure to converge to the given tolerence
+            Failure to converge to the given tolerance
 
     Notes:
-        Uses Newton-Raphson algorihtm if f'(x) is given, else uses bisect if
+        Uses Newton-Raphson algorithm if f'(x) is given, else uses bisect if
         y is given and brackets the root, else uses secant. 
 
     Status : Beta (Not fully tested)
@@ -330,7 +330,9 @@ def find_root(f, x, y=None, fprime=None, tolerance=1.48e-8, max_iterations=50):
         
         for i in range(max_iterations):
             # print(x0, x1, v0, v1, x2-x0)
-            x2 = x1 - v1*(x1-x0)/(v1-v0)
+            diff = v1 - v0
+            if diff ==0 : return x2
+            x2 = x1 - v1*(x1-x0) / diff
             if abs(x2-x1) < tolerance : return x2        
             x0 = x1
             v0 = v1        
