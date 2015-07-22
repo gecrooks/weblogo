@@ -154,12 +154,7 @@ description  = "Create sequence logos from biological sequence alignments."
 
 __version__ = corebio.__version__
 
-# These keywords are substituted by subversion.
-# The date and revision will only tell the truth after a branch or tag,
-# since different files in trunk will have been changed at different times
-release_date ="$Date$".split()[1]
-release_build = "$Revision$".split()[1]
-release_description = "WebLogo %s (%s)" % (__version__,  release_date)
+release_description = "WebLogo %s" % (__version__)
 
 
 
