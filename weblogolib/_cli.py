@@ -321,14 +321,18 @@ def _build_option_parser() :
     # Add position weight matrix formats to input parsers by hand
     fin_choices = dict(seq_io.format_names())
     fin_choices['transfac'] = 'transfac'
+    del fin_choices['plain']
+    fin_names = [f.names[0] for f in seq_io.formats]
+    fin_names.remove('plain')
+    fin_names.append('transfac')
+    
     
     io_grp.add_option("-D", "--datatype", 
         dest="input_parser",
         action="store", type ="dict",
         default = seq_io,
         choices = fin_choices,       # seq_io.format_names(),
-        help="Type of multiple sequence alignment or position weight matrix file: (%s, transfac)" % 
-           ', '.join([ f.names[0] for f in seq_io.formats]),
+        help="Type of multiple sequence alignment or position weight matrix file: (%s)" % ', '.join(fin_names),
         metavar="FORMAT")
 
     io_grp.add_option("-o", "--fout", dest="fout",
