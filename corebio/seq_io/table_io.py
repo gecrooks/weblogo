@@ -37,7 +37,7 @@ from . import *
 
 
 names = ( 'table', 'tab')
-extensions = ('tbl')
+extensions = ('tbl',)
 
 
 example = """

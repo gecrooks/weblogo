@@ -79,7 +79,7 @@ Chicken  S.SNTVDAQE VELIWTILPA IVLVLLALPS LQILYMMDEI DEPDLTLKAI
    """
 
 names = ('msf', 'gcg-msf', 'gcg', 'PileUp')
-extensions = ('msf')
+extensions = ('msf',)
 
 end_header=re.compile(r'(//)(\s*)$')
 seq_line=re.compile(r'\s*(\S+)\s+([\S\s.?]+)$')

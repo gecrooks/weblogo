@@ -57,7 +57,7 @@ from . import *
 
 
 names = ( 'intelligenetics', 'ig', 'stanford', )
-extensions = ('ig') 
+extensions = ('ig',) 
 
 
 example = """
