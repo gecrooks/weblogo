@@ -94,6 +94,16 @@ class test_seq_io(unittest.TestCase) :
             seqs = seq_io.read(f)
         self.assertEqual(len(seqs), 56)
     
+    def test_parser_extensions(self) :
+        # Test that the list of extension is a list.
+        # Very easy with one extension list to write ('txt') rather than ('txt',)
+        for p in seq_io._parsers :
+            self.assertTrue( type(p.extensions) == tuple)
+
+    def test_parser_names(self) :
+        # Same for names
+        for p in seq_io._parsers : self.assertTrue( type(p.names) == tuple)  
+    
     def test_parsers(self) :
         # seq_io._parsers is an ordered  list of sequence parsers that are 
         # tried, in turn, on files of unknown format. Each parser must raise 

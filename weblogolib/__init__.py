@@ -1009,7 +1009,33 @@ def base_distribution(percentCG) :
 
 def equiprobable_distribution( length) :
     return ones( (length), float64) /length   
+
   
+def _seq_formats():
+    """ Return a dictionary mapping between the names of formats for the sequence data
+    and the corresponing parsers.
+    """
+    # Add position weight matrix formats to input parsers by hand
+    fin_choices = dict(seq_io.format_names())
+    fin_choices['transfac'] = 'transfac'
+    del fin_choices['plain']
+    return fin_choices
+
+
+def _seq_names():
+    """ Returns a list of the names of accepted sequence data formats."""
+    fin_names = [f.names[0] for f in seq_io.formats]
+    fin_names.remove('plain')
+    fin_names.append('transfac')
+    return fin_names
+
+    
+def _seq_extensions():
+    """ Returns a list of the file extensions of accepted sequence data formats """
+    exts = []
+    for f in seq_io.formats: exts.extend(f.extensions)
+    exts.extend('dat')  # Occasionaly used for transfac files (?)
+
 
 def read_seq_data(fin, 
                 input_parser=seq_io.read, 

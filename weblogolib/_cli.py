@@ -60,6 +60,8 @@ from . import (LogoOptions, LogoData, LogoFormat,
                default_formatter,
                std_alphabets, std_units, std_sizes, std_color_schemes,
                read_seq_data)
+from . import (_seq_names, _seq_formats)       
+        
 
 # ====================== Main: Parse Command line =============================
 def main(): 
@@ -318,21 +320,13 @@ def _build_option_parser() :
         help="Sequence input file (default: stdin)",
         metavar="FILENAME")
 
-    # Add position weight matrix formats to input parsers by hand
-    fin_choices = dict(seq_io.format_names())
-    fin_choices['transfac'] = 'transfac'
-    del fin_choices['plain']
-    fin_names = [f.names[0] for f in seq_io.formats]
-    fin_names.remove('plain')
-    fin_names.append('transfac')
-    
-    
     io_grp.add_option("-D", "--datatype", 
         dest="input_parser",
         action="store", type ="dict",
         default = seq_io,
-        choices = fin_choices,       # seq_io.format_names(),
-        help="Type of multiple sequence alignment or position weight matrix file: (%s)" % ', '.join(fin_names),
+        choices = _seq_formats(),
+        help="Type of multiple sequence alignment or position weight matrix file: (%s)" 
+                % ', '.join(_seq_names()),
         metavar="FORMAT")
 
     io_grp.add_option("-o", "--fout", dest="fout",
