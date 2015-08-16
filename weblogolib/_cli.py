@@ -320,6 +320,14 @@ def _build_option_parser() :
         help="Sequence input file (default: stdin)",
         metavar="FILENAME")
 
+    io_grp.add_option( "", "--upload",
+        dest="upload",
+        action="store",
+        default=None,
+        help="Upload input file from URL",
+        metavar="URL")
+
+
     io_grp.add_option("-D", "--datatype", 
         dest="input_parser",
         action="store", type ="dict",

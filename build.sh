@@ -28,7 +28,7 @@ rm -rd dist/_extract_/
 # Moved to refresh_apidocs.sh
 #echo 
 #echo "## Rebuild API docs :" 
-#epydoc -q -o apidocs/ -n WebLogo -u http://code.google.com/p/weblogo/ --parse-only --docformat plaintext --no-frames --no-private weblogolib    || exit
+#epydoc -q -o apidocs/ -n WebLogo -u https://github.com/WebLogo/weblogo --parse-only --docformat plaintext --no-frames --no-private weblogolib    || exit
 
 
 #echo 
