@@ -2,7 +2,252 @@
 /*
    Logo Cascading Style Sheet
 */
+/*bootstrap CSS*/
+html, body {
+  height: 100%
+}
+#wrap {
+  min-height: 100%
+  overflow: hidden;
+}
 
+#thumbnail-2, #thumbnail-3 {
+  margin-bottom: -9999px
+  padding-bottom: 9999px;
+}
+
+
+body {
+  padding-top: 25px;
+  font-family: sans-serif;
+  color: black;
+  background: white;
+}
+
+.thumbnail:hover {
+  background-color: rgba(204,204,204,.85);
+}
+
+.thumbnail {
+  display: inline-flex
+}
+
+.btn-sm{
+  width: 100%
+}
+
+
+#sequence-data {
+  height: 100px
+}
+
+option {
+  font-size: 12px
+}
+h1 {
+  padding: 20px
+}
+
+table: {
+  cell-padding: 5;
+}
+
+form {
+  font-size: 12px
+
+}
+
+
+img {
+  padding: 2px;
+  border-style: solid;
+
+}
+
+#introduction {
+  padding-top: 150px
+}
+
+#spacing-row {
+  height: 50px;
+}
+
+#padding-div {
+  height: 7px
+}
+
+.edit-logo-btn {
+  padding-top: 5px
+}
+
+.image-div {
+  padding: 5px;
+}
+
+#last-button {
+  width: 100%
+}
+
+.button {
+  padding-bottom: 5px;
+}
+
+#sequence-data {
+  height: 100px
+}
+
+option {
+  font-size: 12px
+}
+h1 {
+  padding: 35px
+}
+
+#Gallery-header {
+  text-align: center;
+}
+#CAP-header {
+  text-align: center;
+}
+
+table: {
+  cell-padding: 5;
+}
+
+
+
+/*original WebLogo CSS*/
+
+a:link { color: #369; background: transparent }
+a:visited { color: #066; background: transparent }
+a:active { color: #C00; background: transparent }
+
+a.selected:visited { 
+  color: #000;
+  background: #EEE;
+  text-decoration: none;
+}
+
+
+th, td { /* ns 4 */
+  font-family: sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 { text-align: left }
+h1  { color: #900 }
+h1 { text-align: left ;
+    padding-top: 50px}
+h1 { font: 170% sans-serif}
+h2 { font: bold 140% sans-serif }
+h3 { font: bold 120% sans-serif }
+h4 { font: bold 100% sans-serif;
+padding-top: 15px }
+h5 { font: italic 100% sans-serif }
+h6 { font: small-caps 100% sans-serif }
+
+h2 { margin-top: 2em}
+h4 { margin-bottom: 0.2em}
+
+.discourse {
+    font-size: small
+    }
+
+
+p {text-align: justify; margin-top: 0em}
+p.copyright { font-size: small; text-align: center }
+
+pre { margin-left: 2em ; }
+
+dt, dd { margin-top: 0; margin-bottom: 0 } /* opera 3.50 */
+dt { font-weight: bold }
+
+/* navigator 4 requires this */
+pre, code { 
+            font-family: monospace ; 
+          
+} 
+
+
+/*fluidbox css*/
+@-webkit-keyframes fluidboxLoading {
+  0% {
+    -webkit-transform: translate(-50%, -50%) rotateX(0) rotateY(0); }
+  50% {
+    -webkit-transform: translate(-50%, -50%) rotateX(-180deg) rotateY(0); }
+  100% {
+    -webkit-transform: translate(-50%, -50%) rotateX(-180deg) rotateY(-180deg); } }
+@keyframes fluidboxLoading {
+  0% {
+    transform: translate(-50%, -50%) rotateX(0) rotateY(0); }
+  50% {
+    transform: translate(-50%, -50%) rotateX(-180deg) rotateY(0); }
+  100% {
+    transform: translate(-50%, -50%) rotateX(-180deg) rotateY(-180deg); } }
+.fluidbox {
+  outline: none; }
+
+.fluidbox-overlay {
+  background-color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  cursor: -webkit-zoom-out;
+  cursor: -moz-zoom-out;
+  cursor: zoom-out;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  /* Transition time for overlay is halved to ensure that flickering doesn't happen */
+  transition: all 0.125s ease-in-out 0.125s; }
+
+.fluidbox-wrap {
+  background-position: center center;
+  background-size: cover;
+  margin: 0 auto;
+  position: relative;
+  transition: all 0.25s ease-in-out;
+  /* To prevent flickering, we delay the showing of the image */ }
+  .fluidbox-closed .fluidbox-wrap img {
+    transition: opacity 0s ease-in-out 0.25s; }
+
+.fluidbox-ghost {
+  background-size: 100% 100%;
+  background-position: center center;
+  position: absolute;
+  -webkit-transition-property: opacity, -webkit-transform;
+  -moz-transition-property: opacity, -moz-transform;
+  -o-transition-property: opacity, -o-transform;
+  transition-property: opacity, transform;
+  transition-duration: 0s, 0.25s;
+  transition-delay: 0.25s, 0s; }
+  .fluidbox-opened .fluidbox-ghost {
+    transition-delay: 0s, 0s; }
+
+.fluidbox-loader {
+  perspective: 200px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0; }
+  .fluidbox-loader::before {
+    /* You can replace this with any color you want, or even a loading gif if desired */
+    background-color: rgba(255, 255, 255, 0.85);
+    content: '';
+    transform-style: preserve-3d;
+    transition: all 0.25s ease-in-out;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20%;
+    padding-bottom: 20%; }
+
+.fluidbox-loading .fluidbox-loader::before {
+  -webkit-animation: fluidboxLoading 1s 0s infinite ease-in-out forwards;
+  animation: fluidboxLoading 1s 0s infinite ease-in-out forwards;
+  opacity: 1; }
 body {
   font-family: sans-serif;
   color: black;

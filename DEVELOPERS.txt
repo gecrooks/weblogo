@@ -9,9 +9,9 @@ DEVELOPING WEBLOGO
  Procedure to Build and Release new versions 
 ---------------------------------------------
 
-1. Check out a fresh copy of trunk.
+1. Fork a fresh copy of WebLogo's master branch.
 	
-	svn checkout https://weblogo.googlecode.com/svn/trunk/ weblogo-VERSION --username USERNAME 
+	The WebLogo repository is https://github.com/WebLogo/weblogo
 
 2.  Update version number if necessary (weblogolib/__init__.py and corebio/_version.py )
 
@@ -41,27 +41,25 @@ DEVELOPING WEBLOGO
 
 9. Branch
 
-	svn copy -m "Branch 0.x" https://weblogo.googlecode.com/svn/trunk/ https://weblogo.googlecode.com/svn/branches/0.x 
+	Fork the repository from https://github.com/WebLogo/weblogo
 
 
 10. Update version number in trunk, 
 	(Add new entry to changelog, change in corebio._version.py)
 
 
-11. Switch to release branch. 
+11. Issue a Pull Request to the Master branch. 
 	
-	svn switch https://weblogo.googlecode.com/svn/branches/0.x
-	./build.sh
+	https://github.com/WebLogo/weblogo/pulls
 
 12. Tag
-	svn copy -m "Tag 3.2.0" https://weblogo.googlecode.com/svn/branches/3.2 https://weblogo.googlecode.com/svn/tags/3.2.0 
-
+	svn copy -m "Tag 3.2.0" https://github.com/WebLogo/weblogo https://https://github.com/WebLogo/weblogo
 
 13. Upload distribution tarball
 
 	svn import -m "Dist 0.x.0" dist/weblogo-3.x.0.tar.gz  https://weblogo.googlecode.com/svn/dist/weblogo-3.x.0.tar.gz
 
-14. Update project page.  (http://code.google.com/p/weblogo/admin)
+14. Update project page.  (https://github.com/WebLogo/weblogoadmin)
 	
 	Upload distribution tar file.
 	Add featured tag (so current download shows on front page)
@@ -73,7 +71,7 @@ DEVELOPING WEBLOGO
 	svn switch https://weblogo.googlecode.com/svn/branches/3.2
 
 
-16. Resister with Python Packakge Index PyPI
+16. Register with Python Packakge Index PyPI
 	
 	python setup.py register
 	python setup.py sdist upload
