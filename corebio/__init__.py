@@ -37,7 +37,7 @@
 
 """ A python toolkit for computational biology. 
 
-http://code.google.com/p/corebio/
+https://github.com/WebLogo/weblogo
 
 Attributes:
     __version__ - The corebio version.
@@ -64,7 +64,7 @@ __all__ = [ 'data',
             ]
 
 from corebio._version import __version__, description
-user_agent = "corebio/" + __version__ + " (http://code.google.com/p/corebio/)"
+user_agent = "corebio/" + __version__ + " (https://github.com/WebLogo/weblogo)"
 
 __doc__  = description +' : ' + __doc__
 
