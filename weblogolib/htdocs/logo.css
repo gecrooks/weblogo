@@ -81,9 +81,9 @@ body {
   background: white;
 }
 
-.thumbnail:hover {
+/* .thumbnail:hover {
   background-color: rgba(204,204,204,.85);
-}
+} */
 
 .thumbnail {
   display: inline-flex
