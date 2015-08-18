@@ -141,6 +141,10 @@ img {
   padding: 5px;
 }
 
+.code {
+  text-color: black;
+}
+
 #last-button {
   width: 100%
 }
@@ -171,6 +175,9 @@ table: {
   cell-padding: 5;
 }
 
+code {
+  color: black;
+}
 
 /*fluidbox css*/
 @-webkit-keyframes fluidboxLoading {

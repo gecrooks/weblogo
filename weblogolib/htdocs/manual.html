@@ -34,7 +34,7 @@
         <!--outermost container-->
         <div class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
-                <div class="navbar-header">
+                <div class="navbar-header">https://github.com/WebLogo/weblogo
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
@@ -470,7 +470,7 @@
                             <dl class="dl-horizontal">
                                 <dt id="create-sequence">More Options</dt>
                                 <dd>
-                                    The weblogo <a href="#CLI">command line client</a>, <code>weblogo</code>, provides many more options and greater control over the final logo appearance.
+                                    The weblogo <a href="#CLI">command line client</a>, <code class="code">weblogo</code>, provides many more options and greater control over the final logo appearance.
                                 </dd>
                             </dl>
                         </div>
@@ -494,11 +494,11 @@
                             <dt>
                                 <h4> Download and Installation</h4></dt>
                             <dd>
-                                If the python package <a href="http://peak.telecommunity.com/DevCenter/setuptools"><code>setuptools</code></a> has been installed, then WebLogo and its dependencies can be downloaded and installed with a single command:
+                                If the python package <a href="http://peak.telecommunity.com/DevCenter/setuptools"><code class="code">setuptools</code></a> has been installed, then WebLogo and its dependencies can be downloaded and installed with a single command:
                                 <pre>
                 sudo easy_install weblogo
                 </pre> Alternatively, weblogo and its dependencies can be installed manually. The WebLogo source code can be downloaded from
-                                <a href="https://github.com/WebLogo/weblogo/issues">Weblogo's Github repository</a>. This code is distributed under various <a href="http://www.opensource.org/docs/definition">open source licenses</a>. Please consult the <code>LICENSE.txt</code> file in the source distribution for details.
+                                <a href="https://github.com/WebLogo/weblogo/issues">Weblogo's Github repository</a>. This code is distributed under various <a href="http://www.opensource.org/docs/definition">open source licenses</a>. Please consult the <code class="code">LICENSE.txt</code> file in the source distribution for details.
                                 <p>
                                     After unpacking the WebLogo tarfile, it should be possible to immediately create logos using the command line client (provided that python, numpy and ghostscript have already been installed).
                                 </p>
@@ -506,7 +506,7 @@
                 ./weblogo --format PNG &lt; cap.fa &gt; cap.png   
                 </pre>
                                 <p>
-                                    Please consult the file <code>build_examples.sh</code> for more examples. </p>
+                                    Please consult the file <code class="code">build_examples.sh</code> for more examples. </p>
                                 <p>
                                     To run WebLogo as a stand alone web service, run the logo server command :
                                 </p>
@@ -517,12 +517,12 @@
                                     It should now be possible to access WebLogo at <a href="http://localhost:8080/">http://localhost:8080/</a>.
                                 </p>
                                 <p>
-                                    The command line client and WebLogo libraries can be permanently installed using the supplied <code>setup.py</code> script.</p>
+                                    The command line client and WebLogo libraries can be permanently installed using the supplied <code class="code">setup.py</code> script.</p>
                                 <pre>
                 sudo python setup.py install
                 </pre>
                                 <p>
-                                    Run <code>python setup.py help</code> for more installation options. For example, to specifically install the weblogo script to /usr/local/bin </p>
+                                    Run <code class="code">python setup.py help</code> for more installation options. For example, to specifically install the weblogo script to /usr/local/bin </p>
                                 <pre>
                 sudo python setup.py install_scripts --install-dir /usr/local/bin
                 </pre>
@@ -531,7 +531,7 @@
                                 <h4>Web App</h4></dt>
                             <dd>
                                 To use WebLogo as a web application, first install the weblogo dependencies and libraries as above, then place (or link) the
-                                <code>weblogolib/htdocs</code> directory somewhere within the document root of your webserver. The webserver must be able to execute the CGI script <code>create.cgi</code>. For Apache, you may have to add an <code>ExecCGI</code> option and add a cgi handler in the <code>httpd.conf</code> configuration file. Something like this:
+                                <code class="code">weblogolib/htdocs</code> directory somewhere within the document root of your webserver. The webserver must be able to execute the CGI script <code class="code">create.cgi</code>. For Apache, you may have to add an <code class="code">ExecCGI</code> option and add a cgi handler in the <code class="code">httpd.conf</code> configuration file. Something like this:
                                 <pre>
                     &lt;Directory "/home/httpd/htdocs/weblogo/">
                     Options FollowSymLinks MultiViews ExecCGI
@@ -544,13 +544,13 @@
                     # (You will also need to add "ExecCGI" to the "Options" directive.)
                     #
                     AddHandler cgi-script .cgi
-                  </pre> It may also be necessary to set the <code>PATH</code> and <code>PYTHONPATH</code> environment variables.
+                  </pre> It may also be necessary to set the <code class="code">PATH</code> and <code class="code">PYTHONPATH</code> environment variables.
                                 <pre>
                     SetEnv PYTHONPATH /path/to/weblogo/libraries
-                  </pre> The cgi script also has to be able to find the '<code>gs</code>' ghostscript executable. If ghostscript is installed in a non-standard location add the following environment variable.
+                  </pre> The cgi script also has to be able to find the '<code class="code">gs</code>' ghostscript executable. If ghostscript is installed in a non-standard location add the following environment variable.
                                 <pre>
                     SetEnv COREBIOPATH /path/to/gs
-                  </pre> The maximum bytes of uploaded sequence data can be controlled with the <code>WEBLOGO_MAX_FILE_SIZE</code> environment variable.
+                  </pre> The maximum bytes of uploaded sequence data can be controlled with the <code class="code">WEBLOGO_MAX_FILE_SIZE</code> environment variable.
                                 <pre>
                     SetEnv WEBLOGO_MAX_FILE_SIZE 1000000
                   </pre>
@@ -568,9 +568,9 @@
                         <dl>
                             <!--start definition list for Weblogo CLI-->
                             <dt>
-                                <h2><code>weblogo</code>, The WebLogo Command Line Interface (CLI)</h2></dt>
+                                <h2><code class="code">weblogo</code>, The WebLogo Command Line Interface (CLI)</h2></dt>
                             <dd>
-                                The command line client has many options not available through the web interface. Please consult the bundled <code>build_examples.sh</code> script for inspiration.
+                                The command line client has many options not available through the web interface. Please consult the bundled <code class="code">build_examples.sh</code> script for inspiration.
                         <pre>
                     Usage: weblogo [options]  < sequence_data.fa > sequence_logo.eps
 
@@ -705,7 +705,7 @@
               <a name="API" ><br></a>
               <h2>WebLogo Application Programmer Interface (API)</h2>
 
-              The WebLogo python libraries provide even greater flexibility than the command line client. The code is split between two principle packages, <code>weblogo</code> itself, which contains specialized sequence logo generation code, and <code>corebio</code>, a package that contains code of more general utility. 
+              The WebLogo python libraries provide even greater flexibility than the command line client. The code is split between two principle packages, <code >weblogo</code> itself, which contains specialized sequence logo generation code, and <code>corebio</code>, a package that contains code of more general utility. 
               Please consult the code documentation.
           </div><!--Weblogo API row container end-->
                         <!-- ================================================================== -->
@@ -724,7 +724,7 @@
                 &gt;  cd weblogo
               </pre>
                             <p>
-                                Please consult the developer notes, <code>DEVELOPERS.txt</code> and software license <code>LICENSE.txt</code>
+                                Please consult the developer notes, <code class="code">DEVELOPERS.txt</code> and software license <code class="code">LICENSE.txt</code>
                             </p>
                             <p>
                                 Outstanding bugs and feature requests are listed on the <a href="https://github.com/WebLogo/weblogo/issues">WebLogo issue tracker.</a>

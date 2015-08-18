@@ -8,8 +8,8 @@ echo "# Requires epydoc to build documentation. "
 python -c "import weblogolib; print(weblogolib.description)"
 
 echo 
-echo "## Check Subversion status (working copy checked in and up to date?) " 
-svn status 
+# echo "## Check Subversion status (working copy checked in and up to date?) " 
+# svn status 
 
 echo 
 echo "## Lines of code" 
