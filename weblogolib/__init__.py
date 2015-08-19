@@ -79,7 +79,7 @@ Please see the LICENSE.txt file for details on copyright and licensing.
 The WebLogo source code can be downloaded from 
 https://github.com/WebLogo/weblogo
 
-WebLogo requires Python 2.5, 2.6 or 2.7, and the python
+WebLogo requires Python 2.6, 2.7, 3.2, 3.3 & 3.4 and the python
 array package 'numpy' (http://www.scipy.org/Download)
 
 Generating logos in PDF or bitmap graphics formats require that the ghostscript
