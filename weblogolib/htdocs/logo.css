@@ -69,8 +69,7 @@ html, body {
 }
 
 #thumbnail-2, #thumbnail-3 {
-  margin-bottom: -9999px
-  padding-bottom: 9999px;
+    height: 580px
 }
 
 
