@@ -1,6 +1,7 @@
 WebLogo Release Notes
 
-3.? (2015-08-21) ***Draft***
+	***Draft 08/19/15***
+3.? (2015-08-21) [Gavin Crooks,
 
 * Fix various bugs in file extension collecting
 * Refactor html to optimize WebLogo use on mobile computing devices
