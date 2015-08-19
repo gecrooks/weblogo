@@ -154,13 +154,7 @@ description  = "Create sequence logos from biological sequence alignments."
 
 __version__ = corebio.__version__
 
-# These keywords are substituted by subversion.
-# The date and revision will only tell the truth after a branch or tag,
-# since different files in trunk will have been changed at different times
-release_date ="$Date: 2014-06-02 22:07:02 -0700 (Mon, 02 Jun 2014) $".split()[1]
-release_build = "$Revision: 206 $".split()[1]
-release_description = "WebLogo %s (%s)" % (__version__,  release_date)
-
+release_description = "WebLogo %s" % (__version__)
 
 
 def cgi(htdocs_directory) :
@@ -1015,6 +1009,33 @@ def base_distribution(percentCG) :
 
 def equiprobable_distribution( length) :
     return ones( (length), float64) /length   
+  
+  
+def _seq_formats():
+    """ Return a dictionary mapping between the names of formats for the sequence data
+    and the corresponing parsers.
+    """
+    # Add position weight matrix formats to input parsers by hand
+    fin_choices = dict(seq_io.format_names())
+    fin_choices['transfac'] = 'transfac'
+    del fin_choices['plain']
+    return fin_choices
+
+
+def _seq_names():
+    """ Returns a list of the names of accepted sequence data formats."""
+    fin_names = [f.names[0] for f in seq_io.formats]
+    fin_names.remove('plain')
+    fin_names.append('transfac')
+    return fin_names
+
+    
+def _seq_extensions():
+    """ Returns a list of the file extensions of accepted sequence data formats """
+    exts = []
+    for f in seq_io.formats: exts.extend(f.extensions)
+    exts.extend('dat')  # Occasionaly used for transfac files (?)
+
   
 
 def read_seq_data(fin, 

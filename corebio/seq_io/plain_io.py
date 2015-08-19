@@ -92,7 +92,7 @@ def iterseq(fin, alphabet=None) :
         line = line.strip() 
         
         
-        if line[0] == '>' : # probable a fasta file. Fail.
+        if line[0] == '>' : # probably a fasta file. Fail.
                 raise ValueError(
                     "Parse Error on input line: %d " % (linenum) )
         line = remove_whitespace(line)
