@@ -53,11 +53,11 @@ DEVELOPING WEBLOGO
 	https://github.com/WebLogo/weblogo/pulls
 
 12. Tag
-	svn copy -m "Tag 3.2.0" https://github.com/WebLogo/weblogo https://https://github.com/WebLogo/weblogo
+	tag release on Github at https://github.com/WebLogo/weblogo/releases/new
 
 13. Upload distribution tarball
 
-	svn import -m "Dist 0.x.0" dist/weblogo-3.x.0.tar.gz  https://weblogo.googlecode.com/svn/dist/weblogo-3.x.0.tar.gz
+	See https://github.com/WebLogo/weblogo/releases/new
 
 14. Update project page.  (https://github.com/WebLogo/weblogoadmin)
 	
