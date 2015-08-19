@@ -1085,10 +1085,11 @@ def read_seq_data(fin,
 class LogoData(object) :
     """The data needed to generate a sequence logo.
        
-    - alphabet 
-    - length
-    - counts  -- An array of character counts
-    - entropy -- The relative entropy of each column
+    - alphabet --  The set of symbols to count. 
+                   See also --sequence-type, --ignore-lower-case
+    - length  --   All sequences must be the same length, else WebLogo will return an error
+    - counts  --   An array of character counts
+    - entropy --   The relative entropy of each column
     - entropy_interval -- entropy confidence interval
      """
      
