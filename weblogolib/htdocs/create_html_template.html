@@ -90,30 +90,66 @@
                             <h2> Sequence Data Input:</h2>
                             <hr>
                             <div class="form-group clearfix" "row">
-                                <!--start clearfix div for browse & dropbox & google buttons-->
+                                <!--start clearfix div for browse & open buttons-->
                                 <div class="col-sm-4">
                                     <!--Button browse files for upload div-->
                                     <a class="btn btn-default btn-sm" onclick="$('#sequence-file').click();"> <span class=" glyphicon glyphicon-folder-open"></span>&nbsp&nbsp&nbsp Browse</a>
                                 </div>
-                                <!--end .col-sm-2 button browse files for upload div-->
-                                <div class="form-group col-sm-4" id="dropbox-container">
-                                    <!--start dropbox-container; dropbox button icon appears in this div -->
-                                    <input type="checkbox" name="selected-file" style="display: none;" />
-                                    <!--Jquery to show dropbox in id=dropbox-container div-->
-                                    <script type="text/javascript">
 
-                                    </script>
-                                    <!--end Dropbox scripts-->
+                                <div class="col-sm-4"> <!--center spacing div-->
                                 </div>
-                                <!--end dropbox-container div-->
-                                <div class="form-group col-sm-4" id="download-by-URL">
-                                    <!--start URL download container div-->
 
-                                       
+                                  <!--start URL download container div-->
+                                <div class="form-group col-sm-4" id="download-by-URL">
+                                    
+                                    <!-- Trigger the modal with a button -->
+                                    <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-transfer"></span> &nbsp&nbsp&nbsp Open URL</button>
+
+                                    <!-- Modal -->
+                                    <div id="myModal" class="modal fade" role="dialog">
+                                      <div class="modal-dialog">
+
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header"><!-- modal-header-->
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Open URL</h4>
+                                            </div><!-- end modal-header-->
+
+                                          <!--start modal-body-->
+                                            <div class="modal-body">
+
+                                                <!--form tags to make url form send to weblogo
+                                                <form enctype="multipart/form-data" action="create.cgi" name="logoform" method="post">
+                                                -->
+
+                                                <!--form tags to make url form send to cgi_test.py-->
+                                                <form ACTION="http://localhost:8000/cgi_test.py" method= "POST">
+                                                    <div class="form-group">
+                                                        <label for="recipient-name" class="control-label">URL:</label>
+                                                        <input type="text" class="form-control"  name="url-upload" placeholder="Paste URL Here">
+                                                    </div>
+                                             
+                                              
+                                                    <!--start modal-footer-->
+                                                    <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                        <button class="btn btn-success btn-md" type="submit" name="cmd_create">
+                                                    <span class="glyphicon glyphicon-ok"></span> Create WebLogo</button>
+                                                    </div>
+                                                    <!--end modal-footer-->
+                                                </form>
+
+                                            </div> <!--end modal-body-->
+
+                                        </div><!--end modal content-->
+                                     </div><!--end .modal-dialog-->
+                                    </div><!--end #myModal --> 
+                                    
                                                         
                                 </div> <!--end URL download container div-->
-                            </div>
-                            <!--end clearfix div for browse & dropbox buttons-->
+                            </div> <!--start clearfix div for browse & open buttons-->
+                           
                             <div class="form-group">
                                 <!--open paste seqence data textbox div-->
                                 <label class="err_msg">${error_message}</label>
@@ -122,8 +158,8 @@
                             </div>
                             <!--close paste seqence data textbox-->
                             <div class="form-group row">
-                                <!--Start clearfix div for Download and Dropbox button-->
-                                <div class="col-sm-10">
+                                <!--Start div for Download and Dropbox button-->
+                                <div class="col-sm-8">
                                     <!--start create&clear button column-->
                                     <div class="form-group">
                                         <!--open create&clear button div-->
@@ -133,14 +169,16 @@
                                         <button type="button" class="btn btn-default" name="cmd_clear" onclick="document.logoform.sequences.value='';"> Clear</button>
                                     </div>
                                     <!-- end create&clear button div-->
-                                </div>
-                                <!--end .col-sm-6 create&clear button column-->
-                                <div class="col-sm-2">
-                                    <!--start spacing div for download/email checkboxes-->
-                                    <div>
+
+                                    
+                                </div> <!--end .col-sm-8 create&clear button column-->
+                                
+                                <div class="col-sm-4"><!--start spacing div for download checkbox-->
+                                    
+                                    <div class="form-group">
                                         <!--start download checkbox div-->
                                         <label>
-                                            <input type="checkbox" name="download" value="false">Download
+                                            <input type="checkbox" name="download" value="false">&nbsp Download to local drive
                                         </label>
                                     </div>
                                     <!--end download checkbox div div-->
@@ -181,29 +219,30 @@
                                 <div>
                                     <!--open div for format options-->
                                     <select name="format">
-                                        <option value="png">PNG (low res.)</option>
-                                        <option value="png_print">PNG (high res.)</option>
-                                        <option role="presentation">JPEG (low res.)</option>
-                                        <option value="jpeg">EPS (vector)</option>
-                                        <option value="pdf">PDF (vector)</option>
-                                        <option value="svg">SVG (vector)</option>
-                                        <option value="logodata">Data (plain text)</option>
-                                    </select>
+                                        <option ${png} value="png">PNG (low res.)</option>
+                                        <option ${png_print} value="png_print">PNG (high res.)</option>
+                                        <option ${jpeg} value="jpeg">JPEG (low res.)</option>
+                                        <option ${eps} value="eps">EPS (vector)</option>
+                                        <option ${pdf} value="pdf">PDF (vector)</option>
+                                        <option ${svg} value="svg">SVG (vector)</option>
+                                        <option ${logodata} value="logodata">Data (plain text)</option> 
+                                    </select> 
                                 </div>
                                 <!--close div for format options-->
                             </div>
                             <!--close output format div-->
+
+                            <!--open div for sequence type option-->
                             <div class="form-group">
-                                <!--open sequence type div-->
-                                <label ${alphabet_err}>Sequence type:</label>
-                                <select name="alphabet">
-                                    <option value="alphabet_auto">auto</option>
-                                    <option value="alphabet_protein">protein</option>
-                                    <option value="alphabet_dna">dna</option>
-                                    <option value="alphabet_rna">rna</option>
+                                <label ${alphabet_err}>Sequence type </label>
+                                <select type="submit" name="stack_width"name="alphabet">
+                                    <option ${alphabet_auto} value="alphabet_auto" >auto</option>
+                                    <option ${alphabet_protein} value="alphabet_protein">protein</option>
+                                    <option ${alphabet_dna} value="alphabet_dna">dna</option>
+                                    <option ${alphabet_rna} value="alphabet_rna">rna</option>
                                 </select>
-                            </div>
-                            <!--close sequence type div-->
+                            </div> <!--close dive for sequence type option-->    
+
                             <div class="form-group">
                                 <!--open logo-size div-->
                                 <label ${size_err}>Logo-size: </label>
@@ -220,10 +259,12 @@
                                 <input type="text" name="stacks_per_line" size="8" value="${stacks_per_line}" placeholder="40">
                             </div>
                             <!--close div for format options-->
+
+
                             <div class="form-group">
                                 <!--open Ignore lower case div-->
                                 <label>Ignore lower case:
-                                    <input type="checkbox" name="ignore_lower_case" value="true" checked>
+                                    <input type="checkbox" name="ignore_lower_case" value="true" ${ignore_lower_case}>
                                 </label>
                             </div>
                             <!--close ignore lower case div-->
@@ -243,14 +284,14 @@
                             <div class="form-group">
                                 <!--open first position number div-->
                                 <label ${first_index_err}> First position number: </label>
-                                <input type="text" name="first_index" placeholder="max length 80" maxlength="80" value="${first_index}">
+                                <input type="text" name="first_index" placeholder="max length 80" size="4" maxlength="80" value="${first_index}">
                             </div>
                             <!--close first position div-->
                             <div class="form-group">
                                 <!--open logo range div-->
                                 <label ${logo_range_err}> Logo range: </label>
-                                <input type="text" placeholder="logo start" value="${logo_start}" size="8" maxlength="80"> -
-                                <input type="text" placeholder="logo end" value="${logo_end}" id="formGroupInputSmall" size="8" maxlength="80">
+                                <input type="text" placeholder="logo start" value="${logo_start}" size="4" maxlength="80"> -
+                                <input type="text" placeholder="logo end" value="${logo_end}" id="formGroupInputSmall" size="4" maxlength="80">
                             </div>
                             <!--close logo range div-->
                             <div class="form-group">
@@ -285,12 +326,14 @@
                                 <span> % CG </span>
                             </div>
                             <!--close composition div-->
+
+                            <!--start error bars div-->
                             <div class="form-group">
-                                <!--start error bars div-->
                                 <label>Error bars: </label>
                                 <input type="checkbox" name="show_errorbars" value="true" ${show_errorbars} checked>
                             </div>
                             <!--end error bars div-->
+
                             <div id="padding-div">
                                 <br>
                             </div>
@@ -298,16 +341,17 @@
                         <!--close 2nd thumbnail column-->
                         <div class="thumbnail col-sm-6" id="thumbnail-3">
                             <!--start third thumbnail ; right side logo options-->
+
                             <div class="form-group">
                                 <!--start Sequence Ends labels:div-->
                                 <label>Show Sequence Ends labels:</label>
-                                <input type="checkbox" name="show_ends" value="true">
+                                <input type="checkbox" name="show_ends" value="true" ${show_ends}>
                             </div>
                             <!--end Sequence Ends labels:div-->
                             <div class="form-group">
                                 <!--start Version fineprint: -->
                                 <label>Version fineprint: </label>
-                                <input type="checkbox" name="show_fineprint" value="true" checked>
+                                <input type="checkbox" name="show_fineprint" value="true" checked ${show_fineprint}>
                             </div>
                             <!--end Version fineprint: -->
                             <div class="form-group">
@@ -335,7 +379,7 @@
                             <div class="form-group">
                                 <!--Y-axis tic spacing-->
                                 <label>Y-axis tic spacing:</label>
-                                <input type="text" name="yaxis_tic_interval" value="${yaxis_tic_interval}" placeholder="Y-axis tic spacing">
+                                <input type="text" name="yaxis_tic_interval" value="${yaxis_tic_interval}" placeholder="Y-axis tic spacing" size="4" maxlength="100">
                             </div>
                             <div class="form-group">
                                 <!--start color scheme div-->
@@ -355,6 +399,7 @@
                           -->
                             </div>
                             <!--end color scheme div-->
+
                             <div class="form-group stacked-textfields" id="Symbols">
                                 <!--start symbols div-->
                                 <div>
@@ -362,11 +407,11 @@
                                 </div>
                                 <div>
                                     <!--start symbol options-->
-                                    <input name="symbols0" type="text" maxlength="64" value="${symbols0}">
-                                    <input name="symbols1" type="text" maxlength="64" value="${symbols1}">
-                                    <input name="symbols2" type="text" maxlength="64" value="${symbols2}">
-                                    <input name="symbols3" type="text" maxlength="64" value="${symbols3}">
-                                    <input name="symbols4" type="text" maxlength="64" value="${symbols4}">
+                                    <input name="symbols0" type="text" size="16" maxlength="64" value="${symbols0}">
+                                    <input name="symbols1" type="text" size="16" maxlength="64" value="${symbols1}">
+                                    <input name="symbols2" type="text" size="16" maxlength="64" value="${symbols2}">
+                                    <input name="symbols3" type="text" size="16" maxlength="64" value="${symbols3}">
+                                    <input name="symbols4" type="text" size="16" maxlength="64" value="${symbols4}">
                                 </div>
                                 <!--end symbol options-->
                             </div>
@@ -377,30 +422,31 @@
                                     <label>Color:</label>
                                 </div>
                                 <div>
-                                    <input name="color0" type="text" maxlength="64" value="${color0}">
-                                    <input name="color1" type="text" maxlength="64" value="${color1}">
-                                    <input name="color2" type="text" maxlength="64" value="${color2}">
-                                    <input name="color3" type="text" maxlength="64" value="${color3}">
-                                    <input name="color4" type="text" maxlength="64" value="${color4}">
+                                    <input name="color0" type="text"  size="16" maxlength="64" value="${color0}">
+                                    <input name="color1" type="text"  size="16" maxlength="64" value="${color1}">
+                                    <input name="color2" type="text"  size="16" maxlength="64" value="${color2}">
+                                    <input name="color3" type="text"  size="16" maxlength="64" value="${color3}">
+                                    <input name="color4" type="text"  size="16" maxlength="64" value="${color4}">
                                 </div>
                             </div>
                             <!--end colors div-->
                             <div class="form-group">
                                 <!--start reset defaults div-->
                                 <!--Reset defaults must come after create_logo so that hitting enter creates a logo-->
-                                <button type="submit" class="btn btn-default btn-sm" name="cmd_reset" value="&    nbsp;Create&nbsp;Logo&nbsp;&nbsp;&nbsp;&nbsp;"> Reset Defaults
-                                </button>
+                                <input type="submit" class="btn btn-default btn-sm" name="cmd_reset" value= "Reset Defaults"> 
+                                
                             </div>
                             <!--end reset defaults div-->
                         </div>
                         <!--close 3rd thumbnail group-->
+
+                        <!--start 4th thumbnail group-->
                         <div class="thumbnail clearfix" id="thumbnail-4">
-                            <!--start 4th thumbnail group-->
+                         
                             <div class="form-group">
                                 <!--start create weblogo bottom button div-->
-                                <button class="btn btn-success btn-lg" id="last-button" type="submit" name="cmd_create">
-                                    <span class="glyphicon glyphicon-ok"></span> Create WebLogo
-                                </button>
+                                 <button class="btn btn-success btn-lg" type="submit" name="cmd_create" id="last-button">
+                                <span class="glyphicon glyphicon-ok"></span> Create WebLogo </button>
                             </div>
                             <!--end create weblogo bottom button div-->
                         </div>

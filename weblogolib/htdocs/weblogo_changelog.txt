@@ -1,5 +1,15 @@
 WebLogo Release Notes
 
+	***Draft 08/19/15***
+3.? (2015-08-21) [Gavin Crooks,
+
+* Fix various bugs in file extension collecting
+* Refactor html to optimize WebLogo use on mobile computing devices
+* Add feature to open sequence files via file sharing URL link from Web application and command line
+* Update documenation and references to redirect from code.google.com hosting to Github
+* Update documentation to reflect switch from Subversion as version control method to Git
+
+
 3.4  (2014-06-03)  [Gavin Crooks, Eric Talevich]
 
 * Python 3
