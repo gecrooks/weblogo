@@ -131,7 +131,7 @@ def httpd_serve_forever(port=8080) :
     # so that we can run the standalone server
     # without having to run the install script.      
     pythonpath = os.getenv("PYTHONPATH", '')
-    pythonpath += ":" + os.path.abspath(sys.path[0]).split()[0]
+    pythonpath += os.pathsep + os.path.abspath(sys.path[0]) #.split()[0]
     os.environ["PYTHONPATH"] = pythonpath
 
     htdocs = resource_filename(__name__, 'htdocs', __file__)
@@ -141,7 +141,7 @@ def httpd_serve_forever(port=8080) :
     ServerClass = server.HTTPServer
     httpd = ServerClass(('', port), HandlerClass)
     print("WebLogo server running at http://localhost:%d/" % port)
-    
+
     try :
         httpd.serve_forever()
     except KeyboardInterrupt:
