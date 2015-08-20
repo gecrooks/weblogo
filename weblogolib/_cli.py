@@ -154,8 +154,17 @@ def _build_logodata(options) :
     motif_flag=False
 
     fin = options.fin
-    if fin is None:
-        fin = StringIO(sys.stdin.read())
+    
+    if options.upload is None:
+        if fin is None:
+            fin = StringIO(sys.stdin.read())
+    else :
+        if fin is None:
+            from . import _from_URL_fileopen
+            fin = _from_URL_fileopen(options.upload)
+        else :
+            raise ValueError("error: options --fin and --upload are incompatible")
+
 
     try:
         # Try reading data in transfac format first.     
