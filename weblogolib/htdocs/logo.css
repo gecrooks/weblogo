@@ -156,6 +156,13 @@ img {
   height: 100px
 }
 
+#url-upload{
+  width: 80%
+}
+#title {
+  width: 80%
+}
+
 option {
   font-size: 12px
 }
@@ -169,6 +176,7 @@ h1 {
 #CAP-header {
   text-align: center;
 }
+
 
 table: {
   cell-padding: 5;

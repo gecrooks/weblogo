@@ -1214,14 +1214,15 @@ def _from_URL_fileopen(target_url):
 
     import urllib2
     from urlparse import urlparse, urlunparse
-    import shutil, tempfile 
+    import shutil, tempfile
+   
 
     # parsing url in component parts
     (scheme, net_location, path, param, query, frag) = urlparse(target_url)
 
     # checks if string is URL link
     if scheme != "http" and scheme !="https" and scheme != "ftp":
-        raise ValueError("Cannot open url: %s" % target_url)
+        raise ValueError("Cannot open url: %s" , target_url)
 
     # checks for dropbox link
     if net_location == 'www.dropbox.com':
@@ -1234,7 +1235,6 @@ def _from_URL_fileopen(target_url):
     # checks for google drive link
     if net_location == 'drive.google.com':
         
-
         # link configuration for direct download instead of html frame
         google_directdl_frag = "https://docs.google.com/uc?export=download&id="
         
