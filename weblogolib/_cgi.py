@@ -2,7 +2,7 @@
 
 #  Copyright (c) 2003-2004 The Regents of the University of California.
 #  Copyright (c) 2005 Gavin E. Crooks
-#  Copyright (c) 2006, The Regents of the University of California, through 
+#  Copyright (c) 2006-2015, The Regents of the University of California, through 
 #  Lawrence Berkeley National Laboratory (subject to receipt of any required
 #  approvals from the U.S. Dept. of Energy).  All rights reserved.
 
@@ -161,6 +161,7 @@ def main(htdocs_directory = None) :
     # but an unchecked checkbox returns nothing.
     controls = [
         Field( 'sequences', ''),
+        Field( 'sequences_url', ''),
         Field( 'format', 'png', weblogolib.formatters.get ,
             options=['png_print', 'png', 'jpeg', 'eps', 'pdf', 'svg', 'logodata'] , #TODO: Should copy list from __init__.formatters
             errmsg="Unknown format option."),
@@ -283,32 +284,57 @@ def main(htdocs_directory = None) :
         except ValueError as err:
             errors.append(err.args)            
 
-    sequences = None
+   
 
     # FIXME: Ugly fix: Must check that sequence_file key exists
     # FIXME: Sending malformed or missing form keys should not cause a crash
     # sequences_file = form["sequences_file"]
+    sequences_from_file = None
     if "sequences_file" in form_values:
-        sequences = form_values.getvalue("sequences_file") 
-        #assert type(sequences) == str
-
-    if not sequences or len(sequences)  ==0:
-        sequences = form["sequences"].get_value()
-        # If a user tries to paste a very large file into sequence textarea, 
-        # then WebLogo runs very slow for no apparently good reason. (Might be client side bug?)
-        # So we limit the maximum sequence size. 
-        # Form field also limits size, but not necessarly respected. Also can truncate data
-        # without warning, so we'll set textarea maximum to be larger than MAX_SEQUENCE_SIZE 
-        SEQUENCES_MAXLENGTH  = 100000
-        if len(sequences) > SEQUENCES_MAXLENGTH :
-            errors.append( ("sequences", "Sequence data too large for text input. Use file upload instead."))
-            controls[0]  = Field( 'sequences', '')
+        sequences_from_file = form_values.getvalue("sequences_file") 
         
-    
-    if not sequences or len(sequences)  ==0:
-        errors.append( ("sequences", "Please enter a multiple-sequence alignment in the box above, or select a file to upload."))
-  
+    sequences_from_textfield = form["sequences"].get_value()
+    sequences_url = form["sequences_url"].get_value()
 
+    sequences = None
+    seq_file = None
+
+    if sequences_from_file :
+        if sequences_from_textfield or sequences_url:
+            errors.append(("sequences_file", "Cannot upload, sequence source conflict"))
+        else :
+            sequences = sequences_from_file
+            seq_file = StringIO(sequences)
+    elif sequences_from_textfield :
+        if sequences_url :
+            errors.append(("sequences", "Cannot upload, sequence source conflict"))
+        else:
+            # check SEQUENCES_MAXLENGT
+            # If a user tries to paste a very large file into sequence textarea, 
+            # then WebLogo runs very slow for no apparently good reason. (Might be client side bug?)
+            # So we limit the maximum sequence size. 
+            # Form field also limits size, but not necessarly respected. Also can truncate data
+            # without warning, so we'll set textarea maximum to be larger than MAX_SEQUENCE_SIZE 
+            SEQUENCES_MAXLENGTH  = 100000
+            if len(sequences_from_textfield) > SEQUENCES_MAXLENGTH :
+                errors.append( ("sequences", "Sequence data too large for text input. Use file upload instead."))
+                controls[0]  = Field( 'sequences', '')
+            else:
+                sequences = sequences_from_textfield
+                seq_file = StringIO(sequences)
+
+    elif sequences_url:
+        from . import _from_URL_fileopen
+        try:
+            seq_file = _from_URL_fileopen(sequences_url)
+        except ValueError, e:
+            errors.append(("sequences_url", "Cannot parse URL"))
+        except IOError, e:
+            errors.append(("sequences_url", "Cannot load sequences from URL"))
+        
+    else: 
+        errors.append( ("sequences", 
+             "Please enter a multiple-sequence alignment in the box above, or select a file to upload."))
 
     # If we have uncovered errors or we want the chance to edit the logo 
     # ("cmd_edit" command from examples page) then we return the form now.
@@ -332,12 +358,11 @@ def main(htdocs_directory = None) :
         try:
             # Try reading data in transfac format first. 
             # TODO Refactor this code 
-            motif = Motif.read_transfac(StringIO( sequences), alphabet=logooptions.alphabet)
+            motif = Motif.read_transfac(seq_file, alphabet=logooptions.alphabet)
             prior = weblogolib.parse_prior( comp,motif.alphabet)  
             data = weblogolib.LogoData.from_counts(motif.alphabet, motif, prior)          
         except ValueError as motif_err:
-            seqs = weblogolib.read_seq_data(StringIO( sequences), 
-                                        alphabet=logooptions.alphabet,
+            seqs = weblogolib.read_seq_data(seq_file, alphabet=logooptions.alphabet,
                                         ignore_lower_case=ignore_lower_case
                                         )
             prior = weblogolib.parse_prior(comp, seqs.alphabet)
