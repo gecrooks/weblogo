@@ -1,1 +1,2 @@
-web: gunicorn ./weblogo --serve
+web: gunicorn hello:app --log-file=-
+worker: ./weblogo --serve
