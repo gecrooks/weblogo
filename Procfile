@@ -1,2 +1,3 @@
-web: gunicorn hello:app --log-file=-
+
+web: bin/python -m CGIHTTPServer $PORT
 worker: ./weblogo --serve
