@@ -1,5 +1,5 @@
 #!/usr/bin/env python
- 
+
 #  Copyright (c) 2005 Gavin E. Crooks <gec@threeplusone.com>
 #
 #  This software is distributed under the MIT Open Source License.
@@ -55,14 +55,16 @@ VLARHF-QH-EFTPELQ-HALEAHFCA------V---GDALA----K-----A-----YH-----------
 from __future__ import absolute_import, division, print_function
 
 import re
-from ..utils import *
+
 from ..seq import *
+from ..utils import *
 from . import *
 
 
-names = ( 'fasta', 'pearson', 'fa')
-extensions = ('fa', 'fasta', 'fast', 'seq', 'fsa', 'fst', 'nt', 'aa','fna','mpfa', 'faa', 'fnn','mfasta','tfa', 'pfa') 
-
+names = ('fasta', 'pearson', 'fa')
+extensions = (
+    'fa', 'fasta', 'fast', 'seq', 'fsa', 'fst', 'nt', 'aa', 'fna', 'mpfa', 'faa', 'fnn', 'mfasta', 'tfa', 'pfa'
+)
 
 example = """
 >Lamprey GLOBIN V - SEA LAMPREY
@@ -80,10 +82,10 @@ ELSAVF-VS-TMG-GK--AAYEKLFSI------I---ATLLR----S-----T-----YDA----------
 GSADAIC-----HNA---KVLAHG-EKVLAAIGEGLKHPENLKAHY--AKL-SEYHSNK----LHVDPANFRLLGNVFIT
 VLARHF-QH-EFTPELQ-HALEAHFCA------V---GDALA----K-----A-----YH-----------
 
-"""    
+"""
 
 
-def read(fin, alphabet=None): 
+def read(fin, alphabet=None):
     """Read and parse a fasta file. 
 
     Args:
@@ -93,19 +95,20 @@ def read(fin, alphabet=None):
         SeqList -- A list of sequences
     Raises: 
         ValueError -- If the file is unparsable
-    """         
-    seqs = [ s for s in iterseq(fin, alphabet)]
+    """
+    seqs = [s for s in iterseq(fin, alphabet)]
     name = names[0]
-    if hasattr(fin, "name") : name = fin.name    
+    if hasattr(fin, "name"):
+        name = fin.name
     return SeqList(seqs, name=name)
 
 
-def readseq(fin, alphabet=None) :
+def readseq(fin, alphabet=None):
     """Read one sequence from the file, starting 
     from the current file position."""
     return next(iterseq(fin, alphabet))
-    
-     
+
+
 def iterseq(fin, alphabet=None):
     """ Parse a fasta file and generate sequences.
     
@@ -120,55 +123,57 @@ def iterseq(fin, alphabet=None):
     alphabet = Alphabet(alphabet)
 
     seqs = []
-    comments = []   # FIXME: comments before first sequence are lost.
+    comments = []  # FIXME: comments before first sequence are lost.
     header = None
     header_lineno = -1
-    
-    def build_seq(seqs,alphabet, header, header_lineno,comments) :
-        try :
-            name = header.split(' ',1)[0]
-            if comments :
+
+    def build_seq(seqs, alphabet, header, header_lineno, comments):
+        try:
+            name = header.split(' ', 1)[0]
+            if comments:
                 header += '\n' + '\n'.join(comments)
-            s = Seq( "".join(seqs), alphabet, name=name, description=header)
+            s = Seq("".join(seqs), alphabet, name=name, description=header)
         except ValueError:
-             raise ValueError(
-                "Parse failed with sequence starting at line %d: "
-                "Character not in alphabet: %s" % (header_lineno, alphabet) )
+            raise ValueError(
+                    "Parse failed with sequence starting at line %d: "
+                    "Character not in alphabet: %s" % (header_lineno, alphabet))
         return s
 
-    for lineno, line in enumerate(fin) :
+    for lineno, line in enumerate(fin):
         line = line.strip()
-        if line == '' : continue
-        if line.startswith('>') :
-            if header is not None :
-                yield  build_seq(seqs,alphabet, header, header_lineno, comments)
+        if line == '':
+            continue
+        if line.startswith('>'):
+            if header is not None:
+                yield build_seq(seqs, alphabet, header, header_lineno, comments)
                 header = None
                 seqs = []
             header = line[1:]
             header_lineno = lineno
             comments = []
-        elif line.startswith(';') : 
+        elif line.startswith(';'):
             # Optional (and unusual) comment line
-            comments.append(line[1:])           
-        else :
-            if header is None :
-                raise ValueError (
-                    "Parse failed on line %d: sequence before header"  
-                    % (lineno) )
-            seqs.append(line)    
+            comments.append(line[1:])
+        else:
+            if header is None:
+                raise ValueError(
+                        "Parse failed on line %d: sequence before header"
+                        % (lineno))
+            seqs.append(line)
 
-    if not seqs: return
-    yield build_seq(seqs,alphabet, header, header_lineno, comments)
+    if not seqs:
+        return
+    yield build_seq(seqs, alphabet, header, header_lineno, comments)
 
-     
-def write(fout, seqs): 
+
+def write(fout, seqs):
     """Write a fasta file. 
 
     Args:
         fout -- A writable stream.
         seqs  -- A list of Seq's
-    """ 
-    if seqs.description :
+    """
+    if seqs.description:
         for line in seqs.description.splitlines():
             print(';' + line, file=fout)
     for s in seqs:
@@ -195,22 +200,25 @@ def writeseq(afile, seq):
         print('>', file=afile)
     L = len(seq)
     line_length = 80
-    for n in range(1 + L // line_length) :
-        print(seq[n * line_length : (n+1) * line_length], file=afile)
+    for n in range(1 + L // line_length):
+        print(seq[n * line_length: (n + 1) * line_length], file=afile)
     print(file=afile)
 
 
-def index(afile, alphabet=None) :
+def index(afile, alphabet=None):
     """Return a FileIndex for the fasta file. Sequences can be retrieved
     by item number or name.
     """
-    def parser( afile) :
+
+    def parser(afile):
         return readseq(afile, alphabet)
-    
+
     key = re.compile(r"^>\s*(\S*)")
-    def linekey( line):
+
+    def linekey(line):
         k = key.search(line)
-        if k is None : return None
+        if k is None:
+            return None
         return k.group(1)
-        
+
     return FileIndex(afile, linekey, parser)
