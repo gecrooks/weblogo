@@ -1,5 +1,5 @@
 #!/usr/bin/env python
- 
+
 #  Copyright (c) 2005 Gavin E. Crooks <gec@threeplusone.com>
 #
 #  This software is distributed under the MIT Open Source License.
@@ -31,14 +31,12 @@ This very simple format has two columns per line. The first column is a sequence
 """
 from __future__ import absolute_import, print_function
 
-from ..utils import *
-from ..seq import *
 from . import *
+from ..seq import *
+from ..utils import *
 
-
-names = ( 'table', 'tab')
+names = ('table', 'tab')
 extensions = ('tbl',)
-
 
 example = """
 EC0001	MKRISTTITTTITITTGNGAG
@@ -51,12 +49,10 @@ EC0007	MPDFFSFINSVLWGSVMIYLLFGAGCWFTFRTGFVQFRYIRQFGKSLKNS
 EC0008	MTDKLTSLRQYTTVVADTGDIAAMKLYQPQDATTNPSLILNAAQIPEYRK
 EC0009	MNTLRIGLVSISDRASSGVYQDKGIPALEEWLTSALTTPFELETRLIPDE
 EC0010	MGNTKLANPAPLGLMGFGMTTILLNLHNVGYFALDGIILAMGIFYGGIAQ
-"""    
+"""
 
 
-
-
-def read(fin, alphabet=None): 
+def read(fin, alphabet=None):
     """Read and parse file. 
 
     Args:
@@ -66,11 +62,11 @@ def read(fin, alphabet=None):
         SeqList -- A list of sequences
     Raises: 
         ValueError -- If the file is unparsable
-    """         
-    seqs = [ s for s in iterseq(fin, alphabet)]
+    """
+    seqs = [s for s in iterseq(fin, alphabet)]
     return SeqList(seqs)
 
-    
+
 def iterseq(fin, alphabet=None):
     """ Parse a file and generate sequences.
     
@@ -84,27 +80,28 @@ def iterseq(fin, alphabet=None):
     """
     alphabet = Alphabet(alphabet)
 
-    for lineno, line in enumerate(fin) :
+    for lineno, line in enumerate(fin):
         line = line.strip()
-        if line == '' : continue
+        if line == '':
+            continue
 
         columns = line.split('\t')
-        if len(columns) !=2 :
-            raise ValueError( "Parse failed on line %d: did not find two "
-             "columns separated by a tab."  % (lineno) )        
+        if len(columns) != 2:
+            raise ValueError("Parse failed on line %d: did not find two columns separated by a tab." % lineno)
         yield Seq(columns[1], alphabet=alphabet, name=columns[0])
-     
-     
-def write(fout, seqs): 
+
+
+def write(fout, seqs):
     """Write a two column, tab-delimited file. 
 
     Args:
         fout -- A writable stream.
         seqs  -- A list of Seq's
-    """      
-    for s in seqs : writeseq(fout, s)
+    """
+    for s in seqs:
+        writeseq(fout, s)
 
-    
+
 def writeseq(fout, seq):
     """ Write a single sequence in fasta format.
 
@@ -114,4 +111,3 @@ def writeseq(fout, seq):
     """
     name = seq.name or ''
     print(name, seq, sep='\t', file=fout)
-
