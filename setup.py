@@ -31,7 +31,7 @@ def main():
             maintainer_email="gec@threeplusone.com",
             url="https://github.com/WebLogo/weblogo",
 
-            download_url='https://github.com/WebLogo/weblogo/releases' % __version__,
+            download_url='https://github.com/WebLogo/weblogo/releases',
             classifiers=[
                 'Development Status :: 5 - Production/Stable',
                 'Intended Audience :: Science/Research',
