@@ -1,5 +1,5 @@
 #!/usr/bin/env python
- 
+
 #  Copyright (c) 2005 Gavin E. Crooks <gec@threeplusone.com>
 #
 #  This software is distributed under the MIT Open Source License.
@@ -24,24 +24,23 @@
 #  THE SOFTWARE.
 #
 
-from corebio import *
-from corebio.seq import *
-from corebio.seq_io import *
-import corebio.seq_io.intelligenetics_io as ig_io
-from corebio._py3k import StringIO
-
-from test_corebio import *
-
 import unittest
 
+import corebio.seq_io.intelligenetics_io as ig_io
 
-class test_ig_io(unittest.TestCase) :
+from corebio import *
+from corebio._py3k import StringIO
+from corebio.seq import *
+from corebio.seq_io import *
+from test_corebio import *
 
-    def test_read(self) :
+
+class test_ig_io(unittest.TestCase):
+    def test_read(self):
         f = StringIO(ig_io.example)
         seqs = ig_io.read(f)
-  
-        self.assertEqual(len(seqs), 2)        
+
+        self.assertEqual(len(seqs), 2)
         self.assertEqual(seqs[0].description, "H.sapiens fau mRNA, 518 bases")
         self.assertEqual(seqs[1].name, "HSFAU1")
         self.assertEqual(len(seqs[1]), 299)
@@ -52,23 +51,20 @@ class test_ig_io(unittest.TestCase) :
         self.assertEqual(len(seqs[0]), 518)
         self.assertEqual(len(seqs[1]), 2016)
         f.close()
-       
-    def test_write_seq(self) :
+
+    def test_write_seq(self):
         f = StringIO(ig_io.example)
         seqs = ig_io.read(f)
-        
+
         fout = StringIO()
-        ig_io.write(fout,seqs)
-        
+        ig_io.write(fout, seqs)
+
         fout.seek(0)
 
         seqs2 = ig_io.read(fout)
-        
+
         self.assertEqual(seqs, seqs2)
-    
-   
-   
-          
-        
+
+
 if __name__ == '__main__':
     unittest.main()
