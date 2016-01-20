@@ -495,7 +495,7 @@ class Tree(Nodes.Chain):
                 self.node(n).data.support /= float(nrep)
 
     def has_support(self, node=None):
-        """Returns True if any of the nodes has data.support != None."""
+        """Returns True if any of the nodes has data.support is not None."""
         for n in self._walk(node):
             if self.node(n).data.support:
                 return True

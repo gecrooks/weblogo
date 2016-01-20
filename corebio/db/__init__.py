@@ -159,7 +159,7 @@ class DataSource(object):
 
     def data_object(self, identifier):
         parser = self.parser
-        if parser == None:
+        if parser is None:
             raise ValueError("No parser for resource.")
         stream = self.data_stream(identifier)
         return parser(stream)
