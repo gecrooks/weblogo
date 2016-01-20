@@ -37,12 +37,11 @@ from __future__ import absolute_import
 
 import re
 
+from . import *
 from ..seq import *
 from ..utils import *
-from . import *
 
-
-example= """
+example = """
 
  PileUp
 
@@ -81,79 +80,77 @@ Chicken  S.SNTVDAQE VELIWTILPA IVLVLLALPS LQILYMMDEI DEPDLTLKAI
 names = ('msf', 'gcg-msf', 'gcg', 'PileUp')
 extensions = ('msf',)
 
-end_header=re.compile(r'(//)(\s*)$')
-seq_line=re.compile(r'\s*(\S+)\s+([\S\s.?]+)$')
+end_header = re.compile(r'(//)(\s*)$')
+seq_line = re.compile(r'\s*(\S+)\s+([\S\s.?]+)$')
+
 
 def iterseq(fin, alphabet=None):
     """Iterate over the sequences in the file."""
     # Default implementation
-    return iter(read(fin, alphabet) )
+    return iter(read(fin, alphabet))
 
 
-        
 def read(fin, alphabet=None):
-    alphabet =Alphabet(alphabet)
-    seq_ids=[]
-    seqs=[]
-    block_count=0
+    alphabet = Alphabet(alphabet)
+    seq_ids = []
+    seqs = []
+    block_count = 0
 
     for token in _line_is(fin):
-        if token.typeof=="begin_block":
-                block_count=0
-            
+        if token.typeof == "begin_block":
+            block_count = 0
+
         elif token.typeof == "seq_id":
-            if len(seqs)<= block_count:
+            if len(seqs) <= block_count:
                 seq_ids.append(token.data)
                 seqs.append([])
-        elif token.typeof=="seq":
+        elif token.typeof == "seq":
             if not alphabet.alphabetic(token.data):
                 raise ValueError(
-                    "Character on line: %d not in alphabet: %s : %s" % (
-                    token.lineno, alphabet, token.data) ) 
+                        "Character on line: %d not in alphabet: %s : %s" % (
+                            token.lineno, alphabet, token.data))
             seqs[block_count].append(token.data)
-            block_count +=1
-    if seq_ids==[]:
-            raise ValueError("Parse error, possible wrong format")
-    seqs = [ Seq("".join(s), alphabet, name= i) for s,i in zip(seqs,seq_ids)]
+            block_count += 1
+    if seq_ids == []:
+        raise ValueError("Parse error, possible wrong format")
+    seqs = [Seq("".join(s), alphabet, name=i) for s, i in zip(seqs, seq_ids)]
     return SeqList(seqs)
-    
+
+
 def _line_is(fin):
-    header, body, block = range(3) 
+    header, body, block = range(3)
     yield Token("begin")
-    state=header
+    state = header
     for L, line in enumerate(fin):
-        if state==header:
-            if line.isspace():continue
-            m=end_header.match(line)
+        if state == header:
+            if line.isspace():
+                continue
+            m = end_header.match(line)
             if m is not None:
                 yield Token("end_header")
-                state=body
-                continue            
-            else: continue
-            
-        if state==body:
-            if line.isspace():continue
-            yield Token("begin_block")
-            state=block
-            #skips to a block of sequences
-            
-        if state==block:
-            if line.isspace():
-                yield Token("end_block") 
-                state=body 
+                state = body
                 continue
-            m=seq_line.match(line)
+            else:
+                continue
+
+        if state == body:
+            if line.isspace():
+                continue
+            yield Token("begin_block")
+            state = block
+            # skips to a block of sequences
+
+        if state == block:
+            if line.isspace():
+                yield Token("end_block")
+                state = body
+                continue
+            m = seq_line.match(line)
             if m is None:
                 raise ValueError("Parse error on line: %d" % L)
             if m.group(1).isdigit() and m.group(2).strip().isdigit():
                 continue
-            yield Token("seq_id",m.group(1).strip() )
-            data=m.group(2)
-            data="".join((data.split()))
-            yield Token("seq",data.strip() )
-
-            
-            
-            
-
-                
+            yield Token("seq_id", m.group(1).strip())
+            data = m.group(2)
+            data = "".join((data.split()))
+            yield Token("seq", data.strip())

@@ -1,5 +1,3 @@
-
-
 """ Protein secondary structure and associated tools and data.
 
 Constants:
@@ -32,11 +30,11 @@ Usage :
 >>> fa_reduce_secstruc_to_ehl(record.secondary())
 'LEELLLHHHHHHHHHHHLLLLLHHHHHHHHLLEELLLLLLLLLLLL' 
 
-""" 
+"""
 from __future__ import absolute_import
 
-__all__ = ['dssp', 'stride','secstruc_alphabet','secstruc_ehl_alphabet', 
-    'fa_reduce_secstruc_to_ehl', 'ehl_reduce_secstruc_to_ehl']
+__all__ = ['dssp', 'stride', 'secstruc_alphabet', 'secstruc_ehl_alphabet',
+           'fa_reduce_secstruc_to_ehl', 'ehl_reduce_secstruc_to_ehl']
 
 from ..seq import Alphabet, Seq
 from ..transform import Transform
@@ -46,12 +44,9 @@ secstruc_alphabet = Alphabet("HGIEBbTSC _-L?X")
 secstruc_ehl_alphabet = Alphabet("EHLX")
 
 fa_reduce_secstruc_to_ehl = \
-    Transform(  Seq("HGIEBbTSC _-L?X", secstruc_alphabet),
-                  Seq("HLLELLLLLLLLLXX", secstruc_ehl_alphabet) )
+    Transform(Seq("HGIEBbTSC _-L?X", secstruc_alphabet),
+              Seq("HLLELLLLLLLLLXX", secstruc_ehl_alphabet))
 
 ehl_reduce_secstruc_to_ehl = \
-    Transform( Seq("HGIEBbTSC _-L?X", secstruc_alphabet),
-                 Seq("HHHEEELLLLLLLXX", secstruc_ehl_alphabet) )
-                 
-                 
-                 
+    Transform(Seq("HGIEBbTSC _-L?X", secstruc_alphabet),
+              Seq("HHHEEELLLLLLLXX", secstruc_ehl_alphabet))

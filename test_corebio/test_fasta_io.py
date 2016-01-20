@@ -1,5 +1,5 @@
 #!/usr/bin/env python
- 
+
 #  Copyright (c) 2005 Gavin E. Crooks <gec@threeplusone.com>
 #
 #  This software is distributed under the MIT Open Source License.
@@ -25,17 +25,16 @@
 #
 
 
-from corebio import *
-from corebio.seq import *
-from corebio.seq_io import *
-from corebio._py3k import StringIO
-
-from test_corebio import *
-
 import unittest
 import time
 
-example_with_optional_comments="""
+from corebio import *
+from corebio._py3k import StringIO
+from corebio.seq import *
+from corebio.seq_io import *
+from test_corebio import *
+
+example_with_optional_comments = """
 >SEQUENCE_1
 ;comment line 1 (optional)
 MTEITAAMVKELRESTGAGMMDCKNALSETNGDFDKAVQLLREKGLGKAAKKADRLAAEG
@@ -49,7 +48,7 @@ SATVSEINSETDFVAKNDQFIALTKDTTAHIQSNSLQSVEELHSSTINGVKFEEYLKSQI
 ATIGENLVVRRFATLKAGANGVVNGYIHTNGRVGVVIAAACDSAEVASKSRDLLRQICMH
 """
 
-example3="""
+example3 = """
 >
 AAAGTG
 >
@@ -60,7 +59,7 @@ TGCCCT
 TGCCTT
 """
 
-example4="""
+example4 = """
 >
 AAAGTG
 >
@@ -72,16 +71,11 @@ TGCCTT
 """
 
 
-
-
-
-
-class test_fasta_io(unittest.TestCase) :
-
-    def test_read(self) :
+class test_fasta_io(unittest.TestCase):
+    def test_read(self):
         f = StringIO(fasta_io.example)
         seqs = fasta_io.read(f)
-        #print seqs
+        # print seqs
         self.assertEqual(len(seqs), 3)
         self.assertEqual(seqs[0].description, "Lamprey GLOBIN V - SEA LAMPREY")
         self.assertEqual(seqs[0].name, "Lamprey")
@@ -95,66 +89,63 @@ class test_fasta_io(unittest.TestCase) :
 #            count +=1
 #        end = time.time()
 #        t = end-start
-#        
+#
 #        self.assertEqual(count, 4243)
-#        
+#
 #        # Timing is 3s 1.67 GHz G4
 #        # print t
-  
-    def test_read_fail(self) :
+
+    def test_read_fail(self):
         f = StringIO(fasta_io.example)
         # Wrong alphabet
         self.assertRaises(ValueError, fasta_io.read, f, nucleic_alphabet)
-          
-    def test_parse_globin(self) :
-        #f = open_resource(__file__, "test_data","globin.fa")
+
+    def test_parse_globin(self):
+        # f = open_resource(__file__, "test_data", "globin.fa")
         f = testdata_stream("globin.fa")
-        seqs = fasta_io.read(f,protein_alphabet)
+        seqs = fasta_io.read(f, protein_alphabet)
         self.assertEqual(len(seqs), 56)
         f.close()
 
-    def test_parse_clustal_fail(self) :
+    def test_parse_clustal_fail(self):
         # should fail with parse error
         f = StringIO(clustal_io.example)
-        self.assertRaises(ValueError, 
-            fasta_io.read, f , protein_alphabet )
-   
-    def test_parse_plain_fail(self) :
+        self.assertRaises(ValueError,
+                          fasta_io.read, f, protein_alphabet)
+
+    def test_parse_plain_fail(self):
         # should fail with parse error
         f = StringIO(plain_io.example)
-        self.assertRaises(ValueError, 
-            fasta_io.read, f  )
-   
-   
-    def test_write_seq(self) :
+        self.assertRaises(ValueError,
+                          fasta_io.read, f)
+
+    def test_write_seq(self):
         f = StringIO(fasta_io.example)
         seqs = fasta_io.read(f)
         fout = StringIO()
-        fasta_io.write(fout,seqs)
-        
+        fasta_io.write(fout, seqs)
+
         fout.seek(0)
         seqs2 = fasta_io.read(fout)
-        
+
         self.assertEqual(seqs, seqs2)
-    
-    def test_write_with_header(self) :
+
+    def test_write_with_header(self):
         f = StringIO(fasta_io.example)
         seqs = fasta_io.read(f)
         seqs.description = 'A description\nMore description'
         fout = StringIO()
-        fasta_io.write(fout,seqs)
+        fasta_io.write(fout, seqs)
 
-
-   
-    def test_read_comments(self)   :
+    def test_read_comments(self):
         f = StringIO(example_with_optional_comments)
-        seqs = fasta_io.read(f)             
+        seqs = fasta_io.read(f)
         self.assertEqual(len(seqs), 2)
-        self.assertEqual( seqs[1].startswith("SATVSEI"), True)
-        self.assertEqual( seqs[1].description.splitlines()[1] , 
-                ("comment line 1 (optional)"))
-        
-    def test_write_comments(self)   :
+        self.assertEqual(seqs[1].startswith("SATVSEI"), True)
+        self.assertEqual(seqs[1].description.splitlines()[1],
+                         ("comment line 1 (optional)"))
+
+    def test_write_comments(self):
         f = StringIO(example_with_optional_comments)
         seqs = fasta_io.read(f)
         fout = StringIO()
@@ -162,34 +153,33 @@ class test_fasta_io(unittest.TestCase) :
         fout.seek(0)
         seqs2 = fasta_io.read(fout)
         self.assertEqual(seqs, seqs2)
-        
+
         self.assertEqual(seqs[1].description, seqs2[1].description)
-   
-    def test_read_headerless(self) :
+
+    def test_read_headerless(self):
         # This example has blank headers.
         f = StringIO(example3)
-        seqs = fasta_io.read(f)             
+        seqs = fasta_io.read(f)
         self.assertEqual(len(seqs), 4)
-        #print seqs
-        
+        # print seqs
+
         fout = StringIO()
         fasta_io.write(fout, seqs)
 
-
-    def test_index(self) :
+    def test_index(self):
         f = StringIO(fasta_io.example)
         idx = fasta_io.index(f)
-        #print idx._key_dict
+        # print idx._key_dict
         self.assertEqual(len(idx), 3)
         self.assertEqual(idx[0].description, "Lamprey GLOBIN V - SEA LAMPREY")
         self.assertEqual(idx[0].name, "Lamprey")
         self.assertEqual(idx['Lamprey'].name, "Lamprey")
         self.assertEqual(len(idx['Hagfish']), 231)
 
-    def test_read_empty(self) :
+    def test_read_empty(self):
         f = StringIO()
-        seqs = fasta_io.read(f) 
-        assert len(seqs)==0
+        seqs = fasta_io.read(f)
+        assert len(seqs) == 0
 
     def test_isaligned(self):
         seqs = fasta_io.read(StringIO())
@@ -200,12 +190,11 @@ class test_fasta_io(unittest.TestCase) :
         assert not seqs.isaligned()
 
     def test_read_with_blank_line(self):
-        f=StringIO(example4)
+        f = StringIO(example4)
         seqs = fasta_io.read(f)
         assert not seqs.isaligned()
         self.assertEqual(len(seqs), 3)
-        
-        
-        
+
+
 if __name__ == '__main__':
     unittest.main()

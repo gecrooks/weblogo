@@ -1,7 +1,3 @@
-
-__version__ = '3.4' 
-
+__version__ = '3.4'
 
 description = "CoreBio %s " % (__version__)
-
-

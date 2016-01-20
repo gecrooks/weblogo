@@ -1,4 +1,3 @@
-
 #  Copyright (c) 2006 John Gilman
 #
 #  This software is distributed under the MIT Open Source License.
@@ -54,13 +53,12 @@ Status: Beta
 #       http://www.bioperl.org/wiki/HOWTO:SearchIO
 from __future__ import absolute_import
 
-__all__ = ['read', 'Report', 'Result', 
-            'Hit','Annotation', 'Alignment']
-
+__all__ = ['read', 'Report', 'Result', 'Hit', 'Annotation', 'Alignment']
 
 from ..utils import stdrepr
 
-def read(fin) :
+
+def read(fin):
     """ Read and parse an analysis report. 
     
     returns :
@@ -73,39 +71,39 @@ def read(fin) :
 
     parsers = (fasta, blastxml)
     for p in parsers:
-        try:    
+        try:
             return p.read(fin)
         except ValueError as e:
             pass
-        fin.seek(0)             # FIXME. Non seakable stdin?
-            
+        fin.seek(0)  # FIXME. Non seakable stdin?
+
     raise ValueError("Cannot parse sequence file: Tried fasta and blastxml")
-      
 
 
-class Report(object) :
+class Report(object):
     """The results of a database search. The Report contains a list of 1 or more
     Results, one for each query. Each query result contains a list of hits. 
     Each Hit contains a list of HSP's (High scoring segment pairs).
     
     The structure of the report will vary somewhat depending on the source.
     
-	 algorithm	          -- e.g. 'BLASTX'
-	 algorithm_version	  -- e.g. '2.2.4 [Aug-26-2002]'
-     algorithm_reference	  -- 	 
-	 database_name	      -- e.g. 'test.fa'
-	 database_letters	  -- number of residues in database e.g. 1291	 
-	 database_entries	  -- number of database entries
+      algorithm	          -- e.g. 'BLASTX'
+      algorithm_version	  -- e.g. '2.2.4 [Aug-26-2002]'
+      algorithm_reference --
+      database_name	      -- e.g. 'test.fa'
+      database_letters	  -- number of residues in database e.g. 1291
+      database_entries    -- number of database entries
 
-     parameters           -- Dictionary of parameters used in search
-	 
-	 results              -- A list of lists of Results, one per query
-	 """
-    __slots__ = ['algorithm', 'algorithm_version', 'algorithm_reference','database_name', 
-                'database_letters', 'database_entries', 'parameters', 'results']
+    parameters            -- Dictionary of parameters used in search
 
-    def __init__(self) :
-        for name in self.__slots__ : setattr(self, name, None)
+    results               -- A list of lists of Results, one per query
+    """
+    __slots__ = ['algorithm', 'algorithm_version', 'algorithm_reference', 'database_name',
+                 'database_letters', 'database_entries', 'parameters', 'results']
+
+    def __init__(self):
+        for name in self.__slots__:
+            setattr(self, name, None)
         self.parameters = {}
         self.results = []
 
@@ -113,45 +111,48 @@ class Report(object) :
         return stdrepr(self)
 
 
-class Result(object) :
+class Result(object):
     """ The result from searching a database with a single query sequence.
     
     query        -- Information about the query sequence
-    statistics     -- A dictionary of search statistics
+    statistics   -- A dictionary of search statistics
     hits         -- A list of Hits
     """
     __slots__ = ['query', 'statistics', 'hits']
 
-    def __init__(self) :
-        for name in self.__slots__ : setattr(self, name, None)
-        self.query = Annotation() 
+    def __init__(self):
+        for name in self.__slots__:
+            setattr(self, name, None)
+        self.query = Annotation()
         self.statistics = {}
         self.hits = []
 
     def __repr__(self):
-        return stdrepr(self)        
+        return stdrepr(self)
 
-        
-class Hit(object) :
+
+class Hit(object):
     """ A search hit between a query sequence and a subject sequence.
     Each hit may have one or more Alignments
     
     target       -- Information about the target sequence. 
-    raw_score	 -- Typically the significance of the hit in bits, e.g. 92.0
+    raw_score    -- Typically the significance of the hit in bits, e.g. 92.0
     significance -- Typically evalue. e.g '2e-022' 
     alignments   -- A list of alignments between subject and target
     """
-    __slots__ =['target', 'raw_score', 'bit_score', 'significance', 
-                'alignments']
-    def __init__(self) :
-        for name in self.__slots__ : setattr(self, name, None)
-        self.target      = Annotation()
-        self.alignments	 = []
-        
-    def __repr__(self):
-        return stdrepr(self) 
+    __slots__ = ['target', 'raw_score', 'bit_score', 'significance', 'alignments']
 
-class Annotation(object) :
+    def __init__(self):
+        for name in self.__slots__:
+            setattr(self, name, None)
+        self.target = Annotation()
+        self.alignments = []
+
+    def __repr__(self):
+        return stdrepr(self)
+
+
+class Annotation(object):
     """ Information about a subject or query sequence.
     
     name	     -- subject sequence name, e.g. '443893|124775'
@@ -164,18 +165,19 @@ class Annotation(object) :
     __slots__ = ['name', 'description', 'length', 'locus', 'accession', ]
 
     def __init__(self):
-        for name in self.__slots__ :
+        for name in self.__slots__:
             setattr(self, name, None)
-             
+
     def __repr__(self):
-        return stdrepr(self) 
+        return stdrepr(self)
+
 
 class Alignment(object):
     """An alignment between query and subject sequences. 
     For BLAST, these are High scoring Segment pairs (HSPs)
   
-    raw_score	     -- Typically significance of the hit in bits, e.g. 92.0
-    significance     -- Typically evalue. e.g '2e-022' 
+    raw_score	      -- Typically significance of the hit in bits, e.g. 92.0
+    significance      -- Typically evalue. e.g '2e-022'
 
     similar	          -- number of conserved residues #FIXME either frac or num
     identical	      -- number of identical residues
@@ -194,15 +196,12 @@ class Alignment(object):
     
     """
     __slots__ = ['raw_score', 'bit_score', 'significance', 'similar',
-     'identical', 'gaps', 'length', 'query_seq', 'target_seq', 'mid_seq',
-      'query_start', 'query_frame', 'target_start', 
-      'target_frame']
-      
+                 'identical', 'gaps', 'length', 'query_seq', 'target_seq', 'mid_seq',
+                 'query_start', 'query_frame', 'target_start', 'target_frame']
+
     def __init__(self):
-        for name in self.__slots__ :
+        for name in self.__slots__:
             setattr(self, name, None)
-    
+
     def __repr__(self):
         return stdrepr(self)
-        
-                

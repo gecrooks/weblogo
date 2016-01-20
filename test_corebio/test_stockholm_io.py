@@ -1,5 +1,5 @@
 #!/usr/bin/env python
- 
+
 #  Copyright (c) 2006, The Regents of the University of California, through 
 #  Lawrence Berkeley National Laboratory (subject to receipt of any required
 #  approvals from the U.S. Dept. of Energy).  All rights reserved.
@@ -37,72 +37,68 @@
 import unittest
 
 from corebio import *
+from corebio._py3k import StringIO
 from corebio.seq import *
 from corebio.seq_io import *
 from corebio.seq_io import stockholm_io
-from corebio._py3k import StringIO
-
 from test_corebio import *
 
 
-class test_stockholm_io(unittest.TestCase) :
-
-    def test_parse1(self) :
+class test_stockholm_io(unittest.TestCase):
+    def test_parse1(self):
         with testdata_stream("pfam.txt") as f:
             seqs = stockholm_io.read(f)
-        #self.assertEqual(len(seqs), 7)
+        # self.assertEqual(len(seqs), 7)
         self.assertEqual(seqs[1].name, "O61132/1-232")
         self.assertEqual(len(seqs[1]), 265)
-  
-    def test_parse2(self) :
-        f= StringIO(stockholm_io.example)
+
+    def test_parse2(self):
+        f = StringIO(stockholm_io.example)
         seqs = stockholm_io.read(f)
         self.assertEqual(len(seqs), 5)
         self.assertEqual(seqs[1].name, "O83071/259-312")
         self.assertEqual(len(seqs[1]), 43)
-  
-#12345678901234567890123456789012345678901234567890
-#12*50 +6 = 606
-#QYVTVFYGVPAWRNATIPLFCATKNR.......DTWGTTQCLPDNDDYSE
-  
-  
-    def test_parse3(self) :
+
+    # 12345678901234567890123456789012345678901234567890
+    # 12*50 +6 = 606
+    # QYVTVFYGVPAWRNATIPLFCATKNR.......DTWGTTQCLPDNDDYSE
+
+
+    def test_parse3(self):
         with testdata_stream("pfam_example.txt") as f:
             seqs = stockholm_io.read(f)
         self.assertEqual(len(seqs), 24)
         self.assertEqual(seqs[5].name, "ENV_HV2BE/24-510")
         self.assertEqual(len(seqs[1]), 606)
-        self.assertEqual( str(seqs[0][-6:]) , 'TSRNKR')
-  
-  
-    def test_parse_error(self) :
+        self.assertEqual(str(seqs[0][-6:]), 'TSRNKR')
+
+    def test_parse_error(self):
         """ Wrong alphabet should throw a parsing error """
         f = StringIO(stockholm_io.example)
-        self.assertRaises(ValueError, 
-            clustal_io.read, f, nucleic_alphabet )
+        self.assertRaises(ValueError,
+                          clustal_io.read, f, nucleic_alphabet)
 
-    def test_parse_fasta_fail(self) :
+    def test_parse_fasta_fail(self):
         # should fail with parse error
         f = StringIO(fasta_io.example)
-        self.assertRaises(ValueError, 
-            stockholm_io.read, f , protein_alphabet )
-        
-    def test_parse_fasta_fail2(self) :
+        self.assertRaises(ValueError,
+                          stockholm_io.read, f, protein_alphabet)
+
+    def test_parse_fasta_fail2(self):
         # should fail with parse error
         with testdata_stream("globin.fa") as f:
-            self.assertRaises(ValueError, stockholm_io.read, f )
+            self.assertRaises(ValueError, stockholm_io.read, f)
 
-
-    def test_parse_fail(self) :
+    def test_parse_fail(self):
         # should fail with parse error
         examples = (
             StringIO(clustal_io.example),
         )
-        
-        for f in examples :
-            self.assertRaises(ValueError, 
-                stockholm_io.read, f )
 
-             
+        for f in examples:
+            self.assertRaises(ValueError,
+                              stockholm_io.read, f)
+
+
 if __name__ == '__main__':
     unittest.main()

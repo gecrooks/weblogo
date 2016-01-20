@@ -1,5 +1,4 @@
-
-#  Copyright (c) 2006, The Regents of the University of California, through 
+#  Copyright (c) 2006, The Regents of the University of California, through
 #  Lawrence Berkeley National Laboratory (subject to receipt of any required
 #  approvals from the U.S. Dept. of Energy).  All rights reserved.
 
@@ -65,29 +64,28 @@ ALPHA CRYSTALLIN B CHAIN (ALPHA(B)-CRYSTALLIN).
 """
 from __future__ import absolute_import
 
-from ..utils import *
-from ..seq import *
+
 from . import *
+from ..seq import *
+from ..utils import *
 
 names = ("nbrf", "pir",)
 extensions = ('nbrf', 'pir', 'ali')
 
-
-
-
 type_code = {
-    'P1' : protein_alphabet,   # Protein (complete)
-    'F1' : protein_alphabet,   # Protein (fragment)
-    'DL' : dna_alphabet,       # DNA (linear)
-    'DC' : dna_alphabet,       # DNA (circular)
-    'RC' : rna_alphabet,       # RNA (linear)
-    'RL' : rna_alphabet,       # RNA (circular)
-    'N3' : rna_alphabet,       # tRNA
-    'N1' : rna_alphabet,       # other functional RNA
-    'XX' : generic_alphabet
-    }
+    'P1': protein_alphabet,  # Protein (complete)
+    'F1': protein_alphabet,  # Protein (fragment)
+    'DL': dna_alphabet,  # DNA (linear)
+    'DC': dna_alphabet,  # DNA (circular)
+    'RC': rna_alphabet,  # RNA (linear)
+    'RL': rna_alphabet,  # RNA (circular)
+    'N3': rna_alphabet,  # tRNA
+    'N1': rna_alphabet,  # other functional RNA
+    'XX': generic_alphabet
+}
 
-def read(fin, alphabet=None):  
+
+def read(fin, alphabet=None):
     """Read and parse a NBRF seqquence file. 
 
     Args:
@@ -99,11 +97,10 @@ def read(fin, alphabet=None):
     Raises: 
         ValueError -- If the file is unparsable        
     """
-    seqs = [ s for s in iterseq(fin, alphabet)]
+    seqs = [s for s in iterseq(fin, alphabet)]
     return SeqList(seqs)
 
 
-        
 def iterseq(fin, alphabet=None):
     """ Generate sequences from an NBRF file.
     
@@ -115,56 +112,54 @@ def iterseq(fin, alphabet=None):
     raises :
         ValueError -- On a parse error.
     """
-        
-    body, header,sequence = range(3) # Internal states
-    
+
+    body, header, sequence = range(3)  # Internal states
+
     state = body
     seq_id = None
     seq_desc = None
     seq_alpha = None
     seqs = []
 
-    for lineno, line in enumerate(fin) :
-        if state == body :
-            if line == "" or line.isspace() :
+    for lineno, line in enumerate(fin):
+        if state == body:
+            if line == "" or line.isspace():
                 continue
             if line[0] == '>':
                 seq_type, seq_id = line[1:].split(';')
-                if alphabet :
+                if alphabet:
                     seq_alpha = alphabet
-                else :
+                else:
                     seq_alpha = type_code[seq_type]
                 state = header
                 continue
             raise ValueError("Parse error on line: %d" % lineno)
 
-        elif state == header :
+        elif state == header:
             seq_desc = line.strip()
             state = sequence
             continue
-                          
-        elif state == sequence :
-            data = "".join(line.split()) # Strip out white space
-            if data[-1] =='*' :
-                # End of sequence data
-                seqs.append(data[:-1])   
 
-                seq = Seq( "".join(seqs), name = seq_id.strip(), 
-                    description = seq_desc, alphabet = seq_alpha)
+        elif state == sequence:
+            data = "".join(line.split())  # Strip out white space
+            if data[-1] == '*':
+                # End of sequence data
+                seqs.append(data[:-1])
+
+                seq = Seq("".join(seqs), name=seq_id.strip(),
+                          description=seq_desc, alphabet=seq_alpha)
 
                 yield seq
-                state= body
+                state = body
                 seq_id = None
                 seq_desc = None
                 seqs = []
                 continue
-            else :
+            else:
                 seqs.append(data)
                 continue
-        else :       
+        else:
             # If we ever get here something has gone terrible wrong
-            assert(False)
+            assert False
 
     # end for
-
-

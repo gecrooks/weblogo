@@ -1,5 +1,5 @@
 #!/usr/bin/env python
- 
+
 #  Copyright (c) 2005 Gavin E. Crooks <gec@threeplusone.com>
 #
 #  This software is distributed under the MIT Open Source License.
@@ -32,26 +32,29 @@ from ..seq import Seq, SeqList
 names = ()
 extensions = ()
 
-def read(fin, alphabet=None):       
-    assert fin is not None    # Do something with arguments to quiet pychecker
-    if alphabet is not None : pass
+
+def read(fin, alphabet=None):
+    assert fin is not None  # Do something with arguments to quiet pychecker
+    if alphabet is not None:
+        pass
     return SeqList([])
 
-def iterseq(fin, alphabet=None) :
+
+def iterseq(fin, alphabet=None):
     assert fin is not None
-    if alphabet is not None : pass
+    if alphabet is not None:
+        pass
     yield Seq('')
     return
 
-def write(fout, seqs): 
+
+def write(fout, seqs):
     assert fout is not None
     assert seqs is not None
     return
 
-    
+
 def writeseq(fout, seq):
     assert fout is not None
     assert seq is not None
     return
-
-            

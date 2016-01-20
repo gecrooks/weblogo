@@ -1,5 +1,5 @@
 #!/usr/bin/env python
- 
+
 #  Copyright (c) 2005 Gavin E. Crooks <gec@threeplusone.com>
 #
 #  This software is distributed under the MIT Open Source License.
@@ -25,35 +25,34 @@
 #
 from __future__ import print_function
 
+import unittest
+
+from corebio._py3k import StringIO
 from corebio import *
 from corebio.seq import *
 from corebio.seq_io import array_io
-
-from corebio._py3k import StringIO
-
 from test_corebio import *
-import unittest
 
-class test_array_io(unittest.TestCase) :
 
-    def test_read_example(self) :
+class test_array_io(unittest.TestCase):
+    def test_read_example(self):
         f = StringIO(array_io.example)
         seqs = array_io.read(f)
-        #print(seqs)
+        # print(seqs)
         self.assertEqual(len(seqs), 8)
         self.assertEqual(seqs[0].name, None)
         self.assertEqual(len(seqs[1]), 60)
 
-    def test_write_seq(self) :
+    def test_write_seq(self):
         f = StringIO(array_io.example)
         seqs = array_io.read(f)
         fout = StringIO()
-        array_io.write(fout,seqs)
+        array_io.write(fout, seqs)
         fout.seek(0)
         seqs2 = array_io.read(fout)
         self.assertEqual(seqs, seqs2)
 
-    def test_fail(self) :
+    def test_fail(self):
         # Lengths differ
         example = """
 -SPC-MLETETLNKYVVIIAYALVFLLSLLGNSLVMLVILYSRVGRSVTDVYLLNLALAD
@@ -61,7 +60,6 @@ class test_array_io(unittest.TestCase) :
 """
         f = StringIO(example)
         self.assertRaises(ValueError, array_io.read, f)
-
 
 
 if __name__ == '__main__':

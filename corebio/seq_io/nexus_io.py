@@ -35,40 +35,35 @@ Maddison, Swofford, Maddison. 1997. Syst. Biol. 46(4):590-621
 """
 from __future__ import absolute_import
 
-from ..seq import Seq, SeqList, Alphabet
 from ._nexus import Nexus, safename
+from ..seq import Alphabet, Seq, SeqList
 
-
-names = ( 'nexus', 'paup')
+names = ('nexus', 'paup')
 extensions = ('nex', 'nexus', 'paup', 'nxs')
+
 
 def iterseq(fin, alphabet=None):
     """Iterate over the sequences in the file."""
     # Default implementation
-    return iter(read(fin, alphabet) )
+    return iter(read(fin, alphabet))
 
 
-def read(fin, alphabet=None):          
+def read(fin, alphabet=None):
     """ Extract sequence data from a nexus file."""
     n = Nexus(fin)
-    
+
     seqs = []
-    for taxon in n.taxlabels:   
+    for taxon in n.taxlabels:
         name = safename(taxon)
         r = n.matrix[taxon]
-        if alphabet is None  :
-            s = Seq(r, name = name, alphabet=r.alphabet)
-        else :
-            s = Seq(r, name = name, alphabet=alphabet )
+        if alphabet is None:
+            s = Seq(r, name=name, alphabet=r.alphabet)
+        else:
+            s = Seq(r, name=name, alphabet=alphabet)
         seqs.append(s)
 
-    if len(seqs) == 0 :
+    if len(seqs) == 0:
         # Something went terrible wrong.
         raise ValueError("Cannot parse file")
-        
-    return SeqList(seqs)
 
-    
-    
-    
-    
+    return SeqList(seqs)
