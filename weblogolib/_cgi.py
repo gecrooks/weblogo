@@ -335,9 +335,9 @@ def main(htdocs_directory=None):
         from . import _from_URL_fileopen
         try:
             seq_file = _from_URL_fileopen(sequences_url)
-        except ValueError, e:
+        except ValueError as e:
             errors.append(("sequences_url", "Cannot parse URL"))
-        except IOError, e:
+        except IOError as e:
             errors.append(("sequences_url", "Cannot load sequences from URL"))
 
     else:
