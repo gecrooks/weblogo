@@ -1,5 +1,5 @@
 #!/usr/bin/env python
- 
+
 #  Copyright (c) 2005 Gavin E. Crooks <gec@threeplusone.com>
 #
 #  This software is distributed under the MIT Open Source License.
@@ -25,79 +25,72 @@
 #
 
 
-from corebio import *
-from corebio.seq import *
-import corebio.seq_io
-from corebio.seq_io import genbank_io
-from corebio._py3k import StringIO
-
-from test_corebio import *
-
 import unittest
 import time
 
+import corebio.seq_io
+
+from corebio import *
+from corebio._py3k import StringIO
+from corebio.seq import *
+from corebio.seq_io import genbank_io
+from test_corebio import *
+
+
 def examples():
     return (
-        testdata_stream('genbank/NT_019265.gb'),            
-        testdata_stream('genbank/cox2.gb'),  
-        testdata_stream('genbank/iro.gb'),                  
+        testdata_stream('genbank/NT_019265.gb'),
+        testdata_stream('genbank/cox2.gb'),
+        testdata_stream('genbank/iro.gb'),
         testdata_stream('genbank/pri1.gb'),
-        testdata_stream('genbank/dbsource_wrap.gb'),        
-        testdata_stream('genbank/noref.gb'),                
+        testdata_stream('genbank/dbsource_wrap.gb'),
+        testdata_stream('genbank/noref.gb'),
         testdata_stream('genbank/protein_refseq.gb'),
-        testdata_stream('genbank/cor6_6.gb'),               
+        testdata_stream('genbank/cor6_6.gb'),
         testdata_stream('genbank/origin_line.gb'),
-        
-        #These files are too large to include in the distribution
-        #testdata_stream('genbank/arab1.gb'),
-        #testdata_stream('genbank/NC_005213.gbk'),
-        #testdata_stream('genbank/NC_003888.gbk'),
+
+        # These files are too large to include in the distribution
+        # testdata_stream('genbank/arab1.gb'),
+        # testdata_stream('genbank/NC_005213.gbk'),
+        # testdata_stream('genbank/NC_003888.gbk'),
     )
-        
 
 
-
-class test_genbank_io(unittest.TestCase) :
-    
+class test_genbank_io(unittest.TestCase):
     # Useful for debugging
-    #def test_scan(self) :
+    # def test_scan(self) :
     #    for f in examples():
     #        for t in genbank_io._scan(f):
     #            print t
     #        print
     #        print 
-            
-    def test_parse(self) :
+
+    def test_parse(self):
         for f in examples():
-            #print f.name
+            # print f.name
             seqs = genbank_io.read(f)
             f.close()
-            #print seqs
-            
-                        
-    def test_read(self) :
+            # print seqs
+
+    def test_read(self):
         f = testdata_stream("genbank/cox2.gb")
         seqs = genbank_io.read(f)
-        #print seqs
+        # print seqs
 
         self.assertEqual(len(seqs), 5)
         self.assertEqual(len(seqs[1]), 210)
-        
+
         f.seek(0)
         seqs = seq_io.read(f)
         self.assertEqual(len(seqs), 5)
         self.assertEqual(len(seqs[1]), 210)
         f.close()
 
-         
-        f = testdata_stream('genbank/NT_019265.gb') 
+        f = testdata_stream('genbank/NT_019265.gb')
         seqs = genbank_io.read(f)
         self.assertEqual(len(seqs), 1)
         self.assertEqual(len(seqs[0]), 0)
         f.close()
-
-
-        
 
 
 if __name__ == '__main__':
