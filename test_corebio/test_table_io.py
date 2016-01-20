@@ -1,5 +1,5 @@
 #!/usr/bin/env python
- 
+
 #  Copyright (c) 2005 Gavin E. Crooks <gec@threeplusone.com>
 #
 #  This software is distributed under the MIT Open Source License.
@@ -25,46 +25,40 @@
 #
 
 
-from corebio import *
-from corebio.seq import *
-from corebio.seq_io import *
-from corebio._py3k import StringIO
-
-from test_corebio import *
-
 import unittest
 
+from corebio import *
+from corebio._py3k import StringIO
+from corebio.seq import *
+from corebio.seq_io import *
+from test_corebio import *
 
-class test_table_io(unittest.TestCase) :
 
-    def test_read(self) :
+class test_table_io(unittest.TestCase):
+    def test_read(self):
         f = StringIO(table_io.example)
         seqs = table_io.read(f)
         self.assertEqual(len(seqs), 10)
         self.assertEqual(seqs[2].name, "EC0003")
         self.assertEqual(len(seqs[1]), 50)
-  
-    def test_read_fail(self) :
+
+    def test_read_fail(self):
         f = StringIO(plain_io.example)
         # Wrong alphabet
         self.assertRaises(ValueError, table_io.read, f)
-   
-    def test_write_seq(self) :
+
+    def test_write_seq(self):
         f = StringIO(table_io.example)
         seqs = table_io.read(f)
-        
+
         fout = StringIO()
-        table_io.write(fout,seqs)
-        
+        table_io.write(fout, seqs)
+
         fout.seek(0)
         seqs2 = table_io.read(fout)
-        
+
         self.assertEqual(seqs, seqs2)
-   
-   
-   
-   
-          
-        
+
+
 if __name__ == '__main__':
     unittest.main()
