@@ -114,7 +114,7 @@ from corebio.seq import (Alphabet, Seq, SeqList, unambiguous_dna_alphabet,
                          unambiguous_rna_alphabet, unambiguous_protein_alphabet)
 from corebio.utils import (isfloat, find_command, ArgumentError, stdrepr, resource_string, resource_filename)
 
-from corebio._py3k import StringIO
+from corebio._py3k import StringIO, urlopen, urlparse, urlunparse, Request
 
 # ------ META DATA ------
 
@@ -1201,8 +1201,6 @@ class LogoData(object):
 def _from_URL_fileopen(target_url):
     """opens files from a remote URL location"""
 
-    import urllib2
-    from urlparse import urlparse, urlunparse
     import shutil, tempfile
 
     # parsing url in component parts
@@ -1235,8 +1233,8 @@ def _from_URL_fileopen(target_url):
         target_url = google_directdl_frag + id_file
 
     # save url to temporary file
-    req = urllib2.Request(target_url)
-    res = urllib2.urlopen(req)
+    req = Request(target_url)
+    res = urlopen(req)
     temp = tempfile.TemporaryFile()
     shutil.copyfileobj(res, temp)
     temp.seek(0)
