@@ -211,35 +211,37 @@ def _build_logoformat(logodata, opts):
 
     args = {}
     direct_from_opts = [
-        "stacks_per_line",
-        "logo_title",
-        "yaxis_label",
-        "show_xaxis",
-        "show_yaxis",
-        "xaxis_label",
-        "show_ends",
-        "fineprint",
-        "show_errorbars",
-        "show_boxes",
-        "yaxis_tic_interval",
-        "resolution",
+        # Logo Data Options.
         "alphabet",
-        "debug",
-        "show_ends",
-        "default_color",
-        # "show_color_key",
-        "color_scheme",
         "unit_name",
-        "logo_label",
-        "yaxis_scale",
         "first_index",
         "logo_start",
         "logo_end",
-        "scale_width",
-        "annotate",
+        # Logo Format Options.
         "stack_width",
+        "stacks_per_line",
+        "logo_title",
+        "logo_label",
+        "show_xaxis",
+        "xaxis_label",
+        "annotate",
+        "yaxis_scale",
+        "show_yaxis",
+        "yaxis_label",
+        "show_ends",
+        "fineprint",
+        "yaxis_tic_interval",
+        "show_errorbars",
+        "reverse_stacks",
+        # Color Options.
+        "color_scheme",
+        "default_color",
+        # Advanced Format Options.
         "stack_aspect_ratio",
-        "reverse_stacks"
+        "show_boxes",
+        "resolution",
+        "scale_width",
+        "debug",
     ]
 
     for k in direct_from_opts:
