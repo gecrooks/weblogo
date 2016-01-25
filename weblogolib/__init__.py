@@ -652,7 +652,8 @@ class LogoFormat(LogoOptions):
         if self.show_xaxis_label:
             self.xaxis_label_height += self.fontsize
         if self.show_fineprint:
-            self.xaxis_label_height += self.small_fontsize
+            if len(self.fineprint) != 0:
+                self.xaxis_label_height += self.small_fontsize
 
         self.line_height = (self.stack_height + self.line_margin_top +
                             self.line_margin_bottom)
