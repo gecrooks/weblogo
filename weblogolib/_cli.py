@@ -236,6 +236,14 @@ def _build_logoformat(logodata, opts):
         # Color Options.
         "color_scheme",
         "default_color",
+        # Font Format Options.
+        "fontsize",
+        "title_fontsize",
+        "small_fontsize",
+        "number_fontsize",
+        "text_font",
+        "logo_font",
+        "title_font",
         # Advanced Format Options.
         "stack_aspect_ratio",
         "show_boxes",
@@ -295,8 +303,10 @@ def _build_option_parser():
                              "These options control the format and display of the logo.")
     color_grp = OptionGroup(parser, "Color Options",
                             "Colors can be specified using CSS2 syntax. e.g. 'red', '#FF0000', etc.")
+    font_grp = OptionGroup(parser, "Font Format Options",
+                           "These options provide control over the font sizes and types.")
     advanced_grp = OptionGroup(parser, "Advanced Format Options",
-                               "These options provide fine control over the display of the logo. ")
+                               "These options provide fine control over the display of the logo.")
     server_grp = OptionGroup(parser, "WebLogo Server",
                              "Run a standalone webserver on a local port.")
 
@@ -305,6 +315,7 @@ def _build_option_parser():
     parser.add_option_group(trans_grp)
     parser.add_option_group(format_grp)
     parser.add_option_group(color_grp)
+    parser.add_option_group(font_grp)
     parser.add_option_group(advanced_grp)
     parser.add_option_group(server_grp)
 
@@ -600,6 +611,64 @@ def _build_option_parser():
                          metavar="COLOR",
                          default=defaults.default_color,
                          help="Symbol color if not otherwise specified.")
+
+    # ========================== Font options =========================
+
+    font_grp.add_option("", "--fontsize",
+                        dest="fontsize",
+                        action="store",
+                        type="float",
+                        default=defaults.fontsize,
+                        help="Regular text font size in points (default: %s)" % defaults.fontsize,
+                        metavar="POINTS")
+
+    font_grp.add_option("", "--title-fontsize",
+                        dest="title_fontsize",
+                        action="store",
+                        type="float",
+                        default=defaults.title_fontsize,
+                        help="Title text font size in points (default: %s)" % defaults.title_fontsize,
+                        metavar="POINTS")
+
+    font_grp.add_option("", "--small-fontsize",
+                        dest="small_fontsize",
+                        action="store",
+                        type="float",
+                        default=defaults.small_fontsize,
+                        help="Small text font size in points (default: %s)" % defaults.small_fontsize,
+                        metavar="POINTS")
+
+    font_grp.add_option("", "--number-fontsize",
+                        dest="number_fontsize",
+                        action="store",
+                        type="float",
+                        default=defaults.number_fontsize,
+                        help="Axis numbers font size in points (default: %s)" % defaults.number_fontsize,
+                        metavar="POINTS")
+
+    font_grp.add_option("", "--text-font",
+                        dest="text_font",
+                        action="store",
+                        type="string",
+                        default=defaults.text_font,
+                        help="Specify font for labels (default: %s)" % defaults.text_font,
+                        metavar="FONT")
+
+    font_grp.add_option("", "--logo-font",
+                        dest="logo_font",
+                        action="store",
+                        type="string",
+                        default=defaults.text_font,
+                        help="Specify font for logo (default: %s)" % defaults.logo_font,
+                        metavar="FONT")
+
+    font_grp.add_option("", "--title-font",
+                        dest="title_font",
+                        action="store",
+                        type="string",
+                        default=defaults.title_font,
+                        help="Specify font for title (default: %s)" % defaults.title_font,
+                        metavar="FONT")
 
     # ========================== Advanced options =========================
 
