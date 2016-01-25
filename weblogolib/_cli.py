@@ -252,6 +252,9 @@ def _build_logoformat(logodata, opts):
         "resolution",
         "scale_width",
         "debug",
+        "errorbar_fraction",
+        "errorbar_width_fraction",
+        "errorbar_gray",
     ]
 
     for k in direct_from_opts:
@@ -736,6 +739,30 @@ def _build_option_parser():
                             default=defaults.debug,
                             metavar="YES/NO",
                             help="Output additional diagnostic information. (Default: %default)")
+
+    advanced_grp.add_option("", "--errorbar-fraction",
+                            dest="errorbar_fraction",
+                            action="store",
+                            type="float",
+                            default=defaults.errorbar_fraction,
+                            help="Sets error bars display proportion (default: %s)" % defaults.errorbar_fraction,
+                            metavar="NUMBER")
+
+    advanced_grp.add_option("", "--errorbar-width-fraction",
+                            dest="errorbar_width_fraction",
+                            action="store",
+                            type="float",
+                            default=defaults.errorbar_width_fraction,
+                            help="Sets error bars width display proportion (default: %s)" % defaults.errorbar_width_fraction,
+                            metavar="NUMBER")
+
+    advanced_grp.add_option("", "--errorbar-gray",
+                            dest="errorbar_gray",
+                            action="store",
+                            type="float",
+                            default=defaults.errorbar_gray,
+                            help="Sets error bars' gray scale percentage (default: %s)" % defaults.errorbar_gray,
+                            metavar="NUMBER")
 
     # ========================== Server options =========================
     server_grp.add_option("", "--serve",
