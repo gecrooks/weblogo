@@ -225,6 +225,8 @@ def _build_logoformat(logodata, opts):
         "show_xaxis",
         "xaxis_label",
         "annotate",
+        "rotate_numbers",
+        "number_interval",
         "yaxis_scale",
         "show_yaxis",
         "yaxis_label",
@@ -513,6 +515,22 @@ def _build_option_parser():
                           default=None,
                           help="A comma separated list of custom stack annotations, e.g. '1,3,4,5,6,7'.  Annotation list must be same length as sequences.",
                           metavar="TEXT")
+
+    format_grp.add_option("", "--rotate-numbers",
+                          dest="rotate_numbers",
+                          action="store",
+                          type="boolean",
+                          default=defaults.rotate_numbers,
+                          help="Draw X-axis numbers with vertical orientation (default: %default).",
+                          metavar="YES/NO")
+
+    format_grp.add_option("", "--number-interval",
+                          dest="number_interval",
+                          action="store",
+                          type="float",
+                          default=defaults.number_interval,
+                          help="Distance between numbers on X-axis (default: %s)" % defaults.number_interval,
+                          metavar="NUMBER")
 
     format_grp.add_option("-S", "--yaxis",
                           dest="yaxis_scale",
