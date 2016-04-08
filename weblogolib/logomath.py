@@ -111,7 +111,7 @@ class Dirichlet(object) :
         return theta
 
     def mean(self) :
-        if  self._mean ==None:
+        if  self._mean is None:
             self._mean = self.alpha / self._total
         return self._mean
     
