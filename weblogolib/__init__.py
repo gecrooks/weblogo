@@ -1210,10 +1210,15 @@ class LogoData(object) :
 
 def _from_URL_fileopen(target_url):
     """opens files from a remote URL location"""
-
-
-    import urllib2
-    from urlparse import urlparse, urlunparse
+    try:
+        # For Python 3.0 and later
+        from urllib.request import urlopen
+        from urllib.parse import urlparse, urlunparse
+    except ImportError:
+        # Fall back to Python 2's urllib2
+        from urllib2 import urlopen
+        from urlparse import urlparse, urlunparse
+ 
     import shutil, tempfile
    
 
@@ -1247,8 +1252,9 @@ def _from_URL_fileopen(target_url):
         target_url = google_directdl_frag + id_file
 
     # save url to temporary file
-    req = urllib2.Request(target_url)
-    res = urllib2.urlopen(req)
+#    req = urllib2.Request(target_url)
+#    res = urllib2.urlopen(req)
+    res =urlopen(target_url)
     temp = tempfile.TemporaryFile()
     shutil.copyfileobj(res, temp)
     temp.seek(0)
