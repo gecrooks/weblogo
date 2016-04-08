@@ -78,7 +78,6 @@ class test_genbank_io(unittest.TestCase) :
     def test_read(self) :
         f = testdata_stream("genbank/cox2.gb")
         seqs = genbank_io.read(f)
-        #print seqs
 
         self.assertEqual(len(seqs), 5)
         self.assertEqual(len(seqs[1]), 210)
@@ -92,8 +91,7 @@ class test_genbank_io(unittest.TestCase) :
          
         f = testdata_stream('genbank/NT_019265.gb') 
         seqs = genbank_io.read(f)
-        self.assertEqual(len(seqs), 1)
-        self.assertEqual(len(seqs[0]), 0)
+        self.assertEqual(len(seqs), 0)
         f.close()
 
 
