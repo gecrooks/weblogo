@@ -114,7 +114,7 @@ from corebio.seq import (Alphabet, Seq, SeqList, unambiguous_dna_alphabet,
                          unambiguous_rna_alphabet, unambiguous_protein_alphabet)
 from corebio.utils import (isfloat, find_command, ArgumentError, stdrepr, resource_string, resource_filename)
 
-from corebio._py3k import StringIO
+from corebio._py3k import StringIO, urlopen, urlparse, urlunparse, Request
 
 # ------ META DATA ------
 
@@ -652,7 +652,8 @@ class LogoFormat(LogoOptions):
         if self.show_xaxis_label:
             self.xaxis_label_height += self.fontsize
         if self.show_fineprint:
-            self.xaxis_label_height += self.small_fontsize
+            if len(self.fineprint) != 0:
+                self.xaxis_label_height += self.small_fontsize
 
         self.line_height = (self.stack_height + self.line_margin_top +
                             self.line_margin_bottom)
@@ -1200,15 +1201,6 @@ class LogoData(object):
 
 def _from_URL_fileopen(target_url):
     """opens files from a remote URL location"""
-    try:
-        # For Python 3.0 and later
-        from urllib.request import urlopen
-        from urllib.parse import urlparse, urlunparse
-    except ImportError:
-        # Fall back to Python 2's urllib2
-        from urllib2 import urlopen
-        from urlparse import urlparse, urlunparse
- 
     import shutil, tempfile
 
     # parsing url in component parts
@@ -1241,9 +1233,8 @@ def _from_URL_fileopen(target_url):
         target_url = google_directdl_frag + id_file
 
     # save url to temporary file
-#    req = urllib2.Request(target_url)
-#    res = urllib2.urlopen(req)
-    res =urlopen(target_url)
+    req = Request(target_url)
+    res = urlopen(req)
     temp = tempfile.TemporaryFile()
     shutil.copyfileobj(res, temp)
     temp.seek(0)

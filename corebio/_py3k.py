@@ -134,7 +134,7 @@ if sys.version_info[0] >= 3:
     from io import StringIO
 
     # On Python 3 urllib, urllib2, and urlparse were merged:
-    from urllib.request import urlopen, Request, urlretrieve, urlparse
+    from urllib.request import urlopen, Request, urlretrieve, urlparse, urlunparse
     from urllib.parse import urlencode, quote
     from urllib.error import HTTPError
 

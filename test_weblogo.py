@@ -224,7 +224,7 @@ class test_color(unittest.TestCase):
         self.assertEqual(len(names), 147)
         for n in names:
             c = Color.by_name(n)
-            self.assertTrue(c != None)
+            self.assertTrue(c is not None)
 
     def test_color_components(self):
         white = Color.by_name("white")

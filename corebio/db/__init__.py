@@ -45,8 +45,8 @@ Usage:
 from __future__ import absolute_import
 
 import re
-import urllib
 
+from corebio._py3k import urlopen
 from ..data import data_stream
 from ..utils import update, stdrepr
 
@@ -152,14 +152,14 @@ class DataSource(object):
 
     def data_stream(self, identifier):
         url = self.data_url(identifier)
-        return urllib.urlopen(url)
+        return urlopen(url)
 
     def data_string(self, identifier):
         return self.data_stream(identifier).read()
 
     def data_object(self, identifier):
         parser = self.parser
-        if parser == None:
+        if parser is None:
             raise ValueError("No parser for resource.")
         stream = self.data_stream(identifier)
         return parser(stream)

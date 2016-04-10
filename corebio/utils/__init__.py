@@ -111,9 +111,9 @@ def update(obj, **entries):
 
 def stdrepr(obj, attributes=None, name=None):
     """Create a standard representation of an object."""
-    if name == None:
+    if name is None:
         name = obj.__class__.__name__
-    if attributes == None:
+    if attributes is None:
         attributes = obj.__class__.__slots__
     args = []
     for a in attributes:
