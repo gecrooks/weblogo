@@ -39,15 +39,14 @@ from __future__ import print_function
 import unittest
 
 from corebio import *
+from corebio.secstruc.stride import *
 from corebio.seq import *
 from corebio.seq_io import *
-from corebio.secstruc.stride import *
 from test_corebio import *
 
 
-class test_stride_io(unittest.TestCase) :
-
-    def test_1(self) :
+class test_stride_io(unittest.TestCase):
+    def test_1(self):
         f = testdata_stream("stride/stride_test_1.txt")
         g = StrideRecord(f)
         self.assertEqual(g.pdbid, "1A65")
@@ -60,10 +59,10 @@ class test_stride_io(unittest.TestCase) :
         self.assertEqual(g.primary(), Seq("QIVNSVDTMT", protein_alphabet))
         self.assertEqual(g.secondary(), Seq("CEETTEEEEE", stride_alphabet))
         self.assertEqual(g.total_area(), float(483.6))
-        self.assertTrue(g.get_residue('A','1') is g.residues[0])
+        self.assertTrue(g.get_residue('A', '1') is g.residues[0])
         f.close()
 
-    def test_2(self) :
+    def test_2(self):
         f = testdata_stream("stride/stride_test_2.txt")
         g = StrideRecord(f)
         self.assertEqual(g.pdbid, "1A59")
@@ -74,9 +73,9 @@ class test_stride_io(unittest.TestCase) :
         self.assertEqual(g.residues[1].psi, float(165.31))
         self.assertEqual(g.residues[1].resid, "3")
         self.assertEqual(g.primary(), Seq("EPTIH", protein_alphabet))
-        self.assertEqual(g.secondary(), Seq("CCCCC",stride_alphabet))
+        self.assertEqual(g.secondary(), Seq("CCCCC", stride_alphabet))
         self.assertEqual(g.total_area(), float(610.9))
-        self.assertTrue(g.get_residue(' ','3') is g.residues[1])
+        self.assertTrue(g.get_residue(' ', '3') is g.residues[1])
         f.close()
 
     def test_3(self):
@@ -90,9 +89,9 @@ class test_stride_io(unittest.TestCase) :
         self.assertEqual(g.residues[2].psi, float(-27.45))
         self.assertEqual(g.residues[0].resid, "12")
         self.assertEqual(g.primary(), Seq("VTADV", protein_alphabet))
-        self.assertEqual(g.secondary(), Seq("TCCCC",stride_alphabet))
+        self.assertEqual(g.secondary(), Seq("TCCCC", stride_alphabet))
         self.assertEqual(g.total_area(), float(404))
-        self.assertTrue(g.get_residue(' ','12') is g.residues[0])
+        self.assertTrue(g.get_residue(' ', '12') is g.residues[0])
         f.close()
 
 
@@ -101,11 +100,11 @@ if __name__ == '__main__':
     try:
         stride = RunStride()
         fn = testdata_filename('1CGP.pdb')
-        #print(fn)
+        # print(fn)
         data = stride.process_pdb(fn)
-        #print(data)
+        # print(data)
         record = stride.record(fn)
-        #print(record)
+        # print(record)
     except Exception as exc:
         print(exc)
     # Now run standard unittests

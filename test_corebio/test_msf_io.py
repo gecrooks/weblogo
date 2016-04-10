@@ -1,5 +1,5 @@
 #!/usr/bin/env python
- 
+
 #  Copyright (c) 2006, The Regents of the University of California, through 
 #  Lawrence Berkeley National Laboratory (subject to receipt of any required
 #  approvals from the U.S. Dept. of Energy).  All rights reserved.
@@ -35,70 +35,69 @@
 #  POSSIBILITY OF SUCH DAMAGE. 
 
 
+import unittest
+
 from corebio import *
+from corebio._py3k import StringIO
 from corebio.seq import *
 from corebio.seq_io import *
 from corebio.seq_io import msf_io
 from test_corebio import *
 
-from corebio._py3k import StringIO
 
-import unittest
-
-class test_msf_io(unittest.TestCase) :
-
-    def test_parse_msf(self) :
+class test_msf_io(unittest.TestCase):
+    def test_parse_msf(self):
         f = testdata_stream("dna.msf")
         seqs = msf_io.read(f)
         self.assertEqual(len(seqs), 10)
         self.assertEqual(seqs[1].name, "Carp")
         self.assertEqual(len(seqs[1]), 705)
-        self.assertEqual( str(seqs[2][0:10]), 'ATGGCCAACC')
+        self.assertEqual(str(seqs[2][0:10]), 'ATGGCCAACC')
         f.close()
-        
-    def test_parse_msf2(self) :
+
+    def test_parse_msf2(self):
         f = testdata_stream("cox2.msf")
         seqs = msf_io.read(f)
         self.assertEqual(len(seqs), 5)
         self.assertEqual(seqs[1].name, "cox2_crifa")
         self.assertEqual(len(seqs[1]), 166)
-        self.assertEqual( str(seqs[2][0:10]), 'MSFILTFWMI')
+        self.assertEqual(str(seqs[2][0:10]), 'MSFILTFWMI')
         f.close()
-           
-    def test_parse_1beo(self) :
+
+    def test_parse_1beo(self):
         f = testdata_stream("1beo.msf")
-        seqs = msf_io.read(f) 
+        seqs = msf_io.read(f)
         f.close()
-   
-        
+
     """ Wrong alphabet should throw a parsing error """
-    def test_parse_error(self) :
+
+    def test_parse_error(self):
         f = testdata_stream("cox2.msf")
-        self.assertRaises(ValueError, 
-            msf_io.read, f, nucleic_alphabet )
+        self.assertRaises(ValueError,
+                          msf_io.read, f, nucleic_alphabet)
         f.close()
-            
-    def test_parse_fasta_fail2(self) :
+
+    def test_parse_fasta_fail2(self):
         # should fail with parse error
         f = testdata_stream("globin.fa")
-        self.assertRaises(ValueError, 
-            msf_io.read, f )
+        self.assertRaises(ValueError,
+                          msf_io.read, f)
         f.close()
-            
-    def test_parse_plain_fail(self) :
+
+    def test_parse_plain_fail(self):
         # should fail with parse error
         f = StringIO(plain_io.example)
-        self.assertRaises(ValueError, 
-            msf_io.read, f  )
+        self.assertRaises(ValueError,
+                          msf_io.read, f)
         f.close()
-            
-    
-    def test_parse_phylip_fail(self) :
+
+    def test_parse_phylip_fail(self):
         # should fail with parse error
         f = testdata_stream("phylip_test_2.phy")
-        self.assertRaises(ValueError, 
-            msf_io.read, f )
+        self.assertRaises(ValueError,
+                          msf_io.read, f)
         f.close()
-                                                 
+
+
 if __name__ == '__main__':
     unittest.main()

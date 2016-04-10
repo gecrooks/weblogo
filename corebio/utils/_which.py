@@ -76,14 +76,13 @@ import getopt
 import stat
 
 
-#---- exceptions
+# ---- exceptions
 
 class WhichError(Exception):
     pass
 
 
-
-#---- internal support stuff
+# ---- internal support stuff
 
 def _getRegisteredExecutable(exeName):
     """Windows allow application paths to be registered in the registry."""
@@ -93,22 +92,24 @@ def _getRegisteredExecutable(exeName):
             exeName += '.exe'
         import _winreg
         try:
-            key = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\" +\
+            key = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\" + \
                   exeName
             value = _winreg.QueryValue(_winreg.HKEY_LOCAL_MACHINE, key)
-            registered = (value, "from HKLM\\"+key)
+            registered = (value, "from HKLM\\" + key)
         except _winreg.error:
             pass
         if registered and not os.path.exists(registered[0]):
             registered = None
     return registered
 
+
 def _samefile(fname1, fname2):
     if sys.platform.startswith('win'):
-        return ( os.path.normpath(os.path.normcase(fname1)) ==\
-            os.path.normpath(os.path.normcase(fname2)) )
+        return (os.path.normpath(os.path.normcase(fname1)) == \
+                os.path.normpath(os.path.normcase(fname2)))
     else:
         return os.path.samefile(fname1, fname2)
+
 
 def _cull(potential, matches, verbose=0):
     """Cull inappropriate matches. Possible reasons:
@@ -129,14 +130,13 @@ def _cull(potential, matches, verbose=0):
                 sys.stderr.write("not a regular file: %s (%s)\n" % potential)
         elif not os.access(potential[0], os.X_OK):
             if verbose:
-                sys.stderr.write("no executable access: %s (%s)\n"\
-                                 % potential)
+                sys.stderr.write("no executable access: %s (%s)\n" % potential)
         else:
             matches.append(potential)
             return potential
 
-        
-#---- module API
+
+# ---- module API
 
 def whichgen(command, path=None, verbose=0, exts=None):
     """Return a generator of full paths to the given command.
@@ -182,8 +182,7 @@ def whichgen(command, path=None, verbose=0, exts=None):
             raise TypeError("'exts' argument must be a list or None")
     else:
         if exts is not None:
-            raise WhichError("'exts' argument is not supported on "\
-                             "platform '%s'" % sys.platform)
+            raise WhichError("'exts' argument is not supported on platform '%s'" % sys.platform)
         exts = []
 
     # File name cannot have path separators because PATH lookup does not
@@ -194,12 +193,12 @@ def whichgen(command, path=None, verbose=0, exts=None):
         for i in range(len(path)):
             dirName = path[i]
             # On windows the dirName *could* be quoted, drop the quotes
-            if sys.platform.startswith("win") and len(dirName) >= 2\
-               and dirName[0] == '"' and dirName[-1] == '"':
+            if sys.platform.startswith("win") and len(dirName) >= 2 \
+                    and dirName[0] == '"' and dirName[-1] == '"':
                 dirName = dirName[1:-1]
-            for ext in ['']+exts:
+            for ext in [''] + exts:
                 absName = os.path.abspath(
-                    os.path.normpath(os.path.join(dirName, command+ext)))
+                        os.path.normpath(os.path.join(dirName, command + ext)))
                 if os.path.isfile(absName):
                     if usingGivenPath:
                         fromWhere = "from given path element %d" % i
@@ -208,7 +207,7 @@ def whichgen(command, path=None, verbose=0, exts=None):
                     elif i == 0:
                         fromWhere = "from current directory"
                     else:
-                        fromWhere = "from PATH element %d" % (i-1)
+                        fromWhere = "from PATH element %d" % (i - 1)
                     match = _cull((absName, fromWhere), matches, verbose)
                     if match:
                         if verbose:
@@ -267,11 +266,10 @@ def whichall(command, path=None, verbose=0, exts=None):
         not a VisualBasic script but ".vbs" is on PATHEXT. This option
         is only supported on Windows.
     """
-    return list( whichgen(command, path, verbose, exts) )
+    return list(whichgen(command, path, verbose, exts))
 
 
-
-#---- mainline
+# ---- mainline
 
 def main(argv):
     all = 0
@@ -280,10 +278,9 @@ def main(argv):
     exts = None
     try:
         optlist, args = getopt.getopt(argv[1:], 'haVvqp:e:',
-            ['help', 'all', 'version', 'verbose', 'quiet', 'path=', 'exts='])
+                                      ['help', 'all', 'version', 'verbose', 'quiet', 'path=', 'exts='])
     except getopt.GetoptError as msg:
-        sys.stderr.write("which: error: %s. Your invocation was: %s\n"\
-                         % (msg, argv))
+        sys.stderr.write("which: error: %s. Your invocation was: %s\n" % (msg, argv))
         sys.stderr.write("Try 'which --help'.\n")
         return 1
     for opt, optarg in optlist:
@@ -315,7 +312,7 @@ def main(argv):
 
     failures = 0
     for arg in args:
-        #print("debug: search for %r" % arg)
+        # print("debug: search for %r" % arg)
         nmatches = 0
         for match in whichgen(arg, path=altpath, verbose=verbose, exts=exts):
             if verbose:
@@ -331,6 +328,4 @@ def main(argv):
 
 
 if __name__ == "__main__":
-    sys.exit( main(sys.argv) )
-
-
+    sys.exit(main(sys.argv))

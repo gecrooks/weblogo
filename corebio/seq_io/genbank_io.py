@@ -1,5 +1,5 @@
 #!/usr/bin/env python
- 
+
 
 """Read GenBank flat files. 
 
@@ -8,16 +8,14 @@ Currently only reads sequence data and not annotations.
 """
 from __future__ import absolute_import
 
-from ..utils import *
 from ..seq import *
+from ..utils import *
 
-  
-names = ( 'genbank',)
-extensions = ('gb','genbank', 'gbk')
+names = ('genbank',)
+extensions = ('gb', 'genbank', 'gbk')
 
 
-
-def read(fin, alphabet=None): 
+def read(fin, alphabet=None):
     """Read and parse a file of genbank records. 
 
     Args:
@@ -29,11 +27,11 @@ def read(fin, alphabet=None):
     
     Raises: 
     ValueError -- If the file is unparsable
-    """         
-    seqs = [ s for s in iterseq(fin, alphabet)]
+    """
+    seqs = [s for s in iterseq(fin, alphabet)]
     return SeqList(seqs)
 
-    
+
 def iterseq(fin, alphabet=None):
     """ Iterate over genbank records
     
@@ -48,7 +46,6 @@ def iterseq(fin, alphabet=None):
     ValueError -- If the file is unparsable
     """
     alphabet = Alphabet(alphabet)
-
 
     header, block, data = range(3)
     state = header
@@ -72,12 +69,4 @@ def iterseq(fin, alphabet=None):
                 seq.extend( line.split()[1:] )
 
             
-       
-    
-        
-    
 
-
-     
-     
-     

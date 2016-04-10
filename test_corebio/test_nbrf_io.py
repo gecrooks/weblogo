@@ -34,82 +34,79 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 #  POSSIBILITY OF SUCH DAMAGE. 
 
-from corebio import *
-from corebio.utils import *
-from corebio.seq import *
-from corebio.seq_io import *
-from corebio._py3k import StringIO
-
-from test_corebio import *
-
 import unittest
 
-class test_nbrf_io(unittest.TestCase) :
+from corebio import *
+from corebio.utils import *
+from corebio._py3k import StringIO
+from corebio.seq import *
+from corebio.seq_io import *
+from test_corebio import *
 
 
-    def test_parse_cox2(self) :
+class test_nbrf_io(unittest.TestCase):
+    def test_parse_cox2(self):
         f = testdata_stream('cox2.nbrf')
         seqs = nbrf_io.read(f)
         self.assertEqual(len(seqs), 5)
-        self.assertEqual( len( seqs[1]), 210)
-        self.assertEqual( str(seqs[0]), "MAFILSFWMIFLLDSVIVLLSFVCFVCVWICALLFSTVLLVSKLNNIYCTWDFTASKFIDVYWFTIGGMFSLGLLLRLCLLLYFGHLNFVSFDLCKVVGFQWYWVYFIFGETTIFSNLILESDYMIGDLRLLQCNHVLTLLSLVIYKLWLSAVDVIHSFAISSLGVKVENLVAVMK")
-        self.assertEqual( seqs[0].alphabet, protein_alphabet)
+        self.assertEqual(len(seqs[1]), 210)
+        self.assertEqual(str(seqs[0]),
+                         "MAFILSFWMIFLLDSVIVLLSFVCFVCVWICALLFSTVLLVSKLNNIYCTWDFTASKFIDVYWFTIGGMFSLGLLLRLCLLLYFGHLNFVSFDLCKVVGFQWYWVYFIFGETTIFSNLILESDYMIGDLRLLQCNHVLTLLSLVIYKLWLSAVDVIHSFAISSLGVKVENLVAVMK")
+        self.assertEqual(seqs[0].alphabet, protein_alphabet)
         f.close()
-        
 
-    def test_parse_crab(self) :
+    def test_parse_crab(self):
         f = testdata_stream('crab.nbrf')
         seqs = nbrf_io.read(f)
-        self.assertEqual( seqs[0].alphabet, protein_alphabet)
+        self.assertEqual(seqs[0].alphabet, protein_alphabet)
         self.assertEqual(len(seqs), 9)
         self.assertEqual(seqs[2].name, "CRAB_CHICK")
-        self.assertEqual(seqs[2].description, 
-            "ALPHA CRYSTALLIN B CHAIN (ALPHA(B)-CRYSTALLIN).")
+        self.assertEqual(seqs[2].description,
+                         "ALPHA CRYSTALLIN B CHAIN (ALPHA(B)-CRYSTALLIN).")
         f.close()
 
     def test_parse_dna(self):
         f = testdata_stream('dna.pir')
         seqs = nbrf_io.read(f)
-        self.assertEqual( seqs[0].alphabet, dna_alphabet)
+        self.assertEqual(seqs[0].alphabet, dna_alphabet)
         self.assertEqual(len(seqs), 10)
         f.close()
 
-    def test_parse_examples(self) :
+    def test_parse_examples(self):
         f = testdata_stream('rhod.pir')
         seqs = nbrf_io.read(f)
-        self.assertEqual( seqs[0].alphabet, protein_alphabet)
+        self.assertEqual(seqs[0].alphabet, protein_alphabet)
         self.assertEqual(len(seqs), 3)
         f.close()
-    
-    def test_parse_protein(self) :
+
+    def test_parse_protein(self):
         f = testdata_stream('protein.pir')
         seqs = nbrf_io.read(f)
-        self.assertEqual( seqs[0].alphabet, protein_alphabet)
+        self.assertEqual(seqs[0].alphabet, protein_alphabet)
         self.assertEqual(len(seqs), 10)
         f.close()
 
-
-    def test_parse_clustal_fail(self) :
+    def test_parse_clustal_fail(self):
         # should fail with parse error
         f = StringIO(clustal_io.example)
-        self.assertRaises(ValueError, 
-            nbrf_io.read, f , protein_alphabet )
-   
-   
-    def test_parse_plain_fail(self) :
+        self.assertRaises(ValueError,
+                          nbrf_io.read, f, protein_alphabet)
+
+    def test_parse_plain_fail(self):
         # should fail with parse error
         f = StringIO(plain_io.example)
-        self.assertRaises(ValueError, 
-            nbrf_io.read, f  )
-        
-   
+        self.assertRaises(ValueError,
+                          nbrf_io.read, f)
+
     def test_pir_file_from_clustal(self):
         f = testdata_stream('clustalw.pir')
         seqs = nbrf_io.read(f)
         self.assertEqual(len(seqs), 2)
-        self.assertEqual( seqs[1].endswith('C-AATC-G-CAATG-G--CTTGAACCGGGTAAAAGTCGT-A---------------------------------------------------------------------------------'), True)
+        self.assertEqual(seqs[1].endswith(
+                'C-AATC-G-CAATG-G--CTTGAACCGGGTAAAAGTCGT-A---------------------------------------------------------------------------------'),
+                True)
         f.close()
-   
-             
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-  
+
 #  Copyright (c) 2005 Gavin E. Crooks <gec@threeplusone.com>
 #
 #  This software is distributed under the MIT Open Source License.
@@ -61,14 +61,13 @@ Special Functions :
 """
 from __future__ import division
 
-
 __all__ = ('euler_gamma', 'catalan', 'golden_ratio', 'bits_per_nat', 'sqrt_2pi',
-            'gamma', 'lngamma', 'factorial', 'digamma', 'trigamma',
-            'cgamma', 'clngamma', 'cdigamma', 'ctrigamma',            
-            'entropy', 'log2',            
-            'incomplete_gamma', 'normalized_incomplete_gamma', 
-            'argmax', 'argmin'
-            )            
+           'gamma', 'lngamma', 'factorial', 'digamma', 'trigamma',
+           'cgamma', 'clngamma', 'cdigamma', 'ctrigamma',
+           'entropy', 'log2',
+           'incomplete_gamma', 'normalized_incomplete_gamma',
+           'argmax', 'argmin'
+           )
 
 from math import *
 import cmath as cm
@@ -77,17 +76,12 @@ from itertools import count
 
 from ._py3k import zip
 
-
 # Some mathematical constants
-euler_gamma  = 0.57721566490153286060651
-catalan      = 0.91596559417721901505460
+euler_gamma = 0.57721566490153286060651
+catalan = 0.91596559417721901505460
 golden_ratio = 1.6180339887498948482046
-bits_per_nat = 1.44269504088896340735992468100 # = log_2(e) = 1/log(2) 
-sqrt_2pi     = 2.5066282746310005024157652848110
-
-
-
-
+bits_per_nat = 1.44269504088896340735992468100  # = log_2(e) = 1/log(2)
+sqrt_2pi = 2.5066282746310005024157652848110
 
 # The Lanczos approximation for the gamma function is
 #                          
@@ -113,25 +107,25 @@ sqrt_2pi     = 2.5066282746310005024157652848110
 # http://my.fit.edu/~gabdo/gamma.txt
 
 
-__lanczos_gamma = 607./128.
-__lanczos_coefficients = ( 
-       0.99999999999999709182,
-      57.156235665862923517,
-     -59.597960355475491248,
-      14.136097974741747174,
-      -0.49191381609762019978,
-        .33994649984811888699e-4,
-        .46523628927048575665e-4,
-       -.98374475304879564677e-4,
-        .15808870322491248884e-3,
-       -.21026444172410488319e-3,
-        .21743961811521264320e-3,
-       -.16431810653676389022e-3,
-        .84418223983852743293e-4,
-       -.26190838401581408670e-4,
-        .36899182659531622704e-5)
+__lanczos_gamma = 607. / 128.
+__lanczos_coefficients = (
+    0.99999999999999709182,
+    57.156235665862923517,
+    -59.597960355475491248,
+    14.136097974741747174,
+    -0.49191381609762019978,
+    .33994649984811888699e-4,
+    .46523628927048575665e-4,
+    -.98374475304879564677e-4,
+    .15808870322491248884e-3,
+    -.21026444172410488319e-3,
+    .21743961811521264320e-3,
+    -.16431810653676389022e-3,
+    .84418223983852743293e-4,
+    -.26190838401581408670e-4,
+    .36899182659531622704e-5)
 
-__factorial =(
+__factorial = (
     1.,
     1.,
     2.,
@@ -164,9 +158,10 @@ __factorial =(
     8841761993739701954543616000000.,
     265252859812191058636308480000000.,
     8222838654177922817725562880000000.,
-    263130836933693530167218012160000000. )
-    
-def gamma(x) :
+    263130836933693530167218012160000000.)
+
+
+def gamma(x):
     """The gamma function. Returns exact results for small integers. Will
     overflow for modest sized arguments. Use lngamma(z) instead. 
     
@@ -177,92 +172,92 @@ def gamma(x) :
     return cgamma(x).real
 
 
-def cgamma(z) :
+def cgamma(z):
     """Gamma function with complex arguments and results."""
-    
+
     z = complex(z)
-    n = floor(z.real)   
-    if  n == z  :
-        if n <= 0 :
-            return complex(1.0/0.0) # Infinity
-        elif n <= len(__factorial) :
-            return complex(__factorial[int(n)-1])
-        
+    n = floor(z.real)
+    if n == z:
+        if n <= 0:
+            return complex(1.0 / 0.0)  # Infinity
+        elif n <= len(__factorial):
+            return complex(__factorial[int(n) - 1])
+
     zz = z
-    if z.real < 0.5 :   # Reflection formula
-        zz = 1-z
-    
-        
+    if z.real < 0.5:  # Reflection formula
+        zz = 1 - z
+
     g = __lanczos_gamma
-    c = __lanczos_coefficients 
-    
-    zz = zz - 1.    
+    c = __lanczos_coefficients
+
+    zz = zz - 1.
     zh = zz + 0.5
     zgh = zh + g
-    zp = zgh** (zh*0.5) # trick for avoiding FP overflow above z=141
+    zp = zgh ** (zh * 0.5)  # trick for avoiding FP overflow above z=141
 
     ss = 0.0
-    for k in range(len(c)-1,0,-1):
-        ss += c[k]/(zz+k)
-    
-    f = (sqrt_2pi*(c[0]+ss)) * (( zp*cm.exp(-zgh)) *zp)
+    for k in range(len(c) - 1, 0, -1):
+        ss += c[k] / (zz + k)
 
-    if z.real<0.5 :
-        f  = pi /( cm.sin(pi*z) *f)
+    f = (sqrt_2pi * (c[0] + ss)) * ((zp * cm.exp(-zgh)) * zp)
+
+    if z.real < 0.5:
+        f = pi / (cm.sin(pi * z) * f)
 
     return complex(f)
 
-def lngamma(x) :
+
+def lngamma(x):
     """The logarithm of the gamma function. 
     """
     return clngamma(x).real
 
-   
-def clngamma(z) :
+
+def clngamma(z):
     """The logarithm of the gamma function for a complex argument
     """
     z = complex(z)
-    
+
     # common case optimization
-    n = floor(z.real)   
-    if  n == z  :
-        if n <= 0 :
-            return complex(1.0/0.0) # Infinity
-        elif n <= len(__factorial) :
-            return complex(__factorial[int(n)-1])
-        
+    n = floor(z.real)
+    if n == z:
+        if n <= 0:
+            return complex(1.0 / 0.0)  # Infinity
+        elif n <= len(__factorial):
+            return complex(__factorial[int(n) - 1])
+
     zz = z
-    if z.real < 0.5 :
-        zz = 1-z
-    
-        
+    if z.real < 0.5:
+        zz = 1 - z
+
     g = __lanczos_gamma
-    c = __lanczos_coefficients 
-    
-    zz = zz - 1.    
+    c = __lanczos_coefficients
+
+    zz = zz - 1.
     zh = zz + 0.5
     zgh = zh + g
-    zp = zgh** (zh*0.5) # trick for avoiding FP overflow above z=141
+    zp = zgh ** (zh * 0.5)  # trick for avoiding FP overflow above z=141
 
     ss = 0.0
-    for k in range(len(c)-1,0,-1):
-        ss += c[k]/(zz+k)
-    
-    f = (sqrt_2pi*(c[0]+ss)) * (( zp*cm.exp(-zgh)) *zp)
+    for k in range(len(c) - 1, 0, -1):
+        ss += c[k] / (zz + k)
 
-    if z.real<0.5 :
-        f  = pi /( cm.sin(pi*z) *f)
+    f = (sqrt_2pi * (c[0] + ss)) * ((zp * cm.exp(-zgh)) * zp)
+
+    if z.real < 0.5:
+        f = pi / (cm.sin(pi * z) * f)
 
     return cm.log(f)
-          
-                    
-def factorial(z) :
+
+
+def factorial(z):
     """ The factorial function. 
     factorial(z) == gamma(z+1)
     """
-    return gamma(z+1)
-              
-def digamma(x) :   
+    return gamma(z + 1)
+
+
+def digamma(x):
     """The digamma function, the logarithmic derivative of the gamma function.
              digamma(z) = d/dz ln( gamma(z) )
 
@@ -271,76 +266,78 @@ def digamma(x) :
      A Wolfram Web Resource. http://mathworld.wolfram.com/DigammaFunction.html
     """
     return cdigamma(x).real
-          
-          
-def cdigamma(z) :
+
+
+def cdigamma(z):
     """Digamma function with complex arguments"""
     z = complex(z)
 
     g = __lanczos_gamma
-    c = __lanczos_coefficients 
-        
+    c = __lanczos_coefficients
+
     zz = z
-    if z.real < 0.5 :
-        zz = 1 -z
-        
-    n=0.
-    d=0.
-    for k in range(len(c)-1,0,-1):
-        dz =1./(zz+(k+1)-2);
-        dd =c[k] * dz
-        d = d + dd 
+    if z.real < 0.5:
+        zz = 1 - z
+
+    n = 0.
+    d = 0.
+    for k in range(len(c) - 1, 0, -1):
+        dz = 1. / (zz + (k + 1) - 2);
+        dd = c[k] * dz
+        d = d + dd
         n = n - dd * dz
 
     d = d + c[0]
     gg = zz + g - 0.5
-    f = cm.log(gg) + (n/d - g/gg)
+    f = cm.log(gg) + (n / d - g / gg)
 
-    if z.real<0.5 :
-        f -= pi / cm.tan( pi * z)
-        
+    if z.real < 0.5:
+        f -= pi / cm.tan(pi * z)
+
     return f
 
 
-def trigamma(x) :
+def trigamma(x):
     """The trigamma function, the derivative of the digamma function.
             trigamma(z) = d/dz digamma(z) = d/dz d/dz ln( gamma(z) )
     
     See: Eric W. Weisstein. "Trigamma Function." From MathWorld--
     A Wolfram Web Resource. http://mathworld.wolfram.com/TrigammaFunction.html
     """
-    return ctrigamma(x).real    
+    return ctrigamma(x).real
+
 
 def ctrigamma(z):
     "The trigamma function with complex arguments and return value."
     z = complex(z)
     g = __lanczos_gamma
-    c = __lanczos_coefficients 
-        
-    t1=0.
-    t2=0.
-    t3=0.
-    for k in range(len(c)-1,0,-1):
-        dz =1./(z+k);       
-        dd1 = c[k]* dz
+    c = __lanczos_coefficients
+
+    t1 = 0.
+    t2 = 0.
+    t3 = 0.
+    for k in range(len(c) - 1, 0, -1):
+        dz = 1. / (z + k);
+        dd1 = c[k] * dz
         t1 += dd1
         dd2 = dd1 * dz
         t2 += dd2
         t3 += dd2 * dz
 
     t1 += c[0]
-    c =  - (t2*t2)/(t1*t1)  +2*t3/t1
+    c = - (t2 * t2) / (t1 * t1) + 2 * t3 / t1
 
-    result = 1./(z*z)
+    result = 1. / (z * z)
     gg = z + g + 0.5
-    result += - (z+0.5)/ (gg*gg)
-    result += 2./gg
+    result += - (z + 0.5) / (gg * gg)
+    result += 2. / gg
 
     result += c
 
     return result
 
-def incomplete_gamma(a,x) :
+
+def incomplete_gamma(a, x):
     """The 'upper' incomplete gamma function:
 
                             oo
@@ -364,11 +361,11 @@ def incomplete_gamma(a,x) :
 
     Bugs :
         This implementation is not very accurate for some arguments. 
-    """   
-    return  normalized_incomplete_gamma(a,x) * gamma(a)
+    """
+    return normalized_incomplete_gamma(a, x) * gamma(a)
 
-    
-def normalized_incomplete_gamma(a,x) :
+
+def normalized_incomplete_gamma(a, x):
     """The upper, incomplete gamma function normalized so that the limiting
     values are zero and one.
     
@@ -382,82 +379,81 @@ def normalized_incomplete_gamma(a,x) :
     maxiter = 100
     epsilon = 1.48e-8
     small = 1e-30
-    
-        
-    if a<=0 or x<0 : 
+
+    if a <= 0 or x < 0:
         raise ValueError("Invalid arguments")
-    if x == 0.0 : return 1.0
-    
-    if x<= a+1 :
+    if x == 0.0:
+        return 1.0
+
+    if x <= a + 1:
         # Use the series representation
-        term = 1./a
+        term = 1. / a
         total = term
-        for n in range(1,maxiter) :
-            term *= x/(a+n)
+        for n in range(1, maxiter):
+            term *= x / (a + n)
             total += term
-            if abs(term/total) < epsilon : 
-                return 1. - total * exp(-x+a*log(x) - lngamma(a) )
+            if abs(term / total) < epsilon:
+                return 1. - total * exp(-x + a * log(x) - lngamma(a))
         raise RuntimeError(
-            "Failed to converge after %d iterations." % (maxiter) )
-    else :
+                "Failed to converge after %d iterations." % (maxiter))
+    else:
         # Use the continued fraction representation
         total = 1.0
-        b = x + 1. -a
-        c = 1./small
-        d = 1./b
+        b = x + 1. - a
+        c = 1. / small
+        d = 1. / b
         h = d
-        for i in range(1, maxiter) :
-            an = -i * (i-a)
-            b = b+2.
+        for i in range(1, maxiter):
+            an = -i * (i - a)
+            b = b + 2.
             d = an * d + b
-            if abs(d) < small : d = small
-            c = b + an /c
-            if abs(c) < small : c= small
-            d = 1./d
+            if abs(d) < small:
+                d = small
+            c = b + an / c
+            if abs(c) < small:
+                c = small
+            d = 1. / d
             term = d * c
             h = h * term
-            if abs( term-1.) < epsilon :
-                return h * exp(-x+a*log(x) - lngamma(a) )
+            if abs(term - 1.) < epsilon:
+                return h * exp(-x + a * log(x) - lngamma(a))
         raise RuntimeError(
-            "Failed to converge after %d iterations." % (maxiter) )
+                "Failed to converge after %d iterations." % (maxiter))
 
 
- 
-def log2( x) :
+def log2(x):
     """ Return the base 2 logarithm of x """
-    return log(x,2)
+    return log(x, 2)
 
 
-def entropy( pvec, base= exp(1) ) :
+def entropy(pvec, base=exp(1)):
     """ The entropy S = -Sum_i p_i ln p_i
         pvec is a frequency vector, not necessarily normalized. 
     """
     # TODO: Optimize
-    if len(pvec) ==0 : 
+    if len(pvec) == 0:
         raise ValueError("Zero length vector")
-        
-        
+
     total = 0.0
     ent = 0.0
     for p in pvec:
-        if p>0 : # 0 log(0) =0 
+        if p > 0:  # 0 log(0) =0
             total += p
-            ent += - log(float(p)) *p
-        elif p<0:
+            ent += - log(float(p)) * p
+        elif p < 0:
             raise ValueError("Negative probability")
-    
-    
-    ent = (ent/total) + log(total)
+
+    ent = (ent / total) + log(total)
     ent /= log(base)
 
     return ent
 
 
-def argmax( alist) :
+def argmax(alist):
     """Return the index of the last occurrence of the maximum value in the list."""
     return max(zip(alist, count()))[1]
 
 
-def argmin( alist) :
+def argmin(alist):
     """Return the index of the first occurrence of the minimum value in the list."""
     return min(zip(alist, count()))[1]

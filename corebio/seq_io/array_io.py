@@ -1,5 +1,5 @@
 #!/usr/bin/env python
- 
+
 #  Copyright (c) 2005 Gavin E. Crooks <gec@threeplusone.com>
 #
 #  This software is distributed under the MIT Open Source License.
@@ -56,10 +56,11 @@ example = """
 -EPC-RDENVHFNRIFLPTIYFIIFLTGIVGNGLVILVMGYQKKLRSMTDKYRLHLSVAD
 """
 
-names = ("array",'flatfile')
+names = ("array", 'flatfile')
 extensions = ()
 
-def read(fin, alphabet=None): 
+
+def read(fin, alphabet=None):
     """Read a file of raw sequence alignment data. 
 
     Args:
@@ -69,12 +70,12 @@ def read(fin, alphabet=None):
         SeqList -- A list of sequences
     Raises: 
         ValueError -- If the file is unparsable
-    """         
-    seqs = [ s for s in iterseq(fin, alphabet)]
+    """
+    seqs = [s for s in iterseq(fin, alphabet)]
     return SeqList(seqs)
 
 
-def iterseq(fin, alphabet=None) :
+def iterseq(fin, alphabet=None):
     """ Read one line of sequence data and yield the sequence.
 
     Args:
@@ -88,40 +89,38 @@ def iterseq(fin, alphabet=None) :
 
     alphabet = Alphabet(alphabet)
     line_length = 0
-    
-    for linenum, line in enumerate(fin) :
-        if line.isspace(): continue # Blank line
-        line = line.strip() 
 
-        if line[0] == '>' : # probably a fasta file. Fail.
-            raise ValueError(
-                "Parse Error on input line: %d " % (linenum) )
-        
+    for linenum, line in enumerate(fin):
+        if line.isspace():
+            continue  # Blank line
+        line = line.strip()
+
+        if line[0] == '>':  # probably a fasta file. Fail.
+            raise ValueError("Parse Error on input line: %d " % linenum)
+
         line = remove_whitespace(line)
-        
-        if not alphabet.alphabetic(line) :
-            raise ValueError(
-                "Character on line: %d not in alphabet: %s : %s" % \
-                     (linenum, alphabet, line) )
-        
-        if line_length and line_length != len(line) :
+
+        if not alphabet.alphabetic(line):
+            raise ValueError("Character on line: %d not in alphabet: %s : %s" % (linenum, alphabet, line))
+
+        if line_length and line_length != len(line):
             raise ValueError("Line %d has an incommensurate length." % linenum)
         line_length = len(line)
-        
+
         yield Seq(line, alphabet)
 
 
-def write(afile, seqs): 
+def write(afile, seqs):
     """Write raw sequence data, one line per sequence.
 
     arguments:
         afile -- A writable stream.
         seqs  -- A list of Seq's
-    """         
-    for s in seqs :
+    """
+    for s in seqs:
         writeseq(afile, s)
 
-    
+
 def writeseq(afile, seq):
     """ Write a single sequence in raw format.
 
@@ -130,5 +129,3 @@ def writeseq(afile, seq):
         seq  -- A Seq instance
     """
     print(seq, file=afile)
-
-            

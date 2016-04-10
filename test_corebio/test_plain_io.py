@@ -1,5 +1,5 @@
 #!/usr/bin/env python
- 
+
 #  Copyright (c) 2005 Gavin E. Crooks <gec@threeplusone.com>
 #
 #  This software is distributed under the MIT Open Source License.
@@ -25,40 +25,39 @@
 #
 
 
-from corebio import *
-from corebio.seq import *
-from corebio.seq_io import *
-from corebio._py3k import StringIO
-
 import unittest
 
-class test_plain_io(unittest.TestCase) :
+from corebio import *
+from corebio._py3k import StringIO
+from corebio.seq import *
+from corebio.seq_io import *
 
-    def test_read_example(self) :
+
+class test_plain_io(unittest.TestCase):
+    def test_read_example(self):
         f = StringIO(plain_io.example)
         seqs = plain_io.read(f)
-        #print seqs
+        # print seqs
         self.assertEqual(len(seqs), 1)
         self.assertEqual(seqs[0].name, None)
-        #print seqs[0]
+        # print seqs[0]
         self.assertEqual(len(seqs[0]), 450)
-  
-  
-    def test_write_seq(self) :
+
+    def test_write_seq(self):
         f = StringIO(plain_io.example)
         seqs = plain_io.read(f)
-        
+
         fout = StringIO()
-        plain_io.write(fout,seqs)
-        
+        plain_io.write(fout, seqs)
+
         fout.seek(0)
         seqs2 = plain_io.read(fout)
-        
-        #print seqs[0].alphabet !=seqs2[0].alphabet
-        self.assertEqual(seqs[0].alphabet, seqs2[0].alphabet)  
-        self.assertEqual(seqs[0], seqs2[0])  
-        self.assertEqual(seqs, seqs2)  
 
-             
+        # print seqs[0].alphabet !=seqs2[0].alphabet
+        self.assertEqual(seqs[0].alphabet, seqs2[0].alphabet)
+        self.assertEqual(seqs[0], seqs2[0])
+        self.assertEqual(seqs, seqs2)
+
+
 if __name__ == '__main__':
     unittest.main()
