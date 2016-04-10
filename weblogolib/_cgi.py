@@ -265,7 +265,7 @@ def main(htdocs_directory=None):
     for optname in options_from_form:
         try:
             value = form[optname].get_value()
-            if value != None:
+            if value is not None:
                 setattr(logooptions, optname, value)
         except ValueError as err:
             errors.append(err.args)
@@ -335,9 +335,9 @@ def main(htdocs_directory=None):
         from . import _from_URL_fileopen
         try:
             seq_file = _from_URL_fileopen(sequences_url)
-        except ValueError, e:
+        except ValueError as e:
             errors.append(("sequences_url", "Cannot parse URL"))
-        except IOError, e:
+        except IOError as e:
             errors.append(("sequences_url", "Cannot load sequences from URL"))
 
     else:
@@ -428,7 +428,7 @@ def send_form(controls, errors=[], htdocs_directory=None):
             substitutions[c.value.replace('/', '_')] = 'selected'
         else:
             value = c.value
-            if value == None:
+            if value is None:
                 value = 'auto'
             if value == 'true':
                 substitutions[c.name] = 'checked'
