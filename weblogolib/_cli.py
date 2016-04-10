@@ -211,35 +211,50 @@ def _build_logoformat(logodata, opts):
 
     args = {}
     direct_from_opts = [
-        "stacks_per_line",
-        "logo_title",
-        "yaxis_label",
-        "show_xaxis",
-        "show_yaxis",
-        "xaxis_label",
-        "show_ends",
-        "fineprint",
-        "show_errorbars",
-        "show_boxes",
-        "yaxis_tic_interval",
-        "resolution",
+        # Logo Data Options.
         "alphabet",
-        "debug",
-        "show_ends",
-        "default_color",
-        # "show_color_key",
-        "color_scheme",
         "unit_name",
-        "logo_label",
-        "yaxis_scale",
         "first_index",
         "logo_start",
         "logo_end",
-        "scale_width",
-        "annotate",
+        # Logo Format Options.
         "stack_width",
+        "stacks_per_line",
+        "logo_title",
+        "logo_label",
+        "show_xaxis",
+        "xaxis_label",
+        "annotate",
+        "rotate_numbers",
+        "number_interval",
+        "yaxis_scale",
+        "show_yaxis",
+        "yaxis_label",
+        "show_ends",
+        "fineprint",
+        "yaxis_tic_interval",
+        "show_errorbars",
+        "reverse_stacks",
+        # Color Options.
+        "color_scheme",
+        "default_color",
+        # Font Format Options.
+        "fontsize",
+        "title_fontsize",
+        "small_fontsize",
+        "number_fontsize",
+        "text_font",
+        "logo_font",
+        "title_font",
+        # Advanced Format Options.
         "stack_aspect_ratio",
-        "reverse_stacks"
+        "show_boxes",
+        "resolution",
+        "scale_width",
+        "debug",
+        "errorbar_fraction",
+        "errorbar_width_fraction",
+        "errorbar_gray",
     ]
 
     for k in direct_from_opts:
@@ -293,8 +308,10 @@ def _build_option_parser():
                              "These options control the format and display of the logo.")
     color_grp = OptionGroup(parser, "Color Options",
                             "Colors can be specified using CSS2 syntax. e.g. 'red', '#FF0000', etc.")
+    font_grp = OptionGroup(parser, "Font Format Options",
+                           "These options provide control over the font sizes and types.")
     advanced_grp = OptionGroup(parser, "Advanced Format Options",
-                               "These options provide fine control over the display of the logo. ")
+                               "These options provide fine control over the display of the logo.")
     server_grp = OptionGroup(parser, "WebLogo Server",
                              "Run a standalone webserver on a local port.")
 
@@ -303,6 +320,7 @@ def _build_option_parser():
     parser.add_option_group(trans_grp)
     parser.add_option_group(format_grp)
     parser.add_option_group(color_grp)
+    parser.add_option_group(font_grp)
     parser.add_option_group(advanced_grp)
     parser.add_option_group(server_grp)
 
@@ -501,6 +519,22 @@ def _build_option_parser():
                           help="A comma separated list of custom stack annotations, e.g. '1,3,4,5,6,7'.  Annotation list must be same length as sequences.",
                           metavar="TEXT")
 
+    format_grp.add_option("", "--rotate-numbers",
+                          dest="rotate_numbers",
+                          action="store",
+                          type="boolean",
+                          default=defaults.rotate_numbers,
+                          help="Draw X-axis numbers with vertical orientation (default: %default).",
+                          metavar="YES/NO")
+
+    format_grp.add_option("", "--number-interval",
+                          dest="number_interval",
+                          action="store",
+                          type="float",
+                          default=defaults.number_interval,
+                          help="Distance between numbers on X-axis (default: %s)" % defaults.number_interval,
+                          metavar="NUMBER")
+
     format_grp.add_option("-S", "--yaxis",
                           dest="yaxis_scale",
                           action="store",
@@ -599,6 +633,64 @@ def _build_option_parser():
                          default=defaults.default_color,
                          help="Symbol color if not otherwise specified.")
 
+    # ========================== Font options =========================
+
+    font_grp.add_option("", "--fontsize",
+                        dest="fontsize",
+                        action="store",
+                        type="float",
+                        default=defaults.fontsize,
+                        help="Regular text font size in points (default: %s)" % defaults.fontsize,
+                        metavar="POINTS")
+
+    font_grp.add_option("", "--title-fontsize",
+                        dest="title_fontsize",
+                        action="store",
+                        type="float",
+                        default=defaults.title_fontsize,
+                        help="Title text font size in points (default: %s)" % defaults.title_fontsize,
+                        metavar="POINTS")
+
+    font_grp.add_option("", "--small-fontsize",
+                        dest="small_fontsize",
+                        action="store",
+                        type="float",
+                        default=defaults.small_fontsize,
+                        help="Small text font size in points (default: %s)" % defaults.small_fontsize,
+                        metavar="POINTS")
+
+    font_grp.add_option("", "--number-fontsize",
+                        dest="number_fontsize",
+                        action="store",
+                        type="float",
+                        default=defaults.number_fontsize,
+                        help="Axis numbers font size in points (default: %s)" % defaults.number_fontsize,
+                        metavar="POINTS")
+
+    font_grp.add_option("", "--text-font",
+                        dest="text_font",
+                        action="store",
+                        type="string",
+                        default=defaults.text_font,
+                        help="Specify font for labels (default: %s)" % defaults.text_font,
+                        metavar="FONT")
+
+    font_grp.add_option("", "--logo-font",
+                        dest="logo_font",
+                        action="store",
+                        type="string",
+                        default=defaults.text_font,
+                        help="Specify font for logo (default: %s)" % defaults.logo_font,
+                        metavar="FONT")
+
+    font_grp.add_option("", "--title-font",
+                        dest="title_font",
+                        action="store",
+                        type="string",
+                        default=defaults.title_font,
+                        help="Specify font for title (default: %s)" % defaults.title_font,
+                        metavar="FONT")
+
     # ========================== Advanced options =========================
 
     advanced_grp.add_option("-W", "--stack-width",
@@ -647,6 +739,30 @@ def _build_option_parser():
                             default=defaults.debug,
                             metavar="YES/NO",
                             help="Output additional diagnostic information. (Default: %default)")
+
+    advanced_grp.add_option("", "--errorbar-fraction",
+                            dest="errorbar_fraction",
+                            action="store",
+                            type="float",
+                            default=defaults.errorbar_fraction,
+                            help="Sets error bars display proportion (default: %s)" % defaults.errorbar_fraction,
+                            metavar="NUMBER")
+
+    advanced_grp.add_option("", "--errorbar-width-fraction",
+                            dest="errorbar_width_fraction",
+                            action="store",
+                            type="float",
+                            default=defaults.errorbar_width_fraction,
+                            help="Sets error bars width display proportion (default: %s)" % defaults.errorbar_width_fraction,
+                            metavar="NUMBER")
+
+    advanced_grp.add_option("", "--errorbar-gray",
+                            dest="errorbar_gray",
+                            action="store",
+                            type="float",
+                            default=defaults.errorbar_gray,
+                            help="Sets error bars' gray scale percentage (default: %s)" % defaults.errorbar_gray,
+                            metavar="NUMBER")
 
     # ========================== Server options =========================
     server_grp.add_option("", "--serve",
