@@ -1,0 +1,7 @@
+idna>=2.0
+pyasn1>=0.1.8
+six>=1.4.1
+setuptools
+enum34
+ipaddress
+cffi>=1.1.0
