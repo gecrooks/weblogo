@@ -1,4 +1,3 @@
- 
 #  Copyright (c) 2005 Gavin E. Crooks <gec@threeplusone.com>
 #
 #  This software is distributed under the MIT Open Source License.
@@ -71,58 +70,54 @@ CXCR4_MURINE      LLFVITLPFWAVDAM-ADWYFGKFLCKAVHIIYTVNLYSSVLILAFISLDRYLAIVHATN
                   :*:.: **: ...     * :*  ***..  :  :*:*.. ::** *:.****:****..
 """
 
-
-
 names = ("clustal", "clustalw",)
 extensions = ('aln',)
-
 
 header_line = re.compile(r'(CLUSTAL.*)$')
 
 # (sequence_id) (Sequence) (Optional sequence number)
-seq_line   = re.compile(r'(\s*\S+\s+)(\S+)\s*(\d*)\s*$')
+seq_line = re.compile(r'(\s*\S+\s+)(\S+)\s*(\d*)\s*$')
 
 # Saved group includes variable length leading space.
 # Must consult a seq_line to figure out how long the leading space is since
 # the maximum CLUSTAL ids length (normally 10 characters) can be changed.
-match_line = re.compile(r'([\s:\.\*]*)$') 
+match_line = re.compile(r'([\s:\.\*]*)$')
 
 
 def iterseq(fin, alphabet=None):
     """Iterate over the sequences in the file."""
     # Default implementation
-    return iter(read(fin, alphabet) )
+    return iter(read(fin, alphabet))
 
 
-def read(fin, alphabet=None) :  
-    alphabet = Alphabet(alphabet)      
+def read(fin, alphabet=None):
+    alphabet = Alphabet(alphabet)
     seq_ids = []
     seqs = []
     block_count = 0
-    data_len =0
+    data_len = 0
 
     for token in _scan(fin):
-        if token.typeof== "begin_block":
+        if token.typeof == "begin_block":
             block_count = 0
         elif token.typeof == "seq_id":
-            if len(seqs) <= block_count :
+            if len(seqs) <= block_count:
                 seq_ids.append(token.data)
                 seqs.append([])
         elif token.typeof == "seq":
-            if not alphabet.alphabetic(token.data) :
+            if not alphabet.alphabetic(token.data):
                 raise ValueError(
-                    "Character on line: %d not in alphabet: %s : %s" % (
-                    token.lineno, alphabet, token.data) )
+                        "Character on line: %d not in alphabet: %s : %s" % (
+                            token.lineno, alphabet, token.data))
             seqs[block_count].append(token.data)
-            if block_count==0 :
-                data_len = len(token.data) 
-            elif data_len != len(token.data) :
+            if block_count == 0:
+                data_len = len(token.data)
+            elif data_len != len(token.data):
                 raise ValueError("Inconsistent line lengths")
-                
-            block_count +=1
 
-          
-    seqs = [ Seq("".join(s), alphabet, name= i) for s,i in zip(seqs,seq_ids)]
+            block_count += 1
+
+    seqs = [Seq("".join(s), alphabet, name=i) for s, i in zip(seqs, seq_ids)]
     return SeqList(seqs)
 
 
@@ -133,7 +128,7 @@ def read(fin, alphabet=None) :
 # 4) Each sequence line starts with a sequence name followed by at least one
 #     space and then the sequence.
 
-def _scan( fin ):
+def _scan(fin):
     """Scan a clustal format MSA file and yield tokens.
         The basic file structure is
             begin_document
@@ -149,61 +144,61 @@ def _scan( fin ):
             do_something(token)
     """
     header, body, block = range(3)
-    
+
     yield Token("begin")
     leader_width = -1
     state = header
     for L, line in enumerate(fin):
-        if state==header :
-            if line.isspace() : continue
+        if state == header:
+            if line.isspace():
+                continue
             m = header_line.match(line)
             state = body
-            if m is not None :
-                yield Token("header", m.group() )
+            if m is not None:
+                yield Token("header", m.group())
                 continue
             # Just keep going and hope for the best.
-            #else :
-                #raise ValueError("Cannot find required header")
-                
-                
-        
-        if state == body :
-            if line.isspace() : continue
+            # else:
+            #     raise ValueError("Cannot find required header")
+
+        if state == body:
+            if line.isspace():
+                continue
             yield Token("begin_block")
             state = block
             # fall through to block
-        
-        if state ==  block:
-            if line.isspace() :
+
+        if state == block:
+            if line.isspace():
                 yield Token("end_block")
                 state = body
                 continue
-            
+
             m = match_line.match(line)
-            if m is not None :
+            if m is not None:
                 yield Token("match_line", line[leader_width:-1])
                 continue
-     
-            m = seq_line.match(line) 
-            if m is None: 
-                raise ValueError("Parse error on line: %d (%s)" % (L,line))
+
+            m = seq_line.match(line)
+            if m is None:
+                raise ValueError("Parse error on line: %d (%s)" % (L, line))
             leader_width = len(m.group(1))
-            yield Token("seq_id", m.group(1).strip() )
-            yield Token("seq", m.group(2).strip() )
-            if m.group(3)  :
-                yield Token("seq_num", m.group(3)) 
+            yield Token("seq_id", m.group(1).strip())
+            yield Token("seq", m.group(2).strip())
+            if m.group(3):
+                yield Token("seq_num", m.group(3))
             continue
 
         # END state blocks. If I ever get here something has gone terrible wrong
         raise RuntimeError()
-    
-    if state==block:
-         yield Token("end_block")
-    yield Token("end")     
+
+    if state == block:
+        yield Token("end_block")
+    yield Token("end")
     return
 
 
-def write(fout, seqs) :
+def write(fout, seqs):
     """Write 'seqs' to 'fout' as text in clustal format"""
     header = "CLUSTAL W (1.81) multiple sequence alignment"
     name_width = 17
@@ -218,4 +213,3 @@ def write(fout, seqs) :
             print(s.name.ljust(name_width), end='', file=fout)
             print(s[start:end], file=fout)
         print(file=fout)
-

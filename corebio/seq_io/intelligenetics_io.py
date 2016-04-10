@@ -1,5 +1,5 @@
 #!/usr/bin/env python
- 
+
 #  Copyright (c) 2005 Gavin E. Crooks <gec@threeplusone.com>
 #
 #  This software is distributed under the MIT Open Source License.
@@ -51,14 +51,13 @@ ttacctgctacgccagccttctgtgcgcgcaactgtctggtcccgcccc2
 """
 from __future__ import absolute_import, division, print_function
 
-from ..utils import *
 from ..seq import *
+from ..utils import *
 from . import *
 
 
-names = ( 'intelligenetics', 'ig', 'stanford', )
-extensions = ('ig',) 
-
+names = ('intelligenetics', 'ig', 'stanford',)
+extensions = ('ig',)
 
 example = """
 ;H.sapiens fau mRNA, 518 bases
@@ -74,12 +73,10 @@ gggttaacaatgattaacactgagcctcacacccacgcgatgccctcagc
 tcctcgctcagcgctctcaccaacagccgtagcccgcagccccgctggac
 accggttctccatccccgcagcgtagcccggaacatggtagctgccatct
 ttacctgctacgccagccttctgtgcgcgcaactgtctggtcccgcccc2
-"""    
+"""
 
 
-
-
-def read(fin, alphabet=None): 
+def read(fin, alphabet=None):
     """Read and parse an IG file. 
 
     Args:
@@ -89,11 +86,11 @@ def read(fin, alphabet=None):
         SeqList -- A list of sequences
     Raises: 
         ValueError -- If the file is unparsable
-    """         
-    seqs = [ s for s in iterseq(fin, alphabet)]
+    """
+    seqs = [s for s in iterseq(fin, alphabet)]
     return SeqList(seqs)
 
-    
+
 def iterseq(fin, alphabet=None):
     """ Parse an IG file and generate sequences.
     
@@ -108,53 +105,51 @@ def iterseq(fin, alphabet=None):
     alphabet = Alphabet(alphabet)
 
     seqs = []
-    header = []   
+    header = []
     start_lineno = -1
     name = None
-    
-    def build_seq(seqs,alphabet, name, comments, lineno) :
-        try :
+
+    def build_seq(seqs, alphabet, name, comments, lineno):
+        try:
             desc = '\n'.join(comments)
-            s = Seq( "".join(seqs), alphabet, name=name, description=desc)
-        except ValueError :
-             raise ValueError(
-                "Parse failed with sequence starting at line %d: "
-                "Character not in alphabet: %s" % (lineno, alphabet) )
+            s = Seq("".join(seqs), alphabet, name=name, description=desc)
+        except ValueError:
+            raise ValueError(
+                    "Parse failed with sequence starting at line %d: "
+                    "Character not in alphabet: %s" % (lineno, alphabet))
         return s
 
-    for lineno, line in enumerate(fin) :
+    for lineno, line in enumerate(fin):
         line = line.strip()
-        if line == '' : continue
-        if line.startswith(';') :
-            if seqs :
+        if line == '':
+            continue
+        if line.startswith(';'):
+            if seqs:
                 # end of sequence
-                yield  build_seq(seqs,alphabet, name, header, start_lineno)
+                yield build_seq(seqs, alphabet, name, header, start_lineno)
                 header = []
                 seqs = []
                 name = None
             header.append(line[1:])
             start_lineno = lineno
-        elif not name :  
+        elif not name:
             name = line
-        elif line[-1] == '1' or line[-1]=='2': 
+        elif line[-1] == '1' or line[-1] == '2':
             # End of sequence
             seqs.append(remove_whitespace(line[0:-1]))
-            yield  build_seq(seqs,alphabet, name, header, start_lineno)
+            yield build_seq(seqs, alphabet, name, header, start_lineno)
             header = []
-            seqs = []       
+            seqs = []
             name = None
         else:
-            seqs.append( remove_whitespace(line))    
-    
-    if seqs :
-        yield build_seq(seqs,alphabet, name, header, start_lineno)
+            seqs.append(remove_whitespace(line))
+
+    if seqs:
+        yield build_seq(seqs, alphabet, name, header, start_lineno)
     return
-    
-    
-    
 
 
-def write(fout, seqs): 
+def write(fout, seqs):
     """Write an IG file. 
 
     Args:
@@ -162,8 +157,8 @@ def write(fout, seqs):
         seqs  -- A list of Seq's
     Raises:
         ValueError -- If a sequence is missing a name
-    """        
-    for s in seqs :
+    """
+    for s in seqs:
         writeseq(fout, s)
 
 
@@ -181,11 +176,10 @@ def writeseq(fout, seq):
     for h in desc.splitlines():
         print(';' + h, file=fout)
     if not seq.name:
-        raise ValueError(
-            "Write failed with missing sequence name: %s"% str(seq) )
+        raise ValueError("Write failed with missing sequence name: %s" % str(seq))
     print(seq.name, file=fout)
     L = len(seq)
     line_length = 80
     for n in range(1 + L // line_length):
-        print(seq[n * line_length : (n+1) * line_length], file=fout)
+        print(seq[n * line_length: (n + 1) * line_length], file=fout)
     print(file=fout)

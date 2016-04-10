@@ -1,4 +1,3 @@
-
 #  Copyright (c) 2003-2005 The Regents of the University of California.
 #  Copyright (c) 2005 Gavin E. Crooks
 
@@ -55,118 +54,128 @@ Status : Beta - Needs documentation.
 from corebio import seq
 from .color import Color
 
+
 class ColorScheme(object):
     """ A coloring of an alphabet.
     
-    title : string            -- A human readable description
-    defualt_color : Color           --
-    groups : list of color groups 
-    alphabet : string               -- The set of colored symbols
-    color -- A map between a symbol and a Coloring
+    title :         string               -- A human readable description
+    default_color : Color                --
+    groups :        list of color groups
+    alphabet :      string               -- The set of colored symbols
+    color                                -- A map between a symbol and a Coloring
     
 
     """
-    
-    def __init__(self, 
-                groups = [], 
-                title = "", 
-                description = "",
-                default_color = "black", 
-                alphabet = seq.generic_alphabet) :
+
+    def __init__(self,
+                 groups=[],
+                 title="",
+                 description="",
+                 default_color="black",
+                 alphabet=seq.generic_alphabet):
         """  """
-        self.title= title
+        self.title = title
         self.description = description
         self.default_color = Color.from_string(default_color)
         self.groups = groups
         self.alphabet = alphabet
-            
+
         color = {}
-        for cg in groups :
-            for s in cg.symbols :
+        for cg in groups:
+            for s in cg.symbols:
                 color[s] = cg.color
-                if s not in alphabet :
+                if s not in alphabet:
                     raise KeyError("Colored symbol does not exist in alphabet.")
         self._color = color
 
-    def color(self, symbol) :
-        if symbol in self._color :
+    def color(self, symbol):
+        if symbol in self._color:
             return self._color[symbol]
         return self.default_color
-        
-class ColorGroup(object) :
+
+
+class ColorGroup(object):
     """Associate a group of symbols with a color"""
-    def __init__(self, symbols, color, description=None) :
-        self.symbols = symbols              
-        self.color =  Color.from_string(color)
+
+    def __init__(self, symbols, color, description=None):
+        self.symbols = symbols
+        self.color = Color.from_string(color)
         self.description = description
 
 
-         
-monochrome = ColorScheme([]) # This list intentionally left blank
-               
-# From makelogo
-nucleotide = ColorScheme([
-    ColorGroup("G", "orange"),
-    ColorGroup("TU", "red"),
-    ColorGroup("C",  "blue"),
-    ColorGroup("A",  "green") 
-    ]) 
+monochrome = ColorScheme([])  # This list intentionally left blank
 
-base_pairing = ColorScheme([
-    ColorGroup("TAU",  "darkorange", "Weak (2 Watson-Crick hydrogen bonds)"),
-    ColorGroup("GC",    "blue", "Strong (3 Watson-Crick hydrogen bonds)")],
-    )
+# From makelogo
+nucleotide = ColorScheme(
+        [
+            ColorGroup("G", "orange"),
+            ColorGroup("TU", "red"),
+            ColorGroup("C", "blue"),
+            ColorGroup("A", "green")
+        ],
+)
+
+base_pairing = ColorScheme(
+        [
+            ColorGroup("TAU", "darkorange", "Weak (2 Watson-Crick hydrogen bonds)"),
+            ColorGroup("GC", "blue", "Strong (3 Watson-Crick hydrogen bonds)")
+        ],
+)
 
 # From Crooks2004c-Proteins-SeqStr.pdf
-hydrophobicity = ColorScheme([
-    ColorGroup( "RKDENQ",   "blue", "hydrophilic"),
-    ColorGroup( "SGHTAP",   "green", "neutral"  ),
-    ColorGroup( "YVMCLFIW", "black",  "hydrophobic") ],
-    alphabet = seq.unambiguous_protein_alphabet
-    )
+hydrophobicity = ColorScheme(
+        [
+            ColorGroup("RKDENQ", "blue", "hydrophilic"),
+            ColorGroup("SGHTAP", "green", "neutral"),
+            ColorGroup("YVMCLFIW", "black", "hydrophobic")
+        ],
+        alphabet=seq.unambiguous_protein_alphabet
+)
 
 # from makelogo
-chemistry = ColorScheme([
-  ColorGroup( "GSTYC",  "green",   "polar"),
-  ColorGroup( "NQ",      "purple", "neutral"), 
-  ColorGroup( "KRH",     "blue",   "basic"),
-  ColorGroup( "DE",      "red",    "acidic"),
-  ColorGroup("PAWFLIMV", "black",  "hydrophobic") ],
-  alphabet = seq.unambiguous_protein_alphabet
-  )   
+chemistry = ColorScheme(
+        [
+            ColorGroup("GSTYC", "green", "polar"),
+            ColorGroup("NQ", "purple", "neutral"),
+            ColorGroup("KRH", "blue", "basic"),
+            ColorGroup("DE", "red", "acidic"),
+            ColorGroup("PAWFLIMV", "black", "hydrophobic")
+        ],
+        alphabet=seq.unambiguous_protein_alphabet
+)
 
-charge = ColorScheme([
-    ColorGroup("KRH", "blue", "Positive" ),
-    ColorGroup( "DE", "red", "Negative") ],
-    alphabet = seq.unambiguous_protein_alphabet
-    )
+charge = ColorScheme(
+        [
+            ColorGroup("KRH", "blue", "Positive"),
+            ColorGroup("DE", "red", "Negative")
+        ],
+        alphabet=seq.unambiguous_protein_alphabet
+)
 
-
-taylor = ColorScheme([
-    ColorGroup( 'A', '#CCFF00' ),
-    ColorGroup( 'C', '#FFFF00' ),
-    ColorGroup( 'D', '#FF0000'),
-    ColorGroup( 'E', '#FF0066' ),
-    ColorGroup( 'F', '#00FF66'),
-    ColorGroup( 'G', '#FF9900'),
-    ColorGroup( 'H', '#0066FF'),
-    ColorGroup( 'I', '#66FF00'),
-    ColorGroup( 'K', '#6600FF'),
-    ColorGroup( 'L', '#33FF00'),
-    ColorGroup( 'M', '#00FF00'),
-    ColorGroup( 'N', '#CC00FF'),
-    ColorGroup( 'P', '#FFCC00'),
-    ColorGroup( 'Q', '#FF00CC'),
-    ColorGroup( 'R', '#0000FF'),
-    ColorGroup( 'S', '#FF3300'),
-    ColorGroup( 'T', '#FF6600'),
-    ColorGroup( 'V', '#99FF00'),
-    ColorGroup( 'W', '#00CCFF'),
-    ColorGroup( 'Y', '#00FFCC')],
-    title = "Taylor",
-    description = "W. Taylor, Protein Engineering, Vol 10 , 743-746 (1997)",
-    alphabet = seq.unambiguous_protein_alphabet
-    )
-    
-
-
+taylor = ColorScheme(
+        [
+            ColorGroup('A', '#CCFF00'),
+            ColorGroup('C', '#FFFF00'),
+            ColorGroup('D', '#FF0000'),
+            ColorGroup('E', '#FF0066'),
+            ColorGroup('F', '#00FF66'),
+            ColorGroup('G', '#FF9900'),
+            ColorGroup('H', '#0066FF'),
+            ColorGroup('I', '#66FF00'),
+            ColorGroup('K', '#6600FF'),
+            ColorGroup('L', '#33FF00'),
+            ColorGroup('M', '#00FF00'),
+            ColorGroup('N', '#CC00FF'),
+            ColorGroup('P', '#FFCC00'),
+            ColorGroup('Q', '#FF00CC'),
+            ColorGroup('R', '#0000FF'),
+            ColorGroup('S', '#FF3300'),
+            ColorGroup('T', '#FF6600'),
+            ColorGroup('V', '#99FF00'),
+            ColorGroup('W', '#00CCFF'),
+            ColorGroup('Y', '#00FFCC')
+        ],
+        title="Taylor",
+        description="W. Taylor, Protein Engineering, Vol 10 , 743-746 (1997)",
+        alphabet=seq.unambiguous_protein_alphabet
+)

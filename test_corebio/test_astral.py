@@ -4,14 +4,13 @@
 
 import unittest
 
-from corebio.db.astral  import *
+from corebio.db.astral import *
 from test_corebio import *
 
+
 class Astraltest(unittest.TestCase):
-   
-   
-    def testParseDomain(self) :
-        s=">d1tpt_1 a.46.2.1 (1-70) Thymidine phosphorylase {Escherichia coli}"
+    def testParseDomain(self):
+        s = ">d1tpt_1 a.46.2.1 (1-70) Thymidine phosphorylase {Escherichia coli}"
         dom = parse_domain(s)
 
         assert dom.sid == 'd1tpt_1'
@@ -19,26 +18,24 @@ class Astraltest(unittest.TestCase):
         assert dom.residues.pdbid == '1tpt'
         assert dom.description == 'Thymidine phosphorylase {Escherichia coli}'
 
-        s2="d1tpt_1 a.46.2.1 (1tpt 1-70) Thymidine phosphorylase {E. coli}"
+        s2 = "d1tpt_1 a.46.2.1 (1tpt 1-70) Thymidine phosphorylase {E. coli}"
         assert s2 == str(parse_domain(s2)), str(parse_domain(s2))
 
-
-
-        #Genetic domains (See Astral release notes)
-        s3="g1cph.1 g.1.1.1 (1cph B:,A:) Insulin {Cow (Bos taurus)}"
+        # Genetic domains (See Astral release notes)
+        s3 = "g1cph.1 g.1.1.1 (1cph B:,A:) Insulin {Cow (Bos taurus)}"
         assert s3 == str(parse_domain(s3)), str(parse_domain(s3))
 
-        s4="e1cph.1a g.1.1.1 (1cph A:) Insulin {Cow (Bos taurus)}"
+        s4 = "e1cph.1a g.1.1.1 (1cph A:) Insulin {Cow (Bos taurus)}"
         assert s4 == str(parse_domain(s4))
 
-        #Raw Astral header
-        s5=">e1cph.1a g.1.1.1 (A:) Insulin {Cow (Bos taurus)}"
-        assert s4 ==  str(parse_domain(s5))
+        # Raw Astral header
+        s5 = ">e1cph.1a g.1.1.1 (A:) Insulin {Cow (Bos taurus)}"
+        assert s4 == str(parse_domain(s5))
 
         try:
             dom = parse_domain("Totally wrong")
             assert 0, "Should never get here"
-        except ValueError as e :
+        except ValueError as e:
             pass
 
 
@@ -49,28 +46,27 @@ class RafTest(unittest.TestCase):
 
     rafLine3 = "101mB 0.01 38 010301 111011    0  153   90 mm  91 vv  92 ll  939ss  94 ee  95 gg"
 
-
     def test_Parse(self):
         """Can we parse a RAF record?"""
         r = RafSeqMap(self.rafLine)
 
         assert r.pdbid == "101m"
-        assert r.pdb_datestamp =="010301"  
-        assert r.flags =="111011"          
-      
+        assert r.pdb_datestamp == "010301"
+        assert r.flags == "111011"
+
         i = r.index("143")
         res = r.res[i]
-        assert res.chainid =="_"        
-        assert res.resid =="143"
-        assert res.seqres =="A"
-        assert res.atom =="A"
+        assert res.chainid == "_"
+        assert res.resid == "143"
+        assert res.seqres == "A"
+        assert res.atom == "A"
 
-        r = RafSeqMap(self.rafLine2)   
+        r = RafSeqMap(self.rafLine2)
         res = r.res[r.index("6A", chainid="A")]
-        assert res.resid =="6A"
-        assert res.atom=="E"
+        assert res.resid == "6A"
+        assert res.atom == "E"
 
-    def test_SeqMapAdd(self) :
+    def test_SeqMapAdd(self):
         r2 = RafSeqMap(self.rafLine2)
         r3 = RafSeqMap(self.rafLine3)
 
@@ -79,49 +75,47 @@ class RafTest(unittest.TestCase):
         assert len(r2.res) == l
 
         r2.extend(r2)
-        assert len(r2.res) == l*2
+        assert len(r2.res) == l * 2
 
         r4 = r2 + r2
-        assert len(r4.res) == l*4
+        assert len(r4.res) == l * 4
 
         r4.append(Res())
-        assert len(r4.res) == (l*4)+1
-        
+        assert len(r4.res) == (l * 4) + 1
 
-    def test_SeqMapSlice(self) :
+    def test_SeqMapSlice(self):
         r = RafSeqMap(self.rafLine)
-        r = r[ r.index("124"): r.index("135")+1]
-        assert len(r.res) ==12
+        r = r[r.index("124"):r.index("135") + 1]
+        assert len(r.res) == 12
 
-    def test_SeqMapIndex(self) :
-        fs= testdata_stream("scop/raftest.txt")
+    def test_SeqMapIndex(self):
+        fs = testdata_stream("scop/raftest.txt")
         filename = fs.name
         fs.close()
         f = open(filename)
         index = Raf(f)
         r = index.get_seqmap("103m")
         assert r.pdbid == "103m", r.pdbid
-        assert len(r.res) ==154, len(r.res)
-        assert r.pdb_datestamp =="010301"  
-        assert r.flags =="111011"
+        assert len(r.res) == 154, len(r.res)
+        assert r.pdb_datestamp == "010301"
+        assert r.flags == "111011"
 
         r = index.get_seqmap("103m 1-10")
         assert r.pdbid == "103m", r.pdbid
-        assert len(r.res) ==10, len(r.res)
-        assert r.pdb_datestamp =="010301"  
-        assert r.flags =="111011"        
+        assert len(r.res) == 10, len(r.res)
+        assert r.pdb_datestamp == "010301"
+        assert r.flags == "111011"
 
         r = index.get_seqmap("104l A:")
         assert r.pdbid == "104l", r.pdbid
 
         r = index.get_seqmap("104l A:112-113")
-        assert r.pdbid == "104l", r.pdbid        
-        assert len(r.res)== 2
+        assert r.pdbid == "104l", r.pdbid
+        assert len(r.res) == 2
 
         r = index.get_seqmap("104l A:112-113,B:146-148")
-        assert r.pdbid == "104l", r.pdbid        
-        assert len(r.res)== 5        
-
+        assert r.pdbid == "104l", r.pdbid
+        assert len(r.res) == 5
 
         assert "103m_" in index
         r = index["103m_"]
@@ -132,12 +126,14 @@ class RafTest(unittest.TestCase):
     def test_Parse_error(self):
         self.assertRaises(ValueError, RafSeqMap, "tooshort")
 
-    def test_records(self) :
+    def test_records(self):
         f = testdata_stream("scop/raftest.txt")
-        i=0
-        for rsm in RafSeqMap.records(f) : i +=1
+        i = 0
+        for rsm in RafSeqMap.records(f):
+            i += 1
         assert i == 16
         f.close()
+
 
 if __name__ == '__main__':
     unittest.main()

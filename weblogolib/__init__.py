@@ -89,16 +89,17 @@ the program 'pdf2svg'.
 """
 from __future__ import absolute_import, division, print_function
 
-import sys
 import copy
 import os
+import sys
+
 from datetime import datetime
-from math import log, sqrt, exp
+from math import exp, log, sqrt
 from string import Template
 from subprocess import *
 
 # Avoid 'from numpy import *' since numpy has lots of names defined
-from numpy import array, asarray, float64, ones, zeros, int32,all,any, shape
+from numpy import array, asarray, float64, ones, zeros, any, int32, all, shape
 import numpy as na
 
 from .color import *
@@ -107,66 +108,63 @@ from .logomath import Dirichlet
 
 import corebio
 from corebio import seq_io
-from corebio.data import (amino_acid_composition, amino_acid_letters,
-                          dna_letters, rna_letters)
+from corebio.data import (amino_acid_composition, amino_acid_letters, dna_letters, rna_letters)
 from corebio.moremath import *
 from corebio.seq import (Alphabet, Seq, SeqList, unambiguous_dna_alphabet,
                          unambiguous_rna_alphabet, unambiguous_protein_alphabet)
-from corebio.utils import (isfloat, find_command, ArgumentError, stdrepr,
-                           resource_string, resource_filename)
+from corebio.utils import (isfloat, find_command, ArgumentError, stdrepr, resource_string, resource_filename)
 
 from corebio._py3k import StringIO
 
-
-
 # ------ META DATA ------
 
-__all__ = [ 'LogoOptions', 
-            'description', 
-            '__version__', 
-            'LogoFormat',
-            'LogoData',
-            'GhostscriptAPI',
-            'std_color_schemes',
-            'default_color_schemes',
-            'classic',
-            'std_units',
-            'std_sizes',
-            'std_alphabets',
-            'std_percentCG',
-            'pdf_formatter',
-            'jpeg_formatter',
-            'png_formatter',
-            'png_print_formatter',
-            'txt_formatter',
-            'eps_formatter',
-            'formatters',
-            'default_formatter',
-            'base_distribution',
-            'equiprobable_distribution',
-            'read_seq_data',
-            'color',
-            'colorscheme',
-            'logomath',
-            ]
+__all__ = ['LogoOptions',
+           'description',
+           '__version__',
+           'LogoFormat',
+           'LogoData',
+           'GhostscriptAPI',
+           'std_color_schemes',
+           'default_color_schemes',
+           'classic',
+           'std_units',
+           'std_sizes',
+           'std_alphabets',
+           'std_percentCG',
+           'pdf_formatter',
+           'jpeg_formatter',
+           'png_formatter',
+           'png_print_formatter',
+           'txt_formatter',
+           'eps_formatter',
+           'formatters',
+           'default_formatter',
+           'base_distribution',
+           'equiprobable_distribution',
+           'read_seq_data',
+           'color',
+           'colorscheme',
+           'logomath',
+           ]
 
-description  = "Create sequence logos from biological sequence alignments." 
+description = "Create sequence logos from biological sequence alignments."
 
 __version__ = corebio.__version__
 
 release_description = "WebLogo %s" % (__version__)
 
 
-def cgi(htdocs_directory) :
+def cgi(htdocs_directory):
     import weblogolib._cgi
     weblogolib._cgi.main(htdocs_directory)
-        
-class GhostscriptAPI(object) :
+
+
+class GhostscriptAPI(object):
     """Interface to the command line program Ghostscript ('gs')"""
-    
+
     formats = ('png', 'pdf', 'jpeg')
-    
-    def __init__(self, path=None) :
+
+    def __init__(self, path=None):
         try:
             command = find_command('gs', path=path)
         except EnvironmentError:
@@ -174,114 +172,114 @@ class GhostscriptAPI(object) :
                 command = find_command('gswin32c.exe', path=path)
             except EnvironmentError:
                 raise EnvironmentError("Could not find Ghostscript on path."
-                " There should be either a gs executable or a gswin32c.exe on your system's path")
-        
-        self.command = command        
-    
-    def version(self) :
+                                       " There should be either a gs executable or a gswin32c.exe on your system's path")
+
+        self.command = command
+
+    def version(self):
         args = [self.command, '--version']
-        try :
+        try:
             p = Popen(args, stdout=PIPE)
-            (out,err) = p.communicate() 
-        except OSError :
-            raise RuntimeError("Cannot communicate with ghostscript.")  
+            (out, err) = p.communicate()
+        except OSError:
+            raise RuntimeError("Cannot communicate with ghostscript.")
         return out.strip()
-       
-    def convert(self, format, postscript,  width,  height, resolution=300) :
-        device_map = { 'png':'png16m',  'pdf':'pdfwrite', 'jpeg':'jpeg'}
-       
-        try :
+
+    def convert(self, format, postscript, width, height, resolution=300):
+        device_map = {'png': 'png16m', 'pdf': 'pdfwrite', 'jpeg': 'jpeg'}
+
+        try:
             device = device_map[format]
         except KeyError:
             raise ValueError("Unsupported format.")
-        
-        args = [self.command, 
-            "-sDEVICE=%s" % device, 
-            "-dPDFSETTINGS=/printer",
-            #"-q",   # Quite: Do not dump messages to stdout.
-            "-sstdout=%stderr", # Redirect messages and errors to stderr
-            # fix issue 36, problems with ghostscript 9.10
-            "-dColorConversionStrategy=/LeaveColorUnchanged", 
-            "-sOutputFile=-", # Stdout
-            "-dDEVICEWIDTHPOINTS=%s" % str(width),  
-            "-dDEVICEHEIGHTPOINTS=%s" % str(height),  
-            "-dSAFER",  # For added security
-            "-dNOPAUSE",]
-            
-        if device != 'pdf' :
-            args.append("-r%s" % str(resolution) ) 
-            if resolution < 300 : # Antialias if resolution is Less than 300 DPI
+
+        args = [self.command,
+                "-sDEVICE=%s" % device,
+                "-dPDFSETTINGS=/printer",
+                # "-q",   # Quite: Do not dump messages to stdout.
+                "-sstdout=%stderr",  # Redirect messages and errors to stderr
+                # fix issue 36, problems with ghostscript 9.10
+                "-dColorConversionStrategy=/LeaveColorUnchanged",
+                "-sOutputFile=-",  # Stdout
+                "-dDEVICEWIDTHPOINTS=%s" % str(width),
+                "-dDEVICEHEIGHTPOINTS=%s" % str(height),
+                "-dSAFER",  # For added security
+                "-dNOPAUSE", ]
+
+        if device != 'pdf':
+            args.append("-r%s" % str(resolution))
+            if resolution < 300:  # Antialias if resolution is Less than 300 DPI
                 args.append("-dGraphicsAlphaBits=4")
                 args.append("-dTextAlphaBits=4")
                 args.append("-dAlignToPixels=0")
-        
-        args.append("-")  # Read from stdin. Must be last argument.
-        
-        error_msg = "Unrecoverable error : Ghostscript conversion failed " \
-                    "(Invalid postscript?). %s" % " ".join(args) 
 
-        try :
-            p = Popen(args, stdin=PIPE, stdout = PIPE, stderr= PIPE) 
-            (out,err) = p.communicate(postscript.encode()) 
-        except OSError :
+        args.append("-")  # Read from stdin. Must be last argument.
+
+        error_msg = "Unrecoverable error : Ghostscript conversion failed " \
+                    "(Invalid postscript?). %s" % " ".join(args)
+
+        try:
+            p = Popen(args, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+            (out, err) = p.communicate(postscript.encode())
+        except OSError:
             raise RuntimeError(error_msg)
-    
-        if p.returncode != 0 : 
-            error_msg += '\nReturn code: %i\n' % p.returncode 
-            if err is not None : error_msg += err
+
+        if p.returncode != 0:
+            error_msg += '\nReturn code: %i\n' % p.returncode
+            if err is not None:
+                error_msg += err
             raise RuntimeError(error_msg)
 
         # Python 2: out is a 'str', python 3 out is 'bytes'
         return out
-#        print( str(type(out)), file=sys.stderr)
-#        print( str(type(fout)), file=sys.stderr)
-#        
+
+
+#        print(str(type(out)), file=sys.stderr)
+#        print(str(type(fout)), file=sys.stderr)
+#
 #        if sys.version_info[0] >= 3:
 #            #fout.buffer.write(out)  # If file
-#            fout.write(out)     #if bytesIO. But mangles outputsomehow
+#            fout.write(out)  # if bytesIO. But mangles output somehow
 #        else:
 #            print(out, file=fout)
 
 # end class Ghostscript
 
 
-aa_composition = [ amino_acid_composition[_k] for _k in
-                    unambiguous_protein_alphabet]
-
-
+aa_composition = [amino_acid_composition[_k] for _k in unambiguous_protein_alphabet]
 
 # ------  DATA ------
 
 classic = ColorScheme([
-    ColorGroup("G",  "orange" ),
+    ColorGroup("G", "orange"),
     ColorGroup("TU", "red"),
-    ColorGroup("C",  "blue"),
-    ColorGroup("A",  "green")
-    ] )
-    
-std_color_schemes = {"auto":            None,   # Depends on sequence type
-                     "monochrome":      monochrome,
-                     "base pairing":    base_pairing,
-                     "classic":         classic,
-                     "hydrophobicity" : hydrophobicity,  
-                     "chemistry" :      chemistry,
-                     "charge" :         charge,
-                     }#
+    ColorGroup("C", "blue"),
+    ColorGroup("A", "green")
+])
+
+std_color_schemes = {"auto": None,  # Depends on sequence type
+                     "monochrome": monochrome,
+                     "base pairing": base_pairing,
+                     "classic": classic,
+                     "hydrophobicity": hydrophobicity,
+                     "chemistry": chemistry,
+                     "charge": charge,
+                     }  #
 
 default_color_schemes = {
-    unambiguous_protein_alphabet: hydrophobicity, 
+    unambiguous_protein_alphabet: hydrophobicity,
     unambiguous_rna_alphabet: base_pairing,
-    unambiguous_dna_alphabet: base_pairing 
+    unambiguous_dna_alphabet: base_pairing
 }
 
 std_units = {
-    "bits"    : 1./log(2),
-    "nats"    : 1.,
-    "digits"  : 1./log(10),
-    "kT"      : 1.,
-    "kJ/mol"  : 8.314472 *298.15 /1000.,
-    "kcal/mol": 1.987 *298.15  /1000.,
-    "probability" : None,
+    "bits": 1. / log(2),
+    "nats": 1.,
+    "digits": 1. / log(10),
+    "kT": 1.,
+    "kJ/mol": 8.314472 * 298.15 / 1000.,
+    "kcal/mol": 1.987 * 298.15 / 1000.,
+    "probability": None,
 }
 
 # The base stack width is set equal to 9pt Courier. 
@@ -289,25 +287,26 @@ std_units = {
 # Check that can get 80 characters in journal page @small
 # 40 characters in a journal column
 std_sizes = {
-    "small" : 5.4 , 
-    "medium" : 5.4*2,
-    "large"  : 5.4*3
+    "small": 5.4,
+    "medium": 5.4 * 2,
+    "large": 5.4 * 3
 }
-            
+
 std_alphabets = {
-    'protein': unambiguous_protein_alphabet, 
+    'protein': unambiguous_protein_alphabet,
     'rna': unambiguous_rna_alphabet,
     'dna': unambiguous_dna_alphabet}
 
 std_percentCG = {
-    'H. sapiens'    : 40.,
-    'E. coli'       : 50.5,
-    'S. cerevisiae' : 38.,
-    'C. elegans'    : 36.,
+    'H. sapiens': 40.,
+    'E. coli': 50.5,
+    'S. cerevisiae': 38.,
+    'C. elegans': 36.,
     'D. melanogaster': 43.,
-    'M. musculus'   :  42.,
-    'T. thermophilus' : 69.4,
+    'M. musculus': 42.,
+    'T. thermophilus': 69.4,
 }
+
 
 # Thermus thermophilus: Henne A, Bruggemann H, Raasch C, Wiezer A, Hartsch T,
 # Liesegang H, Johann A, Lienard T, Gohl O, Martinez-Arias R, Jacobi C, 
@@ -315,10 +314,9 @@ std_percentCG = {
 # Merkl R, Gottschalk G, Fritz HJ: The genome sequence of the extreme 
 # thermophile Thermus thermophilus.
 # Nat Biotechnol 2004, 22:547-53
-            
 
-  
-class LogoOptions(object) :
+
+class LogoOptions(object):
     """ A container for all logo formatting options. Not all of these
     are directly accessible through the CLI or web interfaces. 
     
@@ -391,9 +389,9 @@ class LogoOptions(object) :
         o logo_start                -- Lower bound of sequence to display
         o logo_end                  -- Upper bound of sequence to display
 
-    """       
+    """
 
-    def __init__(self, **kwargs) :
+    def __init__(self, **kwargs):
         """ Create a new LogoOptions instance.
         
         >>> L = LogoOptions(logo_title = "Some Title String")
@@ -404,13 +402,13 @@ class LogoOptions(object) :
         self.alphabet = None
 
         self.creator_text = release_description
-        
+
         self.logo_title = ""
         self.logo_label = ""
         self.stacks_per_line = 40
-        
+
         self.unit_name = "bits"
-     
+
         self.show_yaxis = True
         # yaxis_lable default depends on other settings. See LogoFormat
         self.yaxis_label = None
@@ -420,76 +418,74 @@ class LogoOptions(object) :
 
         self.show_xaxis = True
         self.xaxis_label = ""
-        self.xaxis_tic_interval =1
+        self.xaxis_tic_interval = 1
         self.rotate_numbers = False
-        self.number_interval = 5            
+        self.number_interval = 5
         self.show_ends = False
         self.annotate = None
-        
-          
+
         self.show_fineprint = True
-        self.fineprint =  "WebLogo "+__version__ 
-    
+        self.fineprint = "WebLogo " + __version__
+
         self.show_boxes = False
         self.shrink_fraction = 0.5
-  
+
         self.show_errorbars = True
         self.errorbar_fraction = 0.90
-        self.errorbar_width_fraction = 0.25      
+        self.errorbar_width_fraction = 0.25
         self.errorbar_gray = 0.75
- 
-        self.resolution  = 96.     # Dots per inch
-           
-        self.default_color = Color.by_name("black")    
+
+        self.resolution = 96.  # Dots per inch
+
+        self.default_color = Color.by_name("black")
         self.color_scheme = None
-        #self.show_color_key = False # NOT yet implemented
-        
+        # self.show_color_key = False # NOT yet implemented
+
         self.debug = False
-        
+
         self.logo_margin = 2
         self.stroke_width = 0.5
         self.tic_length = 5
-        
-        self.stack_width = std_sizes["medium"]        
+
+        self.stack_width = std_sizes["medium"]
         self.stack_aspect_ratio = 5
-        
+
         self.stack_margin = 0.5
-        self.pad_right = False  
+        self.pad_right = False
 
         self.small_fontsize = 6
         self.fontsize = 10
         self.title_fontsize = 12
         self.number_fontsize = 8
 
-        self.text_font    = "ArialMT"
-        self.logo_font    = "Arial-BoldMT"
-        self.title_font   = "ArialMT"
+        self.text_font = "ArialMT"
+        self.logo_font = "Arial-BoldMT"
+        self.title_font = "ArialMT"
 
-        self.first_index = 1        
-        self.logo_start = None      
-        self.logo_end=None          
+        self.first_index = 1
+        self.logo_start = None
+        self.logo_end = None
         self.scale_width = True
 
-        self.reverse_stacks = True       # If true, draw stacks with largest letters on top.
+        self.reverse_stacks = True  # If true, draw stacks with largest letters on top.
 
         from corebio.utils import update
         update(self, **kwargs)
 
-    def __repr__(self) :
+    def __repr__(self):
         from corebio.util import stdrepr
-        return stdrepr( self) 
+        return stdrepr(self)
 
-    def __repr__(self) :
+    def __repr__(self):
         attributes = list(vars(self).keys())
         attributes.sort()
-        return stdrepr(self, attributes )
- 
+        return stdrepr(self, attributes)
+
+
 # End class LogoOptions
 
 
-        
-
-class LogoFormat(LogoOptions) :     
+class LogoFormat(LogoOptions):
     """ Specifies the format of the logo. Requires LogoData and LogoOptions 
     objects.
     
@@ -500,27 +496,27 @@ class LogoFormat(LogoOptions) :
     
     Raises an ArgumentError if arguments are invalid.
     """
-    def __init__(self, data, options= None) :
+
+    def __init__(self, data, options=None):
         """ Create a new LogoFormat instance.
         
         """
         LogoOptions.__init__(self)
-        
-        if options is not None :
+
+        if options is not None:
             self.__dict__.update(options.__dict__)
-                 
+
         self.alphabet = data.alphabet
         self.seqlen = data.length
-        
-        
+
         # Derived parameters.
         self.show_title = False
         self.show_xaxis_label = False
         self.yaxis_minor_tic_interval = None
-        self.lines_per_logo       = None
-        self.char_width       = None        # Maximum character width. Stack width minus margins. 
+        self.lines_per_logo = None
+        self.char_width = None  # Maximum character width. Stack width minus margins.
         self.line_margin_left = None
-        self.line_margin_right    = None
+        self.line_margin_right = None
         self.line_margin_bottom = None
         self.line_margin_top = None
         self.title_height = None
@@ -533,169 +529,170 @@ class LogoFormat(LogoOptions) :
         self.end_type = None
 
         self.stack_height = self.stack_width * self.stack_aspect_ratio
-        
+
         # Attribute to test, test, error message
         arg_conditions = (
-            ("stacks_per_line",     lambda x: x>0 ,     "Stacks per line must be positive."),
-            ("stack_width",         lambda x: x>0.0,    "Stack width must be greater than zero."),
-            ("stack_aspect_ratio" , lambda x: x>0,    "Stack aspect ratio must be greater than zero."),
-            ("fontsize" ,           lambda x: x>0 ,     "Font sizes must be positive."),
-            ("small_fontsize" ,     lambda x: x>0 ,     "Font sizes must be positive."),
-            ("title_fontsize" ,     lambda x: x>0 ,     "Font sizes must be positive."),
-            ("errorbar_fraction" ,  lambda x: x>=0.0 and x<=1.0, 
-                "The visible fraction of the error bar must be between zero and one."),
-            ("yaxis_tic_interval" , lambda x: x>=0.0 , "The yaxis tic interval cannot be negative."),                                    
-            ("yaxis_minor_tic_interval" , lambda x: not (x and x<0.0) , "Distances cannot be negative."),
-            ("xaxis_tic_interval" , lambda x: x>0.0 ,   "Tic interval must be greater than zero."),
-            ("number_interval" ,    lambda x: x>0.0 ,      "Invalid interval between numbers."),
-            ("shrink_fraction" ,    lambda x: x>=0.0 and x<=1.0 , "Invalid shrink fraction."),
-            ("stack_margin" ,       lambda x: x>0.0 , "Invalid stack margin."),
-            ("logo_margin" ,        lambda x: x>0.0 , "Invalid logo margin."),
-            ("stroke_width",       lambda x: x>0.0 , "Invalid stroke width."),
-            ("tic_length" ,         lambda x: x>0.0 , "Invalid tic length."),
+            ("stacks_per_line", lambda x: x > 0, "Stacks per line must be positive."),
+            ("stack_width", lambda x: x > 0.0, "Stack width must be greater than zero."),
+            ("stack_aspect_ratio", lambda x: x > 0, "Stack aspect ratio must be greater than zero."),
+            ("fontsize", lambda x: x > 0, "Font sizes must be positive."),
+            ("small_fontsize", lambda x: x > 0, "Font sizes must be positive."),
+            ("title_fontsize", lambda x: x > 0, "Font sizes must be positive."),
+            ("errorbar_fraction", lambda x: x >= 0.0 and x <= 1.0,
+             "The visible fraction of the error bar must be between zero and one."),
+            ("yaxis_tic_interval", lambda x: x >= 0.0, "The yaxis tic interval cannot be negative."),
+            ("yaxis_minor_tic_interval", lambda x: not (x and x < 0.0), "Distances cannot be negative."),
+            ("xaxis_tic_interval", lambda x: x > 0.0, "Tic interval must be greater than zero."),
+            ("number_interval", lambda x: x > 0.0, "Invalid interval between numbers."),
+            ("shrink_fraction", lambda x: x >= 0.0 and x <= 1.0, "Invalid shrink fraction."),
+            ("stack_margin", lambda x: x > 0.0, "Invalid stack margin."),
+            ("logo_margin", lambda x: x > 0.0, "Invalid logo margin."),
+            ("stroke_width", lambda x: x > 0.0, "Invalid stroke width."),
+            ("tic_length", lambda x: x > 0.0, "Invalid tic length."),
         )
-        
+
         # Run arguments tests. The second, attribute argument to the ArgumentError is 
         # used by the UI to provide user feedback.
         # FIXME: More validation        
-        for test in arg_conditions :
-            if not test[1]( getattr(self,test[0]) ) : raise ArgumentError(test[2], test[0])
-   
-         
+        for test in arg_conditions:
+            if not test[1](getattr(self, test[0])):
+                raise ArgumentError(test[2], test[0])
+
         # Inclusive upper and lower bounds
         # FIXME: Validate here. Move from eps_formatter        
-        if self.logo_start is  None: self.logo_start = self.first_index
-        
-        if self.logo_end is  None : 
-            self.logo_end = self.seqlen + self.first_index -1 
-        
-        self.total_stacks = self.logo_end - self.logo_start +1
+        if self.logo_start is None:
+            self.logo_start = self.first_index
 
-        if self.logo_start - self.first_index <0 :
-            raise ArgumentError(
-                "Logo range extends before start of available sequence.",
-                'logo_range')
-        
-        if self.logo_end - self.first_index  >= self.seqlen  : 
-            raise ArgumentError(
-                "Logo range extends beyond end of available sequence.",
-                'logo_range')
-    
-        if self.logo_title      : self.show_title = True
-        if not self.fineprint   : self.show_fineprint = False
-        if self.xaxis_label     : self.show_xaxis_label = True
+        if self.logo_end is None:
+            self.logo_end = self.seqlen + self.first_index - 1
 
-        if self.yaxis_label is None : 
+        self.total_stacks = self.logo_end - self.logo_start + 1
+
+        if self.logo_start - self.first_index < 0:
+            raise ArgumentError(
+                    "Logo range extends before start of available sequence.",
+                    'logo_range')
+
+        if self.logo_end - self.first_index >= self.seqlen:
+            raise ArgumentError(
+                    "Logo range extends beyond end of available sequence.",
+                    'logo_range')
+
+        if self.logo_title:
+            self.show_title = True
+        if not self.fineprint:
+            self.show_fineprint = False
+        if self.xaxis_label:
+            self.show_xaxis_label = True
+
+        if self.yaxis_label is None:
             self.yaxis_label = self.unit_name
-        
-        if self.yaxis_label : 
+
+        if self.yaxis_label:
             self.show_yaxis_label = True
-        else :
+        else:
             self.show_yaxis_label = False
             self.show_ends = False
-              
-        if not self.yaxis_scale :
-            conversion_factor = std_units[self.unit_name]
-            if conversion_factor :
-                self.yaxis_scale=log(len(self.alphabet))*conversion_factor
-            else :
-                self.yaxis_scale=1.0    # probability units
 
-        if self.yaxis_scale<=0.0 : 
-            raise ArgumentError("Invalid yaxis scale", 'yaxis_scale',)
+        if not self.yaxis_scale:
+            conversion_factor = std_units[self.unit_name]
+            if conversion_factor:
+                self.yaxis_scale = log(len(self.alphabet)) * conversion_factor
+            else:
+                self.yaxis_scale = 1.0  # probability units
+
+        if self.yaxis_scale <= 0.0:
+            raise ArgumentError("Invalid yaxis scale", 'yaxis_scale', )
 
         if self.yaxis_tic_interval >= self.yaxis_scale:
-            self.yaxis_tic_interval /= 2. 
+            self.yaxis_tic_interval /= 2.
 
         self.yaxis_minor_tic_interval \
-            = float(self.yaxis_tic_interval)/self.yaxis_minor_tic_ratio
-                      
-        if self.color_scheme is None :
-            if self.alphabet in default_color_schemes :
+            = float(self.yaxis_tic_interval) / self.yaxis_minor_tic_ratio
+
+        if self.color_scheme is None:
+            if self.alphabet in default_color_schemes:
                 self.color_scheme = default_color_schemes[self.alphabet]
-            else :
+            else:
                 self.color_scheme = monochrome
 
-        self.lines_per_logo = 1+ ( (self.total_stacks-1) // self.stacks_per_line)
-    
-        if self.lines_per_logo==1 and not self.pad_right:
+        self.lines_per_logo = 1 + ((self.total_stacks - 1) // self.stacks_per_line)
+
+        if self.lines_per_logo == 1 and not self.pad_right:
             self.stacks_per_line = min(self.stacks_per_line, self.total_stacks)
 
-        self.char_width = self.stack_width - 2* self.stack_margin
-    
-    
-        if self.show_yaxis :
+        self.char_width = self.stack_width - 2 * self.stack_margin
+
+        if self.show_yaxis:
             self.line_margin_left = self.fontsize * 3.0
-        else :
+        else:
             self.line_margin_left = 0
 
-        if self.show_ends :
-            self.line_margin_right = self.fontsize *1.5 
-        else :
-            self.line_margin_right = self.fontsize             
+        if self.show_ends:
+            self.line_margin_right = self.fontsize * 1.5
+        else:
+            self.line_margin_right = self.fontsize
 
-        if self.show_xaxis :
-            if self.rotate_numbers :
-                self.line_margin_bottom = self.number_fontsize *2.5
+        if self.show_xaxis:
+            if self.rotate_numbers:
+                self.line_margin_bottom = self.number_fontsize * 2.5
             else:
-                self.line_margin_bottom = self.number_fontsize *1.5
-        else :
+                self.line_margin_bottom = self.number_fontsize * 1.5
+        else:
             self.line_margin_bottom = 4
 
         self.line_margin_top = 4
-    
-        if self.show_title :
-            self.title_height = self.title_fontsize 
-        else :
+
+        if self.show_title:
+            self.title_height = self.title_fontsize
+        else:
             self.title_height = 0
 
-        self.xaxis_label_height =0.
-        if self.show_xaxis_label :
+        self.xaxis_label_height = 0.
+        if self.show_xaxis_label:
             self.xaxis_label_height += self.fontsize
-        if self.show_fineprint :
+        if self.show_fineprint:
             self.xaxis_label_height += self.small_fontsize
 
-        self.line_height = (self.stack_height + self.line_margin_top +    
-                            self.line_margin_bottom )
-        self.line_width  = (self.stack_width*self.stacks_per_line + 
-                            self.line_margin_left + self.line_margin_right )
+        self.line_height = (self.stack_height + self.line_margin_top +
+                            self.line_margin_bottom)
+        self.line_width = (self.stack_width * self.stacks_per_line +
+                           self.line_margin_left + self.line_margin_right)
 
-        self.logo_height = int(2*self.logo_margin + self.title_height \
-            + self.xaxis_label_height + self.line_height*self.lines_per_logo) 
-        self.logo_width = int(2*self.logo_margin + self.line_width )
+        self.logo_height = int(2 * self.logo_margin + self.title_height \
+                               + self.xaxis_label_height + self.line_height * self.lines_per_logo)
+        self.logo_width = int(2 * self.logo_margin + self.line_width)
 
-
-        self.creation_date = datetime.now().isoformat(' ') 
+        self.creation_date = datetime.now().isoformat(' ')
 
         end_type = '-'
         end_types = {
-            unambiguous_protein_alphabet: 'p', 
+            unambiguous_protein_alphabet: 'p',
             unambiguous_rna_alphabet: '-',
-            unambiguous_dna_alphabet: 'd' 
+            unambiguous_dna_alphabet: 'd'
         }
         if self.show_ends and self.alphabet in end_types:
             end_type = end_types[self.alphabet]
         self.end_type = end_type
 
-        
-        if self.annotate is None :
+        if self.annotate is None:
             self.annotate = []
             for i in range(self.seqlen):
                 index = i + self.first_index
-                if index % self.number_interval == 0 : 
-                    self.annotate.append( "%d"%index)
-                else :
+                if index % self.number_interval == 0:
+                    self.annotate.append("%d" % index)
+                else:
                     self.annotate.append("")
-                    
-        if len(self.annotate)!=self.seqlen  :
+
+        if len(self.annotate) != self.seqlen:
             raise ArgumentError(
-                  "Annotations must be same length as sequences.",
-                  'annotate')
-            
+                    "Annotations must be same length as sequences.",
+                    'annotate')
 
     # End __init__
-# End class LogoFormat
 
+
+# End class LogoFormat
 
 
 # ------ Logo Formaters ------
@@ -707,29 +704,31 @@ class LogoFormat(LogoOptions) :
 # Each formatter returns binary data. The eps and data formats can decoded
 # to strings, e.g. eps_as_string = eps_data.decode()
 
-def pdf_formatter(data, format) :
+def pdf_formatter(data, format):
     """ Generate a logo in PDF format."""
     eps = eps_formatter(data, format).decode()
-    gs = GhostscriptAPI()    
+    gs = GhostscriptAPI()
     return gs.convert('pdf', eps, format.logo_width, format.logo_height)
 
 
-def _bitmap_formatter(data, format, device) :
-    eps = eps_formatter(data, format).decode()   
-    gs = GhostscriptAPI()    
-    return gs.convert(device, eps, 
-        format.logo_width, format.logo_height, format.resolution)
+def _bitmap_formatter(data, format, device):
+    eps = eps_formatter(data, format).decode()
+    gs = GhostscriptAPI()
+    return gs.convert(device, eps,
+                      format.logo_width, format.logo_height, format.resolution)
 
-def jpeg_formatter(data, format) : 
+
+def jpeg_formatter(data, format):
     """ Generate a logo in JPEG format."""
     return _bitmap_formatter(data, format, device="jpeg")
 
-def svg_formatter(data, format) : 
+
+def svg_formatter(data, format):
     """ Generate a logo in Scalable Vector Graphics (SVG) format.
     Requires the program 'pdf2svg' be installed.
     """
     pdf = pdf_formatter(data, format)
-    
+
     try:
         command = find_command('pdf2svg')
     except EnvironmentError:
@@ -740,19 +739,18 @@ def svg_formatter(data, format) :
     fpdfi, fname_pdf = tempfile.mkstemp(suffix=".pdf")
     fsvgi, fname_svg = tempfile.mkstemp(suffix=".svg")
     try:
-        
 
         fpdf2 = open(fname_pdf, 'w')
         if sys.version_info[0] >= 3:
             fpdf2.buffer.write(pdf)
-        else: 
-            fpdf2.write(pdf)        
-                    
+        else:
+            fpdf2.write(pdf)
+
         fpdf2.seek(0)
-  
+
         args = [command, fname_pdf, fname_svg]
         p = Popen(args)
-        (out,err) = p.communicate() 
+        (out, err) = p.communicate()
 
         fsvg = open(fname_svg)
         return fsvg.read().encode()
@@ -761,12 +759,12 @@ def svg_formatter(data, format) :
         os.remove(fname_pdf)
 
 
-def png_formatter(data, format) : 
+def png_formatter(data, format):
     """ Generate a logo in PNG format."""
     return _bitmap_formatter(data, format, device="png")
 
 
-def png_print_formatter(data, format) : 
+def png_print_formatter(data, format):
     """ Generate a logo in PNG format with print quality (600 DPI) resolution."""
     format.resolution = 600
     return _bitmap_formatter(data, format, device="png")
@@ -776,241 +774,235 @@ def txt_formatter(logodata, format):
     """ Create a text representation of the logo data. 
     """
     return str(logodata).encode()
-   
 
-    
-def eps_formatter(logodata, format) :
+
+def eps_formatter(logodata, format):
     """ Generate a logo in Encapsulated Postscript (EPS)"""
     substitutions = {}
-    from_format =[
-        "creation_date",    "logo_width",           "logo_height",      
-        "lines_per_logo",   "line_width",           "line_height",
-        "line_margin_right","line_margin_left",     "line_margin_bottom",
-        "line_margin_top",  "title_height",         "xaxis_label_height",
-        "creator_text",     "logo_title",           "logo_margin",
-        "stroke_width",     "tic_length",           
-        "stacks_per_line",  "stack_margin",
-        "yaxis_label",      "yaxis_tic_interval",   "yaxis_minor_tic_interval",
-        "xaxis_label",      "xaxis_tic_interval",   "number_interval",
-        "fineprint",        "shrink_fraction",      "errorbar_fraction",
+    from_format = [
+        "creation_date", "logo_width", "logo_height",
+        "lines_per_logo", "line_width", "line_height",
+        "line_margin_right", "line_margin_left", "line_margin_bottom",
+        "line_margin_top", "title_height", "xaxis_label_height",
+        "creator_text", "logo_title", "logo_margin",
+        "stroke_width", "tic_length",
+        "stacks_per_line", "stack_margin",
+        "yaxis_label", "yaxis_tic_interval", "yaxis_minor_tic_interval",
+        "xaxis_label", "xaxis_tic_interval", "number_interval",
+        "fineprint", "shrink_fraction", "errorbar_fraction",
         "errorbar_width_fraction",
-        "errorbar_gray",    "small_fontsize",       "fontsize",
-        "title_fontsize",   "number_fontsize",      "text_font",
-        "logo_font",        "title_font",          
-        "logo_label",       "yaxis_scale",          "end_type",
-        "debug",            "show_title",           "show_xaxis",
-        "show_xaxis_label", "show_yaxis",           "show_yaxis_label",
-        "show_boxes",       "show_errorbars",       "show_fineprint",
-        "rotate_numbers",   "show_ends",            "stack_height",
+        "errorbar_gray", "small_fontsize", "fontsize",
+        "title_fontsize", "number_fontsize", "text_font",
+        "logo_font", "title_font",
+        "logo_label", "yaxis_scale", "end_type",
+        "debug", "show_title", "show_xaxis",
+        "show_xaxis_label", "show_yaxis", "show_yaxis_label",
+        "show_boxes", "show_errorbars", "show_fineprint",
+        "rotate_numbers", "show_ends", "stack_height",
         "stack_width"
-        ]
-   
-    for s in from_format :
-        substitutions[s] = getattr(format,s)
+    ]
+
+    for s in from_format:
+        substitutions[s] = getattr(format, s)
 
     substitutions["shrink"] = str(format.show_boxes).lower()
 
-
     # --------- COLORS --------------
     def format_color(color):
-        return  " ".join( ("[",str(color.red) , str(color.green), 
-            str(color.blue), "]"))  
+        return " ".join(("[", str(color.red), str(color.green),
+                         str(color.blue), "]"))
 
     substitutions["default_color"] = format_color(format.default_color)
 
-    colors = []  
-    for group in format.color_scheme.groups :
+    colors = []
+    for group in format.color_scheme.groups:
         cf = format_color(group.color)
-        for s in group.symbols :
-            colors.append( "  ("+s+") " + cf )
+        for s in group.symbols:
+            colors.append("  (" + s + ") " + cf)
     substitutions["color_dict"] = "\n".join(colors)
-        
+
     data = []
-    
+
     # Unit conversion. 'None' for probability units
     conv_factor = std_units[format.unit_name]
-    
+
     data.append("StartLine")
 
-    seq_from = format.logo_start- format.first_index
-    seq_to = format.logo_end - format.first_index +1
+    seq_from = format.logo_start - format.first_index
+    seq_to = format.logo_end - format.first_index + 1
 
     # seq_index : zero based index into sequence data
     # logo_index : User visible coordinate, first_index based
     # stack_index : zero based index of visible stacks
-    for seq_index in range(seq_from, seq_to) :
-        logo_index = seq_index + format.first_index 
+    for seq_index in range(seq_from, seq_to):
+        logo_index = seq_index + format.first_index
         stack_index = seq_index - seq_from
-        
-        if stack_index!=0 and (stack_index % format.stacks_per_line) ==0 :
+
+        if stack_index != 0 and (stack_index % format.stacks_per_line) == 0:
             data.append("")
             data.append("EndLine")
             data.append("StartLine")
             data.append("")
-        
-        data.append("(%s) StartStack" % format.annotate[seq_index] )
 
-        if conv_factor: 
+        data.append("(%s) StartStack" % format.annotate[seq_index])
+
+        if conv_factor:
             stack_height = logodata.entropy[seq_index] * std_units[format.unit_name]
-        else :
-            stack_height = 1.0 # Probability
+        else:
+            stack_height = 1.0  # Probability
 
         # Sort by frequency. If equal frequency then reverse alphabetic
         # (So sort reverse alphabetic first, then frequencty)
         # TODO: doublecheck this actual works
         s = list(zip(logodata.counts[seq_index], logodata.alphabet))
-        s.sort(key= lambda x: x[1])
+        s.sort(key=lambda x: x[1])
         s.reverse()
-        s.sort(key= lambda x: x[0])
-        
-        
+        s.sort(key=lambda x: x[0])
+
         if not format.reverse_stacks: s.reverse()
 
-        C = float(sum(logodata.counts[seq_index])) 
-        if C > 0.0 :
+        C = float(sum(logodata.counts[seq_index]))
+        if C > 0.0:
             fraction_width = 1.0
-            if format.scale_width :
-                fraction_width = logodata.weight[seq_index] 
-            # print(fraction_width, file=sys.stderr)
+            if format.scale_width:
+                fraction_width = logodata.weight[seq_index]
+                # print(fraction_width, file=sys.stderr)
             for c in s:
-                data.append(" %f %f (%s) ShowSymbol" % (fraction_width, c[0]*stack_height/C, c[1]) )
+                data.append(" %f %f (%s) ShowSymbol" % (fraction_width, c[0] * stack_height / C, c[1]))
 
         # Draw error bar on top of logo. Replaced by DrawErrorbarFirst above.
-        if logodata.entropy_interval is not None and conv_factor and C>0.0:
+        if logodata.entropy_interval is not None and conv_factor and C > 0.0:
 
             low, high = logodata.entropy_interval[seq_index]
             center = logodata.entropy[seq_index]
             low *= conv_factor
             high *= conv_factor
-            center *=conv_factor
-            if high> format.yaxis_scale : high = format.yaxis_scale 
+            center *= conv_factor
+            if high > format.yaxis_scale:
+                high = format.yaxis_scale
 
-            down = (center - low) 
-            up   = (high - center) 
-            data.append(" %f %f DrawErrorbar" % (down, up) )
-            
+            down = (center - low)
+            up = (high - center)
+            data.append(" %f %f DrawErrorbar" % (down, up))
+
         data.append("EndStack")
         data.append("")
-               
-    data.append("EndLine")
-    substitutions["logo_data"] = "\n".join(data)  
 
+    data.append("EndLine")
+    substitutions["logo_data"] = "\n".join(data)
 
     # Create and output logo
-    template = resource_string( __name__, 'template.eps', __file__).decode()
+    template = resource_string(__name__, 'template.eps', __file__).decode()
     logo = Template(template).substitute(substitutions)
 
     return logo.encode()
-    
-    
- 
+
 
 # map between output format names and logo  
 formatters = {
-    'eps': eps_formatter, 
+    'eps': eps_formatter,
     'pdf': pdf_formatter,
     'png': png_formatter,
-    'png_print' : png_print_formatter,
-    'jpeg'  : jpeg_formatter,
-    'svg'   : svg_formatter,
-    'logodata' : txt_formatter,          
-    }     
-    
+    'png_print': png_print_formatter,
+    'jpeg': jpeg_formatter,
+    'svg': svg_formatter,
+    'logodata': txt_formatter,
+}
+
 default_formatter = eps_formatter
 
 
-
-
-
-def parse_prior(composition, alphabet, weight=None) :
+def parse_prior(composition, alphabet, weight=None):
     """ Parse a description of the expected monomer distribution of a sequence.
     
     Valid compositions:
     
-    - None or 'none' :      No composition sepecified 
-    - 'auto' or 'automatic': Use the typical average distribution
-                            for proteins and an equiprobable distribution for
-                            everything else.    
-    - 'equiprobable' :      All monomers have the same probability.
+    - None or 'none' :        No composition sepecified
+    - 'auto' or 'automatic' : Use the typical average distribution
+                              for proteins and an equiprobable distribution for
+                              everything else.
+    - 'equiprobable' :        All monomers have the same probability.
     - a percentage, e.g. '45%' or a fraction '0.45':
-                            The fraction of CG bases for nucleotide alphabets
+                              The fraction of CG bases for nucleotide alphabets
     - a species name, e.g. 'E. coli', 'H. sapiens' :
-                            Use the average CG percentage for the specie's      
-                            genome.
+                              Use the average CG percentage for the specie's
+                              genome.
     - An explicit distribution,  e.g. {'A':10, 'C':40, 'G':40, 'T':10}
     """
-    if composition is None: return None
+    if composition is None:
+        return None
     comp = composition.strip()
-    
-    if comp.lower() == 'none': return None
-    
-    
-    if weight is None and alphabet is not None: 
+
+    if comp.lower() == 'none':
+        return None
+
+    if weight is None and alphabet is not None:
         weight = sqrt(float(len(alphabet)))
 
-    if weight<0 : raise ValueError("Weight cannot be negative.")
-    
-    
-    if comp.lower() == 'equiprobable' :
-        prior = weight * equiprobable_distribution(len(alphabet)) 
+    if weight < 0:
+        raise ValueError("Weight cannot be negative.")
+
+    if comp.lower() == 'equiprobable':
+        prior = weight * equiprobable_distribution(len(alphabet))
     elif comp.lower() == 'auto' or comp.lower() == 'automatic':
-        if alphabet == unambiguous_protein_alphabet :
-            prior =  weight * asarray(aa_composition, float64)
-        else :
-            prior = weight * equiprobable_distribution(len(alphabet)) 
-    
-    elif comp in std_percentCG :
+        if alphabet == unambiguous_protein_alphabet:
+            prior = weight * asarray(aa_composition, float64)
+        else:
+            prior = weight * equiprobable_distribution(len(alphabet))
+
+    elif comp in std_percentCG:
         prior = weight * base_distribution(std_percentCG[comp])
 
-    elif comp[-1] == '%' :
-        prior = weight * base_distribution( float(comp[:-1]))
+    elif comp[-1] == '%':
+        prior = weight * base_distribution(float(comp[:-1]))
 
-    elif isfloat(comp) :
-        prior = weight * base_distribution( float(comp)*100. )
+    elif isfloat(comp):
+        prior = weight * base_distribution(float(comp) * 100.)
 
-    elif composition[0] == '{' and composition[-1] == '}' : 
+    elif composition[0] == '{' and composition[-1] == '}':
         explicit = composition[1: -1]
-        explicit = explicit.replace(',',' ').replace("'", ' ').replace('"',' ').replace(':', ' ').split()
-        
-        if len(explicit) != len(alphabet)*2 :
-            #print(explicit)
+        explicit = explicit.replace(',', ' ').replace("'", ' ').replace('"', ' ').replace(':', ' ').split()
+
+        if len(explicit) != len(alphabet) * 2:
+            # print(explicit)
             raise ValueError("Explicit prior does not match length of alphabet")
-        prior = - ones(len(alphabet), float64) 
-        try :
+        prior = - ones(len(alphabet), float64)
+        try:
             for r in range(len(explicit) // 2):
-                letter = explicit[r*2]
+                letter = explicit[r * 2]
                 index = alphabet.ord(letter)
-                value = float(explicit[r*2 +1])
+                value = float(explicit[r * 2 + 1])
                 prior[index] = value
-        except ValueError :
+        except ValueError:
             raise ValueError("Cannot parse explicit composition")
-    
-        if any(prior==-1.) :
-            raise ValueError("Explicit prior does not match alphabet") 
-        prior/= sum(prior)
+
+        if any(prior == -1.):
+            raise ValueError("Explicit prior does not match alphabet")
+        prior /= sum(prior)
         prior *= weight
-        
-        
-    else : 
-        raise ValueError("Unknown or malformed composition: %s"%composition)
-    
-    if len(prior) != len(alphabet) :
+
+
+    else:
+        raise ValueError("Unknown or malformed composition: %s" % composition)
+
+    if len(prior) != len(alphabet):
         raise ValueError(
-            "The sequence alphabet and composition are incompatible.")
+                "The sequence alphabet and composition are incompatible.")
     return prior
 
-    
-def base_distribution(percentCG) :
-    A = (1. - (percentCG/100.))/2.
-    C = (percentCG/100.)/2.
-    G = (percentCG/100.)/2.
-    T = (1. - (percentCG/100))/2.
-    return asarray((A,C,G,T), float64)   
 
-def equiprobable_distribution( length) :
-    return ones( (length), float64) /length   
-  
-  
+def base_distribution(percentCG):
+    A = (1. - (percentCG / 100.)) / 2.
+    C = (percentCG / 100.) / 2.
+    G = (percentCG / 100.) / 2.
+    T = (1. - (percentCG / 100)) / 2.
+    return asarray((A, C, G, T), float64)
+
+
+def equiprobable_distribution(length):
+    return ones((length), float64) / length
+
+
 def _seq_formats():
     """ Return a dictionary mapping between the names of formats for the sequence data
     and the corresponing parsers.
@@ -1029,60 +1021,59 @@ def _seq_names():
     fin_names.append('transfac')
     return fin_names
 
-    
+
 def _seq_extensions():
     """ Returns a list of the file extensions of accepted sequence data formats """
     exts = []
-    for f in seq_io.formats: exts.extend(f.extensions)
+    for f in seq_io.formats:
+        exts.extend(f.extensions)
     exts.extend('dat')  # Occasionaly used for transfac files (?)
 
-  
 
-def read_seq_data(fin, 
-                input_parser=seq_io.read, 
-                alphabet=None, 
-                ignore_lower_case=False, 
-                max_file_size=0):
+def read_seq_data(fin,
+                  input_parser=seq_io.read,
+                  alphabet=None,
+                  ignore_lower_case=False,
+                  max_file_size=0):
     """ Read sequence data from the input stream and return a seqs object. 
     
     The environment variable WEBLOGO_MAX_FILE_SIZE overides the max_file_size argument.
     Used to limit the load on the WebLogo webserver.
     """
 
-    max_file_size =int(os.environ.get("WEBLOGO_MAX_FILE_SIZE", max_file_size))
+    max_file_size = int(os.environ.get("WEBLOGO_MAX_FILE_SIZE", max_file_size))
 
     # If max_file_size is set, or if fin==stdin (which is non-seekable), we
     # read the data and replace fin with a StringIO object. 
-    if(max_file_size>0) :
+    if (max_file_size > 0):
         data = fin.read(max_file_size)
         more_data = fin.read(2)
-        if more_data != "" :
-            raise IOError("File exceeds maximum allowed size: %d bytes"  % max_file_size) 
+        if more_data != "":
+            raise IOError("File exceeds maximum allowed size: %d bytes" % max_file_size)
         fin = StringIO(data)
     elif fin == sys.stdin:
         fin = StringIO(fin.read())
 
-    fin.seek(0)    
+    fin.seek(0)
     seqs = input_parser(fin)
 
-    if seqs is None or len(seqs) ==0 :
+    if seqs is None or len(seqs) == 0:
         raise ValueError("Please provide a multiple sequence alignment")
-    
-    if ignore_lower_case :
+
+    if ignore_lower_case:
         # Case is significant. Do not count lower case letters.
-        for i,s in enumerate(seqs) :
+        for i, s in enumerate(seqs):
             seqs[i] = s.mask()
 
     # Add alphabet to seqs.
-    if alphabet :
-        seqs.alphabet = Alphabet(alphabet) 
-    else :
+    if alphabet:
+        seqs.alphabet = Alphabet(alphabet)
+    else:
         seqs.alphabet = Alphabet.which(seqs)
     return seqs
 
 
-    
-class LogoData(object) :
+class LogoData(object):
     """The data needed to generate a sequence logo.
        
     - alphabet --  The set of symbols to count. 
@@ -1092,9 +1083,9 @@ class LogoData(object) :
     - entropy --   The relative entropy of each column
     - entropy_interval -- entropy confidence interval
      """
-     
-    def __init__(self, length=None, alphabet = None, counts =None, 
-            entropy =None, entropy_interval = None, weight=None) :
+
+    def __init__(self, length=None, alphabet=None, counts=None,
+                 entropy=None, entropy_interval=None, weight=None):
         """Creates a new LogoData object"""
         self.length = length
         self.alphabet = alphabet
@@ -1102,93 +1093,92 @@ class LogoData(object) :
         self.entropy = entropy
         self.entropy_interval = entropy_interval
         self.weight = weight
-        
 
-    @classmethod    
-    def from_counts(cls, alphabet, counts, prior= None):
+    @classmethod
+    def from_counts(cls, alphabet, counts, prior=None):
         """Build a LogoData object from counts."""
         # Counts is a Motif object?
-        #counts = counts.array
-        
+        # counts = counts.array
+
         seq_length, A = counts.shape
-        
-        if prior is not None: prior = array(prior, float64)
-        
-        if prior is None or sum(prior)==0.0:
+
+        if prior is not None:
+            prior = array(prior, float64)
+
+        if prior is None or sum(prior) == 0.0:
             R = log(A)
-            ent = zeros(  seq_length, float64)
-            entropy_interval = None    
-            for i in range (0, seq_length) :
-                C = sum(counts[i]) 
-                #FIXME: fixup corebio.moremath.entropy()?
-                if C == 0 :
+            ent = zeros(seq_length, float64)
+            entropy_interval = None
+            for i in range(0, seq_length):
+                C = sum(counts[i])
+                # FIXME: fixup corebio.moremath.entropy()?
+                if C == 0:
                     ent[i] = 0.0
-                else :
+                else:
                     ent[i] = R - entropy(counts[i])
-        else :
-            ent = zeros(  seq_length, float64)
-            entropy_interval = zeros( (seq_length,2) , float64)
-        
+        else:
+            ent = zeros(seq_length, float64)
+            entropy_interval = zeros((seq_length, 2), float64)
+
             R = log(A)
-            
-            for i in range (0, seq_length) :
-                alpha = array(counts[i] , float64)
+
+            for i in range(0, seq_length):
+                alpha = array(counts[i], float64)
                 alpha += prior
-                
+
                 posterior = Dirichlet(alpha)
-                ent[i] = posterior.mean_relative_entropy(prior/sum(prior)) 
+                ent[i] = posterior.mean_relative_entropy(prior / sum(prior))
                 entropy_interval[i][0], entropy_interval[i][1] = \
-                    posterior.interval_relative_entropy(prior/sum(prior), 0.95) 
- 
-        weight = array( na.sum(counts,axis=1) , float) 
+                    posterior.interval_relative_entropy(prior / sum(prior), 0.95)
+
+        weight = array(na.sum(counts, axis=1), float)
         max_weight = max(weight)
-        if max_weight ==0.0 : raise ValueError('No counts.')
+        if max_weight == 0.0:
+            raise ValueError('No counts.')
         weight /= max_weight
- 
+
         return cls(seq_length, alphabet, counts, ent, entropy_interval, weight)
 
-
-    @classmethod    
-    def from_seqs(cls, seqs, prior= None):
+    @classmethod
+    def from_seqs(cls, seqs, prior=None):
         """Build a LogoData object from a SeqList, a list of sequences."""
         # --- VALIDATE DATA ---
         # check that at least one sequence of length at least 1 long
-        if len(seqs)==0 or len(seqs[0]) ==0:
-            raise ValueError("No sequence data found.")   
-    
-        # Check sequence lengths    
+        if len(seqs) == 0 or len(seqs[0]) == 0:
+            raise ValueError("No sequence data found.")
+
+        # Check sequence lengths
         seq_length = len(seqs[0])
-        for i,s in enumerate(seqs) :
-            #print(i, s, len(s))
-            #TODO: Redundant? Should be checked in SeqList?
-            if seq_length != len(s) :
+        for i, s in enumerate(seqs):
+            # print(i, s, len(s))
+            # TODO: Redundant? Should be checked in SeqList?
+            if seq_length != len(s):
                 raise ArgumentError(
-    "Sequence number %d differs in length from the previous sequences" % (i+1) ,
+                        "Sequence number %d differs in length from the previous sequences" % (i + 1),
                         'sequences')
 
         # FIXME: Check seqs.alphabet?
-        
+
         counts = seqs.profile()
         return cls.from_counts(seqs.alphabet, counts, prior)
 
-
-    def __str__(self) :
+    def __str__(self):
         out = StringIO()
         print('## LogoData', file=out)
         print('# First column is position number, counting from zero', file=out)
         print('# Subsequent columns are raw symbol counts', file=out)
-        print('# Entropy is mean entropy measured in nats.' , file=out)
+        print('# Entropy is mean entropy measured in nats.', file=out)
         print('# Low and High are the 95% confidence limits.', file=out)
         print('# Weight is the fraction of non-gap symbols in the column.', file=out)
         print('#\t', file=out)
         # Show column names
         print('#', end='\t', file=out)
-        for a in self.alphabet :
+        for a in self.alphabet:
             print(a, end=' \t', file=out)
         print('Entropy\tLow\tHigh\tWeight', file=out)
 
         # Write the data table
-        for i in range(self.length) :
+        for i in range(self.length):
             print(i + 1, end=' \t', file=out)
             for c in self.counts[i]:
                 print(c, end=' \t', file=out)
@@ -1198,9 +1188,9 @@ class LogoData(object) :
                       file=out)
                 print("%6.4f" % self.entropy_interval[i][1], end=' \t',
                       file=out)
-            else :
+            else:
                 print('\t', '\t', end='', file=out)
-            if self.weight is not None :
+            if self.weight is not None:
                 print("%6.4f" % self.weight[i], end='', file=out)
             print('', file=out)
         print('# End LogoData', file=out)
@@ -1220,29 +1210,28 @@ def _from_URL_fileopen(target_url):
         from urlparse import urlparse, urlunparse
  
     import shutil, tempfile
-   
 
     # parsing url in component parts
     (scheme, net_location, path, param, query, frag) = urlparse(target_url)
 
     # checks if string is URL link
-    if scheme != "http" and scheme !="https" and scheme != "ftp":
-        raise ValueError("Cannot open url: %s" , target_url)
+    if scheme != "http" and scheme != "https" and scheme != "ftp":
+        raise ValueError("Cannot open url: %s", target_url)
 
     # checks for dropbox link
     if net_location == 'www.dropbox.com':
-        #changes dropbox http link into download link
-        if query == "dl=0":    query2 = "dl=1"
+        # changes dropbox http link into download link
+        if query == "dl=0":
+            query2 = "dl=1"
 
         # rebuild download URL, with new query2 variable
-        target_url = urlunparse((scheme, net_location, path, param, query2,""))
+        target_url = urlunparse((scheme, net_location, path, param, query2, ""))
 
     # checks for google drive link
     if net_location == 'drive.google.com':
-        
         # link configuration for direct download instead of html frame
         google_directdl_frag = "https://docs.google.com/uc?export=download&id="
-        
+
         # pull file id
         (scheme, net_location, path_raw, param, query, frag) = urlparse(target_url)
         path = path_raw.split('/')

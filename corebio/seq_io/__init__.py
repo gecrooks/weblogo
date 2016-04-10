@@ -1,4 +1,3 @@
-
 #  Copyright (c) 2005 Gavin E. Crooks <gec@threeplusone.com>
 #  Copyright (c) 2006, The Regents of the University of California, through 
 #  Lawrence Berkeley National Laboratory (subject to receipt of any required
@@ -33,9 +32,6 @@
 #  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 #  POSSIBILITY OF SUCH DAMAGE. 
-
-
-
 
 
 """ Sequence file reading and writing.
@@ -154,7 +150,7 @@ from . import (
 )
 
 __all__ = [
-    'clustal_io', 
+    'clustal_io',
     'fasta_io',
     'msf_io',
     'nbrf_io',
@@ -171,33 +167,36 @@ __all__ = [
     'formats',
     'format_names',
     'format_extensions',
-    ]
+]
 
-formats = ( clustal_io, fasta_io, plain_io, msf_io, genbank_io,nbrf_io, nexus_io, phylip_io, stockholm_io, intelligenetics_io, table_io, array_io)
+
 """Available seq_io formats"""
+formats = (clustal_io, fasta_io, plain_io, msf_io, genbank_io, nbrf_io, nexus_io, phylip_io, stockholm_io,
+           intelligenetics_io, table_io, array_io)
 
 
-def format_names() :   
+def format_names():
     """Return a map between format names and format modules"""
     global formats
     fnames = {}
-    for f in formats :
-        for name in f.names :
-            assert name not in fnames # Insanity check
-            fnames[name] = f  
+    for f in formats:
+        for name in f.names:
+            assert name not in fnames  # Insanity check
+            fnames[name] = f
     return fnames
 
-def format_extensions() :   
+
+def format_extensions():
     """Return a map between filename extensions and sequence file types"""
     global formats
     fext = {}
-    for f in formats :
-        for ext in f.extensions :
-            assert ext not in fext # Insanity check
-            fext[ext] = f  
+    for f in formats:
+        for ext in f.extensions:
+            assert ext not in fext  # Insanity check
+            fext[ext] = f
     return fext
 
-    
+
 # seq_io._parsers is an ordered list of sequence parsers that are tried, in 
 # turn, on files of unknown format. Each parser must raise an exception when
 # fed a format further down the list.
@@ -207,32 +206,31 @@ def format_extensions() :
 # 'array_io' is last, since it is very general.
 _parsers = (nbrf_io, fasta_io, clustal_io, phylip_io, genbank_io, stockholm_io, msf_io, nexus_io, table_io, array_io)
 
- 
-def _get_parsers(fin) :
+
+def _get_parsers(fin):
     global _parsers
-    
+
     fnames = format_names()
     fext = format_extensions()
     parsers = list(_parsers)
     best_guess = parsers[0]
-    
+
     # If a filename is supplied use the extension to guess the format.
-    if hasattr(fin, "name") and '.' in fin.name :
+    if hasattr(fin, "name") and '.' in fin.name:
         extension = fin.name.split('.')[-1]
-        if extension in  fnames:
+        if extension in fnames:
             best_guess = fnames[extension]
-        elif extension in fext :
+        elif extension in fext:
             best_guess = fext[extension]
-        
-    if best_guess in parsers :
+
+    if best_guess in parsers:
         parsers.remove(best_guess)
-    parsers.insert(0,best_guess)
+    parsers.insert(0, best_guess)
 
     return parsers
 
- 
-    
-def read(fin, alphabet=None) :
+
+def read(fin, alphabet=None):
     """ Read a sequence file and attempt to guess its format. 
     First the filename extension (if available) is used to infer the format.
     If that fails, then we attempt to parse the file using several common   
@@ -248,20 +246,14 @@ def read(fin, alphabet=None) :
     """
 
     alphabet = Alphabet(alphabet)
-    parsers =  _get_parsers(fin)
-    
-    for p in parsers :
+    parsers = _get_parsers(fin)
+
+    for p in parsers:
         fin.seek(0)
-        try:    
+        try:
             return p.read(fin, alphabet)
         except ValueError:
             pass
-            
-    names = ", ".join([ p.names[0] for p in parsers])
+
+    names = ", ".join([p.names[0] for p in parsers])
     raise ValueError("Cannot parse sequence file: Tried %s " % names)
-
-
-
-
-
-

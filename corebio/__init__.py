@@ -1,4 +1,3 @@
-
 #  Copyright (c) 2005 Gavin E. Crooks <gec@threeplusone.com>
 #  Copyright (c) 2006, The Regents of the University of California, through 
 #  Lawrence Berkeley National Laboratory (subject to receipt of any required
@@ -48,23 +47,23 @@ Environment Variables:
     - COREBIOPATH -- An alternative search path for shell commands. Used
         by corebio.utils.find_command
     
-""" 
+"""
 from __future__ import absolute_import
 
-__all__ = [ 'data',
-            'matrix',
-            "moremath",
-            "db", 
-            "seq", 
-            "seq_io", 
-            'ssearch_io', 
-            "utils", 
-            'transform',
-            'secstruc',
-            ]
+__all__ = ['data',
+           'matrix',
+           "moremath",
+           "db",
+           "seq",
+           "seq_io",
+           'ssearch_io',
+           "utils",
+           'transform',
+           'secstruc',
+           ]
 
 from corebio._version import __version__, description
+
 user_agent = "corebio/" + __version__ + " (https://github.com/WebLogo/weblogo)"
 
-__doc__  = description +' : ' + __doc__
-
+__doc__ = description + ' : ' + __doc__
