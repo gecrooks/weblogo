@@ -16,7 +16,7 @@ A sequence logo is a graphical representation of an amino acid or nucleic acid m
 3.4
 
 ###WebLogo 2
- The legacy WebLogo 2 sever can be found <a href="http://weblogo.berkeley.edu/">here.</a>
+ The legacy WebLogo 2 server can be found <a href="http://weblogo.berkeley.edu/">here.</a>
 
 
 ### Installation
