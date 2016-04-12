@@ -25,6 +25,13 @@ If the python package <code>setuptools</code> has been installed, then WebLogo a
 ```sh
 $ sudo easy_install weblogo
 ```
+
+WebLogo can also be installed with <code>pip </code>. 
+
+```sh
+$ pip install weblogo
+```
+
 ###Development
 
 Please consult the developer notes, <code>DEVELOPERS.txt</code> and  software license <code>LICENSE.txt</code>
