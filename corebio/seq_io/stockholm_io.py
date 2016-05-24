@@ -1,4 +1,3 @@
- 
 #  Copyright (c) 2005 Gavin E. Crooks <gec@threeplusone.com>
 #
 #  This software is distributed under the MIT Open Source License.
@@ -37,11 +36,9 @@ from __future__ import absolute_import, print_function
 
 import re
 
-from ..utils import *
-from ..seq import *
 from . import *
-
-
+from ..seq import *
+from ..utils import *
 
 example = """
 # STOCKHOLM 1.0
@@ -72,96 +69,88 @@ O31699/88-139           EVMLTDIPRLHINDPIMK..GFGMVINN......GFVCVENDE
 //
 """
 
-
-
 names = ("stockholm", "pfam",)
 extensions = ('sth', 'stockholm', 'align')
 
-
 header_line = re.compile(r'#\s+STOCKHOLM\s+1.\d\s+$')
+
 
 def iterseq(fin, alphabet=None):
     """Iterate over the sequences in the file."""
     # Default implementation
-    return iter(read(fin, alphabet) )
+    return iter(read(fin, alphabet))
 
 
-def read(fin, alphabet=None) :  
-    alphabet = Alphabet(alphabet)      
+def read(fin, alphabet=None):
+    alphabet = Alphabet(alphabet)
     seq_ids = []
     seqs = []
     block_count = 0
-    
-    
+
     for token in _scan(fin):
-        if token.typeof== "begin_block":
+        if token.typeof == "begin_block":
             block_count = 0
         elif token.typeof == "seq_id":
-            if len(seqs) <= block_count :
+            if len(seqs) <= block_count:
                 seq_ids.append(token.data)
                 seqs.append([])
         elif token.typeof == "seq":
-            if not alphabet.alphabetic(token.data) :
+            if not alphabet.alphabetic(token.data):
                 raise ValueError(
-                    "Character on line: %d not in alphabet: %s : %s" % (
-                    token.lineno, alphabet, token.data) )
+                        "Character on line: %d not in alphabet: %s : %s" %
+                        (token.lineno, alphabet, token.data))
             seqs[block_count].append(token.data)
-            block_count +=1
+            block_count += 1
 
-          
-    seqs = [ Seq("".join(s), alphabet, name= i) for s,i in zip(seqs,seq_ids)]
+    seqs = [Seq("".join(s), alphabet, name=i) for s, i in zip(seqs, seq_ids)]
     return SeqList(seqs)
 
 
-def _scan( fin ):
-
+def _scan(fin):
     header, body, block = range(3)
-    
+
     yield Token("begin")
     state = header
     for L, line in enumerate(fin):
-        
 
-        if state==header :
-            if line.isspace() : continue
+        if state == header:
+            if line.isspace():
+                continue
             m = header_line.match(line)
             state = body
-            if m is not None :
+            if m is not None:
                 # print("header: ", m.group())
-                yield Token("header", m.group() )
+                yield Token("header", m.group())
                 continue
-            else :
-                 raise ValueError("Parse error on line: %d" % L)
-        
-        
-        if state == body :
-            if line.isspace() : continue
+            else:
+                raise ValueError("Parse error on line: %d" % L)
+
+        if state == body:
+            if line.isspace():
+                continue
             yield Token("begin_block")
             state = block
             # fall through to block
-        
-        if state ==  block:        
-            if line.isspace() :
+
+        if state == block:
+            if line.isspace():
                 yield Token("end_block")
                 state = body
                 continue
-            if line.strip() == '//' :
+            if line.strip() == '//':
                 yield Token("end_block")
                 return
-            
-            
-            if line[0] =='#' :  # Comment or annotation line 
+
+            if line[0] == '#':  # Comment or annotation line
                 continue
-   
-            name_seq = line.split(None,1) # Split into two parts at first whitespace 
-            if len(name_seq) != 2 : 
+
+            name_seq = line.split(None, 1)  # Split into two parts at first whitespace
+            if len(name_seq) != 2:
                 raise ValueError("Parse error on line: %d" % L)
- 
-            
-            yield Token("seq_id", name_seq[0].strip() )
-            yield Token("seq", name_seq[1].strip() )
+
+            yield Token("seq_id", name_seq[0].strip())
+            yield Token("seq", name_seq[1].strip())
             continue
 
         # END state blocks. If I ever get here something has gone terrible wrong
         raise RuntimeError()
-

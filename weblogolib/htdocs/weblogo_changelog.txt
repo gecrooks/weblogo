@@ -1,29 +1,38 @@
 WebLogo Release Notes
 
-	***Draft 08/19/15***
-3.? (2015-08-21) [Gavin Crooks,
 
-* Fix various bugs in file extension collecting
+
+3.5 (???) [Gavin Crooks, Melissa Fabros]
+
+* Moved source control from GoogleCode to GitHub 
+* Switched from Subversion as version control method to Git
 * Refactor html to optimize WebLogo use on mobile computing devices
 * Add feature to open sequence files via file sharing URL link from Web application and command line
-* Update documenation and references to redirect from code.google.com hosting to Github
-* Update documentation to reflect switch from Subversion as version control method to Git
+* Updated documentation 
+* PEP8ify all python files to solve formatting issues. (Kudos:Gert Hulselmans)
+* Expose additonal LogoOptions via CLI options (Kudos:Gert Hulselmans)
+* Fixed performance issue by limiting size of data that can be pasted into html form
+	Use file upload instead. (Kudos: Peter Cherepanov)
+* Fixed bugs for compatible with Python 3 (Kudos: Gert Hulselmans, Teshome Mulugeta) 
+* Miscellaneous minor bug fixes and refactoring.
+
 
 
 3.4  (2014-06-03)  [Gavin Crooks, Eric Talevich]
 
 * Python 3
-	Weblogo now runs under python 2.6, 2.7, 3.2, 3.3 & 3.4 (Python2.5 is no longer
+	Weblogo now runs under python 2.6, 2.7, 3.2, 3.3 & 3.4 (Python 2.5 is no longer
 	supported.) Note that the api for creating a logo has changed. See docs. 
 	(Kudos: Eric Talevic)
-* Fix bug with using Ghostscipt 9.10 (Issue 36)
+* Fix bug with using Ghostscript 9.10 (Issue 36)
 	(Kudos: Michael Imbeault, Estienne Swart, FiReaNG3L)
 * Fix various bugs in transfac parsing.
 	(Kudos: Promita Bose, Christopher Lamantia)
 * Fix --complement of gapped sequences, added --revcomp option (Issue 36)
-	(Kudos: Jacob Engelbrecht))
+	(Kudos: Jacob Engelbrecht)
 * Miscellaneous minor bug fixes and refactoring.
 	(Kudos: Kamil Slowikowski, Jacob Engelbrecht)
+
 
 
 3.3 (2012-07-02) [Gavin Crooks, David Sivak]

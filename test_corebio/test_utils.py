@@ -1,5 +1,5 @@
 #!/usr/bin/env python
- 
+
 #  Copyright (c) 2006, The Regents of the University of California, through 
 #  Lawrence Berkeley National Laboratory (subject to receipt of any required
 #  approvals from the U.S. Dept. of Energy).  All rights reserved.
@@ -37,13 +37,12 @@
 import re
 import unittest
 
-from corebio.utils import *
 from corebio._py3k import StringIO
+from corebio.utils import *
 
 
-class test_utils(unittest.TestCase) :
-
-    def test_isfloat(self) :
+class test_utils(unittest.TestCase):
+    def test_isfloat(self):
         self.assertTrue(isfloat('0.5'))
         self.assertTrue(isfloat(' 0'))
         self.assertTrue(isfloat('+1000000000  '))
@@ -58,7 +57,7 @@ class test_utils(unittest.TestCase) :
         self.assertFalse(isfloat('92384.kjdfghiksw'))
         self.assertFalse(isfloat('adf!@#nn'))
 
-    def test_isint(self) :
+    def test_isint(self):
         self.assertTrue(isint('0'))
         self.assertTrue(isint('-1'))
         self.assertTrue(isint('10'))
@@ -71,11 +70,11 @@ class test_utils(unittest.TestCase) :
         self.assertFalse(isint('0.23'))
         self.assertFalse(isint('adf!@#nn'))
 
-    def test_remove_whitespace(self) :
+    def test_remove_whitespace(self):
         self.assertEqual(remove_whitespace("  kjashd askjdh askjdh\tasdf"),
                          "kjashdaskjdhaskjdhasdf")
 
-    def test_isblank(self) :
+    def test_isblank(self):
         blank = ('', ' ', '\n', '\t \n\n')
         not_blank = (' a',)
         for s in blank:
@@ -87,62 +86,61 @@ class test_utils(unittest.TestCase) :
         test = 'aaabbbbcccddea'
         out = group_count(test)
         self.assertEqual(tuple(out),
-                         (('a',3),('b',4),('c',3),('d',2),('e',1),('a',1)))
+                         (('a', 3), ('b', 4), ('c', 3), ('d', 2), ('e', 1), ('a', 1)))
 
-    def test_reiterate(self) :
-        i = Reiterate( iter("123456") )
-        for item in i :
+    def test_reiterate(self):
+        i = Reiterate(iter("123456"))
+        for item in i:
             pass
-        self.assertRaises(StopIteration, i.next )
-        self.assertFalse( i.has_item() )
-        self.assertTrue( i.peek() is None )
-        
+        self.assertRaises(StopIteration, i.next)
+        self.assertFalse(i.has_item())
+        self.assertTrue(i.peek() is None)
+
         # pushback
-        i = Reiterate( iter("123456") )
+        i = Reiterate(iter("123456"))
         next(i)
         i.push("0")
-        self.assertEqual( "0", next(i))
+        self.assertEqual("0", next(i))
         p = i.peek()
         n = next(i)
-        self.assertEqual(p,n)
-        self.assertEqual( i.index() ,2)
-        self.assertTrue( i.has_item() )
-        
+        self.assertEqual(p, n)
+        self.assertEqual(i.index(), 2)
+        self.assertTrue(i.has_item())
+
         # Repeated application of Reiterate should return same iterator.
         self.assertTrue(i is iter(i))
         self.assertTrue(i is Reiterate(i))
 
-    def test_token(self) :
-        t = Token( 'kind', 'some data', 4, 3)
+    def test_token(self):
+        t = Token('kind', 'some data', 4, 3)
         s = str(t)
         r = repr(t)
         t2 = eval(r)
         self.assertEqual(t2.typeof, 'kind')
 
-        
-    def test_struct(self) :
+    def test_struct(self):
         s = Struct(a=3, b=4)
         s2 = eval(repr(s))
         self.assertEqual(s2.a, 3)
 
-    def test_invert_dict(self) :
-        d = dict( a=3, b=4)
-        invd =invert_dict(d)
+    def test_invert_dict(self):
+        d = dict(a=3, b=4)
+        invd = invert_dict(d)
         self.assertTrue(3 in invd)
         self.assertEqual(invd[3], 'a')
 
     def test_crc64(self):
         self.assertEqual(crc64("IHATEMATH"), "E3DCADD69B01ADD1")
 
-    def test_crc32(self) :
+    def test_crc32(self):
         self.assertEqual(crc32("Test the CRC-32 of this string."),
-                         "%08X"%1571220330)
+                         "%08X" % 1571220330)
 
-    def test_find_command(self) :
+    def test_find_command(self):
         p = find_command('more')
         p = find_command('python')
-        self.assertRaises( EnvironmentError, find_command, 'NOSUCH')
-        #print p
+        self.assertRaises(EnvironmentError, find_command, 'NOSUCH')
+        # print p
 
     def test_ArgumentValueError(self):
         message = "Some message"
@@ -159,8 +157,8 @@ class test_utils(unittest.TestCase) :
             self.assertEqual(err.key, component)
             self.assertEqual(err.value, 10)
 
-    def test_frozendict(self) :
-        d = frozendict( a='b', c='c')
+    def test_frozendict(self):
+        d = frozendict(a='b', c='c')
         self.assertEqual(d['a'], 'b')
         self.assertRaises(AttributeError, lambda D: D.pop(), d)
 
@@ -170,7 +168,7 @@ class test_utils(unittest.TestCase) :
         self.assertTrue(idx[0].startswith('line 0'))
         self.assertTrue(idx[4].startswith('line 4'))
 
-        def parser(f) :
+        def parser(f):
             return int(f.readline().split()[1])
 
         idx = FileIndex(stream, parser=parser)
@@ -179,7 +177,8 @@ class test_utils(unittest.TestCase) :
         self.assertEqual(idx[4], 4)
 
         key = re.compile(r"(line \d)")
-        def linekey(line) :
+
+        def linekey(line):
             k = key.search(line)
             if k is None:
                 return None
@@ -191,7 +190,7 @@ class test_utils(unittest.TestCase) :
         self.assertEqual(idx[3], 4)
         self.assertRaises(IndexError, idx.__getitem__, 5)
 
-        #print idx._key_dict
+        # print idx._key_dict
         self.assertEqual(idx['line 1'], 1)
         self.assertEqual(idx['line 4'], 4)
         self.assertTrue('line 1' in idx)
@@ -213,17 +212,12 @@ class test_utils(unittest.TestCase) :
         self.assertTrue(s.startswith('>aldB'))
 
 
-
-tfile = """line 0   
+tfile = """line 0
 line 1
 Blah
 line 3
 line 4 
 """
 
-
-
-
 if __name__ == '__main__':
     unittest.main()
-

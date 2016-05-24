@@ -1,5 +1,5 @@
 #!/usr/bin/env python
- 
+
 #  Copyright (c) 2006, The Regents of the University of California, through 
 #  Lawrence Berkeley National Laboratory (subject to receipt of any required
 #  approvals from the U.S. Dept. of Energy).  All rights reserved.
@@ -35,33 +35,32 @@
 #  POSSIBILITY OF SUCH DAMAGE. 
 
 
-from corebio import *
-from corebio.seq import *
-from corebio.seq_io import *
-from test_corebio import *
-from corebio.seq_io import phylip_io
-
-from corebio._py3k import StringIO
-
 import unittest
 
-class test_phylip_io(unittest.TestCase) :
+from corebio import *
+from corebio._py3k import StringIO
+from corebio.seq import *
+from corebio.seq_io import *
+from corebio.seq_io import phylip_io
+from test_corebio import *
 
-    def test_read(self) :
+
+class test_phylip_io(unittest.TestCase):
+    def test_read(self):
         f = testdata_stream("phylip_test_1.phy")
         seqs = phylip_io.read(f)
-        #print seqs
+        # print seqs
         self.assertEqual(len(seqs), 10)
         self.assertEqual(seqs[0].name, "Cow")
         self.assertEqual(len(seqs[1]), 234)
         f.close()
-    
-    def test_parse_plain_fail(self) :
+
+    def test_parse_plain_fail(self):
         # should fail with parse error
         f = StringIO(plain_io.example)
-        self.assertRaises(ValueError, 
-            phylip_io.read, f  )
-    
+        self.assertRaises(ValueError,
+                          phylip_io.read, f)
+
     def test_parse_phylip_test_2(self):
         f = testdata_stream('phylip_test_2.phy')
         seqs = phylip_io.read(f)
@@ -70,13 +69,13 @@ class test_phylip_io(unittest.TestCase) :
         self.assertEqual(str(seqs[1]), "CGTTACTCGTTGTCGTTACT")
         self.assertEqual(seqs[1].name, "Hesperorni")
         f.close()
-    
-    def test_parse_clustal_fail(self) :
+
+    def test_parse_clustal_fail(self):
         # should fail with parse error
         f = StringIO(clustal_io.example)
-        self.assertRaises(ValueError, 
-            phylip_io.read, f , protein_alphabet )
-    
+        self.assertRaises(ValueError,
+                          phylip_io.read, f, protein_alphabet)
+
     def test_parse_phylip_test_3(self):
         f = testdata_stream('phylip_test_3.phy')
         seqs = phylip_io.read(f)
@@ -85,7 +84,7 @@ class test_phylip_io(unittest.TestCase) :
         self.assertEqual(str(seqs[1]), "CGTTACTCGTTGTCGTTACT")
         self.assertEqual(seqs[1].name, "Hesperorni")
         f.close()
-    
+
     def test_parse_phylip_test_4(self):
         f = testdata_stream('phylip_test_4.phy')
         seqs = phylip_io.read(f)
@@ -94,8 +93,7 @@ class test_phylip_io(unittest.TestCase) :
         self.assertEqual(str(seqs[1]), "GTGGTGGTGGGCGCCGGCCGTGTGG")
         self.assertEqual(seqs[2].name, "ddrasa")
         f.close()
-    
-    
+
     def test_parse_phylip_test_5(self):
         f = testdata_stream('phylip_test_5.phy')
         seqs = phylip_io.read(f)
@@ -104,17 +102,17 @@ class test_phylip_io(unittest.TestCase) :
         self.assertEqual(str(seqs[1]), "GTGGTGGTGGGCGCCGGCCGTGTGGGTGGTGGTGGGCGCCGGCCGTGTGG")
         self.assertEqual(seqs[2].name, "ddrasa")
         f.close()
-        
+
     def test_parse_wrong_phylip_codes_1(self):
         f = testdata_stream('phylip_test_6.corrupt.phy')
-        self.assertRaises(ValueError, 
-            phylip_io.read, f , protein_alphabet )
+        self.assertRaises(ValueError,
+                          phylip_io.read, f, protein_alphabet)
         f.close()
-        
+
     def test_parse_wrong_phylip_codes_2(self):
         f = testdata_stream('phylip_test_7.corrupt.phy')
-        self.assertRaises(ValueError, 
-            phylip_io.read, f , protein_alphabet )
+        self.assertRaises(ValueError,
+                          phylip_io.read, f, protein_alphabet)
         f.close()
 
     def test_parse_phylip_dna(self):
@@ -122,10 +120,10 @@ class test_phylip_io(unittest.TestCase) :
         seqs = phylip_io.read(f)
         self.assertEqual(len(seqs), 10)
         self.assertEqual(len(seqs[0]), 705)
-        self.assertEqual( str(seqs[1][0:10]), "ATGGCACACC")
+        self.assertEqual(str(seqs[1][0:10]), "ATGGCACACC")
         self.assertEqual(seqs[2].name, "Chicken")
         f.close()
-   
-             
+
+
 if __name__ == '__main__':
     unittest.main()

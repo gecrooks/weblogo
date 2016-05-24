@@ -25,30 +25,29 @@
 #
 
 
+import unittest
+
 from corebio import *
+from corebio._py3k import StringIO
 from corebio.seq import *
 from corebio.seq_io import null_io
 from corebio.seq_io import *
 
-from corebio._py3k import StringIO
 
-import unittest
-
-class test_null_io(unittest.TestCase) :
-
-    def test_read(self) :
+class test_null_io(unittest.TestCase):
+    def test_read(self):
         f = StringIO(plain_io.example)
         s = null_io.read(f)
-  
-    def test_write(self) :
+
+    def test_write(self):
         f = StringIO(plain_io.example)
         seqs = plain_io.read(f)
-        
-        fout = StringIO()
-        null_io.write(fout,seqs)
-        fout.seek(0)
-        self.assertEqual(fout.read(), '')  
 
-             
+        fout = StringIO()
+        null_io.write(fout, seqs)
+        fout.seek(0)
+        self.assertEqual(fout.read(), '')
+
+
 if __name__ == '__main__':
     unittest.main()

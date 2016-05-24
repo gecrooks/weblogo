@@ -2,6 +2,7 @@
 
 import unittest
 
+
 def suite():
     modules_to_test = (
         'test_corebio.test_array_io',
@@ -22,7 +23,7 @@ def suite():
         'test_corebio.test_null_io',
         'test_corebio.test_phylip_io',
         'test_corebio.test_plain_io',
-        'test_corebio.test_ssearch_io',        
+        'test_corebio.test_ssearch_io',
         'test_corebio.test_scop',
         'test_corebio.test_secstruc',
         'test_corebio.test_seq',
@@ -32,19 +33,17 @@ def suite():
         'test_corebio.test_table_io',
         'test_corebio.test_transform',
         'test_corebio.test_utils',
-        'test_weblogo'  
-    ) 
-
+        'test_weblogo'
+    )
 
     alltests = unittest.TestSuite()
-    for module in modules_to_test : 
+    for module in modules_to_test:
         alltests.addTest(unittest.defaultTestLoader.loadTestsFromName(module))
     return alltests
+
 
 # Can run single tests as
 # > python3.4 -m unittest test_corebio.test_utils
 if __name__ == '__main__':
     import sys
     unittest.main(defaultTest='suite')
-  
-  

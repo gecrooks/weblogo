@@ -58,15 +58,14 @@ import weblogolib._cli
 # Standard python voodoo for CLI
 if __name__ == "__main__":
     ## Code Profiling. Uncomment these lines
-    #import hotshot, hotshot.stats
-    #prof = hotshot.Profile("stones.prof")
-    #prof.runcall(main)
-    #prof.close()
-    #stats = hotshot.stats.load("stones.prof")
-    #stats.strip_dirs()
-    #stats.sort_stats('cumulative', 'calls')
-    #stats.print_stats(40)
-    #sys.exit()
+    # import hotshot, hotshot.stats
+    # prof = hotshot.Profile("stones.prof")
+    # prof.runcall(main)
+    # prof.close()
+    # stats = hotshot.stats.load("stones.prof")
+    # stats.strip_dirs()
+    # stats.sort_stats('cumulative', 'calls')
+    # stats.print_stats(40)
+    # sys.exit()
 
     weblogolib._cli.main()
-    
