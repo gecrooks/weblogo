@@ -199,23 +199,50 @@ class test_seqlogo(unittest.TestCase):
 
 
 class test_colorscheme(unittest.TestCase):
-    def test_colorgroup(self):
-        cr = ColorGroup("ABC", "black", "Because")
-        self.assertEqual(cr.description, "Because")
+    def test_symbol_color(self):
+        sc = SymbolColor("abc", "black", "Because")
+        self.assertEqual(sc.description, "Because")
+        self.assertEqual(sc.symbol_color(0, "A", 0), Color.by_name("black"))
+        self.assertEqual(sc.symbol_color(1, "D", 0), None)
+
+    def test_index_color(self):
+        ic = IndexColor([1,3], "black", "Because")
+        self.assertEqual(ic.description, "Because")
+        self.assertEqual(ic.symbol_color(0, "A", 0), None)
+        self.assertEqual(ic.symbol_color(1, "A", 0), Color.by_name("black"))
+
+    def test_ref_seq_color(self):
+        rc = RefSeqColor("abc", "black", "Because")
+        self.assertEqual(rc.description, "Because")
+
+        self.assertEqual(rc.symbol_color(0, "A", 0), Color.by_name("black"))
+        self.assertEqual(rc.symbol_color(1, "A", 0), None)
+        self.assertEqual(rc.symbol_color(2, "A", 0), None)
+
+        self.assertEqual(rc.symbol_color(0, "B", 0), None)
+        self.assertEqual(rc.symbol_color(1, "B", 0), Color.by_name("black"))
+        self.assertEqual(rc.symbol_color(2, "B", 0), None)
+
+        self.assertEqual(rc.symbol_color(0, "C", 0), None)
+        self.assertEqual(rc.symbol_color(1, "C", 0), None)
+        self.assertEqual(rc.symbol_color(2, "C", 0), Color.by_name("black"))
 
     def test_colorscheme(self):
         cs = ColorScheme([
-            ColorGroup("G", "orange"),
-            ColorGroup("TU", "red"),
-            ColorGroup("C", "blue"),
-            ColorGroup("A", "green")
+            SymbolColor("G", "orange"),
+            SymbolColor("TU", "red"),
+            SymbolColor("C", "blue"),
+            SymbolColor("A", "green")
         ],
                 title="title",
                 description="description",
         )
 
-        self.assertEqual(cs.color('A'), Color.by_name("green"))
-        self.assertEqual(cs.color('X'), cs.default_color)
+        self.assertEqual(cs.symbol_color(1, 'G', 1), Color.by_name("orange"))
+        self.assertEqual(cs.symbol_color(1, 'T', 1), Color.by_name("red"))
+        self.assertEqual(cs.symbol_color(1, 'C', 1), Color.by_name("blue"))
+        self.assertEqual(cs.symbol_color(1, 'A', 1), Color.by_name("green"))
+        self.assertEqual(cs.symbol_color(1, 'X', 1), cs.default_color)
 
 
 class test_color(unittest.TestCase):
