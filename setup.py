@@ -31,7 +31,7 @@ def main():
             maintainer_email="gec@threeplusone.com",
             url="https://github.com/WebLogo/weblogo",
 
-            download_url='https://github.com/WebLogo/weblogo/releases' % __version__,
+            download_url='https://github.com/WebLogo/weblogo/archive/%s.zip' % __version__,
             classifiers=[
                 'Development Status :: 5 - Production/Stable',
                 'Intended Audience :: Science/Research',
@@ -47,11 +47,8 @@ def main():
             scripts=['weblogo', 'transformseq'],
             packages=[
                 'corebio',
-                'corebio.db',
-                'corebio.secstruc',
                 'corebio.seq_io',
                 'corebio.seq_io._nexus',
-                'corebio.ssearch_io',
                 'corebio.utils',
                 'weblogolib',
             ],
