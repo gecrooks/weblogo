@@ -26,8 +26,9 @@
 
 Classes:
     ColorScheme -- A color scheme
-    ColorGroup  
-    
+    SymbolColor  
+    IndexColor
+    RefSeqColor
     
 Generic
     monochrome
@@ -54,53 +55,103 @@ Status : Beta - Needs documentation.
 from corebio import seq
 from .color import Color
 
+class ColorRule(object):
+    """
+    Define an interface for coloring individual symbols based on their position 
+    and identity.  Subclasses should reimplement the symbol_color() method to 
+    return a Color object based on the given parameters.
+    """
 
-class ColorScheme(object):
-    """ A coloring of an alphabet.
-    
-    title :         string               -- A human readable description
-    default_color : Color                --
-    groups :        list of color groups
-    alphabet :      string               -- The set of colored symbols
-    color                                -- A map between a symbol and a Coloring
-    
+    def __init__(self, description=""):
+        self.description = description
 
+    def symbol_color(self, seq_index, symbol, rank):
+        raise NotImplementedError
+
+
+class ColorScheme(ColorRule):
+    """
+    Specify which color each symbol in a sequence logo should be.
+
+    A color scheme is primarily a container of color rules.  These rules would 
+    be along the lines of "hydrophobic residues are blue" or "indices 5-10 are 
+    red" or "the wildtype sequence is black".  When a color is requested for a 
+    particular symbol, each rule is consulted in turn until one provides a 
+    color.  If no rule provides a color, the given default color will be used.
     """
 
     def __init__(self,
-                 groups=[],
+                 rules=[],
                  title="",
                  description="",
                  default_color="black",
                  alphabet=seq.generic_alphabet):
-        """  """
+
+        self.rules = rules
         self.title = title
         self.description = description
         self.default_color = Color.from_string(default_color)
-        self.groups = groups
         self.alphabet = alphabet
 
-        color = {}
-        for cg in groups:
-            for s in cg.symbols:
-                color[s] = cg.color
-                if s not in alphabet:
-                    raise KeyError("Colored symbol does not exist in alphabet.")
-        self._color = color
+    def symbol_color(self, seq_index, symbol, rank):
+        if symbol not in self.alphabet:
+            raise KeyError("Colored symbol '%s' does not exist in alphabet." % symbol)
 
-    def color(self, symbol):
-        if symbol in self._color:
-            return self._color[symbol]
+        for rule in self.rules:
+            color = rule.symbol_color(seq_index, symbol, rank)
+            if color is not None:
+                return color
+
         return self.default_color
 
 
-class ColorGroup(object):
-    """Associate a group of symbols with a color"""
+class SymbolColor(ColorRule):
+    """
+    Represent the given set of symbols (e.g. "DEHKR" for charged residues) with 
+    a single color.  
+    """
 
     def __init__(self, symbols, color, description=None):
-        self.symbols = symbols
+        self.symbols = symbols.upper()
         self.color = Color.from_string(color)
         self.description = description
+
+    def symbol_color(self, seq_index, symbol, rank):
+        if symbol.upper() in self.symbols:
+            return self.color
+
+
+class IndexColor(ColorRule):
+    """
+    Represent the given set of indices (e.g. range(10) for the first ten 
+    residues) with a single color.
+    """
+
+    def __init__(self, indices, color, description=None):
+        self.indices = indices
+        self.color = Color.from_string(color)
+        self.description = description
+
+    def symbol_color(self, seq_index, symbol, rank):
+        if seq_index in self.indices:
+            return self.color
+
+
+class RefSeqColor(ColorRule):
+    """
+    Color the given reference sequence in its own color, so you can easily see 
+    which positions match that sequence and which don't.
+    """
+
+    def __init__(self, ref_seq, color, description=None):
+        self.ref_seq = ref_seq.upper()
+        self.color = Color.from_string(color)
+        self.description = description
+
+    def symbol_color(self, seq_index, symbol, rank):
+        if symbol.upper() == self.ref_seq[seq_index]:
+            return self.color
+
 
 
 monochrome = ColorScheme([])  # This list intentionally left blank
@@ -108,26 +159,26 @@ monochrome = ColorScheme([])  # This list intentionally left blank
 # From makelogo
 nucleotide = ColorScheme(
         [
-            ColorGroup("G", "orange"),
-            ColorGroup("TU", "red"),
-            ColorGroup("C", "blue"),
-            ColorGroup("A", "green")
+            SymbolColor("G", "orange"),
+            SymbolColor("TU", "red"),
+            SymbolColor("C", "blue"),
+            SymbolColor("A", "green")
         ],
 )
 
 base_pairing = ColorScheme(
         [
-            ColorGroup("TAU", "darkorange", "Weak (2 Watson-Crick hydrogen bonds)"),
-            ColorGroup("GC", "blue", "Strong (3 Watson-Crick hydrogen bonds)")
+            SymbolColor("TAU", "darkorange", "Weak (2 Watson-Crick hydrogen bonds)"),
+            SymbolColor("GC", "blue", "Strong (3 Watson-Crick hydrogen bonds)")
         ],
 )
 
 # From Crooks2004c-Proteins-SeqStr.pdf
 hydrophobicity = ColorScheme(
         [
-            ColorGroup("RKDENQ", "blue", "hydrophilic"),
-            ColorGroup("SGHTAP", "green", "neutral"),
-            ColorGroup("YVMCLFIW", "black", "hydrophobic")
+            SymbolColor("RKDENQ", "blue", "hydrophilic"),
+            SymbolColor("SGHTAP", "green", "neutral"),
+            SymbolColor("YVMCLFIW", "black", "hydrophobic")
         ],
         alphabet=seq.unambiguous_protein_alphabet
 )
@@ -135,45 +186,45 @@ hydrophobicity = ColorScheme(
 # from makelogo
 chemistry = ColorScheme(
         [
-            ColorGroup("GSTYC", "green", "polar"),
-            ColorGroup("NQ", "purple", "neutral"),
-            ColorGroup("KRH", "blue", "basic"),
-            ColorGroup("DE", "red", "acidic"),
-            ColorGroup("PAWFLIMV", "black", "hydrophobic")
+            SymbolColor("GSTYC", "green", "polar"),
+            SymbolColor("NQ", "purple", "neutral"),
+            SymbolColor("KRH", "blue", "basic"),
+            SymbolColor("DE", "red", "acidic"),
+            SymbolColor("PAWFLIMV", "black", "hydrophobic")
         ],
         alphabet=seq.unambiguous_protein_alphabet
 )
 
 charge = ColorScheme(
         [
-            ColorGroup("KRH", "blue", "Positive"),
-            ColorGroup("DE", "red", "Negative")
+            SymbolColor("KRH", "blue", "Positive"),
+            SymbolColor("DE", "red", "Negative")
         ],
         alphabet=seq.unambiguous_protein_alphabet
 )
 
 taylor = ColorScheme(
         [
-            ColorGroup('A', '#CCFF00'),
-            ColorGroup('C', '#FFFF00'),
-            ColorGroup('D', '#FF0000'),
-            ColorGroup('E', '#FF0066'),
-            ColorGroup('F', '#00FF66'),
-            ColorGroup('G', '#FF9900'),
-            ColorGroup('H', '#0066FF'),
-            ColorGroup('I', '#66FF00'),
-            ColorGroup('K', '#6600FF'),
-            ColorGroup('L', '#33FF00'),
-            ColorGroup('M', '#00FF00'),
-            ColorGroup('N', '#CC00FF'),
-            ColorGroup('P', '#FFCC00'),
-            ColorGroup('Q', '#FF00CC'),
-            ColorGroup('R', '#0000FF'),
-            ColorGroup('S', '#FF3300'),
-            ColorGroup('T', '#FF6600'),
-            ColorGroup('V', '#99FF00'),
-            ColorGroup('W', '#00CCFF'),
-            ColorGroup('Y', '#00FFCC')
+            SymbolColor('A', '#CCFF00'),
+            SymbolColor('C', '#FFFF00'),
+            SymbolColor('D', '#FF0000'),
+            SymbolColor('E', '#FF0066'),
+            SymbolColor('F', '#00FF66'),
+            SymbolColor('G', '#FF9900'),
+            SymbolColor('H', '#0066FF'),
+            SymbolColor('I', '#66FF00'),
+            SymbolColor('K', '#6600FF'),
+            SymbolColor('L', '#33FF00'),
+            SymbolColor('M', '#00FF00'),
+            SymbolColor('N', '#CC00FF'),
+            SymbolColor('P', '#FFCC00'),
+            SymbolColor('Q', '#FF00CC'),
+            SymbolColor('R', '#0000FF'),
+            SymbolColor('S', '#FF3300'),
+            SymbolColor('T', '#FF6600'),
+            SymbolColor('V', '#99FF00'),
+            SymbolColor('W', '#00CCFF'),
+            SymbolColor('Y', '#00FFCC')
         ],
         title="Taylor",
         description="W. Taylor, Protein Engineering, Vol 10 , 743-746 (1997)",

@@ -59,7 +59,7 @@ from . import (LogoOptions, LogoData, LogoFormat,
                read_seq_data)
 from . import (_seq_names, _seq_formats)
 from .color import *
-from .colorscheme import ColorScheme, ColorGroup
+from .colorscheme import ColorScheme, SymbolColor
 
 
 # ====================== Main: Parse Command line =============================
@@ -273,7 +273,7 @@ def _build_logoformat(logodata, opts):
         for color, symbols, desc in opts.colors:
             try:
                 # c = Color.from_string(color)
-                color_scheme.groups.append(ColorGroup(symbols, color, desc))
+                color_scheme.rules.append(SymbolColor(symbols, color, desc))
             except ValueError:
                 raise ValueError(
                         "error: option --color: invalid value: '%s'" % color)

@@ -3,3 +3,6 @@
 *.BAK
 tmp
 dist
+build
+*.egg-info
+

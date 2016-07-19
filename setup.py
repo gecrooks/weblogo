@@ -30,7 +30,6 @@ def main():
             maintainer="Gavin Crooks",
             maintainer_email="gec@threeplusone.com",
             url="https://github.com/WebLogo/weblogo",
-
             download_url='https://github.com/WebLogo/weblogo/archive/%s.zip' % __version__,
             classifiers=[
                 'Development Status :: 5 - Production/Stable',
