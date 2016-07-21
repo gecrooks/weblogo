@@ -13,8 +13,10 @@ WebLogo Release Notes
 * Expose additonal LogoOptions via CLI options (Kudos:Gert Hulselmans)
 * Fixed performance issue by limiting size of data that can be pasted into html form
 	Use file upload instead. (Kudos: Peter Cherepanov)
+* Add ability to custom color every stack (Kudos: Kale Kundert)
+* Weblogo 3.5 runs under python 2.6, 2.7, 3.2, 3.3, 3.4 & 3.5 
 * Fixed bugs for compatible with Python 3 (Kudos: Gert Hulselmans, Teshome Mulugeta) 
-* Miscellaneous minor bug fixes and refactoring.
+* Miscellaneous minor bug fixes and refactoring (Kudos: David Kelley)
 
 
 
