@@ -2,7 +2,7 @@ WebLogo Release Notes
 
 
 
-3.5 (???) [Gavin Crooks, Melissa Fabros]
+3.5 (2016-07-24) [Gavin Crooks, Melissa Fabros]
 
 * Moved source control from GoogleCode to GitHub 
 * Switched from Subversion as version control method to Git

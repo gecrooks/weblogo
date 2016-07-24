@@ -59,14 +59,16 @@ DEVELOPING WEBLOGO
 
 13. Register with Python Packakge Index PyPI
 	
-	python setup.py register
-	python setup.py sdist upload
- 	sudo easy_install weblogo
-
+	python setup.py sdist upload	# Assumes already regitered with PyPI
+	pip install weblogo
+ 	
+	(Should try this all out on the test PyPI test site)
+	python setup.py register -r https://testpypi.python.org/pypi
+	python setup.py sdist upload -r https://testpypi.python.org/pypi
+	pip install --install-option="--install-scripts=~/" -i https://testpypi.python.org/pypi weblogo
+	
 
 14. Update version number in trunk, add new entry to changelog,
-
-
 
 15. Post announcement. (http://groups.google.com/group/WebLogo)
 
