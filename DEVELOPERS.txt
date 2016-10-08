@@ -9,11 +9,11 @@ DEVELOPING WEBLOGO
  Procedure to Build and Release new versions 
 ---------------------------------------------
 
-1. Fork a fresh copy of WebLogo's master branch.
+1. Make sure local repository is up to date.
 	
 	The WebLogo repository is https://github.com/WebLogo/weblogo
 
-2.  Update version number if necessary (weblogolib/__init__.py and corebio/_version.py )
+2.  Update version number if necessary (corebio/_version.py )
 
 
 3. 	Update changelog (weblogolib/htdocs/weblogo_changelog.txt)
@@ -22,63 +22,55 @@ DEVELOPING WEBLOGO
 4. 	Update manual.html with the latest --help text.
 
 
-5. 	Rebuild apidocs. Rebuild examples.
+5. 	Rebuild examples. (./build.sh)
+		
 	
-
-6.  Commit final changes.
-
-	
-7. 	Run build process under all supported python versions.
+6. 	Run build process under all supported python versions.
 	
 	sudo port select python python27	# MacPorts on OS X
 	./build.sh
 
 
-8. 	Run webpage tests.
+7. 	Run webpage tests.
 
 	./weblogo --serve	# then goto localhost:8080/test.html and try tests
 
 
-9. Branch
-
-	Fork the repository from https://github.com/WebLogo/weblogo
+8.  Commit final changes.
 
 
-10. Update version number in trunk, 
-	(Add new entry to changelog, change in corebio._version.py)
+9.  Branch
+
+	git branch 3.x
+	git checkout 3.x
 
 
-11. Issue a Pull Request to the Master branch. 
+10. Tag
+	tag release on Github at https://github.com/WebLogo/weblogo/releases/new	
+
+
+11. Update server: login to weblogo.threeplusone.com, weblogo directory and switch branches 
 	
-	https://github.com/WebLogo/weblogo/pulls
+	git checkout 3.x
 
-12. Tag
-	tag release on Github at https://github.com/WebLogo/weblogo/releases/new
 
-13. Upload distribution tarball
+12. Check server is working correctly. Run tests at weblogo.threeplusone.com/tests.html
 
-	See https://github.com/WebLogo/weblogo/releases/new
 
-14. Update project page.  (https://github.com/WebLogo/weblogoadmin)
+13. Register with Python Packakge Index PyPI
 	
-	Upload distribution tar file.
-	Add featured tag (so current download shows on front page)
-	Update links
-	The README.txt file should match the googlecode front page and the comments in weblogo cmd.
-
-15. Update server :login to weblogo.threeplusone.com, weblogo directory and switch branches 
+	python setup.py sdist upload	# Assumes already regitered with PyPI
+	pip install weblogo
+ 	
+	(Should try this all out on the test PyPI test site)
+	python setup.py register -r https://testpypi.python.org/pypi
+	python setup.py sdist upload -r https://testpypi.python.org/pypi
+	pip install --install-option="--install-scripts=~/" -i https://testpypi.python.org/pypi weblogo
 	
-	svn switch https://weblogo.googlecode.com/svn/branches/3.2
 
+14. Update version number in trunk, add new entry to changelog,
 
-16. Register with Python Packakge Index PyPI
-	
-	python setup.py register
-	python setup.py sdist upload
- 	sudo easy_install weblogo
-
-
-17. Post announcement. (http://groups.google.com/group/WebLogo)
+15. Post announcement. (http://groups.google.com/group/WebLogo)
 
 
 

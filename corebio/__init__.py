@@ -53,13 +53,10 @@ from __future__ import absolute_import
 __all__ = ['data',
            'matrix',
            "moremath",
-           "db",
            "seq",
            "seq_io",
-           'ssearch_io',
            "utils",
            'transform',
-           'secstruc',
            ]
 
 from corebio._version import __version__, description

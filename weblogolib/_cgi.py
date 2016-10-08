@@ -49,7 +49,7 @@ from string import Template
 from corebio.utils import *
 from corebio._py3k import StringIO
 from weblogolib.color import *
-from weblogolib.colorscheme import ColorScheme, ColorGroup
+from weblogolib.colorscheme import ColorScheme, SymbolColor
 
 
 cgitb.enable()
@@ -280,7 +280,7 @@ def main(htdocs_directory=None):
 
         if color:
             try:
-                custom.groups.append(weblogolib.ColorGroup(symbols, color, desc))
+                custom.rules.append(SymbolColor(symbols, color, desc))
             except ValueError as e:
                 errors.append(('color%d' % i, "Invalid color: %s" % color))
 

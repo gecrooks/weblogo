@@ -251,10 +251,10 @@ aa_composition = [amino_acid_composition[_k] for _k in unambiguous_protein_alpha
 # ------  DATA ------
 
 classic = ColorScheme([
-    ColorGroup("G", "orange"),
-    ColorGroup("TU", "red"),
-    ColorGroup("C", "blue"),
-    ColorGroup("A", "green")
+    SymbolColor("G", "orange"),
+    SymbolColor("TU", "red"),
+    SymbolColor("C", "blue"),
+    SymbolColor("A", "green")
 ])
 
 std_color_schemes = {"auto": None,  # Depends on sequence type
@@ -808,19 +808,11 @@ def eps_formatter(logodata, format):
 
     substitutions["shrink"] = str(format.show_boxes).lower()
 
-    # --------- COLORS --------------
-    def format_color(color):
+    def format_color(color):    # (no fold)
         return " ".join(("[", str(color.red), str(color.green),
                          str(color.blue), "]"))
 
     substitutions["default_color"] = format_color(format.default_color)
-
-    colors = []
-    for group in format.color_scheme.groups:
-        cf = format_color(group.color)
-        for s in group.symbols:
-            colors.append("  (" + s + ") " + cf)
-    substitutions["color_dict"] = "\n".join(colors)
 
     data = []
 
@@ -868,8 +860,11 @@ def eps_formatter(logodata, format):
             if format.scale_width:
                 fraction_width = logodata.weight[seq_index]
                 # print(fraction_width, file=sys.stderr)
-            for c in s:
-                data.append(" %f %f (%s) ShowSymbol" % (fraction_width, c[0] * stack_height / C, c[1]))
+            for rank, c in enumerate(s):
+                color = format.color_scheme.symbol_color(seq_index, c[1], rank)
+                data.append(" %f %f %s (%s) ShowSymbol" % (
+                    fraction_width, c[0] * stack_height / C,
+                    format_color(color), c[1]))
 
         # Draw error bar on top of logo. Replaced by DrawErrorbarFirst above.
         if logodata.entropy_interval is not None and conv_factor and C > 0.0:
@@ -897,6 +892,7 @@ def eps_formatter(logodata, format):
     logo = Template(template).substitute(substitutions)
 
     return logo.encode()
+
 
 
 # map between output format names and logo  
@@ -981,7 +977,6 @@ def parse_prior(composition, alphabet, weight=None):
             raise ValueError("Explicit prior does not match alphabet")
         prior /= sum(prior)
         prior *= weight
-
 
     else:
         raise ValueError("Unknown or malformed composition: %s" % composition)

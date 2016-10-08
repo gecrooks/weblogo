@@ -1,20 +1,13 @@
 #!/usr/bin/env python
 
 import sys
-from distutils.core import setup
-from distutils.core import Extension
-from distutils.command.build import build
-from distutils.command.install_data import install_data
+from setuptools import setup, find_packages
 
 # Suppress warning that distutils generates for the install_requires option
-import warnings
+#import warnings
 
-warnings.simplefilter('ignore', UserWarning, lineno=236)
+#warnings.simplefilter('ignore', UserWarning, lineno=236)
 
-# check dependencies
-if not hasattr(sys, 'version_info') or sys.version_info < (2, 5, 0, 'final'):
-    raise SystemExit(
-            "Dependency error: WebLogo requires Python 2.5 or later.")
 
 from weblogolib import __version__
 
@@ -27,11 +20,11 @@ def main():
             version=__version__,
             description="WebLogo3 : Sequence Logos Redrawn",
             long_description=long_description,
+            license = 'BSD',
             maintainer="Gavin Crooks",
             maintainer_email="gec@threeplusone.com",
             url="https://github.com/WebLogo/weblogo",
-
-            download_url='https://github.com/WebLogo/weblogo/releases' % __version__,
+            download_url='https://github.com/WebLogo/weblogo/archive/%s.zip' % __version__,
             classifiers=[
                 'Development Status :: 5 - Production/Stable',
                 'Intended Audience :: Science/Research',
@@ -42,16 +35,26 @@ def main():
                 'Operating System :: OS Independent',
                 'Topic :: Software Development :: Libraries',
                 'Topic :: Software Development :: Libraries :: Python Modules',
+                
+                # Specify the Python versions you support here. In particular, ensure
+                # that you indicate whether you support Python 2, Python 3 or both.
+                'Programming Language :: Python :: 2',
+                'Programming Language :: Python :: 2.6',
+                'Programming Language :: Python :: 2.7',
+                'Programming Language :: Python :: 3',
+                'Programming Language :: Python :: 3.2',
+                'Programming Language :: Python :: 3.3',
+                'Programming Language :: Python :: 3.4',                
+                'Programming Language :: Python :: 3.5',                
+                
             ],
 
             scripts=['weblogo', 'transformseq'],
+            
             packages=[
                 'corebio',
-                'corebio.db',
-                'corebio.secstruc',
                 'corebio.seq_io',
                 'corebio.seq_io._nexus',
-                'corebio.ssearch_io',
                 'corebio.utils',
                 'weblogolib',
             ],
@@ -60,7 +63,8 @@ def main():
                 'weblogolib': ['htdocs/*.*', 'htdocs/img/*.*', 'htdocs/examples/*.*', 'template.eps'],
                 'corebio': ['data/*.*']
             },
-            requires=['numpy'],
+            
+            install_requires=['numpy'],
 
     )
 

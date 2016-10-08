@@ -76,10 +76,6 @@
 
 /UseCIEColor true def       % Fix for issue 4
 /default_color ${default_color} def 
-/color_dict << 
-${color_dict}
->> def
-
 
 
 % ---- DERIVED PARAMETERS ----
@@ -472,8 +468,9 @@ ${color_dict}
 
 
 % Draw a character whose height is proportional to symbol bits
-/ShowSymbol{ % interval character ShowSymbol
+/ShowSymbol{ % interval color character ShowSymbol
     /char exch def
+    /color exch def
     /interval exch def
     /fraction_width exch def
     
@@ -505,7 +502,7 @@ ${color_dict}
             stack_margin stack_margin rmoveto
             debug { char_height char_width DrawBox } if
             1 fraction_width sub char_width mul 2 div  0 rmoveto
-            fraction_width char_width mul char_height char DrawChar
+            fraction_width char_width mul char_height color char DrawChar
         grestore
         
     } if
@@ -515,6 +512,7 @@ ${color_dict}
 
 /DrawChar { % <width> <height> <char> ShowChar
     /tc exch def    % The character
+    /color exch def % The color of the character
     /ysize exch def % the y size of the character
     /xsize exch def % the x size of the character
     /xmulfactor 1 def 
@@ -522,7 +520,7 @@ ${color_dict}
     
     gsave
         SetLogoFont    
-        tc SetColor
+        color aload pop setrgbcolor
 
         % IReplacementHack
         % Deal with the lack of bars on the letter 'I' in Arial and Helvetica
@@ -573,16 +571,6 @@ ${color_dict}
 
     grestore
 } bind def
-
-/SetColor{ % <char> SetColor
-  dup color_dict exch known {
-    color_dict exch get aload pop setrgbcolor
-  } {
-    pop
-    default_color aload pop setrgbcolor
-  } ifelse 
-} bind def
-
 
 /DrawErrorbar{ % interval_down interval_up DrawErrorbar
     
@@ -641,15 +629,14 @@ ${color_dict}
 %StartLogo
 %    StartLine
 %        (1) StartStack
-%            1.2 (C) ShowSymbol
-%            2.2 (I) ShowSymbol
+%            1.2 [0 0 0] (C) ShowSymbol
+%            2.2 [0 0 0] (I) ShowSymbol
 %            0.5 0.5 DrawErrorbar
 %        EndStack
 %        (2) StartStack
-%            0.5 (I) ShowSymbol
-%            0.9 (L) ShowSymbol
-%            1.0 (G) ShowSymbol
-%            
+%            0.5 [0 0 0] (I) ShowSymbol
+%            0.9 [0 0 0] (L) ShowSymbol
+%            1.0 [0 0 0] (G) ShowSymbol
 %            0.5 0.5 DrawErrorbar        
 %        EndStack
 %        (234) StartStack
