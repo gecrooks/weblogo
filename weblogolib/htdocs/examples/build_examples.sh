@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd "$(dirname "${BASH_SOURCE[0]}")"
+
 echo -n '.'
 ../../../weblogo --format PNG --size large \
     -i -5 -l 1 -u 20 \
