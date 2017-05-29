@@ -35,40 +35,37 @@ __all__ = ('isblank', 'isfloat', 'isint', 'ischar', 'fcmp',
            'ArgumentError', 'frozendict', 'group_count',
            'resource_string', 'resource_stream', 'resource_filename')
 
-import os.path
 import math
+import numbers
+import os.path
 
 try:
     import pkg_resources
 except ImportError:
     pkg_resources = None
 
-from .._py3k import iteritems
+from .._py3k import iteritems, _is_int_or_long
 
 
-def isblank(string):
+def isblank(s):
     """Is this whitespace or an empty string?"""
-    if string == '':
-        return True
-    return string.isspace()
+    if isinstance(s, basestring):
+        if not s:
+            return True
+        else:
+            return s.isspace()
+    else:
+        return False
 
 
 def isfloat(s):
     """Does this object represent a floating point number? """
-    try:
-        float(s)
-        return True
-    except (ValueError, TypeError):
-        return False
+    return isinstance(s, numbers.Real)
 
 
 def isint(s):
     """Does this object represent an integer?"""
-    try:
-        int(s)
-        return True
-    except (ValueError, TypeError):
-        return False
+    return _is_int_or_long(s)
 
 
 def ischar(s):
