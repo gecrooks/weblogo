@@ -446,19 +446,8 @@ class Motif(AlphabeticArray):
         if header[0] == 'PO' or header[0] == 'P0':
             header.pop(0)
 
-        position_header = True
-        alphabet_header = True
-        for h in header:
-            if not isint(h):
-                position_header = False
-            if not str.isalpha(h):
-                alphabet_header = False
-
-        if not position_header and not alphabet_header:
-            raise ValueError("Can't parse header: {}".format(str(header)))
-
-        if position_header and alphabet_header:
-            raise ValueError("Can't parse header")
+        position_header = True if all([isint(h) for h in header]) else False
+        alphabet_header = True if position_header is False else False
 
         # Check row headers
         if alphabet_header:
@@ -477,7 +466,7 @@ class Motif(AlphabeticArray):
                 a.append(r.pop(0))
             defacto_alphabet = ''.join(a)
 
-            # Check defacto_alphabet
+        # Check defacto_alphabet
         defacto_alphabet = Alphabet(defacto_alphabet)
 
         if alphabet:
