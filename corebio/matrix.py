@@ -357,6 +357,8 @@ class Motif(AlphabeticArray):
 
     """
 
+    _TRANSFAC_DELIM_LINES = ['XX', '//']
+
     def __init__(self, alphabet, array=None, dtype=None, name=None,
                  description=None, scale=None):
         AlphabeticArray.__init__(self, (None, alphabet), array, dtype)
@@ -398,25 +400,30 @@ class Motif(AlphabeticArray):
         self.reverse()
         self.complement()
 
-    @staticmethod  # TODO: should be classmethod?
-    def read_transfac(fin, alphabet=None):
+    @classmethod
+    def read_transfac(cls, fin, alphabet=None):
         """ Parse a sequence matrix from a file.
         Returns a tuple of (alphabet, matrix)
         """
-
         items = []
 
-        start = True
+        start = False
         for line in fin:
             if line.isspace() or line[0] == '#':
                 continue
+
             stuff = line.split()
-            if start and stuff[0] != 'PO' and stuff[0] != 'P0':
-                continue
-            if stuff[0] == 'XX' or stuff[0] == '//':
-                break
-            start = False
-            items.append(stuff)
+
+            if stuff[0] == 'PO' or stuff[0] == 'P0':
+                start = True
+
+            # 'XX' delimiters may precede the first motif
+            if start:
+                if stuff[0] in cls._TRANSFAC_DELIM_LINES:
+                    break
+                else:
+                    items.append(stuff)
+
         if len(items) < 2:
             raise ValueError("Vacuous file.")
 
