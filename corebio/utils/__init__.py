@@ -3,7 +3,7 @@
 #  This software is distributed under the MIT Open Source License.
 #  <http://www.opensource.org/licenses/mit-license.html>
 #
-#  Permission is hereby granted, free of charge, to any person obtaining a 
+#  Permission is hereby granted, free of charge, to any person obtaining a
 #  copy of this software and associated documentation files (the "Software"),
 #  to deal in the Software without restriction, including without limitation
 #  the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -13,12 +13,12 @@
 #  The above copyright notice and this permission notice shall be included
 #  in all copies or substantial portions of the Software.
 #
-#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 #  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 #
 
@@ -82,21 +82,21 @@ def fcmp(x, y, precision):
 
 def remove_whitespace(astring):
     """Remove all whitespace from a string."""
-    # TODO: Is this horrible slow?   
+    # TODO: Is this horrible slow?
     return "".join(astring.split())
 
 
 def invert_dict(dictionary):
-    """Constructs a new dictionary with inverted mappings so that keys become 
-    values and vice versa. If the values of the original dictionary are not
-    unique then only one of the original keys will be included in the new
-    dictionary.
+    """Constructs a new dictionary with inverted mappings so that keys
+    become values and vice versa. If the values of the original dictionary
+    are not unique then only one of the original keys will be included
+    in the new dictionary.
     """
     return dict((value, key) for key, value in iteritems(dictionary))
 
 
 def update(obj, **entries):
-    """Update an instance with new values. 
+    """Update an instance with new values.
 
     >>> update({'a': 1}, a=10, b=20)
     {'a': 10, 'b': 20}
@@ -135,7 +135,7 @@ def group_count(i):
 class Token(object):
     """Represents the items returned by a file scanner, normally processed
     by a parser.
-    
+
     Attributes :
     o typeof    -- a string describing the kind of token
     o data      -- the value of the token
@@ -158,13 +158,14 @@ class Token(object):
         if self.offset != -1:
             coord += ':' + str(self.offset)
         coord = coord.ljust(7)
-        return (coord + '  ' + self.typeof + ' : ').ljust(32) + str(self.data or '')
+        return ((coord + '  ' + self.typeof + ' : ').ljust(32) +
+                str(self.data or ''))
 
 
 def Struct(**kwargs):
     """Create a new instance of an anonymous class with the supplied attributes
     and values.
-    
+
     >>> s = Struct(a=3,b=4)
     >>> s
     Struct(
@@ -173,7 +174,7 @@ def Struct(**kwargs):
     )
     >>> s.a
     3
-    
+
     """
     name = 'Struct'
 
@@ -193,7 +194,7 @@ def Struct(**kwargs):
 
 
 class Reiterate(object):
-    """ A flexible wrapper around a simple iterator.    
+    """ A flexible wrapper around a simple iterator.
     """
 
     def __new__(cls, iterator):
@@ -274,12 +275,13 @@ _crc64_table = None
 def crc64(string):
     """ Calculate ISO 3309 standard cyclic redundancy checksum.
     Used, for example, by SWISS-PROT.
-    
+
     Returns : The CRC as a hexadecimal string.
-    
-    Reference: 
+
+    Reference:
     o W. H. Press, S. A. Teukolsky, W. T. Vetterling, and B. P. Flannery,
-     "Numerical recipes in C", 2nd ed., Cambridge University Press. Pages 896ff.
+     "Numerical recipes in C", 2nd ed., Cambridge University Press.
+     Pages 896ff.
     """
     # Adapted from biopython, which was adapted from bioperl
     global _crc64_table
@@ -318,29 +320,29 @@ def crc64(string):
 class FileIndex(object):
     """Line based random access to a file. Quickly turn a file into a read-only
     database.
-    
+
     Attr:
     - indexfile -- The file to be indexed. Can be set to None and latter
                 replaced with a new file handle, for exampel, if you need to
-                close and latter reopen the file. 
-    
+                close and latter reopen the file.
+
     Bugs:
-        User must set the indexedfile to None before pickling this class.  
-    
+        User must set the indexedfile to None before pickling this class.
+
     """
     __slots__ = ['indexedfile', '_parser', '_positions', '_keys', '_key_dict']
 
     def __init__(self, indexedfile, linekey=None, parser=None):
         """
-            
+
         Args:
         - indexedfile -- The file to index
         - linekey -- An optional function. keyofline() will be passed each line
-            of the file in turn and should return a string to index the line, 
-            or None. If keyofline() is supplied, then only lines that generate  
+            of the file in turn and should return a string to index the line,
+            or None. If keyofline() is supplied, then only lines that generate
             keys are indexed.
-        - parser -- An optional parser. A function that reads from a file handle
-            positioned at the start of a record and returns an object.   
+        - parser -- An optional parser. A function that reads from a file
+            handle positioned at the start of a record and returns an object.
         """
 
         def default_parser(seekedfile):
@@ -412,20 +414,20 @@ class FileIndex(object):
 def find_command(command, path=None):
     """Return the full path to the first match of the given command on
     the path.
-    
+
     Arguments:
     - command -- is a the name of the executable to search for.
     - path -- is an optional alternate path list to search. The default is
-        to use the COREBIOPATH environment variable, if it exists, else the 
+        to use the COREBIOPATH environment variable, if it exists, else the
         PATH environment variable.
-        
+
     Raises:
     - EnvironmentError -- If no match is found for the command.
-    
-    By default the COREBIOPATH or PATH environment variable is searched (as well
-    as, on Windows, the AppPaths key in the registry), but a specific 'path'
-    list to search may be specified as well.  
-        
+
+    By default the COREBIOPATH or PATH environment variable is searched (as
+    well as, on Windows, the AppPaths key in the registry), but a specific
+    'path' list to search may be specified as well.
+
     Author: Adapted from code by Trent Mick (TrentM@ActiveState.com)
     See: http://trentm.com/projects/which/
     """
@@ -444,9 +446,10 @@ def find_command(command, path=None):
 
 class ArgumentError(ValueError):
     """ A subclass of ValueError raised when a function receives an argument
-    that has the right type but an inappropriate value, and the situation is not
-    described by a more precise exception such as IndexError. The name of the   
-    argument or component at fault and (optionally) the value are also stored.
+    that has the right type but an inappropriate value, and the situation is
+    not described by a more precise exception such as IndexError. The name of
+    the argument or component at fault and (optionally) the value
+    are also stored.
     """
 
     def __init__(self, message, key, value=None):
@@ -456,7 +459,8 @@ class ArgumentError(ValueError):
         - value -- Optional value of the argument.
         """
         ValueError.__init__(self, key, message)
-        self.msg = message  # Changed .message to .msg because of deprecation warning in python 2.6
+        # Changed .message to .msg because of deprecation warning in python 2.6
+        self.msg = message
         self.key = key
         self.value = value
 
@@ -533,12 +537,13 @@ def resource_filename(modulename, resource, basefilename=None):
     resource_filename) call the corresponding methods in the 'pkg_resources'
     module, if installed. Otherwise, we resort to locating the resource
     in the local filesystem. However, this does not work if the package
-    is located inside a zip file. 
+    is located inside a zip file.
     """
     if pkg_resources:
         return pkg_resources.resource_filename(modulename, resource)
 
     if basefilename is None:
-        raise NotImplementedError("Require either basefilename or pkg_resources")
+        raise NotImplementedError("Require either basefilename "
+                                  "or pkg_resources")
 
     return os.path.join(os.path.dirname(basefilename), resource)
