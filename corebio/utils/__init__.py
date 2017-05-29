@@ -28,9 +28,10 @@
 # private submodules, such as _which, are for internal corebio use.
 from __future__ import absolute_import
 
-__all__ = ('isblank', 'isfloat', 'isint', 'ischar', 'fcmp', 'remove_whitespace',
-           'invert_dict', 'update', 'stdrepr', 'Token', 'Struct', 'Reiterate',
-           'deoptparse', 'crc32', 'crc64', 'FileIndex', 'find_command',
+__all__ = ('isblank', 'isfloat', 'isint', 'ischar', 'fcmp',
+           'remove_whitespace', 'invert_dict', 'update', 'stdrepr',
+           'Token', 'Struct', 'Reiterate', 'deoptparse', 'crc32',
+           'crc64', 'FileIndex', 'find_command',
            'ArgumentError', 'frozendict', 'group_count',
            'resource_string', 'resource_stream', 'resource_filename')
 
