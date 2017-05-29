@@ -43,7 +43,7 @@ try:
 except ImportError:
     pkg_resources = None
 
-from .._py3k import iteritems
+from .._py3k import iteritems, basestring
 
 
 def isblank(s):
