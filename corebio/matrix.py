@@ -446,8 +446,16 @@ class Motif(AlphabeticArray):
         if header[0] == 'PO' or header[0] == 'P0':
             header.pop(0)
 
-        position_header = True if all([isint(h) for h in header]) else False
-        alphabet_header = True if position_header is False else False
+        position_header = True
+
+        for h in header:
+            if not ischar(h):
+                raise ValueError("Expected a single character per header "
+                                 "item, but got \"{}\" as one item".format(h))
+            if not isint(h):
+                position_header = False
+
+        alphabet_header = False if position_header else True
 
         # Check row headers
         if alphabet_header:
