@@ -305,8 +305,8 @@ class SubMatrix(AlphabeticArray):
             # are optional.
 
             if cells[0].isalpha() and cells[0] != alphabet[i]:
-                raise ValueError("Incompatible alphabet: line %d : %s %s: "
-                                 % (linenum, line[0], alphabet[i]))
+                raise ValueError("Incompatible alphabet: line {} : {} {}: ".
+                                 format(linenum, line[0], alphabet[i]))
 
             if cells[0].isalpha():
                 cells = cells[1:]
@@ -314,7 +314,7 @@ class SubMatrix(AlphabeticArray):
                 cells = cells[:23]  # Chop off '*' state
             if len(cells) != L:
                 raise ValueError("SubMatrix matrix parse"
-                                 "error: line %d" % linenum)
+                                 "error: line {}".format(linenum))
 
             for j in range(0, L):
                 matrix[i, j] = float(cells[j])
@@ -331,7 +331,7 @@ class SubMatrix(AlphabeticArray):
             for j in range(0, L):
                 if matrix[i, j] != matrix[j, i]:
                     raise ValueError("Substitution matrix "
-                                     "is asymmetric! (%d,%d)" % (i, j))
+                                     "is asymmetric! ({}, {})".format(i, j))
 
         return SubMatrix(alphabet, matrix)
 
@@ -433,7 +433,7 @@ class Motif(AlphabeticArray):
         cols = len(items[0])
         for i in range(1, len(items)):
             if cols != len(items[i]):
-                raise ValueError("Inconsistant length, row %d: " % i)
+                raise ValueError("Inconsistant length, row: {}".format(i))
 
         # Vertical or horizontal arrangement?
         if header[0] == 'PO' or header[0] == 'P0':
@@ -448,7 +448,7 @@ class Motif(AlphabeticArray):
                 alphabet_header = False
 
         if not position_header and not alphabet_header:
-            raise ValueError("Can't parse header: %s" % str(header))
+            raise ValueError("Can't parse header: {}".format(str(header)))
 
         if position_header and alphabet_header:
             raise ValueError("Can't parse header")
@@ -458,7 +458,7 @@ class Motif(AlphabeticArray):
             for i, r in enumerate(items):
                 if not isint(r[0]) and r[0][0] != 'P':
                     raise ValueError("Expected position "
-                                     "as first item on line %d" % i)
+                                     "as first item on line {}".format(i))
                 r.pop(0)
                 defacto_alphabet = ''.join(header)
         else:
@@ -466,7 +466,7 @@ class Motif(AlphabeticArray):
             for i, r in enumerate(items):
                 if not ischar(r[0]) and r[0][0] != 'P':
                     raise ValueError("Expected position "
-                                     "as first item on line %d" % i)
+                                     "as first item on line {}".format(i))
                 a.append(r.pop(0))
             defacto_alphabet = ''.join(a)
 
@@ -475,8 +475,8 @@ class Motif(AlphabeticArray):
 
         if alphabet:
             if not defacto_alphabet.alphabetic(alphabet):
-                raise ValueError("Incompatible alphabets: %s , %s (defacto)"
-                                 % (alphabet, defacto_alphabet))
+                raise ValueError("Incompatible alphabets: {} , {} (defacto)".
+                                 format(alphabet, defacto_alphabet))
         else:
             alphabets = (unambiguous_rna_alphabet,
                          unambiguous_dna_alphabet,
