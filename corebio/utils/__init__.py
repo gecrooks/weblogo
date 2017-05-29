@@ -28,7 +28,7 @@
 # private submodules, such as _which, are for internal corebio use.
 from __future__ import absolute_import
 
-__all__ = ('isblank', 'isfloat', 'isint', 'fcmp', 'remove_whitespace',
+__all__ = ('isblank', 'isfloat', 'isint', 'ischar', 'fcmp', 'remove_whitespace',
            'invert_dict', 'update', 'stdrepr', 'Token', 'Struct', 'Reiterate',
            'deoptparse', 'crc32', 'crc64', 'FileIndex', 'find_command',
            'ArgumentError', 'frozendict', 'group_count',
@@ -68,6 +68,13 @@ def isint(s):
         return True
     except (ValueError, TypeError):
         return False
+
+
+def ischar(s):
+    """Does this object represent a character?"""
+    # Adapted from: https://stackoverflow.com/a/14321721 and
+    # https://mail.python.org/pipermail/python-list/2007-March/425058.html
+    return isinstance(s, basestring) and bool(s) and s == len(s) * s[0]
 
 
 def fcmp(x, y, precision):

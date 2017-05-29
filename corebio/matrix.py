@@ -34,7 +34,7 @@ from corebio._py3k import zip
 from .seq import Alphabet
 from .seq import (unambiguous_dna_alphabet, unambiguous_rna_alphabet,
                   unambiguous_protein_alphabet)
-from .utils import isint
+from .utils import isint, ischar
 
 __all__ = 'AlphabeticArray', 'submatrix_alphabet', 'SubMatrix', 'Motif'
 
