@@ -36,7 +36,6 @@ __all__ = ('isblank', 'isfloat', 'isint', 'ischar', 'fcmp',
            'resource_string', 'resource_stream', 'resource_filename')
 
 import math
-import numbers
 import os.path
 
 try:
@@ -44,7 +43,7 @@ try:
 except ImportError:
     pkg_resources = None
 
-from .._py3k import iteritems, _is_int_or_long
+from .._py3k import iteritems
 
 
 def isblank(s):
@@ -60,12 +59,20 @@ def isblank(s):
 
 def isfloat(s):
     """Does this object represent a floating point number? """
-    return isinstance(s, numbers.Real)
+    try:
+        float(s)
+        return True
+    except (ValueError, TypeError):
+        return False
 
 
 def isint(s):
     """Does this object represent an integer?"""
-    return _is_int_or_long(s)
+    try:
+        int(s)
+        return True
+    except (ValueError, TypeError):
+        return False
 
 
 def ischar(s):
