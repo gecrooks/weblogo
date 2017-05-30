@@ -357,6 +357,8 @@ class Motif(AlphabeticArray):
 
     """
 
+    _TRANSFAC_DELIM_LINES = ['XX', '//']
+
     def __init__(self, alphabet, array=None, dtype=None, name=None,
                  description=None, scale=None):
         AlphabeticArray.__init__(self, (None, alphabet), array, dtype)
@@ -398,25 +400,30 @@ class Motif(AlphabeticArray):
         self.reverse()
         self.complement()
 
-    @staticmethod  # TODO: should be classmethod?
-    def read_transfac(fin, alphabet=None):
+    @classmethod
+    def read_transfac(cls, fin, alphabet=None):
         """ Parse a sequence matrix from a file.
         Returns a tuple of (alphabet, matrix)
         """
-
         items = []
 
-        start = True
+        start = False
         for line in fin:
             if line.isspace() or line[0] == '#':
                 continue
+
             stuff = line.split()
-            if start and stuff[0] != 'PO' and stuff[0] != 'P0':
-                continue
-            if stuff[0] == 'XX' or stuff[0] == '//':
-                break
-            start = False
-            items.append(stuff)
+
+            if stuff[0] == 'PO' or stuff[0] == 'P0':
+                start = True
+
+            # 'XX' delimiters may precede the first motif
+            if start:
+                if stuff[0] in cls._TRANSFAC_DELIM_LINES:
+                    break
+                else:
+                    items.append(stuff)
+
         if len(items) < 2:
             raise ValueError("Vacuous file.")
 
@@ -440,18 +447,15 @@ class Motif(AlphabeticArray):
             header.pop(0)
 
         position_header = True
-        alphabet_header = True
+
         for h in header:
+            if not ischar(h):
+                raise ValueError("Expected a single character per header "
+                                 "item, but got \"{}\" as one item".format(h))
             if not isint(h):
                 position_header = False
-            if not str.isalpha(h):
-                alphabet_header = False
 
-        if not position_header and not alphabet_header:
-            raise ValueError("Can't parse header: {}".format(str(header)))
-
-        if position_header and alphabet_header:
-            raise ValueError("Can't parse header")
+        alphabet_header = False if position_header else True
 
         # Check row headers
         if alphabet_header:
@@ -470,7 +474,7 @@ class Motif(AlphabeticArray):
                 a.append(r.pop(0))
             defacto_alphabet = ''.join(a)
 
-            # Check defacto_alphabet
+        # Check defacto_alphabet
         defacto_alphabet = Alphabet(defacto_alphabet)
 
         if alphabet:
