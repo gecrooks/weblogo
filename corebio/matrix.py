@@ -478,9 +478,10 @@ class Motif(AlphabeticArray):
         defacto_alphabet = Alphabet(defacto_alphabet)
 
         if alphabet:
-            if not defacto_alphabet.alphabetic(alphabet):
-                raise ValueError("Incompatible alphabets: {} , {} (defacto)".
-                                 format(alphabet, defacto_alphabet))
+            if not Alphabet(alphabet).alphabetic(defacto_alphabet):
+                raise ValueError("The alphabet used within the PWM "
+                                 "({}) must be a subset of that provided "
+                                 "({})".format(defacto_alphabet, alphabet))
         else:
             alphabets = (unambiguous_rna_alphabet,
                          unambiguous_dna_alphabet,
@@ -509,4 +510,4 @@ class Motif(AlphabeticArray):
         if position_header:
             matrix.transpose()
 
-        return Motif(defacto_alphabet, matrix).reindex(alphabet)
+        return Motif(defacto_alphabet, matrix)
