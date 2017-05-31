@@ -32,8 +32,6 @@ import numpy as na
 
 from corebio._py3k import zip
 from .seq import Alphabet
-from .seq import (unambiguous_dna_alphabet, unambiguous_rna_alphabet,
-                  unambiguous_protein_alphabet)
 from .utils import isint, ischar
 
 __all__ = 'AlphabeticArray', 'submatrix_alphabet', 'SubMatrix', 'Motif'
@@ -402,8 +400,9 @@ class Motif(AlphabeticArray):
 
     @classmethod
     def read_transfac(cls, fin, alphabet=None):
-        """ Parse a sequence matrix from a file.
-        Returns a tuple of (alphabet, matrix)
+        """ Parse a TRANSFAC-format PWM from a file.
+        Returns a Motif object, representing the provided
+        PWM along with an inferred or provided alphabet.
         """
         items = []
 
@@ -474,25 +473,9 @@ class Motif(AlphabeticArray):
                 a.append(r.pop(0))
             defacto_alphabet = ''.join(a)
 
-        # Check defacto_alphabet
-        defacto_alphabet = Alphabet(defacto_alphabet)
-
-        if alphabet:
-            if not Alphabet(alphabet).alphabetic(defacto_alphabet):
-                raise ValueError("The alphabet used within the PWM "
-                                 "({}) must be a subset of that provided "
-                                 "({})".format(defacto_alphabet, alphabet))
-        else:
-            alphabets = (unambiguous_rna_alphabet,
-                         unambiguous_dna_alphabet,
-                         unambiguous_protein_alphabet,
-                         )
-            for a in alphabets:
-                if defacto_alphabet.alphabetic(a):
-                    alphabet = a
-                    break
-            if not alphabet:
-                alphabet = defacto_alphabet
+        # check the de facto alphabet, guessing the correct one
+        inferred_alphabet = Alphabet.infer_alphabet(alphabet,
+                                                    Alphabet(defacto_alphabet))
 
         # The last item of each row may be extra cruft. Remove
         if len(items[0]) == len(header) + 1:
@@ -510,4 +493,5 @@ class Motif(AlphabeticArray):
         if position_header:
             matrix.transpose()
 
-        return Motif(defacto_alphabet, matrix)
+        # returns Motif with the de facto alphabet, if alphabet is set to do so
+        return Motif(defacto_alphabet, matrix).reindex(inferred_alphabet)
