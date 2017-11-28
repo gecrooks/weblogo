@@ -626,12 +626,15 @@ class LogoFormat(LogoOptions):
         if self.show_yaxis:
             self.line_margin_left = self.fontsize * 3.0
         else:
-            self.line_margin_left = 0
+            if self.show_ends and self.show_xaxis:
+                self.line_margin_left = self.fontsize * 1.5
+            else:
+                self.line_margin_left = 4
 
-        if self.show_ends:
+        if self.show_ends and self.show_xaxis:
             self.line_margin_right = self.fontsize * 1.5
         else:
-            self.line_margin_right = self.fontsize
+            self.line_margin_right = 4
 
         if self.show_xaxis:
             if self.rotate_numbers:
