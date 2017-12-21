@@ -9,7 +9,7 @@ from setuptools import setup, find_packages
 #warnings.simplefilter('ignore', UserWarning, lineno=236)
 
 
-from weblogolib import __version__
+from corebio import __version__
 
 
 def main():
