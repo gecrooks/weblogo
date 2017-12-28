@@ -1,4 +1,4 @@
 import pkg_resources 
 
-version = pkg_resources.require("CoreBio")[0].version
+__version__ = pkg_resources.require("CoreBio")[0].version
 
