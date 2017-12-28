@@ -380,6 +380,7 @@ def _build_option_parser():
                         action="store",
                         help="The set of symbols to count, e.g. 'AGTC'. "
                              "All characters not in the alphabet are ignored. "
+                             "'actual' can be specified to use an alphabet derived from the symbols present in the input data. "
                              "If neither the alphabet nor sequence-type are specified then weblogo will examine the input data and make an educated guess. "
                              "See also --sequence-type, --ignore-lower-case")
 

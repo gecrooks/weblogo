@@ -3,7 +3,7 @@
 #  This software is distributed under the MIT Open Source License.
 #  <http://www.opensource.org/licenses/mit-license.html>
 #
-#  Permission is hereby granted, free of charge, to any person obtaining a 
+#  Permission is hereby granted, free of charge, to any person obtaining a
 #  copy of this software and associated documentation files (the "Software"),
 #  to deal in the Software without restriction, including without limitation
 #  the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -13,20 +13,19 @@
 #  The above copyright notice and this permission notice shall be included
 #  in all copies or substantial portions of the Software.
 #
-#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 #  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
-#  THE SOFTWARE.
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+#  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+#  IN THE SOFTWARE.
 #
-
 
 
 """ Alphabetic sequences and associated tools and data.
 
-Seq is a subclass of a python string with additional annotation and an alphabet.
+Seq is a subclass of a python string with additional annotation and alphabet.
 The characters in string must be contained in the alphabet. Various standard
 alphabets are provided.
 
@@ -35,24 +34,24 @@ Classes :
     Alphabet    -- A subset of non-null ascii characters
     Seq         -- An alphabetic string
     SeqList     -- A collection of Seq's
-  
-Alphabets :    
+
+Alphabets :
     o generic_alphabet  -- A generic alphabet. Any printable ASCII character.
-    o protein_alphabet -- IUCAP/IUB Amino Acid one letter codes. 
+    o protein_alphabet -- IUCAP/IUB Amino Acid one letter codes.
     o nucleic_alphabet -- IUPAC/IUB Nucleic Acid codes 'ACGTURYSWKMBDHVN-'
-    o dna_alphabet -- Same as nucleic_alphabet, with 'U' (Uracil) an 
+    o dna_alphabet -- Same as nucleic_alphabet, with 'U' (Uracil) an
         alternative for 'T' (Thymidine).
     o rna_alphabet -- Same as nucleic_alphabet, with 'T' (Thymidine) an
         alternative for 'U' (Uracil).
     o reduced_nucleic_alphabet -- All ambiguous codes in 'nucleic_alphabet' are
         alternative to 'N' (aNy)
-    o reduced_protein_alphabet -- All ambiguous ('BZJ') and non-canonical amino 
-        acids codes ( 'U', Selenocysteine and 'O', Pyrrolysine)  in 
+    o reduced_protein_alphabet -- All ambiguous ('BZJ') and non-canonical amino
+        acids codes ( 'U', Selenocysteine and 'O', Pyrrolysine)  in
         'protein_alphabet' are alternative to 'X'.
     o unambiguous_dna_alphabet -- 'ACGT'
     o unambiguous_rna_alphabet -- 'ACGU'
-    o unambiguous_protein_alphabet -- The twenty canonical amino acid one letter
-        codes, in alphabetic order, 'ACDEFGHIKLMNPQRSTVWY'
+    o unambiguous_protein_alphabet -- The twenty canonical amino acid
+        one letter codes, in alphabetic order, 'ACDEFGHIKLMNPQRSTVWY'
 
 Amino Acid Codes:
     Code  Alt.  Meaning
@@ -66,12 +65,12 @@ Amino Acid Codes:
     G           Glycine
     H           Histidine
     I           Isoleucine
-    J           Leucine or Isoleucine    
+    J           Leucine or Isoleucine
     K           Lysine
     L           Leucine
     M           Methionine
     N           Asparagine
-    O           Pyrrolysine    
+    O           Pyrrolysine
     P           Proline
     Q           Glutamine
     R           Arginine
@@ -84,7 +83,7 @@ Amino Acid Codes:
     Z           Glutamate or Glutamine
     X    ?      any
     *           translation stop
-    -    .~     gap 
+    -    .~     gap
 
 Nucleotide Codes:
     Code  Alt.  Meaning
@@ -105,31 +104,29 @@ Nucleotide Codes:
     H           A C T (not G) (H comes after G)
     V           G C A (not T, not U) (V comes after U)
     N   X?      A G C T (aNy)
-    -   .~      A gap 
-    
+    -   .~      A gap
+
 
 
 
 Refs:
     http://www.chem.qmw.ac.uk/iupac/AminoAcid/A2021.html
-    http://www.chem.qmw.ac.uk/iubmb/misc/naseq.html    
+    http://www.chem.qmw.ac.uk/iubmb/misc/naseq.html
 Status:
-    Beta    
+    Beta
 Authors:
     GEC 2004,2005
 """
 from __future__ import absolute_import, division
 
 # TODO: Add this to docstring somewhere.
-# To replace all ambiguous nucleic code by 'N', replace alphabet and then n 
+# To replace all ambiguous nucleic code by 'N', replace alphabet and then n
 # normalize.
-# 
+#
 # >>> Seq( 'ACGT-RYKM', reduced_nucleic_alphabet).normalized()
 # 'ACGT-NNNN'
 
 from array import array
-
-from .moremath import argmax, sqrt
 
 from ._py3k import maketrans, _as_bytes
 
@@ -158,29 +155,32 @@ class Alphabet(object):
 
     Status:
         Beta
-    Authors: 
+    Authors:
         - GEC 2005
     """
     __slots__ = ['_letters', '_alternatives', '_ord_table', '_chr_table']
 
+    _OVERRIDE_ALPH_GUESS_PARAM = 'actual'
+
     # We're immutable, so use __new__ not __init__
     def __new__(cls, letters, alternatives=None):
         """Create a new, immutable Alphabet.
-        
+
         arguments:
         - letters -- the letters in the alphabet. The ordering determines
             the ordinal position of each character in this alphabet.
         - alt -- A list of (alternative, canonical) letters. The alternatives
-            are given the same ordinal position as the canonical characters. 
-            e.g. (('?','X'),('x', 'X')) states that '?' and 'x' are synonomous 
-            with 'X'.  Values that are not in 'letters' are ignored. Alternatives
-            that are already in 'letters' are also ignored. If the same
-            alternative character is used twice then the alternative is assigned
-            to the canonical character that occurs first in 'letters'. The 
-            default is to assume that upper and lower case characters are
-            equivalent, unless both cases are included in 'letters'.                   
+            are given the same ordinal position as the canonical characters.
+            e.g. (('?','X'),('x', 'X')) states that '?' and 'x' are synonomous
+            with 'X'.  Values that are not in 'letters' are ignored.
+            Alternatives that are already in 'letters' are also ignored.
+            If the same alternative character is used twice then the
+            alternative is assigned to the canonical character that
+            occurs first in 'letters'. The default is to assume that upper
+            and lower case characters are equivalent, unless both cases are
+            included in 'letters'.
         raises:
-            ValueError : Repetitive or otherwise illegal set of letters.        
+            ValueError : Repetitive or otherwise illegal set of letters.
         """
         self = object.__new__(cls)
 
@@ -197,10 +197,10 @@ class Alphabet(object):
         if alternatives is None:
             alternatives = equivalent_by_case
 
-        # The ord_table maps between the ordinal position of a character in ascii
-        # and the ordinal position in this alphabet. Characters not in the
-        # alphabet are given a position of 255. The ord_table is stored as a 
-        # string. 
+        # The ord_table maps between the ordinal position of a character in
+        # ascii and the ordinal position in this alphabet. Characters not in
+        # the alphabet are given a position of 255. The ord_table is stored as
+        # a string.
         ord_table = bytearray([0xff, ] * 256)
         for i, a in enumerate(letters):
             n = ord(a)
@@ -235,6 +235,31 @@ class Alphabet(object):
 
         return self
 
+    @classmethod
+    def infer_alphabet(cls, alphabet, defacto_alphabet):
+        if alphabet == cls._OVERRIDE_ALPH_GUESS_PARAM:
+            return Alphabet(defacto_alphabet)
+
+        if alphabet:
+            alphabet = Alphabet(alphabet)
+
+            if not defacto_alphabet.alphabetic(alphabet):
+                raise ValueError("The alphabet used within the PWM "
+                                 "({}) must be a subset of that provided "
+                                 "({})".format(defacto_alphabet, alphabet))
+
+            return alphabet
+        else:
+            alphabets = (unambiguous_rna_alphabet,
+                         unambiguous_dna_alphabet,
+                         unambiguous_protein_alphabet)
+
+            for alphabet in alphabets:
+                if defacto_alphabet.alphabetic(alphabet):
+                    return alphabet
+
+            return Alphabet(defacto_alphabet)
+
     def alphabetic(self, string):
         """True if all characters of the string are in this alphabet."""
         table = self._ord_table
@@ -267,7 +292,7 @@ class Alphabet(object):
         return a
 
     def normalize(self, string):
-        """Normalize an alphabetic string by converting all alternative symbols 
+        """Normalize an alphabetic string by converting all alternative symbols
         to the canonical equivalent in 'letters'.
         """
         if not self.alphabetic(string):
@@ -287,7 +312,8 @@ class Alphabet(object):
         return ''.join(let)
 
     def __repr__(self):
-        return "Alphabet( '" + self._letters + "', zip" + repr(self._alternatives) + " )"
+        return "Alphabet( '{}', zip{})".format(self._letters,
+                                               repr(self._alternatives))
 
     def __str__(self):
         return str(self._letters)
@@ -315,12 +341,12 @@ class Alphabet(object):
     @staticmethod
     def which(seqs, alphabets=None):
         """ Returns the most appropriate unambiguous protein, RNA or DNA alphabet
-        for a Seq or SeqList. If a list of alphabets is supplied, then the best alphabet
-        is selected from that list.
+        for a Seq or SeqList. If a list of alphabets is supplied,
+        then the best alphabet is selected from that list.
 
-        The heuristic is to count the occurrences of letters for each alphabet and 
-        downweight longer alphabets by the log of the alphabet length. Ties
-        go to the first alphabet in the list.
+        The heuristic is to count the occurrences of letters for each alphabet
+        and downweight longer alphabets by the log of the alphabet length.
+        Ties go to the first alphabet in the list.
 
         """
         if alphabets is None:
@@ -385,8 +411,8 @@ class Seq(str):
     Attributes:
         alphabet    -- A string or Alphabet of allowed characters.
         name        -- A short string used to identify the sequence.
-        description -- A string describing the sequence   
-        
+        description -- A string describing the sequence
+
     Authors :
         GEC 2005
     """
@@ -404,7 +430,8 @@ class Seq(str):
         if not isinstance(alphabet, Alphabet):
             alphabet = Alphabet(alphabet)
         if not alphabet.alphabetic(self):
-            raise ValueError("Sequence not alphabetic %s, '%s'" % (alphabet, self))
+            raise ValueError("Sequence not alphabetic {}, "
+                             "'{}'".format(alphabet, self))
 
         self._alphabet = alphabet
         self.name = name
@@ -414,23 +441,22 @@ class Seq(str):
 
     # BEGIN PROPERTIES
 
-    # Make alphabet constant 
+    # Make alphabet constant
     @property
     def alphabet(self):
         return self._alphabet
 
-    # END PROPERTIES        
-
+    # END PROPERTIES
 
     def ords(self):
-        """ Convert sequence to an array of integers 
-        in the range [0, len(alphabet) ) 
+        """ Convert sequence to an array of integers
+        in the range [0, len(alphabet) )
         """
         return self.alphabet.ords(self)
 
     def tally(self, alphabet=None):
         """Counts the occurrences of alphabetic characters.
-                
+
         Arguments:
         - alphabet -- an optional alternative alphabet
 
@@ -484,15 +510,15 @@ class Seq(str):
         return not self.__eq__(other)
 
     def tostring(self):
-        """ Converts Seq to a raw string. 
+        """ Converts Seq to a raw string.
         """
         # Compatibility with biopython
         return str(self)
 
     # ---- Transformations of Seq ----
     def reverse(self):
-        """Return the reversed sequence. 
-        
+        """Return the reversed sequence.
+
         Note that this method returns a new object, in contrast to
         the in-place reverse() method of list objects.
         """
@@ -515,13 +541,15 @@ class Seq(str):
     def lower(self):
         """Return a lower case copy of the sequence. """
         cls = self.__class__
-        trans = maketrans('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')
+        trans = maketrans('ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+                          'abcdefghijklmnopqrstuvwxyz')
         return cls(str(self).translate(trans), self.alphabet)
 
     def upper(self):
         """Return a lower case copy of the sequence. """
         cls = self.__class__
-        trans = maketrans('abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+        trans = maketrans('abcdefghijklmnopqrstuvwxyz',
+                          'ABCDEFGHIJKLMNOPQRSTUVWXYZ')
         return cls(str(self).translate(trans), self.alphabet)
 
     def mask(self, letters='abcdefghijklmnopqrstuvwxyz', mask='X'):
@@ -556,7 +584,7 @@ class Seq(str):
 
     def reverse_complement(self):
         """Returns reversed complementary nucleic acid sequence (i.e. the other
-        strand of a DNA sequence.) 
+        strand of a DNA sequence.)
         """
         return self.reverse().complement()
 
@@ -569,9 +597,10 @@ class Seq(str):
         return cls(s, self.alphabet, self.name, self.description)
 
     def words(self, k, alphabet=None):
-        """Return an iteration over all subwords of length k in the sequence. If an optional
-        alphabet is provided, only words from that alphabet are returned.
-        
+        """Return an iteration over all subwords of length k in the sequence.
+           If an optional alphabet is provided, only words from that
+           alphabet are returned.
+
         >>> list(Seq("abcabc").words(3))
         ['abc', 'bca', 'cab', 'abc']
         """
@@ -590,7 +619,7 @@ class Seq(str):
 
     def word_count(self, k, alphabet=None):
         """Return a count of all subwords in the sequence.
-        
+
         >>> from corebio.seq import *
         >>> Seq("abcabc").word_count(3)
         [('abc', 2), ('bca', 1), ('cab', 1)]
@@ -604,7 +633,7 @@ class Seq(str):
 
 
 class SeqList(list):
-    """ A list of sequences. 
+    """ A list of sequences.
     """
 
     __slots__ = ["alphabet", "name", "description"]
@@ -682,7 +711,8 @@ class SeqList(list):
 
         for o in ords:
             if len(o) != L:
-                raise ValueError("Sequences are of incommensurate lengths. Cannot tally.")
+                raise ValueError("Sequences are of incommensurate lengths. "
+                                 "Cannot tally.")
             for j, n in enumerate(o):
                 if n < N:
                     counts[j][n] += 1
@@ -695,18 +725,18 @@ class SeqList(list):
 
 
 def dna(string):
-    """Create an alphabetic sequence representing a stretch of DNA.    
+    """Create an alphabetic sequence representing a stretch of DNA.
     """
     return Seq(string, alphabet=dna_alphabet)
 
 
 def rna(string):
-    """Create an alphabetic sequence representing a stretch of RNA.    
+    """Create an alphabetic sequence representing a stretch of RNA.
     """
     return Seq(string, alphabet=rna_alphabet)
 
 
 def protein(string):
-    """Create an alphabetic sequence representing a stretch of polypeptide.    
+    """Create an alphabetic sequence representing a stretch of polypeptide.
     """
     return Seq(string, alphabet=protein_alphabet)
