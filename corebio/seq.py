@@ -167,6 +167,10 @@ class Alphabet(object):
     def __new__(cls, letters, alternatives=None):
         """Create a new, immutable Alphabet.
         
+        e.g. 
+        Alphabet( 'ACDEFGHIKLMNPQRSTVUWY', 
+                  zip('acdefghiklmnpqrstvuwy', 'ACDEFGHIKLMNPQRSTVUWY') )
+        
         arguments:
         - letters -- the letters in the alphabet. The ordering determines
             the ordinal position of each character in this alphabet.
