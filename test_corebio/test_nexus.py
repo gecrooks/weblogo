@@ -12,7 +12,7 @@ class test_nexus(unittest.TestCase):
         self.assertNotEqual(n, None)
 
     def test_parse_f0(self):
-        f = testdata_stream("nexus/test_Nexus_input.nex")
+        f = data_stream("nexus/test_Nexus_input.nex")
         n = Nexus(f)
         # self.output_basics(n)
 
@@ -26,12 +26,12 @@ class test_nexus(unittest.TestCase):
         f.close()
 
     def test_parse_protein(self):
-        f = testdata_stream("nexus/protein.nex")
+        f = data_stream("nexus/protein.nex")
         n = Nexus(f)
         f.close()
 
     def test_parse_dna(self):
-        f = testdata_stream("nexus/dna.nex")
+        f = data_stream("nexus/dna.nex")
         n = Nexus(f)
 
         taxa = n.taxlabels
@@ -43,7 +43,7 @@ class test_nexus(unittest.TestCase):
 
     def test_TreeTest1(self):
         """Test Tree module."""
-        f = testdata_stream("nexus/test_Nexus_input.nex")
+        f = data_stream("nexus/test_Nexus_input.nex")
         n = Nexus(f)
         t3 = n.trees[2]
         t2 = n.trees[2]

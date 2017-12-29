@@ -39,20 +39,20 @@ from test_corebio import *
 
 def examples():
     return (
-        testdata_stream('genbank/NT_019265.gb'),
-        testdata_stream('genbank/cox2.gb'),
-        testdata_stream('genbank/iro.gb'),
-        testdata_stream('genbank/pri1.gb'),
-        testdata_stream('genbank/dbsource_wrap.gb'),
-        testdata_stream('genbank/noref.gb'),
-        testdata_stream('genbank/protein_refseq.gb'),
-        testdata_stream('genbank/cor6_6.gb'),
-        testdata_stream('genbank/origin_line.gb'),
+        data_stream('genbank/NT_019265.gb'),
+        data_stream('genbank/cox2.gb'),
+        data_stream('genbank/iro.gb'),
+        data_stream('genbank/pri1.gb'),
+        data_stream('genbank/dbsource_wrap.gb'),
+        data_stream('genbank/noref.gb'),
+        data_stream('genbank/protein_refseq.gb'),
+        data_stream('genbank/cor6_6.gb'),
+        data_stream('genbank/origin_line.gb'),
 
         # These files are too large to include in the distribution
-        # testdata_stream('genbank/arab1.gb'),
-        # testdata_stream('genbank/NC_005213.gbk'),
-        # testdata_stream('genbank/NC_003888.gbk'),
+        # data_stream('genbank/arab1.gb'),
+        # data_stream('genbank/NC_005213.gbk'),
+        # data_stream('genbank/NC_003888.gbk'),
     )
 
 
@@ -73,7 +73,7 @@ class test_genbank_io(unittest.TestCase):
             # print seqs
 
     def test_read(self):
-        f = testdata_stream("genbank/cox2.gb")
+        f = data_stream("genbank/cox2.gb")
         seqs = genbank_io.read(f)
 
         self.assertEqual(len(seqs), 5)
@@ -85,7 +85,7 @@ class test_genbank_io(unittest.TestCase):
         self.assertEqual(len(seqs[1]), 210)
         f.close()
 
-        f = testdata_stream('genbank/NT_019265.gb')
+        f = data_stream('genbank/NT_019265.gb')
         seqs = genbank_io.read(f)
         self.assertEqual(len(seqs), 0)
         f.close()

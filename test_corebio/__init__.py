@@ -3,13 +3,13 @@ import unittest
 from corebio.utils import resource_string, resource_stream, resource_filename
 
 
-def testdata_string(name):
+def data_string(name):
     return resource_string(__name__, 'data/' + name, __file__)
 
 
-def testdata_stream(name):
+def data_stream(name):
     return resource_stream(__name__, 'data/' + name, __file__)
 
 
-def testdata_filename(name):
+def data_filename(name):
     return resource_filename(__name__, 'data/' + name, __file__)

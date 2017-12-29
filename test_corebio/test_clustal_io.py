@@ -36,7 +36,7 @@ from test_corebio import *
 
 class test_clustal_parser(unittest.TestCase):
     def test_parse_clustal(self):
-        f = testdata_stream("clustal.aln")
+        f = data_stream("clustal.aln")
         seqs = clustal_io.read(f)
         self.assertEqual(len(seqs), 7)
         self.assertEqual(seqs[1].name, "CATH_HUMAN")
@@ -45,7 +45,7 @@ class test_clustal_parser(unittest.TestCase):
 
     def test_parse_clustal2_newline(self):
         # Bug regession test. Clustal barfed on windows line endings, sometimes
-        f = testdata_stream("clustalw2.aln")
+        f = data_stream("clustalw2.aln")
         s = f.read()
 
         import re
@@ -55,7 +55,7 @@ class test_clustal_parser(unittest.TestCase):
         f.close()
 
     def test_parse_headerless(self):
-        f = testdata_stream("clustal_headerless.aln")
+        f = data_stream("clustal_headerless.aln")
         seqs = clustal_io.read(f)
         self.assertEqual(len(seqs), 21)
         self.assertEqual(seqs[2].name, "O16386_CAEEL")
@@ -65,23 +65,23 @@ class test_clustal_parser(unittest.TestCase):
     """ Wrong alphabet should throw a parsing error """
 
     def test_parse_error(self):
-        f = testdata_stream("clustal.aln")
+        f = data_stream("clustal.aln")
         self.assertRaises(ValueError,
                           clustal_io.read, f, nucleic_alphabet)
         f.close()
 
     def test_parse_clustal181(self):
-        f = testdata_stream("clustal181.aln")
+        f = data_stream("clustal181.aln")
         seqs = clustal_io.read(f)
         f.close()
 
     def test_parse_clustal_glualign(self):
-        f = testdata_stream("clustal_glualign.aln")
+        f = data_stream("clustal_glualign.aln")
         seqs = clustal_io.read(f, nucleic_alphabet)
         f.close()
 
     def test_parse_clustalw182(self):
-        f = testdata_stream("clustalw182.aln")
+        f = data_stream("clustalw182.aln")
         seqs = clustal_io.read(f, protein_alphabet)
         f.close()
 
@@ -95,7 +95,7 @@ class test_clustal_parser(unittest.TestCase):
 
     def test_parse_fasta_fail2(self):
         # should fail with parse error
-        f = testdata_stream("globin.fa")
+        f = data_stream("globin.fa")
         self.assertRaises(ValueError,
                           clustal_io.read, f)
         f.close()

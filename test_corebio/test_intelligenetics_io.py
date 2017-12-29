@@ -46,7 +46,7 @@ class test_ig_io(unittest.TestCase):
         self.assertEqual(len(seqs[1]), 299)
 
     def test_read2(self):
-        f = testdata_stream("intelligenetics.txt")
+        f = data_stream("intelligenetics.txt")
         seqs = ig_io.read(f)
         self.assertEqual(len(seqs[0]), 518)
         self.assertEqual(len(seqs[1]), 2016)

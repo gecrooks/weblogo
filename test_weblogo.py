@@ -54,7 +54,7 @@ from corebio.seq import *
 from corebio.moremath import entropy
 
 
-def testdata_stream(name):
+def data_stream(name):
     return resource_stream(__name__, 'test_weblogo/data/' + name)
 
 
@@ -140,7 +140,7 @@ class test_seqlogo(unittest.TestCase):
     # same as that used to run this test.
     def _exec(self, args, outputtext, returncode=0, stdin=None):
         if not stdin:
-            stdin = testdata_stream("cap.fa")
+            stdin = data_stream("cap.fa")
         args = ["./weblogo"] + args
         p = Popen(args, stdin=stdin, stdout=PIPE, stderr=PIPE)
         (out, err) = p.communicate()

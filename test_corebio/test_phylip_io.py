@@ -47,7 +47,7 @@ from test_corebio import *
 
 class test_phylip_io(unittest.TestCase):
     def test_read(self):
-        f = testdata_stream("phylip_test_1.phy")
+        f = data_stream("phylip_test_1.phy")
         seqs = phylip_io.read(f)
         # print seqs
         self.assertEqual(len(seqs), 10)
@@ -62,7 +62,7 @@ class test_phylip_io(unittest.TestCase):
                           phylip_io.read, f)
 
     def test_parse_phylip_test_2(self):
-        f = testdata_stream('phylip_test_2.phy')
+        f = data_stream('phylip_test_2.phy')
         seqs = phylip_io.read(f)
         self.assertEqual(len(seqs), 6)
         self.assertEqual(len(seqs[0]), 20)
@@ -77,7 +77,7 @@ class test_phylip_io(unittest.TestCase):
                           phylip_io.read, f, protein_alphabet)
 
     def test_parse_phylip_test_3(self):
-        f = testdata_stream('phylip_test_3.phy')
+        f = data_stream('phylip_test_3.phy')
         seqs = phylip_io.read(f)
         self.assertEqual(len(seqs), 6)
         self.assertEqual(len(seqs[0]), 20)
@@ -86,7 +86,7 @@ class test_phylip_io(unittest.TestCase):
         f.close()
 
     def test_parse_phylip_test_4(self):
-        f = testdata_stream('phylip_test_4.phy')
+        f = data_stream('phylip_test_4.phy')
         seqs = phylip_io.read(f)
         self.assertEqual(len(seqs), 6)
         self.assertEqual(len(seqs[0]), 25)
@@ -95,7 +95,7 @@ class test_phylip_io(unittest.TestCase):
         f.close()
 
     def test_parse_phylip_test_5(self):
-        f = testdata_stream('phylip_test_5.phy')
+        f = data_stream('phylip_test_5.phy')
         seqs = phylip_io.read(f)
         self.assertEqual(len(seqs), 6)
         self.assertEqual(len(seqs[0]), 50)
@@ -104,19 +104,19 @@ class test_phylip_io(unittest.TestCase):
         f.close()
 
     def test_parse_wrong_phylip_codes_1(self):
-        f = testdata_stream('phylip_test_6.corrupt.phy')
+        f = data_stream('phylip_test_6.corrupt.phy')
         self.assertRaises(ValueError,
                           phylip_io.read, f, protein_alphabet)
         f.close()
 
     def test_parse_wrong_phylip_codes_2(self):
-        f = testdata_stream('phylip_test_7.corrupt.phy')
+        f = data_stream('phylip_test_7.corrupt.phy')
         self.assertRaises(ValueError,
                           phylip_io.read, f, protein_alphabet)
         f.close()
 
     def test_parse_phylip_dna(self):
-        f = testdata_stream('dna.phy')
+        f = data_stream('dna.phy')
         seqs = phylip_io.read(f)
         self.assertEqual(len(seqs), 10)
         self.assertEqual(len(seqs[0]), 705)

@@ -10,28 +10,27 @@ DEVELOPING WEBLOGO
 ---------------------------------------------
 
 1. Make sure local repository is up to date.
-	
-	The WebLogo repository is https://github.com/WebLogo/weblogo
+   The WebLogo repository is https://github.com/WebLogo/weblogo
+	git pull origin master
 
-2.  Update version number if necessary (corebio/_version.py )
-
-
-3. 	Update changelog (weblogolib/htdocs/weblogo_changelog.txt)
+2. Update version number if necessary (corebio/_version.py )
 
 
-4. 	Update manual.html with the latest --help text.
+3. Update changelog (weblogolib/htdocs/weblogo_changelog.txt)
 
 
-5. 	Rebuild examples. (./build.sh)
+4. Update manual.html with the latest --help text.
+
+
+5. Rebuild examples. (./build.sh)
 		
 	
-6. 	Run build process under all supported python versions.
+6. Run build and test under all supported python versions.
 	
-	sudo port select python python27	# MacPorts on OS X
-	./build.sh
+	tox
 
 
-7. 	Run webpage tests.
+7. Run webpage tests.
 
 	./weblogo --serve	# then goto localhost:8080/test.html and try tests
 
