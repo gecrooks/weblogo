@@ -1,4 +1,3 @@
-import pkg_resources 
+__version__ = '3.5.0'
 
-__version__ = pkg_resources.require("CoreBio")[0].version
-
+description = "CoreBio %s " % (__version__)
