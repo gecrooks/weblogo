@@ -9,7 +9,7 @@ from setuptools import setup, find_packages
 #warnings.simplefilter('ignore', UserWarning, lineno=236)
 
 
-from corebio._version import __version__
+exec(open("./corebio/_version.py").read()) # sets __version__
 
 
 def main():
