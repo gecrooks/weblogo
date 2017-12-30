@@ -115,10 +115,10 @@ class test_alphabet(unittest.TestCase):
         a = Alphabet.which(Seq("ARNDCQEGHILKMFPSTWYVX"))
         assert a == unambiguous_protein_alphabet
 
-        f1 = testdata_stream('cap.fa')
-        f2 = testdata_stream('cox2.msf')
-        f3 = testdata_stream('Rv3829c.fasta')
-        f4 = testdata_stream('chain_B.fasta')
+        f1 = data_stream('cap.fa')
+        f2 = data_stream('cox2.msf')
+        f3 = data_stream('Rv3829c.fasta')
+        f4 = data_stream('chain_B.fasta')
 
         tests = (
             (seq_io.read(f1), unambiguous_dna_alphabet),

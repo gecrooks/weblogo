@@ -5,4 +5,5 @@ tmp
 dist
 build
 *.egg-info
-
+.tox
+.cache

@@ -46,7 +46,7 @@ from test_corebio import *
 
 class test_nbrf_io(unittest.TestCase):
     def test_parse_cox2(self):
-        f = testdata_stream('cox2.nbrf')
+        f = data_stream('cox2.nbrf')
         seqs = nbrf_io.read(f)
         self.assertEqual(len(seqs), 5)
         self.assertEqual(len(seqs[1]), 210)
@@ -56,7 +56,7 @@ class test_nbrf_io(unittest.TestCase):
         f.close()
 
     def test_parse_crab(self):
-        f = testdata_stream('crab.nbrf')
+        f = data_stream('crab.nbrf')
         seqs = nbrf_io.read(f)
         self.assertEqual(seqs[0].alphabet, protein_alphabet)
         self.assertEqual(len(seqs), 9)
@@ -66,21 +66,21 @@ class test_nbrf_io(unittest.TestCase):
         f.close()
 
     def test_parse_dna(self):
-        f = testdata_stream('dna.pir')
+        f = data_stream('dna.pir')
         seqs = nbrf_io.read(f)
         self.assertEqual(seqs[0].alphabet, dna_alphabet)
         self.assertEqual(len(seqs), 10)
         f.close()
 
     def test_parse_examples(self):
-        f = testdata_stream('rhod.pir')
+        f = data_stream('rhod.pir')
         seqs = nbrf_io.read(f)
         self.assertEqual(seqs[0].alphabet, protein_alphabet)
         self.assertEqual(len(seqs), 3)
         f.close()
 
     def test_parse_protein(self):
-        f = testdata_stream('protein.pir')
+        f = data_stream('protein.pir')
         seqs = nbrf_io.read(f)
         self.assertEqual(seqs[0].alphabet, protein_alphabet)
         self.assertEqual(len(seqs), 10)
@@ -99,7 +99,7 @@ class test_nbrf_io(unittest.TestCase):
                           nbrf_io.read, f)
 
     def test_pir_file_from_clustal(self):
-        f = testdata_stream('clustalw.pir')
+        f = data_stream('clustalw.pir')
         seqs = nbrf_io.read(f)
         self.assertEqual(len(seqs), 2)
         self.assertEqual(seqs[1].endswith(

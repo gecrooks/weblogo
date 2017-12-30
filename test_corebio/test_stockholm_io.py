@@ -46,7 +46,7 @@ from test_corebio import *
 
 class test_stockholm_io(unittest.TestCase):
     def test_parse1(self):
-        with testdata_stream("pfam.txt") as f:
+        with data_stream("pfam.txt") as f:
             seqs = stockholm_io.read(f)
         # self.assertEqual(len(seqs), 7)
         self.assertEqual(seqs[1].name, "O61132/1-232")
@@ -65,7 +65,7 @@ class test_stockholm_io(unittest.TestCase):
 
 
     def test_parse3(self):
-        with testdata_stream("pfam_example.txt") as f:
+        with data_stream("pfam_example.txt") as f:
             seqs = stockholm_io.read(f)
         self.assertEqual(len(seqs), 24)
         self.assertEqual(seqs[5].name, "ENV_HV2BE/24-510")
@@ -86,7 +86,7 @@ class test_stockholm_io(unittest.TestCase):
 
     def test_parse_fasta_fail2(self):
         # should fail with parse error
-        with testdata_stream("globin.fa") as f:
+        with data_stream("globin.fa") as f:
             self.assertRaises(ValueError, stockholm_io.read, f)
 
     def test_parse_fail(self):

@@ -45,7 +45,7 @@ class test_seq_io(unittest.TestCase):
         e = seq_io.format_extensions()
 
     def test_parse_clustal(self):
-        with testdata_stream("clustal.aln") as f:
+        with data_stream("clustal.aln") as f:
             seqs = seq_io.read(f)
         self.assertEqual(len(seqs), 7)
         self.assertEqual(seqs[1].name, "CATH_HUMAN")
@@ -53,20 +53,20 @@ class test_seq_io(unittest.TestCase):
 
     def test_parse_error(self):
         """ Wrong alphabet should throw a parsing error """
-        with testdata_stream("clustal.aln") as f:
+        with data_stream("clustal.aln") as f:
             self.assertRaises(ValueError,
                               seq_io.read, f, nucleic_alphabet)
 
     def test_parse_clustal181(self):
-        with testdata_stream("clustal181.aln") as f:
+        with data_stream("clustal181.aln") as f:
             seqs = seq_io.read(f, protein_alphabet)
 
     def test_parse_clustal_glualign(self):
-        with testdata_stream("clustal_glualign.aln") as f:
+        with data_stream("clustal_glualign.aln") as f:
             seqs = seq_io.read(f, nucleic_alphabet)
 
     def test_parse_clustalw182(self):
-        with testdata_stream("clustalw182.aln") as f:
+        with data_stream("clustalw182.aln") as f:
             seqs = seq_io.read(f, protein_alphabet)
 
     def test_read_example_array(self):
@@ -86,7 +86,7 @@ class test_seq_io(unittest.TestCase):
         self.assertEqual(len(seqs[1]), 231)
 
     def test_parse_globin_fasta(self):
-        with testdata_stream("globin.fa") as f:
+        with data_stream("globin.fa") as f:
             seqs = seq_io.read(f)
         self.assertEqual(len(seqs), 56)
 
@@ -114,43 +114,43 @@ class test_seq_io(unittest.TestCase):
         # TODO: Also autotest Write and writeseq, where available.
 
         fasta_examples = (StringIO(fasta_io.example),
-                          testdata_stream("globin.fa"))
+                          data_stream("globin.fa"))
 
         clustal_examples = (StringIO(clustal_io.example),
-                            testdata_stream("clustal.aln"),
-                            testdata_stream("clustal181.aln"),
-                            testdata_stream("clustal_glualign.aln"),
-                            testdata_stream("clustalw182.aln"),
+                            data_stream("clustal.aln"),
+                            data_stream("clustal181.aln"),
+                            data_stream("clustal_glualign.aln"),
+                            data_stream("clustalw182.aln"),
                             )
         plain_examples = (StringIO(plain_io.example),)
         phylip_examples = (
-            testdata_stream("phylip_test_1.phy"),
-            testdata_stream('phylip_test_2.phy'),
-            testdata_stream('phylip_test_3.phy'),
-            testdata_stream('phylip_test_4.phy'),
-            testdata_stream('phylip_test_5.phy'),
-            testdata_stream('dna.phy'),
+            data_stream("phylip_test_1.phy"),
+            data_stream('phylip_test_2.phy'),
+            data_stream('phylip_test_3.phy'),
+            data_stream('phylip_test_4.phy'),
+            data_stream('phylip_test_5.phy'),
+            data_stream('dna.phy'),
         )
         msf_examples = (
-            testdata_stream("dna.msf"),
-            testdata_stream("cox2.msf"),
-            testdata_stream("1beo.msf"),
+            data_stream("dna.msf"),
+            data_stream("cox2.msf"),
+            data_stream("1beo.msf"),
         )
         nbrf_examples = (
-            testdata_stream('cox2.nbrf'),
-            testdata_stream('crab.nbrf'),
-            testdata_stream('dna.pir'),
-            testdata_stream('rhod.pir'),
-            testdata_stream('protein.pir'),
+            data_stream('cox2.nbrf'),
+            data_stream('crab.nbrf'),
+            data_stream('dna.pir'),
+            data_stream('rhod.pir'),
+            data_stream('protein.pir'),
         )
         nexus_examples = (
-            testdata_stream("nexus/protein.nex"),
-            testdata_stream("nexus/dna.nex"),
+            data_stream("nexus/protein.nex"),
+            data_stream("nexus/dna.nex"),
         )
         stockholm_examples = (
             StringIO(stockholm_io.example),
-            testdata_stream("pfam_example.txt"),
-            testdata_stream("pfam.txt"),
+            data_stream("pfam_example.txt"),
+            data_stream("pfam.txt"),
         )
         table_examples = (
             StringIO(table_io.example),

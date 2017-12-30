@@ -82,7 +82,7 @@ class test_fasta_io(unittest.TestCase):
         self.assertEqual(len(seqs[1]), 231)
 
 #    def test_read_long(self):
-#        f = testdata_stream("NC_000913.ffn")
+#        f = data_stream("NC_000913.ffn")
 #        count = 0
 #        start = time.time()
 #        for s in seq_io.fasta_io.read_seq(f):
@@ -102,7 +102,7 @@ class test_fasta_io(unittest.TestCase):
 
     def test_parse_globin(self):
         # f = open_resource(__file__, "test_data", "globin.fa")
-        f = testdata_stream("globin.fa")
+        f = data_stream("globin.fa")
         seqs = fasta_io.read(f, protein_alphabet)
         self.assertEqual(len(seqs), 56)
         f.close()

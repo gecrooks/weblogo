@@ -12,7 +12,7 @@ from test_corebio import *
 
 class test_fasta_io(unittest.TestCase):
     def test_read(self):
-        f = testdata_stream("nexus/protein.nex")
+        f = data_stream("nexus/protein.nex")
         seqs = nexus_io.read(f)
         # print seqs
         self.assertEqual(len(seqs), 10)
@@ -23,13 +23,13 @@ class test_fasta_io(unittest.TestCase):
 
     def test_parse_StringIO(self):
         # Bio.Nexus cannot read from a StringIO object.
-        f0 = testdata_stream("nexus/protein.nex")
+        f0 = data_stream("nexus/protein.nex")
         f = StringIO(f0.read())
         n = nexus_io.read(f)
         f0.close()
 
     def test_parse_fasta_fail(self):
-        f = testdata_stream("globin.fa")
+        f = data_stream("globin.fa")
         self.assertRaises(ValueError,
                           nexus_io.read, f)
         f.close()

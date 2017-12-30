@@ -20,8 +20,19 @@ class test_AlphabeticArray(unittest.TestCase):
 
 
 class test_Motif(unittest.TestCase):
+    def test_read_transfac_alphabet_superset(self):
+        with data_stream("transfac_matrix.txt") as f:
+            m = Motif.read_transfac(f, alphabet='TCGA')
+
+        # Supplied alphabet can be superset of defacto alphabet.
+        # Reverts to defacto alphabet
+        with data_stream("transfac_matrix.txt") as f:
+            m = Motif.read_transfac(f, alphabet='TCGAXYZ')
+
+    
+    
     def test_read_transfac(self):
-        f = testdata_stream("transfac_matrix.txt")
+        f = data_stream("transfac_matrix.txt")
         m = Motif.read_transfac(f)
         f.close()
         assert m[3, 'A'] == 0.0
@@ -29,7 +40,7 @@ class test_Motif(unittest.TestCase):
         assert shape(m.array) == (12, 4)
         f.close()
 
-        f = testdata_stream("transfac_matrix2.txt")
+        f = data_stream("transfac_matrix2.txt")
         m = Motif.read_transfac(f)
         f.close()
         assert m[3, 'A'] == 3.0
@@ -37,12 +48,12 @@ class test_Motif(unittest.TestCase):
         assert shape(m.array) == (15, 4)
 
         # this one has extra Ps on start of each line
-        f = testdata_stream("transfac_matrix3.txt")
+        f = data_stream("transfac_matrix3.txt")
         m = Motif.read_transfac(f)
         f.close()
 
     def test_reindex(self):
-        f = testdata_stream("transfac_matrix.txt")
+        f = data_stream("transfac_matrix.txt")
         m = Motif.read_transfac(f)
         f.close()
         m2 = m.reindex("TCGA")
@@ -53,10 +64,11 @@ class test_Motif(unittest.TestCase):
             for i, a in enumerate("AGCT"):
                 assert m[k, a] == m2[k, a]
 
+
     def test_reverse(self):
-        f = testdata_stream("transfac_matrix.txt")
+        f = data_stream("transfac_matrix.txt")
         m = Motif.read_transfac(f)
-        f2 = testdata_stream("transfac_matrix.txt")
+        f2 = data_stream("transfac_matrix.txt")
         m2 = Motif.read_transfac(f2)
         m2.reverse()
 
@@ -69,9 +81,9 @@ class test_Motif(unittest.TestCase):
         f2.close()
 
     def test_complement(self):
-        f = testdata_stream("transfac_matrix.txt")
+        f = data_stream("transfac_matrix.txt")
         m = Motif.read_transfac(f)
-        f2 = testdata_stream("transfac_matrix.txt")
+        f2 = data_stream("transfac_matrix.txt")
         m2 = Motif.read_transfac(f2)
         m2.complement()
 
@@ -85,10 +97,10 @@ class test_Motif(unittest.TestCase):
         f2.close()
 
     def test_reverse_complement(self):
-        f = testdata_stream("transfac_matrix.txt")
+        f = data_stream("transfac_matrix.txt")
         m = Motif.read_transfac(f)
 
-        f2 = testdata_stream("transfac_matrix.txt")
+        f2 = data_stream("transfac_matrix.txt")
         m2 = Motif.read_transfac(f2)
 
         m.complement()
@@ -210,21 +222,21 @@ class test_SubMatrix(unittest.TestCase):
 
     def test_read_blast(self):
         # New style blast matrices have letters at beginning of lines and a '*'
-        f = testdata_stream("blosum35.blast.new")
+        f = data_stream("blosum35.blast.new")
         mat = SubMatrix.read(f)
         self.assertEqual(mat[4, 5], -3)
         f.close()
 
         # Matrices formatted for old blast have a '*' (stop)
         # column and no letters at the beggining of lines 
-        f = testdata_stream("blosum35.blast")
+        f = data_stream("blosum35.blast")
         mat = SubMatrix.read(f)
         self.assertEqual(mat[0, 10], -2)
         self.assertEqual(mat.array.shape, (23, 23))
         f.close()
 
         # For comparison, we'll also parse a matrix without '*'
-        f = testdata_stream("pam250.mat")
+        f = data_stream("pam250.mat")
         mat = SubMatrix.read(f)
         self.assertEqual(mat[4, 5], -5)
         f.close()
