@@ -22,8 +22,10 @@ DEVELOPING WEBLOGO
 4. Update manual.html with the latest --help text.
 
 
-5. Rebuild examples. (./build.sh)
-		
+5. Rebuild examples.
+	cd weblogolib/htdocs/examples
+	bash build_examples.sh
+	
 	
 6. Run build and test under all supported python versions.
 	
