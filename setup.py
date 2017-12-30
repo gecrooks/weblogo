@@ -13,8 +13,18 @@ exec(open("./corebio/_version.py").read()) # sets __version__
 
 
 def main():
-    long_description = open("README.txt").read()
+    long_description = """
+	WebLogo (https://github.com/WebLogo/weblogo) is a tool for creating sequence 
+	logos from biological sequence alignments.  It can be run on the command line, 
+	as a standalone webserver, as a CGI webapp, or as a python library.
 
+	The main WebLogo webserver is located at http://weblogo.threeplusone.com
+
+	Please consult the manual for installation instructions and more information:
+	./weblogolib/htdocs/manual.html
+
+	(Also located at http://weblogo.threeplusone.com/manual.html.)
+	"""
     setup(
             name="weblogo",
             version=__version__,
