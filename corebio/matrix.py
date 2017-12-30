@@ -194,13 +194,13 @@ class AlphabeticArray(object):
             outerkeys.append(k)
         return self.array.__getitem__(tuple(outerkeys))
 
-    def reindex(self, new_alphabets):
-        """Create a new AlphabeticArray with the given alphabets. The new
+    def reindex(self, new_alphabet):
+        """Create a new AlphabeticArray with the given alphabet. The new
         alphabet must be a subset of the current alphabet. Useful for
         extracting a submatrix or for permuting the alphabet.
         """
-        new_array = self.index(new_alphabets)
-        return AlphabeticArray(new_alphabets, new_array)
+        new_array = self.index(new_alphabet)
+        return AlphabeticArray(new_alphabet, new_array)
 
     # The following code is designed to proxy all attributes
     # of the wrapped array. But I'm not entirely sure that this will work as
@@ -402,9 +402,11 @@ class Motif(AlphabeticArray):
 
     @classmethod
     def read_transfac(cls, fin, alphabet=None):
-        """ Parse a sequence matrix from a file.
-        Returns a tuple of (alphabet, matrix)
+        """ Parse a TRANSFAC-format PWM from a file.
+        Returns a Motif object, representing the provided
+        PWM along with an inferred or provided alphabet.
         """
+
         items = []
 
         start = False
@@ -478,9 +480,11 @@ class Motif(AlphabeticArray):
         defacto_alphabet = Alphabet(defacto_alphabet)
 
         if alphabet:
+            alphabet = Alphabet(alphabet)
             if not defacto_alphabet.alphabetic(alphabet):
-                raise ValueError("Incompatible alphabets: {} , {} (defacto)".
-                                 format(alphabet, defacto_alphabet))
+                # Allow alphabet to be a superset of defacto_alphabet
+                alphabet = defacto_alphabet
+
         else:
             alphabets = (unambiguous_rna_alphabet,
                          unambiguous_dna_alphabet,

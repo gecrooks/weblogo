@@ -20,6 +20,17 @@ class test_AlphabeticArray(unittest.TestCase):
 
 
 class test_Motif(unittest.TestCase):
+    def test_read_transfac_alphabet_superset(self):
+        with data_stream("transfac_matrix.txt") as f:
+            m = Motif.read_transfac(f, alphabet='TCGA')
+
+        # Supplied alphabet can be superset of defacto alphabet.
+        # Reverts to defacto alphabet
+        with data_stream("transfac_matrix.txt") as f:
+            m = Motif.read_transfac(f, alphabet='TCGAXYZ')
+
+    
+    
     def test_read_transfac(self):
         f = data_stream("transfac_matrix.txt")
         m = Motif.read_transfac(f)
@@ -52,6 +63,7 @@ class test_Motif(unittest.TestCase):
         for k in range(0, 12):
             for i, a in enumerate("AGCT"):
                 assert m[k, a] == m2[k, a]
+
 
     def test_reverse(self):
         f = data_stream("transfac_matrix.txt")
