@@ -5,7 +5,7 @@ WebLogo Release Notes
 * refactor version string creation
 * update testing framework for use with tox and pytest
 * weblogo is centered in it's png file (Kudos: Gert Huselmans)
-* Miscellaneous minor bug fixes and refactoring (Kudos: Kudos: Jerry Caskey, Coby Viner) 
+* Miscellaneous minor bug fixes and refactoring (Kudos: Jerry Caskey, Coby Viner) 
 * fix headings in README.md
 * Weblogo 3.6 runs under python 2.7, 3.4, 3.5 & 3.6
 
