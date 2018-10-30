@@ -23,11 +23,10 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
 #  THE SOFTWARE.
 #
-from __future__ import print_function
 
+from io import StringIO
 import unittest
 
-from corebio._py3k import StringIO
 from corebio import *
 from corebio.seq import *
 from corebio.seq_io import array_io

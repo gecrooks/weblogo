@@ -24,14 +24,14 @@
 #  THE SOFTWARE.
 #
 
-
-import unittest
+from io import StringIO
 import time
+import unittest
+
 
 import corebio.seq_io
 
 from corebio import *
-from corebio._py3k import StringIO
 from corebio.seq import *
 from corebio.seq_io import genbank_io
 from test_corebio import *

@@ -25,7 +25,6 @@
 #
 
 """Null sequence IO. Acts like /dev/null. Read returns empty sequences or sequence lists, writes do nothing."""
-from __future__ import absolute_import
 
 from ..seq import Seq, SeqList
 

@@ -26,11 +26,9 @@
 """
 Arrays indexed by alphabetic strings.
 """
-from __future__ import absolute_import, print_function
 
 import numpy as na
 
-from corebio._py3k import zip
 from .seq import Alphabet
 from .seq import (unambiguous_dna_alphabet, unambiguous_rna_alphabet,
                   unambiguous_protein_alphabet)

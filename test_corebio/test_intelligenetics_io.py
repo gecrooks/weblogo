@@ -24,12 +24,13 @@
 #  THE SOFTWARE.
 #
 
+from io import StringIO
+
 import unittest
 
 import corebio.seq_io.intelligenetics_io as ig_io
 
 from corebio import *
-from corebio._py3k import StringIO
 from corebio.seq import *
 from corebio.seq_io import *
 from test_corebio import *

@@ -36,8 +36,8 @@
 
 import re
 import unittest
+from io import StringIO
 
-from corebio._py3k import StringIO
 from corebio.utils import *
 
 

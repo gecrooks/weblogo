@@ -6,7 +6,6 @@
 Currently only reads sequence data and not annotations.
 
 """
-from __future__ import absolute_import
 
 from ..seq import *
 from ..utils import *

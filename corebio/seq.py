@@ -118,7 +118,6 @@ Status:
 Authors:
     GEC 2004,2005
 """
-from __future__ import absolute_import, division
 
 # TODO: Add this to docstring somewhere.
 # To replace all ambiguous nucleic code by 'N', replace alphabet and then n 
@@ -128,10 +127,10 @@ from __future__ import absolute_import, division
 # 'ACGT-NNNN'
 
 from array import array
+import codecs
 
 from .moremath import argmax, sqrt
 
-from ._py3k import maketrans, _as_bytes
 
 __all__ = [
     'Alphabet',
@@ -378,7 +377,7 @@ unambiguous_protein_alphabet = Alphabet("ACDEFGHIKLMNPQRSTVWY",
                                         zip('acdefghiklmnopqrstuvwy',
                                             'ACDEFGHIKLMNOPQRSTUVWY'))
 
-_complement_table = maketrans("ACGTRYSWKMBDHVN-acgtUuryswkmbdhvnXx?.~",
+_complement_table = str.maketrans("ACGTRYSWKMBDHVN-acgtUuryswkmbdhvnXx?.~",
                               "TGCAYRSWMKVHDBN-tgcaAayrswmkvhdbnXx?.~")
 
 
@@ -514,18 +513,18 @@ class Seq(str):
         cls = self.__class__
         cleanseq = ''.join(char for char in str(self)
                            if char not in set(delchars))
-        return cls(cleanseq.translate(maketrans('', '')), self.alphabet)
+        return cls(cleanseq.translate(str.maketrans('', '')), self.alphabet)
 
     def lower(self):
         """Return a lower case copy of the sequence. """
         cls = self.__class__
-        trans = maketrans('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')
+        trans = str.maketrans('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')
         return cls(str(self).translate(trans), self.alphabet)
 
     def upper(self):
         """Return a lower case copy of the sequence. """
         cls = self.__class__
-        trans = maketrans('abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+        trans = str.maketrans('abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')
         return cls(str(self).translate(trans), self.alphabet)
 
     def mask(self, letters='abcdefghijklmnopqrstuvwxyz', mask='X'):
@@ -536,7 +535,7 @@ class Seq(str):
         if len(mask) != 1:
             raise ValueError("Mask should be single character")
         to = mask * LL
-        trans = maketrans(letters, to)
+        trans = str.maketrans(letters, to)
         cls = self.__class__
         return cls(str(self).translate(trans), self.alphabet)
 
@@ -714,3 +713,13 @@ def protein(string):
     """Create an alphabetic sequence representing a stretch of polypeptide.    
     """
     return Seq(string, alphabet=protein_alphabet)
+
+
+def _as_bytes(s):
+    """Turn byte string or unicode string into a bytes string."""
+    if isinstance(s, bytes):
+        return s
+    # Assume it is a unicode string
+    # Note ISO-8859-1 aka Latin-1 preserves first 256 chars
+    return codecs.latin_1_encode(s)[0]
+

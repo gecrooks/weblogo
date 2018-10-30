@@ -48,7 +48,6 @@ Environment Variables:
         by corebio.utils.find_command
     
 """
-from __future__ import absolute_import
 
 __all__ = ['data',
            'matrix',

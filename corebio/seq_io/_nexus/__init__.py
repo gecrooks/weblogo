@@ -15,16 +15,12 @@ Maddison, Swofford, Maddison. 1997. Syst. Biol. 46(4):590-621
 
 Authors: Frank Kauff and Cymon J. Cox
 """
-from __future__ import print_function
 
 import copy
 import math
 import os.path
 import random
 import sys
-
-# Python 3 compatibility
-from ..._py3k import zip, range, basestring
 from functools import reduce
 
 # --- Changes from Bio.Nexus ---
@@ -61,7 +57,7 @@ import contextlib
 @contextlib.contextmanager
 def as_handle(handleish, mode='r'):
     """Treat a filename or file-like object as an open file handle."""
-    if isinstance(handleish, basestring):
+    if isinstance(handleish, str):
         with open(handleish, mode) as fp:
             yield fp
     else:
@@ -84,7 +80,7 @@ SPECIAL_COMMANDS = ['charstatelabels', 'charlabels', 'taxlabels', 'taxset',
                     'charset', 'charpartition', 'taxpartition', 'matrix',
                     'tree', 'utree', 'translate', 'codonposset', 'title']
 KNOWN_NEXUS_BLOCKS = ['trees', 'data', 'characters', 'taxa', 'sets', 'codons']
-PUNCTUATION = '()[]{}/\,;:=*\'"`+-<>'
+PUNCTUATION = '()[]{}/\\,;:=*\'"`+-<>'
 MRBAYESSAFE = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_'
 WHITESPACE = ' \t\n'
 # SPECIALCOMMENTS = ['!', '&', '%', '/', '\\', '@']  # original list of special comments
@@ -453,7 +449,7 @@ def combine(matrices):
 
 
 def _kill_comments_and_break_lines(text):
-    """Delete []-delimited comments out of a file and break into lines separated by ';'.
+    r"""Delete []-delimited comments out of a file and break into lines separated by ';'.
 
     stripped_text=_kill_comments_and_break_lines(text):
     Nested and multiline comments are allowed. [ and ] symbols within single
@@ -669,7 +665,7 @@ class Nexus(object):
                 self.filename = getattr(fp, 'name', 'Unknown_nexus_file')
         except (TypeError, IOError, AttributeError):
             # 2 Assume we have a string from a fh.read()
-            if isinstance(input, basestring):
+            if isinstance(input, str):
                 file_contents = input
                 self.filename = 'input_string'
             else:

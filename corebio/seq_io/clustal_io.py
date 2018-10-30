@@ -34,7 +34,6 @@ Ref :
     sequence alignment through sequence weighting, position-specific gap
     penalties and weight matrix choice. Nucleic Acids Res. 22:4673-4680.
 """
-from __future__ import absolute_import, print_function
 
 # TODO: What happens if CLUSTAL is not the first line of the file?
 

@@ -135,7 +135,6 @@ Attributes:
 
 Status: Beta (Data needs to be proof checked.)    
 """
-from __future__ import absolute_import
 
 # FIXME: Proof check data
 # FIXME: Add __all__

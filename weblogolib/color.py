@@ -22,7 +22,6 @@
 #  THE SOFTWARE.
 
 """ Color specifications using CSS2 (Cascading Style Sheet) syntax."""
-from __future__ import division
 
 
 class Color(object):

@@ -33,7 +33,6 @@ This is a file format for biological sequence data. The sequences are interweave
 3. the word MSF on the first line of the file, and the characters ".." at the end of this line (optional)
 4. A header containing sequence information followed by a line with the characters "//"
 """
-from __future__ import absolute_import
 
 import re
 

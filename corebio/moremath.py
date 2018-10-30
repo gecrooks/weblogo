@@ -59,7 +59,6 @@ Special Functions :
 
 
 """
-from __future__ import division
 
 __all__ = ('euler_gamma', 'catalan', 'golden_ratio', 'bits_per_nat', 'sqrt_2pi',
            'gamma', 'lngamma', 'factorial', 'digamma', 'trigamma',
@@ -74,7 +73,6 @@ import cmath as cm
 
 from itertools import count
 
-from ._py3k import zip
 
 # Some mathematical constants
 euler_gamma = 0.57721566490153286060651

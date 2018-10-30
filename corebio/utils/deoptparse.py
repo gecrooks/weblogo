@@ -23,7 +23,7 @@
 #
 
 """Custom extensions to OptionParse for parsing command line options."""
-from __future__ import print_function
+
 # FIXME: Docstring
 
 # TODO: Add profiling option

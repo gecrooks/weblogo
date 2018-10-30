@@ -49,7 +49,6 @@ accggttctccatccccgcagcgtagcccggaacatggtagctgccatct
 ttacctgctacgccagccttctgtgcgcgcaactgtctggtcccgcccc2
 
 """
-from __future__ import absolute_import, division, print_function
 
 from ..seq import *
 from ..utils import *

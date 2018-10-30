@@ -10,7 +10,6 @@ get information about trees (monphyly of taxon sets, congruence between trees,
 common ancestors,...) and to manipulate trees (reroot trees, split terminal
 nodes).
 """
-from __future__ import absolute_import, print_function
 
 import random
 import sys

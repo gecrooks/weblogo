@@ -38,17 +38,16 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 #  POSSIBILITY OF SUCH DAMAGE. 
 
-# WebLogo Command Line Interface
+# WebLogo Command Line Interfaceg
 
-from __future__ import absolute_import, print_function
 
 import os
 import sys
 from optparse import OptionGroup
 from string import Template
+from io import StringIO
 
 from corebio import seq_io
-from corebio._py3k import iteritems, StringIO
 from corebio.seq import Seq, SeqList, nucleic_alphabet
 from corebio.utils import *
 from corebio.utils.deoptparse import DeOptionParser
@@ -284,7 +283,7 @@ def _build_logoformat(logodata, opts):
         args["annotate"] = opts.annotate.split(',')
 
     logooptions = LogoOptions()
-    for a, v in iteritems(args):
+    for a, v in args.items():
         setattr(logooptions, a, v)
 
     theformat = LogoFormat(logodata, logooptions)

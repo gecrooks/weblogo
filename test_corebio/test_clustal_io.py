@@ -24,10 +24,9 @@
 #  THE SOFTWARE.
 #
 
-
+from io import StringIO
 import unittest
 
-from corebio._py3k import StringIO
 from corebio import *
 from corebio.seq import *
 from corebio.seq_io import *

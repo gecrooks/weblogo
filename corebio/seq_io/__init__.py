@@ -129,7 +129,6 @@ Attributes :
 #    - http://www.cse.ucsc.edu/research/compbio/a2m-desc.html (a2m)
 #    - http://www.genomatix.de/online_help/help/sequence_formats.html
 
-from __future__ import absolute_import
 
 from ..seq import *
 

@@ -35,20 +35,20 @@
 #  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 #  POSSIBILITY OF SUCH DAMAGE. 
-from __future__ import absolute_import, division, print_function
 
 import cgi as cgilib
 import cgitb
 import os.path
 import sys
 import shutil
+from io import StringIO
+
 
 import weblogolib
 
 from string import Template
 
 from corebio.utils import *
-from corebio._py3k import StringIO
 from weblogolib.color import *
 from weblogolib.colorscheme import ColorScheme, SymbolColor
 

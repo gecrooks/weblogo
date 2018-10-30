@@ -34,11 +34,11 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 #  POSSIBILITY OF SUCH DAMAGE. 
 
+from io import StringIO
 
 import unittest
 
 from corebio import *
-from corebio._py3k import StringIO
 from corebio.seq import *
 from corebio.seq_io import *
 from corebio.seq_io import msf_io

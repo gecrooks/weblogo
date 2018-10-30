@@ -52,7 +52,6 @@ VLARHF-QH-EFTPELQ-HALEAHFCA------V---GDALA----K-----A-----YH-----------
 
 
 """
-from __future__ import absolute_import, division, print_function
 
 import re
 

@@ -25,7 +25,6 @@
 
 """Extra utilities and core classes not in standard python.
 """
-from __future__ import absolute_import
 
 __all__ = ('isblank', 'isfloat', 'isint', 'ischar', 'fcmp',
            'remove_whitespace', 'invert_dict', 'update', 'stdrepr',
@@ -42,12 +41,10 @@ try:
 except ImportError:
     pkg_resources = None
 
-from .._py3k import iteritems, basestring
-
 
 def isblank(s):
     """Is this whitespace or an empty string?"""
-    if isinstance(s, basestring):
+    if isinstance(s, str):
         if not s:
             return True
         else:
@@ -78,7 +75,7 @@ def ischar(s):
     """Does this object represent a character?"""
     # Adapted from: https://stackoverflow.com/a/14321721 and
     # https://mail.python.org/pipermail/python-list/2007-March/425058.html
-    return isinstance(s, basestring) and bool(s) and s == len(s) * s[0]
+    return isinstance(s, str) and bool(s) and s == len(s) * s[0]
 
 
 def fcmp(x, y, precision):
@@ -103,7 +100,7 @@ def invert_dict(dictionary):
     are not unique then only one of the original keys will be included
     in the new dictionary.
     """
-    return dict((value, key) for key, value in iteritems(dictionary))
+    return dict((value, key) for key, value in dictionary.items())
 
 
 def update(obj, **entries):
@@ -115,7 +112,7 @@ def update(obj, **entries):
     if hasattr(obj, 'update'):
         obj.update(entries)
     else:
-        for k, v in iteritems(entries):
+        for k, v in entries.items():
             setattr(obj, k, v)
     return obj
 
@@ -190,7 +187,7 @@ def Struct(**kwargs):
     name = 'Struct'
 
     def _init(obj, **kwargs):
-        for k, v in iteritems(kwargs):
+        for k, v in kwargs.items():
             setattr(obj, k, v)
 
     def _repr(obj):

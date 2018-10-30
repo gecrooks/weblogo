@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from io import StringIO
 import unittest
 import time
 

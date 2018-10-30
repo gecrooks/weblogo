@@ -87,7 +87,6 @@ program 'gs' be installed. Scalable Vector Graphics (SVG) format also requires
 the program 'pdf2svg'.
 
 """
-from __future__ import absolute_import, division, print_function
 
 import copy
 import os
@@ -99,6 +98,8 @@ from string import Template
 from subprocess import Popen, PIPE
 import shutil
 import tempfile
+from io import StringIO
+from urllib.request import urlopen, Request, urlparse, urlunparse
 
 # Avoid 'from numpy import *' since numpy has lots of names defined
 from numpy import array, asarray, float64, ones, zeros, any, int32, all, shape
@@ -116,7 +117,6 @@ from corebio.seq import (Alphabet, Seq, SeqList, unambiguous_dna_alphabet,
                          unambiguous_rna_alphabet, unambiguous_protein_alphabet)
 from corebio.utils import (isfloat, ArgumentError, stdrepr, resource_string, resource_filename)
 
-from corebio._py3k import StringIO, urlopen, urlparse, urlunparse, Request
 
 # ------ META DATA ------
 

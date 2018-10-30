@@ -62,8 +62,6 @@ ALPHA CRYSTALLIN B CHAIN (ALPHA(B)-CRYSTALLIN).
   QASGPERTIP ITREEKPAVT AAPKK*
 
 """
-from __future__ import absolute_import
-
 
 from . import *
 from ..seq import *

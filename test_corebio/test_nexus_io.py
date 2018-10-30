@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
+from io import StringIO
+
 import unittest
 
 from corebio import *
-from corebio._py3k import StringIO
 from corebio.seq import *
 from corebio.seq_io import *
 from corebio.utils import *

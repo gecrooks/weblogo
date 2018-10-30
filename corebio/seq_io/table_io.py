@@ -29,7 +29,6 @@
 This very simple format has two columns per line. The first column is a sequence name, the second column is the sequence itself. The columns are separated by a single tab ("\\t") character.
 
 """
-from __future__ import absolute_import, print_function
 
 from . import *
 from ..seq import *

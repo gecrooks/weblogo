@@ -44,9 +44,7 @@ Other:
             Prot. Eng. 16 323-330 (2003)  
 
 """
-from __future__ import absolute_import
 
-from ._py3k import maketrans
 from .data import dna_extended_letters, dna_ambiguity
 from .moremath import log2, entropy
 from .seq import Seq, protein_alphabet, dna_alphabet, nucleic_alphabet, Alphabet
@@ -81,7 +79,7 @@ class Transform(object):
     __slots__ = ["table", "source", "target", "name", "description"]
 
     def __init__(self, source, target, name=None, description=None):
-        self.table = maketrans(source.tostring(), target.tostring())
+        self.table = str.maketrans(source.tostring(), target.tostring())
         self.source = source
         self.target = target
         self.name = name

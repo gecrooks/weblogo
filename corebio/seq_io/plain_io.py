@@ -39,7 +39,6 @@ in as a sequence.  Whitespace is removed.
 -SPC-MLETETLNKYVVIIAYALVFLLSLLGNSLVMLVILYSRVGRSVTDVYLLNLALAD
 -EPC-RDENVHFNRIFLPTIYFIIFLTGIVGNGLVILVMGYQKKLRSMTDKYRLHLSVAD
 """
-from __future__ import absolute_import, print_function
 
 from ..seq import *
 from ..utils import remove_whitespace
