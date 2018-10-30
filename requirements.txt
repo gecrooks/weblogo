@@ -1,1 +1,11 @@
 numpy
+
+# Testing
+pytest
+pytest-cov
+tox
+flake8
+
+# Docs
+sphinx
+sphinx_rtd_theme
