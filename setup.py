@@ -4,7 +4,7 @@ from setuptools import setup
 
 
 # FIXME
-exec(open("./corebio/_version.py").read())  # sets __version__
+exec(open("./weblogo/_version.py").read())  # sets __version__
 
 
 def main():
@@ -16,7 +16,7 @@ as a standalone webserver, as a CGI webapp, or as a python library.
 The main WebLogo webserver is located at http://weblogo.threeplusone.com
 
 Please consult the manual for installation instructions and more information:
-./weblogolib/htdocs/manual.html
+./weblogo/htdocs/manual.html
 
 (Also located at http://weblogo.threeplusone.com/manual.html.)
 """
@@ -50,24 +50,26 @@ Please consult the manual for installation instructions and more information:
 
             ],
 
-            scripts=['weblogo', 'transformseq'],
-
             packages=[
-                'corebio',
-                'corebio.seq_io',
-                'corebio.seq_io._nexus',
-                'corebio.utils',
-                'weblogolib',
+                'weblogo',
+                'weblogo.seq_io',
+                'weblogo.seq_io._nexus',
+                'weblogo.utils',
             ],
 
             package_data={
-                'weblogolib': ['htdocs/*.*', 'htdocs/img/*.*', 'htdocs/examples/*.*',
-                               'template.eps'],
-                'corebio': ['data/*.*']
+                'weblogo': ['htdocs/*.*', 'htdocs/img/*.*', 'htdocs/examples/*.*',
+                               'template.eps', 'data/*.*']
             },
 
             install_requires=['numpy'],
 
+            entry_points={
+                'console_scripts': [
+                    'weblogo = weblogo._cli:main',
+                    'transformseq = weblogo.transformseq:main'
+                ],
+            },
     )
 
 
