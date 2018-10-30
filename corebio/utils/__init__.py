@@ -25,13 +25,12 @@
 
 """Extra utilities and core classes not in standard python.
 """
-# private submodules, such as _which, are for internal corebio use.
 from __future__ import absolute_import
 
 __all__ = ('isblank', 'isfloat', 'isint', 'ischar', 'fcmp',
            'remove_whitespace', 'invert_dict', 'update', 'stdrepr',
            'Token', 'Struct', 'Reiterate', 'deoptparse', 'crc32',
-           'crc64', 'FileIndex', 'find_command',
+           'crc64', 'FileIndex',
            'ArgumentError', 'frozendict', 'group_count',
            'resource_string', 'resource_stream', 'resource_filename')
 
@@ -421,39 +420,6 @@ class FileIndex(object):
             return False
 
 # End class FileIndex
-
-
-def find_command(command, path=None):
-    """Return the full path to the first match of the given command on
-    the path.
-
-    Arguments:
-    - command -- is a the name of the executable to search for.
-    - path -- is an optional alternate path list to search. The default is
-        to use the COREBIOPATH environment variable, if it exists, else the
-        PATH environment variable.
-
-    Raises:
-    - EnvironmentError -- If no match is found for the command.
-
-    By default the COREBIOPATH or PATH environment variable is searched (as
-    well as, on Windows, the AppPaths key in the registry), but a specific
-    'path' list to search may be specified as well.
-
-    Author: Adapted from code by Trent Mick (TrentM@ActiveState.com)
-    See: http://trentm.com/projects/which/
-    """
-    from . import _which
-    if path is None:
-        path = os.environ.get("COREBIOPATH", "").split(os.pathsep)
-        if path == ['']:
-            path = None
-
-    try:
-        match = next(_which.whichgen(command, path))
-    except (StopIteration, _which.WhichError):
-        raise EnvironmentError("Could not find '%s' on the path." % command)
-    return match
 
 
 class ArgumentError(ValueError):

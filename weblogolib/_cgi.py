@@ -41,6 +41,7 @@ import cgi as cgilib
 import cgitb
 import os.path
 import sys
+import shutil
 
 import weblogolib
 
@@ -443,21 +444,15 @@ def send_form(controls, errors=[], htdocs_directory=None):
     substitutions['logo_range_err'] = ''
 
     # Disable graphics options if necessary auxiliary programs are not installed.
-    try:
-        command = find_command('gs')
-    except EnvironmentError:
-        try:
-            command = find_command('gswin32c.exe')
-        except EnvironmentError:
-            substitutions['png_print'] = 'disabled="disabled"'
-            substitutions['png'] = 'disabled="disabled"'
-            substitutions['jpeg'] = 'disabled="disabled"'
-            substitutions['pdf'] = 'disabled="disabled"'
-            substitutions['svg'] = 'disabled="disabled"'
-            substitutions['eps'] = 'selected="selected"'
-    try:
-        command = find_command('pdf2svg')
-    except EnvironmentError:
+    if shutil.which('gs') is None and shutil.which(gswin32c.exe) is None:
+        substitutions['png_print'] = 'disabled="disabled"'
+        substitutions['png'] = 'disabled="disabled"'
+        substitutions['jpeg'] = 'disabled="disabled"'
+        substitutions['pdf'] = 'disabled="disabled"'
+        substitutions['svg'] = 'disabled="disabled"'
+        substitutions['eps'] = 'selected="selected"'
+
+    if shutil.which('pdf2svg') is None:
         substitutions['svg'] = 'disabled="disabled"'
 
     if errors:

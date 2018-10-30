@@ -136,12 +136,6 @@ class test_utils(unittest.TestCase):
         self.assertEqual(crc32("Test the CRC-32 of this string."),
                          "%08X" % 1571220330)
 
-    def test_find_command(self):
-        p = find_command('more')
-        p = find_command('python')
-        self.assertRaises(EnvironmentError, find_command, 'NOSUCH')
-        # print p
-
     def test_ArgumentValueError(self):
         message = "Some message"
         component = "whatsit"

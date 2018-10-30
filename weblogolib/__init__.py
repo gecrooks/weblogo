@@ -96,23 +96,25 @@ import sys
 from datetime import datetime
 from math import exp, log, sqrt
 from string import Template
-from subprocess import *
+from subprocess import Popen, PIPE
+import shutil
+import tempfile
 
 # Avoid 'from numpy import *' since numpy has lots of names defined
 from numpy import array, asarray, float64, ones, zeros, any, int32, all, shape
 import numpy as na
 
-from .color import *
-from .colorscheme import *
+from .color import Color
+from .colorscheme import ColorScheme, SymbolColor, monochrome, hydrophobicity, base_pairing, chemistry,charge
 from .logomath import Dirichlet
 
 import corebio
 from corebio import seq_io
 from corebio.data import (amino_acid_composition, amino_acid_letters, dna_letters, rna_letters)
-from corebio.moremath import *
+from corebio.moremath import entropy
 from corebio.seq import (Alphabet, Seq, SeqList, unambiguous_dna_alphabet,
                          unambiguous_rna_alphabet, unambiguous_protein_alphabet)
-from corebio.utils import (isfloat, find_command, ArgumentError, stdrepr, resource_string, resource_filename)
+from corebio.utils import (isfloat, ArgumentError, stdrepr, resource_string, resource_filename)
 
 from corebio._py3k import StringIO, urlopen, urlparse, urlunparse, Request
 
@@ -165,14 +167,12 @@ class GhostscriptAPI(object):
     formats = ('png', 'pdf', 'jpeg')
 
     def __init__(self, path=None):
-        try:
-            command = find_command('gs', path=path)
-        except EnvironmentError:
-            try:
-                command = find_command('gswin32c.exe', path=path)
-            except EnvironmentError:
-                raise EnvironmentError("Could not find Ghostscript on path."
-                                       " There should be either a gs executable or a gswin32c.exe on your system's path")
+        command = shutil.which('gs', path=path)
+        if command is None:
+            command = shutil.which('gswin32c.exe', path=path)
+        if command is None:
+            raise EnvironmentError("Could not find Ghostscript on path."
+                                   " There should be either a gs executable or a gswin32c.exe on your system's path")
 
         self.command = command
 
@@ -733,9 +733,8 @@ def svg_formatter(data, format):
     """
     pdf = pdf_formatter(data, format)
 
-    try:
-        command = find_command('pdf2svg')
-    except EnvironmentError:
+    command = shutil.which('pdf2svg')
+    if command is None:
         raise EnvironmentError("Scalable Vector Graphics (SVG) format requires the program 'pdf2svg'. "
                                "Cannot find 'pdf2svg' on search path.")
 
@@ -1199,7 +1198,6 @@ class LogoData(object):
 
 def _from_URL_fileopen(target_url):
     """opens files from a remote URL location"""
-    import shutil, tempfile
 
     # parsing url in component parts
     (scheme, net_location, path, param, query, frag) = urlparse(target_url)
