@@ -30,7 +30,7 @@ __all__ = ('isblank', 'isfloat', 'isint', 'ischar', 'fcmp',
            'remove_whitespace', 'invert_dict', 'update', 'stdrepr',
            'Token', 'Struct', 'Reiterate', 'deoptparse', 'crc32',
            'crc64', 'FileIndex',
-           'ArgumentError', 'frozendict', 'group_count',
+           'ArgumentError', 'group_count',
            'resource_string', 'resource_stream', 'resource_filename')
 
 import math
@@ -440,49 +440,6 @@ class ArgumentError(ValueError):
         self.value = value
 
 # end class ArgumentError
-
-
-class frozendict(dict):
-    """A frozendict is a dictionary that cannot be modified after being created
-     -  but it is hashable and may serve as a member of a set or a key in a
-    dictionary.
-    # Author: Adapted from code by Oren Tirosh
-    """
-
-    # See: http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/414283
-
-    @property
-    def _blocked_attribute(self):
-        raise AttributeError("A frozendict cannot be modified.")
-
-    __delitem__ = _blocked_attribute
-    __setitem__ = _blocked_attribute
-    clear = _blocked_attribute
-    pop = _blocked_attribute
-    popitem = _blocked_attribute
-    setdefault = _blocked_attribute
-    update = _blocked_attribute
-
-    def __new__(cls, *args, **kw):
-        new = dict.__new__(cls)
-        dict.__init__(new, *args, **kw)
-        return new
-
-    def __init__(self, *args, **kw):
-        pass
-
-    def __hash__(self):
-        try:
-            return self._cached_hash
-        except AttributeError:
-            # Hash keys, not items, since items can be mutable and unhasahble.
-            h = self._cached_hash = hash(tuple(sorted(self.keys())))
-            return h
-
-    def __repr__(self):
-        return "frozendict(%s)" % dict.__repr__(self)
-
-# end class frozendict
 
 
 def resource_string(modulename, resource, basefilename=None):
