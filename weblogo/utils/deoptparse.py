@@ -3,7 +3,7 @@
 #  This software is distributed under the MIT Open Source License.
 #  <http://www.opensource.org/licenses/mit-license.html>
 #
-#  Permission is hereby granted, free of charge, to any person obtaining a 
+#  Permission is hereby granted, free of charge, to any person obtaining a
 #  copy of this software and associated documentation files (the "Software"),
 #  to deal in the Software without restriction, including without limitation
 #  the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -13,12 +13,12 @@
 #  The above copyright notice and this permission notice shall be included
 #  in all copies or substantial portions of the Software.
 #
-#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 #  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 #
 
@@ -28,11 +28,11 @@
 
 # TODO: Add profiling option
 
-# DeOptionParser : 
-# 
+# DeOptionParser :
+#
 #  http://docs.python.org/lib/module-optparse.html
 #
-# Random_options : 
+# Random_options :
 #   Set random generator and seed. Use options.random as
 #   source of random numbers
 # Copyright :
@@ -125,7 +125,8 @@ def _check_boolean(option, opt, value):
         return choices[v]
     except KeyError:
         raise OptionValueError(
-                "option %s: invalid choice: '%s' (choose from 'yes' or 'no', 'true' or 'false')" % (opt, value))
+                "option %s: invalid choice: '%s' (choose from 'yes' or 'no', 'true' or 'false')"
+                % (opt, value))
 
 
 def _check_dict(option, opt, value):
@@ -137,7 +138,8 @@ def _check_dict(option, opt, value):
         return choices[v]
     except KeyError:
         raise OptionValueError(
-                "option %s: invalid choice: '%s' (choose from '%s')" % (opt, value, "', '".join(choices)))
+                "option %s: invalid choice: '%s' (choose from '%s')"
+                % (opt, value, "', '".join(choices)))
 
 
 class DeOption(Option):
@@ -228,14 +230,16 @@ class DeOptionParser(OptionParser):
                             action="store",
                             type="int",
                             dest="random_seed",
-                            help="Initial seed for pseudo-random number generator. (default: System time)",
+                            help="Initial seed for pseudo-random number generator. "
+                                 "(default: System time)",
                             metavar="INTEGER")
 
             self.add_option("--generator",
                             action="store",
                             dest="random_generator",
                             default="MersenneTwister",
-                            help="Select MersenneTwister (default) or WichmannHill pseudo-random number generator",
+                            help="Select MersenneTwister (default) or WichmannHill pseudo-random "
+                                 "number generator",
                             metavar="TYPE")
 
     def parse_args(self, args, values=None):
