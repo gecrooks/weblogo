@@ -4,39 +4,39 @@
 
 #  Copyright (c) 2003-2004 The Regents of the University of California.
 #  Copyright (c) 2005 Gavin E. Crooks
-#  Copyright (c) 2006-2011, The Regents of the University of California, through 
+#  Copyright (c) 2006-2011, The Regents of the University of California, through
 #  Lawrence Berkeley National Laboratory (subject to receipt of any required
 #  approvals from the U.S. Dept. of Energy).  All rights reserved.
 
 #  This software is distributed under the new BSD Open Source License.
 #  <http://www.opensource.org/licenses/bsd-license.html>
 #
-#  Redistribution and use in source and binary forms, with or without 
-#  modification, are permitted provided that the following conditions are met: 
+#  Redistribution and use in source and binary forms, with or without
+#  modification, are permitted provided that the following conditions are met:
 #
-#  (1) Redistributions of source code must retain the above copyright notice, 
-#  this list of conditions and the following disclaimer. 
+#  (1) Redistributions of source code must retain the above copyright notice,
+#  this list of conditions and the following disclaimer.
 #
-#  (2) Redistributions in binary form must reproduce the above copyright 
-#  notice, this list of conditions and the following disclaimer in the 
-#  documentation and or other materials provided with the distribution. 
+#  (2) Redistributions in binary form must reproduce the above copyright
+#  notice, this list of conditions and the following disclaimer in the
+#  documentation and or other materials provided with the distribution.
 #
-#  (3) Neither the name of the University of California, Lawrence Berkeley 
-#  National Laboratory, U.S. Dept. of Energy nor the names of its contributors 
-#  may be used to endorse or promote products derived from this software 
-#  without specific prior written permission. 
+#  (3) Neither the name of the University of California, Lawrence Berkeley
+#  National Laboratory, U.S. Dept. of Energy nor the names of its contributors
+#  may be used to endorse or promote products derived from this software
+#  without specific prior written permission.
 #
-#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-#  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-#  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-#  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
-#  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-#  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-#  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-#  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-#  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-#  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
-#  POSSIBILITY OF SUCH DAMAGE. 
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+#  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+#  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+#  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+#  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+#  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+#  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+#  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+#  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+#  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+#  POSSIBILITY OF SUCH DAMAGE.
 
 # WebLogo Command Line Interfaceg
 
@@ -44,12 +44,11 @@
 import os
 import sys
 from optparse import OptionGroup
-from string import Template
 from io import StringIO
 
 from corebio import seq_io
 from corebio.seq import Seq, SeqList, nucleic_alphabet
-from corebio.utils import *
+from corebio.utils import resource_filename
 from corebio.utils.deoptparse import DeOptionParser
 from . import (LogoOptions, LogoData, LogoFormat,
                parse_prior, description, release_description, formatters,
@@ -57,7 +56,6 @@ from . import (LogoOptions, LogoData, LogoFormat,
                std_alphabets, std_units, std_sizes, std_color_schemes,
                read_seq_data)
 from . import (_seq_names, _seq_formats)
-from .color import *
 from .colorscheme import ColorScheme, SymbolColor
 
 
@@ -93,7 +91,7 @@ def main():
     except ValueError as err:
         print('Error:', err, file=sys.stderr)
         sys.exit(2)
-    except KeyboardInterrupt as err:
+    except KeyboardInterrupt:
         sys.exit(0)
 
 # End main()
@@ -111,7 +109,8 @@ def httpd_serve_forever(port=8080):
         import CGIHTTPServer as cgiserver
 
     class __HTTPRequestHandler(cgiserver.CGIHTTPRequestHandler):
-        # Modify CGIHTTPRequestHandler so that it will run the cgi script directly, instead of exec'ing
+        # Modify CGIHTTPRequestHandler so that it will run the cgi script directly,
+        # instead of exec'ing
         # This bypasses the need for the cgi script to have execute permissions set,
         # since distutils install does not preserve permissions.
         def is_cgi(self):
@@ -126,7 +125,7 @@ def httpd_serve_forever(port=8080):
 
     # Add current directory to PYTHONPATH. This is
     # so that we can run the standalone server
-    # without having to run the install script.      
+    # without having to run the install script.
     pythonpath = os.getenv("PYTHONPATH", '')
     pythonpath += os.pathsep + os.path.abspath(sys.path[0])  # .split()[0]
     os.environ["PYTHONPATH"] = pythonpath
@@ -163,7 +162,7 @@ def _build_logodata(options):
             raise ValueError("error: options --fin and --upload are incompatible")
 
     try:
-        # Try reading data in transfac format first.     
+        # Try reading data in transfac format first.
         from corebio.matrix import Motif
         motif = Motif.read_transfac(fin, alphabet=options.alphabet)
         motif_flag = True
@@ -205,7 +204,7 @@ def _build_logodata(options):
 
 
 def _build_logoformat(logodata, opts):
-    """ Extract and process relevant option values and return a 
+    """ Extract and process relevant option values and return a
     LogoFormat object."""
 
     args = {}
@@ -301,12 +300,13 @@ def _build_option_parser():
 
     io_grp = OptionGroup(parser, "Input/Output Options", )
     data_grp = OptionGroup(parser, "Logo Data Options", )
-    trans_grp = OptionGroup(parser, "Transformations", "Optional transformations of the sequence data.")
+    trans_grp = OptionGroup(parser, "Transformations",
+                            "Optional transformations of the sequence data.")
 
     format_grp = OptionGroup(parser, "Logo Format Options",
                              "These options control the format and display of the logo.")
     color_grp = OptionGroup(parser, "Color Options",
-                            "Colors can be specified using CSS2 syntax. e.g. 'red', '#FF0000', etc.")
+                            "Colors can be specified using CSS2 syntax. e.g. 'red', '#FF0000', etc")
     font_grp = OptionGroup(parser, "Font Format Options",
                            "These options provide control over the font sizes and types.")
     advanced_grp = OptionGroup(parser, "Advanced Format Options",
@@ -345,8 +345,8 @@ def _build_option_parser():
                       action="store", type="dict",
                       default=seq_io,
                       choices=_seq_formats(),
-                      help="Type of multiple sequence alignment or position weight matrix file: (%s)"
-                           % ', '.join(_seq_names()),
+                      help="Type of multiple sequence alignment or position"
+                      " weight matrix file: (%s)" % ', '.join(_seq_names()),
                       metavar="FORMAT")
 
     io_grp.add_option("-o", "--fout", dest="fout",
@@ -361,7 +361,8 @@ def _build_option_parser():
                       type="dict",
                       choices=formatters,
                       metavar="FORMAT",
-                      help="Format of output: eps (default), png, png_print, pdf, jpeg, svg, logodata",
+                      help="Format of output: eps (default), png, png_print, pdf, jpeg, svg, "
+                            "logodata",
                       default=default_formatter)
 
     # ========================== Data OPTIONS ==========================
@@ -379,7 +380,8 @@ def _build_option_parser():
                         action="store",
                         help="The set of symbols to count, e.g. 'AGTC'. "
                              "All characters not in the alphabet are ignored. "
-                             "If neither the alphabet nor sequence-type are specified then weblogo will examine the input data and make an educated guess. "
+                             "If neither the alphabet nor sequence-type are specified then weblogo "
+                             "will examine the input data and make an educated guess. "
                              "See also --sequence-type, --ignore-lower-case")
 
     data_grp.add_option("-U", "--units",
@@ -388,7 +390,9 @@ def _build_option_parser():
                         choices=list(std_units.keys()),
                         type="choice",
                         default=defaults.unit_name,
-                        help="A unit of entropy ('bits' (default), 'nats', 'digits'), or a unit of free energy ('kT', 'kJ/mol', 'kcal/mol'), or 'probability' for probabilities",
+                        help="A unit of entropy ('bits' (default), 'nats', 'digits'), or a unit of"
+                             "free energy ('kT', 'kJ/mol', 'kcal/mol'), or 'probability' for"
+                             " probabilities",
                         metavar="NUMBER")
 
     data_grp.add_option("", "--composition",
@@ -396,7 +400,13 @@ def _build_option_parser():
                         action="store",
                         type="string",
                         default="auto",
-                        help="The expected composition of the sequences: 'auto' (default), 'equiprobable', 'none' (do not perform any compositional adjustment), a CG percentage, a species name (e.g. 'E. coli', 'H. sapiens'), or an explicit distribution (e.g. \"{'A':10, 'C':40, 'G':40, 'T':10}\"). The automatic option uses a typical distribution for proteins and equiprobable distribution for everything else. ",
+                        help="The expected composition of the sequences: 'auto' (default), "
+                             "'equiprobable', 'none' (do not perform any compositional "
+                             "adjustment), a CG percentage, a species name (e.g. 'E. coli', "
+                             "'H. sapiens'), or an explicit distribution (e.g. \"{'A':10, 'C':40,"
+                             " 'G':40, 'T':10}\"). The automatic option uses a typical "
+                             "distribution for proteins and equiprobable distribution for "
+                             "everything else. ",
                         metavar="COMP.")
 
     data_grp.add_option("", "--weight",
@@ -436,7 +446,8 @@ def _build_option_parser():
                          dest="ignore_lower_case",
                          action="store_true",
                          default=False,
-                         help="Disregard lower case letters and only count upper case letters in sequences."
+                         help="Disregard lower case letters and only count upper case letters"
+                              " in sequences."
                          )
 
     trans_grp.add_option("", "--reverse",
@@ -515,7 +526,9 @@ def _build_option_parser():
                           action="store",
                           type="string",
                           default=None,
-                          help="A comma separated list of custom stack annotations, e.g. '1,3,4,5,6,7'.  Annotation list must be same length as sequences.",
+                          help="A comma separated list of custom stack annotations, "
+                               "e.g. '1,3,4,5,6,7'.  Annotation list must be same length as "
+                               "sequences.",
                           metavar="TEXT")
 
     format_grp.add_option("", "--rotate-numbers",
@@ -531,14 +544,16 @@ def _build_option_parser():
                           action="store",
                           type="float",
                           default=defaults.number_interval,
-                          help="Distance between numbers on X-axis (default: %s)" % defaults.number_interval,
+                          help="Distance between numbers on X-axis (default: %s)"
+                          % defaults.number_interval,
                           metavar="NUMBER")
 
     format_grp.add_option("-S", "--yaxis",
                           dest="yaxis_scale",
                           action="store",
                           type="float",
-                          help="Height of yaxis in units. (Default: Maximum value with uninformative prior.)",
+                          help="Height of yaxis in units. (Default: Maximum value with "
+                               "uninformative prior.)",
                           metavar="UNIT")
 
     format_grp.add_option("-Y", "--show-yaxis",
@@ -623,7 +638,8 @@ def _build_option_parser():
                          metavar="COLOR SYMBOLS DESCRIPTION ",
                          nargs=3,
                          default=[],
-                         help="Specify symbol colors, e.g. --color black AG 'Purine' --color red TC 'Pyrimidine' ")
+                         help="Specify symbol colors, e.g. --color black AG 'Purine' "
+                              "--color red TC 'Pyrimidine' ")
 
     color_grp.add_option("", "--default-color",
                          dest="default_color",
@@ -639,7 +655,8 @@ def _build_option_parser():
                         action="store",
                         type="float",
                         default=defaults.fontsize,
-                        help="Regular text font size in points (default: %s)" % defaults.fontsize,
+                        help="Regular text font size in points (default: %s)"
+                        % defaults.fontsize,
                         metavar="POINTS")
 
     font_grp.add_option("", "--title-fontsize",
@@ -647,7 +664,8 @@ def _build_option_parser():
                         action="store",
                         type="float",
                         default=defaults.title_fontsize,
-                        help="Title text font size in points (default: %s)" % defaults.title_fontsize,
+                        help="Title text font size in points (default: %s)"
+                        % defaults.title_fontsize,
                         metavar="POINTS")
 
     font_grp.add_option("", "--small-fontsize",
@@ -655,7 +673,8 @@ def _build_option_parser():
                         action="store",
                         type="float",
                         default=defaults.small_fontsize,
-                        help="Small text font size in points (default: %s)" % defaults.small_fontsize,
+                        help="Small text font size in points (default: %s)"
+                        % defaults.small_fontsize,
                         metavar="POINTS")
 
     font_grp.add_option("", "--number-fontsize",
@@ -663,7 +682,8 @@ def _build_option_parser():
                         action="store",
                         type="float",
                         default=defaults.number_fontsize,
-                        help="Axis numbers font size in points (default: %s)" % defaults.number_fontsize,
+                        help="Axis numbers font size in points (default: %s)"
+                        % defaults.number_fontsize,
                         metavar="POINTS")
 
     font_grp.add_option("", "--text-font",
@@ -671,7 +691,8 @@ def _build_option_parser():
                         action="store",
                         type="string",
                         default=defaults.text_font,
-                        help="Specify font for labels (default: %s)" % defaults.text_font,
+                        help="Specify font for labels (default: %s)"
+                        % defaults.text_font,
                         metavar="FONT")
 
     font_grp.add_option("", "--logo-font",
@@ -679,7 +700,8 @@ def _build_option_parser():
                         action="store",
                         type="string",
                         default=defaults.text_font,
-                        help="Specify font for logo (default: %s)" % defaults.logo_font,
+                        help="Specify font for logo (default: %s)"
+                        % defaults.logo_font,
                         metavar="FONT")
 
     font_grp.add_option("", "--title-font",
@@ -687,7 +709,8 @@ def _build_option_parser():
                         action="store",
                         type="string",
                         default=defaults.title_font,
-                        help="Specify font for title (default: %s)" % defaults.title_font,
+                        help="Specify font for title (default: %s)"
+                        % defaults.title_font,
                         metavar="FONT")
 
     # ========================== Advanced options =========================
@@ -697,7 +720,8 @@ def _build_option_parser():
                             action="store",
                             type="float",
                             default=defaults.stack_width,
-                            help="Width of a logo stack (default: %s)" % defaults.stack_width,
+                            help="Width of a logo stack (default: %s)"
+                            % defaults.stack_width,
                             metavar="POINTS")
 
     advanced_grp.add_option("", "--aspect-ratio",
@@ -705,7 +729,8 @@ def _build_option_parser():
                             action="store",
                             type="float",
                             default=defaults.stack_aspect_ratio,
-                            help="Ratio of stack height to width (default: %s)" % defaults.stack_aspect_ratio,
+                            help="Ratio of stack height to width (default: %s)"
+                            % defaults.stack_aspect_ratio,
                             metavar="POINTS")
 
     advanced_grp.add_option("", "--box",
@@ -721,7 +746,9 @@ def _build_option_parser():
                             action="store",
                             type="float",
                             default=96,
-                            help="Bitmap resolution in dots per inch (DPI).  (Default: 96 DPI, except png_print, 600 DPI) Low resolution bitmaps (DPI<300) are antialiased.",
+                            help="Bitmap resolution in dots per inch (DPI).  (Default: 96 DPI,"
+                                 " except png_print, 600 DPI) Low resolution bitmaps (DPI<300)"
+                                 " are antialiased.",
                             metavar="DPI")
 
     advanced_grp.add_option("", "--scale-width",
@@ -730,7 +757,9 @@ def _build_option_parser():
                             type="boolean",
                             default=True,
                             metavar="YES/NO",
-                            help="Scale the visible stack width by the fraction of symbols in the column?  (I.e. columns with many gaps of unknowns are narrow.)  (Default: yes)")
+                            help="Scale the visible stack width by the fraction of symbols in the"
+                            " column?  (I.e. columns with many gaps of unknowns are narrow.)  "
+                            "(Default: yes)")
 
     advanced_grp.add_option("", "--debug",
                             action="store",
@@ -744,7 +773,8 @@ def _build_option_parser():
                             action="store",
                             type="float",
                             default=defaults.errorbar_fraction,
-                            help="Sets error bars display proportion (default: %s)" % defaults.errorbar_fraction,
+                            help="Sets error bars display proportion (default: %s)"
+                            % defaults.errorbar_fraction,
                             metavar="NUMBER")
 
     advanced_grp.add_option("", "--errorbar-width-fraction",
@@ -752,7 +782,8 @@ def _build_option_parser():
                             action="store",
                             type="float",
                             default=defaults.errorbar_width_fraction,
-                            help="Sets error bars width display proportion (default: %s)" % defaults.errorbar_width_fraction,
+                            help="Sets error bars width display proportion (default: %s)"
+                            % defaults.errorbar_width_fraction,
                             metavar="NUMBER")
 
     advanced_grp.add_option("", "--errorbar-gray",
@@ -760,7 +791,8 @@ def _build_option_parser():
                             action="store",
                             type="float",
                             default=defaults.errorbar_gray,
-                            help="Sets error bars' gray scale percentage (default: %s)" % defaults.errorbar_gray,
+                            help="Sets error bars' gray scale percentage (default: %s)"
+                            % defaults.errorbar_gray,
                             metavar="NUMBER")
 
     # ========================== Server options =========================

@@ -3,7 +3,7 @@
 #  This software is distributed under the MIT Open Source License.
 #  <http://www.opensource.org/licenses/mit-license.html>
 #
-#  Permission is hereby granted, free of charge, to any person obtaining a 
+#  Permission is hereby granted, free of charge, to any person obtaining a
 #  copy of this software and associated documentation files (the "Software"),
 #  to deal in the Software without restriction, including without limitation
 #  the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -13,23 +13,23 @@
 #  The above copyright notice and this permission notice shall be included
 #  in all copies or substantial portions of the Software.
 #
-#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 #  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 #
 
 """ Read and write the CLUSTAL sequence file format.
- 
+
 See :
 - http://www.cmpharm.ucsf.edu/~goh/Treecorr/sampleAlignment.html
 - http://www.bioperl.org/wiki/ClustalW_multiple_alignment_format
-  
+
 Ref :
--   Higgins D., Thompson J., Gibson T., Thompson J.D., Higgins D.G., Gibson 
+-   Higgins D., Thompson J., Gibson T., Thompson J.D., Higgins D.G., Gibson
     T.J. (1994). CLUSTAL W: improving the sensitivity of progressive multiple
     sequence alignment through sequence weighting, position-specific gap
     penalties and weight matrix choice. Nucleic Acids Res. 22:4673-4680.
@@ -40,9 +40,8 @@ Ref :
 
 import re
 
-from ..utils import *
-from ..seq import *
-from . import *
+from ..utils import Token
+from ..seq import Alphabet, Seq, SeqList
 
 __all__ = ('example', 'names', 'extensions', 'read')
 
@@ -55,7 +54,7 @@ BLR_HUMAN         --------------------------LENLEDLF-WELDRLD------NYNDTSLVENH-
 CXCR1_HUMAN       --------------------------MSNITDPQMWDFDDLN-------FTGMPPADEDY
 CXCR4_MURINE      -----------------------------------YTSDN---------YSGSGDYDSNK
                                                      :  :          :..     ..
- 
+
 CXCR3_MOUSE       -SL-------NFDRTFLPALYSLLFLLGLLGNGAVAAVLLSQRTALSSTDTFLLHLAVAD
 BLR_HUMAN         --LC-PATMASFKAVFVPVAYSLIFLLGVIGNVLVLVILERHRQTRSSTETFLFHLAVAD
 CXCR1_HUMAN       -SPC-MLETETLNKYVVIIAYALVFLLSLLGNSLVMLVILYSRVGRSVTDVYLLNLALAD
@@ -131,13 +130,13 @@ def _scan(fin):
     """Scan a clustal format MSA file and yield tokens.
         The basic file structure is
             begin_document
-                header?     
+                header?
                (begin_block
                    (seq_id seq seq_index?)+
                    match_line?
                end_block)*
-            end_document     
-    
+            end_document
+
         Usage:
         for token in scan(clustal_file):
             do_something(token)

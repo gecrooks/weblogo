@@ -3,7 +3,7 @@
 #  This software is distributed under the MIT Open Source License.
 #  <http://www.opensource.org/licenses/mit-license.html>
 #
-#  Permission is hereby granted, free of charge, to any person obtaining a 
+#  Permission is hereby granted, free of charge, to any person obtaining a
 #  copy of this software and associated documentation files (the "Software"),
 #  to deal in the Software without restriction, including without limitation
 #  the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -13,12 +13,12 @@
 #  The above copyright notice and this permission notice shall be included
 #  in all copies or substantial portions of the Software.
 #
-#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 #  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 
 """ Color specifications using CSS2 (Cascading Style Sheet) syntax."""
@@ -26,22 +26,22 @@
 
 class Color(object):
     """ Color specifications using CSS2 (Cascading Style Sheet) syntax.
-    
+
     http://www.w3.org/TR/REC-CSS2/syndata.html#color-units
 
     Usage:
-    
+
     red = Color(255,0,0)
     red = Color(1., 0., 0.)
     red = Color.by_name("red")
     red = Color.from_rgb(1.,0.,0.)
     red = Color.from_rgb(255,0,0)
     red = Color.from_hsl(0.,1., 0.5)
-    
-    red = Color.from_string("red") 
-    red = Color.from_string("RED") 
-    red = Color.from_string("#F00") 
-    red = Color.from_string("#FF0000") 
+
+    red = Color.from_string("red")
+    red = Color.from_string("RED")
+    red = Color.from_string("#F00")
+    red = Color.from_string("#FF0000")
     red = Color.from_string("rgb(255, 0, 0)")
     red = Color.from_string("rgb(100%, 0%, 0%)")
     red = Color.from_string("hsl(0, 100%, 50%)")

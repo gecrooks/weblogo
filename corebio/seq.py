@@ -3,7 +3,7 @@
 #  This software is distributed under the MIT Open Source License.
 #  <http://www.opensource.org/licenses/mit-license.html>
 #
-#  Permission is hereby granted, free of charge, to any person obtaining a 
+#  Permission is hereby granted, free of charge, to any person obtaining a
 #  copy of this software and associated documentation files (the "Software"),
 #  to deal in the Software without restriction, including without limitation
 #  the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -13,15 +13,14 @@
 #  The above copyright notice and this permission notice shall be included
 #  in all copies or substantial portions of the Software.
 #
-#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 #  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 #
-
 
 
 """ Alphabetic sequences and associated tools and data.
@@ -35,19 +34,19 @@ Classes :
     Alphabet    -- A subset of non-null ascii characters
     Seq         -- An alphabetic string
     SeqList     -- A collection of Seq's
-  
-Alphabets :    
+
+Alphabets :
     o generic_alphabet  -- A generic alphabet. Any printable ASCII character.
-    o protein_alphabet -- IUCAP/IUB Amino Acid one letter codes. 
+    o protein_alphabet -- IUCAP/IUB Amino Acid one letter codes.
     o nucleic_alphabet -- IUPAC/IUB Nucleic Acid codes 'ACGTURYSWKMBDHVN-'
-    o dna_alphabet -- Same as nucleic_alphabet, with 'U' (Uracil) an 
+    o dna_alphabet -- Same as nucleic_alphabet, with 'U' (Uracil) an
         alternative for 'T' (Thymidine).
     o rna_alphabet -- Same as nucleic_alphabet, with 'T' (Thymidine) an
         alternative for 'U' (Uracil).
     o reduced_nucleic_alphabet -- All ambiguous codes in 'nucleic_alphabet' are
         alternative to 'N' (aNy)
-    o reduced_protein_alphabet -- All ambiguous ('BZJ') and non-canonical amino 
-        acids codes ( 'U', Selenocysteine and 'O', Pyrrolysine)  in 
+    o reduced_protein_alphabet -- All ambiguous ('BZJ') and non-canonical amino
+        acids codes ( 'U', Selenocysteine and 'O', Pyrrolysine)  in
         'protein_alphabet' are alternative to 'X'.
     o unambiguous_dna_alphabet -- 'ACGT'
     o unambiguous_rna_alphabet -- 'ACGU'
@@ -66,12 +65,12 @@ Amino Acid Codes:
     G           Glycine
     H           Histidine
     I           Isoleucine
-    J           Leucine or Isoleucine    
+    J           Leucine or Isoleucine
     K           Lysine
     L           Leucine
     M           Methionine
     N           Asparagine
-    O           Pyrrolysine    
+    O           Pyrrolysine
     P           Proline
     Q           Glutamine
     R           Arginine
@@ -84,7 +83,7 @@ Amino Acid Codes:
     Z           Glutamate or Glutamine
     X    ?      any
     *           translation stop
-    -    .~     gap 
+    -    .~     gap
 
 Nucleotide Codes:
     Code  Alt.  Meaning
@@ -105,31 +104,29 @@ Nucleotide Codes:
     H           A C T (not G) (H comes after G)
     V           G C A (not T, not U) (V comes after U)
     N   X?      A G C T (aNy)
-    -   .~      A gap 
-    
+    -   .~      A gap
+
 
 
 
 Refs:
     http://www.chem.qmw.ac.uk/iupac/AminoAcid/A2021.html
-    http://www.chem.qmw.ac.uk/iubmb/misc/naseq.html    
+    http://www.chem.qmw.ac.uk/iubmb/misc/naseq.html
 Status:
-    Beta    
+    Beta
 Authors:
     GEC 2004,2005
 """
 
 # TODO: Add this to docstring somewhere.
-# To replace all ambiguous nucleic code by 'N', replace alphabet and then n 
+# To replace all ambiguous nucleic code by 'N', replace alphabet and then n
 # normalize.
-# 
+#
 # >>> Seq( 'ACGT-RYKM', reduced_nucleic_alphabet).normalized()
 # 'ACGT-NNNN'
 
 from array import array
 import codecs
-
-from .moremath import argmax, sqrt
 
 
 __all__ = [
@@ -157,7 +154,7 @@ class Alphabet(object):
 
     Status:
         Beta
-    Authors: 
+    Authors:
         - GEC 2005
     """
     __slots__ = ['_letters', '_alternatives', '_ord_table', '_chr_table']
@@ -165,25 +162,25 @@ class Alphabet(object):
     # We're immutable, so use __new__ not __init__
     def __new__(cls, letters, alternatives=None):
         """Create a new, immutable Alphabet.
-        
-        e.g. 
-        Alphabet( 'ACDEFGHIKLMNPQRSTVUWY', 
+
+        e.g.
+        Alphabet( 'ACDEFGHIKLMNPQRSTVUWY',
                   zip('acdefghiklmnpqrstvuwy', 'ACDEFGHIKLMNPQRSTVUWY') )
-        
+
         arguments:
         - letters -- the letters in the alphabet. The ordering determines
             the ordinal position of each character in this alphabet.
         - alt -- A list of (alternative, canonical) letters. The alternatives
-            are given the same ordinal position as the canonical characters. 
-            e.g. (('?','X'),('x', 'X')) states that '?' and 'x' are synonomous 
+            are given the same ordinal position as the canonical characters.
+            e.g. (('?','X'),('x', 'X')) states that '?' and 'x' are synonomous
             with 'X'.  Values that are not in 'letters' are ignored. Alternatives
             that are already in 'letters' are also ignored. If the same
             alternative character is used twice then the alternative is assigned
-            to the canonical character that occurs first in 'letters'. The 
+            to the canonical character that occurs first in 'letters'. The
             default is to assume that upper and lower case characters are
-            equivalent, unless both cases are included in 'letters'.                   
+            equivalent, unless both cases are included in 'letters'.
         raises:
-            ValueError : Repetitive or otherwise illegal set of letters.        
+            ValueError : Repetitive or otherwise illegal set of letters.
         """
         self = object.__new__(cls)
 
@@ -202,8 +199,8 @@ class Alphabet(object):
 
         # The ord_table maps between the ordinal position of a character in ascii
         # and the ordinal position in this alphabet. Characters not in the
-        # alphabet are given a position of 255. The ord_table is stored as a 
-        # string. 
+        # alphabet are given a position of 255. The ord_table is stored as a
+        # string.
         ord_table = bytearray([0xff, ] * 256)
         for i, a in enumerate(letters):
             n = ord(a)
@@ -270,7 +267,7 @@ class Alphabet(object):
         return a
 
     def normalize(self, string):
-        """Normalize an alphabetic string by converting all alternative symbols 
+        """Normalize an alphabetic string by converting all alternative symbols
         to the canonical equivalent in 'letters'.
         """
         if not self.alphabetic(string):
@@ -321,7 +318,7 @@ class Alphabet(object):
         for a Seq or SeqList. If a list of alphabets is supplied, then the best alphabet
         is selected from that list.
 
-        The heuristic is to count the occurrences of letters for each alphabet and 
+        The heuristic is to count the occurrences of letters for each alphabet and
         downweight longer alphabets by the log of the alphabet length. Ties
         go to the first alphabet in the list.
 
@@ -378,7 +375,7 @@ unambiguous_protein_alphabet = Alphabet("ACDEFGHIKLMNPQRSTVWY",
                                             'ACDEFGHIKLMNOPQRSTUVWY'))
 
 _complement_table = str.maketrans("ACGTRYSWKMBDHVN-acgtUuryswkmbdhvnXx?.~",
-                              "TGCAYRSWMKVHDBN-tgcaAayrswmkvhdbnXx?.~")
+                                  "TGCAYRSWMKVHDBN-tgcaAayrswmkvhdbnXx?.~")
 
 
 class Seq(str):
@@ -388,8 +385,8 @@ class Seq(str):
     Attributes:
         alphabet    -- A string or Alphabet of allowed characters.
         name        -- A short string used to identify the sequence.
-        description -- A string describing the sequence   
-        
+        description -- A string describing the sequence
+
     Authors :
         GEC 2005
     """
@@ -417,23 +414,22 @@ class Seq(str):
 
     # BEGIN PROPERTIES
 
-    # Make alphabet constant 
+    # Make alphabet constant
     @property
     def alphabet(self):
         return self._alphabet
 
-    # END PROPERTIES        
-
+    # END PROPERTIES
 
     def ords(self):
-        """ Convert sequence to an array of integers 
-        in the range [0, len(alphabet) ) 
+        """ Convert sequence to an array of integers
+        in the range [0, len(alphabet) )
         """
         return self.alphabet.ords(self)
 
     def tally(self, alphabet=None):
         """Counts the occurrences of alphabetic characters.
-                
+
         Arguments:
         - alphabet -- an optional alternative alphabet
 
@@ -487,15 +483,15 @@ class Seq(str):
         return not self.__eq__(other)
 
     def tostring(self):
-        """ Converts Seq to a raw string. 
+        """ Converts Seq to a raw string.
         """
         # Compatibility with biopython
         return str(self)
 
     # ---- Transformations of Seq ----
     def reverse(self):
-        """Return the reversed sequence. 
-        
+        """Return the reversed sequence.
+
         Note that this method returns a new object, in contrast to
         the in-place reverse() method of list objects.
         """
@@ -559,7 +555,7 @@ class Seq(str):
 
     def reverse_complement(self):
         """Returns reversed complementary nucleic acid sequence (i.e. the other
-        strand of a DNA sequence.) 
+        strand of a DNA sequence.)
         """
         return self.reverse().complement()
 
@@ -574,7 +570,7 @@ class Seq(str):
     def words(self, k, alphabet=None):
         """Return an iteration over all subwords of length k in the sequence. If an optional
         alphabet is provided, only words from that alphabet are returned.
-        
+
         >>> list(Seq("abcabc").words(3))
         ['abc', 'bca', 'cab', 'abc']
         """
@@ -593,7 +589,7 @@ class Seq(str):
 
     def word_count(self, k, alphabet=None):
         """Return a count of all subwords in the sequence.
-        
+
         >>> from corebio.seq import *
         >>> Seq("abcabc").word_count(3)
         [('abc', 2), ('bca', 1), ('cab', 1)]
@@ -607,7 +603,7 @@ class Seq(str):
 
 
 class SeqList(list):
-    """ A list of sequences. 
+    """ A list of sequences.
     """
 
     __slots__ = ["alphabet", "name", "description"]
@@ -698,19 +694,19 @@ class SeqList(list):
 
 
 def dna(string):
-    """Create an alphabetic sequence representing a stretch of DNA.    
+    """Create an alphabetic sequence representing a stretch of DNA.
     """
     return Seq(string, alphabet=dna_alphabet)
 
 
 def rna(string):
-    """Create an alphabetic sequence representing a stretch of RNA.    
+    """Create an alphabetic sequence representing a stretch of RNA.
     """
     return Seq(string, alphabet=rna_alphabet)
 
 
 def protein(string):
-    """Create an alphabetic sequence representing a stretch of polypeptide.    
+    """Create an alphabetic sequence representing a stretch of polypeptide.
     """
     return Seq(string, alphabet=protein_alphabet)
 
@@ -722,4 +718,3 @@ def _as_bytes(s):
     # Assume it is a unicode string
     # Note ISO-8859-1 aka Latin-1 preserves first 256 chars
     return codecs.latin_1_encode(s)[0]
-

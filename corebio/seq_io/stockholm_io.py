@@ -3,7 +3,7 @@
 #  This software is distributed under the MIT Open Source License.
 #  <http://www.opensource.org/licenses/mit-license.html>
 #
-#  Permission is hereby granted, free of charge, to any person obtaining a 
+#  Permission is hereby granted, free of charge, to any person obtaining a
 #  copy of this software and associated documentation files (the "Software"),
 #  to deal in the Software without restriction, including without limitation
 #  the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -13,12 +13,12 @@
 #  The above copyright notice and this permission notice shall be included
 #  in all copies or substantial portions of the Software.
 #
-#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 #  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 #
 
@@ -27,7 +27,7 @@
 This file format is used by PFAM and HMMER. At present, all annotation
 information is ignored.
 
-See: 
+See:
     - http://www.cgb.ki.se/cgb/groups/sonnhammer/Stockholm.html
     - HMMER manual
 
@@ -35,9 +35,8 @@ See:
 
 import re
 
-from . import *
-from ..seq import *
-from ..utils import *
+from ..seq import Alphabet, Seq, SeqList
+from ..utils import Token
 
 example = """
 # STOCKHOLM 1.0
@@ -45,8 +44,8 @@ example = """
 #=GF AC PF00571
 #=GF DE CBS domain
 #=GF AU Bateman A
-#=GF CC CBS domains are small intracellular modules mostly found  
-#=GF CC in 2 or four copies within a protein. 
+#=GF CC CBS domains are small intracellular modules mostly found
+#=GF CC in 2 or four copies within a protein.
 #=GF SQ 67
 #=GS O31698/18-71 AC O31698
 #=GS O83071/192-246 AC O83071

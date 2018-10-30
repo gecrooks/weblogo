@@ -5,7 +5,7 @@
 #  This software is distributed under the MIT Open Source License.
 #  <http://www.opensource.org/licenses/mit-license.html>
 #
-#  Permission is hereby granted, free of charge, to any person obtaining a 
+#  Permission is hereby granted, free of charge, to any person obtaining a
 #  copy of this software and associated documentation files (the "Software"),
 #  to deal in the Software without restriction, including without limitation
 #  the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -15,12 +15,12 @@
 #  The above copyright notice and this permission notice shall be included
 #  in all copies or substantial portions of the Software.
 #
-#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 #  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 #
 
@@ -32,9 +32,9 @@ Constants :
 - euler_gamma  = 0.577215...
 - catalan      = 0.915965...
 - golden_ratio = 1.618033...
-- bits_per_nat = log2(e) = 1/log(2) 
+- bits_per_nat = log2(e) = 1/log(2)
 - sqrt_2pi     = 2.50662...
-    
+
 Special Functions :
 
 
@@ -46,14 +46,14 @@ Special Functions :
 - trigamma()                    -- Trigamma function (derivative of digamma).
 
 - cgamma()                       -- Complex math version of counterparts above.
-- clngamma()                                   
-- cdigamma()                     
-- ctrigamma()                    
+- clngamma()
+- cdigamma()
+- ctrigamma()
 
 - entropy()                     -- The entropy of a probability vector
 - incomplete_gamma()            -- The 'upper' incomplete gamma function.
-- normalized_incomplete_gamma() -- 
-- log2()                          -- Base 2 logarithms.
+- normalized_incomplete_gamma() --
+- log2()                        -- Base 2 logarithms.
 - argmin()
 - argmax()
 
@@ -68,7 +68,7 @@ __all__ = ('euler_gamma', 'catalan', 'golden_ratio', 'bits_per_nat', 'sqrt_2pi',
            'argmax', 'argmin'
            )
 
-from math import *
+from math import floor, log, pi, exp
 import cmath as cm
 
 from itertools import count
@@ -82,14 +82,14 @@ bits_per_nat = 1.44269504088896340735992468100  # = log_2(e) = 1/log(2)
 sqrt_2pi = 2.5066282746310005024157652848110
 
 # The Lanczos approximation for the gamma function is
-#                          
-#                -(z + g + 1/2)               (z + 1/2)                   
-# Gamma(z+1) =  e               * (z + g + 1/2)        * Sqrt(2Pi) * C 
-#                                                                        
+#
+#                -(z + g + 1/2)               (z + 1/2)
+# Gamma(z+1) =  e               * (z + g + 1/2)        * Sqrt(2Pi) * C
+#
 #
 #                      c[1]    c[2]    c[3]
 #          C = [c[0] + ----- + ----- + ----- + ...   ]
-#                      z + 1   z + 2   z + 3 
+#                      z + 1   z + 2   z + 3
 #
 #
 #  To calculate digamma and trigamma functions we take an analytic derivative
@@ -97,7 +97,7 @@ sqrt_2pi = 2.5066282746310005024157652848110
 #
 #  Gamma(z)  = Gamma(z+1)/z
 #  Digamma(z) = D ln Gamma(z)
-#  Trigamma(z) = D Digamma(z)         
+#  Trigamma(z) = D Digamma(z)
 
 # These Lanczos constants are from
 # "A note on the computation of the convergent
@@ -161,8 +161,8 @@ __factorial = (
 
 def gamma(x):
     """The gamma function. Returns exact results for small integers. Will
-    overflow for modest sized arguments. Use lngamma(z) instead. 
-    
+    overflow for modest sized arguments. Use lngamma(z) instead.
+
     See: Eric W. Weisstein. "Gamma Function." From MathWorld, A Wolfram Web Resource.
          http://mathworld.wolfram.com/GammaFunction.html
 
@@ -206,7 +206,7 @@ def cgamma(z):
 
 
 def lngamma(x):
-    """The logarithm of the gamma function. 
+    """The logarithm of the gamma function.
     """
     return clngamma(x).real
 
@@ -249,7 +249,7 @@ def clngamma(z):
 
 
 def factorial(z):
-    """ The factorial function. 
+    """ The factorial function.
     factorial(z) == gamma(z+1)
     """
     return gamma(z + 1)
@@ -280,7 +280,7 @@ def cdigamma(z):
     n = 0.
     d = 0.
     for k in range(len(c) - 1, 0, -1):
-        dz = 1. / (zz + (k + 1) - 2);
+        dz = 1. / (zz + (k + 1) - 2)
         dd = c[k] * dz
         d = d + dd
         n = n - dd * dz
@@ -298,7 +298,7 @@ def cdigamma(z):
 def trigamma(x):
     """The trigamma function, the derivative of the digamma function.
             trigamma(z) = d/dz digamma(z) = d/dz d/dz ln( gamma(z) )
-    
+
     See: Eric W. Weisstein. "Trigamma Function." From MathWorld--
     A Wolfram Web Resource. http://mathworld.wolfram.com/TrigammaFunction.html
     """
@@ -315,7 +315,7 @@ def ctrigamma(z):
     t2 = 0.
     t3 = 0.
     for k in range(len(c) - 1, 0, -1):
-        dz = 1. / (z + k);
+        dz = 1. / (z + k)
         dd1 = c[k] * dz
         t1 += dd1
         dd2 = dd1 * dz
@@ -343,7 +343,7 @@ def incomplete_gamma(a, x):
                             |    -t  a-1
     incomplete_gamma(a,x) = |   e   t   dt.
                             |
-                           -                         
+                           -
                             x
 
     In Mathematica, Gamma[a,x].
@@ -358,7 +358,7 @@ def incomplete_gamma(a, x):
          http://mathworld.wolfram.com/IncompleteGammaFunction.html
 
     Bugs :
-        This implementation is not very accurate for some arguments. 
+        This implementation is not very accurate for some arguments.
     """
     return normalized_incomplete_gamma(a, x) * gamma(a)
 
@@ -366,13 +366,13 @@ def incomplete_gamma(a, x):
 def normalized_incomplete_gamma(a, x):
     """The upper, incomplete gamma function normalized so that the limiting
     values are zero and one.
-    
-     Q(a,x) = incomplete_gamma(a,x) / gamma(a) 
 
-    See: 
+     Q(a,x) = incomplete_gamma(a,x) / gamma(a)
+
+    See:
         incomplete_gamma()
     Bugs :
-        This implementation is not very accurate for some arguments. 
+        This implementation is not very accurate for some arguments.
     """
     maxiter = 100
     epsilon = 1.48e-8
@@ -426,7 +426,7 @@ def log2(x):
 
 def entropy(pvec, base=exp(1)):
     """ The entropy S = -Sum_i p_i ln p_i
-        pvec is a frequency vector, not necessarily normalized. 
+        pvec is a frequency vector, not necessarily normalized.
     """
     # TODO: Optimize
     if len(pvec) == 0:

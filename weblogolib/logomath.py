@@ -4,67 +4,67 @@
 
 #  Copyright (c) 2003-2004 The Regents of the University of California.
 #  Copyright (c) 2005 Gavin E. Crooks
-#  Copyright (c) 2006-2011, The Regents of the University of California, through 
+#  Copyright (c) 2006-2011, The Regents of the University of California, through
 #  Lawrence Berkeley National Laboratory (subject to receipt of any required
 #  approvals from the U.S. Dept. of Energy).  All rights reserved.
 
 #  This software is distributed under the new BSD Open Source License.
 #  <http://www.opensource.org/licenses/bsd-license.html>
 #
-#  Redistribution and use in source and binary forms, with or without 
-#  modification, are permitted provided that the following conditions are met: 
+#  Redistribution and use in source and binary forms, with or without
+#  modification, are permitted provided that the following conditions are met:
 #
-#  (1) Redistributions of source code must retain the above copyright notice, 
-#  this list of conditions and the following disclaimer. 
+#  (1) Redistributions of source code must retain the above copyright notice,
+#  this list of conditions and the following disclaimer.
 #
-#  (2) Redistributions in binary form must reproduce the above copyright 
-#  notice, this list of conditions and the following disclaimer in the 
-#  documentation and or other materials provided with the distribution. 
+#  (2) Redistributions in binary form must reproduce the above copyright
+#  notice, this list of conditions and the following disclaimer in the
+#  documentation and or other materials provided with the distribution.
 #
-#  (3) Neither the name of the University of California, Lawrence Berkeley 
-#  National Laboratory, U.S. Dept. of Energy nor the names of its contributors 
-#  may be used to endorse or promote products derived from this software 
-#  without specific prior written permission. 
+#  (3) Neither the name of the University of California, Lawrence Berkeley
+#  National Laboratory, U.S. Dept. of Energy nor the names of its contributors
+#  may be used to endorse or promote products derived from this software
+#  without specific prior written permission.
 #
-#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-#  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-#  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-#  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
-#  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-#  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-#  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-#  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-#  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-#  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
-#  POSSIBILITY OF SUCH DAMAGE. 
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+#  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+#  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+#  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+#  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+#  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+#  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+#  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+#  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+#  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+#  POSSIBILITY OF SUCH DAMAGE.
 
 import numpy as na
 import random
 from math import log, sqrt, exp
-from numpy import array, asarray, float64, ones, zeros, int32, all, any, shape
+from numpy import asarray, float64, zeros, shape
 
-from corebio.moremath import *
+from corebio.moremath import gamma, digamma, trigamma, normalized_incomplete_gamma
 
 
 class Dirichlet(object):
-    """The Dirichlet probability distribution. The Dirichlet is a continuous 
+    """The Dirichlet probability distribution. The Dirichlet is a continuous
     multivariate probability distribution across non-negative unit length
-    vectors. In other words, the Dirichlet is a probability distribution of 
+    vectors. In other words, the Dirichlet is a probability distribution of
     probability distributions. It is conjugate to the multinomial
     distribution and is widely used in Bayesian statistics.
-    
-    The Dirichlet probability distribution of order K-1 is 
 
-     p(theta_1,...,theta_K) d theta_1 ... d theta_K = 
+    The Dirichlet probability distribution of order K-1 is
+
+     p(theta_1,...,theta_K) d theta_1 ... d theta_K =
         (1/Z) prod_i=1,K theta_i^{alpha_i - 1} delta(1 -sum_i=1,K theta_i)
 
     The normalization factor Z can be expressed in terms of gamma functions:
 
-      Z = {prod_i=1,K Gamma(alpha_i)} / {Gamma( sum_i=1,K alpha_i)}  
+      Z = {prod_i=1,K Gamma(alpha_i)} / {Gamma( sum_i=1,K alpha_i)}
 
-    The K constants, alpha_1,...,alpha_K, must be positive. The K parameters, 
+    The K constants, alpha_1,...,alpha_K, must be positive. The K parameters,
     theta_1,...,theta_K are nonnegative and sum to 1.
-    
+
     Status:
         Alpha
     """
@@ -74,7 +74,7 @@ class Dirichlet(object):
         """
         Args:
             - alpha  -- The parameters of the Dirichlet prior distribution.
-                        A vector of non-negative real numbers.  
+                        A vector of non-negative real numbers.
         """
         # TODO: Check that alphas are positive
         # TODO: what if alpha's not one dimensional?
@@ -85,10 +85,10 @@ class Dirichlet(object):
 
     def sample(self):
         """Return a randomly generated probability vector.
-        
+
         Random samples are generated by sampling K values from gamma
-        distributions with parameters a=\alpha_i, b=1, and renormalizing. 
-    
+        distributions with parameters a=\alpha_i, b=1, and renormalizing.
+
         Ref:
             A.M. Law, W.D. Kelton, Simulation Modeling and Analysis (1991).
         Authors:
@@ -143,11 +143,11 @@ class Dirichlet(object):
 
     def mean_entropy(self):
         """Calculate the average entropy of probabilities sampled
-        from this Dirichlet distribution. 
-        
+        from this Dirichlet distribution.
+
         Returns:
             The average entropy.
-            
+
         Ref:
             Wolpert & Wolf, PRE 53:6841-6854 (1996) Theorem 7
             (Warning: this paper contains typos.)
@@ -155,7 +155,7 @@ class Dirichlet(object):
             Alpha
         Authors:
             GEC 2005
-    
+
         """
         # TODO: Optimize
         alpha = self.alpha
@@ -169,7 +169,7 @@ class Dirichlet(object):
         return ent
 
     def variance_entropy(self):
-        """Calculate the variance of the Dirichlet entropy. 
+        """Calculate the variance of the Dirichlet entropy.
 
         Ref:
             Wolpert & Wolf, PRE 53:6841-6854 (1996) Theorem 8
@@ -222,7 +222,7 @@ class Dirichlet(object):
         variance = self.variance_relative_entropy(pvec)
         sd = sqrt(variance)
 
-        # If the variance is small, use the standard 95% 
+        # If the variance is small, use the standard 95%
         # confidence interval: mean +/- 1.96 * sd
         if mean / sd > 3.0:
             return max(0.0, mean - sd * 1.96), mean + sd * 1.96
@@ -237,8 +237,8 @@ class Dirichlet(object):
 class Gamma(object):
     """The gamma probability distribution. (Not to be confused with the
     gamma function.)
-    
-    
+
+
     """
     __slots__ = 'alpha', 'beta'
 
@@ -290,22 +290,22 @@ class Gamma(object):
 
 def find_root(f, x, y=None, fprime=None, tolerance=1.48e-8, max_iterations=50):
     """Return argument 'x' of the function f(x), such that f(x)=0 to
-    within the given tolerance. 
-    
+    within the given tolerance.
+
     f : The function to optimize, f(x)
     x : The initial guess
     y : An optional second guess that should bracket the root.
     fprime : The derivate of f'(x) (Optional)
-    tolerance : The error bounds 
+    tolerance : The error bounds
     max_iterations : Maximum number of iterations
-    
+
     Raises:
         ArithmeticError :
             Failure to converge to the given tolerance
 
     Notes:
         Uses Newton-Raphson algorithm if f'(x) is given, else uses bisect if
-        y is given and brackets the root, else uses secant. 
+        y is given and brackets the root, else uses secant.
 
     Status : Beta (Not fully tested)
     """
@@ -331,7 +331,7 @@ def find_root(f, x, y=None, fprime=None, tolerance=1.48e-8, max_iterations=50):
             v1 = f(x1)
 
         raise ArithmeticError(
-                "Failed to converge after %d iterations, value is %f" \
+                "Failed to converge after %d iterations, value is %f"
                 % (max_iterations, x1))
 
     def bisect(f, a, b, tolerance, max_iterations):
@@ -362,7 +362,7 @@ def find_root(f, x, y=None, fprime=None, tolerance=1.48e-8, max_iterations=50):
                 fb = fm
 
         raise ArithmeticError(
-                "Failed to converge after %d iterations, value is %f" \
+                "Failed to converge after %d iterations, value is %f"
                 % (max_iterations, x))
 
     def newton(f, x, fprime, tolerance, max_iterations):
@@ -374,7 +374,7 @@ def find_root(f, x, y=None, fprime=None, tolerance=1.48e-8, max_iterations=50):
             x0 = x1
 
         raise ArithmeticError(
-                "Failed to converge after %d iterations, value is %f" \
+                "Failed to converge after %d iterations, value is %f"
                 % (max_iterations, x1))
 
     if fprime is not None:

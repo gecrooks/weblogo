@@ -2,39 +2,39 @@
 
 #  Copyright (c) 2003-2004 The Regents of the University of California.
 #  Copyright (c) 2005 Gavin E. Crooks
-#  Copyright (c) 2006-2015, The Regents of the University of California, through 
+#  Copyright (c) 2006-2015, The Regents of the University of California, through
 #  Lawrence Berkeley National Laboratory (subject to receipt of any required
 #  approvals from the U.S. Dept. of Energy).  All rights reserved.
 
 #  This software is distributed under the new BSD Open Source License.
 #  <http://www.opensource.org/licenses/bsd-license.html>
 #
-#  Redistribution and use in source and binary forms, with or without 
-#  modification, are permitted provided that the following conditions are met: 
+#  Redistribution and use in source and binary forms, with or without
+#  modification, are permitted provided that the following conditions are met:
 #
-#  (1) Redistributions of source code must retain the above copyright notice, 
-#  this list of conditions and the following disclaimer. 
+#  (1) Redistributions of source code must retain the above copyright notice,
+#  this list of conditions and the following disclaimer.
 #
-#  (2) Redistributions in binary form must reproduce the above copyright 
-#  notice, this list of conditions and the following disclaimer in the 
-#  documentation and or other materials provided with the distribution. 
+#  (2) Redistributions in binary form must reproduce the above copyright
+#  notice, this list of conditions and the following disclaimer in the
+#  documentation and or other materials provided with the distribution.
 #
-#  (3) Neither the name of the University of California, Lawrence Berkeley 
-#  National Laboratory, U.S. Dept. of Energy nor the names of its contributors 
-#  may be used to endorse or promote products derived from this software 
-#  without specific prior written permission. 
+#  (3) Neither the name of the University of California, Lawrence Berkeley
+#  National Laboratory, U.S. Dept. of Energy nor the names of its contributors
+#  may be used to endorse or promote products derived from this software
+#  without specific prior written permission.
 #
-#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-#  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-#  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-#  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
-#  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-#  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-#  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-#  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-#  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-#  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
-#  POSSIBILITY OF SUCH DAMAGE. 
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+#  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+#  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+#  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+#  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+#  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+#  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+#  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+#  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+#  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+#  POSSIBILITY OF SUCH DAMAGE.
 
 import cgi as cgilib
 import cgitb
@@ -48,8 +48,6 @@ import weblogolib
 
 from string import Template
 
-from corebio.utils import *
-from weblogolib.color import *
 from weblogolib.colorscheme import ColorScheme, SymbolColor
 
 
@@ -63,7 +61,7 @@ cgitb.enable()
 # <form method="post" action="/create.cgi" enctype="multipart/form-data">
 
 
-# Should replace with corebio.utils?    
+# Should replace with corebio.utils?
 def resource_string(resource, basefilename):
     import os
     fn = os.path.join(os.path.dirname(basefilename), resource)
@@ -126,13 +124,13 @@ class Field(object):
 
     def get_value(self):
         if self.options:
-            if not self.value in self.options:
+            if self.value not in self.options:
                 raise ValueError(str((self.name, self.errmsg)))
 
         if self.conversion:
             try:
                 return self.conversion(self.value)
-            except ValueError as e:
+            except ValueError:
                 raise ValueError(str((self.name, self.errmsg)))
         else:
             return self.value
@@ -271,7 +269,6 @@ def main(htdocs_directory=None):
         except ValueError as err:
             errors.append(err.args)
 
-
     # Construct custom color scheme
     custom = ColorScheme()
     for i in range(0, 5):
@@ -282,7 +279,7 @@ def main(htdocs_directory=None):
         if color:
             try:
                 custom.rules.append(SymbolColor(symbols, color, desc))
-            except ValueError as e:
+            except ValueError:
                 errors.append(('color%d' % i, "Invalid color: %s" % color))
 
     if form["color_scheme"].value == 'color_custom':
@@ -292,8 +289,6 @@ def main(htdocs_directory=None):
             logooptions.color_scheme = form["color_scheme"].get_value()
         except ValueError as err:
             errors.append(err.args)
-
-
 
     # FIXME: Ugly fix: Must check that sequence_file key exists
     # FIXME: Sending malformed or missing form keys should not cause a crash
@@ -319,14 +314,15 @@ def main(htdocs_directory=None):
             errors.append(("sequences", "Cannot upload, sequence source conflict"))
         else:
             # check SEQUENCES_MAXLENGT
-            # If a user tries to paste a very large file into sequence textarea, 
+            # If a user tries to paste a very large file into sequence textarea,
             # then WebLogo runs very slow for no apparently good reason. (Might be client side bug?)
-            # So we limit the maximum sequence size. 
+            # So we limit the maximum sequence size.
             # Form field also limits size, but not necessarly respected. Also can truncate data
-            # without warning, so we'll set textarea maximum to be larger than MAX_SEQUENCE_SIZE 
+            # without warning, so we'll set textarea maximum to be larger than MAX_SEQUENCE_SIZE
             SEQUENCES_MAXLENGTH = 100000
             if len(sequences_from_textfield) > SEQUENCES_MAXLENGTH:
-                errors.append(("sequences", "Sequence data too large for text input. Use file upload instead."))
+                errors.append(("sequences",
+                               "Sequence data too large for text input. Use file upload instead."))
                 controls[0] = Field('sequences', '')
             else:
                 sequences = sequences_from_textfield
@@ -336,16 +332,17 @@ def main(htdocs_directory=None):
         from . import _from_URL_fileopen
         try:
             seq_file = _from_URL_fileopen(sequences_url)
-        except ValueError as e:
+        except ValueError:
             errors.append(("sequences_url", "Cannot parse URL"))
-        except IOError as e:
+        except IOError:
             errors.append(("sequences_url", "Cannot load sequences from URL"))
 
     else:
         errors.append(("sequences",
-                       "Please enter a multiple-sequence alignment in the box above, or select a file to upload."))
+                       "Please enter a multiple-sequence alignment in the box above, or select a "
+                       "file to upload."))
 
-    # If we have uncovered errors or we want the chance to edit the logo 
+    # If we have uncovered errors or we want the chance to edit the logo
     # ("cmd_edit" command from examples page) then we return the form now.
     # We do not proceed to the time consuming logo creation step unless
     # required by a 'create' or 'validate' command, and no errors have been
@@ -364,12 +361,12 @@ def main(htdocs_directory=None):
         from corebio.matrix import Motif
 
         try:
-            # Try reading data in transfac format first. 
-            # TODO Refactor this code 
+            # Try reading data in transfac format first.
+            # TODO Refactor this code
             motif = Motif.read_transfac(seq_file, alphabet=logooptions.alphabet)
             prior = weblogolib.parse_prior(comp, motif.alphabet)
             data = weblogolib.LogoData.from_counts(motif.alphabet, motif, prior)
-        except ValueError as motif_err:
+        except ValueError:
             seqs = weblogolib.read_seq_data(seq_file, alphabet=logooptions.alphabet,
                                             ignore_lower_case=ignore_lower_case
                                             )
@@ -398,10 +395,10 @@ def main(htdocs_directory=None):
     # Content-Disposition: inline       Open logo in browser window
     # Content-Disposition: attachment   Download logo
     if "download" in form_values:
-        print('Content-Disposition: attachment; ' \
+        print('Content-Disposition: attachment; '
               'filename="logo.%s"' % extension[format])
     else:
-        print('Content-Disposition: inline; ' \
+        print('Content-Disposition: inline; '
               'filename="logo.%s"' % extension[format])
     # Separate header from data
     print()
@@ -444,7 +441,7 @@ def send_form(controls, errors=[], htdocs_directory=None):
     substitutions['logo_range_err'] = ''
 
     # Disable graphics options if necessary auxiliary programs are not installed.
-    if shutil.which('gs') is None and shutil.which(gswin32c.exe) is None:
+    if shutil.which('gs') is None and shutil.which('gswin32c.exe') is None:
         substitutions['png_print'] = 'disabled="disabled"'
         substitutions['png'] = 'disabled="disabled"'
         substitutions['jpeg'] = 'disabled="disabled"'
@@ -472,7 +469,8 @@ def send_form(controls, errors=[], htdocs_directory=None):
             error_message += ' <br />'
 
         error_message += \
-            "<input style='float:right; font-size:small' type='submit' name='cmd_validate' value='Clear Error' /> "
+            "<input style='float:right; font-size:small' type='submit' " \
+            "name='cmd_validate' value='Clear Error' /> "
         substitutions["error_message"] = ''.join(error_message)
     else:
         substitutions["error_message"] = ""

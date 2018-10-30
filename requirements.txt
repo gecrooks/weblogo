@@ -5,6 +5,7 @@ pytest
 pytest-cov
 tox
 flake8
+mypy
 
 # Docs
 sphinx

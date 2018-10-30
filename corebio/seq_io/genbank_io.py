@@ -1,30 +1,30 @@
 #!/usr/bin/env python
 
 
-"""Read GenBank flat files. 
+"""Read GenBank flat files.
 
 Currently only reads sequence data and not annotations.
 
 """
 
-from ..seq import *
-from ..utils import *
+from ..seq import Alphabet, Seq, SeqList
+from ..utils import isblank
 
 names = ('genbank',)
 extensions = ('gb', 'genbank', 'gbk')
 
 
 def read(fin, alphabet=None):
-    """Read and parse a file of genbank records. 
+    """Read and parse a file of genbank records.
 
     Args:
     fin -- A stream or file to read
     alphabet -- The expected alphabet of the data, if given
-    
-    Returns: 
+
+    Returns:
     SeqList -- A list of sequences
-    
-    Raises: 
+
+    Raises:
     ValueError -- If the file is unparsable
     """
     seqs = [s for s in iterseq(fin, alphabet)]
@@ -33,15 +33,15 @@ def read(fin, alphabet=None):
 
 def iterseq(fin, alphabet=None):
     """ Iterate over genbank records
-    
+
     Args:
     fin -- A stream or file to read
-    alphabet -- The expected alphabet of the data, if given    
-    
-    Yeilds: 
+    alphabet -- The expected alphabet of the data, if given
+
+    Yeilds:
     Seq -- One alphabetic sequence at a time.
-    
-    Raises: 
+
+    Raises:
     ValueError -- If the file is unparsable
     """
     alphabet = Alphabet(alphabet)
@@ -50,22 +50,20 @@ def iterseq(fin, alphabet=None):
     state = header
     seq = []
     for L, line in enumerate(fin):
-        if isblank(line): continue
+        if isblank(line):
+            continue
         if state == header:
-            if not line.startswith('LOCUS') :
+            if not line.startswith('LOCUS'):
                 raise ValueError(
-                   "Cannot find start of record at line %d"% L )
+                   "Cannot find start of record at line %d" % L)
             state = block
         elif state == block:
-            if line.startswith('ORIGIN') or line.startswith('//') :
+            if line.startswith('ORIGIN') or line.startswith('//'):
                 state = data
-        elif state == data :
-            if line.startswith('//') :
+        elif state == data:
+            if line.startswith('//'):
                 yield Seq(''.join(seq), alphabet)
                 seq = []
                 state = block
-            else :
-                seq.extend( line.split()[1:] )
-
-            
-
+            else:
+                seq.extend(line.split()[1:])

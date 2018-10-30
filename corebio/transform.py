@@ -3,7 +3,7 @@
 #  This software is distributed under the MIT Open Source License.
 #  <http://www.opensource.org/licenses/mit-license.html>
 #
-#  Permission is hereby granted, free of charge, to any person obtaining a 
+#  Permission is hereby granted, free of charge, to any person obtaining a
 #  copy of this software and associated documentation files (the "Software"),
 #  to deal in the Software without restriction, including without limitation
 #  the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -13,12 +13,12 @@
 #  The above copyright notice and this permission notice shall be included
 #  in all copies or substantial portions of the Software.
 #
-#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 #  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 
 """ Transformations of Seqs (alphabetic sequences).
@@ -30,24 +30,25 @@ Classes :
 - GeneticCode -- The genetic mapping of DNA to protein.
 
 Functions :
--  mask_low_complexity -- Implementation of Seg algorithm to remove low complexity  
+-  mask_low_complexity -- Implementation of Seg algorithm to remove low complexity
         regions from protein sequences.
 
 Other:
--   reduced_protein_alphabets -- A dictionary of transforms that reduce the size of the protein alphabet,
-        merging various amino acids into classes.
-        
+-   reduced_protein_alphabets -- A dictionary of transforms that reduce the size of the protein
+   alphabet, merging various amino acids into classes.
+
         "LiBn" where n is 2 to 19 are from Li et al (2003), table I, 2 to 19 groups.
-        "LiBn" where n is 2 to 19 are from Li et al (2003), table II (no interlacing), 2 to 19 groups.
-        
-        Ref: Li et al Reduction of protein sequence complexity by residue grouping, 
-            Prot. Eng. 16 323-330 (2003)  
+        "LiBn" where n is 2 to 19 are from Li et al (2003), table II (no interlacing),
+        2 to 19 groups.
+
+        Ref: Li et al Reduction of protein sequence complexity by residue grouping,
+            Prot. Eng. 16 323-330 (2003)
 
 """
 
 from .data import dna_extended_letters, dna_ambiguity
 from .moremath import log2, entropy
-from .seq import Seq, protein_alphabet, dna_alphabet, nucleic_alphabet, Alphabet
+from .seq import Seq, protein_alphabet, dna_alphabet, Alphabet
 from .seq import reduced_protein_alphabet as std_protein_alphabet
 
 __all__ = [
@@ -62,18 +63,18 @@ class Transform(object):
     """A translation between alphabetic strings.
     (This class is not called 'Translation' to avoid confusion with the
     biological translation of RNA to protein.)
-    
+
     Example:
-    trans = Transform( 
-        Seq("ACGTRYSWKMBDHVN-acgtUuryswkmbdhvnXx?.~", dna_alphabet),                    
-        Seq("ACGTRYSWKMNNNNN-acgtUuryswkmbnnnnXx?.~", reduced_nucleic_alphabet)         
+    trans = Transform(
+        Seq("ACGTRYSWKMBDHVN-acgtUuryswkmbdhvnXx?.~", dna_alphabet),
+        Seq("ACGTRYSWKMNNNNN-acgtUuryswkmbnnnnXx?.~", reduced_nucleic_alphabet)
         )
     s0 = Seq("AAAAAV", nucleic_alphabet)
-    s1 = trans(s0)              
+    s1 = trans(s0)
     assert(s1.alphabet == reduced_nucleic_alphabet)
     assert(s2 == Seq("AAAAAN",  reduced_nucleic_alphabet)
-        
-    Status : Beta 
+
+    Status : Beta
     """
 
     __slots__ = ["table", "source", "target", "name", "description"]
@@ -105,33 +106,33 @@ dna_complement = Transform(
 
 def mask_low_complexity(seq, width=12, trigger=1.8, extension=2.0, mask='X'):
     """ Mask low complexity regions in protein sequences.
-    
-    Uses the method of Seg [1] by Wootton & Federhen [2] to divide a sequence   
+
+    Uses the method of Seg [1] by Wootton & Federhen [2] to divide a sequence
     into regions of high and low complexity. The sequence is divided into
     overlapping windows. Low complexity windows either have a sequence entropy
-    less than the trigger complexity, or have an entropy less than the extension    
-    complexity and neighbor other low-complexity windows. The sequence within   
-    a low complexity region is replaced with the mask character (default 'X'), 
+    less than the trigger complexity, or have an entropy less than the extension
+    complexity and neighbor other low-complexity windows. The sequence within
+    a low complexity region is replaced with the mask character (default 'X'),
     and the masked alphabetic sequence is returned.
-    
+
     The default parameters, width=12, trigger=1.8, extension=2.0, mask='X' are
-    suitable for masking protein sequences before a database search. The 
+    suitable for masking protein sequences before a database search. The
     standard default seg parameters are width=12, trigger=2.2, extension=2.5
-    
+
     Arguments:
         Seq seq         -- An alphabetic sequence
         int width       -- Window width
         float trigger   -- Entropy in bits between 0 and 4.3.. ( =log_2(20) )
         float extension -- Entropy in bits between 0 and 4.3.. ( =log_2(20) )
-        char mask       -- The mask character (default: 'X') 
+        char mask       -- The mask character (default: 'X')
     Returns :
         Seq         -- A masked alphabetic sequence
     Raises :
         ValueError  -- On invalid arguments
     Refs:
-        [1] seg man page: 
+        [1] seg man page:
             http://bioportal.weizmann.ac.il/education/materials/gcg/seg.html
-        [2] Wootton & Federhen (Computers and Chemistry 17; 149-163, (1993)) 
+        [2] Wootton & Federhen (Computers and Chemistry 17; 149-163, (1993))
     Authors:
         GEC 2005
     Future :
@@ -170,8 +171,7 @@ def mask_low_complexity(seq, width=12, trigger=1.8, extension=2.0, mask='X'):
 
     prev_segged = False
     for i in range(0, nwindows):
-        if ((prev_segged and ent[i] < extension) or
-                    ent[i] < trigger):
+        if ((prev_segged and ent[i] < extension) or ent[i] < trigger):
             for j in range(0, width):
                 s[i + j] = X
             prev_segged = True
@@ -181,8 +181,7 @@ def mask_low_complexity(seq, width=12, trigger=1.8, extension=2.0, mask='X'):
     # Redo, only backwards
     prev_segged = False
     for i in range(nwindows - 1, -1, -1):
-        if ((prev_segged and ent[i] < extension) or
-                    ent[i] < trigger):
+        if ((prev_segged and ent[i] < extension) or ent[i] < trigger):
             for j in range(0, width):
                 s[i + j] = X
             prev_segged = True
@@ -195,16 +194,16 @@ def mask_low_complexity(seq, width=12, trigger=1.8, extension=2.0, mask='X'):
     return segged
 
 
-# end mask_low_complexity()    
+# end mask_low_complexity()
 
 
 class GeneticCode(object):
     """An encoding of amino acids by DNA triplets.
- 
-    Example : 
-    
-    Genetic Code [1]: Standard   
-          T         C         A         G      
+
+    Example :
+
+    Genetic Code [1]: Standard
+          T         C         A         G
        +---------+---------+---------+---------+
      T | TTT F   | TCT S   | TAT Y   | TGT C   | T
      T | TTC F   | TCC S   | TAC Y   | TGC C   | C
@@ -227,7 +226,7 @@ class GeneticCode(object):
      G | GTG V   | GCG A   | GAG E   | GGG G   | G
        +---------+---------+---------+---------+
 
-    
+
     See Also :
     -- http://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi?mode=c
     -- http://www.ncbi.nlm.nih.gov/projects/collab/FT/index.html#7.5
@@ -245,17 +244,17 @@ class GeneticCode(object):
 
         Args:
         -- ident - Standard identifier (or zero). An integer
-        -- description 
+        -- description
         -- amino acid - A sequence of amino acids and stop codons. e.g.
             "FFLLSSSSYY**CC*WLLLLPPPPHHQQRRRRIIIMTTTTNNKKSSRRVVVVAAAADDEEGGGG"
         -- start - A sequence indicating start codons, e.g.,
             "---M---------------M---------------M----------------------------"
-        -- base1 - The first base of each codon. e.g., 
+        -- base1 - The first base of each codon. e.g.,
             "TTTTTTTTTTTTTTTTCCCCCCCCCCCCCCCCAAAAAAAAAAAAAAAAGGGGGGGGGGGGGGGG"
         -- base2 - The second base of each codon. e.g.,
             "TTTTCCCCAAAAGGGGTTTTCCCCAAAAGGGGTTTTCCCCAAAAGGGGTTTTCCCCAAAAGGGG"
-        -- base3 - The last base of each codon. e.g., 
-            "TCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAG"            
+        -- base3 - The last base of each codon. e.g.,
+            "TCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAG"
         """
         self.ident = ident
         self.description = description
@@ -352,8 +351,8 @@ class GeneticCode(object):
 
         # For each ambiguous codon, construct all compatible unambiguous codons.
         # Translate and collect a set of all possible translated amino acids.
-        # If more than one translation look for possible amino acid ambiguity       
-        # codes. 
+        # If more than one translation look for possible amino acid ambiguity
+        # codes.
         for C in codons:
             translated = dict()  # Use dict, because no set in py2.3
             c = C.replace('U', 'T')  # Convert RNA codon to DNA
@@ -385,9 +384,9 @@ class GeneticCode(object):
     def translate(self, seq, frame=0):
         """Translate a DNA sequence to a polypeptide using full
         IUPAC ambiguities in DNA/RNA and amino acid codes.
-        
-        Returns : 
-        -- Seq - A polypeptide sequence 
+
+        Returns :
+        -- Seq - A polypeptide sequence
         """
         # TODO: Optimize.
         # TODO: Insanity check alphabet.
@@ -402,10 +401,10 @@ class GeneticCode(object):
 
     def back_translate(self, seq):
         """Convert protein back into coding DNA.
-        
+
         Args:
         -- seq - A polypeptide sequence.
-        
+
         Returns :
         -- Seq - A DNA sequence
         """
@@ -493,11 +492,11 @@ class GeneticCode(object):
 # Data from http://www.ncbi.nlm.nih.gov/projects/collab/FT/index.html#7.5
 # Aug. 2006
 # Genetic Code Tables
-# 
+#
 # Authority      International Sequence Databank Collaboration
 # Contact        NCBI
 # Scope          /transl_table qualifier
-# URL            http://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi?mode=c   
+# URL            http://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi?mode=c
 _codon_tables = (
     GeneticCode(1, "Standard",
                 "FFLLSSSSYY**CC*WLLLLPPPPHHQQRRRRIIIMTTTTNNKKSSRRVVVVAAAADDEEGGGG",
@@ -711,7 +710,7 @@ reduced_protein_alphabets = {
             Seq("C-F-Y-W-M-L-II-G-P-A-T-S-N-H-Q-E-D-R-KX*-", Alphabet("CFYWMLIGPATSNHQEDRKX*-")),
             "Li et al (2003), table II, group 19"),
     #
-    "LiB19": Transform(
+    "LiB20": Transform(
             Seq("C-F-Y-W-M-L-I-V-G-P-A-T-S-N-H-Q-E-D-R-KX*-", std_protein_alphabet),
             Seq("C-F-Y-W-M-L-I-V-G-P-A-T-S-N-H-Q-E-D-R-KX*-", Alphabet("CFYWMLIVGPATSNHQEDRKX*-")),
             "Li et al (2003), table II, group 20"),

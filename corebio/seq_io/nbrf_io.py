@@ -5,39 +5,39 @@
 #  This software is distributed under the new BSD Open Source License.
 #  <http://www.opensource.org/licenses/bsd-license.html>
 #
-#  Redistribution and use in source and binary forms, with or without 
-#  modification, are permitted provided that the following conditions are met: 
+#  Redistribution and use in source and binary forms, with or without
+#  modification, are permitted provided that the following conditions are met:
 #
-#  (1) Redistributions of source code must retain the above copyright notice, 
-#  this list of conditions and the following disclaimer. 
+#  (1) Redistributions of source code must retain the above copyright notice,
+#  this list of conditions and the following disclaimer.
 #
-#  (2) Redistributions in binary form must reproduce the above copyright 
-#  notice, this list of conditions and the following disclaimer in the 
-#  documentation and or other materials provided with the distribution. 
+#  (2) Redistributions in binary form must reproduce the above copyright
+#  notice, this list of conditions and the following disclaimer in the
+#  documentation and or other materials provided with the distribution.
 #
-#  (3) Neither the name of the University of California, Lawrence Berkeley 
-#  National Laboratory, U.S. Dept. of Energy nor the names of its contributors 
-#  may be used to endorse or promote products derived from this software 
-#  without specific prior written permission. 
+#  (3) Neither the name of the University of California, Lawrence Berkeley
+#  National Laboratory, U.S. Dept. of Energy nor the names of its contributors
+#  may be used to endorse or promote products derived from this software
+#  without specific prior written permission.
 #
-#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-#  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-#  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-#  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
-#  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-#  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-#  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-#  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-#  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-#  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
-#  POSSIBILITY OF SUCH DAMAGE. 
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+#  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+#  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+#  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+#  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+#  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+#  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+#  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+#  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+#  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+#  POSSIBILITY OF SUCH DAMAGE.
 
 """Sequence IO for NBRF/PIR format.
 
 The format is similar to fasta. The header line consistins of '>', a two-
 letter sequence type (P1, F1, DL, DC, RL, RC, or XX), a semicolon, and a
-sequence ID. The next line is a textual description of the sequence, 
-followed by one or more lines containing the sequence data. The end of 
+sequence ID. The next line is a textual description of the sequence,
+followed by one or more lines containing the sequence data. The end of
 the sequence is marked by a "*" (asterisk) character.
 
 type_code -- A map between NBRF two letter type codes and Alphabets.
@@ -49,23 +49,21 @@ see:  http://www.cmbi.kun.nl/bioinf/tools/crab_pir.html
 
 >P1;CRAB_ANAPL
 ALPHA CRYSTALLIN B CHAIN (ALPHA(B)-CRYSTALLIN).
-  MDITIHNPLI RRPLFSWLAP SRIFDQIFGE HLQESELLPA SPSLSPFLMR 
-  SPIFRMPSWL ETGLSEMRLE KDKFSVNLDV KHFSPEELKV KVLGDMVEIH 
-  GKHEERQDEH GFIAREFNRK YRIPADVDPL TITSSLSLDG VLTVSAPRKQ 
+  MDITIHNPLI RRPLFSWLAP SRIFDQIFGE HLQESELLPA SPSLSPFLMR
+  SPIFRMPSWL ETGLSEMRLE KDKFSVNLDV KHFSPEELKV KVLGDMVEIH
+  GKHEERQDEH GFIAREFNRK YRIPADVDPL TITSSLSLDG VLTVSAPRKQ
   SDVPERSIPI TREEKPAIAG AQRK*
 
 >P1;CRAB_BOVIN
 ALPHA CRYSTALLIN B CHAIN (ALPHA(B)-CRYSTALLIN).
-  MDIAIHHPWI RRPFFPFHSP SRLFDQFFGE HLLESDLFPA STSLSPFYLR 
-  PPSFLRAPSW IDTGLSEMRL EKDRFSVNLD VKHFSPEELK VKVLGDVIEV 
-  HGKHEERQDE HGFISREFHR KYRIPADVDP LAITSSLSSD GVLTVNGPRK 
+  MDIAIHHPWI RRPFFPFHSP SRLFDQFFGE HLLESDLFPA STSLSPFYLR
+  PPSFLRAPSW IDTGLSEMRL EKDRFSVNLD VKHFSPEELK VKVLGDVIEV
+  HGKHEERQDE HGFISREFHR KYRIPADVDP LAITSSLSSD GVLTVNGPRK
   QASGPERTIP ITREEKPAVT AAPKK*
 
 """
 
-from . import *
-from ..seq import *
-from ..utils import *
+from ..seq import Seq, SeqList, protein_alphabet, dna_alphabet, rna_alphabet, generic_alphabet
 
 names = ("nbrf", "pir",)
 extensions = ('nbrf', 'pir', 'ali')
@@ -84,16 +82,16 @@ type_code = {
 
 
 def read(fin, alphabet=None):
-    """Read and parse a NBRF seqquence file. 
+    """Read and parse a NBRF seqquence file.
 
     Args:
         fin -- A stream or file to read
         alphabet -- The expected alphabet of the data. If not supplied, then
                 an appropriate alphabet will be inferred from the data.
-    Returns: 
+    Returns:
         SeqList -- A list of sequences
-    Raises: 
-        ValueError -- If the file is unparsable        
+    Raises:
+        ValueError -- If the file is unparsable
     """
     seqs = [s for s in iterseq(fin, alphabet)]
     return SeqList(seqs)
@@ -101,10 +99,10 @@ def read(fin, alphabet=None):
 
 def iterseq(fin, alphabet=None):
     """ Generate sequences from an NBRF file.
-    
+
     arguments:
         fin -- A stream or file to read
-        alphabet --    
+        alphabet --
     yields :
         Seq
     raises :

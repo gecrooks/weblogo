@@ -5,7 +5,7 @@
 #  This software is distributed under the MIT Open Source License.
 #  <http://www.opensource.org/licenses/mit-license.html>
 #
-#  Permission is hereby granted, free of charge, to any person obtaining a 
+#  Permission is hereby granted, free of charge, to any person obtaining a
 #  copy of this software and associated documentation files (the "Software"),
 #  to deal in the Software without restriction, including without limitation
 #  the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -15,30 +15,32 @@
 #  The above copyright notice and this permission notice shall be included
 #  in all copies or substantial portions of the Software.
 #
-#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 #  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 #
 
 
 """Read sequence information in MSF format.
-    
-This is a file format for biological sequence data. The sequences are interweaved and each line is labeled with the sequence name. The MSF format can be identified in one or more of the following ways: 
+
+This is a file format for biological sequence data. The sequences are interweaved and each line is
+labeled with the sequence name. The MSF format can be identified in one or more of the following
+ways:
 1. The word PileUp on the first line (optional)
 2. the word !!AA_MULTIPLE_ALIGNMENT or !!NA_MULTIPLE_ALIGNMENT at the start of the file (optional)
-3. the word MSF on the first line of the file, and the characters ".." at the end of this line (optional)
+3. the word MSF on the first line of the file, and the characters ".." at the end of this line
+   (optional)
 4. A header containing sequence information followed by a line with the characters "//"
 """
 
 import re
 
-from . import *
-from ..seq import *
-from ..utils import *
+from ..seq import Alphabet, Seq, SeqList
+from ..utils import Token
 
 example = """
 
@@ -57,24 +59,24 @@ MSF: 64 Type: P Check: 767 ..
 
 //
 
-                                                            
-    Cow  MAYPMQLGFQ DATSPIMEEL LHFHDHTLMI VFLISSLVLY IISLMLTTKL 
-   Carp  MAHPTQLGFK DAAMPVMEEL LHFHDHALMI VLLISTLVLY IITAMVSTKL 
-Chicken  MANHSQLGFQ DASSPIMEEL VEFHDHALMV ALAICSLVLY LLTLMLMEKL 
-  Human  MAHAAQVGLQ DATSPIMEEL ITFHDHALMI IFLICFLVLY ALFLTLTTKL 
-  Loach  MAHPTQLGFQ DAASPVMEEL LHFHDHALMI VFLISALVLY VIITTVSTKL 
-  Mouse  MAYPFQLGLQ DATSPIMEEL MNFHDHTLMI VFLISSLVLY IISLMLTTKL 
+
+    Cow  MAYPMQLGFQ DATSPIMEEL LHFHDHTLMI VFLISSLVLY IISLMLTTKL
+   Carp  MAHPTQLGFK DAAMPVMEEL LHFHDHALMI VLLISTLVLY IITAMVSTKL
+Chicken  MANHSQLGFQ DASSPIMEEL VEFHDHALMV ALAICSLVLY LLTLMLMEKL
+  Human  MAHAAQVGLQ DATSPIMEEL ITFHDHALMI IFLICFLVLY ALFLTLTTKL
+  Loach  MAHPTQLGFQ DAASPVMEEL LHFHDHALMI VFLISALVLY VIITTVSTKL
+  Mouse  MAYPFQLGLQ DATSPIMEEL MNFHDHTLMI VFLISSLVLY IISLMLTTKL
 
 
-                                                       
-    Cow  THTSTMDAQE VETIWTILPA IILILIALPS LRILYMMDEI NNPSLTVKTM 
-   Carp  TNKYILDSQE IEIVWTILPA VILVLIALPS LRILYLMDEI NDPHLTIKAM 
-Chicken  S.SNTVDAQE VELIWTILPA IVLVLLALPS LQILYMMDEI DEPDLTLKAI 
-  Human  TNTNISDAQE METVWTILPA IILVLIALPS LRILYMTDEV NDPSLTIKSI 
-  Loach  TNMYILDSQE IEIVWTVLPA LILILIALPS LRILYLMDEI NDPHLTIKAM 
-  Mouse  THTSTMDAQE VETIWTILPA VILIMIALPS LRILYMMDEI NNPVLTVKTM 
- 
-   """
+
+    Cow  THTSTMDAQE VETIWTILPA IILILIALPS LRILYMMDEI NNPSLTVKTM
+   Carp  TNKYILDSQE IEIVWTILPA VILVLIALPS LRILYLMDEI NDPHLTIKAM
+Chicken  S.SNTVDAQE VELIWTILPA IVLVLLALPS LQILYMMDEI DEPDLTLKAI
+  Human  TNTNISDAQE METVWTILPA IILVLIALPS LRILYMTDEV NDPSLTIKSI
+  Loach  TNMYILDSQE IEIVWTVLPA LILILIALPS LRILYLMDEI NDPHLTIKAM
+  Mouse  THTSTMDAQE VETIWTILPA VILIMIALPS LRILYMMDEI NNPVLTVKTM
+
+"""
 
 names = ('msf', 'gcg-msf', 'gcg', 'PileUp')
 extensions = ('msf',)

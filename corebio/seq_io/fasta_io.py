@@ -5,7 +5,7 @@
 #  This software is distributed under the MIT Open Source License.
 #  <http://www.opensource.org/licenses/mit-license.html>
 #
-#  Permission is hereby granted, free of charge, to any person obtaining a 
+#  Permission is hereby granted, free of charge, to any person obtaining a
 #  copy of this software and associated documentation files (the "Software"),
 #  to deal in the Software without restriction, including without limitation
 #  the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -15,24 +15,24 @@
 #  The above copyright notice and this permission notice shall be included
 #  in all copies or substantial portions of the Software.
 #
-#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 #  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 #
 
 """Read and write sequence information in FASTA format.
-    
-This is a very common format for unannotated biological sequence data, 
-accepted by many multiple sequence alignment programs. Each sequence 
-consists of a single-line description, followed by lines of sequence data. 
-The first character of the description line is a greater-than (">") symbol 
-in the first column. The first word of the description is often the name or 
-ID of the sequence. Fasta files containing multiple sequences have one 
-sequence listed right after another. 
+
+This is a very common format for unannotated biological sequence data,
+accepted by many multiple sequence alignment programs. Each sequence
+consists of a single-line description, followed by lines of sequence data.
+The first character of the description line is a greater-than (">") symbol
+in the first column. The first word of the description is often the name or
+ID of the sequence. Fasta files containing multiple sequences have one
+sequence listed right after another.
 
 
 Example Fasta File ::
@@ -55,14 +55,14 @@ VLARHF-QH-EFTPELQ-HALEAHFCA------V---GDALA----K-----A-----YH-----------
 
 import re
 
-from ..seq import *
-from ..utils import *
-from . import *
+from ..seq import Alphabet, SeqList, Seq
+from ..utils import FileIndex
 
 
 names = ('fasta', 'pearson', 'fa')
 extensions = (
-    'fa', 'fasta', 'fast', 'seq', 'fsa', 'fst', 'nt', 'aa', 'fna', 'mpfa', 'faa', 'fnn', 'mfasta', 'tfa', 'pfa'
+    'fa', 'fasta', 'fast', 'seq', 'fsa', 'fst', 'nt', 'aa', 'fna', 'mpfa', 'faa', 'fnn',
+    'mfasta', 'tfa', 'pfa'
 )
 
 example = """
@@ -85,14 +85,14 @@ VLARHF-QH-EFTPELQ-HALEAHFCA------V---GDALA----K-----A-----YH-----------
 
 
 def read(fin, alphabet=None):
-    """Read and parse a fasta file. 
+    """Read and parse a fasta file.
 
     Args:
         fin -- A stream or file to read
         alphabet -- The expected alphabet of the data, if given
-    Returns: 
+    Returns:
         SeqList -- A list of sequences
-    Raises: 
+    Raises:
         ValueError -- If the file is unparsable
     """
     seqs = [s for s in iterseq(fin, alphabet)]
@@ -103,20 +103,20 @@ def read(fin, alphabet=None):
 
 
 def readseq(fin, alphabet=None):
-    """Read one sequence from the file, starting 
+    """Read one sequence from the file, starting
     from the current file position."""
     return next(iterseq(fin, alphabet))
 
 
 def iterseq(fin, alphabet=None):
     """ Parse a fasta file and generate sequences.
-    
+
     Args:
         fin -- A stream or file to read
-        alphabet -- The expected alphabet of the data, if given    
-    Yeilds: 
+        alphabet -- The expected alphabet of the data, if given
+    Yeilds:
         Seq -- One alphabetic sequence at a time.
-    Raises: 
+    Raises:
         ValueError -- If the file is unparsable
     """
     alphabet = Alphabet(alphabet)
@@ -166,7 +166,7 @@ def iterseq(fin, alphabet=None):
 
 
 def write(fout, seqs):
-    """Write a fasta file. 
+    """Write a fasta file.
 
     Args:
         fout -- A writable stream.

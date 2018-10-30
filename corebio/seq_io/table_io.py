@@ -5,7 +5,7 @@
 #  This software is distributed under the MIT Open Source License.
 #  <http://www.opensource.org/licenses/mit-license.html>
 #
-#  Permission is hereby granted, free of charge, to any person obtaining a 
+#  Permission is hereby granted, free of charge, to any person obtaining a
 #  copy of this software and associated documentation files (the "Software"),
 #  to deal in the Software without restriction, including without limitation
 #  the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -15,24 +15,23 @@
 #  The above copyright notice and this permission notice shall be included
 #  in all copies or substantial portions of the Software.
 #
-#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 #  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 #
 
 """Read and write sequence information in tab-delimited format.
 
-This very simple format has two columns per line. The first column is a sequence name, the second column is the sequence itself. The columns are separated by a single tab ("\\t") character.
+This very simple format has two columns per line. The first column is a sequence name, the second
+column is the sequence itself. The columns are separated by a single tab ("\\t") character.
 
 """
 
-from . import *
-from ..seq import *
-from ..utils import *
+from ..seq import Seq, SeqList, Alphabet
 
 names = ('table', 'tab')
 extensions = ('tbl',)
@@ -52,14 +51,14 @@ EC0010	MGNTKLANPAPLGLMGFGMTTILLNLHNVGYFALDGIILAMGIFYGGIAQ
 
 
 def read(fin, alphabet=None):
-    """Read and parse file. 
+    """Read and parse file.
 
     Args:
         fin -- A stream or file to read
         alphabet -- The expected alphabet of the data, if given
-    Returns: 
+    Returns:
         SeqList -- A list of sequences
-    Raises: 
+    Raises:
         ValueError -- If the file is unparsable
     """
     seqs = [s for s in iterseq(fin, alphabet)]
@@ -68,13 +67,13 @@ def read(fin, alphabet=None):
 
 def iterseq(fin, alphabet=None):
     """ Parse a file and generate sequences.
-    
+
     Args:
         fin -- A stream or file to read
-        alphabet -- The expected alphabet of the data, if given    
-    Yeilds: 
+        alphabet -- The expected alphabet of the data, if given
+    Yeilds:
         Seq -- One alphabetic sequence at a time.
-    Raises: 
+    Raises:
         ValueError -- If the file is unparsable
     """
     alphabet = Alphabet(alphabet)
@@ -86,12 +85,13 @@ def iterseq(fin, alphabet=None):
 
         columns = line.split('\t')
         if len(columns) != 2:
-            raise ValueError("Parse failed on line %d: did not find two columns separated by a tab." % lineno)
+            raise ValueError("Parse failed on line %d: did not find two columns separated by a tab."
+                             % lineno)
         yield Seq(columns[1], alphabet=alphabet, name=columns[0])
 
 
 def write(fout, seqs):
-    """Write a two column, tab-delimited file. 
+    """Write a two column, tab-delimited file.
 
     Args:
         fout -- A writable stream.

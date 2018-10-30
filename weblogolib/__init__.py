@@ -4,44 +4,44 @@
 
 #  Copyright (c) 2003-2004 The Regents of the University of California.
 #  Copyright (c) 2005 Gavin E. Crooks
-#  Copyright (c) 2006-2015, The Regents of the University of California, through 
+#  Copyright (c) 2006-2015, The Regents of the University of California, through
 #  Lawrence Berkeley National Laboratory (subject to receipt of any required
 #  approvals from the U.S. Dept. of Energy).  All rights reserved.
 
 #  This software is distributed under the new BSD Open Source License.
 #  <http://www.opensource.org/licenses/bsd-license.html>
 #
-#  Redistribution and use in source and binary forms, with or without 
-#  modification, are permitted provided that the following conditions are met: 
+#  Redistribution and use in source and binary forms, with or without
+#  modification, are permitted provided that the following conditions are met:
 #
-#  (1) Redistributions of source code must retain the above copyright notice, 
-#  this list of conditions and the following disclaimer. 
+#  (1) Redistributions of source code must retain the above copyright notice,
+#  this list of conditions and the following disclaimer.
 #
-#  (2) Redistributions in binary form must reproduce the above copyright 
-#  notice, this list of conditions and the following disclaimer in the 
-#  documentation and or other materials provided with the distribution. 
+#  (2) Redistributions in binary form must reproduce the above copyright
+#  notice, this list of conditions and the following disclaimer in the
+#  documentation and or other materials provided with the distribution.
 #
-#  (3) Neither the name of the University of California, Lawrence Berkeley 
-#  National Laboratory, U.S. Dept. of Energy nor the names of its contributors 
-#  may be used to endorse or promote products derived from this software 
-#  without specific prior written permission. 
+#  (3) Neither the name of the University of California, Lawrence Berkeley
+#  National Laboratory, U.S. Dept. of Energy nor the names of its contributors
+#  may be used to endorse or promote products derived from this software
+#  without specific prior written permission.
 #
-#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-#  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-#  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-#  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
-#  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-#  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-#  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-#  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-#  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-#  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
-#  POSSIBILITY OF SUCH DAMAGE. 
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+#  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+#  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+#  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+#  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+#  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+#  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+#  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+#  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+#  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+#  POSSIBILITY OF SUCH DAMAGE.
 
 # Replicates README.txt
 
 """
-WebLogo (https://github.com/WebLogo/weblogo) is a tool for creating sequence 
+WebLogo (https://github.com/WebLogo/weblogo) is a tool for creating sequence
 logos from biological sequence alignments.  It can be run on the command line,
 as a standalone webserver, as a CGI webapp, or as a python library.
 
@@ -57,65 +57,66 @@ For help on the command line interface run
 
 To build a simple logo run
     ./weblogo  < cap.fa > logo0.eps
-    
-To run as a standalone webserver at localhost:8080 
+
+To run as a standalone webserver at localhost:8080
     ./weblogo --serve
 
 To create a logo in python code:
     >>> from weblogolib import *
     >>> fin = open('cap.fa')
-    >>> seqs = read_seq_data(fin) 
+    >>> seqs = read_seq_data(fin)
     >>> data = LogoData.from_seqs(seqs)
     >>> options = LogoOptions()
     >>> options.title = "A Logo Title"
     >>> format = LogoFormat(data, options)
     >>> eps = eps_formatter( data, format)
-   
+
 
 
 -- Distribution and Modification --
-This package is distributed under the new BSD Open Source License. 
+This package is distributed under the new BSD Open Source License.
 Please see the LICENSE.txt file for details on copyright and licensing.
-The WebLogo source code can be downloaded from 
+The WebLogo source code can be downloaded from
 https://github.com/WebLogo/weblogo
 
 WebLogo requires Python 2.6, 2.7, 3.2, 3.3 & 3.4 and the python
 array package 'numpy' (http://www.scipy.org/Download)
 
 Generating logos in PDF or bitmap graphics formats require that the ghostscript
-program 'gs' be installed. Scalable Vector Graphics (SVG) format also requires 
+program 'gs' be installed. Scalable Vector Graphics (SVG) format also requires
 the program 'pdf2svg'.
 
 """
 
-import copy
 import os
 import sys
 
 from datetime import datetime
-from math import exp, log, sqrt
+from math import log, sqrt
 from string import Template
 from subprocess import Popen, PIPE
 import shutil
 import tempfile
 from io import StringIO
-from urllib.request import urlopen, Request, urlparse, urlunparse
+from urllib.request import urlopen, Request
+from urllib.parse import urlparse, urlunparse
 
 # Avoid 'from numpy import *' since numpy has lots of names defined
-from numpy import array, asarray, float64, ones, zeros, any, int32, all, shape
+from numpy import array, asarray, float64, ones, zeros, any
 import numpy as na
 
 from .color import Color
-from .colorscheme import ColorScheme, SymbolColor, monochrome, hydrophobicity, base_pairing, chemistry,charge
+from .colorscheme import (ColorScheme, SymbolColor, monochrome, hydrophobicity, base_pairing,
+                          chemistry, charge)
 from .logomath import Dirichlet
 
 import corebio
 from corebio import seq_io
-from corebio.data import (amino_acid_composition, amino_acid_letters, dna_letters, rna_letters)
+from corebio.data import amino_acid_composition
 from corebio.moremath import entropy
-from corebio.seq import (Alphabet, Seq, SeqList, unambiguous_dna_alphabet,
+from corebio.seq import (Alphabet, unambiguous_dna_alphabet,
                          unambiguous_rna_alphabet, unambiguous_protein_alphabet)
-from corebio.utils import (isfloat, ArgumentError, stdrepr, resource_string, resource_filename)
+from corebio.utils import (isfloat, ArgumentError, stdrepr, resource_string)
 
 
 # ------ META DATA ------
@@ -171,8 +172,9 @@ class GhostscriptAPI(object):
         if command is None:
             command = shutil.which('gswin32c.exe', path=path)
         if command is None:
-            raise EnvironmentError("Could not find Ghostscript on path."
-                                   " There should be either a gs executable or a gswin32c.exe on your system's path")
+            raise EnvironmentError("Could not find Ghostscript on path. "
+                                   "There should be either a gs executable or a gswin32c.exe on "
+                                   "your system's path")
 
         self.command = command
 
@@ -282,7 +284,7 @@ std_units = {
     "probability": None,
 }
 
-# The base stack width is set equal to 9pt Courier. 
+# The base stack width is set equal to 9pt Courier.
 # (Courier has a width equal to 3/5 of the point size.)
 # Check that can get 80 characters in journal page @small
 # 40 characters in a journal column
@@ -309,47 +311,49 @@ std_percentCG = {
 
 
 # Thermus thermophilus: Henne A, Bruggemann H, Raasch C, Wiezer A, Hartsch T,
-# Liesegang H, Johann A, Lienard T, Gohl O, Martinez-Arias R, Jacobi C, 
-# Starkuviene V, Schlenczeck S, Dencker S, Huber R, Klenk HP, Kramer W, 
-# Merkl R, Gottschalk G, Fritz HJ: The genome sequence of the extreme 
+# Liesegang H, Johann A, Lienard T, Gohl O, Martinez-Arias R, Jacobi C,
+# Starkuviene V, Schlenczeck S, Dencker S, Huber R, Klenk HP, Kramer W,
+# Merkl R, Gottschalk G, Fritz HJ: The genome sequence of the extreme
 # thermophile Thermus thermophilus.
 # Nat Biotechnol 2004, 22:547-53
 
 
 class LogoOptions(object):
     """ A container for all logo formatting options. Not all of these
-    are directly accessible through the CLI or web interfaces. 
-    
+    are directly accessible through the CLI or web interfaces.
+
     To display LogoOption defaults:
     >>> from weblogolib import *
     >>> LogoOptions()
-    
+
     All physical lengths are measured in points. (72 points per inch, 28.3 points per cm)
-      
+
     String attributes:
         o creator_text             -- Embedded as comment in figures.
-        o logo_title               -- Creates title for the sequence logo     
+        o logo_title               -- Creates title for the sequence logo
         o logo_label               -- An optional figure label, added to the top left (e.g. '(a)').
-        o unit_name                -- See std_units for options. (Default 'bits') 
-        o yaxis_label              -- Defaults to unit_name      
+        o unit_name                -- See std_units for options. (Default 'bits')
+        o yaxis_label              -- Defaults to unit_name
         o xaxis_label              -- Add a label to the x-axis, or hide x-axis altogether.
         o fineprint                -- Defaults to WebLogo name and version
-        
+
     Boolean attributes:
         o show_yaxis               -- Display entropy scale along y-axis (default: True)
-        o show_xaxis               -- Display sequence numbers along x-axis (default: True)                                                
+        o show_xaxis               -- Display sequence numbers along x-axis (default: True)
         o show_ends                -- Display label at the ends of the sequence (default: False)
-        o show_fineprint           -- Toggle display of the WebLogo version information in the lower right corner. Optional, but we appreciate the acknowledgment. 
+        o show_fineprint           -- Toggle display of the WebLogo version information in the lower
+                                      right corner. Optional, but we appreciate the acknowledgment.
         o show_errorbars           -- Draw errorbars (default: False)
         o show_boxes               -- Draw boxes around stack characters (default: True)
-        o debug                    -- Draw extra graphics debugging information. 
-        o rotate_numbers           -- Draw xaxis numbers with vertical orientation? 
+        o debug                    -- Draw extra graphics debugging information.
+        o rotate_numbers           -- Draw xaxis numbers with vertical orientation?
         o scale_width              -- boolean, scale width of characters proportional to ungaps
-        o pad_right                -- Make a single line logo the same width as multiline logos (default: False)                           
-                                
+        o pad_right                -- Make a single line logo the same width as multiline logos
+                                      (default: False)
+
     Other attributes:
         o stacks_per_line           -- Maximum number of logo stacks per logo line. (Default: 40)
-        o yaxis_tic_interval        -- Distance between ticmarks on y-axis(default: 1.0) 
+        o yaxis_tic_interval        -- Distance between ticmarks on y-axis(default: 1.0)
         o yaxis_minor_tic_ratio     -- Distance between minor tic ratio
         o yaxis_scale               -- Sets height of the y-axis in designated units
         o xaxis_tic_interval        -- Distance between ticmarks on x-axis(default: 1.0)
@@ -361,30 +365,34 @@ class LogoOptions(object):
         o errorbar_width_fraction   -- Sets error bars display
         o errorbar_gray             -- Sets error bars' gray scale percentage (default .75)
 
-        o resolution                -- Dots per inch (default: 96). Used for bitmapped output formats
-        
+        o resolution                -- Dots per inch (default: 96). Used for bitmapped output
+                                       formats
+
         o default_color             -- Symbol color if not otherwise specified
-        o color_scheme              -- A custom color scheme can be specified using CSS2 (Cascading Style Sheet) syntax. 
-                                    (E.g. 'red', '#F00', '#FF0000', 'rgb(255, 0, 0)', 'rgb(100%, 0%, 0%)' or 'hsl(0, 100%, 50%)' for the color red.) 
-        
-        o stack_width               -- Scale the visible stack width by the fraction of symbols in the column (I.e. columns with
-                                        many gaps of unknowns are narrow.)  (Default: yes)
+        o color_scheme              -- A custom color scheme can be specified using CSS2 (Cascading
+                                       Style Sheet) syntax.
+                                       E.g. 'red', '#F00', '#FF0000', 'rgb(255, 0, 0)',
+                                       'rgb(100%, 0%, 0%)' or 'hsl(0, 100%, 50%)' for the color red.
+
+        o stack_width               -- Scale the visible stack width by the fraction of symbols in
+                                       the column (I.e. columns with many gaps of unknowns are
+                                       narrow.)  (Default: yes)
         o stack_aspect_ratio        -- Ratio of stack height to width (default: 5)
 
         o logo_margin               -- Default: 2 pts
         o stroke_width              -- Default: 0.5 pts
         o tic_length                -- Default: 5 pts
         o stack_margin              -- Default: 0.5 pts
-        
+
         o small_fontsize            -- Small text font size in points
         o fontsize                  -- Regular text font size in points
         o title_fontsize            -- Title text font size in points
         o number_fontsize           -- Font size for axis-numbers, in points.
-        
+
         o text_font                 -- Select font for labels
         o logo_font                 -- Select font for Logo
         o title_font                -- Select font for Logo's title
-        
+
         o first_index               -- Index of first position in sequence data
         o logo_start                -- Lower bound of sequence to display
         o logo_end                  -- Upper bound of sequence to display
@@ -393,7 +401,7 @@ class LogoOptions(object):
 
     def __init__(self, **kwargs):
         """ Create a new LogoOptions instance.
-        
+
         >>> L = LogoOptions(logo_title = "Some Title String")
         >>> L.show_yaxis = False
         >>> repr(L)
@@ -473,10 +481,6 @@ class LogoOptions(object):
         update(self, **kwargs)
 
     def __repr__(self):
-        from corebio.util import stdrepr
-        return stdrepr(self)
-
-    def __repr__(self):
         attributes = list(vars(self).keys())
         attributes.sort()
         return stdrepr(self, attributes)
@@ -486,20 +490,20 @@ class LogoOptions(object):
 
 
 class LogoFormat(LogoOptions):
-    """ Specifies the format of the logo. Requires LogoData and LogoOptions 
+    """ Specifies the format of the logo. Requires LogoData and LogoOptions
     objects.
-    
+
     >>> data = LogoData.from_seqs(seqs )
     >>> options = LogoOptions()
     >>> options.title = "A Logo Title"
-    >>> format = LogoFormat(data, options) 
-    
+    >>> format = LogoFormat(data, options)
+
     Raises an ArgumentError if arguments are invalid.
     """
 
     def __init__(self, data, options=None):
         """ Create a new LogoFormat instance.
-        
+
         """
         LogoOptions.__init__(self)
 
@@ -534,14 +538,17 @@ class LogoFormat(LogoOptions):
         arg_conditions = (
             ("stacks_per_line", lambda x: x > 0, "Stacks per line must be positive."),
             ("stack_width", lambda x: x > 0.0, "Stack width must be greater than zero."),
-            ("stack_aspect_ratio", lambda x: x > 0, "Stack aspect ratio must be greater than zero."),
+            ("stack_aspect_ratio", lambda x: x > 0,
+                "Stack aspect ratio must be greater than zero."),
             ("fontsize", lambda x: x > 0, "Font sizes must be positive."),
             ("small_fontsize", lambda x: x > 0, "Font sizes must be positive."),
             ("title_fontsize", lambda x: x > 0, "Font sizes must be positive."),
             ("errorbar_fraction", lambda x: x >= 0.0 and x <= 1.0,
              "The visible fraction of the error bar must be between zero and one."),
-            ("yaxis_tic_interval", lambda x: x >= 0.0, "The yaxis tic interval cannot be negative."),
-            ("yaxis_minor_tic_interval", lambda x: not (x and x < 0.0), "Distances cannot be negative."),
+            ("yaxis_tic_interval", lambda x: x >= 0.0,
+                "The yaxis tic interval cannot be negative."),
+            ("yaxis_minor_tic_interval", lambda x: not (x and x < 0.0),
+                "Distances cannot be negative."),
             ("xaxis_tic_interval", lambda x: x > 0.0, "Tic interval must be greater than zero."),
             ("number_interval", lambda x: x > 0.0, "Invalid interval between numbers."),
             ("shrink_fraction", lambda x: x >= 0.0 and x <= 1.0, "Invalid shrink fraction."),
@@ -551,15 +558,15 @@ class LogoFormat(LogoOptions):
             ("tic_length", lambda x: x > 0.0, "Invalid tic length."),
         )
 
-        # Run arguments tests. The second, attribute argument to the ArgumentError is 
+        # Run arguments tests. The second, attribute argument to the ArgumentError is
         # used by the UI to provide user feedback.
-        # FIXME: More validation        
+        # FIXME: More validation
         for test in arg_conditions:
             if not test[1](getattr(self, test[0])):
                 raise ArgumentError(test[2], test[0])
 
         # Inclusive upper and lower bounds
-        # FIXME: Validate here. Move from eps_formatter        
+        # FIXME: Validate here. Move from eps_formatter
         if self.logo_start is None:
             self.logo_start = self.first_index
 
@@ -663,7 +670,7 @@ class LogoFormat(LogoOptions):
         self.line_width = (self.stack_width * self.stacks_per_line +
                            self.line_margin_left + self.line_margin_right)
 
-        self.logo_height = int(2 * self.logo_margin + self.title_height \
+        self.logo_height = int(2 * self.logo_margin + self.title_height
                                + self.xaxis_label_height + self.line_height * self.lines_per_logo)
         self.logo_width = int(2 * self.logo_margin + self.line_width)
 
@@ -704,7 +711,7 @@ class LogoFormat(LogoOptions):
 # that draws a representation of the logo.
 # The main graphical formatter is eps_formatter. A mapping 'formatters'
 # containing all available formatters is located after the formatter
-# definitions. 
+# definitions.
 # Each formatter returns binary data. The eps and data formats can decoded
 # to strings, e.g. eps_as_string = eps_data.decode()
 
@@ -735,8 +742,8 @@ def svg_formatter(data, format):
 
     command = shutil.which('pdf2svg')
     if command is None:
-        raise EnvironmentError("Scalable Vector Graphics (SVG) format requires the program 'pdf2svg'. "
-                               "Cannot find 'pdf2svg' on search path.")
+        raise EnvironmentError("Scalable Vector Graphics (SVG) format requires the program"
+                               "'pdf2svg'. Cannot find 'pdf2svg' on search path.")
 
     import tempfile
     fpdfi, fname_pdf = tempfile.mkstemp(suffix=".pdf")
@@ -774,7 +781,7 @@ def png_print_formatter(data, format):
 
 
 def txt_formatter(logodata, format):
-    """ Create a text representation of the logo data. 
+    """ Create a text representation of the logo data.
     """
     return str(logodata).encode()
 
@@ -830,7 +837,7 @@ def eps_formatter(logodata, format):
     # logo_index : User visible coordinate, first_index based
     # stack_index : zero based index of visible stacks
     for seq_index in range(seq_from, seq_to):
-        logo_index = seq_index + format.first_index
+        # logo_index = seq_index + format.first_index
         stack_index = seq_index - seq_from
 
         if stack_index != 0 and (stack_index % format.stacks_per_line) == 0:
@@ -854,7 +861,8 @@ def eps_formatter(logodata, format):
         s.reverse()
         s.sort(key=lambda x: x[0])
 
-        if not format.reverse_stacks: s.reverse()
+        if not format.reverse_stacks:
+            s.reverse()
 
         C = float(sum(logodata.counts[seq_index]))
         if C > 0.0:
@@ -896,8 +904,7 @@ def eps_formatter(logodata, format):
     return logo.encode()
 
 
-
-# map between output format names and logo  
+# map between output format names and logo
 formatters = {
     'eps': eps_formatter,
     'pdf': pdf_formatter,
@@ -913,9 +920,9 @@ default_formatter = eps_formatter
 
 def parse_prior(composition, alphabet, weight=None):
     """ Parse a description of the expected monomer distribution of a sequence.
-    
+
     Valid compositions:
-    
+
     - None or 'none' :        No composition sepecified
     - 'auto' or 'automatic' : Use the typical average distribution
                               for proteins and an equiprobable distribution for
@@ -960,7 +967,8 @@ def parse_prior(composition, alphabet, weight=None):
 
     elif composition[0] == '{' and composition[-1] == '}':
         explicit = composition[1: -1]
-        explicit = explicit.replace(',', ' ').replace("'", ' ').replace('"', ' ').replace(':', ' ').split()
+        explicit = explicit.replace(',', ' ').replace("'", ' ').replace('"', ' ') \
+            .replace(':', ' ').split()
 
         if len(explicit) != len(alphabet) * 2:
             # print(explicit)
@@ -1033,8 +1041,8 @@ def read_seq_data(fin,
                   alphabet=None,
                   ignore_lower_case=False,
                   max_file_size=0):
-    """ Read sequence data from the input stream and return a seqs object. 
-    
+    """ Read sequence data from the input stream and return a seqs object.
+
     The environment variable WEBLOGO_MAX_FILE_SIZE overides the max_file_size argument.
     Used to limit the load on the WebLogo webserver.
     """
@@ -1042,7 +1050,7 @@ def read_seq_data(fin,
     max_file_size = int(os.environ.get("WEBLOGO_MAX_FILE_SIZE", max_file_size))
 
     # If max_file_size is set, or if fin==stdin (which is non-seekable), we
-    # read the data and replace fin with a StringIO object. 
+    # read the data and replace fin with a StringIO object.
     if (max_file_size > 0):
         data = fin.read(max_file_size)
         more_data = fin.read(2)
@@ -1073,8 +1081,8 @@ def read_seq_data(fin,
 
 class LogoData(object):
     """The data needed to generate a sequence logo.
-       
-    - alphabet --  The set of symbols to count. 
+
+    - alphabet --  The set of symbols to count.
                    See also --sequence-type, --ignore-lower-case
     - length  --   All sequences must be the same length, else WebLogo will return an error
     - counts  --   An array of character counts
@@ -1152,8 +1160,8 @@ class LogoData(object):
             # TODO: Redundant? Should be checked in SeqList?
             if seq_length != len(s):
                 raise ArgumentError(
-                        "Sequence number %d differs in length from the previous sequences" % (i + 1),
-                        'sequences')
+                        "Sequence number %d differs in length from the previous sequences"
+                        % (i + 1), 'sequences')
 
         # FIXME: Check seqs.alphabet?
 

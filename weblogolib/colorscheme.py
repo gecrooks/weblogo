@@ -4,7 +4,7 @@
 #  This software is distributed under the MIT Open Source License.
 #  <http://www.opensource.org/licenses/mit-license.html>
 #
-#  Permission is hereby granted, free of charge, to any person obtaining a 
+#  Permission is hereby granted, free of charge, to any person obtaining a
 #  copy of this software and associated documentation files (the "Software"),
 #  to deal in the Software without restriction, including without limitation
 #  the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -14,22 +14,22 @@
 #  The above copyright notice and this permission notice shall be included
 #  in all copies or substantial portions of the Software.
 #
-#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 #  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 
-""" Popular color codings for nucleic and amino acids. 
+""" Popular color codings for nucleic and amino acids.
 
 Classes:
     ColorScheme -- A color scheme
-    SymbolColor  
+    SymbolColor
     IndexColor
     RefSeqColor
-    
+
 Generic
     monochrome
 
@@ -47,7 +47,7 @@ Status : Beta - Needs documentation.
 
 """
 # Good online references include bioruby and the JalView alignment editor.
-# Clamp, M., Cuff, J., Searle, S. M. and Barton, G. J. (2004), 
+# Clamp, M., Cuff, J., Searle, S. M. and Barton, G. J. (2004),
 # "The Jalview Java Alignment Editor," Bioinformatics, 12, 426-7
 # http://www.jalview.org
 
@@ -55,10 +55,11 @@ Status : Beta - Needs documentation.
 from corebio import seq
 from .color import Color
 
+
 class ColorRule(object):
     """
-    Define an interface for coloring individual symbols based on their position 
-    and identity.  Subclasses should reimplement the symbol_color() method to 
+    Define an interface for coloring individual symbols based on their position
+    and identity.  Subclasses should reimplement the symbol_color() method to
     return a Color object based on the given parameters.
     """
 
@@ -73,10 +74,10 @@ class ColorScheme(ColorRule):
     """
     Specify which color each symbol in a sequence logo should be.
 
-    A color scheme is primarily a container of color rules.  These rules would 
-    be along the lines of "hydrophobic residues are blue" or "indices 5-10 are 
-    red" or "the wildtype sequence is black".  When a color is requested for a 
-    particular symbol, each rule is consulted in turn until one provides a 
+    A color scheme is primarily a container of color rules.  These rules would
+    be along the lines of "hydrophobic residues are blue" or "indices 5-10 are
+    red" or "the wildtype sequence is black".  When a color is requested for a
+    particular symbol, each rule is consulted in turn until one provides a
     color.  If no rule provides a color, the given default color will be used.
     """
 
@@ -107,8 +108,8 @@ class ColorScheme(ColorRule):
 
 class SymbolColor(ColorRule):
     """
-    Represent the given set of symbols (e.g. "DEHKR" for charged residues) with 
-    a single color.  
+    Represent the given set of symbols (e.g. "DEHKR" for charged residues) with
+    a single color.
     """
 
     def __init__(self, symbols, color, description=None):
@@ -123,7 +124,7 @@ class SymbolColor(ColorRule):
 
 class IndexColor(ColorRule):
     """
-    Represent the given set of indices (e.g. range(10) for the first ten 
+    Represent the given set of indices (e.g. range(10) for the first ten
     residues) with a single color.
     """
 
@@ -139,7 +140,7 @@ class IndexColor(ColorRule):
 
 class RefSeqColor(ColorRule):
     """
-    Color the given reference sequence in its own color, so you can easily see 
+    Color the given reference sequence in its own color, so you can easily see
     which positions match that sequence and which don't.
     """
 
@@ -151,7 +152,6 @@ class RefSeqColor(ColorRule):
     def symbol_color(self, seq_index, symbol, rank):
         if symbol.upper() == self.ref_seq[seq_index]:
             return self.color
-
 
 
 monochrome = ColorScheme([])  # This list intentionally left blank

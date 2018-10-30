@@ -297,13 +297,13 @@ def crc64(string):
         # Initialisation of CRC64 table
         table = []
         for i in range(256):
-            l = i
+            k = i
             part_h = 0
             for j in range(8):
-                rflag = l & 1
-                l >>= 1
+                rflag = k & 1
+                k >>= 1
                 if part_h & 1:
-                    l |= (1 << 31)
+                    k |= (1 << 31)
                 part_h >>= 1
                 if rflag:
                     part_h ^= 0xd8000000

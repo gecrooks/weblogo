@@ -5,7 +5,7 @@
 #  This software is distributed under the MIT Open Source License.
 #  <http://www.opensource.org/licenses/mit-license.html>
 #
-#  Permission is hereby granted, free of charge, to any person obtaining a 
+#  Permission is hereby granted, free of charge, to any person obtaining a
 #  copy of this software and associated documentation files (the "Software"),
 #  to deal in the Software without restriction, including without limitation
 #  the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -15,16 +15,16 @@
 #  The above copyright notice and this permission notice shall be included
 #  in all copies or substantial portions of the Software.
 #
-#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 #  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 #
 
-"""Read and write raw, unformatted sequence data. The whole file is read 
+"""Read and write raw, unformatted sequence data. The whole file is read
 in as a sequence.  Whitespace is removed.
 
 
@@ -40,7 +40,7 @@ in as a sequence.  Whitespace is removed.
 -EPC-RDENVHFNRIFLPTIYFIIFLTGIVGNGLVILVMGYQKKLRSMTDKYRLHLSVAD
 """
 
-from ..seq import *
+from ..seq import Alphabet, Seq, SeqList
 from ..utils import remove_whitespace
 
 example = """
@@ -59,14 +59,14 @@ extensions = ()
 
 
 def read(fin, alphabet=None):
-    """Read a file of raw sequence data. 
+    """Read a file of raw sequence data.
 
     Args:
         fin -- A stream or file to read
         alphabet -- The expected alphabet of the data, if given
-    Returns: 
+    Returns:
         SeqList -- A list of sequences
-    Raises: 
+    Raises:
         ValueError -- If the file is unparsable
     """
     seqs = [s for s in iterseq(fin, alphabet)]
@@ -78,10 +78,10 @@ def iterseq(fin, alphabet=None):
 
     Args:
         fin -- A stream or file to read
-        alphabet -- The expected alphabet of the data, if given    
-    Yields: 
+        alphabet -- The expected alphabet of the data, if given
+    Yields:
         Seq -- One alphabetic sequence at a time.
-    Raises: 
+    Raises:
         ValueError -- If the file is unparsable
     """
 
@@ -97,7 +97,8 @@ def iterseq(fin, alphabet=None):
         line = remove_whitespace(line)
 
         if not alphabet.alphabetic(line):
-            raise ValueError("Character on line: %d not in alphabet: %s : %s" % (linenum, alphabet, line))
+            raise ValueError("Character on line: %d not in alphabet: %s : %s"
+                             % (linenum, alphabet, line))
         lines.append(line)
 
     yield Seq(''.join(lines), alphabet)

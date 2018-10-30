@@ -1,36 +1,36 @@
-#  Copyright (c) 2006, The Regents of the University of California, through 
+#  Copyright (c) 2006, The Regents of the University of California, through
 #  Lawrence Berkeley National Laboratory (subject to receipt of any required
 #  approvals from the U.S. Dept. of Energy).  All rights reserved.
 
 #  This software is distributed under the new BSD Open Source License.
 #  <http://www.opensource.org/licenses/bsd-license.html>
 #
-#  Redistribution and use in source and binary forms, with or without 
-#  modification, are permitted provided that the following conditions are met: 
+#  Redistribution and use in source and binary forms, with or without
+#  modification, are permitted provided that the following conditions are met:
 #
-#  (1) Redistributions of source code must retain the above copyright notice, 
-#  this list of conditions and the following disclaimer. 
+#  (1) Redistributions of source code must retain the above copyright notice,
+#  this list of conditions and the following disclaimer.
 #
-#  (2) Redistributions in binary form must reproduce the above copyright 
-#  notice, this list of conditions and the following disclaimer in the 
-#  documentation and or other materials provided with the distribution. 
+#  (2) Redistributions in binary form must reproduce the above copyright
+#  notice, this list of conditions and the following disclaimer in the
+#  documentation and or other materials provided with the distribution.
 #
-#  (3) Neither the name of the University of California, Lawrence Berkeley 
-#  National Laboratory, U.S. Dept. of Energy nor the names of its contributors 
-#  may be used to endorse or promote products derived from this software 
-#  without specific prior written permission. 
+#  (3) Neither the name of the University of California, Lawrence Berkeley
+#  National Laboratory, U.S. Dept. of Energy nor the names of its contributors
+#  may be used to endorse or promote products derived from this software
+#  without specific prior written permission.
 #
-#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-#  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-#  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-#  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
-#  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-#  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-#  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-#  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-#  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-#  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
-#  POSSIBILITY OF SUCH DAMAGE. 
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+#  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+#  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+#  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+#  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+#  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+#  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+#  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+#  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+#  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+#  POSSIBILITY OF SUCH DAMAGE.
 
 """
 Standard data used in computational biology.
@@ -41,37 +41,37 @@ To convert a property dictionary to a list :
 
 
 
-Resources: 
+Resources:
     Various standard data files are included in the corebio distribution. These
     may be loaded with the data_string, data_stream or data_filename methods.
     A complete set of names is stored in 'resource_names'
- 
+
 BLOSUM Scoring Matrices
     Source: ftp://ftp.ncbi.nih.gov/repository/blocks/unix/blosum
     These are all new blast style with 1/3 bit scaling
     - blosum35
-    - blosum45    
-    - blosum62    
-    - blosum40    
-    - blosum50    
-    - blosum80    
-    - blosum100   
+    - blosum45
+    - blosum62
+    - blosum40
+    - blosum50
+    - blosum80
+    - blosum100
 
 Other substitution scoring matrices:
-    - dist20_comp 
+    - dist20_comp
     - pam250
     - pam120
     - vtml160
-    
+
 Description of database cross references :
     - dbxref.txt (http://www.expasy.org/cgi-bin/lists?dbxref.txt)
 
-    
+
 Attributes:
     - amino_acid_letters
         -- Standard codes for the 20 canonical amino acids, in alphabetic
         order.
-        
+
     - amino_acid_alternative_letters
         -- Amino acid one letter codes, alphabetic by three letter codes.
 
@@ -82,37 +82,37 @@ Attributes:
     - dna_extended_letters
 
     - rna_letters
-    
+
     - rna_extended_letters
 
-    - dna_ambiguity 
+    - dna_ambiguity
 
     - rna_ambiguity
-    
+
     - amino_acid_ambiguity
-    
+
     - amino_acid_mass
-        -- Monomer isotopically averaged molecular mass 
-    
+        -- Monomer isotopically averaged molecular mass
+
     - dna_mass
-    
+
     - rna_mass
-        
-    - one_to_three      
+
+    - one_to_three
         -- Map from standard 1 letter amino acid codes to standard three
-        letter codes. 
+        letter codes.
         Ref: http://www.ebi.ac.uk/RESID/faq.html
-      
+
     - standard_three_to_one
         -- Map from standard 3 letter amino acid codes to standard 1
         letter codes.
-         
+
     - extended_three_to_one
-        -- Map between three letter amino acid codes (first letter capitalized) 
+        -- Map between three letter amino acid codes (first letter capitalized)
         and standard one letter codes. This map contains many nonstandard three
         letter codes, used, for example, to specify chemically modified amino
         acids in PDB files.
-        Ref: http://astral.berkeley.edu/ 
+        Ref: http://astral.berkeley.edu/
         Ref: http://www.ebi.ac.uk/RESID/faq.html
 
     - amino_acid_names
@@ -121,26 +121,26 @@ Attributes:
         -- Average amino acid composition of proteins.
         Ref: McCaldon P., Argos P. Proteins 4:99-122 (1988).
 
-    - kyte_doolittle_hydrophobicity 
+    - kyte_doolittle_hydrophobicity
         -- Kyte-Doolittle hydrophobicity scale.
         Ref: Kyte J., Doolittle R.F. J. Mol. Biol. 157:105-132 (1982)
-        
+
     - nucleotide_names
-    
+
     - amino_acid_accesible_surface_area
         -- Nominal maximum solvent accessoble area for unmodified amino acids,
         in square Angstroms.
         Ref: Sander & Rost, (1994), Proteins, 20:216-226
 
 
-Status: Beta (Data needs to be proof checked.)    
+Status: Beta (Data needs to be proof checked.)
 """
 
 # FIXME: Proof check data
 # FIXME: Add __all__
 
 # The ExPasy ProtScale tool is a great source of amino acid properties.
-# http://au.expasy.org/cgi-bin/protscale.pl       
+# http://au.expasy.org/cgi-bin/protscale.pl
 
 from .utils import resource_string, resource_stream, resource_filename
 from . import utils
@@ -202,11 +202,11 @@ def data_filename(name):
 
 
 # def data_object( name, parser = None) :
-#    if parser is None : 
+#    if parser is None :
 #        if name in _resource_parsers :
 #            parser = _resource_parsers[name]
 #        else :
-#            parser = str    
+#            parser = str
 #    return parser( data_stream(name) )
 
 
@@ -347,31 +347,33 @@ one_to_three = {
 standard_three_to_one = utils.invert_dict(one_to_three)
 
 extended_three_to_one = {
-    '2as': 'D', '3ah': 'H', '5hp': 'E', 'Acl': 'R', 'Agm': 'R', 'Aib': 'A', 'Ala': 'A', 'Alm': 'A', 'Alo': 'T',
-    'Aly': 'K', 'Arg': 'R', 'Arm': 'R', 'Asa': 'D', 'Asb': 'D', 'Ask': 'D', 'Asl': 'D', 'Asn': 'N', 'Asp': 'D',
-    'Asq': 'D', 'Asx': 'B', 'Aya': 'A', 'Bcs': 'C', 'Bhd': 'D', 'Bmt': 'T', 'Bnn': 'A', 'Buc': 'C', 'Bug': 'L',
-    'C5c': 'C', 'C6c': 'C', 'Ccs': 'C', 'Cea': 'C', 'Cgu': 'E', 'Chg': 'A', 'Cle': 'L', 'Cme': 'C', 'Csd': 'A',
-    'Cso': 'C', 'Csp': 'C', 'Css': 'C', 'Csw': 'C', 'Csx': 'C', 'Cxm': 'M', 'Cy1': 'C', 'Cy3': 'C', 'Cyg': 'C',
-    'Cym': 'C', 'Cyq': 'C', 'Cys': 'C', 'Dah': 'F', 'Dal': 'A', 'Dar': 'R', 'Das': 'D', 'Dcy': 'C', 'Dgl': 'E',
-    'Dgn': 'Q', 'Dha': 'A', 'Dhi': 'H', 'Dil': 'I', 'Div': 'V', 'Dle': 'L', 'Dly': 'K', 'Dnp': 'A', 'Dpn': 'F',
-    'Dpr': 'P', 'Dsn': 'S', 'Dsp': 'D', 'Dth': 'T', 'Dtr': 'W', 'Dty': 'Y', 'Dva': 'V', 'Efc': 'C', 'Fla': 'A',
-    'Fme': 'M', 'Ggl': 'E', 'Gl3': 'G', 'Gln': 'Q', 'Glu': 'E', 'Glx': 'Z', 'Gly': 'G', 'Glz': 'G', 'Gma': 'E',
-    'Gsc': 'G', 'Hac': 'A', 'Har': 'R', 'Hic': 'H', 'Hip': 'H', 'His': 'H', 'Hmr': 'R', 'Hpq': 'F', 'Htr': 'W',
-    'Hyp': 'P', 'Iil': 'I', 'Ile': 'I', 'Iyr': 'Y', 'Kcx': 'K', 'Leu': 'L', 'Llp': 'K', 'Lly': 'K', 'Ltr': 'W',
-    'Lym': 'K', 'Lys': 'K', 'Lyz': 'K', 'Maa': 'A', 'Men': 'N', 'Met': 'M', 'Mhs': 'H', 'Mis': 'S', 'Mle': 'L',
-    'Mpq': 'G', 'Msa': 'G', 'Mse': 'M', 'Mva': 'V', 'Nem': 'H', 'Nep': 'H', 'Nle': 'L', 'Nln': 'L', 'Nlp': 'L',
-    'Nmc': 'G', 'Oas': 'S', 'Ocs': 'C', 'Omt': 'M', 'Paq': 'Y', 'Pca': 'E', 'Pec': 'C', 'Phe': 'F', 'Phi': 'F',
-    'Phl': 'F', 'Pr3': 'C', 'Pro': 'P', 'Prr': 'A', 'Ptr': 'Y', 'Pyl': 'O', 'Sac': 'S', 'Sar': 'G', 'Sch': 'C',
-    'Scs': 'C', 'Scy': 'C', 'Sec': 'U', 'Sel': 'U', 'Sep': 'S', 'Ser': 'S', 'Set': 'S', 'Shc': 'C', 'Shr': 'K',
-    'Smc': 'C', 'Soc': 'C', 'Sty': 'Y', 'Sva': 'S', 'Ter': '*', 'Thr': 'T', 'Tih': 'A', 'Tpl': 'W', 'Tpo': 'T',
-    'Tpq': 'A', 'Trg': 'K', 'Tro': 'W', 'Trp': 'W', 'Tyb': 'Y', 'Tyq': 'Y', 'Tyr': 'Y', 'Tys': 'Y', 'Tyy': 'Y',
-    'Unk': 'X', 'Val': 'V', 'Xaa': 'X', 'Xer': 'X', 'Xle': 'J'}
+    '2as': 'D', '3ah': 'H', '5hp': 'E', 'Acl': 'R', 'Agm': 'R', 'Aib': 'A', 'Ala': 'A', 'Alm': 'A',
+    'Alo': 'T', 'Aly': 'K', 'Arg': 'R', 'Arm': 'R', 'Asa': 'D', 'Asb': 'D', 'Ask': 'D', 'Asl': 'D',
+    'Asn': 'N', 'Asp': 'D', 'Asq': 'D', 'Asx': 'B', 'Aya': 'A', 'Bcs': 'C', 'Bhd': 'D', 'Bmt': 'T',
+    'Bnn': 'A', 'Buc': 'C', 'Bug': 'L', 'C5c': 'C', 'C6c': 'C', 'Ccs': 'C', 'Cea': 'C', 'Cgu': 'E',
+    'Chg': 'A', 'Cle': 'L', 'Cme': 'C', 'Csd': 'A', 'Cso': 'C', 'Csp': 'C', 'Css': 'C', 'Csw': 'C',
+    'Csx': 'C', 'Cxm': 'M', 'Cy1': 'C', 'Cy3': 'C', 'Cyg': 'C', 'Cym': 'C', 'Cyq': 'C', 'Cys': 'C',
+    'Dah': 'F', 'Dal': 'A', 'Dar': 'R', 'Das': 'D', 'Dcy': 'C', 'Dgl': 'E', 'Dgn': 'Q', 'Dha': 'A',
+    'Dhi': 'H', 'Dil': 'I', 'Div': 'V', 'Dle': 'L', 'Dly': 'K', 'Dnp': 'A', 'Dpn': 'F', 'Dpr': 'P',
+    'Dsn': 'S', 'Dsp': 'D', 'Dth': 'T', 'Dtr': 'W', 'Dty': 'Y', 'Dva': 'V', 'Efc': 'C', 'Fla': 'A',
+    'Fme': 'M', 'Ggl': 'E', 'Gl3': 'G', 'Gln': 'Q', 'Glu': 'E', 'Glx': 'Z', 'Gly': 'G', 'Glz': 'G',
+    'Gma': 'E', 'Gsc': 'G', 'Hac': 'A', 'Har': 'R', 'Hic': 'H', 'Hip': 'H', 'His': 'H', 'Hmr': 'R',
+    'Hpq': 'F', 'Htr': 'W', 'Hyp': 'P', 'Iil': 'I', 'Ile': 'I', 'Iyr': 'Y', 'Kcx': 'K', 'Leu': 'L',
+    'Llp': 'K', 'Lly': 'K', 'Ltr': 'W', 'Lym': 'K', 'Lys': 'K', 'Lyz': 'K', 'Maa': 'A', 'Men': 'N',
+    'Met': 'M', 'Mhs': 'H', 'Mis': 'S', 'Mle': 'L', 'Mpq': 'G', 'Msa': 'G', 'Mse': 'M', 'Mva': 'V',
+    'Nem': 'H', 'Nep': 'H', 'Nle': 'L', 'Nln': 'L', 'Nlp': 'L', 'Nmc': 'G', 'Oas': 'S', 'Ocs': 'C',
+    'Omt': 'M', 'Paq': 'Y', 'Pca': 'E', 'Pec': 'C', 'Phe': 'F', 'Phi': 'F', 'Phl': 'F', 'Pr3': 'C',
+    'Pro': 'P', 'Prr': 'A', 'Ptr': 'Y', 'Pyl': 'O', 'Sac': 'S', 'Sar': 'G', 'Sch': 'C', 'Scs': 'C',
+    'Scy': 'C', 'Sec': 'U', 'Sel': 'U', 'Sep': 'S', 'Ser': 'S', 'Set': 'S', 'Shc': 'C', 'Shr': 'K',
+    'Smc': 'C', 'Soc': 'C', 'Sty': 'Y', 'Sva': 'S', 'Ter': '*', 'Thr': 'T', 'Tih': 'A', 'Tpl': 'W',
+    'Tpo': 'T', 'Tpq': 'A', 'Trg': 'K', 'Tro': 'W', 'Trp': 'W', 'Tyb': 'Y', 'Tyq': 'Y', 'Tyr': 'Y',
+    'Tys': 'Y', 'Tyy': 'Y', 'Unk': 'X', 'Val': 'V', 'Xaa': 'X', 'Xer': 'X', 'Xle': 'J'}
 # Initial table is from the ASTRAL RAF release notes.
 # added UNK
 # Extra IUPAC: Xle, Xaa, Sec, Pyl
 # The following have been seen in biopython code.
 # Ter : '*'     Termination
-# Sel : 'U'     A typo for Sec, selenocysteine? 
+# Sel : 'U'     A typo for Sec, selenocysteine?
 # Xer : 'X'     Another alternative for unknown?
 
 
@@ -408,13 +410,13 @@ amino_acid_names = {
 
 amino_acid_composition = dict(
         A=.082, R=.057, N=.044, D=.053, C=.017,
-        Q=.040, E=.062, G=.072, H=.022, I=.052,
+        Q=.040, E=.062, G=.072, H=.022, I=.052,     # noqa: E741
         L=.090, K=.057, M=.024, F=.039, P=.051,
         S=.069, T=.058, W=.013, Y=.032, V=.066)
 
 kyte_doolittle_hydrophobicity = dict(
         A=1.8, R=-4.5, N=-3.5, D=-3.5, C=2.5,
-        Q=-3.5, E=-3.5, G=-0.4, H=-3.2, I=4.5,
+        Q=-3.5, E=-3.5, G=-0.4, H=-3.2, I=4.5,      # noqa: E741
         L=3.8, K=-3.9, M=1.9, F=2.8, P=-1.6,
         S=-0.8, T=-0.7, W=-0.9, Y=-1.3, V=4.2)
 
@@ -438,7 +440,7 @@ nucleotide_names = {
     '-': 'gap',
 }
 
-# TODO: CHECK VALUES, UNITS    
+# TODO: CHECK VALUES, UNITS
 amino_acid_accesible_surface_area = {
     'A': 106.0,
     'C': 135.0,

@@ -5,7 +5,7 @@
 #  This software is distributed under the MIT Open Source License.
 #  <http://www.opensource.org/licenses/mit-license.html>
 #
-#  Permission is hereby granted, free of charge, to any person obtaining a 
+#  Permission is hereby granted, free of charge, to any person obtaining a
 #  copy of this software and associated documentation files (the "Software"),
 #  to deal in the Software without restriction, including without limitation
 #  the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -15,20 +15,20 @@
 #  The above copyright notice and this permission notice shall be included
 #  in all copies or substantial portions of the Software.
 #
-#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 #  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 #
 
 """Read and write sequence information in IntelliGenetics format.
-    
+
 A sequence file in IG format can contain several sequences, each consisting of a
-number of comment lines that must begin with a semicolon (";"), a line with the 
-sequence name and the sequence itself terminated with the termination character 
+number of comment lines that must begin with a semicolon (";"), a line with the
+sequence name and the sequence itself terminated with the termination character
 '1' for linear or '2' for circular sequences. The termination character is
 defacto optional.
 
@@ -50,9 +50,8 @@ ttacctgctacgccagccttctgtgcgcgcaactgtctggtcccgcccc2
 
 """
 
-from ..seq import *
-from ..utils import *
-from . import *
+from ..seq import Seq, Alphabet, SeqList
+from ..utils import remove_whitespace
 
 
 names = ('intelligenetics', 'ig', 'stanford',)
@@ -76,14 +75,14 @@ ttacctgctacgccagccttctgtgcgcgcaactgtctggtcccgcccc2
 
 
 def read(fin, alphabet=None):
-    """Read and parse an IG file. 
+    """Read and parse an IG file.
 
     Args:
         fin -- A stream or file to read
         alphabet -- The expected alphabet of the data, if given
-    Returns: 
+    Returns:
         SeqList -- A list of sequences
-    Raises: 
+    Raises:
         ValueError -- If the file is unparsable
     """
     seqs = [s for s in iterseq(fin, alphabet)]
@@ -92,13 +91,13 @@ def read(fin, alphabet=None):
 
 def iterseq(fin, alphabet=None):
     """ Parse an IG file and generate sequences.
-    
+
     Args:
         fin -- A stream or file to read
-        alphabet -- The expected alphabet of the data, if given    
-    Yeilds: 
+        alphabet -- The expected alphabet of the data, if given
+    Yeilds:
         Seq -- One alphabetic sequence at a time.
-    Raises: 
+    Raises:
         ValueError -- If the file is unparsable
     """
     alphabet = Alphabet(alphabet)
@@ -149,7 +148,7 @@ def iterseq(fin, alphabet=None):
 
 
 def write(fout, seqs):
-    """Write an IG file. 
+    """Write an IG file.
 
     Args:
         fout -- A writable stream.
@@ -168,7 +167,7 @@ def writeseq(fout, seq):
         afile -- A writable stream.
         seq  -- A Seq instance
     Raises:
-        ValueError -- If a sequence is missing a name        
+        ValueError -- If a sequence is missing a name
     """
     desc = seq.description or ''
     # We prepend ';' to each line

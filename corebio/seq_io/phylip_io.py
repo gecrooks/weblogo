@@ -5,7 +5,7 @@
 #  This software is distributed under the MIT Open Source License.
 #  <http://www.opensource.org/licenses/mit-license.html>
 #
-#  Permission is hereby granted, free of charge, to any person obtaining a 
+#  Permission is hereby granted, free of charge, to any person obtaining a
 #  copy of this software and associated documentation files (the "Software"),
 #  to deal in the Software without restriction, including without limitation
 #  the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -15,12 +15,12 @@
 #  The above copyright notice and this permission notice shall be included
 #  in all copies or substantial portions of the Software.
 #
-#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 #  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 #
 
@@ -41,29 +41,29 @@ the number of lines the usertree will take, and then the usertrees follow.
 
 Examples:
   6   50   W
-W         0101001111 0101110101 01011	
-dmras1    GTCGTCGTTG GACCTGGAGG CGTGG	
+W         0101001111 0101110101 01011
+dmras1    GTCGTCGTTG GACCTGGAGG CGTGG
 hschras   GTGGTGGTGG GCGCCGGCCG TGTGG
 ddrasa    GTTATTGTTG GTGGTGGTGG TGTCG
 spras     GTAGTTGTAG GAGATGGTGG TGTTG
 scras1    GTAGTTGTCG GTGGAGGTGG CGTTG
 scras2    GTCGTCGTTG GTGGTGGTGG TGTTG
 
-0101001111 0101110101 01011	
-GTCGTCGTTG GACCTGGAGG CGTGG	
+0101001111 0101110101 01011
+GTCGTCGTTG GACCTGGAGG CGTGG
 GTGGTGGTGG GCGCCGGCCG TGTGG
 GTTATTGTTG GTGGTGGTGG TGTCG
 GTAGTTGTAG GAGATGGTGG TGTTG
 GTAGTTGTCG GTGGAGGTGG CGTTG
 GTCGTCGTTG GTGGTGGTGG TGTTG
 
-1					
+1
 ((dmras1,ddrasa),((hschras,spras),(scras1,scras2)));
 
 
 """
 
-from ..seq import *
+from ..seq import Seq, SeqList
 
 names = ('phylip',)
 extensions = ('phy',)
@@ -94,7 +94,7 @@ def read(fin, alphabet=None):
             pass
 
         elif (s_line[0].isdigit() and len(s_line) == 1 and
-              len(sequence) == num_seq and len(sequence[0]) == num_total_seq):  # identifies usertree
+              len(sequence) == num_seq and len(sequence[0]) == num_total_seq):
             usertree_tracker = int(s_line[0])
             pass
 
@@ -116,7 +116,7 @@ def read(fin, alphabet=None):
             else:
                 raise ValueError('User Tree in Wrong Place')
 
-        #####problems parse error unexpected
+        # problems parse error unexpected
         elif s_line[0].isdigit():
             if len(s_line) >= 2 and len(sequence) == 0:  # identifies first line of file
                 num_seq = int(s_line[0])  # get number of sequences
