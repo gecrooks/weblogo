@@ -323,14 +323,14 @@ def ctrigamma(z):
         t3 += dd2 * dz
 
     t1 += c[0]
-    c = - (t2 * t2) / (t1 * t1) + 2 * t3 / t1
+    d = - (t2 * t2) / (t1 * t1) + 2 * t3 / t1
 
     result = 1. / (z * z)
     gg = z + g + 0.5
     result += - (z + 0.5) / (gg * gg)
     result += 2. / gg
 
-    result += c
+    result += d
 
     return result
 
@@ -393,7 +393,7 @@ def normalized_incomplete_gamma(a, x):
             if abs(term / total) < epsilon:
                 return 1. - total * exp(-x + a * log(x) - lngamma(a))
         raise RuntimeError(
-                "Failed to converge after %d iterations." % (maxiter))
+                "Failed to converge after %d iterations." % (maxiter))  # pragma: no cover
     else:
         # Use the continued fraction representation
         total = 1.0
@@ -406,17 +406,17 @@ def normalized_incomplete_gamma(a, x):
             b = b + 2.
             d = an * d + b
             if abs(d) < small:
-                d = small
+                d = small                                               # pragma: no cover
             c = b + an / c
             if abs(c) < small:
-                c = small
+                c = small                                               # pragma: no cover
             d = 1. / d
             term = d * c
             h = h * term
             if abs(term - 1.) < epsilon:
                 return h * exp(-x + a * log(x) - lngamma(a))
         raise RuntimeError(
-                "Failed to converge after %d iterations." % (maxiter))
+                "Failed to converge after %d iterations." % (maxiter))  # pragma: no cover
 
 
 def log2(x):

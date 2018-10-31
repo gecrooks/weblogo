@@ -132,7 +132,7 @@ def _line_is(fin):
                 state = body
                 continue
             else:
-                continue
+                continue                                                # pragma: no cover
 
         if state == body:
             if line.isspace():
@@ -148,7 +148,7 @@ def _line_is(fin):
                 continue
             m = seq_line.match(line)
             if m is None:
-                raise ValueError("Parse error on line: %d" % L)
+                raise ValueError("Parse error on line: %d" % L)         # pragma: no cover
             if m.group(1).isdigit() and m.group(2).strip().isdigit():
                 continue
             yield Token("seq_id", m.group(1).strip())

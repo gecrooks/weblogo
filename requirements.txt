@@ -1,4 +1,5 @@
 numpy
+setuptools
 
 # Testing
 pytest

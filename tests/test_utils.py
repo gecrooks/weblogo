@@ -38,7 +38,9 @@ import re
 import unittest
 from io import StringIO
 
-from weblogo.utils import *
+from weblogo.utils import (isfloat, isint, isblank, remove_whitespace, Reiterate, crc32, crc64,
+                           Token, group_count, ArgumentError, FileIndex, invert_dict,
+                           resource_filename, resource_string, resource_stream)
 
 
 class test_utils(unittest.TestCase):
@@ -82,6 +84,8 @@ class test_utils(unittest.TestCase):
         for s in not_blank:
             self.assertFalse(isblank(s))
 
+        self.assertFalse(isblank(123))
+
     def test_group_count(self):
         test = 'aaabbbbcccddea'
         out = group_count(test)
@@ -113,15 +117,10 @@ class test_utils(unittest.TestCase):
 
     def test_token(self):
         t = Token('kind', 'some data', 4, 3)
-        s = str(t)
+        str(t)
         r = repr(t)
         t2 = eval(r)
         self.assertEqual(t2.typeof, 'kind')
-
-    def test_struct(self):
-        s = Struct(a=3, b=4)
-        s2 = eval(repr(s))
-        self.assertEqual(s2.a, 3)
 
     def test_invert_dict(self):
         d = dict(a=3, b=4)

@@ -5,7 +5,7 @@
 #  This software is distributed under the MIT Open Source License.
 #  <http://www.opensource.org/licenses/mit-license.html>
 #
-#  Permission is hereby granted, free of charge, to any person obtaining a 
+#  Permission is hereby granted, free of charge, to any person obtaining a
 #  copy of this software and associated documentation files (the "Software"),
 #  to deal in the Software without restriction, including without limitation
 #  the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -15,22 +15,24 @@
 #  The above copyright notice and this permission notice shall be included
 #  in all copies or substantial portions of the Software.
 #
-#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 #  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 #
 
-from io import StringIO
-
 import unittest
 
+import pytest
+
 from weblogo import seq_io
-from weblogo.seq import *
-from . import *
+from weblogo.seq import (Alphabet, generic_alphabet, Seq, unambiguous_protein_alphabet,
+                         unambiguous_dna_alphabet, protein_alphabet, dna_alphabet,
+                         nucleic_alphabet, dna, SeqList, rna, protein, rna_alphabet)
+from . import data_stream
 
 
 class test_alphabet(unittest.TestCase):
@@ -38,10 +40,10 @@ class test_alphabet(unittest.TestCase):
         # Alphabet contains repeated character
         self.assertRaises(ValueError, Alphabet, "alphabet")
 
-        # Alphbaet contains null character
+        # Alphabet contains null character
         self.assertRaises(ValueError, Alphabet, "alph\x00")
 
-        a1 = Alphabet("alphbet")
+        Alphabet("alphbet")
 
     def test_alphabet_alphabetic(self):
         a = Alphabet("alphbet")
@@ -82,16 +84,18 @@ class test_alphabet(unittest.TestCase):
         self.assertEqual(a1, generic_alphabet)
 
     def test_create_from_alphabet(self):
-        """ If we pass an alphabet to the constuctor, it's passed 
+        """ If we pass an alphabet to the constuctor, it's passed
         right back """
         a1 = Alphabet("kjdahf")
         a2 = Alphabet(a1)
         self.assertTrue(a1 == a2)
 
+        self.assertFalse(a1 == "not an alphabet")
+
     def test_repr(self):
         a = Alphabet("kjdahf")
-        r = repr(a)
-        s = str(a)
+        repr(a)
+        str(a)
 
     def test_str(self):
         self.assertEqual(str(Alphabet("kjdahf")), "kjdahf")
@@ -104,6 +108,8 @@ class test_alphabet(unittest.TestCase):
         s = 'aBbc'
         n = a.normalize(s)
         self.assertEqual(str(n), 'ABBC')
+
+        self.assertRaises(ValueError, a.normalize, 'aslkfdnnr33')
 
     def test_alt(self):
         alt = zip('12345', 'ABCED')
@@ -141,7 +147,8 @@ class test_seq(unittest.TestCase):
         self.assertTrue(Seq("alphabet", "alphbet"))
         self.assertRaises(ValueError, Seq, "not alphabetic", "alphabet")
 
-        a = "Any printable Ascii character `1234567890-=~!@#$%^&*()_+{}|[]\:;'<>?,./QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm "
+        a = "Any printable Ascii character `1234567890-=~!@#$%^&*()_+{}|[]\\:;'<>?,./QWERTYUIOPASD"\
+            "FGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm "
 
         for l in a:
             self.assertTrue(l in generic_alphabet)
@@ -181,7 +188,10 @@ class test_seq(unittest.TestCase):
                              'AC', 'CG', 'GA', 'AC', 'CG', 'GC', 'CG', 'GC'])
 
         self.assertEqual(list(s.words(len(s), unambiguous_dna_alphabet)), [])
-        self.assertEqual(list(s.words(len(s) - 1, unambiguous_dna_alphabet)), ["AGTCAGCTACGACGCGC", ])
+        self.assertEqual(list(s.words(len(s) - 1, unambiguous_dna_alphabet)),
+                         ["AGTCAGCTACGACGCGC", ])
+
+        w = list(s.words(200, unambiguous_dna_alphabet))
 
     def test_words2(self):
         s = Seq("AGTCAGCTACGACGCGC", unambiguous_dna_alphabet)
@@ -210,11 +220,18 @@ class test_seq(unittest.TestCase):
         self.assertEqual(s3.alphabet, dna_alphabet)
         self.assertEqual(s3, Seq("AAAATTTT", dna_alphabet))
 
+        assert s3 == Seq("AAAATTTT", dna_alphabet)
+        assert s3 != Seq("AAAATTTT", protein_alphabet)
+        assert s3 != "not a seq"
+
         s4 = "AA"
         s5 = s4 + s1
         s6 = s1 + s4
         self.assertEqual(s5.alphabet, s6.alphabet)
         self.assertEqual(s5, s6)
+
+        assert s5 == s6
+        assert not(s5 != s6)
 
     def test_join(self):
         s1 = Seq("AAAA", dna_alphabet)
@@ -227,7 +244,7 @@ class test_seq(unittest.TestCase):
 
     def test_repr(self):
         s1 = Seq("AAAA", dna_alphabet)
-        r = repr(s1)
+        repr(s1)
 
     def test_str(self):
         s1 = Seq("AGCTA", dna_alphabet)
@@ -247,6 +264,7 @@ class test_seq(unittest.TestCase):
         s = dna('GCCATTGTAATGGGCCGCTGAAAGGGTGCCCGA')
         p = s.translate()
         self.assertEqual(str(p), 'AIVMGR*KGAR')
+        s2 = p.back_translate()
 
     def test_reverse_complement(self):
         s = dna('GGGGaaaaaaaatttatatat')
@@ -255,6 +273,8 @@ class test_seq(unittest.TestCase):
 
         self.assertEqual(dna('ACGTRYSWKMBDHVN').reverse_complement(),
                          dna('NBDHVKMWSRYACGT'))
+
+        self.assertRaises(ValueError, protein('G').reverse_complement)
 
     def test_ungap(self):
         s = Seq("T-T", dna_alphabet).ungap()
@@ -266,19 +286,26 @@ class test_seq(unittest.TestCase):
         s = dna('AAaaaaAAA').mask()
         self.assertEqual(str(s), 'AAXXXXAAA')
 
-    def test_shortcuts(self):
-        sprotein = protein('gGGGGG-PPPPP')
-        d1 = dna('ACGTRYSWKMBDHVN')
-        d2 = dna('t')
-        d3 = dna('actgta')
-        d4 = dna('acgtrysw-kmb-dhvn')
 
-        srna = rna('ACUUUUU')
+
+    def test_shortcuts(self):
+        protein('gGGGGG-PPPPP')
+        dna('ACGTRYSWKMBDHVN')
+        dna('t')
+        dna('actgta')
+        dna('acgtrysw-kmb-dhvn')
+
+        rna('ACUUUUU')
 
     def test_casechange(self):
         s1 = dna('ACGTRYSWKMBDHVN')
         s2 = s1.lower().upper()
         self.assertEqual(s1, s2)
+
+    def test_slice(self):
+        s1 = dna('ACGTRYSWKMBDHVN')
+        s2 = s1[4:6]
+        assert s2 == dna('RY')
 
 
 class test_seqlist(unittest.TestCase):
@@ -317,14 +344,27 @@ class test_seqlist(unittest.TestCase):
         # self.assertRaises(ValueError, seqs2.ords )
 
         # Use a different alphabet
-        a2 = seqs.ords(nucleic_alphabet)
+        seqs.ords(nucleic_alphabet)
 
         # No alphabet
         seqs3 = SeqList([s0, s1, s2])
-        a3 = seqs3.ords(alphabet=Alphabet("ABC"))
+        seqs3.ords(alphabet=Alphabet("ABC"))
 
         # Fail if no alphabet
         self.assertRaises(ValueError, seqs3.ords)
+
+    def test_isaligned(self):
+        a = Alphabet("ABCD")
+
+        s0 = Seq("ABCDD", a)
+        s1 = Seq("AAAAD", a)
+        s2 = Seq("AAABD", a)
+        s3 = Seq("AAACD", a)
+        seqs = SeqList([s0, s1, s2, s3], a)
+        assert seqs.isaligned()
+
+        seqs = SeqList([s0, s1, s2, s3], Alphabet("ABCDE"))
+        assert not seqs.isaligned()
 
     def test_profile(self):
         a = Alphabet("ABCD")
@@ -346,6 +386,12 @@ class test_seqlist(unittest.TestCase):
 
         self.assertEqual(tally[4, 'D'], 4)
 
+        seqs = SeqList([Seq("AAACD", a), Seq("AAACDA", a)], a)
+        self.assertRaises(ValueError, seqs.profile)
+
+        seqs = SeqList([Seq("AAACD", a), Seq("AAACD", a)])
+        self.assertRaises(ValueError, seqs.profile)
+
     def test_tally(self):
         # 1234567890123456789012345678
         s0 = Seq("ACTTT", nucleic_alphabet)
@@ -355,6 +401,9 @@ class test_seqlist(unittest.TestCase):
 
         counts = seqs.tally()
         assert counts == [2, 5, 4, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+        seqs = SeqList([Seq("AAACD", nucleic_alphabet), Seq("AAACD", nucleic_alphabet)])
+        self.assertRaises(ValueError, seqs.tally)
 
     def test_create_empty(self):
         s0 = Seq("ACGTURYBDHVNACGTURYSWKMBDHVN", nucleic_alphabet)
@@ -374,14 +423,19 @@ class test_seqlist(unittest.TestCase):
         s2 = Seq("ACGTURSWKMBDHVNACGTURKMBDHVN", nucleic_alphabet)
         seqs = SeqList([s0, s1, s2])
 
-        r = repr(seqs)
+        repr(seqs)
 
     def test_str(self):
         s0 = Seq("ACGTURYBDHVNACGTURYSWKMBDHVN", nucleic_alphabet)
         s1 = Seq("ACGTURYSWKMBDHVNACGTURYSWKMBDHVN", nucleic_alphabet)
         s2 = Seq("ACGTURSWKMBDHVNACGTURKMBDHVN", nucleic_alphabet)
         seqs = SeqList([s0, s1, s2])
-        s = str(seqs)
+        str(seqs)
+
+
+def test_bad_mask():
+    with pytest.raises(ValueError):
+        dna('AAaaaaAAA').mask(mask='ABC')
 
 
 if __name__ == '__main__':

@@ -312,7 +312,7 @@ class GeneticCode(object):
     def back_table(self):
         """A map between amino acids and codons"""
         if self._back_table is None:
-            self._create_table()
+            self._create_table()        # pragma: no cover
         return self._back_table
 
     def _create_table(self):
@@ -450,7 +450,7 @@ class GeneticCode(object):
         if self.ident:
             string += 'Genetic Code [%d]: ' % self.ident
         else:
-            string += 'Genetic Code: '
+            string += 'Genetic Code: '      # pragma: no cover
         string += self.description or ''
 
         string += "\n    "

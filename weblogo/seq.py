@@ -263,7 +263,7 @@ class Alphabet(object):
         """Convert an alphabetic string into a byte array of ordinals."""
         string = str(string)
         s = string.translate(self._ord_table)
-        a = array('B', _as_bytes(s))
+        a = array('B', codecs.latin_1_encode(s)[0])
         return a
 
     def normalize(self, string):
@@ -278,13 +278,13 @@ class Alphabet(object):
         """ Letters of the alphabet as a string."""
         return str(self)
 
-    def _all_letters(self):
-        """ All allowed letters, including alternatives."""
-        let = []
-        let.append(self._letters)
-        for key, value in self._alternatives:
-            let.append(value)
-        return ''.join(let)
+    # def _all_letters(self):
+    #     """ All allowed letters, including alternatives."""
+    #     let = []
+    #     let.append(self._letters)
+    #     for key, value in self._alternatives:
+    #         let.append(value)
+    #     return ''.join(let)
 
     def __repr__(self):
         return "Alphabet( '" + self._letters + "', zip" + repr(self._alternatives) + " )"
@@ -449,10 +449,6 @@ class Seq(str):
                 counts[n] += 1
 
         return counts
-
-    def __getslice__(self, i, j):
-        cls = self.__class__
-        return cls(str.__getslice__(self, i, j), self.alphabet)
 
     def __getitem__(self, key):
         cls = self.__class__
@@ -709,12 +705,3 @@ def protein(string):
     """Create an alphabetic sequence representing a stretch of polypeptide.
     """
     return Seq(string, alphabet=protein_alphabet)
-
-
-def _as_bytes(s):
-    """Turn byte string or unicode string into a bytes string."""
-    if isinstance(s, bytes):
-        return s
-    # Assume it is a unicode string
-    # Note ISO-8859-1 aka Latin-1 preserves first 256 chars
-    return codecs.latin_1_encode(s)[0]

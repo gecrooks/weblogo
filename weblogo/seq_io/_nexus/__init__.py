@@ -22,6 +22,7 @@ import os.path
 import random
 import sys
 from functools import reduce
+from collections import namedtuple
 
 # --- Changes from Bio.Nexus ---
 # Renamed Nexus.py to __init__.py. Helps with api documentation.
@@ -33,25 +34,27 @@ from functools import reduce
 
 from ... import data
 from ...seq import Seq, Alphabet, protein_alphabet
-from ...utils import Struct
+import contextlib
 
-IUPACData = Struct(
+_IUPACData = dict(
         ambiguous_dna_letters=data.dna_extended_letters,
         ambiguous_rna_letters=data.rna_extended_letters,
         ambiguous_dna_values=data.dna_ambiguity,
         ambiguous_rna_values=data.rna_ambiguity,
         protein_letters=data.amino_acid_letters,
         unambiguous_dna_letters=data.dna_letters,
-        unambiguous_rna_letters=data.rna_letters,
-)
+        unambiguous_rna_letters=data.rna_letters)
 
-IUPAC = Struct(
+IUPACData = namedtuple('IUPACDataTuple', _IUPACData.keys())(**_IUPACData)
+
+
+_IUPAC = dict(
         ambiguous_dna=Alphabet(IUPACData.ambiguous_dna_letters + '-?'),
         ambiguous_rna=Alphabet(IUPACData.ambiguous_rna_letters + '-?'),
         protein=protein_alphabet  # Alphabet(IUPACData.protein_letters+'-?')
-)
+        )
 
-import contextlib
+IUPAC = namedtuple('IUPATuple', _IUPAC.keys())(**_IUPAC)
 
 
 @contextlib.contextmanager

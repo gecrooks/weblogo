@@ -188,7 +188,7 @@ def _scan(fin):
             continue
 
         # END state blocks. If I ever get here something has gone terrible wrong
-        raise RuntimeError()
+        raise RuntimeError()  # pragma: nocover
 
     if state == block:
         yield Token("end_block")

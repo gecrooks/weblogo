@@ -104,15 +104,14 @@ def read(fin, alphabet=None):
                     num_options -= 1
                     pass
                 else:
-                    raise ValueError('Not an option, but it should be one')
+                    raise ValueError('Not an option, but it should be one')  # pragma: no cover
             else:
                 num_options -= 1
                 pass
 
         elif usertree_tracker > 0:  # basically skip usertree
             if len(sequence[num_seq - 1]) == num_total_seq:
-                usertree_tracker -= 1
-                pass
+                usertree_tracker -= 1     # pragma: no cover
             else:
                 raise ValueError('User Tree in Wrong Place')
 
@@ -148,13 +147,13 @@ def read(fin, alphabet=None):
         line = fin.readline()
 
     if len(sequence) != len(idents) or len(sequence) != num_seq:
-        raise ValueError("Number of different sequences wrong")
+        raise ValueError("Number of different sequences wrong")   # pragma: no cover
 
     seqs = []
     for i in range(0, len(idents)):
         if len(sequence[i]) == num_total_seq:
             seqs.append(Seq(sequence[i], alphabet, idents[i]))
         else:
-            raise ValueError("extra sequence in list")
+            raise ValueError("extra sequence in list")    # pragma: no cover
 
     return SeqList(seqs)

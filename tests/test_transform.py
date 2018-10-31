@@ -5,7 +5,7 @@
 #  This software is distributed under the MIT Open Source License.
 #  <http://www.opensource.org/licenses/mit-license.html>
 #
-#  Permission is hereby granted, free of charge, to any person obtaining a 
+#  Permission is hereby granted, free of charge, to any person obtaining a
 #  copy of this software and associated documentation files (the "Software"),
 #  to deal in the Software without restriction, including without limitation
 #  the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -15,25 +15,28 @@
 #  The above copyright notice and this permission notice shall be included
 #  in all copies or substantial portions of the Software.
 #
-#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 #  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 
 
 import unittest
 
-from weblogo.seq import *
-from weblogo.transform import *
+from weblogo.seq import (protein_alphabet, Seq, nucleic_alphabet, reduced_protein_alphabet,
+                         dna_alphabet)
+from weblogo.transform import mask_low_complexity, GeneticCode, Transform, reduced_protein_alphabets
 
 
 class test_mask_low_complexity(unittest.TestCase):
     def test_segging(self):
-        before = "mgnrafkshhghflsaegeavkthhghhdhhthfhvenhggkvalkthcgkylsigdhkqvylshhlhgdhslfhlehhggkvsikghhhhyisadhhghvstkehhdhdttfeeiii".upper()
-        after = "MGNRAFKSHHGHFLSAEGEAVxxxxxxxxxxxxxxxENHGGKVALKTHCGKYLSIGDHKQVYLSHHLHGDHSLFHLEHHGGKVSIKGHHHHYISADHHGHVSTKEHHDHDTTFEEIII".upper()
+        before = "mgnrafkshhghflsaegeavkthhghhdhhthfhvenhggkvalkthcgkylsigdhkqvylshhlhgdhslfhlehhg"\
+                 "gkvsikghhhhyisadhhghvstkehhdhdttfeeiii".upper()
+        after = "MGNRAFKSHHGHFLSAEGEAVxxxxxxxxxxxxxxxENHGGKVALKTHCGKYLSIGDHKQVYLSHHLHGDHSLFHLEHHGG"\
+                "KVSIKGHHHHYISADHHGHVSTKEHHDHDTTFEEIII".upper()
 
         bseq = Seq(before, protein_alphabet)
         aseq = Seq(after, protein_alphabet)
@@ -50,9 +53,12 @@ class test_mask_low_complexity(unittest.TestCase):
         sseq = mask_low_complexity(bseq, 12, 4.3, 4.3)
         self.assertEqual(sseq, xseq)
 
+        mask_low_complexity(bseq, 100000, 4.3, 4.3)
+
     def test_seg_invalid(self):
         seq = Seq("KTHCGKYLSIGDHKQVYLSHH", protein_alphabet)
         self.assertRaises(ValueError, mask_low_complexity, seq, 12, -1, 0)
+        self.assertRaises(ValueError, mask_low_complexity, seq, -1, 0, 0)
         self.assertRaises(ValueError, mask_low_complexity, seq, 12, 1, 10)
         self.assertRaises(ValueError, mask_low_complexity, seq, 6, 12, 13)
         self.assertRaises(ValueError, mask_low_complexity, seq, 6, 2.0, 1.9)
@@ -67,8 +73,11 @@ class test_transform(unittest.TestCase):
         self.assertEqual(s1.alphabet, dna_alphabet)
         self.assertEqual(s1, Seq("AAAAAN", dna_alphabet))
 
+        s2 = Seq(protein_alphabet, protein_alphabet)
+        self.assertRaises(ValueError, trans, s2)
 
     # def test_translations(self):
+
     #     s = Seq("ACGTURYSWKMBDHVNACGTURYSWKMBDHVN", nucleic_alphabet)
     #     s2 = dna_ext_to_std(s)
     #     s3 = Seq("ACGTTNNNNNNNNNNNACGTTNNNNNNNNNNN", dna_alphabet)
@@ -79,7 +88,7 @@ class test_transform(unittest.TestCase):
                   reduced_protein_alphabet)
 
         for t in reduced_protein_alphabets.values():
-            s = t(seq)
+            t(seq)
 
 
 class test_geneticcode(unittest.TestCase):
@@ -100,7 +109,7 @@ class test_geneticcode(unittest.TestCase):
         self.assertEqual(str(s), 'AIVMGR*KGAR')
 
         for t in GeneticCode.std_list():
-            p = t.translate(dna)
+            t.translate(dna)
 
     def test_translate(self):
         # Ref: http://lists.open-bio.org/pipermail/biopython/2006-March/002960.html
@@ -117,12 +126,16 @@ class test_geneticcode(unittest.TestCase):
             trans = c.translate(dna)
             self.assertEqual(str(trans), protein)
 
+        self.assertRaises(ValueError, GeneticCode.by_name, 'not_a_name')
+
     def test_back_translate(self):
         prot = 'ACDEFGHIKLMNPQRSTVWY*'
         t = GeneticCode.std()
         t.table['CGA']
         s = t.back_translate(prot)
         self.assertEqual(prot, str(t.translate(s)))
+
+        GeneticCode.std().back_table
 
 
 if __name__ == '__main__':

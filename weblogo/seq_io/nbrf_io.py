@@ -156,6 +156,6 @@ def iterseq(fin, alphabet=None):
                 continue
         else:
             # If we ever get here something has gone terrible wrong
-            assert False
+            assert False    # pragma: no cover
 
     # end for

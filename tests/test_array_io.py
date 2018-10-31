@@ -28,7 +28,7 @@ from io import StringIO
 import unittest
 
 from weblogo.seq import *
-from weblogo.seq_io import array_io
+from weblogo.seq_io import array_io, fasta_io
 from test_corebio import *
 
 
@@ -59,6 +59,9 @@ class test_array_io(unittest.TestCase):
         f = StringIO(example)
         self.assertRaises(ValueError, array_io.read, f)
 
+    def test_read_fasta(self):
+        f = StringIO(fasta_io.example)
+        self.assertRaises(ValueError, array_io.read, f)
 
 if __name__ == '__main__':
     unittest.main()

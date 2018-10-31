@@ -5,7 +5,7 @@
 #  This software is distributed under the MIT Open Source License.
 #  <http://www.opensource.org/licenses/mit-license.html>
 #
-#  Permission is hereby granted, free of charge, to any person obtaining a 
+#  Permission is hereby granted, free of charge, to any person obtaining a
 #  copy of this software and associated documentation files (the "Software"),
 #  to deal in the Software without restriction, including without limitation
 #  the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -15,12 +15,12 @@
 #  The above copyright notice and this permission notice shall be included
 #  in all copies or substantial portions of the Software.
 #
-#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 #  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 #
 
@@ -29,8 +29,8 @@ import unittest
 
 from weblogo import *
 from weblogo.seq import *
-from weblogo.seq_io import *
-from . import *
+from weblogo.seq_io import clustal_io, fasta_io, table_io
+from . import data_stream
 
 
 class test_clustal_parser(unittest.TestCase):
@@ -50,7 +50,7 @@ class test_clustal_parser(unittest.TestCase):
         import re
         s = re.sub("\n", "\r\n", s)  # Change to windows line endings
 
-        seqs = clustal_io.read(StringIO(s))
+        clustal_io.read(StringIO(s))
         f.close()
 
     def test_parse_headerless(self):
@@ -65,8 +65,7 @@ class test_clustal_parser(unittest.TestCase):
 
     def test_parse_error(self):
         f = data_stream("clustal.aln")
-        self.assertRaises(ValueError,
-                          clustal_io.read, f, nucleic_alphabet)
+        self.assertRaises(ValueError, clustal_io.read, f, nucleic_alphabet)
         f.close()
 
     def test_parse_clustal181(self):
@@ -127,6 +126,10 @@ class test_clustal_parser(unittest.TestCase):
 
         f.close()
 
+    def test_iterseq(self):
+        f = StringIO(clustal_io.example)
+        for s in clustal_io.iterseq(f):
+            pass
 
 if __name__ == '__main__':
     unittest.main()

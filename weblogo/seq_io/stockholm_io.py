@@ -125,7 +125,7 @@ def _scan(fin):
 
         if state == body:
             if line.isspace():
-                continue
+                continue            # pragma: no cover
             yield Token("begin_block")
             state = block
             # fall through to block
@@ -144,11 +144,11 @@ def _scan(fin):
 
             name_seq = line.split(None, 1)  # Split into two parts at first whitespace
             if len(name_seq) != 2:
-                raise ValueError("Parse error on line: %d" % L)
+                raise ValueError("Parse error on line: %d" % L)  # pragma: no cover
 
             yield Token("seq_id", name_seq[0].strip())
             yield Token("seq", name_seq[1].strip())
             continue
 
         # END state blocks. If I ever get here something has gone terrible wrong
-        raise RuntimeError()
+        raise RuntimeError()   # pragma: no cover

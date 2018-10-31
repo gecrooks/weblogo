@@ -26,20 +26,14 @@
 """Extra utilities and core classes not in standard python.
 """
 
-__all__ = ('isblank', 'isfloat', 'isint', 'ischar', 'fcmp',
-           'remove_whitespace', 'invert_dict', 'update', 'stdrepr',
-           'Token', 'Struct', 'Reiterate', 'deoptparse', 'crc32',
+import pkg_resources
+
+__all__ = ('isblank', 'isfloat', 'isint', 'ischar',
+           'remove_whitespace', 'invert_dict', 'stdrepr',
+           'Token', 'Reiterate', 'deoptparse', 'crc32',
            'crc64', 'FileIndex',
            'ArgumentError', 'group_count',
            'resource_string', 'resource_stream', 'resource_filename')
-
-import math
-import os.path
-
-try:
-    import pkg_resources
-except ImportError:
-    pkg_resources = None
 
 
 def isblank(s):
@@ -78,16 +72,6 @@ def ischar(s):
     return isinstance(s, str) and bool(s) and s == len(s) * s[0]
 
 
-def fcmp(x, y, precision):
-    """Floating point comparison."""
-    # TODO: Doc string, default precision. Test
-    if math.fabs(x - y) < precision:
-        return 0
-    elif x < y:
-        return -1
-    return 1
-
-
 def remove_whitespace(astring):
     """Remove all whitespace from a string."""
     # TODO: Is this horrible slow?
@@ -103,20 +87,6 @@ def invert_dict(dictionary):
     return dict((value, key) for key, value in dictionary.items())
 
 
-def update(obj, **entries):
-    """Update an instance with new values.
-
-    >>> update({'a': 1}, a=10, b=20)
-    {'a': 10, 'b': 20}
-    """
-    if hasattr(obj, 'update'):
-        obj.update(entries)
-    else:
-        for k, v in entries.items():
-            setattr(obj, k, v)
-    return obj
-
-
 def stdrepr(obj, attributes=None, name=None):
     """Create a standard representation of an object."""
     if name is None:
@@ -126,7 +96,7 @@ def stdrepr(obj, attributes=None, name=None):
     args = []
     for a in attributes:
         if a[0] == '_':
-            continue
+            continue        # pragma: no cover
         args.append('%s=%s' % (a, repr(getattr(obj, a))))
     args = ',\n'.join(args).replace('\n', '\n    ')
     return '%s(\n    %s\n)' % (name, args)
@@ -168,37 +138,6 @@ class Token(object):
         coord = coord.ljust(7)
         return ((coord + '  ' + self.typeof + ' : ').ljust(32) +
                 str(self.data or ''))
-
-
-def Struct(**kwargs):
-    """Create a new instance of an anonymous class with the supplied attributes
-    and values.
-
-    >>> s = Struct(a=3,b=4)
-    >>> s
-    Struct(
-        a=3,
-        b=4
-    )
-    >>> s.a
-    3
-
-    """
-    name = 'Struct'
-
-    def _init(obj, **kwargs):
-        for k, v in kwargs.items():
-            setattr(obj, k, v)
-
-    def _repr(obj):
-        return stdrepr(obj, obj.__slots__, name)
-
-    adict = {}
-    adict['__slots__'] = kwargs.keys()
-    adict['__init__'] = _init
-    adict['__repr__'] = _repr
-
-    return type(name, (object,), adict)(**kwargs)
 
 
 class Reiterate(object):
@@ -260,13 +199,6 @@ class Reiterate(object):
         except StopIteration:
             return False
 
-    def filter(self, predicate):
-        """Return the next item in the iteration that satisfied the
-        predicate."""
-        next_item = next(self)
-        while not predicate(next_item):
-            next_item = next(self)
-        return next_item
 
 # End class Reiterate
 
@@ -303,7 +235,7 @@ def crc64(string):
                 rflag = k & 1
                 k >>= 1
                 if part_h & 1:
-                    k |= (1 << 31)
+                    k |= (1 << 31)      # pragma: no cover
                 part_h >>= 1
                 if rflag:
                     part_h ^= 0xd8000000
@@ -392,9 +324,9 @@ class FileIndex(object):
             p = self._positions[item]
         return p
 
-    def seek(self, item):
-        """Seek the indexfile to the position of item."""
-        self.indexedfile.seek(self.tell(item))
+    # def seek(self, item):
+    #     """Seek the indexfile to the position of item."""
+    #     self.indexedfile.seek(self.tell(item))
 
     def __iter__(self):
         for i in range(0, len(self)):
@@ -442,15 +374,12 @@ class ArgumentError(ValueError):
 # end class ArgumentError
 
 
+# TODO: Replace with direct calls to pkg_resources
 def resource_string(modulename, resource, basefilename=None):
     """Locate and return a resource as a string.
     >>> f = resource_string( __name__, 'somedatafile', __file__)
     """
-    if pkg_resources:
-        return pkg_resources.resource_string(modulename, resource)
-
-    f = resource_stream(modulename, resource, basefilename)
-    return f.read()
+    return pkg_resources.resource_string(modulename, resource)
 
 
 def resource_stream(modulename, resource, basefilename=None):
@@ -463,19 +392,5 @@ def resource_stream(modulename, resource, basefilename=None):
 def resource_filename(modulename, resource, basefilename=None):
     """Locate and return a resource filename.
     >>> f = resource_filename( __name__, 'somedatafile', __file__)
-
-    A resource is a data file stored with the python code in a package.
-    All three resource methods (resource_string,  resource_stream,
-    resource_filename) call the corresponding methods in the 'pkg_resources'
-    module, if installed. Otherwise, we resort to locating the resource
-    in the local filesystem. However, this does not work if the package
-    is located inside a zip file.
     """
-    if pkg_resources:
-        return pkg_resources.resource_filename(modulename, resource)
-
-    if basefilename is None:
-        raise NotImplementedError("Require either basefilename "
-                                  "or pkg_resources")
-
-    return os.path.join(os.path.dirname(basefilename), resource)
+    return pkg_resources.resource_filename(modulename, resource)

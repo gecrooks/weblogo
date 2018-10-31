@@ -476,8 +476,8 @@ class LogoOptions(object):
 
         self.reverse_stacks = True  # If true, draw stacks with largest letters on top.
 
-        from .utils import update
-        update(self, **kwargs)
+        for k, v in kwargs.items():
+            setattr(self, k, v)
 
     def __repr__(self):
         attributes = list(vars(self).keys())
