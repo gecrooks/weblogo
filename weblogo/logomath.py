@@ -43,20 +43,7 @@ import random
 from math import log, sqrt, exp
 from numpy import asarray, float64, zeros, shape
 
-#from .moremath import gamma, digamma, trigamma, normalized_incomplete_gamma
-
-from scipy.special import gamma, digamma, polygamma
-from scipy.special import gammaincc as normalized_incomplete_gamma
-
-
-def trigamma(x):
-    """The trigamma function, the derivative of the digamma function.
-            trigamma(z) = d/dz digamma(z) = d/dz d/dz ln( gamma(z) )
-
-    See: Eric W. Weisstein. "Trigamma Function." From MathWorld--
-    A Wolfram Web Resource. http://mathworld.wolfram.com/TrigammaFunction.html
-    """
-    return polygamma(1, x)
+from scipy.special import gamma, digamma, polygamma, gammaincc
 
 
 class Dirichlet(object):
@@ -200,10 +187,10 @@ class Dirichlet(object):
         for i in range(L):
             dg1[i] = digamma(alpha[i] + 1.0)
             dg2[i] = digamma(alpha[i] + 2.0)
-            tg2[i] = trigamma(alpha[i] + 2.0)
+            tg2[i] = polygamma(1, alpha[i] + 2.0)
 
         dg_Ap2 = digamma(A + 2.)
-        tg_Ap2 = trigamma(A + 2.)
+        tg_Ap2 = polygamma(1, A + 2.)
 
         mean = self.mean_entropy()
         var = 0.0
@@ -290,7 +277,7 @@ class Gamma(object):
         return (x ** (a - 1.)) * exp(- b * x) * (b ** a) / gamma(a)
 
     def cdf(self, x):
-        return 1.0 - normalized_incomplete_gamma(self.alpha, self.beta * x)
+        return 1.0 - gammaincc(self.alpha, self.beta * x)
 
     def inverse_cdf(self, p):
         def rootof(x):

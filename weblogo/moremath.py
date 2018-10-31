@@ -60,23 +60,11 @@ Special Functions :
 
 """
 
-__all__ = ('euler_gamma', 'catalan', 'golden_ratio', 'bits_per_nat', 'sqrt_2pi',
-           'gamma', 'lngamma', 'factorial', 'digamma', 'trigamma',
-           'cgamma', 'clngamma', 'cdigamma', 'ctrigamma',
+__all__ = (
            'entropy', 'log2',
-           'incomplete_gamma', 'normalized_incomplete_gamma',
-           'argmax', 'argmin'
            )
 
 from math import log, exp
-from itertools import count
-
-# Some mathematical constants
-euler_gamma = 0.57721566490153286060651
-catalan = 0.91596559417721901505460
-golden_ratio = 1.6180339887498948482046
-bits_per_nat = 1.44269504088896340735992468100  # = log_2(e) = 1/log(2)
-sqrt_2pi = 2.5066282746310005024157652848110
 
 
 def log2(x):
@@ -106,12 +94,3 @@ def entropy(pvec, base=exp(1)):
 
     return ent
 
-
-def argmax(alist):
-    """Return the index of the last occurrence of the maximum value in the list."""
-    return max(zip(alist, count()))[1]
-
-
-def argmin(alist):
-    """Return the index of the first occurrence of the minimum value in the list."""
-    return min(zip(alist, count()))[1]

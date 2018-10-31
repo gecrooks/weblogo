@@ -37,20 +37,10 @@
 import unittest
 from math import log
 
-from weblogo.moremath import (argmax, argmin, entropy)
+from weblogo.moremath import entropy
 
 
 class test_misc_math(unittest.TestCase):
-    def test_argmax(self):
-        self.assertEqual(argmax((0, 1, 2, 3)), 3)
-        self.assertEqual(argmax((0, 1, 2, -1)), 2)
-        self.assertEqual(argmax((3, 2, 3, 3)), 3)
-
-    def test_argmin(self):
-        self.assertEqual(argmin((1, 2, 3, 4)), 0)
-        self.assertEqual(argmin((1, 2, 3, -1)), 3)
-        self.assertEqual(argmin((3, 5, 3, 3)), 0)
-
     def test_entropy(self):
         ent = entropy((1., 1.))
         self.assertAlmostEqual(ent, log(2))
