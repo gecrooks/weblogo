@@ -43,7 +43,20 @@ import random
 from math import log, sqrt, exp
 from numpy import asarray, float64, zeros, shape
 
-from .moremath import gamma, digamma, trigamma, normalized_incomplete_gamma
+#from .moremath import gamma, digamma, trigamma, normalized_incomplete_gamma
+
+from scipy.special import gamma, digamma, polygamma
+from scipy.special import gammaincc as normalized_incomplete_gamma
+
+
+def trigamma(x):
+    """The trigamma function, the derivative of the digamma function.
+            trigamma(z) = d/dz digamma(z) = d/dz d/dz ln( gamma(z) )
+
+    See: Eric W. Weisstein. "Trigamma Function." From MathWorld--
+    A Wolfram Web Resource. http://mathworld.wolfram.com/TrigammaFunction.html
+    """
+    return polygamma(1, x)
 
 
 class Dirichlet(object):

@@ -62,7 +62,7 @@ Please consult the manual for installation instructions and more information:
                                'template.eps', 'data/*.*']
             },
 
-            install_requires=['numpy', 'setuptools'],
+            install_requires=['numpy', 'scipy', 'setuptools'],
 
             entry_points={
                 'console_scripts': [
