@@ -70,8 +70,8 @@ def main():
         parser.error("Unparsable arguments: %s " % args)
 
     if opts.serve:
-        httpd_serve_forever(opts.port)  # Never returns?
-        sys.exit(0)
+        httpd_serve_forever(opts.port)  # Never returns?    # pragma: no cover
+        sys.exit(0)                                         # pragma: no cover
 
     # ------ Create Logo ------
     try:
@@ -82,11 +82,7 @@ def main():
         logo = formatter(data, format)
         # logo = logo.encode()
 
-        if sys.version_info[0] >= 3:
-            opts.fout.buffer.write(logo)
-        else:
-            opts.fout.write(logo)
-        # print(logo, file=opts.fout)
+        opts.fout.buffer.write(logo)
 
     except ValueError as err:
         print('Error:', err, file=sys.stderr)
@@ -100,13 +96,8 @@ def main():
 def httpd_serve_forever(port=8080):
     """ Start a webserver on a local port."""
 
-    if sys.version_info[0] >= 3:
-        import http.server as server
-        import http.server as cgiserver
-
-    else:
-        import BaseHTTPServer as server
-        import CGIHTTPServer as cgiserver
+    import http.server as server
+    import http.server as cgiserver
 
     class __HTTPRequestHandler(cgiserver.CGIHTTPRequestHandler):
         # Modify CGIHTTPRequestHandler so that it will run the cgi script directly,
@@ -191,7 +182,7 @@ def _build_logodata(options):
 
         if options.complement or options.revcomp:
             if not nucleic_alphabet.alphabetic(seqs.alphabet):
-                raise ValueError('non-nucleic sequence cannot be complemented')
+                raise ValueError('non-nucleic sequence cannot be complemented')  # pragam: no cover
             aaa = seqs.alphabet
             seqs.alphabet = nucleic_alphabet
             seqs = SeqList([Seq(s, seqs.alphabet).complement() for s in seqs], seqs.alphabet)

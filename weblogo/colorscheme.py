@@ -56,6 +56,7 @@ from . import seq
 from .color import Color
 
 
+# TODO: Make as abstract
 class ColorRule(object):
     """
     Define an interface for coloring individual symbols based on their position
@@ -63,11 +64,8 @@ class ColorRule(object):
     return a Color object based on the given parameters.
     """
 
-    def __init__(self, description=""):
-        self.description = description
-
     def symbol_color(self, seq_index, symbol, rank):
-        raise NotImplementedError
+        raise NotImplementedError   # pragma: no cover
 
 
 class ColorScheme(ColorRule):

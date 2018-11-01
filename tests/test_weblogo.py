@@ -37,12 +37,10 @@
 import unittest
 
 from math import log, sqrt
-from subprocess import Popen, PIPE
 from pkg_resources import resource_stream
 
 from numpy import array, float64, ones, zeros, all
 
-import weblogo
 from weblogo import LogoOptions, equiprobable_distribution
 from weblogo import parse_prior, GhostscriptAPI
 from weblogo.color import Color
@@ -133,69 +131,6 @@ class test_logooptions(unittest.TestCase):
         self.assertEqual(opt.title, "sometitle")
 
 
-class test_seqlogo(unittest.TestCase):
-    # FIXME: The version of python used by Popen may not be the
-    # same as that used to run this test.
-    def _exec(self, args, outputtext, returncode=0, stdin=None):
-        if not stdin:
-            stdin = data_stream("cap.fa")
-        args = ["weblogo"] + args
-        p = Popen(args, stdin=stdin, stdout=PIPE, stderr=PIPE)
-        (out, err) = p.communicate()
-        if returncode == 0 and p.returncode > 0:
-            print(err)
-        self.assertEqual(returncode, p.returncode)
-        if returncode == 0:
-            self.assertEqual(len(err), 0)
-
-        out = out.decode()
-
-        for item in outputtext:
-            self.assertTrue(item in out)
-
-        stdin.close()
-
-    def test_malformed_options(self):
-        self._exec(["--notarealoption"], [], 2)
-        self._exec(["extrajunk"], [], 2)
-        self._exec(["-I"], [], 2)
-
-    def test_help_option(self):
-        self._exec(["-h"], ["options"])
-        self._exec(["--help"], ["options"])
-
-    def test_version_option(self):
-        self._exec(['--version'], weblogo.__version__)
-
-    def test_default_build(self):
-        self._exec([], ["%%Title:        Sequence Logo:"])
-
-    # Format options
-    def test_width(self):
-        self._exec(['-W', '1234'], ["/stack_width         1234"])
-        self._exec(['--stack-width', '1234'], ["/stack_width         1234"])
-
-    def test_height(self):
-        self._exec(['-W', '1000'], ["/stack_height        5000"])
-        self._exec(['-W', '1000', '--aspect-ratio', '2'], ["/stack_height        2000"])
-
-    def test_stacks_per_line(self):
-        self._exec(['-n', '7'], ["/stacks_per_line     7 def"])
-        self._exec(['--stacks-per-line', '7'], ["/stacks_per_line     7 def"])
-
-    def test_title(self):
-        self._exec(['-t', '3456'], ['/logo_title         (3456) def',
-                                    '/show_title         True def'])
-        self._exec(['-t', ''], ['/logo_title         () def',
-                                '/show_title         False def'])
-        self._exec(['--title', '3456'], ['/logo_title         (3456) def',
-                                         '/show_title         True def'])
-
-    def test_annotate(self):
-        self._exec(["--annotate", "1,2,3,4"], [], 2)
-        self._exec(["--annotate", "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,,"], [])
-
-
 class test_colorscheme(unittest.TestCase):
     def test_symbol_color(self):
         sc = SymbolColor("abc", "black", "Because")
@@ -241,6 +176,18 @@ class test_colorscheme(unittest.TestCase):
         self.assertEqual(cs.symbol_color(1, 'C', 1), Color.by_name("blue"))
         self.assertEqual(cs.symbol_color(1, 'A', 1), Color.by_name("green"))
         self.assertEqual(cs.symbol_color(1, 'X', 1), cs.default_color)
+
+        cs = ColorScheme([
+            SymbolColor("G", "orange"),
+            SymbolColor("TU", "red"),
+            SymbolColor("C", "blue"),
+            SymbolColor("A", "green")
+        ],
+                title="title",
+                description="description",
+                alphabet="GTUCA"
+        )
+        self.assertRaises(KeyError, cs.symbol_color, 1, 'X', 1)
 
 
 class test_color(unittest.TestCase):
@@ -358,10 +305,16 @@ class test_color(unittest.TestCase):
         for s in skyblue_strings:
             self.assertEqual(skyblue, Color.from_string(s))
 
+        self.assertRaises(ValueError, Color.from_string, '#not_a_color')
+        self.assertRaises(ValueError, Color.from_string, 'rgb(not_a_color)')
+        self.assertRaises(ValueError, Color.from_string, 'hsl(not_a_color)')
+        self.assertRaises(ValueError, Color.from_string, 'not_a_color')
+
     def test_color_equality(self):
         c1 = Color(123, 99, 12)
         c2 = Color(123, 99, 12)
         self.assertEqual(c1, c2)
+        self.assertNotEqual(c1, "not_a_color")
 
 
 class test_gamma(unittest.TestCase):
@@ -531,6 +484,9 @@ class test_Dirichlet(unittest.TestCase):
         m = Dirichlet(alpha).mean_x(xx)
         self.assertEqual(m, 2.0)
 
+        xx2 = (2.0, 2.0, 2.0, 2.0, 2.0)
+        self.assertRaises(ValueError, Dirichlet(alpha).mean_x, xx2)
+
         alpha = (1.0, 1.0, 1.0, 1.0)
         xx = (2.0, 3.0, 4.0, 3.0)
         m = Dirichlet(alpha).mean_x(xx)
@@ -547,6 +503,9 @@ class test_Dirichlet(unittest.TestCase):
         v = Dirichlet(alpha).variance_x(xx)
         # print(v)
         # TODO: Don't actually know if this is correct
+
+        xx2 = (2.0, 2.0, 2.0, 2.0, 2.0)
+        self.assertRaises(ValueError, Dirichlet(alpha).variance_x, xx2)
 
     def test_relative_entropy(self):
         alpha = (2.0, 10.0, 1.0, 1.0)

@@ -78,21 +78,21 @@ class Color(object):
             if vH < 0.0:
                 vH += 1.0
             if vH > 1.0:
-                vH -= 1.0
+                vH -= 1.0           # pragma: no cover (Grandfathered in)
             if vH * 6.0 < 1.0:
                 return (v1 + (v2 - v1) * 6.0 * vH)
             if vH * 2.0 < 1.0:
                 return v2
             if vH * 3.0 < 2.0:
-                return (v1 + (v2 - v1) * ((2.0 / 3.0) - vH) * 6.0)
+                return (v1 + (v2 - v1) * ((2.0 / 3.0) - vH) * 6.0)   # pragma: no cover
             return v1
 
         hue = (((hue_angle % 360.) + 360.) % 360.) / 360.
 
         if not (saturation >= 0.0 and saturation <= 1.0):
-            raise ValueError("Out-of-range saturation %f" % saturation)
+            raise ValueError("Out-of-range saturation %f" % saturation)  # pragma: no cover
         if not (lightness >= 0.0 and lightness <= 1.0):
-            raise ValueError("Out-of-range lightness %f" % lightness)
+            raise ValueError("Out-of-range lightness %f" % lightness)  # pragma: no cover
 
         if saturation == 0:
             # greyscale

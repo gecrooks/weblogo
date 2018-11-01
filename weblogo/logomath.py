@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 # -------------------------------- WebLogo --------------------------------
 
 #  Copyright (c) 2003-2004 The Regents of the University of California.
@@ -38,12 +36,13 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 #  POSSIBILITY OF SUCH DAMAGE.
 
-import numpy as na
+import numpy as np
 import random
 from math import log, sqrt, exp
 from numpy import asarray, float64, zeros, shape
 
 from scipy.special import gamma, digamma, polygamma, gammaincc
+import scipy.optimize
 
 
 class Dirichlet(object):
@@ -138,7 +137,7 @@ class Dirichlet(object):
             raise ValueError("Argument must be same dimension as Dirichlet")
 
         cv = self.covariance()
-        var = na.dot(na.dot(na.transpose(x), cv), x)
+        var = np.dot(np.dot(np.transpose(x), cv), x)
         return var
 
     def mean_entropy(self):
@@ -210,11 +209,11 @@ class Dirichlet(object):
         return var
 
     def mean_relative_entropy(self, pvec):
-        ln_p = na.log(pvec)
+        ln_p = np.log(pvec)
         return - self.mean_x(ln_p) - self.mean_entropy()
 
     def variance_relative_entropy(self, pvec):
-        ln_p = na.log(pvec)
+        ln_p = np.log(pvec)
         return self.variance_x(ln_p) + self.variance_entropy()
 
     def interval_relative_entropy(self, pvec, frac):
@@ -283,103 +282,5 @@ class Gamma(object):
         def rootof(x):
             return self.cdf(exp(x)) - p
 
-        return exp(find_root(rootof, log(self.mean())))
-
-
-#
-
-def find_root(f, x, y=None, fprime=None, tolerance=1.48e-8, max_iterations=50):
-    """Return argument 'x' of the function f(x), such that f(x)=0 to
-    within the given tolerance.
-
-    f : The function to optimize, f(x)
-    x : The initial guess
-    y : An optional second guess that should bracket the root.
-    fprime : The derivate of f'(x) (Optional)
-    tolerance : The error bounds
-    max_iterations : Maximum number of iterations
-
-    Raises:
-        ArithmeticError :
-            Failure to converge to the given tolerance
-
-    Notes:
-        Uses Newton-Raphson algorithm if f'(x) is given, else uses bisect if
-        y is given and brackets the root, else uses secant.
-
-    Status : Beta (Not fully tested)
-    """
-
-    def secant(f, x, tolerance, max_iterations):
-        x0 = x
-        x1 = x0 + 1e-4
-        v0 = f(x0)
-        v1 = f(x1)
-        x2 = 0
-
-        for i in range(max_iterations):
-            # print(x0, x1, v0, v1, x2-x0)
-            diff = v1 - v0
-            if diff == 0:
-                return x2
-            x2 = x1 - v1 * (x1 - x0) / diff
-            if abs(x2 - x1) < tolerance:
-                return x2
-            x0 = x1
-            v0 = v1
-            x1 = x2
-            v1 = f(x1)
-
-        raise ArithmeticError(
-                "Failed to converge after %d iterations, value is %f"
-                % (max_iterations, x1))
-
-    def bisect(f, a, b, tolerance, max_iterations):
-        fa = f(a)
-        fb = f(b)
-
-        if fa == 0:
-            return a
-        if fb == 0:
-            return b
-
-        if fa * fb > 0:
-            raise ArithmeticError("Start points do not bracket root.")
-
-        for i in range(max_iterations):
-            # print(a, b, fa, fb)
-            delta = b - a
-            xm = a + 0.5 * delta  # Minimize roundoff in computing the midpoint
-            fm = f(xm)
-            if delta < tolerance:
-                return xm
-
-            if fm * fa > 0:  # Root lies in interval [xm,b], replace a
-                a = xm
-                fa = fm
-            else:  # Root lies in interval [a,xm], replace b
-                b = xm
-                fb = fm
-
-        raise ArithmeticError(
-                "Failed to converge after %d iterations, value is %f"
-                % (max_iterations, x))
-
-    def newton(f, x, fprime, tolerance, max_iterations):
-        x0 = x
-        for i in range(max_iterations):
-            x1 = x0 - f(x0) / fprime(x0)
-            if abs(x1 - x0) < tolerance:
-                return x1
-            x0 = x1
-
-        raise ArithmeticError(
-                "Failed to converge after %d iterations, value is %f"
-                % (max_iterations, x1))
-
-    if fprime is not None:
-        return newton(f, x, fprime, tolerance, max_iterations)
-    elif y is not None:
-        return bisect(f, x, y, tolerance, max_iterations)
-    else:
-        return secant(f, x, tolerance, max_iterations)
+        root = scipy.optimize.newton(rootof, log(self.mean()))
+        return exp(root)

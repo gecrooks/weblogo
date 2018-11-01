@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 # -------------------------------- WebLogo --------------------------------
 
 #  Copyright (c) 2003-2004 The Regents of the University of California.
