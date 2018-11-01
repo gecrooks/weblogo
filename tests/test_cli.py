@@ -1,6 +1,8 @@
 
-
+import shutil
 from subprocess import Popen, PIPE
+
+import pytest
 
 import weblogo
 
@@ -19,10 +21,10 @@ def _exec(args, outputtext, returncode=0, stdin=None):
     if returncode == 0:
         assert len(err) == 0
 
-    out = out.decode()
-
-    for item in outputtext:
-        assert item in out
+    if outputtext:
+        out = out.decode()
+        for item in outputtext:
+            assert item in out
 
     stdin.close()
 
@@ -82,3 +84,19 @@ def test_reverse_complement():
     _exec(['--complement'], [])
     _exec(['--reverse'], [])
     _exec(['--revcomp'], [])
+
+
+def test_formats():
+    _exec(['--format', 'eps'], [])
+    _exec(['--format', 'png'], [])
+    _exec(['--format', 'png_print'], [])
+    _exec(['--format', 'pdf'], [])
+    _exec(['--format', 'jpeg'], [])
+
+    _exec(['--format', 'logodata'], [])
+
+
+@pytest.mark.skipif(shutil.which('pdf2svg') is None,
+                    reason="requires pdf2svg")
+def test_formats_svg():
+    _exec(['--format', 'svg'], [])

@@ -61,7 +61,7 @@ class test_logoformat(unittest.TestCase):
 
 class test_ghostscript(unittest.TestCase):
     def test_version(self):
-        GhostscriptAPI().version
+        GhostscriptAPI().version()
 
 
 class test_parse_prior(unittest.TestCase):
@@ -540,7 +540,7 @@ class test_Dirichlet(unittest.TestCase):
 class _from_URL_fileopen_Tests(unittest.TestCase):
     def test_URLscheme(self):
         """test for http, https, or ftp scheme"""
-        from weblogo import _from_URL_fileopen
+        from weblogo.logo import _from_URL_fileopen
         broken_url = "file://foo.txt"
         self.assertRaises(ValueError, _from_URL_fileopen, (broken_url))
 

@@ -143,8 +143,3 @@ def _build_option_parser():
                       metavar="FORMAT")
 
     return parser
-
-
-# Standard python voodoo for CLI
-if __name__ == "__main__":
-    main()

@@ -55,7 +55,7 @@ from . import (LogoOptions, LogoData, LogoFormat,
                default_formatter,
                std_alphabets, std_units, std_sizes, std_color_schemes,
                read_seq_data)
-from . import (_seq_names, _seq_formats)
+from .logo import (_seq_names, _seq_formats)
 from .colorscheme import ColorScheme, SymbolColor
 
 
