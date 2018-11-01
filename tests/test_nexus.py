@@ -3,7 +3,7 @@
 import unittest
 
 from weblogo.seq_io._nexus import Nexus
-from . import *
+from . import data_stream
 
 
 class test_nexus(unittest.TestCase):
@@ -27,7 +27,7 @@ class test_nexus(unittest.TestCase):
 
     def test_parse_protein(self):
         f = data_stream("nexus/protein.nex")
-        n = Nexus(f)
+        Nexus(f)
         f.close()
 
     def test_parse_dna(self):
@@ -46,11 +46,11 @@ class test_nexus(unittest.TestCase):
         f = data_stream("nexus/test_Nexus_input.nex")
         n = Nexus(f)
         t3 = n.trees[2]
-        t2 = n.trees[2]
+        n.trees[2]
         t3.root_with_outgroup(['t1', 't5'])
 
         # Return node_id of common ancestor if
-        # taxon_list is monophyletic, -1 otherwise.        
+        # taxon_list is monophyletic, -1 otherwise.
         self.assertEqual(t3.is_monophyletic(['t1', 't5']), 13)
 
         t3.split(parent_id=t3.search_taxon('t9'))

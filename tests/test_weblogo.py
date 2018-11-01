@@ -1,54 +1,54 @@
 #!/usr/bin/env python
 
-#  Copyright (c) 2006, The Regents of the University of California, through 
+#  Copyright (c) 2006, The Regents of the University of California, through
 #  Lawrence Berkeley National Laboratory (subject to receipt of any required
 #  approvals from the U.S. Dept. of Energy).  All rights reserved.
 
 #  This software is distributed under the new BSD Open Source License.
 #  <http://www.opensource.org/licenses/bsd-license.html>
 #
-#  Redistribution and use in source and binary forms, with or without 
-#  modification, are permitted provided that the following conditions are met: 
+#  Redistribution and use in source and binary forms, with or without
+#  modification, are permitted provided that the following conditions are met:
 #
-#  (1) Redistributions of source code must retain the above copyright notice, 
-#  this list of conditions and the following disclaimer. 
+#  (1) Redistributions of source code must retain the above copyright notice,
+#  this list of conditions and the following disclaimer.
 #
-#  (2) Redistributions in binary form must reproduce the above copyright 
-#  notice, this list of conditions and the following disclaimer in the 
-#  documentation and or other materials provided with the distribution. 
+#  (2) Redistributions in binary form must reproduce the above copyright
+#  notice, this list of conditions and the following disclaimer in the
+#  documentation and or other materials provided with the distribution.
 #
-#  (3) Neither the name of the University of California, Lawrence Berkeley 
-#  National Laboratory, U.S. Dept. of Energy nor the names of its contributors 
-#  may be used to endorse or promote products derived from this software 
-#  without specific prior written permission. 
+#  (3) Neither the name of the University of California, Lawrence Berkeley
+#  National Laboratory, U.S. Dept. of Energy nor the names of its contributors
+#  may be used to endorse or promote products derived from this software
+#  without specific prior written permission.
 #
-#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-#  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-#  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-#  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
-#  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-#  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-#  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-#  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-#  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-#  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
-#  POSSIBILITY OF SUCH DAMAGE. 
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+#  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+#  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+#  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+#  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+#  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+#  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+#  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+#  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+#  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+#  POSSIBILITY OF SUCH DAMAGE.
 
 import unittest
 
 from math import log, sqrt
-from subprocess import *
+from subprocess import Popen, PIPE
 from pkg_resources import resource_stream
 
-from numpy import array, float64, ones, zeros, all, shape
+from numpy import array, float64, ones, zeros, all
 
 import weblogo
-from weblogo import *
+from weblogo import LogoOptions, equiprobable_distribution
 from weblogo import parse_prior, GhostscriptAPI
-from weblogo.color import *
-from weblogo.colorscheme import *
+from weblogo.color import Color
+from weblogo.colorscheme import ColorScheme, RefSeqColor, SymbolColor, IndexColor
 from weblogo.logomath import Dirichlet, Gamma
-from weblogo.seq import *
+from weblogo.seq import (Alphabet, unambiguous_protein_alphabet, unambiguous_dna_alphabet)
 from weblogo.moremath import entropy
 
 
@@ -58,12 +58,12 @@ def data_stream(name):
 
 class test_logoformat(unittest.TestCase):
     def test_options(self):
-        options = LogoOptions()
+        LogoOptions()
 
 
 class test_ghostscript(unittest.TestCase):
     def test_version(self):
-        version = GhostscriptAPI().version
+        GhostscriptAPI().version
 
 
 class test_parse_prior(unittest.TestCase):
@@ -127,7 +127,7 @@ class test_logooptions(unittest.TestCase):
     def test_create(self):
         opt = LogoOptions()
         opt.small_fontsize = 10
-        options = repr(opt)
+        repr(opt)
 
         opt = LogoOptions(title="sometitle")
         self.assertEqual(opt.title, "sometitle")
@@ -204,7 +204,7 @@ class test_colorscheme(unittest.TestCase):
         self.assertEqual(sc.symbol_color(1, "D", 0), None)
 
     def test_index_color(self):
-        ic = IndexColor([1,3], "black", "Because")
+        ic = IndexColor([1, 3], "black", "Because")
         self.assertEqual(ic.description, "Because")
         self.assertEqual(ic.symbol_color(0, "A", 0), None)
         self.assertEqual(ic.symbol_color(1, "A", 0), Color.by_name("black"))
@@ -280,7 +280,7 @@ class test_color(unittest.TestCase):
         saddlebrown = Color.by_name("saddlebrown")
         darkgreen = Color.by_name("darkgreen")
         blue = Color.by_name("blue")
-        green = Color.by_name("green")
+        Color.by_name("green")
         self.assertEqual(red, Color.from_hsl(0, 1.0, 0.5))
         self.assertEqual(lime, Color.from_hsl(120, 1.0, 0.5))
         self.assertEqual(blue, Color.from_hsl(240, 1.0, 0.5))
@@ -333,7 +333,7 @@ class test_color(unittest.TestCase):
         self.assertEqual(red, Color.from_string("hsl(0, 100%, 50%)"))
 
     def test_color_from_string(self):
-        purple = Color(128, 0, 128)
+        Color(128, 0, 128)  # purple
         red = Color(255, 0, 0)
         skyblue = Color(135, 206, 235)
 
@@ -467,7 +467,7 @@ class test_gamma(unittest.TestCase):
 
 class test_Dirichlet(unittest.TestCase):
     def test_init(self):
-        d = Dirichlet((1, 1, 1, 1,))
+        Dirichlet((1, 1, 1, 1,))
 
     def test_random(self):
 
@@ -577,8 +577,6 @@ class test_Dirichlet(unittest.TestCase):
         self.assertTrue(abs(low - sent[int(samples * 0.025)]) < 0.2)
         self.assertTrue(abs(high - sent[int(samples * 0.975)]) < 0.2)
 
-        # print('>>', mean(sent), var(sent), sent[ int( samples *0.025)] ,sent[ int( samples *0.975)])
-
 
 class _from_URL_fileopen_Tests(unittest.TestCase):
     def test_URLscheme(self):
@@ -596,12 +594,11 @@ def var(a):
     return (sum(a * a) / len(a)) - mean(a) ** 2
 
 
-#
 def integrate(f, a, b, n=1000):
     """
     Numerically integrate the function 'f' from 'a' to 'b' using a discretization with 'n' points.
 
-    Args:    
+    Args:
     - f -- A function that eats a float and returns a float.
     - a -- Lower integration bound (float)
     - b -- Upper integration bound (float)

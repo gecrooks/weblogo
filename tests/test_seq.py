@@ -31,7 +31,7 @@ import pytest
 from weblogo import seq_io
 from weblogo.seq import (Alphabet, generic_alphabet, Seq, unambiguous_protein_alphabet,
                          unambiguous_dna_alphabet, protein_alphabet, dna_alphabet,
-                         nucleic_alphabet, dna, SeqList, rna, protein, rna_alphabet)
+                         nucleic_alphabet, dna, SeqList, rna, protein)
 from . import data_stream
 
 
@@ -264,7 +264,7 @@ class test_seq(unittest.TestCase):
         s = dna('GCCATTGTAATGGGCCGCTGAAAGGGTGCCCGA')
         p = s.translate()
         self.assertEqual(str(p), 'AIVMGR*KGAR')
-        s2 = p.back_translate()
+        p.back_translate()
 
     def test_reverse_complement(self):
         s = dna('GGGGaaaaaaaatttatatat')
@@ -285,8 +285,6 @@ class test_seq(unittest.TestCase):
     def test_mask(self):
         s = dna('AAaaaaAAA').mask()
         self.assertEqual(str(s), 'AAXXXXAAA')
-
-
 
     def test_shortcuts(self):
         protein('gGGGGG-PPPPP')
@@ -334,7 +332,7 @@ class test_seqlist(unittest.TestCase):
         s1 = Seq("ACGTURYSDHVNACGTURYSWKMBDHVN", nucleic_alphabet)
         s2 = Seq("ACGTURSWKMBDHVNACGTURKMBDHVN", nucleic_alphabet)
         seqs = SeqList([s0, s1, s2], nucleic_alphabet)
-        a = seqs.ords()
+        seqs.ords()
         # self.assertEqual( a.shape, (3, 28) )
 
         # Fails if seqs are of different lengths

@@ -24,8 +24,7 @@
 #  THE SOFTWARE.
 #
 
-from io import StringIO
-import time
+
 import unittest
 
 from weblogo import seq_io
@@ -59,12 +58,12 @@ class test_genbank_io(unittest.TestCase):
     #        for t in genbank_io._scan(f):
     #            print t
     #        print
-    #        print 
+    #        print
 
     def test_parse(self):
         for f in examples():
             # print f.name
-            seqs = genbank_io.read(f)
+            genbank_io.read(f)
             f.close()
             # print seqs
 

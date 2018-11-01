@@ -1,4 +1,3 @@
-import unittest
 
 # TODO: replace with direct calls to pkg_resources
 from weblogo.utils import resource_string, resource_stream, resource_filename

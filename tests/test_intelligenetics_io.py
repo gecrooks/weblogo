@@ -74,5 +74,3 @@ def test_write_seq_fail():
     fout = StringIO()
     with pytest.raises(ValueError):
         ig_io.write(fout, seqs)
-
-

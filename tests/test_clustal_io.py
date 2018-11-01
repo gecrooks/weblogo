@@ -27,8 +27,7 @@
 from io import StringIO
 import unittest
 
-from weblogo import *
-from weblogo.seq import *
+from weblogo.seq import nucleic_alphabet, protein_alphabet
 from weblogo.seq_io import clustal_io, fasta_io, table_io
 from . import data_stream
 
@@ -70,17 +69,17 @@ class test_clustal_parser(unittest.TestCase):
 
     def test_parse_clustal181(self):
         f = data_stream("clustal181.aln")
-        seqs = clustal_io.read(f)
+        clustal_io.read(f)
         f.close()
 
     def test_parse_clustal_glualign(self):
         f = data_stream("clustal_glualign.aln")
-        seqs = clustal_io.read(f, nucleic_alphabet)
+        clustal_io.read(f, nucleic_alphabet)
         f.close()
 
     def test_parse_clustalw182(self):
         f = data_stream("clustalw182.aln")
-        seqs = clustal_io.read(f, protein_alphabet)
+        clustal_io.read(f, protein_alphabet)
         f.close()
 
     def test_parse_fasta_fail(self):
@@ -100,7 +99,7 @@ class test_clustal_parser(unittest.TestCase):
 
     def test_parse_clustal_example(self):
         f = StringIO(clustal_io.example)
-        seqs = clustal_io.read(f)
+        clustal_io.read(f)
         f.close()
 
     def test_write(self):
@@ -130,6 +129,7 @@ class test_clustal_parser(unittest.TestCase):
         f = StringIO(clustal_io.example)
         for s in clustal_io.iterseq(f):
             pass
+
 
 if __name__ == '__main__':
     unittest.main()

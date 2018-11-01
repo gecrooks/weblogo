@@ -27,7 +27,7 @@
 Arrays indexed by alphabetic strings.
 """
 
-import numpy as na
+import numpy as np
 
 from .seq import Alphabet
 from .seq import (unambiguous_dna_alphabet, unambiguous_rna_alphabet,
@@ -61,7 +61,7 @@ class AlphabeticArray(object):
     >>>
     >>> # Different alphabets on each dimension:
     >>> import numpy as na
-    >>> a234 = na.zeros( shape = (2,3,4) )
+    >>> a234 = zeros( shape = (2,3,4) )
     >>> alpha = ( "AB", "ABC", "ABCD")
     >>> aa = AlphabeticArray(alpha,a234)
     >>> aa['A', 'B', 'C'] = 22
@@ -125,9 +125,9 @@ class AlphabeticArray(object):
 
         shape = tuple(shape)
         if values is None:
-            values = na.zeros(shape=shape, dtype=dtype)
+            values = np.zeros(shape=shape, dtype=dtype)
         else:
-            values = na.asarray(values, dtype=dtype)
+            values = np.asarray(values, dtype=dtype)
             vshape = values.shape
             if len(shape) != len(vshape):
                 raise ValueError("The values array is the wrong shape.")
@@ -158,7 +158,7 @@ class AlphabeticArray(object):
                     return alpha.ord(key)
                 if len(key) == 0:
                     return None
-                return na.asarray(alpha.ords(key))
+                return np.asarray(alpha.ords(key))
             elif isinstance(key, slice):
                 start = norm(key.start, alpha)
                 stop = norm(key.stop, alpha)
@@ -186,9 +186,9 @@ class AlphabeticArray(object):
         for i, k in enumerate(keys):
             if k is None:
                 k = range(0, self.array.shape[i])
-            k = na.asarray(k)
+            k = np.asarray(k)
             for j in range(len(keys) - i - 1):
-                k = k[..., na.newaxis]
+                k = k[..., np.newaxis]
             outerkeys.append(k)
         return self.array.__getitem__(tuple(outerkeys))
 
@@ -261,7 +261,7 @@ class SubMatrix(AlphabeticArray):
         return AlphabeticArray.reindex(self, (alphabet, alphabet))
 
     @staticmethod
-    def read(fin, alphabet=None, typeof=na.float64):
+    def read(fin, alphabet=None, typeof=np.float64):
         """ Parse and return a substitution matrix
 
         Arguments:
@@ -279,7 +279,7 @@ class SubMatrix(AlphabeticArray):
         if alphabet is None:
             alphabet = submatrix_alphabet
         L = len(alphabet)
-        matrix = na.zeros((L, L), typeof)
+        matrix = np.zeros((L, L), typeof)
 
         i = 0
 
@@ -503,7 +503,7 @@ class Motif(AlphabeticArray):
         # items should now be a list of lists of numbers (as strings)
         rows = len(items)
         cols = len(items[0])
-        matrix = na.zeros((rows, cols), dtype=na.float64)
+        matrix = np.zeros((rows, cols), dtype=np.float64)
         for r in range(rows):
             for c in range(cols):
                 matrix[r, c] = float(items[r][c])

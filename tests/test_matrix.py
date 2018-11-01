@@ -1,16 +1,14 @@
 #!/usr/bin/env python
 
 from io import StringIO
-
 import unittest
-from numpy import *
 
-from weblogo import *
+import numpy as np
+
 from weblogo import data
-from weblogo.matrix import *
-from weblogo.seq import *
-from weblogo.utils import *
-from . import *
+from weblogo.matrix import AlphabeticArray, Motif, SubMatrix
+from weblogo.seq import protein_alphabet, Alphabet, unambiguous_protein_alphabet
+from . import data_stream
 
 
 class test_AlphabeticArray(unittest.TestCase):
@@ -23,22 +21,20 @@ class test_AlphabeticArray(unittest.TestCase):
 class test_Motif(unittest.TestCase):
     def test_read_transfac_alphabet_superset(self):
         with data_stream("transfac_matrix.txt") as f:
-            m = Motif.read_transfac(f, alphabet='TCGA')
+            Motif.read_transfac(f, alphabet='TCGA')
 
         # Supplied alphabet can be superset of defacto alphabet.
         # Reverts to defacto alphabet
         with data_stream("transfac_matrix.txt") as f:
-            m = Motif.read_transfac(f, alphabet='TCGAXYZ')
+            Motif.read_transfac(f, alphabet='TCGAXYZ')
 
-    
-    
     def test_read_transfac(self):
         f = data_stream("transfac_matrix.txt")
         m = Motif.read_transfac(f)
         f.close()
         assert m[3, 'A'] == 0.0
         assert m[0, 'G'] == 2.0
-        assert shape(m.array) == (12, 4)
+        assert np.shape(m.array) == (12, 4)
         f.close()
 
         f = data_stream("transfac_matrix2.txt")
@@ -46,7 +42,7 @@ class test_Motif(unittest.TestCase):
         f.close()
         assert m[3, 'A'] == 3.0
         assert m[0, 'G'] == 152.0
-        assert shape(m.array) == (15, 4)
+        assert np.shape(m.array) == (15, 4)
 
         # this one has extra Ps on start of each line
         f = data_stream("transfac_matrix3.txt")
@@ -65,7 +61,6 @@ class test_Motif(unittest.TestCase):
             for i, a in enumerate("AGCT"):
                 assert m[k, a] == m2[k, a]
 
-
     def test_reverse(self):
         f = data_stream("transfac_matrix.txt")
         m = Motif.read_transfac(f)
@@ -73,7 +68,7 @@ class test_Motif(unittest.TestCase):
         m2 = Motif.read_transfac(f2)
         m2.reverse()
 
-        (K, N) = shape(m2)
+        (K, N) = np.shape(m2)
         for k in range(0, K):
             for n in range(0, N):
                 assert (m[k, n] == m2[K - k - 1, n])
@@ -88,7 +83,7 @@ class test_Motif(unittest.TestCase):
         m2 = Motif.read_transfac(f2)
         m2.complement()
 
-        (K, N) = shape(m2)
+        (K, N) = np.shape(m2)
         for k in range(0, K):
             assert (m[k, 'A'] == m2[k, 'T'])
             assert (m[k, 'G'] == m2[k, 'C'])
@@ -117,7 +112,7 @@ class test_Motif(unittest.TestCase):
 class test_SubMatrix(unittest.TestCase):
     def test_create(self):
         ab = 'ABCD'
-        ar = asarray([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])
+        ar = np.asarray([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])
         s = SubMatrix(ab, ar)
 
         assert s[0, 0] == 1
@@ -128,7 +123,7 @@ class test_SubMatrix(unittest.TestCase):
 
     def test_get(self):
         ab = Alphabet('ABCD')
-        ar = asarray([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])
+        ar = np.asarray([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])
         s = SubMatrix(ab, ar)
         s1 = 'DCCBBBAAA'
         s2 = 'BA'
@@ -140,21 +135,21 @@ class test_SubMatrix(unittest.TestCase):
 
     def test_get_subMatrix(self):
         ab = Alphabet('ABCD')
-        ar = asarray([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])
+        ar = np.asarray([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])
         mat = SubMatrix(ab, ar)
 
         mat2 = mat.reindex('ABC')
-        assert all(mat2.array == asarray([[1, 2, 3], [5, 6, 7], [9, 10, 11]]))
+        assert np.all(mat2.array == np.asarray([[1, 2, 3], [5, 6, 7], [9, 10, 11]]))
 
         mat2 = mat.reindex('BA')
-        assert all(mat2.array == asarray([[6, 5], [2, 1]]))
+        assert np.all(mat2.array == np.asarray([[6, 5], [2, 1]]))
 
         mat2 = mat.reindex(Alphabet('BA'))
-        assert all(mat2.array == asarray([[6, 5], [2, 1]]))
+        assert np.all(mat2.array == np.asarray([[6, 5], [2, 1]]))
 
     def test_fail_get(self):
         ab = Alphabet('ABCD')
-        ar = asarray([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])
+        ar = np.asarray([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])
         s = SubMatrix(ab, ar)
 
         self.assertRaises(IndexError, s.__getitem__, ('E', 'A'))
@@ -165,10 +160,10 @@ class test_SubMatrix(unittest.TestCase):
 
     def test_repr(self):
         ab = Alphabet('ABCD')
-        ar = asarray([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])
+        ar = np.asarray([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])
         s = SubMatrix(ab, ar)
 
-        string = repr(s)
+        repr(s)
         # print string
 
     def test_read(self):
@@ -188,7 +183,7 @@ class test_SubMatrix(unittest.TestCase):
                           SubMatrix.read, f)
 
         f = StringIO(test_matrix3)
-        mat = SubMatrix.read(f, alphabet=Alphabet('ARNDCQEGHILKMFPSTWYV'))
+        SubMatrix.read(f, alphabet=Alphabet('ARNDCQEGHILKMFPSTWYV'))
 
         f2 = StringIO(test_matrix1)
         self.assertRaises(ValueError,
@@ -229,7 +224,7 @@ class test_SubMatrix(unittest.TestCase):
         f.close()
 
         # Matrices formatted for old blast have a '*' (stop)
-        # column and no letters at the beggining of lines 
+        # column and no letters at the beggining of lines
         f = data_stream("blosum35.blast")
         mat = SubMatrix.read(f)
         self.assertEqual(mat[0, 10], -2)
@@ -305,26 +300,26 @@ X   -1  -1  -1  -2  -2  -1  -1  -2  -1  -2  -2  -1  -1  -1  -2  -1  -1  -1  -1  
 
 test_matrix3 = """#
 # This test matrix has a smaller alphabet
-A    4  -2  -2  -2   0  -1  -1  -1  -2  -2  -2  -2  -1  -2  -1   0  -1  -3  -2  -1  
-R   -2   6  -1  -1  -4   1   0  -3   0  -3  -3   2  -2  -3  -2  -1  -1  -2  -2  -3  
-N   -2  -1   7   1  -3   0   0  -1   0  -5  -4   0  -3  -4  -2   0  -1  -3  -2  -4  
-D   -2  -1   1   7  -4   0   1  -1  -1  -6  -5   0  -4  -5  -1   0  -1  -4  -3  -5  
-C    0  -4  -3  -4  12  -3  -4  -3  -3  -1  -2  -4  -1  -2  -3  -2  -1  -2  -2   0  
-Q   -1   1   0   0  -3   6   4  -2   0  -3  -3   1  -2  -3  -1   0  -1  -2  -2  -3  
-E   -1   0   0   1  -4   4   5  -2  -1  -4  -4   1  -3  -4  -1  -1  -1  -3  -3  -4  
-G   -1  -3  -1  -1  -3  -2  -2   7  -2  -6  -5  -2  -4  -5  -2  -1  -2  -4  -4  -5  
-H   -2   0   0  -1  -3   0  -1  -2   9  -3  -3  -1  -2  -1  -2  -1  -1   0   0  -3  
-I   -2  -3  -5  -6  -1  -3  -4  -6  -3   5   2  -4   1   0  -4  -4  -2  -1  -1   3  
-L   -2  -3  -4  -5  -2  -3  -4  -5  -3   2   5  -3   2   1  -3  -3  -2  -1  -1   1  
-K   -2   2   0   0  -4   1   1  -2  -1  -4  -3   5  -2  -4  -1  -1  -1  -3  -3  -3  
-M   -1  -2  -3  -4  -1  -2  -3  -4  -2   1   2  -2   7   1  -3  -2  -1   0   0   1  
-F   -2  -3  -4  -5  -2  -3  -4  -5  -1   0   1  -4   1   7  -3  -3  -2   3   3   0  
-P   -1  -2  -2  -1  -3  -1  -1  -2  -2  -4  -3  -1  -3  -3   8  -1  -2  -3  -3  -3  
-S    0  -1   0   0  -2   0  -1  -1  -1  -4  -3  -1  -2  -3  -1   4   1  -3  -2  -3  
-T   -1  -1  -1  -1  -1  -1  -1  -2  -1  -2  -2  -1  -1  -2  -2   1   5  -2  -2  -1  
-W   -3  -2  -3  -4  -2  -2  -3  -4   0  -1  -1  -3   0   3  -3  -3  -2  12   3  -2  
-Y   -2  -2  -2  -3  -2  -2  -3  -4   0  -1  -1  -3   0   3  -3  -2  -2   3   8  -2  
-V   -1  -3  -4  -5   0  -3  -4  -5  -3   3   1  -3   1   0  -3  -3  -1  -2  -2   5  
+A    4  -2  -2  -2   0  -1  -1  -1  -2  -2  -2  -2  -1  -2  -1   0  -1  -3  -2  -1
+R   -2   6  -1  -1  -4   1   0  -3   0  -3  -3   2  -2  -3  -2  -1  -1  -2  -2  -3
+N   -2  -1   7   1  -3   0   0  -1   0  -5  -4   0  -3  -4  -2   0  -1  -3  -2  -4
+D   -2  -1   1   7  -4   0   1  -1  -1  -6  -5   0  -4  -5  -1   0  -1  -4  -3  -5
+C    0  -4  -3  -4  12  -3  -4  -3  -3  -1  -2  -4  -1  -2  -3  -2  -1  -2  -2   0
+Q   -1   1   0   0  -3   6   4  -2   0  -3  -3   1  -2  -3  -1   0  -1  -2  -2  -3
+E   -1   0   0   1  -4   4   5  -2  -1  -4  -4   1  -3  -4  -1  -1  -1  -3  -3  -4
+G   -1  -3  -1  -1  -3  -2  -2   7  -2  -6  -5  -2  -4  -5  -2  -1  -2  -4  -4  -5
+H   -2   0   0  -1  -3   0  -1  -2   9  -3  -3  -1  -2  -1  -2  -1  -1   0   0  -3
+I   -2  -3  -5  -6  -1  -3  -4  -6  -3   5   2  -4   1   0  -4  -4  -2  -1  -1   3
+L   -2  -3  -4  -5  -2  -3  -4  -5  -3   2   5  -3   2   1  -3  -3  -2  -1  -1   1
+K   -2   2   0   0  -4   1   1  -2  -1  -4  -3   5  -2  -4  -1  -1  -1  -3  -3  -3
+M   -1  -2  -3  -4  -1  -2  -3  -4  -2   1   2  -2   7   1  -3  -2  -1   0   0   1
+F   -2  -3  -4  -5  -2  -3  -4  -5  -1   0   1  -4   1   7  -3  -3  -2   3   3   0
+P   -1  -2  -2  -1  -3  -1  -1  -2  -2  -4  -3  -1  -3  -3   8  -1  -2  -3  -3  -3
+S    0  -1   0   0  -2   0  -1  -1  -1  -4  -3  -1  -2  -3  -1   4   1  -3  -2  -3
+T   -1  -1  -1  -1  -1  -1  -1  -2  -1  -2  -2  -1  -1  -2  -2   1   5  -2  -2  -1
+W   -3  -2  -3  -4  -2  -2  -3  -4   0  -1  -1  -3   0   3  -3  -3  -2  12   3  -2
+Y   -2  -2  -2  -3  -2  -2  -3  -4   0  -1  -1  -3   0   3  -3  -2  -2   3   8  -2
+V   -1  -3  -4  -5   0  -3  -4  -5  -3   3   1  -3   1   0  -3  -3  -1  -2  -2   5
 """
 
 test_matrix4 = """# This matrix is invalid because it is asymetric! (AR, RA)

@@ -84,8 +84,8 @@ class test_transform(unittest.TestCase):
     #     self.assertEqual(s2, s3)
 
     def test_reduced_protein_alphabets(self):
-        seq = Seq("ENHGGKVALKTHCGKYLSIGDHKQVYLSHHLHGDHSLFHLEHHGGKVSIKGHHHHYISADHHGHVSTKEHHDHDTTFEEIII",
-                  reduced_protein_alphabet)
+        seq = Seq("ENHGGKVALKTHCGKYLSIGDHKQVYLSHHLHGDHSLFHLEHHGGKVSIKGHHHHYISADHHGHVSTKEHHDHDT"
+                  "TFEEIII", reduced_protein_alphabet)
 
         for t in reduced_protein_alphabets.values():
             t(seq)

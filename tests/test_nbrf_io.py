@@ -38,8 +38,6 @@ from io import StringIO
 
 import unittest
 
-from weblogo import *
-from weblogo.utils import *
 from weblogo.seq import protein_alphabet, dna_alphabet
 from weblogo.seq_io import nbrf_io, clustal_io, plain_io
 from . import data_stream
@@ -106,10 +104,10 @@ class test_nbrf_io(unittest.TestCase):
         seqs = nbrf_io.read(f)
         self.assertEqual(len(seqs), 2)
         self.assertEqual(seqs[1].endswith(
-                'C-AATC-G-CAATG-G--CTTGAACCGGGTAAAAGTCGT-A---------------------------------------------------------------------------------'),
+                'C-AATC-G-CAATG-G--CTTGAACCGGGTAAAAGTCGT-A----------------------------------------'
+                '-----------------------------------------'),
                 True)
         f.close()
-
 
     def test_parse_examples_alphabet(self):
         f = data_stream('rhod.pir')
@@ -117,6 +115,7 @@ class test_nbrf_io(unittest.TestCase):
         self.assertEqual(seqs[0].alphabet, protein_alphabet)
         self.assertEqual(len(seqs), 3)
         f.close()
+
 
 if __name__ == '__main__':
     unittest.main()

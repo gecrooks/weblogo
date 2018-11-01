@@ -109,6 +109,5 @@ class test_stockholm_io(unittest.TestCase):
                               stockholm_io.read, f)
 
 
-
 if __name__ == '__main__':
     unittest.main()
