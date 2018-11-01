@@ -62,6 +62,7 @@ Special Functions :
 
 __all__ = (
            'entropy', 'log2',
+           'incomplete_gamma', 'normalized_incomplete_gamma',
            )
 
 from math import log, exp
@@ -93,4 +94,3 @@ def entropy(pvec, base=exp(1)):
     ent /= log(base)
 
     return ent
-
