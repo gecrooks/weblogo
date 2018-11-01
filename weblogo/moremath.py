@@ -27,43 +27,14 @@
 
 """ Various bits of useful math not in the standard python library.
 
-Constants :
-
-- euler_gamma  = 0.577215...
-- catalan      = 0.915965...
-- golden_ratio = 1.618033...
-- bits_per_nat = log2(e) = 1/log(2)
-- sqrt_2pi     = 2.50662...
-
 Special Functions :
 
-
-
-- gamma()                       -- Gamma function.
-- lngamma()                     -- Logarithm of the gamma function
-- factorial()                   -- Factorial function.
-- digamma()                     -- Digamma function (logarithmic derivative of gamma).
-- trigamma()                    -- Trigamma function (derivative of digamma).
-
-- cgamma()                       -- Complex math version of counterparts above.
-- clngamma()
-- cdigamma()
-- ctrigamma()
-
 - entropy()                     -- The entropy of a probability vector
-- incomplete_gamma()            -- The 'upper' incomplete gamma function.
-- normalized_incomplete_gamma() --
 - log2()                        -- Base 2 logarithms.
-- argmin()
-- argmax()
-
 
 """
 
-__all__ = (
-           'entropy', 'log2',
-           'incomplete_gamma', 'normalized_incomplete_gamma',
-           )
+__all__ = ('entropy', 'log2')
 
 from math import log, exp
 
