@@ -29,7 +29,6 @@ import unittest
 
 from weblogo.seq import *
 from weblogo.seq_io import array_io, fasta_io
-from test_corebio import *
 
 
 class test_array_io(unittest.TestCase):

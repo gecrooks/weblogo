@@ -20,6 +20,7 @@ from optparse import OptionGroup
 from weblogo import seq_io
 from weblogo.seq import SeqList, Seq, nucleic_alphabet
 from weblogo.utils.deoptparse import DeOptionParser
+from weblogo.transform import mask_low_complexity
 
 __version__ = "1.0.0"
 description = """ A tool for converting multiple sequence alignments from
@@ -36,7 +37,6 @@ def main():
     seqs = opts.reader.read(opts.fin)
 
     if opts.trans_seg:
-        from corebio.transform import mask_low_complexity
         seqs = SeqList([mask_low_complexity(s) for s in seqs])
 
     if opts.subsample is not None:
