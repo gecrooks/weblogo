@@ -17,9 +17,9 @@ one format to another.
 import sys
 from optparse import OptionGroup
 
-from corebio import seq_io
-from corebio.seq import SeqList, Seq, nucleic_alphabet
-from corebio.utils.deoptparse import DeOptionParser
+from weblogo import seq_io
+from weblogo.seq import SeqList, Seq, nucleic_alphabet
+from weblogo.utils.deoptparse import DeOptionParser
 
 __version__ = "1.0.0"
 description = """ A tool for converting multiple sequence alignments from

@@ -67,7 +67,7 @@ Please consult the manual for installation instructions and more information:
             entry_points={
                 'console_scripts': [
                     'weblogo = weblogo._cli:main',
-                    'transformseq = weblogo.transformseq:main'
+                    'transformseq = weblogo._transformseq:main'
                 ],
             },
     )
