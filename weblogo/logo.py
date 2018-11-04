@@ -116,41 +116,43 @@ from .utils import (isfloat, ArgumentError, stdrepr)
 
 from ._version import __version__
 
-from .logo_formatter import (GhostscriptAPI, pdf_formatter, jpeg_formatter, png_formatter,
-                             png_print_formatter,
-                             txt_formatter, eps_formatter, formatters, default_formatter)
+
+# from .logo_formatter import (GhostscriptAPI, pdf_formatter, jpeg_formatter, png_formatter,
+#                             png_print_formatter,
+#                             txt_formatter, eps_formatter, formatters, default_formatter)
 # ------ META DATA ------
 
-__all__ = ['LogoOptions',
-           'description',
-           '__version__',
-           'LogoFormat',
-           'LogoData',
-           'GhostscriptAPI',
-           'std_color_schemes',
-           'default_color_schemes',
-           'classic',
-           'std_units',
-           'std_sizes',
-           'std_alphabets',
-           'std_percentCG',
-           'pdf_formatter',
-           'jpeg_formatter',
-           'png_formatter',
-           'png_print_formatter',
-           'txt_formatter',
-           'eps_formatter',
-           'formatters',
-           'default_formatter',
-           'base_distribution',
-           'equiprobable_distribution',
-           'read_seq_data',
-           'Color',
-           'ColorScheme',
-           'parse_prior',
-           'release_description',
-           'description'
-           ]
+
+# __all__ = ['LogoOptions',
+#            'description',
+#            '__version__',
+#            'LogoFormat',
+#            'LogoData',
+#            'GhostscriptAPI',
+#            'std_color_schemes',
+#            'default_color_schemes',
+#            'classic',
+#            'std_units',
+#            'std_sizes',
+#            'std_alphabets',
+#            'std_percentCG',
+#            'pdf_formatter',
+#            'jpeg_formatter',
+#            'png_formatter',
+#            'png_print_formatter',
+#            'txt_formatter',
+#            'eps_formatter',
+#            'formatters',
+#            'default_formatter',
+#            'base_distribution',
+#            'equiprobable_distribution',
+#            'read_seq_data',
+#            'Color',
+#            'ColorScheme',
+#            'parse_prior',
+#            'release_description',
+#            'description'
+#            ]
 
 description = "Create sequence logos from biological sequence alignments."
 
@@ -242,74 +244,72 @@ class LogoOptions(object):
 
     All physical lengths are measured in points. (72 points per inch, 28.3 points per cm)
 
-    String attributes:
-        o creator_text             -- Embedded as comment in figures.
-        o logo_title               -- Creates title for the sequence logo
-        o logo_label               -- An optional figure label, added to the top left (e.g. '(a)').
-        o unit_name                -- See std_units for options. (Default 'bits')
-        o yaxis_label              -- Defaults to unit_name
-        o xaxis_label              -- Add a label to the x-axis, or hide x-axis altogether.
-        o fineprint                -- Defaults to WebLogo name and version
+    Args:
+        creator_text:           Embedded as comment in figures.
+        logo_title:             Creates title for the sequence logo
+        logo_label:             An optional figure label, added to the top left (e.g. '(a)').
+        unit_name:              See std_units for options. (Default 'bits')
+        yaxis_label:            Defaults to unit_name
+        xaxis_label:            Add a label to the x-axis, or hide x-axis altogether.
+        fineprint:              Defaults to WebLogo name and version
 
-    Boolean attributes:
-        o show_yaxis               -- Display entropy scale along y-axis (default: True)
-        o show_xaxis               -- Display sequence numbers along x-axis (default: True)
-        o show_ends                -- Display label at the ends of the sequence (default: False)
-        o show_fineprint           -- Toggle display of the WebLogo version information in the lower
+        show_yaxis:              Display entropy scale along y-axis (default: True)
+        show_xaxis:             Display sequence numbers along x-axis (default: True)
+        show_ends:              Display label at the ends of the sequence (default: False)
+        show_fineprint:          Toggle display of the WebLogo version information in the lower
                                       right corner. Optional, but we appreciate the acknowledgment.
-        o show_errorbars           -- Draw errorbars (default: False)
-        o show_boxes               -- Draw boxes around stack characters (default: True)
-        o debug                    -- Draw extra graphics debugging information.
-        o rotate_numbers           -- Draw xaxis numbers with vertical orientation?
-        o scale_width              -- boolean, scale width of characters proportional to ungaps
-        o pad_right                -- Make a single line logo the same width as multiline logos
+        show_errorbars:          Draw errorbars (default: False)
+        show_boxes:              Draw boxes around stack characters (default: True)
+        debug:                   Draw extra graphics debugging information.
+        rotate_numbers:          Draw xaxis numbers with vertical orientation?
+        scale_width:             boolean, scale width of characters proportional to ungaps
+        pad_right:               Make a single line logo the same width as multiline logos
                                       (default: False)
 
-    Other attributes:
-        o stacks_per_line           -- Maximum number of logo stacks per logo line. (Default: 40)
-        o yaxis_tic_interval        -- Distance between ticmarks on y-axis(default: 1.0)
-        o yaxis_minor_tic_ratio     -- Distance between minor tic ratio
-        o yaxis_scale               -- Sets height of the y-axis in designated units
-        o xaxis_tic_interval        -- Distance between ticmarks on x-axis(default: 1.0)
-        o number_interval           -- Distance between ticmarks (default: 1.0)
+        stacks_per_line:          Maximum number of logo stacks per logo line. (Default: 40)
+        yaxis_tic_interval:       Distance between ticmarks on y-axis(default: 1.0)
+        yaxis_minor_tic_ratio:    Distance between minor tic ratio
+        yaxis_scale:              Sets height of the y-axis in designated units
+        xaxis_tic_interval:       Distance between ticmarks on x-axis(default: 1.0)
+        number_interval:          Distance between ticmarks (default: 1.0)
 
-        o shrink_fraction           -- Proportional shrinkage of characters if show_boxes is true.
+        shrink_fraction:          Proportional shrinkage of characters if show_boxes is true.
 
-        o errorbar_fraction         -- Sets error bars display proportion
-        o errorbar_width_fraction   -- Sets error bars display
-        o errorbar_gray             -- Sets error bars' gray scale percentage (default .75)
+        errorbar_fraction:        Sets error bars display proportion
+        errorbar_width_fraction:  Sets error bars display
+        errorbar_gray:            Sets error bars' gray scale percentage (default .75)
 
-        o resolution                -- Dots per inch (default: 96). Used for bitmapped output
+        resolution:               Dots per inch (default: 96). Used for bitmapped output
                                        formats
 
-        o default_color             -- Symbol color if not otherwise specified
-        o color_scheme              -- A custom color scheme can be specified using CSS2 (Cascading
+        default_color:            Symbol color if not otherwise specified
+        color_scheme:             A custom color scheme can be specified using CSS2 (Cascading
                                        Style Sheet) syntax.
                                        E.g. 'red', '#F00', '#FF0000', 'rgb(255, 0, 0)',
                                        'rgb(100%, 0%, 0%)' or 'hsl(0, 100%, 50%)' for the color red.
 
-        o stack_width               -- Scale the visible stack width by the fraction of symbols in
+        stack_width:              Scale the visible stack width by the fraction of symbols in
                                        the column (I.e. columns with many gaps of unknowns are
                                        narrow.)  (Default: yes)
-        o stack_aspect_ratio        -- Ratio of stack height to width (default: 5)
+        stack_aspect_ratio:       Ratio of stack height to width (default: 5)
 
-        o logo_margin               -- Default: 2 pts
-        o stroke_width              -- Default: 0.5 pts
-        o tic_length                -- Default: 5 pts
-        o stack_margin              -- Default: 0.5 pts
+        logo_margin:              Default: 2 pts
+        stroke_width:             Default: 0.5 pts
+        tic_length:               Default: 5 pts
+        stack_margin:             Default: 0.5 pts
 
-        o small_fontsize            -- Small text font size in points
-        o fontsize                  -- Regular text font size in points
-        o title_fontsize            -- Title text font size in points
-        o number_fontsize           -- Font size for axis-numbers, in points.
+        small_fontsize:           Small text font size in points
+        fontsize:                 Regular text font size in points
+        title_fontsize:           Title text font size in points
+        number_fontsize:          Font size for axis-numbers, in points.
 
-        o text_font                 -- Select font for labels
-        o logo_font                 -- Select font for Logo
-        o title_font                -- Select font for Logo's title
+        text_font:                Select font for labels
+        logo_font:                Select font for Logo
+        title_font:               Select font for Logo's title
 
-        o first_index               -- Index of first position in sequence data
-        o logo_start                -- Lower bound of sequence to display
-        o logo_end                  -- Upper bound of sequence to display
+        first_index:              Index of first position in sequence data
+        logo_start:               Lower bound of sequence to display
+        logo_end:                 Upper bound of sequence to display
 
     """
 

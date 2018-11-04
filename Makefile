@@ -26,7 +26,7 @@ untyped:	## Report type errors and untyped functions
 	@mypy $(FILES) --ignore-missing-imports --follow-imports=skip --disallow-untyped-defs
 
 docs:		## Build documentation
-	$(MAKE) -C docs html
+	$(MAKE) -C docs html && open docs/_build/html/index.html
 
 .PHONY: help
 .PHONY: docs

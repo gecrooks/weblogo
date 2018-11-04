@@ -1,3 +1,9 @@
+"""
+Logo formatting. Each formatter is a function f(data, format) that draws
+a representation of the logo. The main graphical formatter is eps_formatter. A mapping
+'formatters' containing all available formatters . Each formatter returns binary data. The eps
+and data formats can decoded to strings, e.g. eps_as_string = eps_data.decode()
+"""
 
 import shutil
 from subprocess import Popen, PIPE
@@ -7,15 +13,9 @@ import os
 
 from .utils import resource_string
 
-
-# ------ Logo Formaters ------
-# Each formatter is a function f(LogoData, LogoFormat).
-# that draws a representation of the logo.
-# The main graphical formatter is eps_formatter. A mapping 'formatters'
-# containing all available formatters is located after the formatter
-# definitions.
-# Each formatter returns binary data. The eps and data formats can decoded
-# to strings, e.g. eps_as_string = eps_data.decode()
+__all__ = ['pdf_formatter', 'jpeg_formatter', 'svg_formatter', 'png_formatter',
+           'png_print_formatter', 'txt_formatter', 'eps_formatter', 'formatters',
+           'default_formatter', 'GhostscriptAPI']
 
 std_units = {
     "bits": 1. / log(2),
@@ -26,9 +26,10 @@ std_units = {
     "kcal/mol": 1.987 * 298.15 / 1000.,
     "probability": None,
 }
+"""Some text"""
 
 
-def pdf_formatter(data, format):
+def pdf_formatter(data, format) -> bytes:
     """ Generate a logo in PDF format."""
     eps = eps_formatter(data, format).decode()
     gs = GhostscriptAPI()
@@ -95,7 +96,7 @@ def txt_formatter(logodata, format):
     return str(logodata).encode()
 
 
-def eps_formatter(logodata, format):
+def eps_formatter(logodata, format) -> bytes:
     """ Generate a logo in Encapsulated Postscript (EPS)"""
     substitutions = {}
     from_format = [
@@ -121,8 +122,8 @@ def eps_formatter(logodata, format):
         "stack_width"
     ]
 
-    for s in from_format:
-        substitutions[s] = getattr(format, s)
+    for sf in from_format:
+        substitutions[sf] = getattr(format, sf)
 
     substitutions["shrink"] = str(format.show_boxes).lower()
 
@@ -213,7 +214,6 @@ def eps_formatter(logodata, format):
     return logo.encode()
 
 
-# map between output format names and logo
 formatters = {
     'eps': eps_formatter,
     'pdf': pdf_formatter,
@@ -223,8 +223,11 @@ formatters = {
     'svg': svg_formatter,
     'logodata': txt_formatter,
 }
+"""Map between output format names and corresponing logo formatter"""
+
 
 default_formatter = eps_formatter
+"""The default logo formatter."""
 
 
 class GhostscriptAPI(object):
@@ -232,7 +235,12 @@ class GhostscriptAPI(object):
 
     formats = ('png', 'pdf', 'jpeg')
 
-    def __init__(self, path=None):
+    def __init__(self, path: os.PathLike = None) -> None:
+        """
+        Raises:
+            EnvironmentError: If cannot find Ghostscript executable on
+                path
+        """
         command = shutil.which('gs', path=path)
         if command is None:
             command = shutil.which('gswin32c.exe', path=path)   # pragma: no cover
@@ -243,7 +251,8 @@ class GhostscriptAPI(object):
 
         self.command = command
 
-    def version(self):
+    def version(self) -> str:
+        """Returms: The ghostscript version string"""
         args = [self.command, '--version']
         try:
             p = Popen(args, stdout=PIPE)
@@ -252,7 +261,19 @@ class GhostscriptAPI(object):
             raise RuntimeError("Cannot communicate with ghostscript.")  # pragma: no cover
         return out.strip()
 
-    def convert(self, format, postscript, width, height, resolution=300):
+    def convert(self,
+                format: str,
+                postscript: str,
+                width: int,
+                height: int,
+                resolution: int = 300) -> bytes:
+        """Convert a string of postscript into a different graphical format
+
+        Supported foramts are 'png', 'pdf', and 'jpeg'.
+
+        Raises:
+            ValueError: For an unregonized format.
+        """
         device_map = {'png': 'png16m', 'pdf': 'pdfwrite', 'jpeg': 'jpeg'}
 
         try:
@@ -297,17 +318,6 @@ class GhostscriptAPI(object):
                 error_msg += err
             raise RuntimeError(error_msg)
 
-        # Python 2: out is a 'str', python 3 out is 'bytes'
         return out
-
-
-#        print(str(type(out)), file=sys.stderr)
-#        print(str(type(fout)), file=sys.stderr)
-#
-#        if sys.version_info[0] >= 3:
-#            #fout.buffer.write(out)  # If file
-#            fout.write(out)  # if bytesIO. But mangles output somehow
-#        else:
-#            print(out, file=fout)
 
 # end class Ghostscript
