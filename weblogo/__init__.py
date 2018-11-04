@@ -1,5 +1,5 @@
-from ._version import __version__
-from .logo import *					# noqa
-from .seq import *					# noqa
-from .seq_io import *				# noqa
-from .logo_formatter import *		# noqa
+from ._version import __version__   # noqa: F401
+from .logo import *					# noqa: F401, F403
+from .seq import *					# noqa: F401, F403
+from .seq_io import *				# noqa: F401, F403
+from .logo_formatter import *		# noqa: F401, F403
