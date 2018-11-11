@@ -3,7 +3,7 @@ WebLogo: A Sequence Logo Generator
 
 [![Build Status](https://travis-ci.org/WebLogo/weblogo.svg?branch=master)](https://travis-ci.org/WebLogo/weblogo)
 
- WebLogo is a web based application designed to make the generation of sequence logos as easy and painless as possible.
+WebLogo is a web based application designed to make the generation of sequence logos as easy and painless as possible.
 
 WebLogo can create output in several common graphics' formats, including the bitmap formats GIF and PNG, suitable for on-screen display, and the vector formats EPS and PDF, more suitable for printing, publication, and further editing. Additional graphics options include bitmap resolution, titles, optional axis, and axis labels, antialiasing, error bars, and alternative symbol formats.
 

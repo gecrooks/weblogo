@@ -8,3 +8,4 @@ Logo Data, Options, and Format
 
 .. automodule:: weblogo.logo
 	:members:
+

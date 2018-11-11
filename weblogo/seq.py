@@ -30,12 +30,14 @@ The characters in string must be contained in the alphabet. Various standard
 alphabets are provided.
 
 
-Classes :
+Classes ::
+
     Alphabet    -- A subset of non-null ascii characters
     Seq         -- An alphabetic string
     SeqList     -- A collection of Seq's
 
-Alphabets :
+Alphabets ::
+
     o generic_alphabet  -- A generic alphabet. Any printable ASCII character.
     o protein_alphabet -- IUCAP/IUB Amino Acid one letter codes.
     o nucleic_alphabet -- IUPAC/IUB Nucleic Acid codes 'ACGTURYSWKMBDHVN-'
@@ -53,7 +55,8 @@ Alphabets :
     o unambiguous_protein_alphabet -- The twenty canonical amino acid one letter
         codes, in alphabetic order, 'ACDEFGHIKLMNPQRSTVWY'
 
-Amino Acid Codes:
+Amino Acid Codes::
+
     Code  Alt.  Meaning
     -----------------
     A           Alanine
@@ -85,7 +88,8 @@ Amino Acid Codes:
     *           translation stop
     -    .~     gap
 
-Nucleotide Codes:
+Nucleotide Codes::
+
     Code  Alt.  Meaning
     ------------------------------
     A           Adenosine
@@ -112,8 +116,7 @@ Nucleotide Codes:
 Refs:
     http://www.chem.qmw.ac.uk/iupac/AminoAcid/A2021.html
     http://www.chem.qmw.ac.uk/iubmb/misc/naseq.html
-Status:
-    Beta
+
 Authors:
     GEC 2004,2005
 """

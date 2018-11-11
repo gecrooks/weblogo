@@ -34,45 +34,53 @@
 #  POSSIBILITY OF SUCH DAMAGE.
 
 
-""" Sequence file reading and writing.
+"""
+Sequence file reading and writing
+---------------------------------
 
 Biological sequence data is stored and transmitted using a wide variety of
 different file formats. This package provides convenient methods to read and
 write several of these file fomats.
 
 WebLogo is often capable of guessing the correct file type, either from the
-file extension or the structure of the file:
+file extension or the structure of the file::
+
 >>> import weblogo.seq_io
 >>> afile = open("test_weblogo/data/cap.fa")
 >>> seqs = weblogo.seq_io.read(afile)
 
 Alternatively, each sequence file type has a separate module named FILETYPE_io
-(e.g. fasta_io, clustal_io).
+(e.g. fasta_io, clustal_io)::
+
 >>> import weblogo.seq_io.fasta_io
 >>> afile = open("test_weblogo/data/cap.fa")
->>> seqs = weblogo.seq_io.fasta_io.read( afile )
+>>> seqs = weblogo.seq_io.fasta_io.read(afile)
 
-Sequence data can also be written back to files:
+Sequence data can also be written back to files::
+
 >>> fout = open("out.fa", "w")
->>> weblogo.seq_io.fasta_io.write( fout, seqs )
+>>> weblogo.seq_io.fasta_io.write(fout, seqs)
 
 
 Supported File Formats
 ----------------------
 
-Module              Name            Extension  read write features
----------------------------------------------------------------------------
-array_io            array, flatfile             yes  yes    none
-clustal_io          clustalw        aln         yes  yes
-fasta_io            fasta, Pearson  fa          yes  yes    none
-genbank_io          genbank         gb          yes
-intelligenetics_io  intelligenetics ig          yes  yes
-msf_io              msf             msf         yes
-nbrf_io             nbrf, pir       pir         yes
-nexus_io            nexus           nexus       yes
-phylip_io           phylip          phy         yes
-plain_io            plain, raw                  yes  yes    none
-table_io            table           tbl         yes  yes    none
+::
+
+    Module              Name            Extension  read write features
+    ---------------------------------------------------------------------------
+    array_io            array, flatfile             yes  yes    none
+    clustal_io          clustalw        aln         yes  yes
+    fasta_io            fasta, Pearson  fa          yes  yes    none
+    genbank_io          genbank         gb          yes
+    intelligenetics_io  intelligenetics ig          yes  yes
+    msf_io              msf             msf         yes
+    nbrf_io             nbrf, pir       pir         yes
+    nexus_io            nexus           nexus       yes
+    phylip_io           phylip          phy         yes
+    plain_io            plain, raw                  yes  yes    none
+    table_io            table           tbl         yes  yes    none
+
 
 Each IO module defines one or more of the following functions and variables:
 
@@ -113,9 +121,9 @@ extensions
 
 
 Attributes :
-- formats -- Available seq_io format parsers
-- format_names -- A map between format names and format parsers.
-- format_extensions -- A map between filename extensions and parsers.
+   * formats: Available seq_io format parsers
+   * format_names:  A map between format names and format parsers.
+   * format_extensions: A map between filename extensions and parsers.
 
 """
 
@@ -130,7 +138,9 @@ Attributes :
 #    - http://www.genomatix.de/online_help/help/sequence_formats.html
 
 
-from ..seq import Alphabet
+from typing.io import TextIO
+
+from ..seq import Alphabet, SeqList
 
 from . import (
     clustal_io,
@@ -230,7 +240,7 @@ def _get_parsers(fin):
     return parsers
 
 
-def read(fin, alphabet=None):
+def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
     """ Read a sequence file and attempt to guess its format.
     First the filename extension (if available) is used to infer the format.
     If that fails, then we attempt to parse the file using several common
@@ -240,9 +250,9 @@ def read(fin, alphabet=None):
 
     returns :
         SeqList
-    raises :
-        ValueError - If the file cannot be parsed.
-        ValueError - Sequence do not conform to the alphabet.
+    Raises :
+        ValueError: If the file cannot be parsed.
+        ValueError: Sequence do not conform to the alphabet.
     """
 
     alphabet = Alphabet(alphabet)

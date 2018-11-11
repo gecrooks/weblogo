@@ -36,54 +36,7 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 #  POSSIBILITY OF SUCH DAMAGE.
 
-# Replicates README.txt
-
 """
-WebLogo (https://github.com/WebLogo/weblogo) is a tool for creating sequence
-logos from biological sequence alignments.  It can be run on the command line,
-as a standalone webserver, as a CGI webapp, or as a python library.
-
-The main WebLogo webserver is located at http://weblogo.threeplusone.com
-
-Please consult the manual for installation instructions and more information:
-(Also located in the weblogolib/htdocs subdirectory.)
-
-    http://weblogo.threeplusone.com/manual.html
-
-For help on the command line interface run
-    ./weblogo --help
-
-To build a simple logo run
-    ./weblogo  < cap.fa > logo0.eps
-
-To run as a standalone webserver at localhost:8080
-    ./weblogo --serve
-
-To create a logo in python code:
-    >>> from weblogolib import *
-    >>> fin = open('cap.fa')
-    >>> seqs = read_seq_data(fin)
-    >>> data = LogoData.from_seqs(seqs)
-    >>> options = LogoOptions()
-    >>> options.title = "A Logo Title"
-    >>> format = LogoFormat(data, options)
-    >>> eps = eps_formatter( data, format)
-
-
-
--- Distribution and Modification --
-This package is distributed under the new BSD Open Source License.
-Please see the LICENSE.txt file for details on copyright and licensing.
-The WebLogo source code can be downloaded from
-https://github.com/WebLogo/weblogo
-
-WebLogo requires Python 2.6, 2.7, 3.2, 3.3 & 3.4 and the python
-array package 'numpy' (http://www.scipy.org/Download)
-
-Generating logos in PDF or bitmap graphics formats require that the ghostscript
-program 'gs' be installed. Scalable Vector Graphics (SVG) format also requires
-the program 'pdf2svg'.
-
 """
 
 import os
@@ -238,8 +191,9 @@ class LogoOptions(object):
     """ A container for all logo formatting options. Not all of these
     are directly accessible through the CLI or web interfaces.
 
-    To display LogoOption defaults:
-    >>> from weblogolib import *
+    To display LogoOption defaults::
+
+    >>> from weblogo import *
     >>> LogoOptions()
 
     All physical lengths are measured in points. (72 points per inch, 28.3 points per cm)
@@ -316,9 +270,10 @@ class LogoOptions(object):
     def __init__(self, **kwargs):
         """ Create a new LogoOptions instance.
 
-        >>> L = LogoOptions(logo_title = "Some Title String")
-        >>> L.show_yaxis = False
-        >>> repr(L)
+        >>> logooptions = LogoOptions(logo_title = "Some Title String")
+        >>> logooptions.show_yaxis = False
+        >>> repr(logooptions)
+
         """
 
         self.alphabet = None
@@ -407,25 +362,25 @@ class LogoFormat(LogoOptions):
     """ Specifies the format of the logo. Requires LogoData and LogoOptions
     objects.
 
-    >>> data = LogoData.from_seqs(seqs )
-    >>> options = LogoOptions()
-    >>> options.title = "A Logo Title"
-    >>> format = LogoFormat(data, options)
+    >>> logodata = LogoData.from_seqs(seqs)
+    >>> logooptions = LogoOptions()
+    >>> logooptions.title = "A Logo Title"
+    >>> format = LogoFormat(logodata, logooptions)
 
-    Raises an ArgumentError if arguments are invalid.
+    Raises:
+        ArgumentError: if arguments are invalid.
     """
 
-    def __init__(self, data, options=None):
+    def __init__(self, logodata, logooptions=None):
         """ Create a new LogoFormat instance.
 
         """
-        LogoOptions.__init__(self)
 
-        if options is not None:
-            self.__dict__.update(options.__dict__)
+        if logooptions is not None:
+            self.__dict__.update(logooptions.__dict__)
 
-        self.alphabet = data.alphabet
-        self.seqlen = data.length
+        self.alphabet = logodata.alphabet
+        self.seqlen = logodata.length
 
         # Derived parameters.
         self.show_title = False
@@ -625,17 +580,20 @@ def parse_prior(composition, alphabet, weight=None):
 
     Valid compositions:
 
-    - None or 'none' :        No composition sepecified
-    - 'auto' or 'automatic' : Use the typical average distribution
-                              for proteins and an equiprobable distribution for
-                              everything else.
-    - 'equiprobable' :        All monomers have the same probability.
-    - a percentage, e.g. '45%' or a fraction '0.45':
-                              The fraction of CG bases for nucleotide alphabets
-    - a species name, e.g. 'E. coli', 'H. sapiens' :
-                              Use the average CG percentage for the specie's
-                              genome.
-    - An explicit distribution,  e.g. {'A':10, 'C':40, 'G':40, 'T':10}
+    * None or 'none'
+        No composition sepecified
+    * 'auto' or 'automatic'
+        Use the typical average distribution
+        for proteins and an equiprobable distribution for
+        everything else.
+    * 'equiprobable'
+        All monomers have the same probability.
+    * a percentage, e.g. '45%' or a fraction '0.45'
+        The fraction of CG bases for nucleotide alphabets
+    * a species name, e.g. 'E. coli', 'H. sapiens',
+        Use the average CG percentage for the species's genome.
+    * An explicit distribution
+        e.g. {'A':10, 'C':40, 'G':40, 'T':10}
     """
     if composition is None:
         return None
@@ -743,7 +701,7 @@ def read_seq_data(fin,
                   alphabet=None,
                   ignore_lower_case=False,
                   max_file_size=0):
-    """ Read sequence data from the input stream and return a seqs object.
+    """Read sequence data from the input stream and return a seqs object.
 
     The environment variable WEBLOGO_MAX_FILE_SIZE overides the max_file_size argument.
     Used to limit the load on the WebLogo webserver.
@@ -784,12 +742,13 @@ def read_seq_data(fin,
 class LogoData(object):
     """The data needed to generate a sequence logo.
 
-    - alphabet --  The set of symbols to count.
+    Args:
+        alphabet: The set of symbols to count.
                    See also --sequence-type, --ignore-lower-case
-    - length  --   All sequences must be the same length, else WebLogo will return an error
-    - counts  --   An array of character counts
-    - entropy --   The relative entropy of each column
-    - entropy_interval -- entropy confidence interval
+        length:   All sequences must be the same length, else WebLogo will return an error
+        counts:   An array of character counts
+        entropy:  The relative entropy of each column
+        entropy_interval: entropy confidence interval
      """
 
     def __init__(self, length=None, alphabet=None, counts=None,

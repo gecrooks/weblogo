@@ -12,6 +12,7 @@ from string import Template
 import os
 
 from .utils import resource_string
+from .logo import LogoData, LogoFormat
 
 __all__ = ['pdf_formatter', 'jpeg_formatter', 'svg_formatter', 'png_formatter',
            'png_print_formatter', 'txt_formatter', 'eps_formatter', 'formatters',
@@ -29,30 +30,30 @@ std_units = {
 """Some text"""
 
 
-def pdf_formatter(data, format) -> bytes:
+def pdf_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
     """ Generate a logo in PDF format."""
-    eps = eps_formatter(data, format).decode()
+    eps = eps_formatter(logodata, logoformat).decode()
     gs = GhostscriptAPI()
-    return gs.convert('pdf', eps, format.logo_width, format.logo_height)
+    return gs.convert('pdf', eps, logoformat.logo_width, logoformat.logo_height)
 
 
-def _bitmap_formatter(data, format, device):
-    eps = eps_formatter(data, format).decode()
+def _bitmap_formatter(logodata: LogoData, logoformat: LogoFormat, device: str) -> bytes:
+    eps = eps_formatter(logodata, logoformat).decode()
     gs = GhostscriptAPI()
     return gs.convert(device, eps,
-                      format.logo_width, format.logo_height, format.resolution)
+                      logoformat.logo_width, logoformat.logo_height, logoformat.resolution)
 
 
-def jpeg_formatter(data, format):
+def jpeg_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
     """ Generate a logo in JPEG format."""
-    return _bitmap_formatter(data, format, device="jpeg")
+    return _bitmap_formatter(logodata, logoformat, device="jpeg")
 
 
-def svg_formatter(data, format):
+def svg_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
     """ Generate a logo in Scalable Vector Graphics (SVG) format.
     Requires the program 'pdf2svg' be installed.
     """
-    pdf = pdf_formatter(data, format)
+    pdf = pdf_formatter(logodata, logoformat)
 
     command = shutil.which('pdf2svg')
     if command is None:
@@ -79,24 +80,24 @@ def svg_formatter(data, format):
         os.remove(fname_pdf)
 
 
-def png_formatter(data, format):
+def png_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
     """ Generate a logo in PNG format."""
-    return _bitmap_formatter(data, format, device="png")
+    return _bitmap_formatter(logodata, logoformat, device="png")
 
 
-def png_print_formatter(data, format):
+def png_print_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
     """ Generate a logo in PNG format with print quality (600 DPI) resolution."""
-    format.resolution = 600
-    return _bitmap_formatter(data, format, device="png")
+    logoformat.resolution = 600
+    return _bitmap_formatter(logodata, logoformat, device="png")
 
 
-def txt_formatter(logodata, format):
+def txt_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
     """ Create a text representation of the logo data.
     """
     return str(logodata).encode()
 
 
-def eps_formatter(logodata, format) -> bytes:
+def eps_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
     """ Generate a logo in Encapsulated Postscript (EPS)"""
     substitutions = {}
     from_format = [
@@ -123,43 +124,43 @@ def eps_formatter(logodata, format) -> bytes:
     ]
 
     for sf in from_format:
-        substitutions[sf] = getattr(format, sf)
+        substitutions[sf] = getattr(logoformat, sf)
 
-    substitutions["shrink"] = str(format.show_boxes).lower()
+    substitutions["shrink"] = str(logoformat.show_boxes).lower()
 
     def format_color(color):    # (no fold)
         return " ".join(("[", str(color.red), str(color.green),
                          str(color.blue), "]"))
 
-    substitutions["default_color"] = format_color(format.default_color)
+    substitutions["default_color"] = format_color(logoformat.default_color)
 
     data = []
 
     # Unit conversion. 'None' for probability units
-    conv_factor = std_units[format.unit_name]
+    conv_factor = std_units[logoformat.unit_name]
 
     data.append("StartLine")
 
-    seq_from = format.logo_start - format.first_index
-    seq_to = format.logo_end - format.first_index + 1
+    seq_from = logoformat.logo_start - logoformat.first_index
+    seq_to = logoformat.logo_end - logoformat.first_index + 1
 
     # seq_index : zero based index into sequence data
     # logo_index : User visible coordinate, first_index based
     # stack_index : zero based index of visible stacks
     for seq_index in range(seq_from, seq_to):
-        # logo_index = seq_index + format.first_index
+        # logo_index = seq_index + logoformat.first_index
         stack_index = seq_index - seq_from
 
-        if stack_index != 0 and (stack_index % format.stacks_per_line) == 0:
+        if stack_index != 0 and (stack_index % logoformat.stacks_per_line) == 0:
             data.append("")
             data.append("EndLine")
             data.append("StartLine")
             data.append("")
 
-        data.append("(%s) StartStack" % format.annotate[seq_index])
+        data.append("(%s) StartStack" % logoformat.annotate[seq_index])
 
         if conv_factor:
-            stack_height = logodata.entropy[seq_index] * std_units[format.unit_name]
+            stack_height = logodata.entropy[seq_index] * std_units[logoformat.unit_name]
         else:
             stack_height = 1.0  # probability   # pragma: no cover
 
@@ -171,17 +172,17 @@ def eps_formatter(logodata, format) -> bytes:
         s.reverse()
         s.sort(key=lambda x: x[0])
 
-        if not format.reverse_stacks:
+        if not logoformat.reverse_stacks:
             s.reverse()         # pragma: no cover
 
         C = float(sum(logodata.counts[seq_index]))
         if C > 0.0:
             fraction_width = 1.0
-            if format.scale_width:
+            if logoformat.scale_width:
                 fraction_width = logodata.weight[seq_index]
                 # print(fraction_width, file=sys.stderr)
             for rank, c in enumerate(s):
-                color = format.color_scheme.symbol_color(seq_index, c[1], rank)
+                color = logoformat.color_scheme.symbol_color(seq_index, c[1], rank)
                 data.append(" %f %f %s (%s) ShowSymbol" % (
                     fraction_width, c[0] * stack_height / C,
                     format_color(color), c[1]))
@@ -194,8 +195,8 @@ def eps_formatter(logodata, format) -> bytes:
             low *= conv_factor
             high *= conv_factor
             center *= conv_factor
-            if high > format.yaxis_scale:
-                high = format.yaxis_scale       # pragma: no cover
+            if high > logoformat.yaxis_scale:
+                high = logoformat.yaxis_scale       # pragma: no cover
 
             down = (center - low)
             up = (high - center)
