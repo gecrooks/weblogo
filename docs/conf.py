@@ -17,7 +17,6 @@ html_sidebars = {
 }
 
 def setup(app):
-    app.add_stylesheet("theme.css")
     app.add_stylesheet("qf.css")
 
 
