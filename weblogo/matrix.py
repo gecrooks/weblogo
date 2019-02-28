@@ -322,7 +322,7 @@ class SubMatrix(AlphabeticArray):
             if i == L:
                 break
 
-        if i != L:
+        else:
             raise ValueError("Premature EOF")   # pragma: no cover
 
         for i in range(0, L):
