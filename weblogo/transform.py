@@ -47,7 +47,10 @@ Other:
 """
 
 from .data import dna_extended_letters, dna_ambiguity
-from .moremath import log2, entropy
+#from .moremath import log2, entropy
+from scipy.stats import entropy
+from numpy import log2
+
 from .seq import Seq, protein_alphabet, dna_alphabet, Alphabet
 from .seq import reduced_protein_alphabet as std_protein_alphabet
 
@@ -162,12 +165,12 @@ def mask_low_complexity(seq, width=12, trigger=1.8, extension=2.0, mask='X'):
 
     for c in s[0:width]:
         count[c] += 1
-    ent[0] = entropy(count, 2)
+    ent[0] = entropy(count, base=2)
 
     for i in range(1, nwindows):
         count[s[i - 1]] -= 1
         count[s[i + width - 1]] += 1
-        ent[i] = entropy(count, 2)
+        ent[i] = entropy(count, base=2)
 
     prev_segged = False
     for i in range(0, nwindows):

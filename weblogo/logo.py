@@ -62,7 +62,8 @@ from .logomath import Dirichlet
 
 from . import seq_io
 from .data import amino_acid_composition
-from .moremath import entropy
+#from .moremath import entropy
+from scipy.stats import entropy
 from .seq import (Alphabet, unambiguous_dna_alphabet,
                   unambiguous_rna_alphabet, unambiguous_protein_alphabet)
 from .utils import (isfloat, ArgumentError, stdrepr)

@@ -48,7 +48,8 @@ from weblogo.color import Color
 from weblogo.colorscheme import ColorScheme, RefSeqColor, SymbolColor, IndexColor
 from weblogo.logomath import Dirichlet, Gamma
 from weblogo.seq import (Alphabet, unambiguous_protein_alphabet, unambiguous_dna_alphabet)
-from weblogo.moremath import entropy
+#from weblogo.moremath import entropy
+from scipy.stats import entropy
 from weblogo.utils import ArgumentError
 from weblogo.seq import unambiguous_rna_alphabet
 
