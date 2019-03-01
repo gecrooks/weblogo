@@ -13,17 +13,18 @@ DEVELOPING WEBLOGO
    The WebLogo repository is https://github.com/WebLogo/weblogo
 	git pull origin master
 
-2. Update version number if necessary (corebio/_version.py )
+2. Update version number if necessary (subl corebio/_version.py
+ )
 
 
-3. Update changelog (weblogolib/htdocs/weblogo_changelog.txt)
+3. Update changelog (weblogo/htdocs/weblogo_changelog.txt)
 
 
 4. Update manual.html with the latest --help text.
 
 
 5. Rebuild examples.
-	cd weblogolib/htdocs/examples
+	cd weblogo/htdocs/examples
 	bash build_examples.sh
 	
 	

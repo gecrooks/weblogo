@@ -44,11 +44,11 @@ import shutil
 from io import StringIO
 
 
-import weblogolib
+import weblogo
 
 from string import Template
 
-from weblogolib.colorscheme import ColorScheme, SymbolColor
+from weblogo.colorscheme import ColorScheme, SymbolColor
 
 
 cgitb.enable()
@@ -90,13 +90,13 @@ extension = {
 
 alphabets = {
     'alphabet_auto': None,
-    'alphabet_protein': weblogolib.unambiguous_protein_alphabet,
-    'alphabet_rna': weblogolib.unambiguous_rna_alphabet,
-    'alphabet_dna': weblogolib.unambiguous_dna_alphabet}
+    'alphabet_protein': weblogo.unambiguous_protein_alphabet,
+    'alphabet_rna': weblogo.unambiguous_rna_alphabet,
+    'alphabet_dna': weblogo.unambiguous_dna_alphabet}
 
 color_schemes = {}
-for k in weblogolib.std_color_schemes.keys():
-    color_schemes['color_' + k.replace(' ', '_')] = weblogolib.std_color_schemes[k]
+for k in weblogo.std_color_schemes.keys():
+    color_schemes['color_' + k.replace(' ', '_')] = weblogo.std_color_schemes[k]
 
 composition = {'comp_none': 'none',
                'comp_auto': 'auto',
@@ -161,7 +161,7 @@ def float_or_none(value):
 
 
 def main(htdocs_directory=None):
-    logooptions = weblogolib.LogoOptions()
+    logooptions = weblogo.LogoOptions()
 
     # A list of form fields.
     # The default for checkbox values must be False (irrespective of
@@ -170,13 +170,13 @@ def main(htdocs_directory=None):
     controls = [
         Field('sequences', ''),
         Field('sequences_url', ''),
-        Field('format', 'png', weblogolib.formatters.get,
+        Field('format', 'png', weblogo.formatters.get,
               options=['png_print', 'png', 'jpeg', 'eps', 'pdf', 'svg', 'logodata'],
               # TODO: Should copy list from __init__.formatters
               errmsg="Unknown format option."),
         Field('stacks_per_line', logooptions.stacks_per_line, int,
               errmsg='Invalid number of stacks per line.'),
-        Field('stack_width', 'medium', weblogolib.std_sizes.get,
+        Field('stack_width', 'medium', weblogo.std_sizes.get,
               options=['small', 'medium', 'large'], errmsg='Invalid logo size.'),
         Field('alphabet', 'alphabet_auto', alphabets.get,
               options=['alphabet_auto', 'alphabet_protein', 'alphabet_dna',
@@ -364,18 +364,18 @@ def main(htdocs_directory=None):
             # Try reading data in transfac format first.
             # TODO Refactor this code
             motif = Motif.read_transfac(seq_file, alphabet=logooptions.alphabet)
-            prior = weblogolib.parse_prior(comp, motif.alphabet)
-            data = weblogolib.LogoData.from_counts(motif.alphabet, motif, prior)
+            prior = weblogo.parse_prior(comp, motif.alphabet)
+            data = weblogo.LogoData.from_counts(motif.alphabet, motif, prior)
         except ValueError:
-            seqs = weblogolib.read_seq_data(seq_file, alphabet=logooptions.alphabet,
+            seqs = weblogo.read_seq_data(seq_file, alphabet=logooptions.alphabet,
                                             ignore_lower_case=ignore_lower_case
                                             )
-            prior = weblogolib.parse_prior(comp, seqs.alphabet)
-            data = weblogolib.LogoData.from_seqs(seqs, prior)
+            prior = weblogo.parse_prior(comp, seqs.alphabet)
+            data = weblogo.LogoData.from_seqs(seqs, prior)
 
-        logoformat = weblogolib.LogoFormat(data, logooptions)
+        logoformat = weblogo.LogoFormat(data, logooptions)
         format = form["format"].value
-        logo = weblogolib.formatters[format](data, logoformat)
+        logo = weblogo.formatters[format](data, logoformat)
     except ValueError as err:
         errors.append(err.args)
     except IOError as err:
@@ -416,7 +416,7 @@ def send_form(controls, errors=[], htdocs_directory=None):
                 os.path.dirname(__file__, "htdocs"))
 
     substitutions = {}
-    substitutions["version"] = weblogolib.release_description
+    substitutions["version"] = weblogo.release_description
     # Bug fix. Not sure why this default substitution isn't added automatically like everything else
     substitutions['color_custom'] = ''
     for c in controls:
