@@ -3,12 +3,7 @@
 from setuptools import setup
 
 
-# FIXME
-exec(open("./weblogo/_version.py").read())  # sets __version__
-
-
-def main():
-    long_description = """
+long_description = """
 WebLogo (https://github.com/WebLogo/weblogo) is a tool for creating sequence
 logos from biological sequence alignments.  It can be run on the command line,
 as a standalone webserver, as a CGI webapp, or as a python library.
@@ -20,17 +15,21 @@ Please consult the manual for installation instructions and more information:
 
 (Also located at http://weblogo.threeplusone.com/manual.html.)
 """
-    setup(
+
+setup(
             name="weblogo",
-            version=__version__,          # noqa: F821
+            python_requires='>=3.6',
+
+            setup_requires=['setuptools_scm'],
+            use_scm_version={'write_to': 'weblogo/version.py'},
+
             description="WebLogo3 : Sequence Logos Redrawn",
             long_description=long_description,
             license='BSD',
             maintainer="Gavin Crooks",
             maintainer_email="gec@threeplusone.com",
             url="https://github.com/WebLogo/weblogo",
-            download_url='https://github.com/WebLogo/weblogo/archive/%s.zip'
-                % __version__,  # noqa: F821
+
             classifiers=[
                 'Development Status :: 5 - Production/Stable',
                 'Intended Audience :: Science/Research',
@@ -72,6 +71,3 @@ Please consult the manual for installation instructions and more information:
             },
     )
 
-
-if __name__ == '__main__':
-    main()

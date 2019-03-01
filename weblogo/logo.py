@@ -67,7 +67,7 @@ from .seq import (Alphabet, unambiguous_dna_alphabet,
                   unambiguous_rna_alphabet, unambiguous_protein_alphabet)
 from .utils import (isfloat, ArgumentError, stdrepr)
 
-from ._version import __version__
+from .version import version as __version__
 
 
 # from .logo_formatter import (GhostscriptAPI, pdf_formatter, jpeg_formatter, png_formatter,
@@ -113,8 +113,8 @@ release_description = "WebLogo %s" % (__version__)
 
 
 def cgi(htdocs_directory):  # pragma: no cover
-    import weblogolib._cgi
-    weblogolib._cgi.main(htdocs_directory)
+    import weblogo._cgi
+    weblogo._cgi.main(htdocs_directory)
 
 
 aa_composition = [amino_acid_composition[_k] for _k in unambiguous_protein_alphabet]
