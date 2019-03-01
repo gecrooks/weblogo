@@ -112,7 +112,7 @@ description = "Create sequence logos from biological sequence alignments."
 release_description = "WebLogo %s" % (__version__)
 
 
-def cgi(htdocs_directory):
+def cgi(htdocs_directory):  # pragma: no cover
     import weblogolib._cgi
     weblogolib._cgi.main(htdocs_directory)
 
@@ -443,6 +443,8 @@ class LogoFormat(LogoOptions):
             self.logo_end = self.seqlen + self.first_index - 1
 
         self.total_stacks = self.logo_end - self.logo_start + 1
+        if self.total_stacks <= 0:
+            raise ArgumentError("Logo must contain at least one stack", 'logo_end')
 
         if self.logo_start - self.first_index < 0:
             raise ArgumentError(
@@ -473,6 +475,9 @@ class LogoFormat(LogoOptions):
         if not self.yaxis_scale:
             conversion_factor = std_units[self.unit_name]
             if conversion_factor:
+                if self.alphabet is None:
+                    raise ArgumentError("Need an alphabet", 'alphabet')
+
                 self.yaxis_scale = log(len(self.alphabet)) * conversion_factor
             else:
                 self.yaxis_scale = 1.0  # probability units
@@ -631,7 +636,6 @@ def parse_prior(composition, alphabet, weight=None):
             .replace(':', ' ').split()
 
         if len(explicit) != len(alphabet) * 2:
-            # print(explicit)
             raise ValueError("Explicit prior does not match length of alphabet")
         prior = - ones(len(alphabet), float64)
         try:
@@ -644,7 +648,7 @@ def parse_prior(composition, alphabet, weight=None):
             raise ValueError("Cannot parse explicit composition")
 
         if any(prior == -1.):
-            raise ValueError("Explicit prior does not match alphabet")
+            raise ValueError("Explicit prior does not match alphabet")  # pragma: no cover
         prior /= sum(prior)
         prior *= weight
 
@@ -653,7 +657,7 @@ def parse_prior(composition, alphabet, weight=None):
 
     if len(prior) != len(alphabet):
         raise ValueError(
-                "The sequence alphabet and composition are incompatible.")
+                "The sequence alphabet and composition are incompatible.")  # pragma: no cover
     return prior
 
 
@@ -686,14 +690,6 @@ def _seq_names():
     fin_names.remove('plain')
     fin_names.append('transfac')
     return fin_names
-
-
-def _seq_extensions():
-    """ Returns a list of the file extensions of accepted sequence data formats """
-    exts = []
-    for f in seq_io.formats:
-        exts.extend(f.extensions)
-    exts.extend('dat')  # Occasionaly used for transfac files (?)
 
 
 def read_seq_data(fin,
@@ -865,7 +861,7 @@ class LogoData(object):
         return out.getvalue()
 
 
-def _from_URL_fileopen(target_url):
+def _from_URL_fileopen(target_url):  # pragma: no cover
     """opens files from a remote URL location"""
 
     # parsing url in component parts

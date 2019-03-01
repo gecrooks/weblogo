@@ -35,19 +35,22 @@
 #  POSSIBILITY OF SUCH DAMAGE.
 
 import unittest
+import pytest
 
 from math import log, sqrt
 from pkg_resources import resource_stream
 
 from numpy import array, float64, ones, zeros, all
 
-from weblogo import LogoOptions, equiprobable_distribution
+from weblogo import LogoOptions, equiprobable_distribution, LogoData, LogoFormat
 from weblogo import parse_prior, GhostscriptAPI
 from weblogo.color import Color
 from weblogo.colorscheme import ColorScheme, RefSeqColor, SymbolColor, IndexColor
 from weblogo.logomath import Dirichlet, Gamma
 from weblogo.seq import (Alphabet, unambiguous_protein_alphabet, unambiguous_dna_alphabet)
 from weblogo.moremath import entropy
+from weblogo.utils import ArgumentError
+from weblogo.seq import unambiguous_rna_alphabet
 
 
 def data_stream(name):
@@ -57,6 +60,87 @@ def data_stream(name):
 class test_logoformat(unittest.TestCase):
     def test_options(self):
         LogoOptions()
+
+
+def test_logoformat_errors():
+    logodata = LogoData()
+    logodata.length = 100
+
+    # Negactive logo_margin
+    with pytest.raises(ArgumentError):
+        logooptions = LogoOptions()
+        logooptions.logo_margin = -1
+        LogoFormat(logodata, logooptions)
+
+    # logo_start before start of sequecne
+    with pytest.raises(ArgumentError):
+        logooptions = LogoOptions()
+        logooptions.first_index = 10
+        logooptions.logo_start = -10
+        LogoFormat(logodata, logooptions)
+
+    # logo_end before logo_staRT
+    with pytest.raises(ArgumentError):
+        logooptions = LogoOptions()
+        logooptions.first_index = 1
+        logooptions.logo_start = 10
+        logooptions.logo_end = -10
+        LogoFormat(logodata, logooptions)
+
+    # logo_end past lenght of sequence
+    with pytest.raises(ArgumentError):
+        logooptions = LogoOptions()
+        logooptions.first_index = 1
+        logooptions.logo_start = 10
+        logooptions.logo_end = 200
+        LogoFormat(logodata, logooptions)
+
+    # No alphabet
+    with pytest.raises(ArgumentError):
+        logooptions = LogoOptions()
+        logooptions.first_index = 1
+        logooptions.logo_start = 10
+        logooptions.logo_end = 20
+        LogoFormat(logodata, logooptions)
+
+    with pytest.raises(ArgumentError):
+        logooptions = LogoOptions()
+        logooptions.yaxis_scale = -1
+        LogoFormat(logodata, logooptions)
+
+
+def test_logoformats():
+    # Make sure all different logo option code gets run
+    logodata = LogoData()
+    logodata.alphabet = unambiguous_rna_alphabet
+    logodata.length = 100
+
+    logooptions = LogoOptions()
+    logooptions.fineprint = None
+    logooptions.xaxis_label = True
+    logooptions.yaxis_label = "Label"
+    LogoFormat(logodata, logooptions)
+
+    logooptions.yaxis_label = ''
+    logooptions.unit_name = 'probability'
+    LogoFormat(logodata, logooptions)
+
+    logooptions.show_yaxis = False
+    LogoFormat(logodata, logooptions)
+
+    logooptions.yaxis_label = 'Label'
+    logooptions.show_ends = True
+    logooptions.show_xaxis = True
+    LogoFormat(logodata, logooptions)
+
+    logooptions.rotate_numbers = True
+    LogoFormat(logodata, logooptions)
+
+    logooptions.show_xaxis = False
+    LogoFormat(logodata, logooptions)
+
+    logodata.alphabet = "ABCD"
+    LogoFormat(logodata, logooptions)
 
 
 class test_ghostscript(unittest.TestCase):
@@ -108,6 +192,9 @@ class test_parse_prior(unittest.TestCase):
         self.assertTrue(all(2. * equiprobable_distribution(4) ==
                             parse_prior('automatic', unambiguous_dna_alphabet)))
 
+        parse_prior('automatic', unambiguous_protein_alphabet)
+        parse_prior('E. coli', unambiguous_dna_alphabet)
+
     def test_weight(self):
         self.assertTrue(all(2. * equiprobable_distribution(4) ==
                             parse_prior('automatic', unambiguous_dna_alphabet)))
@@ -119,6 +206,23 @@ class test_parse_prior(unittest.TestCase):
         p = array((10, 40, 40, 10), float64) * 2. / 100.
         self.assertTrue(all(
                 p == parse_prior(s, unambiguous_dna_alphabet)))
+
+
+def test_parse_prior_error():
+    with pytest.raises(ValueError):
+        parse_prior('0.5', unambiguous_protein_alphabet, weight=-10000.0)
+
+    with pytest.raises(ValueError):
+        s = "{'A':10, 'C':40, 'G':40, 'T':10}"
+        parse_prior(s, unambiguous_protein_alphabet)
+
+    with pytest.raises(ValueError):
+        s = "{'A':'ljkasd', 'C':40, 'G':40, 'T':10}"
+        parse_prior(s, unambiguous_dna_alphabet)
+
+    with pytest.raises(ValueError):
+        s = "asjnd"
+        parse_prior(s, unambiguous_dna_alphabet)
 
 
 class test_logooptions(unittest.TestCase):
