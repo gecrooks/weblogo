@@ -23,6 +23,8 @@
 
 """ Color specifications using CSS2 (Cascading Style Sheet) syntax."""
 
+from typing import List, Any
+
 
 class Color(object):
     """ Color specifications using CSS2 (Cascading Style Sheet) syntax.
@@ -48,7 +50,7 @@ class Color(object):
 
     """
 
-    def __init__(self, red, green, blue):
+    def __init__(self, red: float, green: float, blue: float) -> None:
         if not (type(red) == type(green) == type(blue)):
             raise TypeError("Mixed floats and integers?")
         # Convert integer RBG values in [0, 255] to floats in [0, 1]
@@ -64,17 +66,17 @@ class Color(object):
         self.blue = max(0., min(blue, 1.0))
 
     @staticmethod
-    def names():
+    def names() -> List[str]:
         "Return a list of standard color names."
-        return _std_colors.keys()
+        return list(_std_colors.keys())
 
     @classmethod
-    def from_rgb(cls, r, g, b):
+    def from_rgb(cls, r: float, g: float, b: float) -> "Color":
         return cls(r, g, b)
 
     @classmethod
-    def from_hsl(cls, hue_angle, saturation, lightness):
-        def hue_to_rgb(v1, v2, vH):
+    def from_hsl(cls, hue_angle: float, saturation: float, lightness: float) -> "Color":
+        def hue_to_rgb(v1: float, v2: float, vH: float) -> float:
             if vH < 0.0:
                 vH += 1.0
             if vH > 1.0:
@@ -111,7 +113,7 @@ class Color(object):
         return cls(r, g, b)
 
     @staticmethod
-    def by_name(string):
+    def by_name(string: str) -> "Color":
         s = string.strip().lower().replace(' ', '')
         try:
             return _std_colors[s]
@@ -119,8 +121,8 @@ class Color(object):
             raise ValueError("Unknown color name: %s" % s)
 
     @classmethod
-    def from_string(cls, string):
-        def to_frac(string):
+    def from_string(cls, string: str) -> "Color":
+        def to_frac(string: str) -> float:
             # string can be "255" or "100%"
             if string[-1] == '%':
                 return float(string[0:-1]) / 100.
@@ -160,7 +162,7 @@ class Color(object):
 
         raise ValueError("Cannot parse string: %s" % s)
 
-    def __eq__(self, other):
+    def __eq__(self, other: Any) -> bool:
         if not isinstance(other, self.__class__):
             return False
         req = int(0.5 + 255. * self.red) == int(0.5 + 255. * other.red)
@@ -168,7 +170,7 @@ class Color(object):
         geq = int(0.5 + 255. * self.green) == int(0.5 + 255. * other.green)
         return req and beq and geq
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "Color(%f,%f,%f)" % (self.red, self.green, self.blue)
 
 
