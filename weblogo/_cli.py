@@ -545,7 +545,7 @@ def _build_option_parser():
                           type="float",
                           help="Height of yaxis in units. (Default: Maximum value with "
                                "uninformative prior.)",
-                          metavar="UNIT")
+                          metavar="NUMBER")
 
     format_grp.add_option("-Y", "--show-yaxis",
                           action="store",

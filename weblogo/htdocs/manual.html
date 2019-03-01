@@ -494,9 +494,9 @@
                             <dt>
                                 <h4> Download and Installation</h4></dt>
                             <dd>
-                                If the python package <a href="http://peak.telecommunity.com/DevCenter/setuptools"><code class="code">setuptools</code></a> has been installed, then WebLogo and its dependencies can be downloaded and installed with a single command:
+                                WebLogo and its dependencies can be downloaded and installed with pip:
                                 <pre>
-                sudo easy_install weblogo
+                pip install weblogo
                 </pre> Alternatively, weblogo and its dependencies can be installed manually. The WebLogo source code can be downloaded from
                                 <a href="https://github.com/WebLogo/weblogo/issues">Weblogo's Github repository</a>. This code is distributed under various <a href="http://www.opensource.org/docs/definition">open source licenses</a>. Please consult the <code class="code">LICENSE.txt</code> file in the source distribution for details.
                                 <p>
@@ -516,16 +516,7 @@
                                 <p>
                                     It should now be possible to access WebLogo at <a href="http://localhost:8080/">http://localhost:8080/</a>.
                                 </p>
-                                <p>
-                                    The command line client and WebLogo libraries can be permanently installed using the supplied <code class="code">setup.py</code> script.</p>
-                                <pre>
-                sudo python setup.py install
-                </pre>
-                                <p>
-                                    Run <code class="code">python setup.py help</code> for more installation options. For example, to specifically install the weblogo script to /usr/local/bin </p>
-                                <pre>
-                sudo python setup.py install_scripts --install-dir /usr/local/bin
-                </pre>
+                                
                             </dd>
                             <dt>
                                 <h4>Web App</h4></dt>
@@ -600,7 +591,7 @@ Options:
                                 specified then weblogo will examine the input
                                 data and make an educated guess. See also
                                 --sequence-type, --ignore-lower-case
-    -U --units NUMBER           A unit of entropy ('bits' (default), 'nats',
+    -U --units UNIT             A unit of entropy ('bits' (default), 'nats',
                                 'digits'), or a unit of free energy ('kT',
                                 'kJ/mol', 'kcal/mol'), or 'probability' for
                                 probabilities
@@ -649,7 +640,7 @@ Options:
        --number-interval NUMBER
                                 Distance between numbers on X-axis (default:
                                 5)
-    -S --yaxis UNIT             Height of yaxis in units. (Default: Maximum
+    -S --yaxis NUMBER           Height of yaxis in units. (Default: Maximum
                                 value with uninformative prior.)
     -Y --show-yaxis YES/NO      Display entropy scale along y-axis? (default:
                                 True)
@@ -745,7 +736,10 @@ Options:
                             </p>
                             <pre>
                 &gt; git clone https://github.com/WebLogo/weblogo
-                &gt;  cd weblogo
+                &gt; pip install -e .
+
+                
+                &gt; cd weblogo
               </pre>
                             <p>
                                 Please consult the developer notes, <code class="code">DEVELOPERS.txt</code> and software license <code class="code">LICENSE.txt</code>
