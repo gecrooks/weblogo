@@ -384,7 +384,7 @@ def _build_option_parser():
                         help="A unit of entropy ('bits' (default), 'nats', 'digits'), or a unit of"
                              "free energy ('kT', 'kJ/mol', 'kcal/mol'), or 'probability' for"
                              " probabilities",
-                        metavar="NUMBER")
+                        metavar="UNIT")
 
     data_grp.add_option("", "--composition",
                         dest="composition",
