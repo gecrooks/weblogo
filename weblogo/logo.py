@@ -42,6 +42,7 @@
 import os
 import sys
 
+from typing.io import TextIO
 from datetime import datetime
 from math import log, sqrt
 import shutil
@@ -52,7 +53,7 @@ from urllib.parse import urlparse, urlunparse
 
 # Avoid 'from numpy import *' since numpy has lots of names defined
 from numpy import array, asarray, float64, ones, zeros, any
-import numpy as na
+import numpy as np
 
 from .color import Color
 from .colorscheme import (ColorScheme, SymbolColor, monochrome, hydrophobicity, base_pairing,
@@ -62,10 +63,9 @@ from .logomath import Dirichlet
 
 from . import seq_io
 from .data import amino_acid_composition
-#from .moremath import entropy
 from scipy.stats import entropy
 from .seq import (Alphabet, unambiguous_dna_alphabet,
-                  unambiguous_rna_alphabet, unambiguous_protein_alphabet)
+                  unambiguous_rna_alphabet, unambiguous_protein_alphabet, SeqList)
 from .utils import (isfloat, ArgumentError, stdrepr)
 
 from .version import version as __version__
@@ -670,7 +670,7 @@ def base_distribution(percentCG):
     return asarray((A, C, G, T), float64)
 
 
-def equiprobable_distribution(length):
+def equiprobable_distribution(length: int) -> np.ndarray:
     return ones((length), float64) / length
 
 
@@ -759,7 +759,10 @@ class LogoData(object):
         self.weight = weight
 
     @classmethod
-    def from_counts(cls, alphabet, counts, prior=None):
+    def from_counts(cls,
+                    alphabet: Alphabet,
+                    counts: np.ndarray,
+                    prior: np.ndarray = None) -> 'LogoData':
         """Build a LogoData object from counts."""
         # Counts is a Motif object?
         # counts = counts.array
@@ -795,7 +798,7 @@ class LogoData(object):
                 entropy_interval[i][0], entropy_interval[i][1] = \
                     posterior.interval_relative_entropy(prior / sum(prior), 0.95)
 
-        weight = array(na.sum(counts, axis=1), float)
+        weight = array(np.sum(counts, axis=1), float)
         max_weight = max(weight)
         if max_weight == 0.0:
             raise ValueError('No counts.')
@@ -804,7 +807,7 @@ class LogoData(object):
         return cls(seq_length, alphabet, counts, ent, entropy_interval, weight)
 
     @classmethod
-    def from_seqs(cls, seqs, prior=None):
+    def from_seqs(cls, seqs: SeqList, prior: np.ndarray = None) -> 'LogoData':
         """Build a LogoData object from a SeqList, a list of sequences."""
         # --- VALIDATE DATA ---
         # check that at least one sequence of length at least 1 long
@@ -826,7 +829,7 @@ class LogoData(object):
         counts = seqs.profile()
         return cls.from_counts(seqs.alphabet, counts, prior)
 
-    def __str__(self):
+    def __str__(self) -> str:
         out = StringIO()
         print('## LogoData', file=out)
         print('# First column is position number, counting from zero', file=out)
@@ -862,7 +865,7 @@ class LogoData(object):
         return out.getvalue()
 
 
-def _from_URL_fileopen(target_url):  # pragma: no cover
+def _from_URL_fileopen(target_url: str) -> TextIO:  # pragma: no cover
     """opens files from a remote URL location"""
 
     # parsing url in component parts
@@ -888,8 +891,7 @@ def _from_URL_fileopen(target_url):  # pragma: no cover
 
         # pull file id
         (scheme, net_location, path_raw, param, query, frag) = urlparse(target_url)
-        path = path_raw.split('/')
-        id_file = path[3]
+        id_file = path_raw.split('/')[3]
 
         # rebuild URL for direct download
         target_url = google_directdl_frag + id_file

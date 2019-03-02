@@ -142,6 +142,7 @@ Status: Beta (Data needs to be proof checked.)
 # The ExPasy ProtScale tool is a great source of amino acid properties.
 # http://au.expasy.org/cgi-bin/protscale.pl
 
+from typing.io import TextIO
 from .utils import resource_string, resource_stream, resource_filename
 from . import utils
 
@@ -183,19 +184,19 @@ _resource_filenames = {
 # TODO: Substitution matrix parser, SeqMatrix.read
 # _resource_parsers = {}
 
-def data_string(name):
+def data_string(name: str) -> str:
     """Load the specified resource as a string."""
     fn = _resource_filenames[name]
     return resource_string(__name__, fn, __file__)
 
 
-def data_stream(name):
+def data_stream(name: str) -> TextIO:
     """Provide an open file handle to the specified resource."""
     fn = _resource_filenames[name]
     return resource_stream(__name__, fn, __file__)
 
 
-def data_filename(name):
+def data_filename(name: str) -> str:
     """Provide a filename for the given resource in the local filesystem."""
     fn = _resource_filenames[name]
     return resource_filename(__name__, fn, __file__)

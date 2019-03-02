@@ -29,20 +29,23 @@ Null sequence IO. Acts like /dev/null. Read returns empty sequences or sequence 
 writes do nothing.
 """
 
-from ..seq import Seq, SeqList
+from typing import Generator
+from typing.io import TextIO
+
+from ..seq import Seq, SeqList, Alphabet
 
 names = ()
 extensions = ()
 
 
-def read(fin, alphabet=None):
+def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
     assert fin is not None  # Do something with arguments to quiet pychecker
     if alphabet is not None:
         pass
     return SeqList([])
 
 
-def iterseq(fin, alphabet=None):
+def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Generator:
     assert fin is not None
     if alphabet is not None:
         pass
@@ -50,13 +53,13 @@ def iterseq(fin, alphabet=None):
     return
 
 
-def write(fout, seqs):
+def write(fout: TextIO, seqs: SeqList) -> None:
     assert fout is not None
     assert seqs is not None
     return
 
 
-def writeseq(fout, seq):
+def writeseq(fout: TextIO, seq: SeqList) -> None:
     assert fout is not None
     assert seq is not None
     return

@@ -203,7 +203,7 @@ class Reiterate(object):
 # End class Reiterate
 
 
-def crc32(string):
+def crc32(string: str) -> str:
     """Return the standard CRC32 checksum as a hexidecimal string."""
     import binascii
     return "%08X" % binascii.crc32(string.encode())
@@ -212,7 +212,7 @@ def crc32(string):
 _crc64_table = None
 
 
-def crc64(string):
+def crc64(string: str) -> str:
     """ Calculate ISO 3309 standard cyclic redundancy checksum.
     Used, for example, by SWISS-PROT.
 

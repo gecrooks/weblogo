@@ -47,7 +47,6 @@ Other:
 """
 
 from .data import dna_extended_letters, dna_ambiguity
-#from .moremath import log2, entropy
 from scipy.stats import entropy
 from numpy import log2
 

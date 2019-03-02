@@ -13,6 +13,7 @@ import os
 
 from .utils import resource_string
 from .logo import LogoData, LogoFormat
+from .color import Color
 
 __all__ = ['pdf_formatter', 'jpeg_formatter', 'svg_formatter', 'png_formatter',
            'png_print_formatter', 'txt_formatter', 'eps_formatter', 'formatters',
@@ -128,7 +129,7 @@ def eps_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
 
     substitutions["shrink"] = str(logoformat.show_boxes).lower()
 
-    def format_color(color):    # (no fold)
+    def format_color(color: Color) -> str:    # (no fold)
         return " ".join(("[", str(color.red), str(color.green),
                          str(color.blue), "]"))
 

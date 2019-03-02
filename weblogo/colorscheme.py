@@ -52,8 +52,10 @@ Status : Beta - Needs documentation.
 # http://www.jalview.org
 
 
+from typing import Sequence, List, Optional
 from . import seq
 from .color import Color
+from .seq import Alphabet
 
 
 # TODO: Make as abstract
@@ -64,7 +66,7 @@ class ColorRule(object):
     return a Color object based on the given parameters.
     """
 
-    def symbol_color(self, seq_index, symbol, rank):
+    def symbol_color(self, seq_index: int, symbol: str, rank: int) -> Optional[Color]:
         raise NotImplementedError   # pragma: no cover
 
 
@@ -80,11 +82,11 @@ class ColorScheme(ColorRule):
     """
 
     def __init__(self,
-                 rules=[],
-                 title="",
-                 description="",
-                 default_color="black",
-                 alphabet=seq.generic_alphabet):
+                 rules: List[ColorRule] = [],
+                 title: str = "",
+                 description: str = "",
+                 default_color: str = "black",
+                 alphabet: Alphabet = seq.generic_alphabet) -> None:
 
         self.rules = rules
         self.title = title
@@ -92,7 +94,7 @@ class ColorScheme(ColorRule):
         self.default_color = Color.from_string(default_color)
         self.alphabet = alphabet
 
-    def symbol_color(self, seq_index, symbol, rank):
+    def symbol_color(self, seq_index: int, symbol: str, rank: int) -> Color:
         if symbol not in self.alphabet:
             raise KeyError("Colored symbol '%s' does not exist in alphabet." % symbol)
 
@@ -110,14 +112,15 @@ class SymbolColor(ColorRule):
     a single color.
     """
 
-    def __init__(self, symbols, color, description=None):
+    def __init__(self, symbols: str, color: str, description: str = None) -> None:
         self.symbols = symbols.upper()
         self.color = Color.from_string(color)
         self.description = description
 
-    def symbol_color(self, seq_index, symbol, rank):
+    def symbol_color(self, seq_index: int, symbol: str, rank: int) -> Optional[Color]:
         if symbol.upper() in self.symbols:
             return self.color
+        return None
 
 
 class IndexColor(ColorRule):
@@ -126,14 +129,15 @@ class IndexColor(ColorRule):
     residues) with a single color.
     """
 
-    def __init__(self, indices, color, description=None):
+    def __init__(self, indices: Sequence[list], color: str, description: str = None) -> None:
         self.indices = indices
         self.color = Color.from_string(color)
         self.description = description
 
-    def symbol_color(self, seq_index, symbol, rank):
+    def symbol_color(self, seq_index: int, symbol: str, rank: int) -> Optional[Color]:
         if seq_index in self.indices:
             return self.color
+        return None
 
 
 class RefSeqColor(ColorRule):
@@ -142,14 +146,15 @@ class RefSeqColor(ColorRule):
     which positions match that sequence and which don't.
     """
 
-    def __init__(self, ref_seq, color, description=None):
+    def __init__(self, ref_seq: str, color: str, description: str = None) -> None:
         self.ref_seq = ref_seq.upper()
         self.color = Color.from_string(color)
         self.description = description
 
-    def symbol_color(self, seq_index, symbol, rank):
+    def symbol_color(self, seq_index: int, symbol: str, rank: int) -> Optional[Color]:
         if symbol.upper() == self.ref_seq[seq_index]:
             return self.color
+        return None
 
 
 monochrome = ColorScheme([])  # This list intentionally left blank

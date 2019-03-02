@@ -16,9 +16,10 @@ Maddison, Swofford, Maddison. 1997. Syst. Biol. 46(4):590-621
 Authors: Frank Kauff and Cymon J. Cox
 """
 
+# type: ignore
+
 import copy
 import math
-import os.path
 import random
 import sys
 from functools import reduce
@@ -49,8 +50,8 @@ IUPACData = namedtuple('IUPACDataTuple', _IUPACData.keys())(**_IUPACData)
 
 
 _IUPAC = dict(
-        ambiguous_dna=Alphabet(IUPACData.ambiguous_dna_letters + '-?'),
-        ambiguous_rna=Alphabet(IUPACData.ambiguous_rna_letters + '-?'),
+        ambiguous_dna=Alphabet(data.dna_extended_letters + '-?'),
+        ambiguous_rna=Alphabet(data.rna_extended_letters + '-?'),
         protein=protein_alphabet  # Alphabet(IUPACData.protein_letters+'-?')
         )
 

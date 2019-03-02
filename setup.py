@@ -58,7 +58,7 @@ setup(
 
             package_data={
                 'weblogo': ['htdocs/*.*', 'htdocs/img/*.*', 'htdocs/examples/*.*',
-                               'template.eps', 'data/*.*']
+                            'template.eps', 'data/*.*']
             },
 
             install_requires=['numpy', 'scipy', 'setuptools'],
@@ -70,4 +70,3 @@ setup(
                 ],
             },
     )
-

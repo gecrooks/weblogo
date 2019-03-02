@@ -368,8 +368,8 @@ def main(htdocs_directory=None):
             data = weblogo.LogoData.from_counts(motif.alphabet, motif, prior)
         except ValueError:
             seqs = weblogo.read_seq_data(seq_file, alphabet=logooptions.alphabet,
-                                            ignore_lower_case=ignore_lower_case
-                                            )
+                                         ignore_lower_case=ignore_lower_case
+                                         )
             prior = weblogo.parse_prior(comp, seqs.alphabet)
             data = weblogo.LogoData.from_seqs(seqs, prior)
 

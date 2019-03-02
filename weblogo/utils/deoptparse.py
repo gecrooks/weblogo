@@ -165,7 +165,7 @@ class DeOption(Option):
     # Have to override _check_choices so that we can parse
     # a dict through to check_dict
     CHECK_METHODS = Option.CHECK_METHODS
-    CHECK_METHODS[2] = _new_check_choice
+    CHECK_METHODS[2] = _new_check_choice    # type: ignore
 
 
 class DeOptionParser(OptionParser):
