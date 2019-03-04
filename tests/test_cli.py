@@ -4,7 +4,7 @@ from subprocess import Popen, PIPE
 
 import pytest
 
-import weblogo
+# import weblogo
 
 from . import data_stream
 
