@@ -68,7 +68,10 @@ from .seq import (Alphabet, unambiguous_dna_alphabet,
                   unambiguous_rna_alphabet, unambiguous_protein_alphabet, SeqList)
 from .utils import (isfloat, ArgumentError, stdrepr)
 
-from .version import version as __version__
+from . import __version__
+
+# Shorten development version string of the form weblogo-3.6.1.dev43+g64d9f12.d20190304
+__version__ = __version__[:__version__.find('+')]
 
 
 # from .logo_formatter import (GhostscriptAPI, pdf_formatter, jpeg_formatter, png_formatter,

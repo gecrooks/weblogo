@@ -17,56 +17,59 @@ Please consult the manual for installation instructions and more information:
 """
 
 setup(
-            name="weblogo",
-            python_requires='>=3.6',
+    name="weblogo",
+    python_requires='>=3.6',
 
-            setup_requires=['setuptools_scm'],
-            use_scm_version={'write_to': 'weblogo/version.py'},
+    install_requires=['numpy', 'scipy', 'setuptools', 'setuptools_scm'],
 
-            description="WebLogo3 : Sequence Logos Redrawn",
-            long_description=long_description,
-            license='BSD',
-            maintainer="Gavin Crooks",
-            maintainer_email="gec@threeplusone.com",
-            url="https://github.com/WebLogo/weblogo",
+    use_scm_version=True,
+    setup_requires=['setuptools_scm'],
 
-            classifiers=[
-                'Development Status :: 5 - Production/Stable',
-                'Intended Audience :: Science/Research',
-                'License :: OSI Approved :: BSD License',
-                'Topic :: Scientific/Engineering :: Bio-Informatics',
-                'Programming Language :: Python',
-                'Natural Language :: English',
-                'Operating System :: OS Independent',
-                'Topic :: Software Development :: Libraries',
-                'Topic :: Software Development :: Libraries :: Python Modules',
 
-                # Specify the Python versions you support here. In particular, ensure
-                # that you indicate whether you support Python 2, Python 3 or both.
-                'Programming Language :: Python :: 3',
-                'Programming Language :: Python :: 3.6',
-                'Programming Language :: Python :: 3.7',
+    description="WebLogo3 : Sequence Logos Redrawn",
+    long_description=long_description,
+    license='BSD',
+    maintainer="Gavin Crooks",
+    maintainer_email="gec@threeplusone.com",
+    url="https://github.com/WebLogo/weblogo",
 
-            ],
+    classifiers=[
+        'Development Status :: 5 - Production/Stable',
+        'Intended Audience :: Science/Research',
+        'License :: OSI Approved :: BSD License',
+        'Topic :: Scientific/Engineering :: Bio-Informatics',
+        'Programming Language :: Python',
+        'Natural Language :: English',
+        'Operating System :: OS Independent',
+        'Topic :: Software Development :: Libraries',
+        'Topic :: Software Development :: Libraries :: Python Modules',
 
-            packages=[
-                'weblogo',
-                'weblogo.seq_io',
-                'weblogo.seq_io._nexus',
-                'weblogo.utils',
-            ],
+        # Specify the Python versions you support here. In particular, ensure
+        # that you indicate whether you support Python 2, Python 3 or both.
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
 
-            package_data={
-                'weblogo': ['htdocs/*.*', 'htdocs/img/*.*', 'htdocs/examples/*.*',
-                            'template.eps', 'data/*.*']
-            },
+    ],
 
-            install_requires=['numpy', 'scipy', 'setuptools'],
+    packages=[
+        'weblogo',
+        'weblogo.seq_io',
+        'weblogo.seq_io._nexus',
+        'weblogo.utils',
+    ],
 
-            entry_points={
-                'console_scripts': [
-                    'weblogo = weblogo._cli:main',
-                    'transformseq = weblogo._transformseq:main'
-                ],
-            },
-    )
+    package_data={
+        'weblogo': ['htdocs/*.*', 'htdocs/img/*.*', 'htdocs/examples/*.*',
+                    'template.eps', 'data/*.*']
+    },
+
+
+
+    entry_points={
+        'console_scripts': [
+            'weblogo = weblogo._cli:main',
+            'transformseq = weblogo._transformseq:main'
+        ],
+    },
+)
