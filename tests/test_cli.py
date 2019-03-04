@@ -41,7 +41,7 @@ def test_help_option():
 
 
 def test_version_option():
-    _exec(['--version'], weblogo.__version__)
+    _exec(['--version'], weblogo.__version__[0:5])
 
 
 def test_default_build():
