@@ -1,6 +1,7 @@
 numpy
 scipy
 setuptools
+setuptools-scm
 
 # Testing
 pytest

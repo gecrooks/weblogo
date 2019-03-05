@@ -13,66 +13,44 @@ DEVELOPING WEBLOGO
    The WebLogo repository is https://github.com/WebLogo/weblogo
 	git pull origin master
 
-2. Update version number if necessary (subl corebio/_version.py
- )
+
+2. Update changelog (weblogo/htdocs/weblogo_changelog.txt)
 
 
-3. Update changelog (weblogo/htdocs/weblogo_changelog.txt)
+3. Update manual.html with the latest --help text.
 
 
-4. Update manual.html with the latest --help text.
-
-
-5. Rebuild examples.
+4. Rebuild examples.
 	cd weblogo/htdocs/examples
 	bash build_examples.sh
 	
 	
-6. Run build and test under all supported python versions.
+5. Run build and test under all supported python versions.
 	
 	tox
 
 
-7. Run webpage tests.
+6. Run webpage tests.
 
 	./weblogo --serve	# then goto localhost:8080/test.html and try tests
 
 
-8.  Commit final changes.
+7. Commit final changes.
 
 
-9.  Branch
-
-	git branch 3.x
-	git checkout 3.x
-
-
-10. Tag
+8. Tag
 	tag release on Github at https://github.com/WebLogo/weblogo/releases/new	
 
 
-11. Update server: login to weblogo.threeplusone.com, weblogo directory and switch branches 
+10. Update server: login to weblogo.threeplusone.com, weblogo directory and switch branches 
 	
-	git checkout 3.x
+	git checkout 3.x.x
 
 
-12. Check server is working correctly. Run tests at weblogo.threeplusone.com/tests.html
+11. Check server is working correctly. Run tests at weblogo.threeplusone.com/tests.html
 
 
-13. Register with Python Packakge Index PyPI
-	
-	python setup.py sdist upload	# Assumes already regitered with PyPI
-	pip install weblogo
- 	
-	(Should try this all out on the test PyPI test site)
-	python setup.py register -r https://testpypi.python.org/pypi
-	python setup.py sdist upload -r https://testpypi.python.org/pypi
-	pip install --install-option="--install-scripts=~/" -i https://testpypi.python.org/pypi weblogo
-	
-
-14. Update version number in trunk, add new entry to changelog,
-
-15. Post announcement. (http://groups.google.com/group/WebLogo)
+12. Post announcement. (http://groups.google.com/group/WebLogo)
 
 
 

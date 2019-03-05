@@ -1,13 +1,27 @@
 WebLogo Release Notes
 
 
+3.7 (2019-03-04) [Gavin Crooks]
+
+* Refactor and cleanup code, removing python 2.7 support
+* Extend API documentation
+* WebLogo python package is now 'weblogo', rather than 'weblogolib',
+  matching pip install name. The 'corebio' package has been merged into 'weblogo'.
+* Miscellaneous minor bug fixes and refactoring
+* Weblogo 3.7 runs under python 3.6 and 3.7
+
+
+
 3.6 (2017-12-29) [Gavin Crooks, Melissa Fabros]
+
 * refactor version string creation
 * update testing framework for use with tox and pytest
 * weblogo is centered in it's png file (Kudos: Gert Huselmans)
 * Miscellaneous minor bug fixes and refactoring (Kudos: Jerry Caskey, Coby Viner) 
 * fix headings in README.md
 * Weblogo 3.6 runs under python 2.7, 3.4, 3.5 & 3.6
+
+
 
 3.5 (2016-07-24) [Gavin Crooks, Melissa Fabros]
 
