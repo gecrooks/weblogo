@@ -1,0 +1,157 @@
+/*
+Overide guzzle.css defaults.
+https://github.com/guzzle/guzzle_sphinx_theme/blob/master/guzzle_sphinx_theme/guzzle_sphinx_theme/static/guzzle.css_t
+*/
+body {
+  background-color: #fff;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+#left-column {
+  overflow: hidden;
+}
+
+#right-column {
+  float: left;  
+}
+
+h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a {
+  color: #990000;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #990000;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-shadow: gray 1px 1px 1px;
+}
+
+h1 {
+  font-size: 38px;
+  background-color: #eee;
+}
+
+h2 {
+  font-size: 28px;
+}
+
+h3 {
+  font-size: 24px;
+}
+
+h4 {
+  font-size: 20px;
+}
+
+h5 {
+  font-size: 18px;
+}
+
+div.clearer {
+  clear: both;
+}
+
+.container-wrapper {
+  padding: 0;
+  position: relative;
+}
+
+div.related {
+  display: none;
+}
+
+p {
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  color: #333;
+}
+
+code {
+  padding: 2px 0.7px !important;
+}
+
+code, pre, tt {
+  font-size: 16px;
+}
+
+pre {
+  background-color: #f7f7f7;
+  border-color: #f7f7f7;
+}
+
+div.highlight {
+  background-color: none !important;
+}
+
+.breadcrumb {
+  margin-bottom: -20px;
+  margin-top: -20px;  
+}
+
+ div.sphinxsidebar {
+   word-wrap: break-word;
+  position: absolute;
+  overflow-y: scroll;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: -20px;
+  height: 100%;
+ }
+
+div.sphinxsidebar p {
+  padding: 0px 10px;
+  color: #666;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+div.sphinxsidebar .sidebar-toc a {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.sidebar-block h2 {
+  display: none;
+}
+
+.text-logo {
+  font-size: 22px;
+  color: #990000;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  background-color: #eee;
+  text-shadow: gray 1px 1px 1px;
+}
+
+.text-logo:hover {
+  color: #fff;
+}
+
+.admonition-title {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+
+@media print{
+    .rst-versions,footer,.wy-nav-side{
+        display:none
+    }
+    .wy-nav-content-wrap{
+        margin-left:0
+    }
+}
+
+.rst-versions{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:300px;
+    color:#fcfcfc;
+    background:#1f1d1d;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    z-index:400
+}

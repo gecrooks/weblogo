@@ -1,6 +1,9 @@
 WebLogo: A Sequence Logo Generator
 ==================================
- WebLogo is a web based application designed to make the generation of sequence logos as easy and painless as possible.
+
+[![Build Status](https://travis-ci.org/WebLogo/weblogo.svg?branch=master)](https://travis-ci.org/WebLogo/weblogo)
+
+WebLogo is a web based application designed to make the generation of sequence logos as easy and painless as possible.
 
 WebLogo can create output in several common graphics' formats, including the bitmap formats GIF and PNG, suitable for on-screen display, and the vector formats EPS and PDF, more suitable for printing, publication, and further editing. Additional graphics options include bitmap resolution, titles, optional axis, and axis labels, antialiasing, error bars, and alternative symbol formats.
 
@@ -13,7 +16,7 @@ A sequence logo is a graphical representation of an amino acid or nucleic acid m
 >Schneider TD, Stephens RM. 1990. Sequence Logos: A New Way to Display Consensus Sequences. Nucleic Acids Res. 18:6097-6100 
 
 ### Version
-3.6
+3.7
 
 ### WebLogo 2
  The legacy WebLogo 2 server can be found <a href="http://weblogo.berkeley.edu/">here.</a>

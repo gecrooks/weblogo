@@ -1,0 +1,7 @@
+[run]
+omit = 
+	weblogo/seq_io/_nexus/Nodes.py
+	weblogo/seq_io/_nexus/Trees.py
+	weblogo/seq_io/_nexus/__init__.py
+	weblogo/utils/deoptparse.py
+	weblogo/_cgi.py

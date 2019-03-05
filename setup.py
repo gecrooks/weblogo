@@ -1,83 +1,75 @@
 #!/usr/bin/env python
 
-import sys
-from setuptools import setup, find_packages
-
-# Suppress warning that distutils generates for the install_requires option
-#import warnings
-
-#warnings.simplefilter('ignore', UserWarning, lineno=236)
+from setuptools import setup
 
 
-exec(open("./corebio/_version.py").read()) # sets __version__
+long_description = """
+WebLogo (https://github.com/WebLogo/weblogo) is a tool for creating sequence
+logos from biological sequence alignments.  It can be run on the command line,
+as a standalone webserver, as a CGI webapp, or as a python library.
+
+The main WebLogo webserver is located at http://weblogo.threeplusone.com
+
+Please consult the manual for installation instructions and more information:
+./weblogo/htdocs/manual.html
+
+(Also located at http://weblogo.threeplusone.com/manual.html.)
+"""
+
+setup(
+    name="weblogo",
+    python_requires='>=3.6',
+
+    install_requires=['numpy', 'scipy', 'setuptools', 'setuptools_scm'],
+
+    use_scm_version=True,
+    setup_requires=['setuptools_scm'],
 
 
-def main():
-    long_description = """
-	WebLogo (https://github.com/WebLogo/weblogo) is a tool for creating sequence 
-	logos from biological sequence alignments.  It can be run on the command line, 
-	as a standalone webserver, as a CGI webapp, or as a python library.
+    description="WebLogo3 : Sequence Logos Redrawn",
+    long_description=long_description,
+    license='BSD',
+    maintainer="Gavin Crooks",
+    maintainer_email="gec@threeplusone.com",
+    url="https://github.com/WebLogo/weblogo",
 
-	The main WebLogo webserver is located at http://weblogo.threeplusone.com
+    classifiers=[
+        'Development Status :: 5 - Production/Stable',
+        'Intended Audience :: Science/Research',
+        'License :: OSI Approved :: BSD License',
+        'Topic :: Scientific/Engineering :: Bio-Informatics',
+        'Programming Language :: Python',
+        'Natural Language :: English',
+        'Operating System :: OS Independent',
+        'Topic :: Software Development :: Libraries',
+        'Topic :: Software Development :: Libraries :: Python Modules',
 
-	Please consult the manual for installation instructions and more information:
-	./weblogolib/htdocs/manual.html
+        # Specify the Python versions you support here. In particular, ensure
+        # that you indicate whether you support Python 2, Python 3 or both.
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
 
-	(Also located at http://weblogo.threeplusone.com/manual.html.)
-	"""
-    setup(
-            name="weblogo",
-            version=__version__,
-            description="WebLogo3 : Sequence Logos Redrawn",
-            long_description=long_description,
-            license = 'BSD',
-            maintainer="Gavin Crooks",
-            maintainer_email="gec@threeplusone.com",
-            url="https://github.com/WebLogo/weblogo",
-            download_url='https://github.com/WebLogo/weblogo/archive/%s.zip' % __version__,
-            classifiers=[
-                'Development Status :: 5 - Production/Stable',
-                'Intended Audience :: Science/Research',
-                'License :: OSI Approved :: BSD License',
-                'Topic :: Scientific/Engineering :: Bio-Informatics',
-                'Programming Language :: Python',
-                'Natural Language :: English',
-                'Operating System :: OS Independent',
-                'Topic :: Software Development :: Libraries',
-                'Topic :: Software Development :: Libraries :: Python Modules',
-                
-                # Specify the Python versions you support here. In particular, ensure
-                # that you indicate whether you support Python 2, Python 3 or both.
-                'Programming Language :: Python :: 2',
-                'Programming Language :: Python :: 2.6',
-                'Programming Language :: Python :: 2.7',
-                'Programming Language :: Python :: 3',
-                'Programming Language :: Python :: 3.2',
-                'Programming Language :: Python :: 3.3',
-                'Programming Language :: Python :: 3.4',                
-                'Programming Language :: Python :: 3.5',                
-                
-            ],
+    ],
 
-            scripts=['weblogo', 'transformseq'],
-            
-            packages=[
-                'corebio',
-                'corebio.seq_io',
-                'corebio.seq_io._nexus',
-                'corebio.utils',
-                'weblogolib',
-            ],
+    packages=[
+        'weblogo',
+        'weblogo.seq_io',
+        'weblogo.seq_io._nexus',
+        'weblogo.utils',
+    ],
 
-            package_data={
-                'weblogolib': ['htdocs/*.*', 'htdocs/img/*.*', 'htdocs/examples/*.*', 'template.eps'],
-                'corebio': ['data/*.*']
-            },
-            
-            install_requires=['numpy'],
-
-    )
+    package_data={
+        'weblogo': ['htdocs/*.*', 'htdocs/img/*.*', 'htdocs/examples/*.*',
+                    'template.eps', 'data/*.*']
+    },
 
 
-if __name__ == '__main__':
-    main()
+
+    entry_points={
+        'console_scripts': [
+            'weblogo = weblogo._cli:main',
+            'transformseq = weblogo._transformseq:main'
+        ],
+    },
+)

@@ -1,0 +1,14 @@
+language: python
+sudo: required
+dist: xenial
+before_install:
+  - sudo apt-get install -y ghostscript
+python:
+  - "3.6"
+  - "3.7"
+install:
+  - pip install -r requirements.txt
+  - pip install .
+script:
+  - pytest
+  - flake8 setup.py weblogo tests
