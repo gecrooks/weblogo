@@ -5,6 +5,7 @@ tmp
 junk
 devnotes.txt
 version.py
+version.html
 
 # Standard python .gitignore
 # https://github.com/github/gitignore/blob/master/Python.gitignore
