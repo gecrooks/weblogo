@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 #  Copyright (c) 2003-2004 The Regents of the University of California.
 #  Copyright (c) 2005 Gavin E. Crooks
@@ -40,11 +40,7 @@ import cgi
 import cgitb; cgitb.enable()
 import weblogo
 
-if __name__=="__main__" :
-
-    # Set path to ghostscript here, if can't set it in webserver configuration
-    # import os
-    # os.environ["COREBIOPATH"]="/opt/local/bin/:/home/three/local/bin"
+if __name__ == "__main__":
     weblogo.cgi(__file__)
 
 

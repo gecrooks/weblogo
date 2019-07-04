@@ -522,19 +522,18 @@
                                 <h4>Web App</h4></dt>
                             <dd>
                                 To use WebLogo as a web application, first install the weblogo dependencies and libraries as above, then place (or link) the
-                                <code class="code">weblogolib/htdocs</code> directory somewhere within the document root of your webserver. The webserver must be able to execute the CGI script <code class="code">create.cgi</code>. For Apache, you may have to add an <code class="code">ExecCGI</code> option and add a cgi handler in the <code class="code">httpd.conf</code> configuration file. Something like this:
+                                <code class="code">weblogo/htdocs</code> directory somewhere within the document root of your webserver. The webserver must be able to execute the CGI script <code class="code">create.cgi</code>. For Apache, you may have to add an <code class="code">ExecCGI</code> option and add a cgi handler in the <code class="code">httpd.conf</code> configuration file. Something like this:
                                 <pre>
-                    &lt;Directory "/home/httpd/htdocs/weblogo/">
-                    Options FollowSymLinks MultiViews ExecCGI
-                    AllowOverride None
-                    Order allow,deny
-                    Allow from all
+                    DocumentRoot "/home/ec2-user/weblogo/weblogo/htdocs"
+
+                    # Further relax access to the default document root:
+                    &lt;Directory "/home/ec2-user/weblogo/weblogo/htdocs">
+                        Options Indexes FollowSymLinks ExecCGI MultiViews
+                        AddHandler cgi-script .cgi
+                        AllowOverride All
+                        Require all granted
                     &lt;/Directory>
-                    ...
-                    # To use CGI scripts outside of ScriptAliased directories:
-                    # (You will also need to add "ExecCGI" to the "Options" directive.)
-                    #
-                    AddHandler cgi-script .cgi
+
                   </pre> It may also be necessary to set the <code class="code">PATH</code> and <code class="code">PYTHONPATH</code> environment variables.
                                 <pre>
                     SetEnv PYTHONPATH /path/to/weblogo/libraries
