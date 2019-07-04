@@ -1,8 +1,22 @@
 
 # Configuration file for the Sphinx documentation builder.
 
+from setuptools_scm import get_version
 
 import guzzle_sphinx_theme
+
+import os
+import sys
+
+# Hack for readthedocs
+sys.path.insert(0, os.path.abspath(".."))
+
+__version__ = get_version(root='..', relative_to=__file__)
+print('__version__', __version__)
+
+with open('./_templates/version.html', 'w') as f:
+    f.write('<div align="center">v%s</div>' % __version__)
+
 
 html_theme_path = guzzle_sphinx_theme.html_theme_path()
 html_theme = 'guzzle_sphinx_theme'
@@ -13,8 +27,12 @@ html_short_title = "WebLogo"
 
 # Custom sidebar templates, maps document names to template names.
 html_sidebars = {
-    '**': ['logo-text.html', 'searchbox.html', 'globaltoc.html', ]
+    '**': ['logo-text.html',
+           'version.html',
+           'searchbox.html',
+           'globaltoc.html']
 }
+
 
 def setup(app):
     app.add_stylesheet("qf.css")
@@ -26,10 +44,9 @@ project = 'WebLogo'
 copyright = '2004-2018, Gavin E. Crooks'
 author = 'Gavin E. Crooks'
 
-# The short X.Y version
-version = '' # FIXME
-# The full version, including alpha/beta/rc tags
-release = ''    # FIXME
+
+version = __version__
+release = __version__
 
 
 # -- General configuration ---------------------------------------------------

@@ -15,7 +15,7 @@ The main WebLogo webserver is located at http://weblogo.threeplusone.com
 
 Please consult the manual for installation instructions and more information:
 (Also located in the weblogolib/htdocs subdirectory.)
-    http://weblogo.threeplusone.com/manual.html
+http://weblogo.threeplusone.com/manual.html
 
 For help on the command line interface run
 
