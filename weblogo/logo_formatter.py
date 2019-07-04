@@ -245,6 +245,8 @@ class GhostscriptAPI(object):
         """
         command = shutil.which('gs', path=path)
         if command is None:
+            command = shutil.which('gswin64c.exe', path=path)   # pragma: no cover
+        if command is None:
             command = shutil.which('gswin32c.exe', path=path)   # pragma: no cover
         if command is None:
             raise EnvironmentError("Could not find Ghostscript on path. "
