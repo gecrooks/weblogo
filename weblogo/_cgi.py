@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 
 #  Copyright (c) 2003-2004 The Regents of the University of California.
 #  Copyright (c) 2005 Gavin E. Crooks
@@ -402,12 +401,10 @@ def main(htdocs_directory=None):
               'filename="logo.%s"' % extension[format])
     # Separate header from data
     print()
-    # Finally, and at last, send the logo.
+    sys.stdout.flush()
 
-    if sys.version_info[0] >= 3:
-        sys.stdout.buffer.write(logo)
-    else:
-        sys.stdout.write(logo)
+    # Finally, and at last, send the logo.
+    sys.stdout.buffer.write(logo)
 
 
 def send_form(controls, errors=[], htdocs_directory=None):
