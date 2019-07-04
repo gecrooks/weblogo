@@ -2,6 +2,12 @@
 
 PACKAGENAME = weblogo
 FILES = weblogo setup.py
+
+USER = ec2-user
+HOST = weblogo.threeplusone.com
+DIR = /home/ec2-user/weblogo
+
+
 # Kudos: Adapted from Auto-documenting default target 
 # https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 help:
@@ -27,6 +33,16 @@ untyped:	## Report type errors and untyped functions
 
 docs:		## Build documentation
 	$(MAKE) -C docs html && open docs/_build/html/index.html
+
+login:		## ssh into remote server
+	ssh  ${USER}@${HOST}
+
+sync:		## Sync remote server
+	ssh ${USER}@${HOST} 'cd weblogo && git pull'
+
+restart:
+	ssh ${USER}@${HOST} 'sudo systemctl restart httpd.service'
+
 
 .PHONY: help
 .PHONY: docs
