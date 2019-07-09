@@ -477,11 +477,11 @@
     /char_height 
        interval yaxis_scale div stack_height mul
        stack_margin sub
-
+       dup 
        % if char_height is negative or very small replace with zero 
        % BUG FIX: This used to be '0.0 gt' but it seems that DrawHeight
        % has a finite, non-zero minimum, which results in a rangecheck error
-       interval 0.1 gt {}{pop 0.0} ifelse
+       0.01 gt {}{pop 0.0} ifelse 
     def 
 
     char_height 0.0 gt {
