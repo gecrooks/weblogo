@@ -39,7 +39,7 @@ login:		## ssh into remote server
 
 sync:		## Sync remote server
 	# pip install needed to update versions with latest git tag
-	ssh ${USER}@${HOST} 'cd weblogo && git pull ** sudo pip3 install -e .'
+	ssh ${USER}@${HOST} 'cd weblogo && git pull && sudo pip3 install -e .'
 
 restart:
 	ssh ${USER}@${HOST} 'sudo systemctl restart httpd.service'
