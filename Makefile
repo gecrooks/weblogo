@@ -34,14 +34,20 @@ untyped:	## Report type errors and untyped functions
 docs:		## Build documentation
 	$(MAKE) -C docs html && open docs/_build/html/index.html
 
+examples: 	## Build examples
+	cd weblogo/htdocs/examples && ./build_examples.sh
+
 login:		## ssh into remote server
 	ssh  ${USER}@${HOST}
 
 sync:		## Sync remote server
-	# pip install needed to update versions with latest git tag
-	ssh ${USER}@${HOST} 'cd weblogo && git pull && sudo pip3 install -e .'
+	ssh ${USER}@${HOST} 'cd weblogo && git pull'
 
-restart:
+reinstall:	## Reinstall weblogo on remote server
+	# pip install needed to update versions with latest git tag
+	ssh ${USER}@${HOST} 'cd weblogo && sudo pip3 install -e .'
+
+restart:  	## Restart remote server
 	ssh ${USER}@${HOST} 'sudo systemctl restart httpd.service'
 
 
