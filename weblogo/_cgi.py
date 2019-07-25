@@ -40,7 +40,7 @@ import cgitb
 import os.path
 import sys
 import shutil
-from io import StringIO
+from io import StringIO, BytesIO, TextIOWrapper
 
 
 import weblogo
@@ -307,7 +307,7 @@ def main(htdocs_directory=None):
             errors.append(("sequences_file", "Cannot upload, sequence source conflict"))
         else:
             sequences = sequences_from_file
-            seq_file = StringIO(sequences)
+            seq_file = TextIOWrapper(BytesIO(sequences), encoding='utf-8')
     elif sequences_from_textfield:
         if sequences_url:
             errors.append(("sequences", "Cannot upload, sequence source conflict"))
