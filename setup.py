@@ -20,7 +20,7 @@ setup(
     name="weblogo",
     python_requires='>=3.6',
 
-    install_requires=['numpy', 'scipy', 'setuptools', 'setuptools_scm'],
+    install_requires=['numpy', 'scipy', 'setuptools'],
 
     use_scm_version=True,
     setup_requires=['setuptools_scm'],
