@@ -676,7 +676,7 @@ class SeqList(list):
         N = len(alphabet)
         ords = self.ords(alphabet)
         L = len(ords[0])
-        counts = [[0, ] * N for l in range(0, L)]
+        counts = [[0, ] * N for x in range(0, L)]
 
         for o in ords:
             if len(o) != L:

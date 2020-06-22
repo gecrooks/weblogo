@@ -150,8 +150,8 @@ class test_seq(unittest.TestCase):
         a = "Any printable Ascii character `1234567890-=~!@#$%^&*()_+{}|[]\\:;'<>?,./QWERTYUIOPASD"\
             "FGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm "
 
-        for l in a:
-            self.assertTrue(l in generic_alphabet)
+        for x in a:
+            self.assertTrue(x in generic_alphabet)
         self.assertTrue(Seq(a, generic_alphabet))
         self.assertRaises(ValueError, Seq,
                           "Not zero. \x00", generic_alphabet)
