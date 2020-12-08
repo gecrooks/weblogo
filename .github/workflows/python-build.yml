@@ -1,0 +1,50 @@
+# This workflow will install the python package and dependencies, and run tests against a variety of Python versions
+
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+    - cron: "0 13 * * *"  # Every day at 1pm UTC (6am PST)
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.6', '3.7', '3.8', '3.9']
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install .[dev]  # install package + test dependencies
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi        
+    - name: About
+      run: |
+        python -m $(python -Wi setup.py --name).about
+    - name: Test with pytest
+      run: |
+        python -m pytest --cov-fail-under 100
+    - name: Lint with black and isort (run `make delint` to fix issues)
+      run: |
+        black --check .  
+        isort --check -m 3 --tc .
+    - name: Lint with flake8
+      run: |
+        flake8 .            
+    - name: Typecheck with mypy
+      run: |
+        mypy
+    - name: Build documentation with sphinx
+      run: |
+        sphinx-build -M html docs docs/_build
