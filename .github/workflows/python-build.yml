@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.6', '3.7', '3.8', '3.9']
+        python-version: ['3.6',]
 
     steps:
     - uses: actions/checkout@v2
@@ -26,25 +26,13 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
+        sudo apt-get install -y ghostscript
         python -m pip install --upgrade pip
-        python -m pip install .[dev]  # install package + test dependencies
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi        
-    - name: About
-      run: |
-        python -m $(python -Wi setup.py --name).about
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi          
+        python -m pip install .
     - name: Test with pytest
       run: |
-        python -m pytest --cov-fail-under 100
-    - name: Lint with black and isort (run `make delint` to fix issues)
-      run: |
-        black --check .  
-        isort --check -m 3 --tc .
+        python -m pytest 
     - name: Lint with flake8
       run: |
-        flake8 .            
-    - name: Typecheck with mypy
-      run: |
-        mypy
-    - name: Build documentation with sphinx
-      run: |
-        sphinx-build -M html docs docs/_build
+        flake8 setup.py weblogo tests            
