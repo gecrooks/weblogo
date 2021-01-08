@@ -45,8 +45,6 @@ import sys
 from typing.io import TextIO
 from datetime import datetime
 from math import log, sqrt
-import shutil
-import tempfile
 from io import StringIO
 from urllib.request import urlopen, Request
 from urllib.parse import urlparse, urlunparse
@@ -903,7 +901,5 @@ def _from_URL_fileopen(target_url: str) -> TextIO:  # pragma: no cover
     # save url to temporary file
     req = Request(target_url)
     res = urlopen(req)
-    temp = tempfile.TemporaryFile()
-    shutil.copyfileobj(res, temp)
-    temp.seek(0)
-    return temp
+
+    return StringIO(str(res.read()))
