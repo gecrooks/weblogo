@@ -147,7 +147,7 @@ def _build_logodata(options):
             fin = StringIO(sys.stdin.read())
     else:
         if fin is None:
-            from . import _from_URL_fileopen
+            from .logo import _from_URL_fileopen
             fin = _from_URL_fileopen(options.upload)
         else:
             raise ValueError("error: options --fin and --upload are incompatible")
