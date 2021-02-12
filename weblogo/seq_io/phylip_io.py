@@ -65,8 +65,8 @@ GTCGTCGTTG GTGGTGGTGG TGTTG
 
 from ..seq import Seq, SeqList
 
-names = ('phylip',)
-extensions = ('phy',)
+names = ("phylip",)
+extensions = ("phy",)
 
 
 def iterseq(fin, alphabet=None):
@@ -83,18 +83,24 @@ def read(fin, alphabet=None):
     num_total_seq = 0  # length of sequence of 1 species
     tracker = 0  # track what sequence the line is on
     usertree_tracker = 0  # track usertree lines
-    options = ''  # options
+    options = ""  # options
     num_options = 0  # number/lens of options - U
 
     line = fin.readline()
     while line:
-        s_line = line.split()  # for ease of use, not used in all scenarios, but easier on the eye
+        s_line = (
+            line.split()
+        )  # for ease of use, not used in all scenarios, but easier on the eye
 
         if s_line == []:  # see nothing do nothing
             pass
 
-        elif (s_line[0].isdigit() and len(s_line) == 1 and
-              len(sequence) == num_seq and len(sequence[0]) == num_total_seq):
+        elif (
+            s_line[0].isdigit()
+            and len(s_line) == 1
+            and len(sequence) == num_seq
+            and len(sequence[0]) == num_total_seq
+        ):
             usertree_tracker = int(s_line[0])
             pass
 
@@ -104,16 +110,18 @@ def read(fin, alphabet=None):
                     num_options -= 1
                     pass
                 else:
-                    raise ValueError('Not an option, but it should be one')  # pragma: no cover
+                    raise ValueError(
+                        "Not an option, but it should be one"
+                    )  # pragma: no cover
             else:
                 num_options -= 1
                 pass
 
         elif usertree_tracker > 0:  # basically skip usertree
             if len(sequence[num_seq - 1]) == num_total_seq:
-                usertree_tracker -= 1     # pragma: no cover
+                usertree_tracker -= 1  # pragma: no cover
             else:
-                raise ValueError('User Tree in Wrong Place')
+                raise ValueError("User Tree in Wrong Place")
 
         # problems parse error unexpected
         elif s_line[0].isdigit():
@@ -121,10 +129,10 @@ def read(fin, alphabet=None):
                 num_seq = int(s_line[0])  # get number of sequences
                 num_total_seq = int(s_line[1])  # get length of sequences
                 if len(s_line) > 2:  # takes care of the options
-                    options = (''.join(s_line[2:]))
-                    num_options = len(options) - options.count('U')
+                    options = "".join(s_line[2:])
+                    num_options = len(options) - options.count("U")
             else:
-                raise ValueError('parse error')
+                raise ValueError("parse error")
 
         # when options end, this takes care of the sequence
         elif num_options == 0:
@@ -132,28 +140,28 @@ def read(fin, alphabet=None):
                 raise ValueError("Empty File, or possibly wrong file")
             elif tracker < num_seq:
                 if num_seq > len(sequence):
-                    sequence.append(''.join(line[10:].split()))  # removes species name
+                    sequence.append("".join(line[10:].split()))  # removes species name
                     idents.append(line[0:10].strip())
                     tracker += 1
 
                 else:
-                    sequence[tracker] += (''.join(s_line))
+                    sequence[tracker] += "".join(s_line)
                     tracker += 1
 
                 if tracker == num_seq:
                     tracker = 0
-                    num_options = len(options) - options.count('U')
+                    num_options = len(options) - options.count("U")
 
         line = fin.readline()
 
     if len(sequence) != len(idents) or len(sequence) != num_seq:
-        raise ValueError("Number of different sequences wrong")   # pragma: no cover
+        raise ValueError("Number of different sequences wrong")  # pragma: no cover
 
     seqs = []
     for i in range(0, len(idents)):
         if len(sequence[i]) == num_total_seq:
             seqs.append(Seq(sequence[i], alphabet, idents[i]))
         else:
-            raise ValueError("extra sequence in list")    # pragma: no cover
+            raise ValueError("extra sequence in list")  # pragma: no cover
 
     return SeqList(seqs)

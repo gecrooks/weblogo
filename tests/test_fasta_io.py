@@ -24,11 +24,12 @@
 #  THE SOFTWARE.
 #
 
-from io import StringIO
 import unittest
+from io import StringIO
 
-from weblogo.seq import protein_alphabet, nucleic_alphabet
-from weblogo.seq_io import fasta_io, plain_io, clustal_io
+from weblogo.seq import nucleic_alphabet, protein_alphabet
+from weblogo.seq_io import clustal_io, fasta_io, plain_io
+
 from . import data_stream
 
 example_with_optional_comments = """
@@ -78,19 +79,19 @@ class test_fasta_io(unittest.TestCase):
         self.assertEqual(seqs[0].name, "Lamprey")
         self.assertEqual(len(seqs[1]), 231)
 
-#    def test_read_long(self):
-#        f = data_stream("NC_000913.ffn")
-#        count = 0
-#        start = time.time()
-#        for s in seq_io.fasta_io.read_seq(f):
-#            count +=1
-#        end = time.time()
-#        t = end-start
-#
-#        self.assertEqual(count, 4243)
-#
-#        # Timing is 3s 1.67 GHz G4
-#        # print t
+    #    def test_read_long(self):
+    #        f = data_stream("NC_000913.ffn")
+    #        count = 0
+    #        start = time.time()
+    #        for s in seq_io.fasta_io.read_seq(f):
+    #            count +=1
+    #        end = time.time()
+    #        t = end-start
+    #
+    #        self.assertEqual(count, 4243)
+    #
+    #        # Timing is 3s 1.67 GHz G4
+    #        # print t
 
     def test_read_fail(self):
         f = StringIO(fasta_io.example)
@@ -107,14 +108,12 @@ class test_fasta_io(unittest.TestCase):
     def test_parse_clustal_fail(self):
         # should fail with parse error
         f = StringIO(clustal_io.example)
-        self.assertRaises(ValueError,
-                          fasta_io.read, f, protein_alphabet)
+        self.assertRaises(ValueError, fasta_io.read, f, protein_alphabet)
 
     def test_parse_plain_fail(self):
         # should fail with parse error
         f = StringIO(plain_io.example)
-        self.assertRaises(ValueError,
-                          fasta_io.read, f)
+        self.assertRaises(ValueError, fasta_io.read, f)
 
     def test_write_seq(self):
         f = StringIO(fasta_io.example)
@@ -130,7 +129,7 @@ class test_fasta_io(unittest.TestCase):
     def test_write_with_header(self):
         f = StringIO(fasta_io.example)
         seqs = fasta_io.read(f)
-        seqs.description = 'A description\nMore description'
+        seqs.description = "A description\nMore description"
         fout = StringIO()
         fasta_io.write(fout, seqs)
 
@@ -139,8 +138,9 @@ class test_fasta_io(unittest.TestCase):
         seqs = fasta_io.read(f)
         self.assertEqual(len(seqs), 2)
         self.assertEqual(seqs[1].startswith("SATVSEI"), True)
-        self.assertEqual(seqs[1].description.splitlines()[1],
-                         ("comment line 1 (optional)"))
+        self.assertEqual(
+            seqs[1].description.splitlines()[1], ("comment line 1 (optional)")
+        )
 
     def test_write_comments(self):
         f = StringIO(example_with_optional_comments)
@@ -170,8 +170,8 @@ class test_fasta_io(unittest.TestCase):
         self.assertEqual(len(idx), 3)
         self.assertEqual(idx[0].description, "Lamprey GLOBIN V - SEA LAMPREY")
         self.assertEqual(idx[0].name, "Lamprey")
-        self.assertEqual(idx['Lamprey'].name, "Lamprey")
-        self.assertEqual(len(idx['Hagfish']), 231)
+        self.assertEqual(idx["Lamprey"].name, "Lamprey")
+        self.assertEqual(len(idx["Hagfish"]), 231)
 
     def test_read_empty(self):
         f = StringIO()
@@ -193,5 +193,5 @@ class test_fasta_io(unittest.TestCase):
         self.assertEqual(len(seqs), 3)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

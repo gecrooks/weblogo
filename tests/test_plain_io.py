@@ -29,7 +29,7 @@ from io import StringIO
 import pytest
 
 from weblogo.seq import protein_alphabet, rna_alphabet
-from weblogo.seq_io import plain_io, fasta_io
+from weblogo.seq_io import fasta_io, plain_io
 
 
 def test_read_example():

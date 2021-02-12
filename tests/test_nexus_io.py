@@ -3,7 +3,8 @@ from io import StringIO
 import pytest
 
 from weblogo.seq import protein_alphabet
-from weblogo.seq_io import nexus_io, plain_io, clustal_io
+from weblogo.seq_io import clustal_io, nexus_io, plain_io
+
 from . import data_stream
 
 
@@ -14,7 +15,7 @@ def test_read():
     assert len(seqs) == 10
     assert seqs[0].name == "Cow"
     assert len(seqs[1]) == 234
-    assert str(seqs[0][0:10]) == 'MAYPMQLGFQ'
+    assert str(seqs[0][0:10]) == "MAYPMQLGFQ"
     f.close()
 
 

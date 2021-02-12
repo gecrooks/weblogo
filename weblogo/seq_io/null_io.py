@@ -32,7 +32,7 @@ writes do nothing.
 from typing import Generator
 from typing.io import TextIO
 
-from ..seq import Seq, SeqList, Alphabet
+from ..seq import Alphabet, Seq, SeqList
 
 names = ()
 extensions = ()
@@ -49,7 +49,7 @@ def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Generator:
     assert fin is not None
     if alphabet is not None:
         pass
-    yield Seq('')
+    yield Seq("")
     return
 
 

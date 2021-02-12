@@ -1,4 +1,3 @@
-
 #  Copyright (c) 2003-2004 The Regents of the University of California.
 #  Copyright (c) 2005 Gavin E. Crooks
 #  Copyright (c) 2006-2015, The Regents of the University of California, through
@@ -38,17 +37,13 @@
 import cgi as cgilib
 import cgitb
 import os.path
-import sys
 import shutil
-from io import StringIO, BytesIO, TextIOWrapper
-
-
-import weblogo
-
+import sys
+from io import BytesIO, StringIO, TextIOWrapper
 from string import Template
 
+import weblogo
 from weblogo.colorscheme import ColorScheme, SymbolColor
-
 
 cgitb.enable()
 
@@ -63,57 +58,62 @@ cgitb.enable()
 # Should replace with weblogo.utils?
 def resource_string(resource, basefilename):
     import os
+
     fn = os.path.join(os.path.dirname(basefilename), resource)
     return open(fn).read()
 
 
 mime_type = {
-    'eps': 'application/postscript',
-    'pdf': 'application/pdf',
-    'svg': 'image/svg+xml',
-    'png': 'image/png',
-    'png_print': 'image/png',
-    'logodata': 'text/plain',
-    'jpeg': 'image/jpeg',
+    "eps": "application/postscript",
+    "pdf": "application/pdf",
+    "svg": "image/svg+xml",
+    "png": "image/png",
+    "png_print": "image/png",
+    "logodata": "text/plain",
+    "jpeg": "image/jpeg",
 }
 
 extension = {
-    'eps': 'eps',
-    'pdf': 'pdf',
-    'png': 'png',
-    'svg': 'svg',
-    'png_print': 'png',
-    'logodata': 'txt',
-    'jpeg': 'jpeg'
+    "eps": "eps",
+    "pdf": "pdf",
+    "png": "png",
+    "svg": "svg",
+    "png_print": "png",
+    "logodata": "txt",
+    "jpeg": "jpeg",
 }
 
 alphabets = {
-    'alphabet_auto': None,
-    'alphabet_protein': weblogo.unambiguous_protein_alphabet,
-    'alphabet_rna': weblogo.unambiguous_rna_alphabet,
-    'alphabet_dna': weblogo.unambiguous_dna_alphabet}
+    "alphabet_auto": None,
+    "alphabet_protein": weblogo.unambiguous_protein_alphabet,
+    "alphabet_rna": weblogo.unambiguous_rna_alphabet,
+    "alphabet_dna": weblogo.unambiguous_dna_alphabet,
+}
 
 color_schemes = {}
 for k in weblogo.std_color_schemes.keys():
-    color_schemes['color_' + k.replace(' ', '_')] = weblogo.std_color_schemes[k]
+    color_schemes["color_" + k.replace(" ", "_")] = weblogo.std_color_schemes[k]
 
-composition = {'comp_none': 'none',
-               'comp_auto': 'auto',
-               'comp_equiprobable': 'equiprobable',
-               'comp_CG': 'percentCG',
-               'comp_Celegans': 'C. elegans',
-               'comp_Dmelanogaster': 'D. melanogaster',
-               'comp_Ecoli': 'E. coli',
-               'comp_Hsapiens': 'H. sapiens',
-               'comp_Mmusculus': 'M. musculus',
-               'comp_Scerevisiae': 'S. cerevisiae'
-               }
+composition = {
+    "comp_none": "none",
+    "comp_auto": "auto",
+    "comp_equiprobable": "equiprobable",
+    "comp_CG": "percentCG",
+    "comp_Celegans": "C. elegans",
+    "comp_Dmelanogaster": "D. melanogaster",
+    "comp_Ecoli": "E. coli",
+    "comp_Hsapiens": "H. sapiens",
+    "comp_Mmusculus": "M. musculus",
+    "comp_Scerevisiae": "S. cerevisiae",
+}
 
 
 class Field(object):
     """ A representation of an HTML form field."""
 
-    def __init__(self, name, default=None, conversion=None, options=None, errmsg="Illegal value."):
+    def __init__(
+        self, name, default=None, conversion=None, options=None, errmsg="Illegal value."
+    ):
         self.name = name
         self.default = default
         self.value = default
@@ -136,7 +136,7 @@ class Field(object):
 
 
 def string_or_none(value):
-    if value is None or value == 'auto':
+    if value is None or value == "auto":
         return None
     return str(value)
 
@@ -148,13 +148,13 @@ def truth(value):
 
 
 def int_or_none(value):
-    if value == '' or value is None or value == 'auto':
+    if value == "" or value is None or value == "auto":
         return None
     return int(value)
 
 
 def float_or_none(value):
-    if value == '' or value is None or value == 'auto':
+    if value == "" or value is None or value == "auto":
         return None
     return float(value)
 
@@ -167,65 +167,108 @@ def main(htdocs_directory=None):
     # the default in logooptions) since a checked checkbox returns 'true'
     # but an unchecked checkbox returns nothing.
     controls = [
-        Field('sequences', ''),
-        Field('sequences_url', ''),
-        Field('format', 'png', weblogo.formatters.get,
-              options=['png_print', 'png', 'jpeg', 'eps', 'pdf', 'svg', 'logodata'],
-              # TODO: Should copy list from __init__.formatters
-              errmsg="Unknown format option."),
-        Field('stacks_per_line', logooptions.stacks_per_line, int,
-              errmsg='Invalid number of stacks per line.'),
-        Field('stack_width', 'medium', weblogo.std_sizes.get,
-              options=['small', 'medium', 'large'], errmsg='Invalid logo size.'),
-        Field('alphabet', 'alphabet_auto', alphabets.get,
-              options=['alphabet_auto', 'alphabet_protein', 'alphabet_dna',
-                       'alphabet_rna'],
-              errmsg="Unknown sequence type."),
-        Field('unit_name', 'bits',
-              options=['probability', 'bits', 'nats', 'kT', 'kJ/mol',
-                       'kcal/mol']),
-        Field('first_index', 1, int_or_none),
-        Field('logo_start', '', int_or_none),
-        Field('logo_end', '', int_or_none),
-        Field('composition', 'comp_auto', composition.get,
-              options=['comp_none', 'comp_auto', 'comp_equiprobable', 'comp_CG',
-                       'comp_Celegans', 'comp_Dmelanogaster', 'comp_Ecoli',
-                       'comp_Hsapiens', 'comp_Mmusculus', 'comp_Scerevisiae'],
-              errmsg="Illegal sequence composition."),
-        Field('percentCG', '', float_or_none, errmsg="Invalid CG percentage."),
-        Field('show_errorbars', False, truth),
-        Field('logo_title', logooptions.logo_title),
-        Field('logo_label', logooptions.logo_label),
-        Field('show_xaxis', False, truth),
-        Field('xaxis_label', logooptions.xaxis_label),
-        Field('show_yaxis', False, truth),
-        Field('yaxis_label', logooptions.yaxis_label, string_or_none),
-        Field('yaxis_scale', logooptions.yaxis_scale, float_or_none,
-              errmsg="The yaxis scale must be a positive number."),
-        Field('yaxis_tic_interval', logooptions.yaxis_tic_interval,
-              float_or_none),
-        Field('show_ends', False, truth),
-        Field('show_fineprint', False, truth),
-        Field('color_scheme', 'color_auto', color_schemes.get,
-              options=color_schemes.keys(),
-              errmsg='Unknown color scheme'),
-        Field('color0', ''),
-        Field('symbols0', ''),
-        Field('desc0', ''),
-        Field('color1', ''),
-        Field('symbols1', ''),
-        Field('desc1', ''),
-        Field('color2', ''),
-        Field('symbols2', ''),
-        Field('desc2', ''),
-        Field('color3', ''),
-        Field('symbols3', ''),
-        Field('desc3', ''),
-        Field('color4', ''),
-        Field('symbols4', ''),
-        Field('desc4', ''),
-        Field('ignore_lower_case', False, truth),
-        Field('scale_width', False, truth),
+        Field("sequences", ""),
+        Field("sequences_url", ""),
+        Field(
+            "format",
+            "png",
+            weblogo.formatters.get,
+            options=["png_print", "png", "jpeg", "eps", "pdf", "svg", "logodata"],
+            # TODO: Should copy list from __init__.formatters
+            errmsg="Unknown format option.",
+        ),
+        Field(
+            "stacks_per_line",
+            logooptions.stacks_per_line,
+            int,
+            errmsg="Invalid number of stacks per line.",
+        ),
+        Field(
+            "stack_width",
+            "medium",
+            weblogo.std_sizes.get,
+            options=["small", "medium", "large"],
+            errmsg="Invalid logo size.",
+        ),
+        Field(
+            "alphabet",
+            "alphabet_auto",
+            alphabets.get,
+            options=[
+                "alphabet_auto",
+                "alphabet_protein",
+                "alphabet_dna",
+                "alphabet_rna",
+            ],
+            errmsg="Unknown sequence type.",
+        ),
+        Field(
+            "unit_name",
+            "bits",
+            options=["probability", "bits", "nats", "kT", "kJ/mol", "kcal/mol"],
+        ),
+        Field("first_index", 1, int_or_none),
+        Field("logo_start", "", int_or_none),
+        Field("logo_end", "", int_or_none),
+        Field(
+            "composition",
+            "comp_auto",
+            composition.get,
+            options=[
+                "comp_none",
+                "comp_auto",
+                "comp_equiprobable",
+                "comp_CG",
+                "comp_Celegans",
+                "comp_Dmelanogaster",
+                "comp_Ecoli",
+                "comp_Hsapiens",
+                "comp_Mmusculus",
+                "comp_Scerevisiae",
+            ],
+            errmsg="Illegal sequence composition.",
+        ),
+        Field("percentCG", "", float_or_none, errmsg="Invalid CG percentage."),
+        Field("show_errorbars", False, truth),
+        Field("logo_title", logooptions.logo_title),
+        Field("logo_label", logooptions.logo_label),
+        Field("show_xaxis", False, truth),
+        Field("xaxis_label", logooptions.xaxis_label),
+        Field("show_yaxis", False, truth),
+        Field("yaxis_label", logooptions.yaxis_label, string_or_none),
+        Field(
+            "yaxis_scale",
+            logooptions.yaxis_scale,
+            float_or_none,
+            errmsg="The yaxis scale must be a positive number.",
+        ),
+        Field("yaxis_tic_interval", logooptions.yaxis_tic_interval, float_or_none),
+        Field("show_ends", False, truth),
+        Field("show_fineprint", False, truth),
+        Field(
+            "color_scheme",
+            "color_auto",
+            color_schemes.get,
+            options=color_schemes.keys(),
+            errmsg="Unknown color scheme",
+        ),
+        Field("color0", ""),
+        Field("symbols0", ""),
+        Field("desc0", ""),
+        Field("color1", ""),
+        Field("symbols1", ""),
+        Field("desc1", ""),
+        Field("color2", ""),
+        Field("symbols2", ""),
+        Field("desc2", ""),
+        Field("color3", ""),
+        Field("symbols3", ""),
+        Field("desc3", ""),
+        Field("color4", ""),
+        Field("symbols4", ""),
+        Field("desc4", ""),
+        Field("ignore_lower_case", False, truth),
+        Field("scale_width", False, truth),
     ]
 
     form = {}
@@ -237,12 +280,12 @@ def main(htdocs_directory=None):
     # Send default form?
     if len(form_values) == 0 or "cmd_reset" in form_values:
         # Load default truth values now.
-        form['show_errorbars'].value = logooptions.show_errorbars
-        form['show_xaxis'].value = logooptions.show_xaxis
-        form['show_yaxis'].value = logooptions.show_yaxis
-        form['show_ends'].value = logooptions.show_ends
-        form['show_fineprint'].value = logooptions.show_fineprint
-        form['scale_width'].value = logooptions.scale_width
+        form["show_errorbars"].value = logooptions.show_errorbars
+        form["show_xaxis"].value = logooptions.show_xaxis
+        form["show_yaxis"].value = logooptions.show_yaxis
+        form["show_ends"].value = logooptions.show_ends
+        form["show_fineprint"].value = logooptions.show_fineprint
+        form["scale_width"].value = logooptions.scale_width
 
         send_form(controls, htdocs_directory=htdocs_directory)
         return
@@ -251,13 +294,29 @@ def main(htdocs_directory=None):
     for c in controls:
         c.value = form_values.getfirst(c.name, c.default)
 
-    options_from_form = ['format', 'stacks_per_line', 'stack_width',
-                         'alphabet', 'unit_name', 'first_index', 'logo_start', 'logo_end',
-                         'composition',
-                         'show_errorbars', 'logo_title', 'logo_label', 'show_xaxis',
-                         'xaxis_label',
-                         'show_yaxis', 'yaxis_label', 'yaxis_scale', 'yaxis_tic_interval',
-                         'show_ends', 'show_fineprint', 'scale_width']
+    options_from_form = [
+        "format",
+        "stacks_per_line",
+        "stack_width",
+        "alphabet",
+        "unit_name",
+        "first_index",
+        "logo_start",
+        "logo_end",
+        "composition",
+        "show_errorbars",
+        "logo_title",
+        "logo_label",
+        "show_xaxis",
+        "xaxis_label",
+        "show_yaxis",
+        "yaxis_label",
+        "yaxis_scale",
+        "yaxis_tic_interval",
+        "show_ends",
+        "show_fineprint",
+        "scale_width",
+    ]
 
     errors = []
     for optname in options_from_form:
@@ -279,9 +338,9 @@ def main(htdocs_directory=None):
             try:
                 custom.rules.append(SymbolColor(symbols, color, desc))
             except ValueError:
-                errors.append(('color%d' % i, "Invalid color: %s" % color))
+                errors.append(("color%d" % i, "Invalid color: %s" % color))
 
-    if form["color_scheme"].value == 'color_custom':
+    if form["color_scheme"].value == "color_custom":
         logooptions.color_scheme = custom
     else:
         try:
@@ -307,7 +366,7 @@ def main(htdocs_directory=None):
             errors.append(("sequences_file", "Cannot upload, sequence source conflict"))
         else:
             sequences = sequences_from_file
-            seq_file = TextIOWrapper(BytesIO(sequences), encoding='utf-8')
+            seq_file = TextIOWrapper(BytesIO(sequences), encoding="utf-8")
     elif sequences_from_textfield:
         if sequences_url:
             errors.append(("sequences", "Cannot upload, sequence source conflict"))
@@ -320,15 +379,20 @@ def main(htdocs_directory=None):
             # without warning, so we'll set textarea maximum to be larger than MAX_SEQUENCE_SIZE
             SEQUENCES_MAXLENGTH = 100000
             if len(sequences_from_textfield) > SEQUENCES_MAXLENGTH:
-                errors.append(("sequences",
-                               "Sequence data too large for text input. Use file upload instead."))
-                controls[0] = Field('sequences', '')
+                errors.append(
+                    (
+                        "sequences",
+                        "Sequence data too large for text input. Use file upload instead.",
+                    )
+                )
+                controls[0] = Field("sequences", "")
             else:
                 sequences = sequences_from_textfield
                 seq_file = StringIO(sequences)
 
     elif sequences_url:
         from . import _from_URL_fileopen
+
         try:
             seq_file = _from_URL_fileopen(sequences_url)
         except ValueError:
@@ -337,9 +401,13 @@ def main(htdocs_directory=None):
             errors.append(("sequences_url", "Cannot load sequences from URL"))
 
     else:
-        errors.append(("sequences",
-                       "Please enter a multiple-sequence alignment in the box above, or select a "
-                       "file to upload."))
+        errors.append(
+            (
+                "sequences",
+                "Please enter a multiple-sequence alignment in the box above, or select a "
+                "file to upload.",
+            )
+        )
 
     # If we have uncovered errors or we want the chance to edit the logo
     # ("cmd_edit" command from examples page) then we return the form now.
@@ -353,8 +421,8 @@ def main(htdocs_directory=None):
     try:
         comp = form["composition"].get_value()
         percentCG = form["percentCG"].get_value()
-        ignore_lower_case = ("ignore_lower_case" in form_values)
-        if comp == 'percentCG':
+        ignore_lower_case = "ignore_lower_case" in form_values
+        if comp == "percentCG":
             comp = str(percentCG / 100)
 
         from .matrix import Motif
@@ -366,9 +434,11 @@ def main(htdocs_directory=None):
             prior = weblogo.parse_prior(comp, motif.alphabet)
             data = weblogo.LogoData.from_counts(motif.alphabet, motif, prior)
         except ValueError:
-            seqs = weblogo.read_seq_data(seq_file, alphabet=logooptions.alphabet,
-                                         ignore_lower_case=ignore_lower_case
-                                         )
+            seqs = weblogo.read_seq_data(
+                seq_file,
+                alphabet=logooptions.alphabet,
+                ignore_lower_case=ignore_lower_case,
+            )
             prior = weblogo.parse_prior(comp, seqs.alphabet)
             data = weblogo.LogoData.from_seqs(seqs, prior)
 
@@ -394,11 +464,11 @@ def main(htdocs_directory=None):
     # Content-Disposition: inline       Open logo in browser window
     # Content-Disposition: attachment   Download logo
     if "download" in form_values:
-        print('Content-Disposition: attachment; '
-              'filename="logo.%s"' % extension[format])
+        print(
+            "Content-Disposition: attachment; " 'filename="logo.%s"' % extension[format]
+        )
     else:
-        print('Content-Disposition: inline; '
-              'filename="logo.%s"' % extension[format])
+        print("Content-Disposition: inline; " 'filename="logo.%s"' % extension[format])
     # Separate header from data
     print()
     sys.stdout.flush()
@@ -409,45 +479,44 @@ def main(htdocs_directory=None):
 
 def send_form(controls, errors=[], htdocs_directory=None):
     if htdocs_directory is None:
-        htdocs_directory = os.path.join(
-                os.path.dirname(__file__, "htdocs"))
+        htdocs_directory = os.path.join(os.path.dirname(__file__, "htdocs"))
 
     substitutions = {}
     substitutions["version"] = weblogo.release_description
     # Bug fix. Not sure why this default substitution isn't added automatically like everything else
-    substitutions['color_custom'] = ''
+    substitutions["color_custom"] = ""
     for c in controls:
         if c.options:
             for opt in c.options:
-                substitutions[opt.replace('/', '_')] = ''
-            substitutions[c.value.replace('/', '_')] = 'selected'
+                substitutions[opt.replace("/", "_")] = ""
+            substitutions[c.value.replace("/", "_")] = "selected"
         else:
             value = c.value
             if value is None:
-                value = 'auto'
-            if value == 'true':
-                substitutions[c.name] = 'checked'
+                value = "auto"
+            if value == "true":
+                substitutions[c.name] = "checked"
             elif type(value) == bool:
                 if value:
-                    substitutions[c.name] = 'checked'
+                    substitutions[c.name] = "checked"
                 else:
-                    substitutions[c.name] = ''
+                    substitutions[c.name] = ""
             else:
                 substitutions[c.name] = str(value)
-        substitutions[c.name + '_err'] = ''
-    substitutions['logo_range_err'] = ''
+        substitutions[c.name + "_err"] = ""
+    substitutions["logo_range_err"] = ""
 
     # Disable graphics options if necessary auxiliary programs are not installed.
-    if shutil.which('gs') is None and shutil.which('gswin32c.exe') is None:
-        substitutions['png_print'] = 'disabled="disabled"'
-        substitutions['png'] = 'disabled="disabled"'
-        substitutions['jpeg'] = 'disabled="disabled"'
-        substitutions['pdf'] = 'disabled="disabled"'
-        substitutions['svg'] = 'disabled="disabled"'
-        substitutions['eps'] = 'selected="selected"'
+    if shutil.which("gs") is None and shutil.which("gswin32c.exe") is None:
+        substitutions["png_print"] = 'disabled="disabled"'
+        substitutions["png"] = 'disabled="disabled"'
+        substitutions["jpeg"] = 'disabled="disabled"'
+        substitutions["pdf"] = 'disabled="disabled"'
+        substitutions["svg"] = 'disabled="disabled"'
+        substitutions["eps"] = 'selected="selected"'
 
-    if shutil.which('pdf2svg') is None:
-        substitutions['svg'] = 'disabled="disabled"'
+    if shutil.which("pdf2svg") is None:
+        substitutions["svg"] = 'disabled="disabled"'
 
     if errors:
         print(errors, file=sys.stderr)
@@ -463,12 +532,13 @@ def send_form(controls, errors=[], htdocs_directory=None):
 
             error_message += "ERROR: "
             error_message += msg
-            error_message += ' <br />'
+            error_message += " <br />"
 
-        error_message += \
-            "<input style='float:right; font-size:small' type='submit' " \
+        error_message += (
+            "<input style='float:right; font-size:small' type='submit' "
             "name='cmd_validate' value='Clear Error' /> "
-        substitutions["error_message"] = ''.join(error_message)
+        )
+        substitutions["error_message"] = "".join(error_message)
     else:
         substitutions["error_message"] = ""
 

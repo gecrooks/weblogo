@@ -31,10 +31,10 @@ column is the sequence itself. The columns are separated by a single tab ("\\t")
 
 """
 
-from ..seq import Seq, SeqList, Alphabet
+from ..seq import Alphabet, Seq, SeqList
 
-names = ('table', 'tab')
-extensions = ('tbl',)
+names = ("table", "tab")
+extensions = ("tbl",)
 
 example = """
 EC0001	MKRISTTITTTITITTGNGAG
@@ -66,7 +66,7 @@ def read(fin, alphabet=None):
 
 
 def iterseq(fin, alphabet=None):
-    """ Parse a file and generate sequences.
+    """Parse a file and generate sequences.
 
     Args:
         fin -- A stream or file to read
@@ -80,13 +80,15 @@ def iterseq(fin, alphabet=None):
 
     for lineno, line in enumerate(fin):
         line = line.strip()
-        if line == '':
+        if line == "":
             continue
 
-        columns = line.split('\t')
+        columns = line.split("\t")
         if len(columns) != 2:
-            raise ValueError("Parse failed on line %d: did not find two columns separated by a tab."
-                             % lineno)
+            raise ValueError(
+                "Parse failed on line %d: did not find two columns separated by a tab."
+                % lineno
+            )
         yield Seq(columns[1], alphabet=alphabet, name=columns[0])
 
 
@@ -102,11 +104,11 @@ def write(fout, seqs):
 
 
 def writeseq(fout, seq):
-    """ Write a single sequence in fasta format.
+    """Write a single sequence in fasta format.
 
     Args:
         afile -- A writable stream.
         seq  -- A Seq instance
     """
-    name = seq.name or ''
-    print(name, seq, sep='\t', file=fout)
+    name = seq.name or ""
+    print(name, seq, sep="\t", file=fout)

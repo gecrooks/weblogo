@@ -29,21 +29,21 @@ import unittest
 
 from weblogo import seq_io
 from weblogo.seq_io import genbank_io
+
 from . import data_stream
 
 
 def examples():
     return (
-        data_stream('genbank/NT_019265.gb'),
-        data_stream('genbank/cox2.gb'),
-        data_stream('genbank/iro.gb'),
-        data_stream('genbank/pri1.gb'),
-        data_stream('genbank/dbsource_wrap.gb'),
-        data_stream('genbank/noref.gb'),
-        data_stream('genbank/protein_refseq.gb'),
-        data_stream('genbank/cor6_6.gb'),
-        data_stream('genbank/origin_line.gb'),
-
+        data_stream("genbank/NT_019265.gb"),
+        data_stream("genbank/cox2.gb"),
+        data_stream("genbank/iro.gb"),
+        data_stream("genbank/pri1.gb"),
+        data_stream("genbank/dbsource_wrap.gb"),
+        data_stream("genbank/noref.gb"),
+        data_stream("genbank/protein_refseq.gb"),
+        data_stream("genbank/cor6_6.gb"),
+        data_stream("genbank/origin_line.gb"),
         # These files are too large to include in the distribution
         # data_stream('genbank/arab1.gb'),
         # data_stream('genbank/NC_005213.gbk'),
@@ -80,11 +80,11 @@ class test_genbank_io(unittest.TestCase):
         self.assertEqual(len(seqs[1]), 210)
         f.close()
 
-        f = data_stream('genbank/NT_019265.gb')
+        f = data_stream("genbank/NT_019265.gb")
         seqs = genbank_io.read(f)
         self.assertEqual(len(seqs), 0)
         f.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

@@ -36,14 +36,14 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 #  POSSIBILITY OF SUCH DAMAGE.
 
-from typing import Tuple
-import numpy as np
 import random
-from math import log, sqrt, exp
-from numpy import asarray, float64, zeros, shape
+from math import exp, log, sqrt
+from typing import Tuple
 
-from scipy.special import gamma, digamma, polygamma, gammaincc
+import numpy as np
 import scipy.optimize
+from numpy import asarray, float64, shape, zeros
+from scipy.special import digamma, gamma, gammaincc, polygamma
 
 
 class Dirichlet(object):
@@ -68,7 +68,12 @@ class Dirichlet(object):
     Status:
         Alpha
     """
-    __slots__ = 'alpha', '_total', '_mean',
+
+    __slots__ = (
+        "alpha",
+        "_total",
+        "_mean",
+    )
 
     def __init__(self, alpha: np.ndarray) -> None:
         """
@@ -115,11 +120,11 @@ class Dirichlet(object):
         cv = zeros((K, K), float64)
 
         for i in range(K):
-            cv[i, i] = alpha[i] * (1. - alpha[i] / A) / (A * (A + 1.))
+            cv[i, i] = alpha[i] * (1.0 - alpha[i] / A) / (A * (A + 1.0))
 
         for i in range(K):
             for j in range(i + 1, K):
-                v = - alpha[i] * alpha[j] / (A * A * (A + 1.))
+                v = -alpha[i] * alpha[j] / (A * A * (A + 1.0))
                 cv[i, j] = v
                 cv[j, i] = v
         return cv
@@ -161,7 +166,7 @@ class Dirichlet(object):
         ent = 0.0
         for a in alpha:
             if a > 0:
-                ent += - 1.0 * a * digamma(1.0 + a)  # FIXME: Check
+                ent += -1.0 * a * digamma(1.0 + a)  # FIXME: Check
         ent /= A
         ent += digamma(A + 1.0)
         return ent
@@ -187,8 +192,8 @@ class Dirichlet(object):
             dg2[i] = digamma(alpha[i] + 2.0)
             tg2[i] = polygamma(1, alpha[i] + 2.0)
 
-        dg_Ap2 = digamma(A + 2.)
-        tg_Ap2 = polygamma(1, A + 2.)
+        dg_Ap2 = digamma(A + 2.0)
+        tg_Ap2 = polygamma(1, A + 2.0)
 
         mean = self.mean_entropy()
         var = 0.0
@@ -197,25 +202,31 @@ class Dirichlet(object):
             for j in range(L):
                 if i != j:
                     var += (
-                               (dg1[i] - dg_Ap2) * (dg1[j] - dg_Ap2) - tg_Ap2
-                           ) * (alpha[i] * alpha[j]) / A2
+                        ((dg1[i] - dg_Ap2) * (dg1[j] - dg_Ap2) - tg_Ap2)
+                        * (alpha[i] * alpha[j])
+                        / A2
+                    )
                 else:
                     var += (
-                               (dg2[i] - dg_Ap2) ** 2 + (tg2[i] - tg_Ap2)
-                           ) * (alpha[i] * (alpha[i] + 1.)) / A2
+                        ((dg2[i] - dg_Ap2) ** 2 + (tg2[i] - tg_Ap2))
+                        * (alpha[i] * (alpha[i] + 1.0))
+                        / A2
+                    )
 
         var -= mean ** 2
         return var
 
     def mean_relative_entropy(self, pvec: np.ndarray) -> float:
         ln_p = np.log(pvec)
-        return - self.mean_x(ln_p) - self.mean_entropy()
+        return -self.mean_x(ln_p) - self.mean_entropy()
 
     def variance_relative_entropy(self, pvec: np.ndarray) -> float:
         ln_p = np.log(pvec)
         return self.variance_x(ln_p) + self.variance_entropy()
 
-    def interval_relative_entropy(self, pvec: np.ndarray, frac: float) -> Tuple[float, float]:
+    def interval_relative_entropy(
+        self, pvec: np.ndarray, frac: float
+    ) -> Tuple[float, float]:
         mean = self.mean_relative_entropy(pvec)
         variance = self.variance_relative_entropy(pvec)
         sd = sqrt(variance)
@@ -226,8 +237,8 @@ class Dirichlet(object):
             return max(0.0, mean - sd * 1.96), mean + sd * 1.96
 
         g = Gamma.from_mean_variance(mean, variance)
-        low_limit = g.inverse_cdf((1. - frac) / 2.)
-        high_limit = g.inverse_cdf(1. - (1. - frac) / 2.)
+        low_limit = g.inverse_cdf((1.0 - frac) / 2.0)
+        high_limit = g.inverse_cdf(1.0 - (1.0 - frac) / 2.0)
 
         return low_limit, high_limit
 
@@ -238,7 +249,8 @@ class Gamma(object):
 
 
     """
-    __slots__ = 'alpha', 'beta'
+
+    __slots__ = "alpha", "beta"
 
     def __init__(self, alpha: float, beta: float) -> None:
         if alpha <= 0.0:
@@ -250,7 +262,7 @@ class Gamma(object):
 
     @classmethod
     def from_shape_scale(cls, shape: float, scale: float) -> "Gamma":
-        return cls(shape, 1. / scale)
+        return cls(shape, 1.0 / scale)
 
     @classmethod
     def from_mean_variance(cls, mean: float, variance: float) -> "Gamma":
@@ -265,14 +277,14 @@ class Gamma(object):
         return self.alpha / (self.beta ** 2)
 
     def sample(self) -> float:
-        return random.gammavariate(self.alpha, 1. / self.beta)
+        return random.gammavariate(self.alpha, 1.0 / self.beta)
 
     def pdf(self, x: float) -> float:
         if x == 0.0:
             return 0.0
         a = self.alpha
         b = self.beta
-        return (x ** (a - 1.)) * exp(- b * x) * (b ** a) / gamma(a)
+        return (x ** (a - 1.0)) * exp(-b * x) * (b ** a) / gamma(a)
 
     def cdf(self, x: float) -> float:
         return 1.0 - gammaincc(self.alpha, self.beta * x)

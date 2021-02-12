@@ -2,8 +2,13 @@
 
 import unittest
 
-from weblogo.data import (amino_acid_composition, resource_names, data_stream, data_string,
-                          data_filename)
+from weblogo.data import (
+    amino_acid_composition,
+    data_filename,
+    data_stream,
+    data_string,
+    resource_names,
+)
 
 
 class test_data(unittest.TestCase):
@@ -19,5 +24,5 @@ class test_data(unittest.TestCase):
             data_filename(n)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

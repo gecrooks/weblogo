@@ -52,7 +52,8 @@ Status : Beta - Needs documentation.
 # http://www.jalview.org
 
 
-from typing import Sequence, List, Optional
+from typing import List, Optional, Sequence
+
 from . import seq
 from .color import Color
 from .seq import Alphabet
@@ -67,7 +68,7 @@ class ColorRule(object):
     """
 
     def symbol_color(self, seq_index: int, symbol: str, rank: int) -> Optional[Color]:
-        raise NotImplementedError   # pragma: no cover
+        raise NotImplementedError  # pragma: no cover
 
 
 class ColorScheme(ColorRule):
@@ -81,12 +82,14 @@ class ColorScheme(ColorRule):
     color.  If no rule provides a color, the given default color will be used.
     """
 
-    def __init__(self,
-                 rules: List[ColorRule] = [],
-                 title: str = "",
-                 description: str = "",
-                 default_color: str = "black",
-                 alphabet: Alphabet = seq.generic_alphabet) -> None:
+    def __init__(
+        self,
+        rules: List[ColorRule] = [],
+        title: str = "",
+        description: str = "",
+        default_color: str = "black",
+        alphabet: Alphabet = seq.generic_alphabet,
+    ) -> None:
 
         self.rules = rules
         self.title = title
@@ -129,7 +132,9 @@ class IndexColor(ColorRule):
     residues) with a single color.
     """
 
-    def __init__(self, indices: Sequence[list], color: str, description: str = None) -> None:
+    def __init__(
+        self, indices: Sequence[list], color: str, description: str = None
+    ) -> None:
         self.indices = indices
         self.color = Color.from_string(color)
         self.description = description
@@ -161,75 +166,72 @@ monochrome = ColorScheme([])  # This list intentionally left blank
 
 # From makelogo
 nucleotide = ColorScheme(
-        [
-            SymbolColor("G", "orange"),
-            SymbolColor("TU", "red"),
-            SymbolColor("C", "blue"),
-            SymbolColor("A", "green")
-        ],
+    [
+        SymbolColor("G", "orange"),
+        SymbolColor("TU", "red"),
+        SymbolColor("C", "blue"),
+        SymbolColor("A", "green"),
+    ],
 )
 
 base_pairing = ColorScheme(
-        [
-            SymbolColor("TAU", "darkorange", "Weak (2 Watson-Crick hydrogen bonds)"),
-            SymbolColor("GC", "blue", "Strong (3 Watson-Crick hydrogen bonds)")
-        ],
+    [
+        SymbolColor("TAU", "darkorange", "Weak (2 Watson-Crick hydrogen bonds)"),
+        SymbolColor("GC", "blue", "Strong (3 Watson-Crick hydrogen bonds)"),
+    ],
 )
 
 # From Crooks2004c-Proteins-SeqStr.pdf
 hydrophobicity = ColorScheme(
-        [
-            SymbolColor("RKDENQ", "blue", "hydrophilic"),
-            SymbolColor("SGHTAP", "green", "neutral"),
-            SymbolColor("YVMCLFIW", "black", "hydrophobic")
-        ],
-        alphabet=seq.unambiguous_protein_alphabet
+    [
+        SymbolColor("RKDENQ", "blue", "hydrophilic"),
+        SymbolColor("SGHTAP", "green", "neutral"),
+        SymbolColor("YVMCLFIW", "black", "hydrophobic"),
+    ],
+    alphabet=seq.unambiguous_protein_alphabet,
 )
 
 # from makelogo
 chemistry = ColorScheme(
-        [
-            SymbolColor("GSTYC", "green", "polar"),
-            SymbolColor("NQ", "purple", "neutral"),
-            SymbolColor("KRH", "blue", "basic"),
-            SymbolColor("DE", "red", "acidic"),
-            SymbolColor("PAWFLIMV", "black", "hydrophobic")
-        ],
-        alphabet=seq.unambiguous_protein_alphabet
+    [
+        SymbolColor("GSTYC", "green", "polar"),
+        SymbolColor("NQ", "purple", "neutral"),
+        SymbolColor("KRH", "blue", "basic"),
+        SymbolColor("DE", "red", "acidic"),
+        SymbolColor("PAWFLIMV", "black", "hydrophobic"),
+    ],
+    alphabet=seq.unambiguous_protein_alphabet,
 )
 
 charge = ColorScheme(
-        [
-            SymbolColor("KRH", "blue", "Positive"),
-            SymbolColor("DE", "red", "Negative")
-        ],
-        alphabet=seq.unambiguous_protein_alphabet
+    [SymbolColor("KRH", "blue", "Positive"), SymbolColor("DE", "red", "Negative")],
+    alphabet=seq.unambiguous_protein_alphabet,
 )
 
 taylor = ColorScheme(
-        [
-            SymbolColor('A', '#CCFF00'),
-            SymbolColor('C', '#FFFF00'),
-            SymbolColor('D', '#FF0000'),
-            SymbolColor('E', '#FF0066'),
-            SymbolColor('F', '#00FF66'),
-            SymbolColor('G', '#FF9900'),
-            SymbolColor('H', '#0066FF'),
-            SymbolColor('I', '#66FF00'),
-            SymbolColor('K', '#6600FF'),
-            SymbolColor('L', '#33FF00'),
-            SymbolColor('M', '#00FF00'),
-            SymbolColor('N', '#CC00FF'),
-            SymbolColor('P', '#FFCC00'),
-            SymbolColor('Q', '#FF00CC'),
-            SymbolColor('R', '#0000FF'),
-            SymbolColor('S', '#FF3300'),
-            SymbolColor('T', '#FF6600'),
-            SymbolColor('V', '#99FF00'),
-            SymbolColor('W', '#00CCFF'),
-            SymbolColor('Y', '#00FFCC')
-        ],
-        title="Taylor",
-        description="W. Taylor, Protein Engineering, Vol 10 , 743-746 (1997)",
-        alphabet=seq.unambiguous_protein_alphabet
+    [
+        SymbolColor("A", "#CCFF00"),
+        SymbolColor("C", "#FFFF00"),
+        SymbolColor("D", "#FF0000"),
+        SymbolColor("E", "#FF0066"),
+        SymbolColor("F", "#00FF66"),
+        SymbolColor("G", "#FF9900"),
+        SymbolColor("H", "#0066FF"),
+        SymbolColor("I", "#66FF00"),
+        SymbolColor("K", "#6600FF"),
+        SymbolColor("L", "#33FF00"),
+        SymbolColor("M", "#00FF00"),
+        SymbolColor("N", "#CC00FF"),
+        SymbolColor("P", "#FFCC00"),
+        SymbolColor("Q", "#FF00CC"),
+        SymbolColor("R", "#0000FF"),
+        SymbolColor("S", "#FF3300"),
+        SymbolColor("T", "#FF6600"),
+        SymbolColor("V", "#99FF00"),
+        SymbolColor("W", "#00CCFF"),
+        SymbolColor("Y", "#00FFCC"),
+    ],
+    title="Taylor",
+    description="W. Taylor, Protein Engineering, Vol 10 , 743-746 (1997)",
+    alphabet=seq.unambiguous_protein_alphabet,
 )

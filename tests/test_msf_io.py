@@ -34,12 +34,12 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 #  POSSIBILITY OF SUCH DAMAGE.
 
-from io import StringIO
-
 import unittest
+from io import StringIO
 
 from weblogo.seq import nucleic_alphabet
 from weblogo.seq_io import msf_io, plain_io
+
 from . import data_stream
 
 
@@ -50,7 +50,7 @@ class test_msf_io(unittest.TestCase):
         self.assertEqual(len(seqs), 10)
         self.assertEqual(seqs[1].name, "Carp")
         self.assertEqual(len(seqs[1]), 705)
-        self.assertEqual(str(seqs[2][0:10]), 'ATGGCCAACC')
+        self.assertEqual(str(seqs[2][0:10]), "ATGGCCAACC")
         f.close()
 
     def test_parse_msf2(self):
@@ -59,7 +59,7 @@ class test_msf_io(unittest.TestCase):
         self.assertEqual(len(seqs), 5)
         self.assertEqual(seqs[1].name, "cox2_crifa")
         self.assertEqual(len(seqs[1]), 166)
-        self.assertEqual(str(seqs[2][0:10]), 'MSFILTFWMI')
+        self.assertEqual(str(seqs[2][0:10]), "MSFILTFWMI")
         f.close()
 
     def test_parse_1beo(self):
@@ -71,29 +71,25 @@ class test_msf_io(unittest.TestCase):
 
     def test_parse_error(self):
         f = data_stream("cox2.msf")
-        self.assertRaises(ValueError,
-                          msf_io.read, f, nucleic_alphabet)
+        self.assertRaises(ValueError, msf_io.read, f, nucleic_alphabet)
         f.close()
 
     def test_parse_fasta_fail2(self):
         # should fail with parse error
         f = data_stream("globin.fa")
-        self.assertRaises(ValueError,
-                          msf_io.read, f)
+        self.assertRaises(ValueError, msf_io.read, f)
         f.close()
 
     def test_parse_plain_fail(self):
         # should fail with parse error
         f = StringIO(plain_io.example)
-        self.assertRaises(ValueError,
-                          msf_io.read, f)
+        self.assertRaises(ValueError, msf_io.read, f)
         f.close()
 
     def test_parse_phylip_fail(self):
         # should fail with parse error
         f = data_stream("phylip_test_2.phy")
-        self.assertRaises(ValueError,
-                          msf_io.read, f)
+        self.assertRaises(ValueError, msf_io.read, f)
         f.close()
 
     def test_iter(self):
@@ -103,5 +99,5 @@ class test_msf_io(unittest.TestCase):
         f.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

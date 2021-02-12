@@ -38,47 +38,62 @@ import re
 import unittest
 from io import StringIO
 
-from weblogo.utils import (isfloat, isint, isblank, remove_whitespace, Reiterate, crc32, crc64,
-                           Token, group_count, ArgumentError, FileIndex, invert_dict,
-                           resource_filename, resource_string, resource_stream)
+from weblogo.utils import (
+    ArgumentError,
+    FileIndex,
+    Reiterate,
+    Token,
+    crc32,
+    crc64,
+    group_count,
+    invert_dict,
+    isblank,
+    isfloat,
+    isint,
+    remove_whitespace,
+    resource_filename,
+    resource_stream,
+    resource_string,
+)
 
 
 class test_utils(unittest.TestCase):
     def test_isfloat(self):
-        self.assertTrue(isfloat('0.5'))
-        self.assertTrue(isfloat(' 0'))
-        self.assertTrue(isfloat('+1000000000  '))
-        self.assertTrue(isfloat('2'))
-        self.assertTrue(isfloat('0000.2323'))
-        self.assertTrue(isfloat('0.1e-23'))
-        self.assertTrue(isfloat(' -0.5e+23'))
+        self.assertTrue(isfloat("0.5"))
+        self.assertTrue(isfloat(" 0"))
+        self.assertTrue(isfloat("+1000000000  "))
+        self.assertTrue(isfloat("2"))
+        self.assertTrue(isfloat("0000.2323"))
+        self.assertTrue(isfloat("0.1e-23"))
+        self.assertTrue(isfloat(" -0.5e+23"))
         self.assertFalse(isfloat(None))
-        self.assertFalse(isfloat(''))
-        self.assertFalse(isfloat('asdad'))
-        self.assertFalse(isfloat('q34sd'))
-        self.assertFalse(isfloat('92384.kjdfghiksw'))
-        self.assertFalse(isfloat('adf!@#nn'))
+        self.assertFalse(isfloat(""))
+        self.assertFalse(isfloat("asdad"))
+        self.assertFalse(isfloat("q34sd"))
+        self.assertFalse(isfloat("92384.kjdfghiksw"))
+        self.assertFalse(isfloat("adf!@#nn"))
 
     def test_isint(self):
-        self.assertTrue(isint('0'))
-        self.assertTrue(isint('-1'))
-        self.assertTrue(isint('10'))
-        self.assertTrue(isint('100101012234'))
-        self.assertTrue(isint('000'))
+        self.assertTrue(isint("0"))
+        self.assertTrue(isint("-1"))
+        self.assertTrue(isint("10"))
+        self.assertTrue(isint("100101012234"))
+        self.assertTrue(isint("000"))
         self.assertFalse(isint(None))
-        self.assertFalse(isint(''))
-        self.assertFalse(isint('asdad'))
-        self.assertFalse(isint('q34sd'))
-        self.assertFalse(isint('0.23'))
-        self.assertFalse(isint('adf!@#nn'))
+        self.assertFalse(isint(""))
+        self.assertFalse(isint("asdad"))
+        self.assertFalse(isint("q34sd"))
+        self.assertFalse(isint("0.23"))
+        self.assertFalse(isint("adf!@#nn"))
 
     def test_remove_whitespace(self):
-        self.assertEqual(remove_whitespace("  kjashd askjdh askjdh\tasdf"),
-                         "kjashdaskjdhaskjdhasdf")
+        self.assertEqual(
+            remove_whitespace("  kjashd askjdh askjdh\tasdf"), "kjashdaskjdhaskjdhasdf"
+        )
 
     def test_isblank(self):
-        blank = ('', ' ', '\n', '\t \n\n')
-        not_blank = (' a',)
+        blank = ("", " ", "\n", "\t \n\n")
+        not_blank = (" a",)
         for s in blank:
             self.assertTrue(isblank(s))
         for s in not_blank:
@@ -87,10 +102,11 @@ class test_utils(unittest.TestCase):
         self.assertFalse(isblank(123))
 
     def test_group_count(self):
-        test = 'aaabbbbcccddea'
+        test = "aaabbbbcccddea"
         out = group_count(test)
-        self.assertEqual(tuple(out),
-                         (('a', 3), ('b', 4), ('c', 3), ('d', 2), ('e', 1), ('a', 1)))
+        self.assertEqual(
+            tuple(out), (("a", 3), ("b", 4), ("c", 3), ("d", 2), ("e", 1), ("a", 1))
+        )
 
     def test_reiterate(self):
         i = Reiterate(iter("123456"))
@@ -116,24 +132,23 @@ class test_utils(unittest.TestCase):
         self.assertTrue(i is Reiterate(i))
 
     def test_token(self):
-        t = Token('kind', 'some data', 4, 3)
+        t = Token("kind", "some data", 4, 3)
         str(t)
         r = repr(t)
         t2 = eval(r)
-        self.assertEqual(t2.typeof, 'kind')
+        self.assertEqual(t2.typeof, "kind")
 
     def test_invert_dict(self):
         d = dict(a=3, b=4)
         invd = invert_dict(d)
         self.assertTrue(3 in invd)
-        self.assertEqual(invd[3], 'a')
+        self.assertEqual(invd[3], "a")
 
     def test_crc64(self):
         self.assertEqual(crc64("IHATEMATH"), "E3DCADD69B01ADD1")
 
     def test_crc32(self):
-        self.assertEqual(crc32("Test the CRC-32 of this string."),
-                         "%08X" % 1571220330)
+        self.assertEqual(crc32("Test the CRC-32 of this string."), "%08X" % 1571220330)
 
     def test_ArgumentValueError(self):
         message = "Some message"
@@ -153,8 +168,8 @@ class test_utils(unittest.TestCase):
     def test_file_index(self):
         stream = StringIO(tfile)
         idx = FileIndex(stream)
-        self.assertTrue(idx[0].startswith('line 0'))
-        self.assertTrue(idx[4].startswith('line 4'))
+        self.assertTrue(idx[0].startswith("line 0"))
+        self.assertTrue(idx[4].startswith("line 4"))
 
         def parser(f):
             return int(f.readline().split()[1])
@@ -179,10 +194,10 @@ class test_utils(unittest.TestCase):
         self.assertRaises(IndexError, idx.__getitem__, 5)
 
         # print idx._key_dict
-        self.assertEqual(idx['line 1'], 1)
-        self.assertEqual(idx['line 4'], 4)
-        self.assertTrue('line 1' in idx)
-        self.assertFalse('Blah' in idx)
+        self.assertEqual(idx["line 1"], 1)
+        self.assertEqual(idx["line 4"], 4)
+        self.assertTrue("line 1" in idx)
+        self.assertFalse("Blah" in idx)
         self.assertFalse(20 in idx)
 
         # Test iteration over values
@@ -192,12 +207,12 @@ class test_utils(unittest.TestCase):
         self.assertEqual(t, 8)
 
     def test_resource(self):
-        fn = resource_filename(__name__, 'data/cap.fa', __file__)
-        self.assertTrue(fn.endswith('data/cap.fa'))
-        f = resource_stream(__name__, 'data/cap.fa', __file__)
+        fn = resource_filename(__name__, "data/cap.fa", __file__)
+        self.assertTrue(fn.endswith("data/cap.fa"))
+        f = resource_stream(__name__, "data/cap.fa", __file__)
         f.close()
-        s = resource_string(__name__, 'data/cap.fa', __file__).decode()
-        self.assertTrue(s.startswith('>aldB'))
+        s = resource_string(__name__, "data/cap.fa", __file__).decode()
+        self.assertTrue(s.startswith(">aldB"))
 
 
 tfile = """line 0
@@ -207,5 +222,5 @@ line 3
 line 4
 """
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

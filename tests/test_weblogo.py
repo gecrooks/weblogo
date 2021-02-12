@@ -35,26 +35,35 @@
 #  POSSIBILITY OF SUCH DAMAGE.
 
 import unittest
-import pytest
-
 from math import log, sqrt
+
+import pytest
+from numpy import all, array, float64, ones, zeros
 from pkg_resources import resource_stream
-
-from numpy import array, float64, ones, zeros, all
-
-from weblogo import LogoOptions, equiprobable_distribution, LogoData, LogoFormat
-from weblogo import parse_prior, GhostscriptAPI
-from weblogo.color import Color
-from weblogo.colorscheme import ColorScheme, RefSeqColor, SymbolColor, IndexColor
-from weblogo.logomath import Dirichlet, Gamma
-from weblogo.seq import (Alphabet, unambiguous_protein_alphabet, unambiguous_dna_alphabet)
 from scipy.stats import entropy
+
+from weblogo import (
+    GhostscriptAPI,
+    LogoData,
+    LogoFormat,
+    LogoOptions,
+    equiprobable_distribution,
+    parse_prior,
+)
+from weblogo.color import Color
+from weblogo.colorscheme import ColorScheme, IndexColor, RefSeqColor, SymbolColor
+from weblogo.logomath import Dirichlet, Gamma
+from weblogo.seq import (
+    Alphabet,
+    unambiguous_dna_alphabet,
+    unambiguous_protein_alphabet,
+    unambiguous_rna_alphabet,
+)
 from weblogo.utils import ArgumentError
-from weblogo.seq import unambiguous_rna_alphabet
 
 
 def data_stream(name):
-    return resource_stream(__name__, 'data/' + name)
+    return resource_stream(__name__, "data/" + name)
 
 
 class test_logoformat(unittest.TestCase):
@@ -121,14 +130,14 @@ def test_logoformats():
     logooptions.yaxis_label = "Label"
     LogoFormat(logodata, logooptions)
 
-    logooptions.yaxis_label = ''
-    logooptions.unit_name = 'probability'
+    logooptions.yaxis_label = ""
+    logooptions.unit_name = "probability"
     LogoFormat(logodata, logooptions)
 
     logooptions.show_yaxis = False
     LogoFormat(logodata, logooptions)
 
-    logooptions.yaxis_label = 'Label'
+    logooptions.yaxis_label = "Label"
     logooptions.show_ends = True
     logooptions.show_xaxis = True
     LogoFormat(logodata, logooptions)
@@ -150,67 +159,112 @@ class test_ghostscript(unittest.TestCase):
 
 class test_parse_prior(unittest.TestCase):
     def test_parse_prior_none(self):
-        self.assertEqual(None,
-                         parse_prior(None, unambiguous_protein_alphabet))
-        self.assertEqual(None,
-                         parse_prior('none', unambiguous_protein_alphabet))
-        self.assertEqual(None,
-                         parse_prior('noNe', None))
+        self.assertEqual(None, parse_prior(None, unambiguous_protein_alphabet))
+        self.assertEqual(None, parse_prior("none", unambiguous_protein_alphabet))
+        self.assertEqual(None, parse_prior("noNe", None))
 
     def test_parse_prior_equiprobable(self):
-        self.assertTrue(all(20. * equiprobable_distribution(20) ==
-                            parse_prior('equiprobable', unambiguous_protein_alphabet, weight=20.)))
+        self.assertTrue(
+            all(
+                20.0 * equiprobable_distribution(20)
+                == parse_prior(
+                    "equiprobable", unambiguous_protein_alphabet, weight=20.0
+                )
+            )
+        )
 
         self.assertTrue(
-                all(1.2 * equiprobable_distribution(3)
-                    == parse_prior(' equiprobablE  ', Alphabet('123'), 1.2)))
+            all(
+                1.2 * equiprobable_distribution(3)
+                == parse_prior(" equiprobablE  ", Alphabet("123"), 1.2)
+            )
+        )
 
     def test_parse_prior_percentage(self):
         # print(parse_prior('50%', unambiguous_dna_alphabet, 1.))
-        self.assertTrue(all(equiprobable_distribution(4)
-                            == parse_prior('50%', unambiguous_dna_alphabet, 1.)))
+        self.assertTrue(
+            all(
+                equiprobable_distribution(4)
+                == parse_prior("50%", unambiguous_dna_alphabet, 1.0)
+            )
+        )
 
-        self.assertTrue(all(equiprobable_distribution(4)
-                            == parse_prior(' 50.0 % ', unambiguous_dna_alphabet, 1.)))
+        self.assertTrue(
+            all(
+                equiprobable_distribution(4)
+                == parse_prior(" 50.0 % ", unambiguous_dna_alphabet, 1.0)
+            )
+        )
 
-        self.assertTrue(all(array((0.3, 0.2, 0.2, 0.3), float64)
-                            == parse_prior(' 40.0 % ', unambiguous_dna_alphabet, 1.)))
+        self.assertTrue(
+            all(
+                array((0.3, 0.2, 0.2, 0.3), float64)
+                == parse_prior(" 40.0 % ", unambiguous_dna_alphabet, 1.0)
+            )
+        )
 
     def test_parse_prior_float(self):
-        self.assertTrue(all(equiprobable_distribution(4)
-                            == parse_prior('0.5', unambiguous_dna_alphabet, 1.)))
+        self.assertTrue(
+            all(
+                equiprobable_distribution(4)
+                == parse_prior("0.5", unambiguous_dna_alphabet, 1.0)
+            )
+        )
 
-        self.assertTrue(all(equiprobable_distribution(4)
-                            == parse_prior(' 0.500 ', unambiguous_dna_alphabet, 1.)))
+        self.assertTrue(
+            all(
+                equiprobable_distribution(4)
+                == parse_prior(" 0.500 ", unambiguous_dna_alphabet, 1.0)
+            )
+        )
 
-        self.assertTrue(all(array((0.3, 0.2, 0.2, 0.3), float64)
-                            == parse_prior(' 0.40 ', unambiguous_dna_alphabet, 1.)))
+        self.assertTrue(
+            all(
+                array((0.3, 0.2, 0.2, 0.3), float64)
+                == parse_prior(" 0.40 ", unambiguous_dna_alphabet, 1.0)
+            )
+        )
 
     def test_auto(self):
-        self.assertTrue(all(2. * equiprobable_distribution(4) ==
-                            parse_prior('auto', unambiguous_dna_alphabet)))
-        self.assertTrue(all(2. * equiprobable_distribution(4) ==
-                            parse_prior('automatic', unambiguous_dna_alphabet)))
+        self.assertTrue(
+            all(
+                2.0 * equiprobable_distribution(4)
+                == parse_prior("auto", unambiguous_dna_alphabet)
+            )
+        )
+        self.assertTrue(
+            all(
+                2.0 * equiprobable_distribution(4)
+                == parse_prior("automatic", unambiguous_dna_alphabet)
+            )
+        )
 
-        parse_prior('automatic', unambiguous_protein_alphabet)
-        parse_prior('E. coli', unambiguous_dna_alphabet)
+        parse_prior("automatic", unambiguous_protein_alphabet)
+        parse_prior("E. coli", unambiguous_dna_alphabet)
 
     def test_weight(self):
-        self.assertTrue(all(2. * equiprobable_distribution(4) ==
-                            parse_prior('automatic', unambiguous_dna_alphabet)))
-        self.assertTrue(all(123.123 * equiprobable_distribution(4) ==
-                            parse_prior('auto', unambiguous_dna_alphabet, 123.123)))
+        self.assertTrue(
+            all(
+                2.0 * equiprobable_distribution(4)
+                == parse_prior("automatic", unambiguous_dna_alphabet)
+            )
+        )
+        self.assertTrue(
+            all(
+                123.123 * equiprobable_distribution(4)
+                == parse_prior("auto", unambiguous_dna_alphabet, 123.123)
+            )
+        )
 
     def test_explicit(self):
         s = "{'A':10, 'C':40, 'G':40, 'T':10}"
-        p = array((10, 40, 40, 10), float64) * 2. / 100.
-        self.assertTrue(all(
-                p == parse_prior(s, unambiguous_dna_alphabet)))
+        p = array((10, 40, 40, 10), float64) * 2.0 / 100.0
+        self.assertTrue(all(p == parse_prior(s, unambiguous_dna_alphabet)))
 
 
 def test_parse_prior_error():
     with pytest.raises(ValueError):
-        parse_prior('0.5', unambiguous_protein_alphabet, weight=-10000.0)
+        parse_prior("0.5", unambiguous_protein_alphabet, weight=-10000.0)
 
     with pytest.raises(ValueError):
         s = "{'A':10, 'C':40, 'G':40, 'T':10}"
@@ -265,33 +319,35 @@ class test_colorscheme(unittest.TestCase):
         self.assertEqual(rc.symbol_color(2, "C", 0), Color.by_name("black"))
 
     def test_colorscheme(self):
-        cs = ColorScheme([
-            SymbolColor("G", "orange"),
-            SymbolColor("TU", "red"),
-            SymbolColor("C", "blue"),
-            SymbolColor("A", "green")
-        ],
-                title="title",
-                description="description",
+        cs = ColorScheme(
+            [
+                SymbolColor("G", "orange"),
+                SymbolColor("TU", "red"),
+                SymbolColor("C", "blue"),
+                SymbolColor("A", "green"),
+            ],
+            title="title",
+            description="description",
         )
 
-        self.assertEqual(cs.symbol_color(1, 'G', 1), Color.by_name("orange"))
-        self.assertEqual(cs.symbol_color(1, 'T', 1), Color.by_name("red"))
-        self.assertEqual(cs.symbol_color(1, 'C', 1), Color.by_name("blue"))
-        self.assertEqual(cs.symbol_color(1, 'A', 1), Color.by_name("green"))
-        self.assertEqual(cs.symbol_color(1, 'X', 1), cs.default_color)
+        self.assertEqual(cs.symbol_color(1, "G", 1), Color.by_name("orange"))
+        self.assertEqual(cs.symbol_color(1, "T", 1), Color.by_name("red"))
+        self.assertEqual(cs.symbol_color(1, "C", 1), Color.by_name("blue"))
+        self.assertEqual(cs.symbol_color(1, "A", 1), Color.by_name("green"))
+        self.assertEqual(cs.symbol_color(1, "X", 1), cs.default_color)
 
-        cs = ColorScheme([
-            SymbolColor("G", "orange"),
-            SymbolColor("TU", "red"),
-            SymbolColor("C", "blue"),
-            SymbolColor("A", "green")
-        ],
-                title="title",
-                description="description",
-                alphabet="GTUCA"
+        cs = ColorScheme(
+            [
+                SymbolColor("G", "orange"),
+                SymbolColor("TU", "red"),
+                SymbolColor("C", "blue"),
+                SymbolColor("A", "green"),
+            ],
+            title="title",
+            description="description",
+            alphabet="GTUCA",
         )
-        self.assertRaises(KeyError, cs.symbol_color, 1, 'X', 1)
+        self.assertRaises(KeyError, cs.symbol_color, 1, "X", 1)
 
 
 class test_color(unittest.TestCase):
@@ -315,14 +371,14 @@ class test_color(unittest.TestCase):
 
         c = Color(0, 128, 0)
         self.assertEqual(0.0, c.red)
-        self.assertEqual(128. / 255., c.green)
+        self.assertEqual(128.0 / 255.0, c.green)
         self.assertEqual(0.0, c.blue)
 
     def test_color_from_rgb(self):
         white = Color.by_name("white")
-        self.assertEqual(white, Color(1., 1., 1.))
+        self.assertEqual(white, Color(1.0, 1.0, 1.0))
         self.assertEqual(white, Color(255, 255, 255))
-        self.assertEqual(white, Color.from_rgb(1., 1., 1.))
+        self.assertEqual(white, Color.from_rgb(1.0, 1.0, 1.0))
         self.assertEqual(white, Color.from_rgb(255, 255, 255))
 
     def test_color_from_hsl(self):
@@ -355,7 +411,7 @@ class test_color(unittest.TestCase):
         red = Color.by_name("red")
         self.assertEqual(red, Color(255, 0, 0))
         self.assertEqual(red, Color(260, -10, 0))
-        self.assertEqual(red, Color(1.1, -0., -1.))
+        self.assertEqual(red, Color(1.1, -0.0, -1.0))
         self.assertEqual(Color(1.0001, 213.0, 1.2).red, 1.0)
         self.assertEqual(Color(-0.001, -2183.0, -1.0).red, 0.0)
         self.assertEqual(Color(1.0001, 213.0, 1.2).green, 1.0)
@@ -371,10 +427,10 @@ class test_color(unittest.TestCase):
         # Check Usage comment in Color
         red = Color.by_name("red")
         self.assertEqual(red, Color(255, 0, 0))
-        self.assertEqual(red, Color(1., 0., 0.))
-        self.assertEqual(red, Color.from_rgb(1., 0., 0.))
+        self.assertEqual(red, Color(1.0, 0.0, 0.0))
+        self.assertEqual(red, Color.from_rgb(1.0, 0.0, 0.0))
         self.assertEqual(red, Color.from_rgb(255, 0, 0))
-        self.assertEqual(red, Color.from_hsl(0., 1., 0.5))
+        self.assertEqual(red, Color.from_hsl(0.0, 1.0, 0.5))
         self.assertEqual(red, Color.from_string("red"))
         self.assertEqual(red, Color.from_string("RED"))
         self.assertEqual(red, Color.from_string("#F00"))
@@ -388,31 +444,34 @@ class test_color(unittest.TestCase):
         red = Color(255, 0, 0)
         skyblue = Color(135, 206, 235)
 
-        red_strings = ("red",
-                       "ReD",
-                       "RED",
-                       "   Red \t",
-                       "#F00",
-                       "#FF0000",
-                       "rgb(255, 0, 0)",
-                       "rgb(100%, 0%, 0%)",
-                       "hsl(0, 100%, 50%)")
+        red_strings = (
+            "red",
+            "ReD",
+            "RED",
+            "   Red \t",
+            "#F00",
+            "#FF0000",
+            "rgb(255, 0, 0)",
+            "rgb(100%, 0%, 0%)",
+            "hsl(0, 100%, 50%)",
+        )
         for s in red_strings:
             self.assertEqual(red, Color.from_string(s))
 
-        skyblue_strings = ("skyblue",
-                           "SKYBLUE",
-                           "  \t\n SkyBlue  \t",
-                           "#87ceeb",
-                           "rgb(135,206,235)"
-                           )
+        skyblue_strings = (
+            "skyblue",
+            "SKYBLUE",
+            "  \t\n SkyBlue  \t",
+            "#87ceeb",
+            "rgb(135,206,235)",
+        )
         for s in skyblue_strings:
             self.assertEqual(skyblue, Color.from_string(s))
 
-        self.assertRaises(ValueError, Color.from_string, '#not_a_color')
-        self.assertRaises(ValueError, Color.from_string, 'rgb(not_a_color)')
-        self.assertRaises(ValueError, Color.from_string, 'hsl(not_a_color)')
-        self.assertRaises(ValueError, Color.from_string, 'not_a_color')
+        self.assertRaises(ValueError, Color.from_string, "#not_a_color")
+        self.assertRaises(ValueError, Color.from_string, "rgb(not_a_color)")
+        self.assertRaises(ValueError, Color.from_string, "hsl(not_a_color)")
+        self.assertRaises(ValueError, Color.from_string, "not_a_color")
 
     def test_color_equality(self):
         c1 = Color(123, 99, 12)
@@ -461,7 +520,7 @@ class test_gamma(unittest.TestCase):
 
         # The estimated mean will differ from true mean by a small amount
 
-        error = 4. * sqrt(g.variance() / S)
+        error = 4.0 * sqrt(g.variance() / S)
         # print(mean, m, error)
         self.assertTrue(abs(mean - m) < error)
 
@@ -469,17 +528,19 @@ class test_gamma(unittest.TestCase):
         m = 3.0
         v = 2.0
         g = Gamma.from_mean_variance(m, v)
-        upper = 30.
+        upper = 30.0
 
         norm = integrate(g.pdf, 0, upper)
         self.assertAlmostEqual(norm, 1.0)
 
-        def fx(x): return x * g.pdf(x)
+        def fx(x):
+            return x * g.pdf(x)
 
         mean = integrate(fx, 0, upper)
         self.assertAlmostEqual(mean, m)
 
-        def fx2(x): return x * x * g.pdf(x)
+        def fx2(x):
+            return x * x * g.pdf(x)
 
         x2 = integrate(fx2, 0, upper)
         var = x2 - mean ** 2
@@ -491,7 +552,7 @@ class test_gamma(unittest.TestCase):
         g = Gamma.from_mean_variance(m, v)
         # Numerical integration
         S = 1000
-        M = 10.
+        M = 10.0
         total_p = 0.0
         epsilon = 1e-4
         last = 0.0
@@ -524,10 +585,16 @@ class test_gamma(unittest.TestCase):
 
 class test_Dirichlet(unittest.TestCase):
     def test_init(self):
-        Dirichlet((1, 1, 1, 1,))
+        Dirichlet(
+            (
+                1,
+                1,
+                1,
+                1,
+            )
+        )
 
     def test_random(self):
-
         def do_test(alpha, samples=1000):
             ent = zeros((samples,), float64)
             # alpha = ones( ( K,), Float64 ) * A/K
@@ -549,29 +616,29 @@ class test_Dirichlet(unittest.TestCase):
             dv = d.variance_entropy()
 
             # print(alpha, ':', m, v, dm, dv)
-            error = 4. * sqrt(v / samples)
+            error = 4.0 * sqrt(v / samples)
             self.assertTrue(abs(m - dm) < error)
             self.assertTrue(abs(v - dv) < error)  # dodgy error estimate
 
-        do_test((1., 1.))
-        do_test((2., 1.))
-        do_test((3., 1.))
-        do_test((4., 1.))
-        do_test((5., 1.))
-        do_test((6., 1.))
+        do_test((1.0, 1.0))
+        do_test((2.0, 1.0))
+        do_test((3.0, 1.0))
+        do_test((4.0, 1.0))
+        do_test((5.0, 1.0))
+        do_test((6.0, 1.0))
 
-        do_test((1., 1.))
-        do_test((20., 20.))
-        do_test((1., 1., 1., 1., 1., 1., 1., 1., 1., 1.))
-        do_test((.1, .1, .1, .1, .1, .1, .1, .1, .1, .1))
-        do_test((.01, .01, .01, .01, .01, .01, .01, .01, .01, .01))
+        do_test((1.0, 1.0))
+        do_test((20.0, 20.0))
+        do_test((1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0))
+        do_test((0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1))
+        do_test((0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01))
         do_test((2.0, 6.0, 1.0, 1.0))
 
     def test_mean(self):
-        alpha = ones((10,), float64) * 23.
+        alpha = ones((10,), float64) * 23.0
         d = Dirichlet(alpha)
         m = d.mean()
-        self.assertAlmostEqual(m[2], 1. / 10)
+        self.assertAlmostEqual(m[2], 1.0 / 10)
         self.assertAlmostEqual(sum(m), 1.0)
 
     def test_covariance(self):
@@ -579,8 +646,8 @@ class test_Dirichlet(unittest.TestCase):
         d = Dirichlet(alpha)
         cv = d.covariance()
         self.assertEqual(cv.shape, (4, 4))
-        self.assertAlmostEqual(cv[0, 0], 1.0 * (1.0 - 1. / 4.0) / (4.0 * 5.0))
-        self.assertAlmostEqual(cv[0, 1], - 1 / (4. * 4. * 5.))
+        self.assertAlmostEqual(cv[0, 0], 1.0 * (1.0 - 1.0 / 4.0) / (4.0 * 5.0))
+        self.assertAlmostEqual(cv[0, 1], -1 / (4.0 * 4.0 * 5.0))
 
     def test_mean_x(self):
         alpha = (1.0, 2.0, 3.0, 4.0)
@@ -632,10 +699,10 @@ class test_Dirichlet(unittest.TestCase):
             post = d.sample()
             e = -entropy(post)
             for k in range(4):
-                e += - post[k] * log(pvec[k])
+                e += -post[k] * log(pvec[k])
             sent[s] = e
         sent.sort()
-        self.assertTrue(abs(sent.mean() - rent) < 4. * sqrt(vrent))
+        self.assertTrue(abs(sent.mean() - rent) < 4.0 * sqrt(vrent))
         self.assertAlmostEqual(sent.std(), sqrt(vrent), 1)
         self.assertTrue(abs(low - sent[int(samples * 0.025)]) < 0.2)
         self.assertTrue(abs(high - sent[int(samples * 0.975)]) < 0.2)
@@ -645,6 +712,7 @@ class _from_URL_fileopen_Tests(unittest.TestCase):
     def test_URLscheme(self):
         """test for http, https, or ftp scheme"""
         from weblogo.logo import _from_URL_fileopen
+
         broken_url = "file://foo.txt"
         self.assertRaises(ValueError, _from_URL_fileopen, (broken_url))
 
@@ -678,5 +746,5 @@ def integrate(f, a, b, n=1000):
     return result
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

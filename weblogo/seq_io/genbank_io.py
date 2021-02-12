@@ -10,8 +10,8 @@ Currently only reads sequence data and not annotations.
 from ..seq import Alphabet, Seq, SeqList
 from ..utils import isblank
 
-names = ('genbank',)
-extensions = ('gb', 'genbank', 'gbk')
+names = ("genbank",)
+extensions = ("gb", "genbank", "gbk")
 
 
 def read(fin, alphabet=None):
@@ -32,7 +32,7 @@ def read(fin, alphabet=None):
 
 
 def iterseq(fin, alphabet=None):
-    """ Iterate over genbank records
+    """Iterate over genbank records
 
     Args:
     fin -- A stream or file to read
@@ -53,16 +53,15 @@ def iterseq(fin, alphabet=None):
         if isblank(line):
             continue
         if state == header:
-            if not line.startswith('LOCUS'):
-                raise ValueError(
-                   "Cannot find start of record at line %d" % L)
+            if not line.startswith("LOCUS"):
+                raise ValueError("Cannot find start of record at line %d" % L)
             state = block
         elif state == block:
-            if line.startswith('ORIGIN') or line.startswith('//'):
+            if line.startswith("ORIGIN") or line.startswith("//"):
                 state = data
         elif state == data:
-            if line.startswith('//'):
-                yield Seq(''.join(seq), alphabet)
+            if line.startswith("//"):
+                yield Seq("".join(seq), alphabet)
                 seq = []
                 state = block
             else:

@@ -40,10 +40,10 @@ Ref :
 
 import re
 
-from ..utils import Token
 from ..seq import Alphabet, Seq, SeqList
+from ..utils import Token
 
-__all__ = ('example', 'names', 'extensions', 'read')
+__all__ = ("example", "names", "extensions", "read")
 
 example = """
 CLUSTAL W (1.81) multiple sequence alignment
@@ -68,18 +68,21 @@ CXCR4_MURINE      LLFVITLPFWAVDAM-ADWYFGKFLCKAVHIIYTVNLYSSVLILAFISLDRYLAIVHATN
                   :*:.: **: ...     * :*  ***..  :  :*:*.. ::** *:.****:****..
 """
 
-names = ("clustal", "clustalw",)
-extensions = ('aln',)
+names = (
+    "clustal",
+    "clustalw",
+)
+extensions = ("aln",)
 
-header_line = re.compile(r'(CLUSTAL.*)$')
+header_line = re.compile(r"(CLUSTAL.*)$")
 
 # (sequence_id) (Sequence) (Optional sequence number)
-seq_line = re.compile(r'(\s*\S+\s+)(\S+)\s*(\d*)\s*$')
+seq_line = re.compile(r"(\s*\S+\s+)(\S+)\s*(\d*)\s*$")
 
 # Saved group includes variable length leading space.
 # Must consult a seq_line to figure out how long the leading space is since
 # the maximum CLUSTAL ids length (normally 10 characters) can be changed.
-match_line = re.compile(r'([\s:\.\*]*)$')
+match_line = re.compile(r"([\s:\.\*]*)$")
 
 
 def iterseq(fin, alphabet=None):
@@ -105,8 +108,9 @@ def read(fin, alphabet=None):
         elif token.typeof == "seq":
             if not alphabet.alphabetic(token.data):
                 raise ValueError(
-                        "Character on line: %d not in alphabet: %s : %s" % (
-                            token.lineno, alphabet, token.data))
+                    "Character on line: %d not in alphabet: %s : %s"
+                    % (token.lineno, alphabet, token.data)
+                )
             seqs[block_count].append(token.data)
             if block_count == 0:
                 data_len = len(token.data)
@@ -126,20 +130,21 @@ def read(fin, alphabet=None):
 # 4) Each sequence line starts with a sequence name followed by at least one
 #     space and then the sequence.
 
+
 def _scan(fin):
     """Scan a clustal format MSA file and yield tokens.
-        The basic file structure is
-            begin_document
-                header?
-               (begin_block
-                   (seq_id seq seq_index?)+
-                   match_line?
-               end_block)*
-            end_document
+    The basic file structure is
+        begin_document
+            header?
+           (begin_block
+               (seq_id seq seq_index?)+
+               match_line?
+           end_block)*
+        end_document
 
-        Usage:
-        for token in scan(clustal_file):
-            do_something(token)
+    Usage:
+    for token in scan(clustal_file):
+        do_something(token)
     """
     header, body, block = range(3)
 
@@ -202,12 +207,12 @@ def write(fout, seqs):
     name_width = 17
     seq_width = 60
 
-    print(header, end='\n\n', file=fout)
+    print(header, end="\n\n", file=fout)
     L = max(len(s) for s in seqs)
     for block in range(0, L, seq_width):
         for s in seqs:
             start = min(block, len(s))
             end = min(start + seq_width, len(s))
-            print(s.name.ljust(name_width), end='', file=fout)
+            print(s.name.ljust(name_width), end="", file=fout)
             print(s[start:end], file=fout)
         print(file=fout)

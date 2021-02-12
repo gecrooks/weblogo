@@ -32,7 +32,11 @@ jobs:
         python -m pip install .
     - name: Test with pytest
       run: |
-        python -m pytest 
+        python -m pytest
+    - name: Lint with black and isort (run `make delint` to fix issues)
+      run: |
+        black --check .
+        isort --check .
     - name: Lint with flake8
       run: |
-        flake8 setup.py weblogo tests            
+        flake8 .

@@ -9,6 +9,8 @@ pytest-cov
 tox
 flake8
 mypy
+isort
+black
 
 # Docs
 sphinx

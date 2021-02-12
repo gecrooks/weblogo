@@ -24,11 +24,10 @@
 #  THE SOFTWARE.
 #
 
+import unittest
 from io import StringIO
 
-import unittest
-
-from weblogo.seq_io import table_io, plain_io
+from weblogo.seq_io import plain_io, table_io
 
 
 class test_table_io(unittest.TestCase):
@@ -57,5 +56,5 @@ class test_table_io(unittest.TestCase):
         self.assertEqual(seqs, seqs2)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

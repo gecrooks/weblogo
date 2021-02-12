@@ -26,21 +26,35 @@
 
 import unittest
 
-from weblogo.seq import (protein_alphabet, Seq, nucleic_alphabet, reduced_protein_alphabet,
-                         dna_alphabet)
-from weblogo.transform import mask_low_complexity, GeneticCode, Transform, reduced_protein_alphabets
+from weblogo.seq import (
+    Seq,
+    dna_alphabet,
+    nucleic_alphabet,
+    protein_alphabet,
+    reduced_protein_alphabet,
+)
+from weblogo.transform import (
+    GeneticCode,
+    Transform,
+    mask_low_complexity,
+    reduced_protein_alphabets,
+)
 
 
 class test_mask_low_complexity(unittest.TestCase):
     def test_segging(self):
-        before = "mgnrafkshhghflsaegeavkthhghhdhhthfhvenhggkvalkthcgkylsigdhkqvylshhlhgdhslfhlehhg"\
-                 "gkvsikghhhhyisadhhghvstkehhdhdttfeeiii".upper()
-        after = "MGNRAFKSHHGHFLSAEGEAVxxxxxxxxxxxxxxxENHGGKVALKTHCGKYLSIGDHKQVYLSHHLHGDHSLFHLEHHGG"\
-                "KVSIKGHHHHYISADHHGHVSTKEHHDHDTTFEEIII".upper()
+        before = (
+            "mgnrafkshhghflsaegeavkthhghhdhhthfhvenhggkvalkthcgkylsigdhkqvylshhlhgdhslfhlehhg"
+            "gkvsikghhhhyisadhhghvstkehhdhdttfeeiii".upper()
+        )
+        after = (
+            "MGNRAFKSHHGHFLSAEGEAVxxxxxxxxxxxxxxxENHGGKVALKTHCGKYLSIGDHKQVYLSHHLHGDHSLFHLEHHGG"
+            "KVSIKGHHHHYISADHHGHVSTKEHHDHDTTFEEIII".upper()
+        )
 
         bseq = Seq(before, protein_alphabet)
         aseq = Seq(after, protein_alphabet)
-        xseq = Seq('X' * len(bseq), protein_alphabet)
+        xseq = Seq("X" * len(bseq), protein_alphabet)
 
         sseq = mask_low_complexity(bseq)
         self.assertEqual(aseq, sseq)
@@ -66,8 +80,10 @@ class test_mask_low_complexity(unittest.TestCase):
 
 class test_transform(unittest.TestCase):
     def test_transform(self):
-        trans = Transform(Seq("ACGTURYSWKMBDHVN", nucleic_alphabet),
-                          Seq("ACGTTNNNNNNNNNNN", dna_alphabet))
+        trans = Transform(
+            Seq("ACGTURYSWKMBDHVN", nucleic_alphabet),
+            Seq("ACGTTNNNNNNNNNNN", dna_alphabet),
+        )
         s0 = Seq("AAAAAR", nucleic_alphabet)
         s1 = trans(s0)  # Callable ob
         self.assertEqual(s1.alphabet, dna_alphabet)
@@ -84,8 +100,11 @@ class test_transform(unittest.TestCase):
     #     self.assertEqual(s2, s3)
 
     def test_reduced_protein_alphabets(self):
-        seq = Seq("ENHGGKVALKTHCGKYLSIGDHKQVYLSHHLHGDHSLFHLEHHGGKVSIKGHHHHYISADHHGHVSTKEHHDHDT"
-                  "TFEEIII", reduced_protein_alphabet)
+        seq = Seq(
+            "ENHGGKVALKTHCGKYLSIGDHKQVYLSHHLHGDHSLFHLEHHGGKVSIKGHHHHYISADHHGHVSTKEHHDHDT"
+            "TFEEIII",
+            reduced_protein_alphabet,
+        )
 
         for t in reduced_protein_alphabets.values():
             t(seq)
@@ -103,10 +122,10 @@ class test_geneticcode(unittest.TestCase):
             # print gc
 
     def test_translate_std(self):
-        dna = 'GCCATTGTAATGGGCCGCTGAAAGGGTGCCCGA'
+        dna = "GCCATTGTAATGGGCCGCTGAAAGGGTGCCCGA"
         t = GeneticCode.std()
         s = t.translate(dna)
-        self.assertEqual(str(s), 'AIVMGR*KGAR')
+        self.assertEqual(str(s), "AIVMGR*KGAR")
 
         for t in GeneticCode.std_list():
             t.translate(dna)
@@ -115,10 +134,13 @@ class test_geneticcode(unittest.TestCase):
         # Ref: http://lists.open-bio.org/pipermail/biopython/2006-March/002960.html
 
         cft = (
-            ("Vertebrate Mitochondrial",
-             'GCCATTGTAATGGGCCGCTGAAAGGGTGCCCGA', 'AIVMGRWKGAR'),
-            (11, 'CAAGGCGTCGAAYAGCTTCAGGAACAGGAC', 'QGVE?LQEQD'),
-            (1, 'GCCATTGTAATGGGCCGCTGAAAGGGTGCCCGA', 'AIVMGR*KGAR'),
+            (
+                "Vertebrate Mitochondrial",
+                "GCCATTGTAATGGGCCGCTGAAAGGGTGCCCGA",
+                "AIVMGRWKGAR",
+            ),
+            (11, "CAAGGCGTCGAAYAGCTTCAGGAACAGGAC", "QGVE?LQEQD"),
+            (1, "GCCATTGTAATGGGCCGCTGAAAGGGTGCCCGA", "AIVMGR*KGAR"),
         )
 
         for code, dna, protein in cft:
@@ -126,17 +148,17 @@ class test_geneticcode(unittest.TestCase):
             trans = c.translate(dna)
             self.assertEqual(str(trans), protein)
 
-        self.assertRaises(ValueError, GeneticCode.by_name, 'not_a_name')
+        self.assertRaises(ValueError, GeneticCode.by_name, "not_a_name")
 
     def test_back_translate(self):
-        prot = 'ACDEFGHIKLMNPQRSTVWY*'
+        prot = "ACDEFGHIKLMNPQRSTVWY*"
         t = GeneticCode.std()
-        t.table['CGA']
+        t.table["CGA"]
         s = t.back_translate(prot)
         self.assertEqual(prot, str(t.translate(s)))
 
         GeneticCode.std().back_table
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

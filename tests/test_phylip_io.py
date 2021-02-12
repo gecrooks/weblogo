@@ -34,12 +34,12 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 #  POSSIBILITY OF SUCH DAMAGE.
 
+import unittest
 from io import StringIO
 
-import unittest
-
 from weblogo.seq import protein_alphabet
-from weblogo.seq_io import phylip_io, plain_io, clustal_io
+from weblogo.seq_io import clustal_io, phylip_io, plain_io
+
 from . import data_stream
 
 
@@ -64,11 +64,10 @@ class test_phylip_io(unittest.TestCase):
     def test_parse_plain_fail(self):
         # should fail with parse error
         f = StringIO(plain_io.example)
-        self.assertRaises(ValueError,
-                          phylip_io.read, f)
+        self.assertRaises(ValueError, phylip_io.read, f)
 
     def test_parse_phylip_test_2(self):
-        f = data_stream('phylip_test_2.phy')
+        f = data_stream("phylip_test_2.phy")
         seqs = phylip_io.read(f)
         self.assertEqual(len(seqs), 6)
         self.assertEqual(len(seqs[0]), 20)
@@ -79,11 +78,10 @@ class test_phylip_io(unittest.TestCase):
     def test_parse_clustal_fail(self):
         # should fail with parse error
         f = StringIO(clustal_io.example)
-        self.assertRaises(ValueError,
-                          phylip_io.read, f, protein_alphabet)
+        self.assertRaises(ValueError, phylip_io.read, f, protein_alphabet)
 
     def test_parse_phylip_test_3(self):
-        f = data_stream('phylip_test_3.phy')
+        f = data_stream("phylip_test_3.phy")
         seqs = phylip_io.read(f)
         self.assertEqual(len(seqs), 6)
         self.assertEqual(len(seqs[0]), 20)
@@ -92,7 +90,7 @@ class test_phylip_io(unittest.TestCase):
         f.close()
 
     def test_parse_phylip_test_4(self):
-        f = data_stream('phylip_test_4.phy')
+        f = data_stream("phylip_test_4.phy")
         seqs = phylip_io.read(f)
         self.assertEqual(len(seqs), 6)
         self.assertEqual(len(seqs[0]), 25)
@@ -101,28 +99,28 @@ class test_phylip_io(unittest.TestCase):
         f.close()
 
     def test_parse_phylip_test_5(self):
-        f = data_stream('phylip_test_5.phy')
+        f = data_stream("phylip_test_5.phy")
         seqs = phylip_io.read(f)
         self.assertEqual(len(seqs), 6)
         self.assertEqual(len(seqs[0]), 50)
-        self.assertEqual(str(seqs[1]), "GTGGTGGTGGGCGCCGGCCGTGTGGGTGGTGGTGGGCGCCGGCCGTGTGG")
+        self.assertEqual(
+            str(seqs[1]), "GTGGTGGTGGGCGCCGGCCGTGTGGGTGGTGGTGGGCGCCGGCCGTGTGG"
+        )
         self.assertEqual(seqs[2].name, "ddrasa")
         f.close()
 
     def test_parse_wrong_phylip_codes_1(self):
-        f = data_stream('phylip_test_6.corrupt.phy')
-        self.assertRaises(ValueError,
-                          phylip_io.read, f, protein_alphabet)
+        f = data_stream("phylip_test_6.corrupt.phy")
+        self.assertRaises(ValueError, phylip_io.read, f, protein_alphabet)
         f.close()
 
     def test_parse_wrong_phylip_codes_2(self):
-        f = data_stream('phylip_test_7.corrupt.phy')
-        self.assertRaises(ValueError,
-                          phylip_io.read, f, protein_alphabet)
+        f = data_stream("phylip_test_7.corrupt.phy")
+        self.assertRaises(ValueError, phylip_io.read, f, protein_alphabet)
         f.close()
 
     def test_parse_phylip_dna(self):
-        f = data_stream('dna.phy')
+        f = data_stream("dna.phy")
         seqs = phylip_io.read(f)
         self.assertEqual(len(seqs), 10)
         self.assertEqual(len(seqs[0]), 705)
@@ -131,5 +129,5 @@ class test_phylip_io(unittest.TestCase):
         f.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
