@@ -1,7 +1,7 @@
 # top-level pyquil Makefile
 
 NAME = weblogo
-FILES = weblogo setup.py tests
+FILES = $(NAME) tests docs/conf.py setup.py
 
 USER = ec2-user
 HOST = weblogo.threeplusone.com
