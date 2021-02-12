@@ -24,8 +24,8 @@
 #  THE SOFTWARE.
 #
 
-from io import StringIO
 import unittest
+from io import StringIO
 
 from weblogo.seq_io import array_io, fasta_io
 
@@ -62,5 +62,5 @@ class test_array_io(unittest.TestCase):
         self.assertRaises(ValueError, array_io.read, f)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

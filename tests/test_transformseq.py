@@ -1,5 +1,4 @@
-
-from subprocess import Popen, PIPE
+from subprocess import PIPE, Popen
 
 import weblogo._transformseq
 
@@ -38,24 +37,24 @@ def test_help_option():
 
 
 def test_version_option():
-    _exec(['--version'], weblogo._transformseq.__version__)
+    _exec(["--version"], weblogo._transformseq.__version__)
 
 
 def test_clustal():
-    _exec(['-F', 'clustal'], ['TCTTGTGATGTGGTTAACCAAT'])
+    _exec(["-F", "clustal"], ["TCTTGTGATGTGGTTAACCAAT"])
 
 
 def test_reverse():
-    _exec(['--reverse'], ['TAACCAATTGGTGTAGTGTTCT'])
+    _exec(["--reverse"], ["TAACCAATTGGTGTAGTGTTCT"])
 
 
 def test_complement():
-    _exec(['--complement'], ['AGAACACTACACCAATTGGTTA'])
+    _exec(["--complement"], ["AGAACACTACACCAATTGGTTA"])
 
 
 def test_seg():
-    _exec(['--seg'], ['XXXXXXXXXXXXXXXXXXXXXX'])
+    _exec(["--seg"], ["XXXXXXXXXXXXXXXXXXXXXX"])
 
 
 def test_subsample():
-    _exec(['--subsample', '0.4'], [])
+    _exec(["--subsample", "0.4"], [])

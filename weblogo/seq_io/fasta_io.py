@@ -55,14 +55,26 @@ VLARHF-QH-EFTPELQ-HALEAHFCA------V---GDALA----K-----A-----YH-----------
 
 import re
 
-from ..seq import Alphabet, SeqList, Seq
+from ..seq import Alphabet, Seq, SeqList
 from ..utils import FileIndex
 
-
-names = ('fasta', 'pearson', 'fa')
+names = ("fasta", "pearson", "fa")
 extensions = (
-    'fa', 'fasta', 'fast', 'seq', 'fsa', 'fst', 'nt', 'aa', 'fna', 'mpfa', 'faa', 'fnn',
-    'mfasta', 'tfa', 'pfa'
+    "fa",
+    "fasta",
+    "fast",
+    "seq",
+    "fsa",
+    "fst",
+    "nt",
+    "aa",
+    "fna",
+    "mpfa",
+    "faa",
+    "fnn",
+    "mfasta",
+    "tfa",
+    "pfa",
 )
 
 example = """
@@ -109,7 +121,7 @@ def readseq(fin, alphabet=None):
 
 
 def iterseq(fin, alphabet=None):
-    """ Parse a fasta file and generate sequences.
+    """Parse a fasta file and generate sequences.
 
     Args:
         fin -- A stream or file to read
@@ -128,21 +140,22 @@ def iterseq(fin, alphabet=None):
 
     def build_seq(seqs, alphabet, header, header_lineno, comments):
         try:
-            name = header.split(' ', 1)[0]
+            name = header.split(" ", 1)[0]
             if comments:
-                header += '\n' + '\n'.join(comments)
+                header += "\n" + "\n".join(comments)
             s = Seq("".join(seqs), alphabet, name=name, description=header)
         except ValueError:
             raise ValueError(
-                    "Parse failed with sequence starting at line %d: "
-                    "Character not in alphabet: %s" % (header_lineno, alphabet))
+                "Parse failed with sequence starting at line %d: "
+                "Character not in alphabet: %s" % (header_lineno, alphabet)
+            )
         return s
 
     for lineno, line in enumerate(fin):
         line = line.strip()
-        if line == '':
+        if line == "":
             continue
-        if line.startswith('>'):
+        if line.startswith(">"):
             if header is not None:
                 yield build_seq(seqs, alphabet, header, header_lineno, comments)
                 header = None
@@ -150,14 +163,14 @@ def iterseq(fin, alphabet=None):
             header = line[1:]
             header_lineno = lineno
             comments = []
-        elif line.startswith(';'):
+        elif line.startswith(";"):
             # Optional (and unusual) comment line
             comments.append(line[1:])
         else:
             if header is None:
                 raise ValueError(
-                        "Parse failed on line %d: sequence before header"
-                        % (lineno))
+                    "Parse failed on line %d: sequence before header" % (lineno)
+                )
             seqs.append(line)
 
     if not seqs:
@@ -174,33 +187,33 @@ def write(fout, seqs):
     """
     if seqs.description:
         for line in seqs.description.splitlines():
-            print(';' + line, file=fout)
+            print(";" + line, file=fout)
     for s in seqs:
         writeseq(fout, s)
 
 
 def writeseq(afile, seq):
-    """ Write a single sequence in fasta format.
+    """Write a single sequence in fasta format.
 
     Args:
         afile -- A writable stream.
         seq  -- A Seq instance
     """
-    header = seq.description or seq.name or ''
+    header = seq.description or seq.name or ""
     # We prepend '>' to the first header line
     # Additional lines start with ';' to indicate comment lines
     if header:
         header = header.splitlines()
-        print('>' + header[0], file=afile)
+        print(">" + header[0], file=afile)
         if len(header) > 1:
             for h in header[1:]:
-                print(';' + h, file=afile)
+                print(";" + h, file=afile)
     else:
-        print('>', file=afile)
+        print(">", file=afile)
     L = len(seq)
     line_length = 80
     for n in range(1 + L // line_length):
-        print(seq[n * line_length: (n + 1) * line_length], file=afile)
+        print(seq[n * line_length : (n + 1) * line_length], file=afile)
     print(file=afile)
 
 

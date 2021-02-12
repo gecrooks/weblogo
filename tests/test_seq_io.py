@@ -24,16 +24,26 @@
 #  THE SOFTWARE.
 #
 
-from io import StringIO
 import unittest
+from io import StringIO
 
-from weblogo.seq import protein_alphabet, nucleic_alphabet
-from weblogo.seq_io import (fasta_io, clustal_io, plain_io, phylip_io, msf_io,
-                            nbrf_io, nexus_io, stockholm_io, table_io, array_io,
-                            genbank_io)
 from weblogo import seq_io
-from . import data_stream
-from . import test_genbank_io
+from weblogo.seq import nucleic_alphabet, protein_alphabet
+from weblogo.seq_io import (
+    array_io,
+    clustal_io,
+    fasta_io,
+    genbank_io,
+    msf_io,
+    nbrf_io,
+    nexus_io,
+    phylip_io,
+    plain_io,
+    stockholm_io,
+    table_io,
+)
+
+from . import data_stream, test_genbank_io
 
 
 class test_seq_io(unittest.TestCase):
@@ -55,8 +65,7 @@ class test_seq_io(unittest.TestCase):
     def test_parse_error(self):
         """ Wrong alphabet should throw a parsing error """
         with data_stream("clustal.aln") as f:
-            self.assertRaises(ValueError,
-                              seq_io.read, f, nucleic_alphabet)
+            self.assertRaises(ValueError, seq_io.read, f, nucleic_alphabet)
 
     def test_parse_clustal181(self):
         with data_stream("clustal181.aln") as f:
@@ -114,23 +123,23 @@ class test_seq_io(unittest.TestCase):
         # TODO: Then test that each example works with read() and iterseq()
         # TODO: Also autotest Write and writeseq, where available.
 
-        fasta_examples = (StringIO(fasta_io.example),
-                          data_stream("globin.fa"))
+        fasta_examples = (StringIO(fasta_io.example), data_stream("globin.fa"))
 
-        clustal_examples = (StringIO(clustal_io.example),
-                            data_stream("clustal.aln"),
-                            data_stream("clustal181.aln"),
-                            data_stream("clustal_glualign.aln"),
-                            data_stream("clustalw182.aln"),
-                            )
+        clustal_examples = (
+            StringIO(clustal_io.example),
+            data_stream("clustal.aln"),
+            data_stream("clustal181.aln"),
+            data_stream("clustal_glualign.aln"),
+            data_stream("clustalw182.aln"),
+        )
         plain_examples = (StringIO(plain_io.example),)
         phylip_examples = (
             data_stream("phylip_test_1.phy"),
-            data_stream('phylip_test_2.phy'),
-            data_stream('phylip_test_3.phy'),
-            data_stream('phylip_test_4.phy'),
-            data_stream('phylip_test_5.phy'),
-            data_stream('dna.phy'),
+            data_stream("phylip_test_2.phy"),
+            data_stream("phylip_test_3.phy"),
+            data_stream("phylip_test_4.phy"),
+            data_stream("phylip_test_5.phy"),
+            data_stream("dna.phy"),
         )
         msf_examples = (
             data_stream("dna.msf"),
@@ -138,11 +147,11 @@ class test_seq_io(unittest.TestCase):
             data_stream("1beo.msf"),
         )
         nbrf_examples = (
-            data_stream('cox2.nbrf'),
-            data_stream('crab.nbrf'),
-            data_stream('dna.pir'),
-            data_stream('rhod.pir'),
-            data_stream('protein.pir'),
+            data_stream("cox2.nbrf"),
+            data_stream("crab.nbrf"),
+            data_stream("dna.pir"),
+            data_stream("rhod.pir"),
+            data_stream("protein.pir"),
         )
         nexus_examples = (
             data_stream("nexus/protein.nex"),
@@ -153,9 +162,7 @@ class test_seq_io(unittest.TestCase):
             data_stream("pfam_example.txt"),
             data_stream("pfam.txt"),
         )
-        table_examples = (
-            StringIO(table_io.example),
-        )
+        table_examples = (StringIO(table_io.example),)
         array_examples = (StringIO(array_io.example),)
 
         examples = {
@@ -169,7 +176,7 @@ class test_seq_io(unittest.TestCase):
             stockholm_io: stockholm_examples,
             table_io: table_examples,
             array_io: array_examples,
-            genbank_io: test_genbank_io.examples()
+            genbank_io: test_genbank_io.examples(),
         }
 
         parsers = seq_io._parsers
@@ -197,5 +204,5 @@ class test_seq_io(unittest.TestCase):
                 f.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

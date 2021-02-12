@@ -28,12 +28,26 @@
 
 import pkg_resources
 
-__all__ = ('isblank', 'isfloat', 'isint', 'ischar',
-           'remove_whitespace', 'invert_dict', 'stdrepr',
-           'Token', 'Reiterate', 'deoptparse', 'crc32',
-           'crc64', 'FileIndex',
-           'ArgumentError', 'group_count',
-           'resource_string', 'resource_stream', 'resource_filename')
+__all__ = (
+    "isblank",
+    "isfloat",
+    "isint",
+    "ischar",
+    "remove_whitespace",
+    "invert_dict",
+    "stdrepr",
+    "Token",
+    "Reiterate",
+    "deoptparse",
+    "crc32",
+    "crc64",
+    "FileIndex",
+    "ArgumentError",
+    "group_count",
+    "resource_string",
+    "resource_stream",
+    "resource_filename",
+)
 
 
 def isblank(s):
@@ -95,11 +109,11 @@ def stdrepr(obj, attributes=None, name=None):
         attributes = obj.__class__.__slots__
     args = []
     for a in attributes:
-        if a[0] == '_':
-            continue        # pragma: no cover
-        args.append('%s=%s' % (a, repr(getattr(obj, a))))
-    args = ',\n'.join(args).replace('\n', '\n    ')
-    return '%s(\n    %s\n)' % (name, args)
+        if a[0] == "_":
+            continue  # pragma: no cover
+        args.append("%s=%s" % (a, repr(getattr(obj, a))))
+    args = ",\n".join(args).replace("\n", "\n    ")
+    return "%s(\n    %s\n)" % (name, args)
 
 
 def group_count(i):
@@ -107,6 +121,7 @@ def group_count(i):
     occurrences. Thus group_count('aabbbc') yields ('a',2), ('b',3), ('c',1)
     """
     from itertools import groupby
+
     return [(item, sum(1 for n in group)) for item, group in groupby(i)]
 
 
@@ -120,7 +135,8 @@ class Token(object):
     o lineno    -- the line of the file on which the data was found (if known)
     o offset    -- the offset of the data within the line (if known)
     """
-    __slots__ = ['typeof', 'data', 'lineno', 'offset']
+
+    __slots__ = ["typeof", "data", "lineno", "offset"]
 
     def __init__(self, typeof, data=None, lineno=-1, offset=-1):
         self.typeof = typeof
@@ -134,15 +150,13 @@ class Token(object):
     def __str__(self):
         coord = str(self.lineno)
         if self.offset != -1:
-            coord += ':' + str(self.offset)
+            coord += ":" + str(self.offset)
         coord = coord.ljust(7)
-        return ((coord + '  ' + self.typeof + ' : ').ljust(32) +
-                str(self.data or ''))
+        return (coord + "  " + self.typeof + " : ").ljust(32) + str(self.data or "")
 
 
 class Reiterate(object):
-    """ A flexible wrapper around a simple iterator.
-    """
+    """A flexible wrapper around a simple iterator."""
 
     def __new__(cls, iterator):
         if isinstance(iterator, cls):
@@ -171,7 +185,7 @@ class Reiterate(object):
 
     def index(self):
         """The number of items returned. Incremented by next(), decremented
-        by push(), unchanged by peek()  """
+        by push(), unchanged by peek()"""
         return self._index
 
     def push(self, item):
@@ -206,6 +220,7 @@ class Reiterate(object):
 def crc32(string: str) -> str:
     """Return the standard CRC32 checksum as a hexidecimal string."""
     import binascii
+
     return "%08X" % binascii.crc32(string.encode())
 
 
@@ -213,7 +228,7 @@ _crc64_table = None
 
 
 def crc64(string: str) -> str:
-    """ Calculate ISO 3309 standard cyclic redundancy checksum.
+    """Calculate ISO 3309 standard cyclic redundancy checksum.
     Used, for example, by SWISS-PROT.
 
     Returns : The CRC as a hexadecimal string.
@@ -235,10 +250,10 @@ def crc64(string: str) -> str:
                 rflag = k & 1
                 k >>= 1
                 if part_h & 1:
-                    k |= (1 << 31)      # pragma: no cover
+                    k |= 1 << 31  # pragma: no cover
                 part_h >>= 1
                 if rflag:
-                    part_h ^= 0xd8000000
+                    part_h ^= 0xD8000000
             table.append(part_h)
         _crc64_table = tuple(table)
 
@@ -253,6 +268,7 @@ def crc64(string: str) -> str:
         crcl = temp1l
 
     return "%08X%08X" % (crch, crcl)
+
 
 # End crc64
 
@@ -270,7 +286,8 @@ class FileIndex(object):
         User must set the indexedfile to None before pickling this class.
 
     """
-    __slots__ = ['indexedfile', '_parser', '_positions', '_keys', '_key_dict']
+
+    __slots__ = ["indexedfile", "_parser", "_positions", "_keys", "_key_dict"]
 
     def __init__(self, indexedfile, linekey=None, parser=None):
         """
@@ -299,7 +316,7 @@ class FileIndex(object):
         while True:
             position = indexedfile.tell()
             line = indexedfile.readline()
-            if line == '':
+            if line == "":
                 break
 
             if linekey:
@@ -348,11 +365,12 @@ class FileIndex(object):
         except IndexError:
             return False
 
+
 # End class FileIndex
 
 
 class ArgumentError(ValueError):
-    """ A subclass of ValueError raised when a function receives an argument
+    """A subclass of ValueError raised when a function receives an argument
     that has the right type but an inappropriate value, and the situation is
     not described by a more precise exception such as IndexError. The name of
     the argument or component at fault and (optionally) the value
@@ -360,7 +378,7 @@ class ArgumentError(ValueError):
     """
 
     def __init__(self, message, key, value=None):
-        """ Args:
+        """Args:
         - msg -- An error message.
         - key -- The name of the argument or component at fault.
         - value -- Optional value of the argument.
@@ -370,6 +388,7 @@ class ArgumentError(ValueError):
         self.msg = message
         self.key = key
         self.value = value
+
 
 # end class ArgumentError
 

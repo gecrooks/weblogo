@@ -1,5 +1,3 @@
-
-
 #  Copyright (c) 2005 Gavin E. Crooks <gec@threeplusone.com>
 #
 #  This software is distributed under the MIT Open Source License.
@@ -30,6 +28,7 @@ import pytest
 
 import weblogo.seq_io.intelligenetics_io as ig_io
 from weblogo.seq import rna_alphabet
+
 from . import data_stream
 
 
@@ -70,7 +69,7 @@ def test_read_fail():
 def test_write_seq_fail():
     f = StringIO(ig_io.example)
     seqs = ig_io.read(f)
-    seqs[0].name = ''
+    seqs[0].name = ""
     fout = StringIO()
     with pytest.raises(ValueError):
         ig_io.write(fout, seqs)

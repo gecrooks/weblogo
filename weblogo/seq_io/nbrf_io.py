@@ -63,21 +63,31 @@ ALPHA CRYSTALLIN B CHAIN (ALPHA(B)-CRYSTALLIN).
 
 """
 
-from ..seq import Seq, SeqList, protein_alphabet, dna_alphabet, rna_alphabet, generic_alphabet
+from ..seq import (
+    Seq,
+    SeqList,
+    dna_alphabet,
+    generic_alphabet,
+    protein_alphabet,
+    rna_alphabet,
+)
 
-names = ("nbrf", "pir",)
-extensions = ('nbrf', 'pir', 'ali')
+names = (
+    "nbrf",
+    "pir",
+)
+extensions = ("nbrf", "pir", "ali")
 
 type_code = {
-    'P1': protein_alphabet,  # Protein (complete)
-    'F1': protein_alphabet,  # Protein (fragment)
-    'DL': dna_alphabet,  # DNA (linear)
-    'DC': dna_alphabet,  # DNA (circular)
-    'RC': rna_alphabet,  # RNA (linear)
-    'RL': rna_alphabet,  # RNA (circular)
-    'N3': rna_alphabet,  # tRNA
-    'N1': rna_alphabet,  # other functional RNA
-    'XX': generic_alphabet
+    "P1": protein_alphabet,  # Protein (complete)
+    "F1": protein_alphabet,  # Protein (fragment)
+    "DL": dna_alphabet,  # DNA (linear)
+    "DC": dna_alphabet,  # DNA (circular)
+    "RC": rna_alphabet,  # RNA (linear)
+    "RL": rna_alphabet,  # RNA (circular)
+    "N3": rna_alphabet,  # tRNA
+    "N1": rna_alphabet,  # other functional RNA
+    "XX": generic_alphabet,
 }
 
 
@@ -98,7 +108,7 @@ def read(fin, alphabet=None):
 
 
 def iterseq(fin, alphabet=None):
-    """ Generate sequences from an NBRF file.
+    """Generate sequences from an NBRF file.
 
     arguments:
         fin -- A stream or file to read
@@ -121,8 +131,8 @@ def iterseq(fin, alphabet=None):
         if state == body:
             if line == "" or line.isspace():
                 continue
-            if line[0] == '>':
-                seq_type, seq_id = line[1:].split(';')
+            if line[0] == ">":
+                seq_type, seq_id = line[1:].split(";")
                 if alphabet:
                     seq_alpha = alphabet
                 else:
@@ -138,12 +148,16 @@ def iterseq(fin, alphabet=None):
 
         elif state == sequence:
             data = "".join(line.split())  # Strip out white space
-            if data[-1] == '*':
+            if data[-1] == "*":
                 # End of sequence data
                 seqs.append(data[:-1])
 
-                seq = Seq("".join(seqs), name=seq_id.strip(),
-                          description=seq_desc, alphabet=seq_alpha)
+                seq = Seq(
+                    "".join(seqs),
+                    name=seq_id.strip(),
+                    description=seq_desc,
+                    alphabet=seq_alpha,
+                )
 
                 yield seq
                 state = body
@@ -156,6 +170,6 @@ def iterseq(fin, alphabet=None):
                 continue
         else:
             # If we ever get here something has gone terrible wrong
-            assert False    # pragma: no cover
+            assert False  # pragma: no cover
 
     # end for

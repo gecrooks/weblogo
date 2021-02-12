@@ -41,7 +41,7 @@ def test_write():
     fout = StringIO()
     null_io.write(fout, seqs)
     fout.seek(0)
-    assert fout.read() == ''
+    assert fout.read() == ""
 
 
 def test_iterseq():
@@ -51,4 +51,4 @@ def test_iterseq():
 
 
 def test_writeseq():
-    null_io.writeseq('fout', ['seqs'])
+    null_io.writeseq("fout", ["seqs"])

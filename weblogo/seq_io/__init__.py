@@ -141,47 +141,57 @@ Attributes :
 from typing.io import TextIO
 
 from ..seq import Alphabet, SeqList
-
+from . import genbank_io  # null_io,
 from . import (
+    array_io,
     clustal_io,
     fasta_io,
+    intelligenetics_io,
     msf_io,
     nbrf_io,
     nexus_io,
-    plain_io,
     phylip_io,
-    # null_io,
+    plain_io,
     stockholm_io,
-    intelligenetics_io,
     table_io,
-    array_io,
-    genbank_io,
 )
 
 __all__ = [
-    'clustal_io',
-    'fasta_io',
-    'msf_io',
-    'nbrf_io',
-    'nexus_io',
-    'plain_io',
-    'phylip_io',
-    'null_io',
-    'stockholm_io',
-    'intelligenetics_io',
-    'table_io',
-    'array_io',
-    'genbank_io',
-    'read',
-    'formats',
-    'format_names',
-    'format_extensions',
+    "clustal_io",
+    "fasta_io",
+    "msf_io",
+    "nbrf_io",
+    "nexus_io",
+    "plain_io",
+    "phylip_io",
+    "null_io",
+    "stockholm_io",
+    "intelligenetics_io",
+    "table_io",
+    "array_io",
+    "genbank_io",
+    "read",
+    "formats",
+    "format_names",
+    "format_extensions",
 ]
 
 
 """Available seq_io formats"""
-formats = (clustal_io, fasta_io, plain_io, msf_io, genbank_io, nbrf_io, nexus_io, phylip_io,
-           stockholm_io, intelligenetics_io, table_io, array_io)
+formats = (
+    clustal_io,
+    fasta_io,
+    plain_io,
+    msf_io,
+    genbank_io,
+    nbrf_io,
+    nexus_io,
+    phylip_io,
+    stockholm_io,
+    intelligenetics_io,
+    table_io,
+    array_io,
+)
 
 
 def format_names():
@@ -213,8 +223,18 @@ def format_extensions():
 # The general trend is most common to least common file format. However,
 # 'nbrf_io' is before 'fasta_io' because nbrf looks like fasta with extras, and
 # 'array_io' is last, since it is very general.
-_parsers = (nbrf_io, fasta_io, clustal_io, phylip_io, genbank_io, stockholm_io, msf_io, nexus_io,
-            table_io, array_io)
+_parsers = (
+    nbrf_io,
+    fasta_io,
+    clustal_io,
+    phylip_io,
+    genbank_io,
+    stockholm_io,
+    msf_io,
+    nexus_io,
+    table_io,
+    array_io,
+)
 
 
 def _get_parsers(fin):
@@ -226,8 +246,8 @@ def _get_parsers(fin):
     best_guess = parsers[0]
 
     # If a filename is supplied use the extension to guess the format.
-    if hasattr(fin, "name") and '.' in fin.name:
-        extension = fin.name.split('.')[-1]
+    if hasattr(fin, "name") and "." in fin.name:
+        extension = fin.name.split(".")[-1]
         if extension in fnames:
             best_guess = fnames[extension]
         elif extension in fext:
@@ -241,7 +261,7 @@ def _get_parsers(fin):
 
 
 def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
-    """ Read a sequence file and attempt to guess its format.
+    """Read a sequence file and attempt to guess its format.
     First the filename extension (if available) is used to infer the format.
     If that fails, then we attempt to parse the file using several common
     formats.

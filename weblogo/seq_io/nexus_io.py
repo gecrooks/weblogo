@@ -34,11 +34,11 @@ Reference:
 Maddison, Swofford, Maddison. 1997. Syst. Biol. 46(4):590-621
 """
 
-from ._nexus import Nexus, safename
 from ..seq import Seq, SeqList
+from ._nexus import Nexus, safename
 
-names = ('nexus', 'paup')
-extensions = ('nex', 'nexus', 'paup', 'nxs')
+names = ("nexus", "paup")
+extensions = ("nex", "nexus", "paup", "nxs")
 
 
 def iterseq(fin, alphabet=None):

@@ -74,7 +74,7 @@ def read(fin, alphabet=None):
 
 
 def iterseq(fin, alphabet=None):
-    """ Read the sequence data and yield one (and only one) sequence.
+    """Read the sequence data and yield one (and only one) sequence.
 
     Args:
         fin -- A stream or file to read
@@ -92,16 +92,18 @@ def iterseq(fin, alphabet=None):
             continue  # Blank line
         line = line.strip()
 
-        if line[0] == '>':  # probably a fasta file. Fail.
+        if line[0] == ">":  # probably a fasta file. Fail.
             raise ValueError("Parse Error on input line: %d " % (linenum))
         line = remove_whitespace(line)
 
         if not alphabet.alphabetic(line):
-            raise ValueError("Character on line: %d not in alphabet: %s : %s"
-                             % (linenum, alphabet, line))
+            raise ValueError(
+                "Character on line: %d not in alphabet: %s : %s"
+                % (linenum, alphabet, line)
+            )
         lines.append(line)
 
-    yield Seq(''.join(lines), alphabet)
+    yield Seq("".join(lines), alphabet)
 
 
 def write(afile, seqs):
@@ -116,7 +118,7 @@ def write(afile, seqs):
 
 
 def writeseq(afile, seq):
-    """ Write a single sequence in raw format.
+    """Write a single sequence in raw format.
 
     arguments:
         afile -- A writable stream.

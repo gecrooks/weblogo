@@ -43,13 +43,10 @@
 #
 # Additional file_in and file_out types
 
+import random
 import sys
 from copy import copy
-from optparse import Option
-from optparse import OptionParser
-from optparse import IndentedHelpFormatter
-from optparse import OptionValueError
-import random
+from optparse import IndentedHelpFormatter, Option, OptionParser, OptionValueError
 
 
 def _copyright_callback(option, opt, value, parser):
@@ -67,14 +64,12 @@ def _doc_callback(option, opt, value, parser):
 
 
 class DeHelpFormatter(IndentedHelpFormatter):
-    def __init__(self,
-                 indent_increment=2,
-                 max_help_position=32,
-                 width=78,
-                 short_first=1):
+    def __init__(
+        self, indent_increment=2, max_help_position=32, width=78, short_first=1
+    ):
         IndentedHelpFormatter.__init__(
-                self, indent_increment, max_help_position,
-                width, short_first)
+            self, indent_increment, max_help_position, width, short_first
+        )
 
     def format_option_strings(self, option):
         """Return a comma-separated list of option strings & metavariables."""
@@ -87,7 +82,9 @@ class DeHelpFormatter(IndentedHelpFormatter):
             long_opts = option._long_opts
 
         if not short_opts:
-            short_opts = ["  ", ]
+            short_opts = [
+                "  ",
+            ]
 
         if self.short_first:
             opts = short_opts + long_opts
@@ -119,14 +116,21 @@ def _check_boolean(option, opt, value):
     if option or opt or value:
         pass  # Shut up lint checker
     v = value.lower()
-    choices = {'no': False, 'false': False, '0': False,
-               'yes': True, 'true': True, '1': True}
+    choices = {
+        "no": False,
+        "false": False,
+        "0": False,
+        "yes": True,
+        "true": True,
+        "1": True,
+    }
     try:
         return choices[v]
     except KeyError:
         raise OptionValueError(
-                "option %s: invalid choice: '%s' (choose from 'yes' or 'no', 'true' or 'false')"
-                % (opt, value))
+            "option %s: invalid choice: '%s' (choose from 'yes' or 'no', 'true' or 'false')"
+            % (opt, value)
+        )
 
 
 def _check_dict(option, opt, value):
@@ -138,8 +142,9 @@ def _check_dict(option, opt, value):
         return choices[v]
     except KeyError:
         raise OptionValueError(
-                "option %s: invalid choice: '%s' (choose from '%s')"
-                % (opt, value, "', '".join(choices)))
+            "option %s: invalid choice: '%s' (choose from '%s')"
+            % (opt, value, "', '".join(choices))
+        )
 
 
 class DeOption(Option):
@@ -154,104 +159,126 @@ class DeOption(Option):
     def _new_check_choice(self):
         if self.type == "dict":
             if self.choices is None:
-                raise OptionValueError("must supply a dictionary of choices for type 'dict'")
+                raise OptionValueError(
+                    "must supply a dictionary of choices for type 'dict'"
+                )
             elif not isinstance(self.choices, dict):
                 raise OptionValueError(
-                        "choices must be a dictionary ('%s' supplied)"
-                        % str(type(self.choices)).split("'")[1])
+                    "choices must be a dictionary ('%s' supplied)"
+                    % str(type(self.choices)).split("'")[1]
+                )
             return
         self._check_choice()
 
     # Have to override _check_choices so that we can parse
     # a dict through to check_dict
     CHECK_METHODS = Option.CHECK_METHODS
-    CHECK_METHODS[2] = _new_check_choice    # type: ignore
+    CHECK_METHODS[2] = _new_check_choice  # type: ignore
 
 
 class DeOptionParser(OptionParser):
-    def __init__(self,
-                 usage=None,
-                 option_list=None,
-                 option_class=DeOption,
-                 version=None,
-                 conflict_handler="error",
-                 description=None,
-                 long_description=None,
-                 formatter=DeHelpFormatter(),
-                 add_help_option=True,
-                 prog=None,
-                 copyright=None,
-                 add_verbose_options=True,
-                 add_random_options=False
-                 ):
+    def __init__(
+        self,
+        usage=None,
+        option_list=None,
+        option_class=DeOption,
+        version=None,
+        conflict_handler="error",
+        description=None,
+        long_description=None,
+        formatter=DeHelpFormatter(),
+        add_help_option=True,
+        prog=None,
+        copyright=None,
+        add_verbose_options=True,
+        add_random_options=False,
+    ):
 
-        OptionParser.__init__(self,
-                              usage,
-                              option_list,
-                              option_class,
-                              version,
-                              conflict_handler,
-                              description,
-                              formatter,
-                              add_help_option,
-                              prog)
+        OptionParser.__init__(
+            self,
+            usage,
+            option_list,
+            option_class,
+            version,
+            conflict_handler,
+            description,
+            formatter,
+            add_help_option,
+            prog,
+        )
 
         if long_description:
             self.long_description = long_description
-            self.add_option("--doc",
-                            action="callback",
-                            callback=_doc_callback,
-                            help="Detailed documentation")
+            self.add_option(
+                "--doc",
+                action="callback",
+                callback=_doc_callback,
+                help="Detailed documentation",
+            )
 
         if copyright:
             self.copyright = copyright
-            self.add_option("--copyright",
-                            action="callback",
-                            callback=_copyright_callback,
-                            help="")
+            self.add_option(
+                "--copyright", action="callback", callback=_copyright_callback, help=""
+            )
 
         if add_verbose_options:
-            self.add_option("-q", "--quite",
-                            action="store_false",
-                            dest="verbose",
-                            default=False,
-                            help="Run quietly (default)")
+            self.add_option(
+                "-q",
+                "--quite",
+                action="store_false",
+                dest="verbose",
+                default=False,
+                help="Run quietly (default)",
+            )
 
-            self.add_option("-v", "--verbose",
-                            action="store_true",
-                            dest="verbose",
-                            default=False,
-                            help="Verbose output (Not quite)")
+            self.add_option(
+                "-v",
+                "--verbose",
+                action="store_true",
+                dest="verbose",
+                default=False,
+                help="Verbose output (Not quite)",
+            )
 
         self.random_options = False
         if add_random_options:
             self.random_options = True
-            self.add_option("--seed",
-                            action="store",
-                            type="int",
-                            dest="random_seed",
-                            help="Initial seed for pseudo-random number generator. "
-                                 "(default: System time)",
-                            metavar="INTEGER")
+            self.add_option(
+                "--seed",
+                action="store",
+                type="int",
+                dest="random_seed",
+                help="Initial seed for pseudo-random number generator. "
+                "(default: System time)",
+                metavar="INTEGER",
+            )
 
-            self.add_option("--generator",
-                            action="store",
-                            dest="random_generator",
-                            default="MersenneTwister",
-                            help="Select MersenneTwister (default) or WichmannHill pseudo-random "
-                                 "number generator",
-                            metavar="TYPE")
+            self.add_option(
+                "--generator",
+                action="store",
+                dest="random_generator",
+                default="MersenneTwister",
+                help="Select MersenneTwister (default) or WichmannHill pseudo-random "
+                "number generator",
+                metavar="TYPE",
+            )
 
     def parse_args(self, args, values=None):
         (options, args) = OptionParser.parse_args(self, args, values)
 
         if self.random_options:
-            if options.random_generator is None or options.random_generator == "MersenneTwister":
+            if (
+                options.random_generator is None
+                or options.random_generator == "MersenneTwister"
+            ):
                 r = random.Random()
             elif options.random_generator == "WichmannHill":
                 r = random.WichmannHill()
             else:
-                self.error("Acceptible generators are MersenneTwister (default) or WichmannHill")
+                self.error(
+                    "Acceptible generators are MersenneTwister (default) or WichmannHill"
+                )
             if options.random_seed:
                 r.seed(options.random_seed)
 

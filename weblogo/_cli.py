@@ -43,20 +43,30 @@
 
 import os
 import sys
-from optparse import OptionGroup
 from io import StringIO
+from optparse import OptionGroup
 
-from . import seq_io
+from . import (
+    LogoData,
+    LogoFormat,
+    LogoOptions,
+    default_formatter,
+    description,
+    formatters,
+    parse_prior,
+    read_seq_data,
+    release_description,
+    seq_io,
+    std_alphabets,
+    std_color_schemes,
+    std_sizes,
+    std_units,
+)
+from .colorscheme import ColorScheme, SymbolColor
+from .logo import _seq_formats, _seq_names
 from .seq import Seq, SeqList, nucleic_alphabet
 from .utils import resource_filename
 from .utils.deoptparse import DeOptionParser
-from . import (LogoOptions, LogoData, LogoFormat,
-               parse_prior, description, release_description, formatters,
-               default_formatter,
-               std_alphabets, std_units, std_sizes, std_color_schemes,
-               read_seq_data)
-from .logo import (_seq_names, _seq_formats)
-from .colorscheme import ColorScheme, SymbolColor
 
 
 # ====================== Main: Parse Command line =============================
@@ -71,7 +81,7 @@ def main():
 
     if opts.serve:
         httpd_serve_forever(opts.port)  # Never returns?    # pragma: no cover
-        sys.exit(0)                                         # pragma: no cover
+        sys.exit(0)  # pragma: no cover
 
     # ------ Create Logo ------
     try:
@@ -85,10 +95,11 @@ def main():
         opts.fout.buffer.write(logo)
 
     except ValueError as err:
-        print('Error:', err, file=sys.stderr)
+        print("Error:", err, file=sys.stderr)
         sys.exit(2)
     except KeyboardInterrupt:
         sys.exit(0)
+
 
 # End main()
 
@@ -107,32 +118,35 @@ def httpd_serve_forever(port=8080):
         def is_cgi(self):
             self.have_fork = False  # Prevent CGIHTTPRequestHandler from using fork
             if self.path == "/create.cgi":
-                self.cgi_info = '', 'create.cgi'
+                self.cgi_info = "", "create.cgi"
                 return True
             return False
 
-        def is_python(self, path):  # Let CGIHTTPRequestHandler know that cgi script is python
+        def is_python(
+            self, path
+        ):  # Let CGIHTTPRequestHandler know that cgi script is python
             return True
 
     # Add current directory to PYTHONPATH. This is
     # so that we can run the standalone server
     # without having to run the install script.
-    pythonpath = os.getenv("PYTHONPATH", '')
+    pythonpath = os.getenv("PYTHONPATH", "")
     pythonpath += os.pathsep + os.path.abspath(sys.path[0])  # .split()[0]
     os.environ["PYTHONPATH"] = pythonpath
 
-    htdocs = resource_filename(__name__, 'htdocs', __file__)
+    htdocs = resource_filename(__name__, "htdocs", __file__)
     os.chdir(htdocs)
 
     HandlerClass = __HTTPRequestHandler
     ServerClass = server.HTTPServer
-    httpd = ServerClass(('', port), HandlerClass)
+    httpd = ServerClass(("", port), HandlerClass)
     print("WebLogo server running at http://localhost:%d/" % port)
 
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
         sys.exit(0)
+
 
 # end httpd_serve_forever()
 
@@ -148,6 +162,7 @@ def _build_logodata(options):
     else:
         if fin is None:
             from .logo import _from_URL_fileopen
+
             fin = _from_URL_fileopen(options.upload)
         else:
             raise ValueError("error: options --fin and --upload are incompatible")
@@ -155,20 +170,25 @@ def _build_logodata(options):
     try:
         # Try reading data in transfac format first.
         from .matrix import Motif
+
         motif = Motif.read_transfac(fin, alphabet=options.alphabet)
         motif_flag = True
     except ValueError as motif_err:
         # Failed reading Motif, try reading as multiple sequence data.
         if options.input_parser == "transfac":
             raise motif_err  # Adding transfac as str insted of parser is a bit of a ugly kludge
-        seqs = read_seq_data(fin,
-                             options.input_parser.read,
-                             alphabet=options.alphabet,
-                             ignore_lower_case=options.ignore_lower_case)
+        seqs = read_seq_data(
+            fin,
+            options.input_parser.read,
+            alphabet=options.alphabet,
+            ignore_lower_case=options.ignore_lower_case,
+        )
 
     if motif_flag:
         if options.ignore_lower_case:
-            raise ValueError("error: option --ignore-lower-case incompatible with matrix input")
+            raise ValueError(
+                "error: option --ignore-lower-case incompatible with matrix input"
+            )
         if options.reverse or options.revcomp:
             motif.reverse()
         if options.complement or options.revcomp:
@@ -182,10 +202,14 @@ def _build_logodata(options):
 
         if options.complement or options.revcomp:
             if not nucleic_alphabet.alphabetic(seqs.alphabet):
-                raise ValueError('non-nucleic sequence cannot be complemented')  # pragam: no cover
+                raise ValueError(
+                    "non-nucleic sequence cannot be complemented"
+                )  # pragam: no cover
             aaa = seqs.alphabet
             seqs.alphabet = nucleic_alphabet
-            seqs = SeqList([Seq(s, seqs.alphabet).complement() for s in seqs], seqs.alphabet)
+            seqs = SeqList(
+                [Seq(s, seqs.alphabet).complement() for s in seqs], seqs.alphabet
+            )
             seqs.alphabet = aaa
 
         prior = parse_prior(options.composition, seqs.alphabet, options.weight)
@@ -195,7 +219,7 @@ def _build_logodata(options):
 
 
 def _build_logoformat(logodata, opts):
-    """ Extract and process relevant option values and return a
+    """Extract and process relevant option values and return a
     LogoFormat object."""
 
     args = {}
@@ -264,13 +288,12 @@ def _build_logoformat(logodata, opts):
                 # c = Color.from_string(color)
                 color_scheme.rules.append(SymbolColor(symbols, color, desc))
             except ValueError:
-                raise ValueError(
-                        "error: option --color: invalid value: '%s'" % color)
+                raise ValueError("error: option --color: invalid value: '%s'" % color)
 
         args["color_scheme"] = color_scheme
 
     if opts.annotate:
-        args["annotate"] = opts.annotate.split(',')
+        args["annotate"] = opts.annotate.split(",")
 
     logooptions = LogoOptions()
     for a, v in args.items():
@@ -283,27 +306,48 @@ def _build_logoformat(logodata, opts):
 # ========================== OPTIONS ==========================
 def _build_option_parser():
     defaults = LogoOptions()
-    parser = DeOptionParser(usage="%prog [options]  < sequence_data.fa > sequence_logo.eps",
-                            description=description,
-                            version=release_description,
-                            add_verbose_options=False
-                            )
+    parser = DeOptionParser(
+        usage="%prog [options]  < sequence_data.fa > sequence_logo.eps",
+        description=description,
+        version=release_description,
+        add_verbose_options=False,
+    )
 
-    io_grp = OptionGroup(parser, "Input/Output Options", )
-    data_grp = OptionGroup(parser, "Logo Data Options", )
-    trans_grp = OptionGroup(parser, "Transformations",
-                            "Optional transformations of the sequence data.")
+    io_grp = OptionGroup(
+        parser,
+        "Input/Output Options",
+    )
+    data_grp = OptionGroup(
+        parser,
+        "Logo Data Options",
+    )
+    trans_grp = OptionGroup(
+        parser, "Transformations", "Optional transformations of the sequence data."
+    )
 
-    format_grp = OptionGroup(parser, "Logo Format Options",
-                             "These options control the format and display of the logo.")
-    color_grp = OptionGroup(parser, "Color Options",
-                            "Colors can be specified using CSS2 syntax. e.g. 'red', '#FF0000', etc")
-    font_grp = OptionGroup(parser, "Font Format Options",
-                           "These options provide control over the font sizes and types.")
-    advanced_grp = OptionGroup(parser, "Advanced Format Options",
-                               "These options provide fine control over the display of the logo.")
-    server_grp = OptionGroup(parser, "WebLogo Server",
-                             "Run a standalone webserver on a local port.")
+    format_grp = OptionGroup(
+        parser,
+        "Logo Format Options",
+        "These options control the format and display of the logo.",
+    )
+    color_grp = OptionGroup(
+        parser,
+        "Color Options",
+        "Colors can be specified using CSS2 syntax. e.g. 'red', '#FF0000', etc",
+    )
+    font_grp = OptionGroup(
+        parser,
+        "Font Format Options",
+        "These options provide control over the font sizes and types.",
+    )
+    advanced_grp = OptionGroup(
+        parser,
+        "Advanced Format Options",
+        "These options provide fine control over the display of the logo.",
+    )
+    server_grp = OptionGroup(
+        parser, "WebLogo Server", "Run a standalone webserver on a local port."
+    )
 
     parser.add_option_group(io_grp)
     parser.add_option_group(data_grp)
@@ -316,290 +360,390 @@ def _build_option_parser():
 
     # ========================== IO OPTIONS ==========================
 
-    io_grp.add_option("-f", "--fin",
-                      dest="fin",
-                      action="store",
-                      type="file_in",
-                      default=None,
-                      help="Sequence input file (default: stdin)",
-                      metavar="FILENAME")
+    io_grp.add_option(
+        "-f",
+        "--fin",
+        dest="fin",
+        action="store",
+        type="file_in",
+        default=None,
+        help="Sequence input file (default: stdin)",
+        metavar="FILENAME",
+    )
 
-    io_grp.add_option("", "--upload",
-                      dest="upload",
-                      action="store",
-                      default=None,
-                      help="Upload input file from URL",
-                      metavar="URL")
+    io_grp.add_option(
+        "",
+        "--upload",
+        dest="upload",
+        action="store",
+        default=None,
+        help="Upload input file from URL",
+        metavar="URL",
+    )
 
-    io_grp.add_option("-D", "--datatype",
-                      dest="input_parser",
-                      action="store", type="dict",
-                      default=seq_io,
-                      choices=_seq_formats(),
-                      help="Type of multiple sequence alignment or position"
-                      " weight matrix file: (%s)" % ', '.join(_seq_names()),
-                      metavar="FORMAT")
+    io_grp.add_option(
+        "-D",
+        "--datatype",
+        dest="input_parser",
+        action="store",
+        type="dict",
+        default=seq_io,
+        choices=_seq_formats(),
+        help="Type of multiple sequence alignment or position"
+        " weight matrix file: (%s)" % ", ".join(_seq_names()),
+        metavar="FORMAT",
+    )
 
-    io_grp.add_option("-o", "--fout", dest="fout",
-                      type="file_out",
-                      default=sys.stdout,
-                      help="Output file (default: stdout)",
-                      metavar="FILENAME")
+    io_grp.add_option(
+        "-o",
+        "--fout",
+        dest="fout",
+        type="file_out",
+        default=sys.stdout,
+        help="Output file (default: stdout)",
+        metavar="FILENAME",
+    )
 
-    io_grp.add_option("-F", "--format",
-                      dest="formatter",
-                      action="store",
-                      type="dict",
-                      choices=formatters,
-                      metavar="FORMAT",
-                      help="Format of output: eps (default), png, png_print, pdf, jpeg, svg, "
-                            "logodata",
-                      default=default_formatter)
+    io_grp.add_option(
+        "-F",
+        "--format",
+        dest="formatter",
+        action="store",
+        type="dict",
+        choices=formatters,
+        metavar="FORMAT",
+        help="Format of output: eps (default), png, png_print, pdf, jpeg, svg, "
+        "logodata",
+        default=default_formatter,
+    )
 
     # ========================== Data OPTIONS ==========================
 
-    data_grp.add_option("-A", "--sequence-type",
-                        dest="alphabet",
-                        action="store",
-                        type="dict",
-                        choices=std_alphabets,
-                        help="The type of sequence data: 'protein', 'rna' or 'dna'.",
-                        metavar="TYPE")
+    data_grp.add_option(
+        "-A",
+        "--sequence-type",
+        dest="alphabet",
+        action="store",
+        type="dict",
+        choices=std_alphabets,
+        help="The type of sequence data: 'protein', 'rna' or 'dna'.",
+        metavar="TYPE",
+    )
 
-    data_grp.add_option("-a", "--alphabet",
-                        dest="alphabet",
-                        action="store",
-                        help="The set of symbols to count, e.g. 'AGTC'. "
-                             "All characters not in the alphabet are ignored. "
-                             "If neither the alphabet nor sequence-type are specified then weblogo "
-                             "will examine the input data and make an educated guess. "
-                             "See also --sequence-type, --ignore-lower-case")
+    data_grp.add_option(
+        "-a",
+        "--alphabet",
+        dest="alphabet",
+        action="store",
+        help="The set of symbols to count, e.g. 'AGTC'. "
+        "All characters not in the alphabet are ignored. "
+        "If neither the alphabet nor sequence-type are specified then weblogo "
+        "will examine the input data and make an educated guess. "
+        "See also --sequence-type, --ignore-lower-case",
+    )
 
-    data_grp.add_option("-U", "--units",
-                        dest="unit_name",
-                        action="store",
-                        choices=list(std_units.keys()),
-                        type="choice",
-                        default=defaults.unit_name,
-                        help="A unit of entropy ('bits' (default), 'nats', 'digits'), or a unit of"
-                             "free energy ('kT', 'kJ/mol', 'kcal/mol'), or 'probability' for"
-                             " probabilities",
-                        metavar="UNIT")
+    data_grp.add_option(
+        "-U",
+        "--units",
+        dest="unit_name",
+        action="store",
+        choices=list(std_units.keys()),
+        type="choice",
+        default=defaults.unit_name,
+        help="A unit of entropy ('bits' (default), 'nats', 'digits'), or a unit of"
+        "free energy ('kT', 'kJ/mol', 'kcal/mol'), or 'probability' for"
+        " probabilities",
+        metavar="UNIT",
+    )
 
-    data_grp.add_option("", "--composition",
-                        dest="composition",
-                        action="store",
-                        type="string",
-                        default="auto",
-                        help="The expected composition of the sequences: 'auto' (default), "
-                             "'equiprobable', 'none' (do not perform any compositional "
-                             "adjustment), a CG percentage, a species name (e.g. 'E. coli', "
-                             "'H. sapiens'), or an explicit distribution (e.g. \"{'A':10, 'C':40,"
-                             " 'G':40, 'T':10}\"). The automatic option uses a typical "
-                             "distribution for proteins and equiprobable distribution for "
-                             "everything else. ",
-                        metavar="COMP.")
+    data_grp.add_option(
+        "",
+        "--composition",
+        dest="composition",
+        action="store",
+        type="string",
+        default="auto",
+        help="The expected composition of the sequences: 'auto' (default), "
+        "'equiprobable', 'none' (do not perform any compositional "
+        "adjustment), a CG percentage, a species name (e.g. 'E. coli', "
+        "'H. sapiens'), or an explicit distribution (e.g. \"{'A':10, 'C':40,"
+        " 'G':40, 'T':10}\"). The automatic option uses a typical "
+        "distribution for proteins and equiprobable distribution for "
+        "everything else. ",
+        metavar="COMP.",
+    )
 
-    data_grp.add_option("", "--weight",
-                        dest="weight",
-                        action="store",
-                        type="float",
-                        default=None,
-                        help="The weight of prior data.  Default depends on alphabet length",
-                        metavar="NUMBER")
+    data_grp.add_option(
+        "",
+        "--weight",
+        dest="weight",
+        action="store",
+        type="float",
+        default=None,
+        help="The weight of prior data.  Default depends on alphabet length",
+        metavar="NUMBER",
+    )
 
-    data_grp.add_option("-i", "--first-index",
-                        dest="first_index",
-                        action="store",
-                        type="int",
-                        default=1,
-                        help="Index of first position in sequence data (default: 1)",
-                        metavar="INDEX")
+    data_grp.add_option(
+        "-i",
+        "--first-index",
+        dest="first_index",
+        action="store",
+        type="int",
+        default=1,
+        help="Index of first position in sequence data (default: 1)",
+        metavar="INDEX",
+    )
 
-    data_grp.add_option("-l", "--lower",
-                        dest="logo_start",
-                        action="store",
-                        type="int",
-                        help="Lower bound of sequence to display",
-                        metavar="INDEX")
+    data_grp.add_option(
+        "-l",
+        "--lower",
+        dest="logo_start",
+        action="store",
+        type="int",
+        help="Lower bound of sequence to display",
+        metavar="INDEX",
+    )
 
-    data_grp.add_option("-u", "--upper",
-                        dest="logo_end",
-                        action="store",
-                        type="int",
-                        help="Upper bound of sequence to display",
-                        metavar="INDEX")
+    data_grp.add_option(
+        "-u",
+        "--upper",
+        dest="logo_end",
+        action="store",
+        type="int",
+        help="Upper bound of sequence to display",
+        metavar="INDEX",
+    )
 
     # ========================== Transformation OPTIONS ==========================
 
     # FIXME Add test?
-    trans_grp.add_option("", "--ignore-lower-case",
-                         dest="ignore_lower_case",
-                         action="store_true",
-                         default=False,
-                         help="Disregard lower case letters and only count upper case letters"
-                              " in sequences."
-                         )
+    trans_grp.add_option(
+        "",
+        "--ignore-lower-case",
+        dest="ignore_lower_case",
+        action="store_true",
+        default=False,
+        help="Disregard lower case letters and only count upper case letters"
+        " in sequences.",
+    )
 
-    trans_grp.add_option("", "--reverse",
-                         dest="reverse",
-                         action="store_true",
-                         default=False,
-                         help="reverse sequences",
-                         )
+    trans_grp.add_option(
+        "",
+        "--reverse",
+        dest="reverse",
+        action="store_true",
+        default=False,
+        help="reverse sequences",
+    )
 
-    trans_grp.add_option("", "--complement",
-                         dest="complement",
-                         action="store_true",
-                         default=False,
-                         help="complement nucleic sequences",
-                         )
+    trans_grp.add_option(
+        "",
+        "--complement",
+        dest="complement",
+        action="store_true",
+        default=False,
+        help="complement nucleic sequences",
+    )
 
-    trans_grp.add_option("", "--revcomp",
-                         dest="revcomp",
-                         action="store_true",
-                         default=False,
-                         help="reverse complement nucleic sequences",
-                         )
+    trans_grp.add_option(
+        "",
+        "--revcomp",
+        dest="revcomp",
+        action="store_true",
+        default=False,
+        help="reverse complement nucleic sequences",
+    )
 
     # ========================== FORMAT OPTIONS ==========================
 
-    format_grp.add_option("-s", "--size",
-                          dest="stack_width",
-                          action="store",
-                          type="dict",
-                          choices=std_sizes,
-                          metavar="LOGOSIZE",
-                          default=defaults.stack_width,
-                          help="Specify a standard logo size (small, medium (default), large)")
+    format_grp.add_option(
+        "-s",
+        "--size",
+        dest="stack_width",
+        action="store",
+        type="dict",
+        choices=std_sizes,
+        metavar="LOGOSIZE",
+        default=defaults.stack_width,
+        help="Specify a standard logo size (small, medium (default), large)",
+    )
 
-    format_grp.add_option("-n", "--stacks-per-line",
-                          dest="stacks_per_line",
-                          action="store",
-                          type="int",
-                          help="Maximum number of logo stacks per logo line. (default: %default)",
-                          default=defaults.stacks_per_line,
-                          metavar="COUNT")
+    format_grp.add_option(
+        "-n",
+        "--stacks-per-line",
+        dest="stacks_per_line",
+        action="store",
+        type="int",
+        help="Maximum number of logo stacks per logo line. (default: %default)",
+        default=defaults.stacks_per_line,
+        metavar="COUNT",
+    )
 
-    format_grp.add_option("-t", "--title",
-                          dest="logo_title",
-                          action="store",
-                          type="string",
-                          help="Logo title text.",
-                          default=defaults.logo_title,
-                          metavar="TEXT")
+    format_grp.add_option(
+        "-t",
+        "--title",
+        dest="logo_title",
+        action="store",
+        type="string",
+        help="Logo title text.",
+        default=defaults.logo_title,
+        metavar="TEXT",
+    )
 
-    format_grp.add_option("", "--label",
-                          dest="logo_label",
-                          action="store",
-                          type="string",
-                          help="A figure label, e.g. '2a'",
-                          default=defaults.logo_label,
-                          metavar="TEXT")
+    format_grp.add_option(
+        "",
+        "--label",
+        dest="logo_label",
+        action="store",
+        type="string",
+        help="A figure label, e.g. '2a'",
+        default=defaults.logo_label,
+        metavar="TEXT",
+    )
 
-    format_grp.add_option("-X", "--show-xaxis",
-                          action="store",
-                          type="boolean",
-                          default=defaults.show_xaxis,
-                          metavar="YES/NO",
-                          help="Display sequence numbers along x-axis? (default: %default)")
+    format_grp.add_option(
+        "-X",
+        "--show-xaxis",
+        action="store",
+        type="boolean",
+        default=defaults.show_xaxis,
+        metavar="YES/NO",
+        help="Display sequence numbers along x-axis? (default: %default)",
+    )
 
-    format_grp.add_option("-x", "--xlabel",
-                          dest="xaxis_label",
-                          action="store",
-                          type="string",
-                          default=defaults.xaxis_label,
-                          help="X-axis label",
-                          metavar="TEXT")
+    format_grp.add_option(
+        "-x",
+        "--xlabel",
+        dest="xaxis_label",
+        action="store",
+        type="string",
+        default=defaults.xaxis_label,
+        help="X-axis label",
+        metavar="TEXT",
+    )
 
-    format_grp.add_option("", "--annotate",
-                          dest="annotate",
-                          action="store",
-                          type="string",
-                          default=None,
-                          help="A comma separated list of custom stack annotations, "
-                               "e.g. '1,3,4,5,6,7'.  Annotation list must be same length as "
-                               "sequences.",
-                          metavar="TEXT")
+    format_grp.add_option(
+        "",
+        "--annotate",
+        dest="annotate",
+        action="store",
+        type="string",
+        default=None,
+        help="A comma separated list of custom stack annotations, "
+        "e.g. '1,3,4,5,6,7'.  Annotation list must be same length as "
+        "sequences.",
+        metavar="TEXT",
+    )
 
-    format_grp.add_option("", "--rotate-numbers",
-                          dest="rotate_numbers",
-                          action="store",
-                          type="boolean",
-                          default=defaults.rotate_numbers,
-                          help="Draw X-axis numbers with vertical orientation (default: %default).",
-                          metavar="YES/NO")
+    format_grp.add_option(
+        "",
+        "--rotate-numbers",
+        dest="rotate_numbers",
+        action="store",
+        type="boolean",
+        default=defaults.rotate_numbers,
+        help="Draw X-axis numbers with vertical orientation (default: %default).",
+        metavar="YES/NO",
+    )
 
-    format_grp.add_option("", "--number-interval",
-                          dest="number_interval",
-                          action="store",
-                          type="float",
-                          default=defaults.number_interval,
-                          help="Distance between numbers on X-axis (default: %s)"
-                          % defaults.number_interval,
-                          metavar="NUMBER")
+    format_grp.add_option(
+        "",
+        "--number-interval",
+        dest="number_interval",
+        action="store",
+        type="float",
+        default=defaults.number_interval,
+        help="Distance between numbers on X-axis (default: %s)"
+        % defaults.number_interval,
+        metavar="NUMBER",
+    )
 
-    format_grp.add_option("-S", "--yaxis",
-                          dest="yaxis_scale",
-                          action="store",
-                          type="float",
-                          help="Height of yaxis in units. (Default: Maximum value with "
-                               "uninformative prior.)",
-                          metavar="NUMBER")
+    format_grp.add_option(
+        "-S",
+        "--yaxis",
+        dest="yaxis_scale",
+        action="store",
+        type="float",
+        help="Height of yaxis in units. (Default: Maximum value with "
+        "uninformative prior.)",
+        metavar="NUMBER",
+    )
 
-    format_grp.add_option("-Y", "--show-yaxis",
-                          action="store",
-                          type="boolean",
-                          dest="show_yaxis",
-                          default=defaults.show_yaxis,
-                          metavar="YES/NO",
-                          help="Display entropy scale along y-axis? (default: %default)")
+    format_grp.add_option(
+        "-Y",
+        "--show-yaxis",
+        action="store",
+        type="boolean",
+        dest="show_yaxis",
+        default=defaults.show_yaxis,
+        metavar="YES/NO",
+        help="Display entropy scale along y-axis? (default: %default)",
+    )
 
-    format_grp.add_option("-y", "--ylabel",
-                          dest="yaxis_label",
-                          action="store",
-                          type="string",
-                          help="Y-axis label (default depends on plot type and units)",
-                          metavar="TEXT")
+    format_grp.add_option(
+        "-y",
+        "--ylabel",
+        dest="yaxis_label",
+        action="store",
+        type="string",
+        help="Y-axis label (default depends on plot type and units)",
+        metavar="TEXT",
+    )
 
-    format_grp.add_option("-E", "--show-ends",
-                          action="store",
-                          type="boolean",
-                          default=defaults.show_ends,
-                          metavar="YES/NO",
-                          help="Label the ends of the sequence? (default: %default)")
+    format_grp.add_option(
+        "-E",
+        "--show-ends",
+        action="store",
+        type="boolean",
+        default=defaults.show_ends,
+        metavar="YES/NO",
+        help="Label the ends of the sequence? (default: %default)",
+    )
 
-    format_grp.add_option("-P", "--fineprint",
-                          dest="fineprint",
-                          action="store",
-                          type="string",
-                          default=defaults.fineprint,
-                          help="The fine print (default: weblogo version)",
-                          metavar="TEXT")
+    format_grp.add_option(
+        "-P",
+        "--fineprint",
+        dest="fineprint",
+        action="store",
+        type="string",
+        default=defaults.fineprint,
+        help="The fine print (default: weblogo version)",
+        metavar="TEXT",
+    )
 
-    format_grp.add_option("", "--ticmarks",
-                          dest="yaxis_tic_interval",
-                          action="store",
-                          type="float",
-                          default=defaults.yaxis_tic_interval,
-                          help="Distance between ticmarks (default: %default)",
-                          metavar="NUMBER")
+    format_grp.add_option(
+        "",
+        "--ticmarks",
+        dest="yaxis_tic_interval",
+        action="store",
+        type="float",
+        default=defaults.yaxis_tic_interval,
+        help="Distance between ticmarks (default: %default)",
+        metavar="NUMBER",
+    )
 
-    format_grp.add_option("", "--errorbars",
-                          dest="show_errorbars",
-                          action="store",
-                          type="boolean",
-                          default=defaults.show_errorbars,
-                          metavar="YES/NO",
-                          help="Display error bars? (default: %default)")
+    format_grp.add_option(
+        "",
+        "--errorbars",
+        dest="show_errorbars",
+        action="store",
+        type="boolean",
+        default=defaults.show_errorbars,
+        metavar="YES/NO",
+        help="Display error bars? (default: %default)",
+    )
 
-    format_grp.add_option("", "--reverse-stacks",
-                          dest="reverse_stacks",
-                          action="store",
-                          type="boolean",
-                          default=defaults.show_errorbars,
-                          metavar="YES/NO",
-                          help="Draw stacks with largest letters on top? (default: %default)")
+    format_grp.add_option(
+        "",
+        "--reverse-stacks",
+        dest="reverse_stacks",
+        action="store",
+        type="boolean",
+        default=defaults.show_errorbars,
+        metavar="YES/NO",
+        help="Draw stacks with largest letters on top? (default: %default)",
+    )
 
     # ========================== Color OPTIONS ==========================
     # TODO: Future Feature
@@ -613,196 +757,252 @@ def _build_option_parser():
 
     color_scheme_choices = list(std_color_schemes.keys())
     color_scheme_choices.sort()
-    color_grp.add_option("-c", "--color-scheme",
-                         dest="color_scheme",
-                         action="store",
-                         type="dict",
-                         choices=std_color_schemes,
-                         metavar="SCHEME",
-                         default=None,  # Auto
-                         help="Specify a standard color scheme (%s)" % \
-                              ", ".join(color_scheme_choices))
+    color_grp.add_option(
+        "-c",
+        "--color-scheme",
+        dest="color_scheme",
+        action="store",
+        type="dict",
+        choices=std_color_schemes,
+        metavar="SCHEME",
+        default=None,  # Auto
+        help="Specify a standard color scheme (%s)" % ", ".join(color_scheme_choices),
+    )
 
-    color_grp.add_option("-C", "--color",
-                         dest="colors",
-                         action="append",
-                         metavar="COLOR SYMBOLS DESCRIPTION ",
-                         nargs=3,
-                         default=[],
-                         help="Specify symbol colors, e.g. --color black AG 'Purine' "
-                              "--color red TC 'Pyrimidine' ")
+    color_grp.add_option(
+        "-C",
+        "--color",
+        dest="colors",
+        action="append",
+        metavar="COLOR SYMBOLS DESCRIPTION ",
+        nargs=3,
+        default=[],
+        help="Specify symbol colors, e.g. --color black AG 'Purine' "
+        "--color red TC 'Pyrimidine' ",
+    )
 
-    color_grp.add_option("", "--default-color",
-                         dest="default_color",
-                         action="store",
-                         metavar="COLOR",
-                         default=defaults.default_color,
-                         help="Symbol color if not otherwise specified.")
+    color_grp.add_option(
+        "",
+        "--default-color",
+        dest="default_color",
+        action="store",
+        metavar="COLOR",
+        default=defaults.default_color,
+        help="Symbol color if not otherwise specified.",
+    )
 
     # ========================== Font options =========================
 
-    font_grp.add_option("", "--fontsize",
-                        dest="fontsize",
-                        action="store",
-                        type="float",
-                        default=defaults.fontsize,
-                        help="Regular text font size in points (default: %s)"
-                        % defaults.fontsize,
-                        metavar="POINTS")
+    font_grp.add_option(
+        "",
+        "--fontsize",
+        dest="fontsize",
+        action="store",
+        type="float",
+        default=defaults.fontsize,
+        help="Regular text font size in points (default: %s)" % defaults.fontsize,
+        metavar="POINTS",
+    )
 
-    font_grp.add_option("", "--title-fontsize",
-                        dest="title_fontsize",
-                        action="store",
-                        type="float",
-                        default=defaults.title_fontsize,
-                        help="Title text font size in points (default: %s)"
-                        % defaults.title_fontsize,
-                        metavar="POINTS")
+    font_grp.add_option(
+        "",
+        "--title-fontsize",
+        dest="title_fontsize",
+        action="store",
+        type="float",
+        default=defaults.title_fontsize,
+        help="Title text font size in points (default: %s)" % defaults.title_fontsize,
+        metavar="POINTS",
+    )
 
-    font_grp.add_option("", "--small-fontsize",
-                        dest="small_fontsize",
-                        action="store",
-                        type="float",
-                        default=defaults.small_fontsize,
-                        help="Small text font size in points (default: %s)"
-                        % defaults.small_fontsize,
-                        metavar="POINTS")
+    font_grp.add_option(
+        "",
+        "--small-fontsize",
+        dest="small_fontsize",
+        action="store",
+        type="float",
+        default=defaults.small_fontsize,
+        help="Small text font size in points (default: %s)" % defaults.small_fontsize,
+        metavar="POINTS",
+    )
 
-    font_grp.add_option("", "--number-fontsize",
-                        dest="number_fontsize",
-                        action="store",
-                        type="float",
-                        default=defaults.number_fontsize,
-                        help="Axis numbers font size in points (default: %s)"
-                        % defaults.number_fontsize,
-                        metavar="POINTS")
+    font_grp.add_option(
+        "",
+        "--number-fontsize",
+        dest="number_fontsize",
+        action="store",
+        type="float",
+        default=defaults.number_fontsize,
+        help="Axis numbers font size in points (default: %s)"
+        % defaults.number_fontsize,
+        metavar="POINTS",
+    )
 
-    font_grp.add_option("", "--text-font",
-                        dest="text_font",
-                        action="store",
-                        type="string",
-                        default=defaults.text_font,
-                        help="Specify font for labels (default: %s)"
-                        % defaults.text_font,
-                        metavar="FONT")
+    font_grp.add_option(
+        "",
+        "--text-font",
+        dest="text_font",
+        action="store",
+        type="string",
+        default=defaults.text_font,
+        help="Specify font for labels (default: %s)" % defaults.text_font,
+        metavar="FONT",
+    )
 
-    font_grp.add_option("", "--logo-font",
-                        dest="logo_font",
-                        action="store",
-                        type="string",
-                        default=defaults.text_font,
-                        help="Specify font for logo (default: %s)"
-                        % defaults.logo_font,
-                        metavar="FONT")
+    font_grp.add_option(
+        "",
+        "--logo-font",
+        dest="logo_font",
+        action="store",
+        type="string",
+        default=defaults.text_font,
+        help="Specify font for logo (default: %s)" % defaults.logo_font,
+        metavar="FONT",
+    )
 
-    font_grp.add_option("", "--title-font",
-                        dest="title_font",
-                        action="store",
-                        type="string",
-                        default=defaults.title_font,
-                        help="Specify font for title (default: %s)"
-                        % defaults.title_font,
-                        metavar="FONT")
+    font_grp.add_option(
+        "",
+        "--title-font",
+        dest="title_font",
+        action="store",
+        type="string",
+        default=defaults.title_font,
+        help="Specify font for title (default: %s)" % defaults.title_font,
+        metavar="FONT",
+    )
 
     # ========================== Advanced options =========================
 
-    advanced_grp.add_option("-W", "--stack-width",
-                            dest="stack_width",
-                            action="store",
-                            type="float",
-                            default=defaults.stack_width,
-                            help="Width of a logo stack (default: %s)"
-                            % defaults.stack_width,
-                            metavar="POINTS")
+    advanced_grp.add_option(
+        "-W",
+        "--stack-width",
+        dest="stack_width",
+        action="store",
+        type="float",
+        default=defaults.stack_width,
+        help="Width of a logo stack (default: %s)" % defaults.stack_width,
+        metavar="POINTS",
+    )
 
-    advanced_grp.add_option("", "--aspect-ratio",
-                            dest="stack_aspect_ratio",
-                            action="store",
-                            type="float",
-                            default=defaults.stack_aspect_ratio,
-                            help="Ratio of stack height to width (default: %s)"
-                            % defaults.stack_aspect_ratio,
-                            metavar="POINTS")
+    advanced_grp.add_option(
+        "",
+        "--aspect-ratio",
+        dest="stack_aspect_ratio",
+        action="store",
+        type="float",
+        default=defaults.stack_aspect_ratio,
+        help="Ratio of stack height to width (default: %s)"
+        % defaults.stack_aspect_ratio,
+        metavar="POINTS",
+    )
 
-    advanced_grp.add_option("", "--box",
-                            dest="show_boxes",
-                            action="store",
-                            type="boolean",
-                            default=False,
-                            metavar="YES/NO",
-                            help="Draw boxes around symbols? (default: no)")
+    advanced_grp.add_option(
+        "",
+        "--box",
+        dest="show_boxes",
+        action="store",
+        type="boolean",
+        default=False,
+        metavar="YES/NO",
+        help="Draw boxes around symbols? (default: no)",
+    )
 
-    advanced_grp.add_option("", "--resolution",
-                            dest="resolution",
-                            action="store",
-                            type="float",
-                            default=96,
-                            help="Bitmap resolution in dots per inch (DPI).  (Default: 96 DPI,"
-                                 " except png_print, 600 DPI) Low resolution bitmaps (DPI<300)"
-                                 " are antialiased.",
-                            metavar="DPI")
+    advanced_grp.add_option(
+        "",
+        "--resolution",
+        dest="resolution",
+        action="store",
+        type="float",
+        default=96,
+        help="Bitmap resolution in dots per inch (DPI).  (Default: 96 DPI,"
+        " except png_print, 600 DPI) Low resolution bitmaps (DPI<300)"
+        " are antialiased.",
+        metavar="DPI",
+    )
 
-    advanced_grp.add_option("", "--scale-width",
-                            dest="scale_width",
-                            action="store",
-                            type="boolean",
-                            default=True,
-                            metavar="YES/NO",
-                            help="Scale the visible stack width by the fraction of symbols in the"
-                            " column?  (I.e. columns with many gaps of unknowns are narrow.)  "
-                            "(Default: yes)")
+    advanced_grp.add_option(
+        "",
+        "--scale-width",
+        dest="scale_width",
+        action="store",
+        type="boolean",
+        default=True,
+        metavar="YES/NO",
+        help="Scale the visible stack width by the fraction of symbols in the"
+        " column?  (I.e. columns with many gaps of unknowns are narrow.)  "
+        "(Default: yes)",
+    )
 
-    advanced_grp.add_option("", "--debug",
-                            action="store",
-                            type="boolean",
-                            default=defaults.debug,
-                            metavar="YES/NO",
-                            help="Output additional diagnostic information. (Default: %default)")
+    advanced_grp.add_option(
+        "",
+        "--debug",
+        action="store",
+        type="boolean",
+        default=defaults.debug,
+        metavar="YES/NO",
+        help="Output additional diagnostic information. (Default: %default)",
+    )
 
-    advanced_grp.add_option("", "--errorbar-fraction",
-                            dest="errorbar_fraction",
-                            action="store",
-                            type="float",
-                            default=defaults.errorbar_fraction,
-                            help="Sets error bars display proportion (default: %s)"
-                            % defaults.errorbar_fraction,
-                            metavar="NUMBER")
+    advanced_grp.add_option(
+        "",
+        "--errorbar-fraction",
+        dest="errorbar_fraction",
+        action="store",
+        type="float",
+        default=defaults.errorbar_fraction,
+        help="Sets error bars display proportion (default: %s)"
+        % defaults.errorbar_fraction,
+        metavar="NUMBER",
+    )
 
-    advanced_grp.add_option("", "--errorbar-width-fraction",
-                            dest="errorbar_width_fraction",
-                            action="store",
-                            type="float",
-                            default=defaults.errorbar_width_fraction,
-                            help="Sets error bars width display proportion (default: %s)"
-                            % defaults.errorbar_width_fraction,
-                            metavar="NUMBER")
+    advanced_grp.add_option(
+        "",
+        "--errorbar-width-fraction",
+        dest="errorbar_width_fraction",
+        action="store",
+        type="float",
+        default=defaults.errorbar_width_fraction,
+        help="Sets error bars width display proportion (default: %s)"
+        % defaults.errorbar_width_fraction,
+        metavar="NUMBER",
+    )
 
-    advanced_grp.add_option("", "--errorbar-gray",
-                            dest="errorbar_gray",
-                            action="store",
-                            type="float",
-                            default=defaults.errorbar_gray,
-                            help="Sets error bars' gray scale percentage (default: %s)"
-                            % defaults.errorbar_gray,
-                            metavar="NUMBER")
+    advanced_grp.add_option(
+        "",
+        "--errorbar-gray",
+        dest="errorbar_gray",
+        action="store",
+        type="float",
+        default=defaults.errorbar_gray,
+        help="Sets error bars' gray scale percentage (default: %s)"
+        % defaults.errorbar_gray,
+        metavar="NUMBER",
+    )
 
     # ========================== Server options =========================
-    server_grp.add_option("", "--serve",
-                          dest="serve",
-                          action="store_true",
-                          default=False,
-                          help="Start a standalone WebLogo server for creating sequence logos.")
+    server_grp.add_option(
+        "",
+        "--serve",
+        dest="serve",
+        action="store_true",
+        default=False,
+        help="Start a standalone WebLogo server for creating sequence logos.",
+    )
 
-    server_grp.add_option("", "--port",
-                          dest="port",
-                          action="store",
-                          type="int",
-                          default=8080,
-                          help="Listen to this local port. (Default: %default)",
-                          metavar="PORT")
+    server_grp.add_option(
+        "",
+        "--port",
+        dest="port",
+        action="store",
+        type="int",
+        default=8080,
+        help="Listen to this local port. (Default: %default)",
+        metavar="PORT",
+    )
 
     return parser
 
     # END _build_option_parser
+
 
 ##############################################################

@@ -58,7 +58,7 @@ example = """
 -EPC-RDENVHFNRIFLPTIYFIIFLTGIVGNGLVILVMGYQKKLRSMTDKYRLHLSVAD
 """
 
-names = ("array", 'flatfile')
+names = ("array", "flatfile")
 extensions = ()
 
 
@@ -78,7 +78,7 @@ def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
 
 
 def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Generator:
-    """ Read one line of sequence data and yield the sequence.
+    """Read one line of sequence data and yield the sequence.
 
     Args:
         fin -- A stream or file to read
@@ -97,14 +97,16 @@ def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Generator:
             continue  # Blank line
         line = line.strip()
 
-        if line[0] == '>':  # probably a fasta file. Fail.
+        if line[0] == ">":  # probably a fasta file. Fail.
             raise ValueError("Parse Error on input line: %d " % linenum)
 
         line = remove_whitespace(line)
 
         if not alphabet.alphabetic(line):
-            raise ValueError("Character on line: %d not in alphabet: %s : %s"
-                             % (linenum, alphabet, line))
+            raise ValueError(
+                "Character on line: %d not in alphabet: %s : %s"
+                % (linenum, alphabet, line)
+            )
 
         if line_length and line_length != len(line):
             raise ValueError("Line %d has an incommensurate length." % linenum)
@@ -125,7 +127,7 @@ def write(afile: TextIO, seqs: SeqList) -> None:
 
 
 def writeseq(afile: TextIO, seq: SeqList) -> None:
-    """ Write a single sequence in raw format.
+    """Write a single sequence in raw format.
 
     arguments:
         afile -- A writable stream.

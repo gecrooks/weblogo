@@ -78,11 +78,11 @@ Chicken  S.SNTVDAQE VELIWTILPA IVLVLLALPS LQILYMMDEI DEPDLTLKAI
 
 """
 
-names = ('msf', 'gcg-msf', 'gcg', 'PileUp')
-extensions = ('msf',)
+names = ("msf", "gcg-msf", "gcg", "PileUp")
+extensions = ("msf",)
 
-end_header = re.compile(r'(//)(\s*)$')
-seq_line = re.compile(r'\s*(\S+)\s+([\S\s.?]+)$')
+end_header = re.compile(r"(//)(\s*)$")
+seq_line = re.compile(r"\s*(\S+)\s+([\S\s.?]+)$")
 
 
 def iterseq(fin, alphabet=None):
@@ -108,8 +108,9 @@ def read(fin, alphabet=None):
         elif token.typeof == "seq":
             if not alphabet.alphabetic(token.data):
                 raise ValueError(
-                        "Character on line: %d not in alphabet: %s : %s" % (
-                            token.lineno, alphabet, token.data))
+                    "Character on line: %d not in alphabet: %s : %s"
+                    % (token.lineno, alphabet, token.data)
+                )
             seqs[block_count].append(token.data)
             block_count += 1
     if seq_ids == []:
@@ -132,7 +133,7 @@ def _line_is(fin):
                 state = body
                 continue
             else:
-                continue                                                # pragma: no cover
+                continue  # pragma: no cover
 
         if state == body:
             if line.isspace():
@@ -148,7 +149,7 @@ def _line_is(fin):
                 continue
             m = seq_line.match(line)
             if m is None:
-                raise ValueError("Parse error on line: %d" % L)         # pragma: no cover
+                raise ValueError("Parse error on line: %d" % L)  # pragma: no cover
             if m.group(1).isdigit() and m.group(2).strip().isdigit():
                 continue
             yield Token("seq_id", m.group(1).strip())

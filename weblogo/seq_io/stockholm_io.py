@@ -67,10 +67,13 @@ O31699/88-139           EVMLTDIPRLHINDPIMK..GFGMVINN......GFVCVENDE
 //
 """
 
-names = ("stockholm", "pfam",)
-extensions = ('sth', 'stockholm', 'align')
+names = (
+    "stockholm",
+    "pfam",
+)
+extensions = ("sth", "stockholm", "align")
 
-header_line = re.compile(r'#\s+STOCKHOLM\s+1.\d\s+$')
+header_line = re.compile(r"#\s+STOCKHOLM\s+1.\d\s+$")
 
 
 def iterseq(fin, alphabet=None):
@@ -95,8 +98,9 @@ def read(fin, alphabet=None):
         elif token.typeof == "seq":
             if not alphabet.alphabetic(token.data):
                 raise ValueError(
-                        "Character on line: %d not in alphabet: %s : %s" %
-                        (token.lineno, alphabet, token.data))
+                    "Character on line: %d not in alphabet: %s : %s"
+                    % (token.lineno, alphabet, token.data)
+                )
             seqs[block_count].append(token.data)
             block_count += 1
 
@@ -125,7 +129,7 @@ def _scan(fin):
 
         if state == body:
             if line.isspace():
-                continue            # pragma: no cover
+                continue  # pragma: no cover
             yield Token("begin_block")
             state = block
             # fall through to block
@@ -135,11 +139,11 @@ def _scan(fin):
                 yield Token("end_block")
                 state = body
                 continue
-            if line.strip() == '//':
+            if line.strip() == "//":
                 yield Token("end_block")
                 return
 
-            if line[0] == '#':  # Comment or annotation line
+            if line[0] == "#":  # Comment or annotation line
                 continue
 
             name_seq = line.split(None, 1)  # Split into two parts at first whitespace
@@ -151,4 +155,4 @@ def _scan(fin):
             continue
 
         # END state blocks. If I ever get here something has gone terrible wrong
-        raise RuntimeError()   # pragma: no cover
+        raise RuntimeError()  # pragma: no cover

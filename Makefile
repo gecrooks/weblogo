@@ -1,7 +1,7 @@
 # top-level pyquil Makefile
 
-PACKAGENAME = weblogo
-FILES = weblogo setup.py
+NAME = weblogo
+FILES = weblogo setup.py tests
 
 USER = ec2-user
 HOST = weblogo.threeplusone.com
@@ -22,11 +22,20 @@ testall:	## Run full test suite
 coverage:	## Report test coverage
 	@pytest --cov=weblogo --cov-report term-missing
 
-lint:		## Delint python source
-	@flake8 flake8 setup.py weblogo tests
+lint:		## Lint check python source
+	@isort --check $(FILES)  ||  echo "isort:   FAILED!"
+	@black --check --quiet $(FILES)    || echo "black:   FAILED!"
+	@flake8 $(FILES)
+
+delint:   ## Run isort and black to delint project
+	@echo
+	isort $(FILES)
+	@echo
+	black $(FILES)
+	@echo
 
 typecheck:	## Static typechecking 
-	@mypy $(FILES)  --ignore-missing-imports --follow-imports=skip
+	@mypy $(FILES) --ignore-missing-imports --follow-imports=skip
 
 untyped:	## Report type errors and untyped functions
 	@mypy $(FILES) --ignore-missing-imports --follow-imports=skip --disallow-untyped-defs

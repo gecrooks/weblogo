@@ -34,12 +34,12 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 #  POSSIBILITY OF SUCH DAMAGE.
 
+import unittest
 from io import StringIO
 
-import unittest
-
 from weblogo.seq import nucleic_alphabet, protein_alphabet, rna_alphabet
-from weblogo.seq_io import stockholm_io, clustal_io, fasta_io
+from weblogo.seq_io import clustal_io, fasta_io, stockholm_io
+
 from . import data_stream
 
 
@@ -73,25 +73,22 @@ class test_stockholm_io(unittest.TestCase):
         self.assertEqual(len(seqs), 24)
         self.assertEqual(seqs[5].name, "ENV_HV2BE/24-510")
         self.assertEqual(len(seqs[1]), 606)
-        self.assertEqual(str(seqs[0][-6:]), 'TSRNKR')
+        self.assertEqual(str(seqs[0][-6:]), "TSRNKR")
 
     def test_parse_error(self):
         """ Wrong alphabet should throw a parsing error """
         f = StringIO(stockholm_io.example)
-        self.assertRaises(ValueError,
-                          clustal_io.read, f, nucleic_alphabet)
+        self.assertRaises(ValueError, clustal_io.read, f, nucleic_alphabet)
 
     def test_parse_fasta_fail(self):
         # should fail with parse error
         f = StringIO(stockholm_io.example)
-        self.assertRaises(ValueError,
-                          stockholm_io.read, f, rna_alphabet)
+        self.assertRaises(ValueError, stockholm_io.read, f, rna_alphabet)
 
     def test_parse_alphabet_fail(self):
         # should fail with parse error
         f = StringIO(fasta_io.example)
-        self.assertRaises(ValueError,
-                          stockholm_io.read, f, protein_alphabet)
+        self.assertRaises(ValueError, stockholm_io.read, f, protein_alphabet)
 
     def test_parse_fasta_fail2(self):
         # should fail with parse error
@@ -100,14 +97,11 @@ class test_stockholm_io(unittest.TestCase):
 
     def test_parse_fail(self):
         # should fail with parse error
-        examples = (
-            StringIO(clustal_io.example),
-        )
+        examples = (StringIO(clustal_io.example),)
 
         for f in examples:
-            self.assertRaises(ValueError,
-                              stockholm_io.read, f)
+            self.assertRaises(ValueError, stockholm_io.read, f)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

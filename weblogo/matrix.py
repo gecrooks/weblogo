@@ -29,12 +29,15 @@ Arrays indexed by alphabetic strings.
 
 import numpy as np
 
-from .seq import Alphabet
-from .seq import (unambiguous_dna_alphabet, unambiguous_rna_alphabet,
-                  unambiguous_protein_alphabet)
-from .utils import isint, ischar
+from .seq import (
+    Alphabet,
+    unambiguous_dna_alphabet,
+    unambiguous_protein_alphabet,
+    unambiguous_rna_alphabet,
+)
+from .utils import ischar, isint
 
-__all__ = 'AlphabeticArray', 'submatrix_alphabet', 'SubMatrix', 'Motif'
+__all__ = "AlphabeticArray", "submatrix_alphabet", "SubMatrix", "Motif"
 
 
 class AlphabeticArray(object):
@@ -76,10 +79,11 @@ class AlphabeticArray(object):
     o GEC 2005, JXG 2006
 
     """
+
     # Design note: Subclassing numpy arrays is hard, so instead we
     # build this proxy wrapper.
 
-    __slots__ = ['alphabets', 'array']
+    __slots__ = ["alphabets", "array"]
 
     def __init__(self, alphabets, values=None, dtype=None):
         """
@@ -102,10 +106,14 @@ class AlphabeticArray(object):
         # nonalphabetic dimension with a string.
         class NullAlphabet(object):
             def ord(self, key):
-                raise IndexError('This dimension does not have an alphabet')  # pragma: no cover
+                raise IndexError(
+                    "This dimension does not have an alphabet"
+                )  # pragma: no cover
 
             def ords(self, key):
-                raise IndexError('This dimension does not have an alphabet')  # pragma: no cover
+                raise IndexError(
+                    "This dimension does not have an alphabet"
+                )  # pragma: no cover
 
         alpha = []
         shape = []
@@ -120,8 +128,8 @@ class AlphabeticArray(object):
                 shape.append(len(a))
                 alpha.append(a)
             else:
-                shape.append(int(a))      # pragma: no cover
-                alpha.append(None)        # pragma: no cover
+                shape.append(int(a))  # pragma: no cover
+                alpha.append(None)  # pragma: no cover
 
         shape = tuple(shape)
         if values is None:
@@ -130,10 +138,14 @@ class AlphabeticArray(object):
             values = np.asarray(values, dtype=dtype)
             vshape = values.shape
             if len(shape) != len(vshape):
-                raise ValueError("The values array is the wrong shape.")   # pragma: no cover
+                raise ValueError(
+                    "The values array is the wrong shape."
+                )  # pragma: no cover
             for s1, s2 in zip(shape, vshape):
                 if s1 is not None and s1 != s2:
-                    raise ValueError("The values array is the wrong shape.")   # pragma: no cover
+                    raise ValueError(
+                        "The values array is the wrong shape."
+                    )  # pragma: no cover
         self.array = values
         self.alphabets = tuple(alpha)
 
@@ -157,13 +169,13 @@ class AlphabeticArray(object):
                 if len(key) == 1:
                     return alpha.ord(key)
                 if len(key) == 0:
-                    return None       # pragma: no cover
+                    return None  # pragma: no cover
                 return np.asarray(alpha.ords(key))
             elif isinstance(key, slice):
-                start = norm(key.start, alpha)          # pragma: no cover
-                stop = norm(key.stop, alpha)            # pragma: no cover
-                step = key.step                         # pragma: no cover
-                return slice(start, stop, step)         # pragma: no cover
+                start = norm(key.start, alpha)  # pragma: no cover
+                stop = norm(key.stop, alpha)  # pragma: no cover
+                step = key.step  # pragma: no cover
+                return slice(start, stop, step)  # pragma: no cover
             else:
                 return key
 
@@ -173,7 +185,7 @@ class AlphabeticArray(object):
             return norm(key, self.alphabets[0])
 
     def index(self, keys):
-        """ Return an array of shape (len(key1), len(key2), ...) whose values
+        """Return an array of shape (len(key1), len(key2), ...) whose values
         are indexed by keys.
 
         a.outerindex( (I,J,K) )[i,j,k] == a.array[I[i],J[j],K[k]]
@@ -212,8 +224,8 @@ class AlphabeticArray(object):
     def __setattr__(self, name, value):
         try:
             return object.__setattr__(self, name, value)
-        except AttributeError:                                  # pragma: no cover
-            return setattr(self.array, name, value)             # pragma: no cover
+        except AttributeError:  # pragma: no cover
+            return setattr(self.array, name, value)  # pragma: no cover
 
 
 # End class AlphabeticArray
@@ -241,16 +253,18 @@ class SubMatrix(AlphabeticArray):
     o GEC 2005, JXG 2006
 
     """
+
     # TODO: __str__
     # TODO: __repr__
     # TODO: normalize
     # TODO: freq->log_odds (With additional ambiguity characters?)
     # TODO: from_seqs
 
-    __slots__ = ['alphabet', 'array', 'name', 'description', 'scale']
+    __slots__ = ["alphabet", "array", "name", "description", "scale"]
 
-    def __init__(self, alphabet, array=None, typeof=None, name=None,
-                 description=None, scale=None):
+    def __init__(
+        self, alphabet, array=None, typeof=None, name=None, description=None, scale=None
+    ):
         AlphabeticArray.__init__(self, (alphabet, alphabet), array, typeof)
         self.alphabet = Alphabet(alphabet)
         self.name = name
@@ -262,7 +276,7 @@ class SubMatrix(AlphabeticArray):
 
     @staticmethod
     def read(fin, alphabet=None, typeof=np.float64):
-        """ Parse and return a substitution matrix
+        """Parse and return a substitution matrix
 
         Arguments:
         - fin       --  matrix file
@@ -287,8 +301,8 @@ class SubMatrix(AlphabeticArray):
 
         for linenum, line in enumerate(fin):
             # print(">>", linenum, i, line)
-            if line.isspace() or line[0] == '#' or line[0] == '*':
-                continue              # pragma: no cover
+            if line.isspace() or line[0] == "#" or line[0] == "*":
+                continue  # pragma: no cover
 
             cells = line.split()
 
@@ -303,16 +317,20 @@ class SubMatrix(AlphabeticArray):
             # are optional.
 
             if cells[0].isalpha() and cells[0] != alphabet[i]:
-                raise ValueError("Incompatible alphabet: line {} : {} {}: "
-                                 .format(linenum, line[0], alphabet[i]))    # pragma: no cover
+                raise ValueError(
+                    "Incompatible alphabet: line {} : {} {}: ".format(
+                        linenum, line[0], alphabet[i]
+                    )
+                )  # pragma: no cover
 
             if cells[0].isalpha():
                 cells = cells[1:]
             if len(cells) == 24:
                 cells = cells[:23]  # Chop off '*' state
             if len(cells) != L:
-                raise ValueError("SubMatrix matrix parse"
-                                 "error: line {}".format(linenum))
+                raise ValueError(
+                    "SubMatrix matrix parse" "error: line {}".format(linenum)
+                )
 
             for j in range(0, L):
                 matrix[i, j] = float(cells[j])
@@ -323,13 +341,14 @@ class SubMatrix(AlphabeticArray):
                 break
 
         else:
-            raise ValueError("Premature EOF")   # pragma: no cover
+            raise ValueError("Premature EOF")  # pragma: no cover
 
         for i in range(0, L):
             for j in range(0, L):
                 if matrix[i, j] != matrix[j, i]:
-                    raise ValueError("Substitution matrix "
-                                     "is asymmetric! ({}, {})".format(i, j))
+                    raise ValueError(
+                        "Substitution matrix " "is asymmetric! ({}, {})".format(i, j)
+                    )
 
         return SubMatrix(alphabet, matrix)
 
@@ -355,10 +374,11 @@ class Motif(AlphabeticArray):
 
     """
 
-    _TRANSFAC_DELIM_LINES = ['XX', '//']
+    _TRANSFAC_DELIM_LINES = ["XX", "//"]
 
-    def __init__(self, alphabet, array=None, dtype=None, name=None,
-                 description=None, scale=None):
+    def __init__(
+        self, alphabet, array=None, dtype=None, name=None, description=None, scale=None
+    ):
         AlphabeticArray.__init__(self, (None, alphabet), array, dtype)
         self.name = name
         self.description = description
@@ -382,7 +402,8 @@ class Motif(AlphabeticArray):
 
     def complement(self):
         """Complement nucleic acid sequence."""
-        from weblogo.seq import Seq, Alphabet
+        from weblogo.seq import Alphabet, Seq
+
         alphabet = self.alphabet
         complement_alphabet = Alphabet(Seq(alphabet, alphabet).complement())
         self.alphabets = (None, complement_alphabet)
@@ -393,14 +414,14 @@ class Motif(AlphabeticArray):
 
     def reverse_complement(self):
         """Complements and reverses nucleic acid
-         sequence (i.e. the other strand of a DNA sequence.)
+        sequence (i.e. the other strand of a DNA sequence.)
         """
         self.reverse()
         self.complement()
 
     @classmethod
     def read_transfac(cls, fin, alphabet=None):
-        """ Parse a TRANSFAC-format PWM from a file.
+        """Parse a TRANSFAC-format PWM from a file.
         Returns a Motif object, representing the provided
         PWM along with an inferred or provided alphabet.
         """
@@ -409,12 +430,12 @@ class Motif(AlphabeticArray):
 
         start = False
         for line in fin:
-            if line.isspace() or line[0] == '#':
-                continue                            # pragma: no cover
+            if line.isspace() or line[0] == "#":
+                continue  # pragma: no cover
 
             stuff = line.split()
 
-            if stuff[0] == 'PO' or stuff[0] == 'P0':
+            if stuff[0] == "PO" or stuff[0] == "P0":
                 start = True
 
             # 'XX' delimiters may precede the first motif
@@ -432,26 +453,34 @@ class Motif(AlphabeticArray):
         hcols = len(header)
         rows = len(items)
         cols = len(items[0])
-        if not (header[0] == 'PO' or header[0] == 'P0' or
-                hcols == cols - 1 or hcols == cols - 2):
-            raise ValueError("Missing header line!")    # pragma: no cover
+        if not (
+            header[0] == "PO"
+            or header[0] == "P0"
+            or hcols == cols - 1
+            or hcols == cols - 2
+        ):
+            raise ValueError("Missing header line!")  # pragma: no cover
 
         # Do all lines (except the first) contain the same number of items?
         cols = len(items[0])
         for i in range(1, len(items)):
             if cols != len(items[i]):
-                raise ValueError("Inconsistant length, row: {}".format(i))  # pragma: no cover
+                raise ValueError(
+                    "Inconsistant length, row: {}".format(i)
+                )  # pragma: no cover
 
         # Vertical or horizontal arrangement?
-        if header[0] == 'PO' or header[0] == 'P0':
+        if header[0] == "PO" or header[0] == "P0":
             header.pop(0)
 
         position_header = True
 
         for h in header:
             if not ischar(h):
-                raise ValueError("Expected a single character per header "
-                                 "item, but got \"{}\" as one item".format(h))  # pragma: no cover
+                raise ValueError(
+                    "Expected a single character per header "
+                    'item, but got "{}" as one item'.format(h)
+                )  # pragma: no cover
             if not isint(h):
                 position_header = False
 
@@ -460,19 +489,22 @@ class Motif(AlphabeticArray):
         # Check row headers
         if alphabet_header:
             for i, r in enumerate(items):
-                if not isint(r[0]) and r[0][0] != 'P':
-                    raise ValueError("Expected position "
-                                     "as first item on line {}".format(i))  # pragma: no cover
+                if not isint(r[0]) and r[0][0] != "P":
+                    raise ValueError(
+                        "Expected position " "as first item on line {}".format(i)
+                    )  # pragma: no cover
                 r.pop(0)
-                defacto_alphabet = ''.join(header)
+                defacto_alphabet = "".join(header)
         else:
-            a = []                                  # pragma: no cover
-            for i, r in enumerate(items):           # pragma: no cover
-                if not ischar(r[0]) and r[0][0] != 'P':     # pragma: no cover
-                    raise ValueError("Expected position "   # pragma: no cover
-                                     "as first item on line {}".format(i))  # pragma: no cover
-                a.append(r.pop(0))                  # pragma: no cover
-            defacto_alphabet = ''.join(a)           # pragma: no cover
+            a = []  # pragma: no cover
+            for i, r in enumerate(items):  # pragma: no cover
+                if not ischar(r[0]) and r[0][0] != "P":  # pragma: no cover
+                    raise ValueError(
+                        "Expected position "  # pragma: no cover
+                        "as first item on line {}".format(i)
+                    )  # pragma: no cover
+                a.append(r.pop(0))  # pragma: no cover
+            defacto_alphabet = "".join(a)  # pragma: no cover
 
         # Check defacto_alphabet
         defacto_alphabet = Alphabet(defacto_alphabet)
@@ -484,16 +516,17 @@ class Motif(AlphabeticArray):
                 alphabet = defacto_alphabet
 
         else:
-            alphabets = (unambiguous_rna_alphabet,
-                         unambiguous_dna_alphabet,
-                         unambiguous_protein_alphabet,
-                         )
+            alphabets = (
+                unambiguous_rna_alphabet,
+                unambiguous_dna_alphabet,
+                unambiguous_protein_alphabet,
+            )
             for a in alphabets:
                 if defacto_alphabet.alphabetic(a):
                     alphabet = a
                     break
             if not alphabet:
-                alphabet = defacto_alphabet         # pragma: no cover
+                alphabet = defacto_alphabet  # pragma: no cover
 
         # The last item of each row may be extra cruft. Remove
         if len(items[0]) == len(header) + 1:
@@ -509,6 +542,6 @@ class Motif(AlphabeticArray):
                 matrix[r, c] = float(items[r][c])
 
         if position_header:
-            matrix.transpose()              # pragma: no cover
+            matrix.transpose()  # pragma: no cover
 
         return Motif(defacto_alphabet, matrix).reindex(alphabet)

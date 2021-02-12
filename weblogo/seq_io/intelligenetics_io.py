@@ -50,12 +50,15 @@ ttacctgctacgccagccttctgtgcgcgcaactgtctggtcccgcccc2
 
 """
 
-from ..seq import Seq, Alphabet, SeqList
+from ..seq import Alphabet, Seq, SeqList
 from ..utils import remove_whitespace
 
-
-names = ('intelligenetics', 'ig', 'stanford',)
-extensions = ('ig',)
+names = (
+    "intelligenetics",
+    "ig",
+    "stanford",
+)
+extensions = ("ig",)
 
 example = """
 ;H.sapiens fau mRNA, 518 bases
@@ -90,7 +93,7 @@ def read(fin, alphabet=None):
 
 
 def iterseq(fin, alphabet=None):
-    """ Parse an IG file and generate sequences.
+    """Parse an IG file and generate sequences.
 
     Args:
         fin -- A stream or file to read
@@ -109,19 +112,20 @@ def iterseq(fin, alphabet=None):
 
     def build_seq(seqs, alphabet, name, comments, lineno):
         try:
-            desc = '\n'.join(comments)
+            desc = "\n".join(comments)
             s = Seq("".join(seqs), alphabet, name=name, description=desc)
         except ValueError:
             raise ValueError(
-                    "Parse failed with sequence starting at line %d: "
-                    "Character not in alphabet: %s" % (lineno, alphabet))
+                "Parse failed with sequence starting at line %d: "
+                "Character not in alphabet: %s" % (lineno, alphabet)
+            )
         return s
 
     for lineno, line in enumerate(fin):
         line = line.strip()
-        if line == '':
+        if line == "":
             continue
-        if line.startswith(';'):
+        if line.startswith(";"):
             if seqs:
                 # end of sequence
                 yield build_seq(seqs, alphabet, name, header, start_lineno)
@@ -132,7 +136,7 @@ def iterseq(fin, alphabet=None):
             start_lineno = lineno
         elif not name:
             name = line
-        elif line[-1] == '1' or line[-1] == '2':
+        elif line[-1] == "1" or line[-1] == "2":
             # End of sequence
             seqs.append(remove_whitespace(line[0:-1]))
             yield build_seq(seqs, alphabet, name, header, start_lineno)
@@ -161,7 +165,7 @@ def write(fout, seqs):
 
 
 def writeseq(fout, seq):
-    """ Write a single sequence in IG format.
+    """Write a single sequence in IG format.
 
     Args:
         afile -- A writable stream.
@@ -169,15 +173,15 @@ def writeseq(fout, seq):
     Raises:
         ValueError -- If a sequence is missing a name
     """
-    desc = seq.description or ''
+    desc = seq.description or ""
     # We prepend ';' to each line
     for h in desc.splitlines():
-        print(';' + h, file=fout)
+        print(";" + h, file=fout)
     if not seq.name:
         raise ValueError("Write failed with missing sequence name: %s" % str(seq))
     print(seq.name, file=fout)
     L = len(seq)
     line_length = 80
     for n in range(1 + L // line_length):
-        print(seq[n * line_length: (n + 1) * line_length], file=fout)
+        print(seq[n * line_length : (n + 1) * line_length], file=fout)
     print(file=fout)

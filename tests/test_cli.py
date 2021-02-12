@@ -1,12 +1,11 @@
-
 import shutil
-from subprocess import Popen, PIPE
+from subprocess import PIPE, Popen
 
 import pytest
 
-# import weblogo
-
 from . import data_stream
+
+# import weblogo
 
 
 def _exec(args, outputtext, returncode=0, stdin=None):
@@ -50,24 +49,30 @@ def test_default_build():
 
 # Format options
 def test_width():
-    _exec(['-W', '1234'], ["/stack_width         1234"])
-    _exec(['--stack-width', '1234'], ["/stack_width         1234"])
+    _exec(["-W", "1234"], ["/stack_width         1234"])
+    _exec(["--stack-width", "1234"], ["/stack_width         1234"])
 
 
 def test_height():
-    _exec(['-W', '1000'], ["/stack_height        5000"])
-    _exec(['-W', '1000', '--aspect-ratio', '2'], ["/stack_height        2000"])
+    _exec(["-W", "1000"], ["/stack_height        5000"])
+    _exec(["-W", "1000", "--aspect-ratio", "2"], ["/stack_height        2000"])
 
 
 def test_stacks_per_line():
-    _exec(['-n', '7'], ["/stacks_per_line     7 def"])
-    _exec(['--stacks-per-line', '7'], ["/stacks_per_line     7 def"])
+    _exec(["-n", "7"], ["/stacks_per_line     7 def"])
+    _exec(["--stacks-per-line", "7"], ["/stacks_per_line     7 def"])
 
 
 def test_title():
-    _exec(['-t', '3456'], ['/logo_title         (3456) def', '/show_title         True def'])
-    _exec(['-t', ''], ['/logo_title         () def', '/show_title         False def'])
-    _exec(['--title', '3456'], ['/logo_title         (3456) def', '/show_title         True def'])
+    _exec(
+        ["-t", "3456"],
+        ["/logo_title         (3456) def", "/show_title         True def"],
+    )
+    _exec(["-t", ""], ["/logo_title         () def", "/show_title         False def"])
+    _exec(
+        ["--title", "3456"],
+        ["/logo_title         (3456) def", "/show_title         True def"],
+    )
 
 
 def test_annotate():
@@ -76,27 +81,26 @@ def test_annotate():
 
 
 def test_color():
-    _exec(['--color', 'black', 'AG', 'Purine'], [])
-    _exec(['--color', 'not_a_color', 'AG', 'Purine'], [], 2)
+    _exec(["--color", "black", "AG", "Purine"], [])
+    _exec(["--color", "not_a_color", "AG", "Purine"], [], 2)
 
 
 def test_reverse_complement():
-    _exec(['--complement'], [])
-    _exec(['--reverse'], [])
-    _exec(['--revcomp'], [])
+    _exec(["--complement"], [])
+    _exec(["--reverse"], [])
+    _exec(["--revcomp"], [])
 
 
 def test_formats():
-    _exec(['--format', 'eps'], [])
-    _exec(['--format', 'png'], [])
-    _exec(['--format', 'png_print'], [])
-    _exec(['--format', 'pdf'], [])
-    _exec(['--format', 'jpeg'], [])
+    _exec(["--format", "eps"], [])
+    _exec(["--format", "png"], [])
+    _exec(["--format", "png_print"], [])
+    _exec(["--format", "pdf"], [])
+    _exec(["--format", "jpeg"], [])
 
-    _exec(['--format', 'logodata'], [])
+    _exec(["--format", "logodata"], [])
 
 
-@pytest.mark.skipif(shutil.which('pdf2svg') is None,
-                    reason="requires pdf2svg")
+@pytest.mark.skipif(shutil.which("pdf2svg") is None, reason="requires pdf2svg")
 def test_formats_svg():
-    _exec(['--format', 'svg'], [])
+    _exec(["--format", "svg"], [])
