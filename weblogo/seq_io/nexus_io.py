@@ -48,7 +48,7 @@ def iterseq(fin, alphabet=None):
 
 
 def read(fin, alphabet=None):
-    """ Extract sequence data from a nexus file."""
+    """Extract sequence data from a nexus file."""
     n = Nexus(fin)
 
     seqs = []

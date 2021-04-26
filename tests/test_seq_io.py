@@ -63,7 +63,7 @@ class test_seq_io(unittest.TestCase):
         self.assertEqual(len(seqs[1]), 395)
 
     def test_parse_error(self):
-        """ Wrong alphabet should throw a parsing error """
+        """Wrong alphabet should throw a parsing error"""
         with data_stream("clustal.aln") as f:
             self.assertRaises(ValueError, seq_io.read, f, nucleic_alphabet)
 

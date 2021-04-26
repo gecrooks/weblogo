@@ -71,7 +71,7 @@ from .utils.deoptparse import DeOptionParser
 
 # ====================== Main: Parse Command line =============================
 def main():
-    """WebLogo command line interface """
+    """WebLogo command line interface"""
 
     # ------ Parse Command line ------
     parser = _build_option_parser()
@@ -105,7 +105,7 @@ def main():
 
 
 def httpd_serve_forever(port=8080):
-    """ Start a webserver on a local port."""
+    """Start a webserver on a local port."""
 
     import http.server as server
     import http.server as cgiserver

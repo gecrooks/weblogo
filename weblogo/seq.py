@@ -260,7 +260,7 @@ class Alphabet(object):
         return True
 
     def chr(self, n):
-        """ The n'th character in the alphabet (zero indexed) or \\0 """
+        """The n'th character in the alphabet (zero indexed) or \\0"""
         return self._chr_table[n]
 
     def ord(self, c):
@@ -291,7 +291,7 @@ class Alphabet(object):
         return self.chrs(self.ords(string))
 
     def letters(self):
-        """ Letters of the alphabet as a string."""
+        """Letters of the alphabet as a string."""
         return str(self)
 
     # def _all_letters(self):
@@ -535,7 +535,7 @@ class Seq(str):
         return cls(cleanseq.translate(str.maketrans("", "")), self.alphabet)
 
     def lower(self):
-        """Return a lower case copy of the sequence. """
+        """Return a lower case copy of the sequence."""
         cls = self.__class__
         trans = str.maketrans(
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz"
@@ -543,7 +543,7 @@ class Seq(str):
         return cls(str(self).translate(trans), self.alphabet)
 
     def upper(self):
-        """Return a lower case copy of the sequence. """
+        """Return a lower case copy of the sequence."""
         cls = self.__class__
         trans = str.maketrans(
             "abcdefghijklmnopqrstuvwxyz", "ABCDEFGHIJKLMNOPQRSTUVWXYZ"

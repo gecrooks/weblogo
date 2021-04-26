@@ -41,7 +41,7 @@ std_units = {
 
 
 def pdf_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
-    """ Generate a logo in PDF format."""
+    """Generate a logo in PDF format."""
     eps = eps_formatter(logodata, logoformat).decode()
     gs = GhostscriptAPI()
     return gs.convert("pdf", eps, logoformat.logo_width, logoformat.logo_height)
@@ -60,7 +60,7 @@ def _bitmap_formatter(logodata: LogoData, logoformat: LogoFormat, device: str) -
 
 
 def jpeg_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
-    """ Generate a logo in JPEG format."""
+    """Generate a logo in JPEG format."""
     return _bitmap_formatter(logodata, logoformat, device="jpeg")
 
 
@@ -98,12 +98,12 @@ def svg_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
 
 
 def png_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
-    """ Generate a logo in PNG format."""
+    """Generate a logo in PNG format."""
     return _bitmap_formatter(logodata, logoformat, device="png")
 
 
 def png_print_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
-    """ Generate a logo in PNG format with print quality (600 DPI) resolution."""
+    """Generate a logo in PNG format with print quality (600 DPI) resolution."""
     logoformat.resolution = 600
     return _bitmap_formatter(logodata, logoformat, device="png")
 
@@ -114,7 +114,7 @@ def txt_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
 
 
 def eps_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
-    """ Generate a logo in Encapsulated Postscript (EPS)"""
+    """Generate a logo in Encapsulated Postscript (EPS)"""
     substitutions = {}
     from_format = [
         "creation_date",
