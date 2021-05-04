@@ -62,7 +62,7 @@ def isblank(s):
 
 
 def isfloat(s):
-    """Does this object represent a floating point number? """
+    """Does this object represent a floating point number?"""
     try:
         float(s)
         return True

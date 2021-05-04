@@ -109,7 +109,7 @@ composition = {
 
 
 class Field(object):
-    """ A representation of an HTML form field."""
+    """A representation of an HTML form field."""
 
     def __init__(
         self, name, default=None, conversion=None, options=None, errmsg="Illegal value."

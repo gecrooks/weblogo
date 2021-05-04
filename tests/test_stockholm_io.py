@@ -76,7 +76,7 @@ class test_stockholm_io(unittest.TestCase):
         self.assertEqual(str(seqs[0][-6:]), "TSRNKR")
 
     def test_parse_error(self):
-        """ Wrong alphabet should throw a parsing error """
+        """Wrong alphabet should throw a parsing error"""
         f = StringIO(stockholm_io.example)
         self.assertRaises(ValueError, clustal_io.read, f, nucleic_alphabet)
 

@@ -739,7 +739,7 @@ def _seq_formats():
 
 
 def _seq_names():
-    """ Returns a list of the names of accepted sequence data formats."""
+    """Returns a list of the names of accepted sequence data formats."""
     fin_names = [f.names[0] for f in seq_io.formats]
     fin_names.remove("plain")
     fin_names.append("transfac")
