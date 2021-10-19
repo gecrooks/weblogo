@@ -128,9 +128,9 @@ Authors:
 # >>> Seq( 'ACGT-RYKM', reduced_nucleic_alphabet).normalized()
 # 'ACGT-NNNN'
 
-from typing import Sequence, Union, Iterator, Tuple
 import codecs
 from array import array
+from typing import Iterator, Sequence, Tuple
 
 __all__ = [
     "Alphabet",
@@ -162,6 +162,7 @@ class Alphabet(object):
     Authors:
         - GEC 2005
     """
+
     _letters: str
     _alternatives: Tuple[Tuple[str, str], ...]
     _ord_table: bytes
