@@ -112,7 +112,7 @@ class Dirichlet(object):
     def mean(self) -> np.ndarray:
         return self._mean
 
-    def covariance(self) -> float:
+    def covariance(self):
         alpha = self.alpha
         A = sum(alpha)
         # A2 = A * A
