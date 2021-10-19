@@ -128,6 +128,7 @@ Authors:
 # >>> Seq( 'ACGT-RYKM', reduced_nucleic_alphabet).normalized()
 # 'ACGT-NNNN'
 
+from typing import Sequence, Union, Iterator, Tuple
 import codecs
 from array import array
 
@@ -161,6 +162,10 @@ class Alphabet(object):
     Authors:
         - GEC 2005
     """
+    _letters: str
+    _alternatives: Tuple[Tuple[str, str], ...]
+    _ord_table: bytes
+    _chr_table: bytes
 
     __slots__ = ["_letters", "_alternatives", "_ord_table", "_chr_table"]
 
@@ -251,7 +256,7 @@ class Alphabet(object):
 
         return self
 
-    def alphabetic(self, string):
+    def alphabetic(self, string: str) -> bool:
         """True if all characters of the string are in this alphabet."""
         table = self._ord_table
         for s in str(string):
@@ -259,27 +264,27 @@ class Alphabet(object):
                 return False
         return True
 
-    def chr(self, n):
+    def chr(self, n: int):
         """The n'th character in the alphabet (zero indexed) or \\0"""
         return self._chr_table[n]
 
-    def ord(self, c):
+    def ord(self, c: str) -> int:
         """The ordinal position of the character c in this alphabet,
         or 255 if no such character.
         """
         return self._ord_table[ord(c)]
 
-    def chrs(self, sequence_of_ints):
+    def chrs(self, sequence_of_ints: Sequence[int]) -> "Seq":
         """Convert a sequence of ordinals into an alphabetic string."""
         c = [self._chr_table[n] for n in sequence_of_ints]
         s = "".join(c)
         return Seq(s, self)
 
-    def ords(self, string):
+    def ords(self, string: "Seq"):
         """Convert an alphabetic string into a byte array of ordinals."""
-        string = str(string)
-        s = string.translate(self._ord_table)
-        a = array("B", codecs.latin_1_encode(s)[0])
+        s = str(string)
+        s = s.translate(self._ord_table)
+        a = array("B", codecs.latin_1_encode(s)[0])  # TESTME FIXME?
         return a
 
     def normalize(self, string):
@@ -290,7 +295,7 @@ class Alphabet(object):
             raise ValueError("Not an alphabetic string.")
         return self.chrs(self.ords(string))
 
-    def letters(self):
+    def letters(self) -> str:
         """Letters of the alphabet as a string."""
         return str(self)
 
@@ -302,32 +307,32 @@ class Alphabet(object):
     #         let.append(value)
     #     return ''.join(let)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return (
             "Alphabet( '" + self._letters + "', zip" + repr(self._alternatives) + " )"
         )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self._letters)
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self._letters)
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         if not hasattr(other, "_ord_table"):
             return False
         return self._ord_table == other._ord_table
 
-    def __ne__(self, other):
+    def __ne__(self, other) -> bool:
         return not self.__eq__(other)
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[str]:
         return iter(self._letters)
 
-    def __getitem__(self, key):
+    def __getitem__(self, key) -> str:
         return self._letters[key]
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(tuple(self._ord_table))
 
     @staticmethod
@@ -534,7 +539,7 @@ class Seq(str):
         cleanseq = "".join(char for char in str(self) if char not in set(delchars))
         return cls(cleanseq.translate(str.maketrans("", "")), self.alphabet)
 
-    def lower(self):
+    def lower(self) -> "Seq":
         """Return a lower case copy of the sequence."""
         cls = self.__class__
         trans = str.maketrans(
@@ -542,7 +547,7 @@ class Seq(str):
         )
         return cls(str(self).translate(trans), self.alphabet)
 
-    def upper(self):
+    def upper(self) -> "Seq":
         """Return a lower case copy of the sequence."""
         cls = self.__class__
         trans = str.maketrans(
