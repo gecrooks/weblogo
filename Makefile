@@ -31,7 +31,7 @@ delint:   ## Run isort and black to delint project
 	black $(FILES)
 	@echo
 
-types:	## Static typechecking
+types:		## Static typechecking
 	@mypy $(FILES) --ignore-missing-imports --follow-imports=skip
 
 untyped:	## Report type errors and untyped functions
