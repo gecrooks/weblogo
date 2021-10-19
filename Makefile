@@ -16,7 +16,7 @@ help:
 test:		## Run unittests with current enviroment
 	@python -m pytest
 
-cov:	## Report test coverage
+cov:		## Report test coverage
 	@python -m pytest --cov=weblogo --cov-report term-missing
 
 lint:		## Lint check python source
