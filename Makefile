@@ -3,7 +3,7 @@
 NAME = weblogo
 FILES = $(NAME) tests docs/conf.py setup.py
 
-USER = ec2-user
+USER = -i ~/.ssh/aws_kaiju.pem ec2-user
 HOST = weblogo.threeplusone.com
 DIR = /home/ec2-user/weblogo
 
@@ -14,13 +14,10 @@ help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-12s\033[0m %s\n", $$1, $$2}'
 
 test:		## Run unittests with current enviroment
-	@pytest 
+	@python -m pytest
 
-testall:	## Run full test suite
-	@tox
-
-coverage:	## Report test coverage
-	@pytest --cov=weblogo --cov-report term-missing
+cov:	## Report test coverage
+	@python -m pytest --cov=weblogo --cov-report term-missing
 
 lint:		## Lint check python source
 	@isort --check $(FILES)  ||  echo "isort:   FAILED!"
@@ -34,7 +31,7 @@ delint:   ## Run isort and black to delint project
 	black $(FILES)
 	@echo
 
-typecheck:	## Static typechecking 
+types:	## Static typechecking
 	@mypy $(FILES) --ignore-missing-imports --follow-imports=skip
 
 untyped:	## Report type errors and untyped functions
