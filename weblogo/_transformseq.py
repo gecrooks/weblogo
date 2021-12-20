@@ -27,7 +27,7 @@ description = """ A tool for converting multiple sequence alignments from
 one format to another. """
 
 
-def main():
+def main() -> None:
     # ------ Parse Command line ------
     parser = _build_option_parser()
     (opts, args) = parser.parse_args(sys.argv[1:])
@@ -59,7 +59,7 @@ def main():
     opts.writer.write(opts.fout, seqs)
 
 
-def _build_option_parser():
+def _build_option_parser() -> DeOptionParser:
     parser = DeOptionParser(
         usage="%prog [options]  < sequence_data.fa > sequence_logo.eps",
         description=description,
@@ -93,7 +93,7 @@ def _build_option_parser():
         default=seq_io,
         choices=seq_io.format_names(),
         help="Multiple sequence alignment format: (%s)"
-        % ", ".join([f.names[0] for f in seq_io.formats]),
+        % ", ".join([f.names[0] for f in seq_io.formats]),  # type: ignore
         metavar="FORMAT",
     )
 
@@ -161,8 +161,8 @@ def _build_option_parser():
             out_formats.append(f)
     out_choices = {}
     for f in out_formats:
-        out_choices[f.names[0]] = f
-    out_names = [f.names[0] for f in out_formats]
+        out_choices[f.names[0]] = f  # type: ignore
+    out_names = [f.names[0] for f in out_formats]  # type: ignore
 
     io_grp.add_option(
         "-F",
