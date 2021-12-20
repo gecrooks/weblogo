@@ -26,6 +26,7 @@
 """Extra utilities and core classes not in standard python.
 """
 
+from typing import TextIO, Any, Iterator
 import pkg_resources
 
 __all__ = (
@@ -50,7 +51,7 @@ __all__ = (
 )
 
 
-def isblank(s):
+def isblank(s) -> bool:
     """Is this whitespace or an empty string?"""
     if isinstance(s, str):
         if not s:
@@ -61,7 +62,7 @@ def isblank(s):
         return False
 
 
-def isfloat(s):
+def isfloat(s) -> bool:
     """Does this object represent a floating point number?"""
     try:
         float(s)
@@ -70,7 +71,7 @@ def isfloat(s):
         return False
 
 
-def isint(s):
+def isint(s) -> bool:
     """Does this object represent an integer?"""
     try:
         int(s)
@@ -79,20 +80,20 @@ def isint(s):
         return False
 
 
-def ischar(s):
+def ischar(s) -> bool:
     """Does this object represent a character?"""
     # Adapted from: https://stackoverflow.com/a/14321721 and
     # https://mail.python.org/pipermail/python-list/2007-March/425058.html
     return isinstance(s, str) and bool(s) and s == len(s) * s[0]
 
 
-def remove_whitespace(astring):
+def remove_whitespace(astring) -> str:
     """Remove all whitespace from a string."""
     # TODO: Is this horrible slow?
     return "".join(astring.split())
 
 
-def invert_dict(dictionary):
+def invert_dict(dictionary) -> dict:
     """Constructs a new dictionary with inverted mappings so that keys
     become values and vice versa. If the values of the original dictionary
     are not unique then only one of the original keys will be included
@@ -101,7 +102,7 @@ def invert_dict(dictionary):
     return dict((value, key) for key, value in dictionary.items())
 
 
-def stdrepr(obj, attributes=None, name=None):
+def stdrepr(obj, attributes=None, name=None) -> str:
     """Create a standard representation of an object."""
     if name is None:
         name = obj.__class__.__name__
@@ -116,7 +117,7 @@ def stdrepr(obj, attributes=None, name=None):
     return "%s(\n    %s\n)" % (name, args)
 
 
-def group_count(i):
+def group_count(i) -> list:
     """An iteration that returns tuples of items and the number of consecutive
     occurrences. Thus group_count('aabbbc') yields ('a',2), ('b',3), ('c',1)
     """
@@ -138,16 +139,16 @@ class Token(object):
 
     __slots__ = ["typeof", "data", "lineno", "offset"]
 
-    def __init__(self, typeof, data=None, lineno=-1, offset=-1):
+    def __init__(self, typeof, data=None, lineno=-1, offset=-1) -> None:
         self.typeof = typeof
         self.data = data
         self.lineno = lineno
         self.offset = offset
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return stdrepr(self)
 
-    def __str__(self):
+    def __str__(self) -> str:
         coord = str(self.lineno)
         if self.offset != -1:
             coord += ":" + str(self.offset)
@@ -158,7 +159,10 @@ class Token(object):
 class Reiterate(object):
     """A flexible wrapper around a simple iterator."""
 
-    def __new__(cls, iterator):
+    _iterator
+    _stack: List[Any]
+
+    def __new__(cls, iterator) -> "Reiterate":
         if isinstance(iterator, cls):
             return iterator
         new = object.__new__(cls)
@@ -167,13 +171,13 @@ class Reiterate(object):
         new._index = 0
         return new
 
-    def __init__(self, *args, **kw):
+    def __init__(self, *args, **kw) -> None:
         pass
 
-    def __iter__(self):
+    def __iter__(self) -> "Reiterate":
         return self
 
-    def __next__(self):
+    def __next__(self) -> Any:
         """Return the next item in the iteration."""
         self._index += 1
         if self._stack:
@@ -183,17 +187,17 @@ class Reiterate(object):
 
     next = __next__
 
-    def index(self):
+    def index(self) -> int:
         """The number of items returned. Incremented by next(), decremented
         by push(), unchanged by peek()"""
         return self._index
 
-    def push(self, item):
+    def push(self, item) -> Any:
         """Push an item back onto the top of the iterator,"""
         self._index -= 1
         self._stack.append(item)
 
-    def peek(self):
+    def peek(self) -> Any:
         """Returns the next item, but does not advance the iteration.
         Returns None if no more items. (Bit may also return None as the
         next item.)"""
@@ -204,7 +208,7 @@ class Reiterate(object):
         except StopIteration:
             return None
 
-    def has_item(self):
+    def has_item(self) -> bool:
         """More items to return?"""
         try:
             item = next(self)
@@ -279,7 +283,7 @@ class FileIndex(object):
 
     Attr:
     - indexfile -- The file to be indexed. Can be set to None and latter
-                replaced with a new file handle, for exampel, if you need to
+                replaced with a new file handle, for example, if you need to
                 close and latter reopen the file.
 
     Bugs:
@@ -289,7 +293,7 @@ class FileIndex(object):
 
     __slots__ = ["indexedfile", "_parser", "_positions", "_keys", "_key_dict"]
 
-    def __init__(self, indexedfile, linekey=None, parser=None):
+    def __init__(self, indexedfile, linekey=None, parser=None) -> None:
         """
 
         Args:
@@ -302,7 +306,7 @@ class FileIndex(object):
             handle positioned at the start of a record and returns an object.
         """
 
-        def default_parser(seekedfile):
+        def default_parser(seekedfile) -> str:
             return seekedfile.readline()
 
         if parser is None:
@@ -334,29 +338,31 @@ class FileIndex(object):
             self._keys = tuple(keys)
             self._key_dict = dict(zip(keys, positions))
 
-    def tell(self, item):
+    def tell(self, item) -> int:
+        """provides position of an item in file"""
+
         if isinstance(item, str):
-            p = self._key_dict[item]
+            position_index = self._key_dict[item]
         else:
-            p = self._positions[item]
-        return p
+            position_index = self._positions[item]
+        return position_index
 
     # def seek(self, item):
     #     """Seek the indexfile to the position of item."""
     #     self.indexedfile.seek(self.tell(item))
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[int]:
         for i in range(0, len(self)):
             yield self[i]
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self._positions)
 
-    def __getitem__(self, item):
+    def __getitem__(self, item) -> str:
         self.indexedfile.seek(self.tell(item))
         return self._parser(self.indexedfile)
 
-    def __contains__(self, item):
+    def __contains__(self, item) -> bool:
         try:
             self.tell(item)
             return True
@@ -377,7 +383,7 @@ class ArgumentError(ValueError):
     are also stored.
     """
 
-    def __init__(self, message, key, value=None):
+    def __init__(self, message, key, value=None) -> None:
         """Args:
         - msg -- An error message.
         - key -- The name of the argument or component at fault.
@@ -394,21 +400,21 @@ class ArgumentError(ValueError):
 
 
 # TODO: Replace with direct calls to pkg_resources
-def resource_string(modulename, resource, basefilename=None):
+def resource_string(modulename, resource, basefilename=None) -> str:
     """Locate and return a resource as a string.
     >>> f = resource_string( __name__, 'somedatafile', __file__)
     """
     return pkg_resources.resource_string(modulename, resource)
 
 
-def resource_stream(modulename, resource, basefilename=None):
+def resource_stream(modulename, resource, basefilename=None) -> TextIO:
     """Locate and return a resource as a stream.
     >>> f = resource_stream( __name__, 'somedatafile', __file__)
     """
     return open(resource_filename(modulename, resource, basefilename))
 
 
-def resource_filename(modulename, resource, basefilename=None):
+def resource_filename(modulename, resource, basefilename=None) -> str:
     """Locate and return a resource filename.
     >>> f = resource_filename( __name__, 'somedatafile', __file__)
     """
