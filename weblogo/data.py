@@ -185,7 +185,7 @@ _resource_filenames = {
 def data_string(name: str) -> ByteString:
     """Load the specified resource as a string."""
     fn = _resource_filenames[name]
-    return pkg_resources.resource_string(__name__, fn)
+    return resource_string(__name__, fn)
 
 
 def data_stream(name: str) -> TextIO:
