@@ -1,0 +1,21 @@
+name: weblogo
+channels:
+  - defaults
+dependencies:
+  - ca-certificates=2021.10.26
+  - certifi=2021.10.8
+  - libcxx>=12.0.0
+  - libffi>=3.3
+  - ncurses>=6.3
+  - openssl>=1.1.1l
+  - pip>=21.2.4
+  - python>=3.9
+  - readline>=8.1=
+  - setuptools>=58.08
+  - sqlite>=3.36.0
+  - tk>=8.6.11
+  - tzdata>=2021e
+  - wheel>=0.37.0
+  - xz>=5.2.5
+  - zlib>=1.2.11
+prefix: /usr/local/Caskroom/miniconda/base/envs/weblogo
