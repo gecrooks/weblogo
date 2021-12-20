@@ -41,7 +41,6 @@ from io import StringIO
 from weblogo.utils import (
     ArgumentError,
     FileIndex,
-    Reiterate,
     Token,
     crc32,
     crc64,
@@ -107,29 +106,6 @@ class test_utils(unittest.TestCase):
         self.assertEqual(
             tuple(out), (("a", 3), ("b", 4), ("c", 3), ("d", 2), ("e", 1), ("a", 1))
         )
-
-    def test_reiterate(self):
-        i = Reiterate(iter("123456"))
-        for item in i:
-            pass
-        self.assertRaises(StopIteration, i.next)
-        self.assertFalse(i.has_item())
-        self.assertTrue(i.peek() is None)
-
-        # pushback
-        i = Reiterate(iter("123456"))
-        next(i)
-        i.push("0")
-        self.assertEqual("0", next(i))
-        p = i.peek()
-        n = next(i)
-        self.assertEqual(p, n)
-        self.assertEqual(i.index(), 2)
-        self.assertTrue(i.has_item())
-
-        # Repeated application of Reiterate should return same iterator.
-        self.assertTrue(i is iter(i))
-        self.assertTrue(i is Reiterate(i))
 
     def test_token(self):
         t = Token("kind", "some data", 4, 3)
