@@ -34,9 +34,7 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 #  POSSIBILITY OF SUCH DAMAGE.
 
-import re
 import unittest
-from io import StringIO
 
 from weblogo.utils import (
     ArgumentError,
