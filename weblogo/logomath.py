@@ -86,7 +86,7 @@ class Dirichlet(object):
         self.alpha = asarray(alpha, float64)
 
         self._total = sum(alpha)
-        self._mean = self.alpha / self._total
+        self._mean: np.ndarray = self.alpha / self._total
 
     def sample(self) -> np.ndarray:
         """Return a randomly generated probability vector.
@@ -112,7 +112,7 @@ class Dirichlet(object):
     def mean(self) -> np.ndarray:
         return self._mean
 
-    def covariance(self):
+    def covariance(self) -> np.ndarray:
         alpha = self.alpha
         A = sum(alpha)
         # A2 = A * A
