@@ -40,7 +40,6 @@ from io import StringIO
 
 from weblogo.utils import (
     ArgumentError,
-    FileIndex,
     Token,
     crc32,
     crc64,
@@ -140,47 +139,6 @@ class test_utils(unittest.TestCase):
             self.assertEqual(err.msg, message)
             self.assertEqual(err.key, component)
             self.assertEqual(err.value, 10)
-
-    def test_file_index(self):
-        stream = StringIO(tfile)
-        idx = FileIndex(stream)
-        self.assertTrue(idx[0].startswith("line 0"))
-        self.assertTrue(idx[4].startswith("line 4"))
-
-        def parser(f):
-            return int(f.readline().split()[1])
-
-        idx = FileIndex(stream, parser=parser)
-        self.assertEqual(len(idx), 5)
-        self.assertEqual(idx[0], 0)
-        self.assertEqual(idx[4], 4)
-
-        key = re.compile(r"(line \d)")
-
-        def linekey(line):
-            k = key.search(line)
-            if k is None:
-                return None
-            return k.group(1)
-
-        idx = FileIndex(stream, linekey=linekey, parser=parser)
-        self.assertEqual(len(idx), 4)
-        self.assertEqual(idx[0], 0)
-        self.assertEqual(idx[3], 4)
-        self.assertRaises(IndexError, idx.__getitem__, 5)
-
-        # print idx._key_dict
-        self.assertEqual(idx["line 1"], 1)
-        self.assertEqual(idx["line 4"], 4)
-        self.assertTrue("line 1" in idx)
-        self.assertFalse("Blah" in idx)
-        self.assertFalse(20 in idx)
-
-        # Test iteration over values
-        t = 0
-        for v in idx:
-            t += v
-        self.assertEqual(t, 8)
 
     def test_resource(self):
         fn = resource_filename(__name__, "data/cap.fa", __file__)

@@ -56,7 +56,6 @@ VLARHF-QH-EFTPELQ-HALEAHFCA------V---GDALA----K-----A-----YH-----------
 import re
 
 from ..seq import Alphabet, Seq, SeqList
-from ..utils import FileIndex
 
 names = ("fasta", "pearson", "fa")
 extensions = (
@@ -215,22 +214,3 @@ def writeseq(afile, seq):
     for n in range(1 + L // line_length):
         print(seq[n * line_length : (n + 1) * line_length], file=afile)
     print(file=afile)
-
-
-def index(afile, alphabet=None):
-    """Return a FileIndex for the fasta file. Sequences can be retrieved
-    by item number or name.
-    """
-
-    def parser(afile):
-        return readseq(afile, alphabet)
-
-    key = re.compile(r"^>\s*(\S*)")
-
-    def linekey(line):
-        k = key.search(line)
-        if k is None:
-            return None
-        return k.group(1)
-
-    return FileIndex(afile, linekey, parser)
