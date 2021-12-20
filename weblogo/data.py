@@ -144,8 +144,6 @@ Status: Beta (Data needs to be proof checked.)
 
 from typing import ByteString, TextIO
 
-import pkg_resources
-
 from . import utils
 from .utils import resource_filename, resource_stream, resource_string
 

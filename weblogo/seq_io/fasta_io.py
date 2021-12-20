@@ -53,8 +53,6 @@ VLARHF-QH-EFTPELQ-HALEAHFCA------V---GDALA----K-----A-----YH-----------
 
 """
 
-import re
-
 from ..seq import Alphabet, Seq, SeqList
 
 names = ("fasta", "pearson", "fa")

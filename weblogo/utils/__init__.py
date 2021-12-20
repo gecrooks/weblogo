@@ -26,7 +26,7 @@
 """Extra utilities and core classes not in standard python.
 """
 
-from typing import Any, ByteString, Iterable, Iterator, List, TextIO
+from typing import Any, ByteString, Iterable, List, TextIO
 
 import pkg_resources
 
