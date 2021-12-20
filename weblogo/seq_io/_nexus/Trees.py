@@ -16,7 +16,6 @@ import random
 
 from . import Nodes
 
-
 PRECISION_BRANCHLENGTH = 6
 PRECISION_SUPPORT = 6
 NODECOMMENT_START = "[&"

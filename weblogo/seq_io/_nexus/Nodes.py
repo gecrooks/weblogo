@@ -13,6 +13,7 @@ Subclassed by Trees to store phylogenetic trees.
 
 # type: ignore
 
+
 class ChainException(Exception):
     pass
 

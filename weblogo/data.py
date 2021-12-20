@@ -144,6 +144,8 @@ Status: Beta (Data needs to be proof checked.)
 
 from typing.io import TextIO
 
+import pkg_resources
+
 from . import utils
 from .utils import resource_filename, resource_stream, resource_string
 
@@ -189,7 +191,7 @@ _resource_filenames = {
 def data_string(name: str) -> str:
     """Load the specified resource as a string."""
     fn = _resource_filenames[name]
-    return resource_string(__name__, fn, __file__)
+    return pkg_resources.resource_string(__name__, fn)
 
 
 def data_stream(name: str) -> TextIO:
