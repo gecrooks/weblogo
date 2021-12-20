@@ -45,6 +45,7 @@ import os
 import sys
 from io import StringIO
 from optparse import OptionGroup
+from typing import Any, Union
 
 from . import (
     LogoData,
@@ -70,7 +71,7 @@ from .utils.deoptparse import DeOptionParser
 
 
 # ====================== Main: Parse Command line =============================
-def main():
+def main() -> None:
     """WebLogo command line interface"""
 
     # ------ Parse Command line ------
@@ -104,7 +105,7 @@ def main():
 # End main()
 
 
-def httpd_serve_forever(port=8080):
+def httpd_serve_forever(port: int = 8080) -> None:
     """Start a webserver on a local port."""
 
     import http.server as server
@@ -115,7 +116,7 @@ def httpd_serve_forever(port=8080):
         # instead of exec'ing
         # This bypasses the need for the cgi script to have execute permissions set,
         # since distutils install does not preserve permissions.
-        def is_cgi(self):
+        def is_cgi(self) -> bool:
             self.have_fork = False  # Prevent CGIHTTPRequestHandler from using fork
             if self.path == "/create.cgi":
                 self.cgi_info = "", "create.cgi"
@@ -123,8 +124,8 @@ def httpd_serve_forever(port=8080):
             return False
 
         def is_python(
-            self, path
-        ):  # Let CGIHTTPRequestHandler know that cgi script is python
+            self, path: Union[str, os.PathLike[str]]
+        ) -> bool:  # Let CGIHTTPRequestHandler know that cgi script is python
             return True
 
     # Add current directory to PYTHONPATH. This is
@@ -151,7 +152,7 @@ def httpd_serve_forever(port=8080):
 # end httpd_serve_forever()
 
 
-def _build_logodata(options):
+def _build_logodata(options: Any) -> LogoData:
     motif_flag = False
 
     fin = options.fin
@@ -218,7 +219,7 @@ def _build_logodata(options):
     return data
 
 
-def _build_logoformat(logodata, opts):
+def _build_logoformat(logodata: LogoData, opts: Any) -> LogoFormat:
     """Extract and process relevant option values and return a
     LogoFormat object."""
 
@@ -304,7 +305,7 @@ def _build_logoformat(logodata, opts):
 
 
 # ========================== OPTIONS ==========================
-def _build_option_parser():
+def _build_option_parser() -> DeOptionParser:
     defaults = LogoOptions()
     parser = DeOptionParser(
         usage="%prog [options]  < sequence_data.fa > sequence_logo.eps",
