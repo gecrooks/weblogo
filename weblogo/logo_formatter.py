@@ -264,6 +264,7 @@ def eps_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
 
     # Create and output logo
     template = resource_string(__name__, "template.eps", __file__).decode()
+    print()
     logo = Template(template).substitute(substitutions)
 
     return logo.encode()
@@ -310,8 +311,8 @@ class GhostscriptAPI(object):
 
         self.command = command
 
-    def version(self) -> str:
-        """Returms: The ghostscript version string"""
+    def version(self) -> bytes:
+        """Returns: The ghostscript version string"""
         args = [self.command, "--version"]
         try:
             p = Popen(args, stdout=PIPE)
@@ -332,10 +333,10 @@ class GhostscriptAPI(object):
     ) -> bytes:
         """Convert a string of postscript into a different graphical format
 
-        Supported foramts are 'png', 'pdf', and 'jpeg'.
+        Supported formats are 'png', 'pdf', and 'jpeg'.
 
         Raises:
-            ValueError: For an unregonized format.
+            ValueError: For an unrecognized format.
         """
         device_map = {"png": "png16m", "pdf": "pdfwrite", "jpeg": "jpeg"}
 
@@ -382,7 +383,7 @@ class GhostscriptAPI(object):
         if p.returncode != 0:  # pragma: no cover
             error_msg += "\nReturn code: %i\n" % p.returncode
             if err is not None:
-                error_msg += err
+                error_msg += str(err)
             raise RuntimeError(error_msg)
 
         return out
