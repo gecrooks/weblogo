@@ -10,20 +10,11 @@ get information about trees (monphyly of taxon sets, congruence between trees,
 common ancestors,...) and to manipulate trees (reroot trees, split terminal
 nodes).
 """
+# type: ignore
 
 import random
-import sys
 
 from . import Nodes
-
-if sys.version_info[0] < 3:
-    # Python 2 definitions
-    from future_builtins import zip
-
-    range = xrange
-else:
-    # Python 3 definitions
-    pass
 
 PRECISION_BRANCHLENGTH = 6
 PRECISION_SUPPORT = 6

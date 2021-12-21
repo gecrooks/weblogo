@@ -100,7 +100,7 @@ index(afile, alphabet = None)
     implemented for formats with interleaved sequences.
 
 write(afile, seqlist)
-    Write a collection of sequences to the specifed file.
+    Write a collection of sequences to the specified file.
 
 write_seq(afile, seq)
     Write one sequence to the file. Only implemented for non-interleaved,

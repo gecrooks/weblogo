@@ -163,16 +163,6 @@ class test_fasta_io(unittest.TestCase):
         fout = StringIO()
         fasta_io.write(fout, seqs)
 
-    def test_index(self):
-        f = StringIO(fasta_io.example)
-        idx = fasta_io.index(f)
-        # print idx._key_dict
-        self.assertEqual(len(idx), 3)
-        self.assertEqual(idx[0].description, "Lamprey GLOBIN V - SEA LAMPREY")
-        self.assertEqual(idx[0].name, "Lamprey")
-        self.assertEqual(idx["Lamprey"].name, "Lamprey")
-        self.assertEqual(len(idx["Hagfish"]), 231)
-
     def test_read_empty(self):
         f = StringIO()
         seqs = fasta_io.read(f)

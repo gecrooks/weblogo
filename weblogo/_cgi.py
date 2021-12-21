@@ -41,6 +41,7 @@ import shutil
 import sys
 from io import BytesIO, StringIO, TextIOWrapper
 from string import Template
+from typing import Any, Callable, List, Optional
 
 import weblogo
 from weblogo.colorscheme import ColorScheme, SymbolColor
@@ -56,7 +57,7 @@ cgitb.enable()
 
 
 # Should replace with weblogo.utils?
-def resource_string(resource, basefilename):
+def resource_string(resource: str, basefilename: str) -> str:
     import os
 
     fn = os.path.join(os.path.dirname(basefilename), resource)
@@ -108,12 +109,18 @@ composition = {
 }
 
 
-class Field(object):
+class Field:
     """A representation of an HTML form field."""
 
     def __init__(
-        self, name, default=None, conversion=None, options=None, errmsg="Illegal value."
-    ):
+        self,
+        name: str,
+        default: Any = None,
+        conversion: Callable = None,
+        options: List[Any] = None,
+        errmsg: str = "Illegal value.",
+    ) -> None:
+
         self.name = name
         self.default = default
         self.value = default
@@ -121,7 +128,7 @@ class Field(object):
         self.options = options
         self.errmsg = errmsg
 
-    def get_value(self):
+    def get_value(self) -> Any:
         if self.options:
             if self.value not in self.options:
                 raise ValueError(str((self.name, self.errmsg)))
@@ -135,31 +142,31 @@ class Field(object):
             return self.value
 
 
-def string_or_none(value):
+def string_or_none(value: Any) -> Optional[str]:
     if value is None or value == "auto":
         return None
     return str(value)
 
 
-def truth(value):
+def truth(value: Any) -> bool:
     if value == "true":
         return True
     return bool(value)
 
 
-def int_or_none(value):
+def int_or_none(value: Any) -> Optional[int]:
     if value == "" or value is None or value == "auto":
         return None
     return int(value)
 
 
-def float_or_none(value):
+def float_or_none(value: Any) -> Optional[float]:
     if value == "" or value is None or value == "auto":
         return None
     return float(value)
 
 
-def main(htdocs_directory=None):
+def main(htdocs_directory: str = None) -> None:
     logooptions = weblogo.LogoOptions()
 
     # A list of form fields.
@@ -249,7 +256,7 @@ def main(htdocs_directory=None):
             "color_scheme",
             "color_auto",
             color_schemes.get,
-            options=color_schemes.keys(),
+            options=list(color_schemes.keys()),
             errmsg="Unknown color scheme",
         ),
         Field("color0", ""),
@@ -391,7 +398,7 @@ def main(htdocs_directory=None):
                 seq_file = StringIO(sequences)
 
     elif sequences_url:
-        from . import _from_URL_fileopen
+        from .logo import _from_URL_fileopen
 
         try:
             seq_file = _from_URL_fileopen(sequences_url)
@@ -443,7 +450,7 @@ def main(htdocs_directory=None):
             data = weblogo.LogoData.from_seqs(seqs, prior)
 
         logoformat = weblogo.LogoFormat(data, logooptions)
-        format = form["format"].value
+        format = str(form["format"].value)
         logo = weblogo.formatters[format](data, logoformat)
     except ValueError as err:
         errors.append(err.args)
@@ -477,9 +484,14 @@ def main(htdocs_directory=None):
     sys.stdout.buffer.write(logo)
 
 
-def send_form(controls, errors=[], htdocs_directory=None):
+def send_form(
+    controls: List[Field], errors: List[tuple] = None, htdocs_directory: str = None
+) -> None:
+    if errors is None:
+        errors = []
+
     if htdocs_directory is None:
-        htdocs_directory = os.path.join(os.path.dirname(__file__, "htdocs"))
+        htdocs_directory = os.path.join(os.path.dirname(__file__), "htdocs")
 
     substitutions = {}
     substitutions["version"] = weblogo.release_description
@@ -489,7 +501,7 @@ def send_form(controls, errors=[], htdocs_directory=None):
         if c.options:
             for opt in c.options:
                 substitutions[opt.replace("/", "_")] = ""
-            substitutions[c.value.replace("/", "_")] = "selected"
+            substitutions[str(c.value).replace("/", "_")] = "selected"
         else:
             value = c.value
             if value is None:
@@ -520,7 +532,7 @@ def send_form(controls, errors=[], htdocs_directory=None):
 
     if errors:
         print(errors, file=sys.stderr)
-        error_message = []
+        error_message: List[str] = []
         for e in errors:
             if type(e) is str:
                 msg = e

@@ -11,6 +11,8 @@ Nodes can store arbitrary data in a NodeData class.
 Subclassed by Trees to store phylogenetic trees.
 """
 
+# type: ignore
+
 
 class ChainException(Exception):
     pass

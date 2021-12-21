@@ -29,8 +29,7 @@ Null sequence IO. Acts like /dev/null. Read returns empty sequences or sequence 
 writes do nothing.
 """
 
-from typing import Generator
-from typing.io import TextIO
+from typing import Generator, TextIO
 
 from ..seq import Alphabet, Seq, SeqList
 
