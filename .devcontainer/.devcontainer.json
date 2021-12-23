@@ -1,0 +1,13 @@
+  { "name": "Developing WebLogo on Codespaces",
+    "image": "mcr.microsoft.com/vscode/devcontainers/python:3.9",
+    "portsAttributes": {
+        "onAutoForward": "openBrowser",
+    },
+    "extensions": ["ms-python.python"],
+    "postCreateCommand": "pip install -r  requirements.txt",
+    "forwardPorts": [5000],
+    "context": "..",
+    "settings": {
+      "terminal.integrated.profiles.linux": {"default": {"command": "./bin/bash"},} },
+    }
+  
