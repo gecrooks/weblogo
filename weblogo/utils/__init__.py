@@ -239,9 +239,7 @@ class ArgumentError(ValueError):
 
 
 # TODO: Replace with direct calls to pkg_resources
-def resource_string(
-    modulename: str, resource: str, basefilename: str = None
-) -> ByteString:
+def resource_string(modulename: str, resource: str, basefilename: str = None) -> bytes:
     """Locate and return a resource as a string.
     >>> f = resource_string( __name__, 'somedatafile', __file__)
     """
