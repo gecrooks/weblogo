@@ -127,12 +127,6 @@ Attributes:
 
     - nucleotide_names
 
-    - amino_acid_accesible_surface_area
-        -- Nominal maximum solvent accessoble area for unmodified amino acids,
-        in square Angstroms.
-        Ref: Sander & Rost, (1994), Proteins, 20:216-226
-
-
 Status: Beta (Data needs to be proof checked.)
 """
 
@@ -641,28 +635,4 @@ nucleotide_names = {
     "V": "G C A (not T, not U) (V comes after U)",
     "N": "A G C T (aNy)",
     "-": "gap",
-}
-
-# TODO: CHECK VALUES, UNITS
-amino_acid_accesible_surface_area = {
-    "A": 106.0,
-    "C": 135.0,
-    "D": 163.0,
-    "E": 194.0,
-    "F": 197.0,
-    "G": 84.0,
-    "H": 184.0,
-    "I": 169.0,
-    "K": 205.0,
-    "L": 164.0,
-    "M": 188.0,
-    "N": 157.0,
-    "P": 136.0,
-    "Q": 198.0,
-    "R": 248.0,
-    "S": 130.0,
-    "T": 142.0,
-    "V": 142.0,
-    "W": 227.0,
-    "Y": 222.0,
 }
