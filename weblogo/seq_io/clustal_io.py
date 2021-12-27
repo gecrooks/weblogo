@@ -204,7 +204,6 @@ def _scan(fin: TextIO) -> None:
     if state == block:
         yield Token("end_block")
     yield Token("end")
-    return
 
 
 def write(fout: TextIO, seqs: SeqList) -> None:
