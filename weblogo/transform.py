@@ -46,7 +46,6 @@ Other:
 
 """
 
-from _typeshed import StrOrBytesPath
 from typing import Dict, List, Optional, Tuple
 from numpy import log2
 from scipy.stats import entropy
