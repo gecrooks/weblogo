@@ -137,7 +137,7 @@ def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
 #     space and then the sequence.
 
 
-def _scan(fin: TextIO) -> Iterator[Token]:
+def _scan(fin: TextIO) -> None:
     """Scan a clustal format MSA file and yield tokens.
     The basic file structure is
         begin_document
