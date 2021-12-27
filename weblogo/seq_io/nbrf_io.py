@@ -63,7 +63,7 @@ ALPHA CRYSTALLIN B CHAIN (ALPHA(B)-CRYSTALLIN).
 
 """
 
-from typing import IO, Generator
+from typing import Iterator, TextIO
 from ..seq import (
     Alphabet,
     Seq,
@@ -93,7 +93,7 @@ type_code = {
 }
 
 
-def read(fin: IO, alphabet: Alphabet = None) -> SeqList:
+def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
     """Read and parse a NBRF sequence file.
 
     Args:
@@ -109,7 +109,7 @@ def read(fin: IO, alphabet: Alphabet = None) -> SeqList:
     return SeqList(seqs)
 
 
-def iterseq(fin: IO, alphabet: Alphabet = None) -> Generator[Seq, None, None]:
+def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Iterator[Seq]:
     """Generate sequences from an NBRF file.
 
     arguments:

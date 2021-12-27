@@ -7,7 +7,7 @@ Currently only reads sequence data and not annotations.
 
 """
 
-from typing import IO, Iterator, List
+from typing import IO, Iterator, List, TextIO
 from ..seq import Alphabet, Seq, SeqList
 from ..utils import isblank
 
@@ -15,7 +15,7 @@ names = ("genbank",)
 extensions = ("gb", "genbank", "gbk")
 
 
-def read(fin: IO, alphabet: Alphabet = None) -> SeqList:
+def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
     """Read and parse a file of genbank records.
 
     Args:
@@ -32,7 +32,7 @@ def read(fin: IO, alphabet: Alphabet = None) -> SeqList:
     return SeqList(seqs)
 
 
-def iterseq(fin: IO, alphabet: Alphabet = None) -> Iterator[Seq]:
+def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Iterator[Seq]:
     """Iterate over genbank records
 
     Args:
@@ -49,7 +49,7 @@ def iterseq(fin: IO, alphabet: Alphabet = None) -> Iterator[Seq]:
 
     header, block, data = range(3)
     state = header
-    seq: List[Seq] = []
+    seq: List[str] = []
     for L, line in enumerate(fin):
         if isblank(line):
             continue

@@ -50,7 +50,7 @@ ttacctgctacgccagccttctgtgcgcgcaactgtctggtcccgcccc2
 
 """
 
-from typing import IO, Iterable, List, Optional
+from typing import Iterator, List, Optional, TextIO
 from ..seq import Alphabet, Seq, SeqList
 from ..utils import remove_whitespace
 
@@ -78,7 +78,7 @@ ttacctgctacgccagccttctgtgcgcgcaactgtctggtcccgcccc2
 """
 
 
-def read(fin: IO, alphabet: Alphabet = None) -> SeqList:
+def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
     """Read and parse an IG file.
 
     Args:
@@ -93,7 +93,7 @@ def read(fin: IO, alphabet: Alphabet = None) -> SeqList:
     return SeqList(seqs)
 
 
-def iterseq(fin: IO, alphabet: Alphabet = None) -> Iterable[Seq]:
+def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Iterator[Seq]:
     """Parse an IG file and generate sequences.
 
     Args:
@@ -112,7 +112,7 @@ def iterseq(fin: IO, alphabet: Alphabet = None) -> Iterable[Seq]:
     name = None
 
     def build_seq(
-        seqs: List[Seq],
+        seqs: List[str],
         alphabet: Alphabet,
         name: Optional[str],
         comments: List[str],
@@ -159,7 +159,7 @@ def iterseq(fin: IO, alphabet: Alphabet = None) -> Iterable[Seq]:
     return
 
 
-def write(fout: IO, seqs: SeqList) -> None:
+def write(fout: TextIO, seqs: SeqList) -> None:
     """Write an IG file.
 
     Args:
@@ -172,7 +172,7 @@ def write(fout: IO, seqs: SeqList) -> None:
         writeseq(fout, s)
 
 
-def writeseq(fout: IO, seq: Seq) -> None:
+def writeseq(fout: TextIO, seq: Seq) -> None:
     """Write a single sequence in IG format.
 
     Args:

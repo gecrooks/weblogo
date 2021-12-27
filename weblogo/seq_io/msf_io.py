@@ -38,7 +38,7 @@ ways:
 """
 
 import re
-from typing import IO, Generator, Iterator, List, Union
+from typing import Generator, Iterator, List, TextIO
 
 from ..seq import Alphabet, Seq, SeqList
 from ..utils import Token
@@ -86,13 +86,13 @@ end_header = re.compile(r"(//)(\s*)$")
 seq_line = re.compile(r"\s*(\S+)\s+([\S\s.?]+)$")
 
 
-def iterseq(fin: IO, alphabet: Alphabet = None) -> Iterator[Seq]:
+def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Iterator[Seq]:
     """Iterate over the sequences in the file."""
     # Default implementation
     return iter(read(fin, alphabet))
 
 
-def read(fin: IO, alphabet: Alphabet = None) -> SeqList:
+def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
     alphabet = Alphabet(alphabet)
     seq_ids = []
     seqs: list = []
@@ -123,7 +123,7 @@ def read(fin: IO, alphabet: Alphabet = None) -> SeqList:
     return SeqList(seqs)
 
 
-def _line_is(fin: IO) -> Generator[Token, None, None]:
+def _line_is(fin: TextIO) -> Generator[Token, None, None]:
     header, body, block = range(3)
     yield Token("begin")
     state = header

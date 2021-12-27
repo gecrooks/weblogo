@@ -39,7 +39,7 @@ Ref :
 
 
 import re
-from typing import IO, Iterable, List
+from typing import Iterator, List, TextIO
 
 from ..seq import Alphabet, Seq, SeqList
 from ..utils import Token
@@ -86,13 +86,13 @@ seq_line = re.compile(r"(\s*\S+\s+)(\S+)\s*(\d*)\s*$")
 match_line = re.compile(r"([\s:\.\*]*)$")
 
 
-def iterseq(fin: IO, alphabet: Alphabet = None) -> Iterable[Seq]:
+def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Iterator[Seq]:
     """Iterate over the sequences in the file."""
     # Default implementation
     return iter(read(fin, alphabet))
 
 
-def read(fin: IO, alphabet: Alphabet = None) -> SeqList:
+def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
     alphabet = Alphabet(alphabet)
     seq_ids = []
     seqs: list = []
@@ -104,8 +104,10 @@ def read(fin: IO, alphabet: Alphabet = None) -> SeqList:
             block_count = 0
         elif token.typeof == "seq_id":
             if len(seqs) <= block_count:
+
                 seq_ids.append(token.data)
                 seqs.append([])
+
         elif token.typeof == "seq":
             data = token.data
             assert data is not None
@@ -135,7 +137,7 @@ def read(fin: IO, alphabet: Alphabet = None) -> SeqList:
 #     space and then the sequence.
 
 
-def _scan(fin: IO) -> Iterable[Token]:
+def _scan(fin: TextIO) -> Iterator[Token]:
     """Scan a clustal format MSA file and yield tokens.
     The basic file structure is
         begin_document
@@ -205,7 +207,7 @@ def _scan(fin: IO) -> Iterable[Token]:
     return
 
 
-def write(fout: IO, seqs: List[Seq]) -> None:
+def write(fout: TextIO, seqs: List[Seq]) -> None:
     """Write 'seqs' to 'fout' as text in clustal format"""
     header = "CLUSTAL W (1.81) multiple sequence alignment"
     name_width = 17

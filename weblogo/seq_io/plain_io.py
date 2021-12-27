@@ -40,7 +40,7 @@ in as a sequence.  Whitespace is removed.
 -EPC-RDENVHFNRIFLPTIYFIIFLTGIVGNGLVILVMGYQKKLRSMTDKYRLHLSVAD
 """
 
-from typing import IO, Iterable, List
+from typing import Iterator, List, TextIO
 from ..seq import Alphabet, Seq, SeqList
 from ..utils import remove_whitespace
 
@@ -59,7 +59,7 @@ names = ("plain", "raw")
 extensions = ()
 
 
-def read(fin: IO, alphabet: Alphabet = None) -> SeqList:
+def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
     """Read a file of raw sequence data.
 
     Args:
@@ -74,7 +74,7 @@ def read(fin: IO, alphabet: Alphabet = None) -> SeqList:
     return SeqList(seqs)
 
 
-def iterseq(fin: IO, alphabet: Alphabet = None) -> Iterable[Seq]:
+def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Iterator[Seq]:
     """Read the sequence data and yield one (and only one) sequence.
 
     Args:
@@ -107,7 +107,7 @@ def iterseq(fin: IO, alphabet: Alphabet = None) -> Iterable[Seq]:
     yield Seq("".join(lines), alphabet)
 
 
-def write(afile: IO, seqs: List[Seq]) -> None:
+def write(afile: TextIO, seqs: List[Seq]) -> None:
     """Write raw sequence data, one line per sequence.
 
     arguments:
@@ -118,7 +118,7 @@ def write(afile: IO, seqs: List[Seq]) -> None:
         writeseq(afile, s)
 
 
-def writeseq(afile: IO, seq: Seq) -> None:
+def writeseq(afile: TextIO, seq: Seq) -> None:
     """Write a single sequence in raw format.
 
     arguments:
