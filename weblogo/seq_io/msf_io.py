@@ -123,7 +123,7 @@ def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
     return SeqList(seqs)
 
 
-def _line_is(fin: TextIO) -> Generator[Token, None, None]:
+def _line_is(fin: TextIO) -> Iterator[Token]:
     header, body, block = range(3)
     yield Token("begin")
     state = header

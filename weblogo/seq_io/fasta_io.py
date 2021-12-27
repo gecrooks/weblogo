@@ -96,7 +96,7 @@ VLARHF-QH-EFTPELQ-HALEAHFCA------V---GDALA----K-----A-----YH-----------
 """
 
 
-def read(fin: TextIO, alphabet: Alphabet = None) -> Iterable[Seq]:
+def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
     """Read and parse a fasta file.
 
     Args:
