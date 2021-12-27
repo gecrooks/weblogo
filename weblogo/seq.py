@@ -423,6 +423,9 @@ class Seq(str):
 
     # TODO: need a method to return a copy of the string with a new alphabet,
     # preserving the sequence, name and alphabet?
+    name: str
+    description: str
+    alphabet: Alphabet
 
     def __new__(
         cls,
