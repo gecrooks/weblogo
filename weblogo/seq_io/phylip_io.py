@@ -64,6 +64,7 @@ GTCGTCGTTG GTGGTGGTGG TGTTG
 """
 
 from typing import Iterator, TextIO
+
 from ..seq import Alphabet, Seq, SeqList
 
 names = ("phylip",)

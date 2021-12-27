@@ -47,6 +47,7 @@ Other:
 """
 
 from typing import Dict, List, Optional, Tuple
+
 from numpy import log2
 from scipy.stats import entropy
 

@@ -51,6 +51,7 @@ ttacctgctacgccagccttctgtgcgcgcaactgtctggtcccgcccc2
 """
 
 from typing import Iterator, List, Optional, TextIO
+
 from ..seq import Alphabet, Seq, SeqList
 from ..utils import remove_whitespace
 

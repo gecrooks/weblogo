@@ -55,6 +55,7 @@ VLARHF-QH-EFTPELQ-HALEAHFCA------V---GDALA----K-----A-----YH-----------
 
 
 from typing import Iterable, Iterator, List, TextIO
+
 from ..seq import Alphabet, Seq, SeqList
 
 names = ("fasta", "pearson", "fa")

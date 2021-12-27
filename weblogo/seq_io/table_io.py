@@ -32,6 +32,7 @@ column is the sequence itself. The columns are separated by a single tab ("\\t")
 """
 
 from typing import Iterator, List, TextIO
+
 from ..seq import Alphabet, Seq, SeqList
 
 names = ("table", "tab")

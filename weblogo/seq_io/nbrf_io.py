@@ -64,6 +64,7 @@ ALPHA CRYSTALLIN B CHAIN (ALPHA(B)-CRYSTALLIN).
 """
 
 from typing import Iterator, TextIO
+
 from ..seq import (
     Alphabet,
     Seq,

@@ -41,6 +41,7 @@ in as a sequence.  Whitespace is removed.
 """
 
 from typing import Iterator, List, TextIO
+
 from ..seq import Alphabet, Seq, SeqList
 from ..utils import remove_whitespace
 

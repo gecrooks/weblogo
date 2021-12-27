@@ -138,8 +138,8 @@ Attributes :
 #    - http://www.genomatix.de/online_help/help/sequence_formats.html
 
 
-from typing import IO, List, TextIO, Union
 from types import ModuleType
+from typing import IO, List, TextIO, Union
 
 from ..seq import Alphabet, SeqList
 from . import genbank_io  # null_io,
