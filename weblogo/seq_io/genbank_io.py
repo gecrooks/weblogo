@@ -49,7 +49,7 @@ def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Iterator[Seq]:
 
     header, block, data = range(3)
     state = header
-    seq: List[str] = []
+    seq: list = []
     for L, line in enumerate(fin):
         if isblank(line):
             continue
