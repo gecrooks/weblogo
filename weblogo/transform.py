@@ -46,6 +46,8 @@ Other:
 
 """
 
+from _typeshed import StrOrBytesPath
+from typing import Dict, List, Optional, Tuple
 from numpy import log2
 from scipy.stats import entropy
 
@@ -81,14 +83,16 @@ class Transform(object):
 
     __slots__ = ["table", "source", "target", "name", "description"]
 
-    def __init__(self, source, target, name=None, description=None):
+    def __init__(
+        self, source: Seq, target: Seq, name: str = None, description: str = None
+    ) -> None:
         self.table = str.maketrans(source.tostring(), target.tostring())
         self.source = source
         self.target = target
         self.name = name
         self.description = description
 
-    def __call__(self, seq):
+    def __call__(self, seq: Seq) -> Seq:
         """Translate sequence."""
         if not self.source.alphabet.alphabetic(seq):
             raise ValueError("Incompatible alphabets")
@@ -106,7 +110,13 @@ dna_complement = Transform(
 )
 
 
-def mask_low_complexity(seq, width=12, trigger=1.8, extension=2.0, mask="X"):
+def mask_low_complexity(
+    seq: Seq,
+    width: int = 12,
+    trigger: float = 1.8,
+    extension: float = 2.0,
+    mask: str = "X",
+) -> Seq:
     """Mask low complexity regions in protein sequences.
 
     Uses the method of Seg [1] by Wootton & Federhen [2] to divide a sequence
@@ -240,7 +250,16 @@ class GeneticCode(object):
     # TODO: Does translate fails with aproriate execption when fed gaps?
     # TODO: Can back_translate handle gaps?
 
-    def __init__(self, ident, description, amino_acid, start, base1, base2, base3):
+    def __init__(
+        self,
+        ident: int,
+        description: str,
+        amino_acid: str,
+        start: str,
+        base1: str,
+        base2: str,
+        base3: str,
+    ) -> None:
         """Create a new GeneticCode.
 
         Args:
@@ -280,21 +299,39 @@ class GeneticCode(object):
 
         # Building the full translation table is expensive,
         # so we avoid doing so until necessary.
-        self._table = None
-        self._back_table = None
+        self._table: Optional[Dict[str, str]] = None
+        self._back_table: Optional[Dict[str, str]] = None
 
     @staticmethod
-    def std_list():
+    def std_list() -> Tuple[
+        "GeneticCode",
+        "GeneticCode",
+        "GeneticCode",
+        "GeneticCode",
+        "GeneticCode",
+        "GeneticCode",
+        "GeneticCode",
+        "GeneticCode",
+        "GeneticCode",
+        "GeneticCode",
+        "GeneticCode",
+        "GeneticCode",
+        "GeneticCode",
+        "GeneticCode",
+        "GeneticCode",
+        "GeneticCode",
+        "GeneticCode",
+    ]:
         "Return a list of standard genetic codes."
         return _codon_tables
 
     @staticmethod
-    def std():
+    def std() -> "GeneticCode":
         "The standard 'universal' genetic code."
         return _codon_tables[0]
 
     @staticmethod
-    def by_name(name):
+    def by_name(name: str) -> "GeneticCode":
         """Find a genetic code in the code list by name or identifier."""
         for t in _codon_tables:
             if t.ident == name or t.description == name:
@@ -302,20 +339,21 @@ class GeneticCode(object):
         raise ValueError("No such translation table: %s" % str(name))
 
     @property
-    def table(self):
+    def table(self) -> Optional[Dict[str, str]]:
         """A map between codons and amino acids"""
         if self._table is None:
-            self._create_table()
+            self._create_table()  # pragma: no cover
+
         return self._table
 
     @property
-    def back_table(self):
+    def back_table(self) -> Optional[Dict[str, str]]:
         """A map between amino acids and codons"""
         if self._back_table is None:
             self._create_table()  # pragma: no cover
         return self._back_table
 
-    def _create_table(self):
+    def _create_table(self) -> None:
         aa = self.amino_acid
         base1 = self.base1
         base2 = self.base2
@@ -342,7 +380,7 @@ class GeneticCode(object):
         ltable = {}
         letters = dna_extended_letters + "U"  # include RNA in table
 
-        # Create a list of all possble codons
+        # Create a list of all possible codons
         codons = []
         for c1 in letters:
             for c2 in letters:
@@ -354,14 +392,14 @@ class GeneticCode(object):
         # If more than one translation look for possible amino acid ambiguity
         # codes.
         for C in codons:
-            translated = dict()  # Use dict, because no set in py2.3
+            pre_translate = dict()  # Use dict, because no set in py2.3
             c = C.replace("U", "T")  # Convert RNA codon to DNA
             for c1 in dna_ambiguity[c[0]]:
                 for c2 in dna_ambiguity[c[1]]:
                     for c3 in dna_ambiguity[c[2]]:
                         aa = table[c1 + c2 + c3]
-                        translated[aa] = ""
-            translated = list(translated.keys())
+                        pre_translate[aa] = ""
+            translated = list(pre_translate.keys())
             translated.sort()
             if len(translated) == 1:
                 trans = list(translated)[0]
@@ -381,7 +419,7 @@ class GeneticCode(object):
 
     # End create tables
 
-    def translate(self, seq, frame=0):
+    def translate(self, seq: List[str], frame: int = 0) -> Seq:
         """Translate a DNA sequence to a polypeptide using full
         IUPAC ambiguities in DNA/RNA and amino acid codes.
 
@@ -390,16 +428,18 @@ class GeneticCode(object):
         """
         # TODO: Optimize.
         # TODO: Insanity check alphabet.
-        seq = str(seq)
+        seqs = seq
         table = self.table
+        assert table is not None
         trans = []
         L = len(seq)
         for i in range(frame, L - 2, 3):
-            codon = seq[i : i + 3].upper()
+            codon = str(seqs[i : i + 3]).upper()
             trans.append(table[codon])
+
         return Seq("".join(trans), protein_alphabet)
 
-    def back_translate(self, seq):
+    def back_translate(self, seq: List[str]) -> Seq:
         """Convert protein back into coding DNA.
 
         Args:
@@ -408,19 +448,21 @@ class GeneticCode(object):
         Returns :
         -- Seq - A DNA sequence
         """
-        # TODO: Optimzie
+        # TODO: Optimize
         # TODO: Insanity check alphabet.
         table = self.back_table
-        seq = str(seq)
-        trans = [table[a] for a in seq]
+        assert table is not None
+
+        seqs = seq
+        trans = [table[a] for a in seqs]
         return Seq("".join(trans), dna_alphabet)
 
     # TODO: translate_orf(self, seq, start) ?
     # TODO: translate_to_stop(self, seq, frame) ?
     # TODO: translate_all_frames(self,seq) -> 6 translations.
 
-    def __repr__(self):
-        string = []
+    def __repr__(self) -> str:
+        string: List[str] = []
         string += 'GeneticCode( %d, "' % self.ident
         string += self.description
         string += '", \n'
@@ -441,11 +483,11 @@ class GeneticCode(object):
         string += '" )'
         return "".join(string)
 
-    def __str__(self):
+    def __str__(self) -> str:
         """Returns a text representation of this genetic code."""
         # Inspired by http://bugzilla.open-bio.org/show_bug.cgi?id=1963
         letters = "TCAG"  # Conventional ordering for codon tables.
-        string = []
+        string: List[str] = []
 
         if self.ident:
             string += "Genetic Code [%d]: " % self.ident
@@ -460,6 +502,7 @@ class GeneticCode(object):
         string += "+".join(["---------" for c2 in letters]) + "+  "
 
         table = self.table
+        assert table is not None
 
         for c1 in letters:
             for c3 in letters:
