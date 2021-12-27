@@ -929,7 +929,7 @@ class LogoData(object):
         return out.getvalue()
 
 
-def _from_URL_fileopen(target_url: str) -> TextIO:  # pragma: no cover
+def _from_URL_fileopen(target_url: str) -> StringIO:  # pragma: no cover
     """opens files from a remote URL location"""
 
     # parsing url in component parts
