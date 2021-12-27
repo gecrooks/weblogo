@@ -44,7 +44,7 @@ import sys
 from datetime import datetime
 from io import StringIO
 from math import log, sqrt
-from typing.io import TextIO
+from typing import TextIO
 from urllib.parse import urlparse, urlunparse
 from urllib.request import Request, urlopen
 
@@ -77,6 +77,7 @@ from .seq import (
 from .utils import ArgumentError, isfloat, stdrepr
 
 # Shorten development version string of the form weblogo-3.6.1.dev43+g64d9f12.d20190304
+
 if __version__.find("+") != -1:
     __version__ = __version__[: __version__.find("+")]
 
@@ -123,7 +124,7 @@ description = "Create sequence logos from biological sequence alignments."
 release_description = "WebLogo %s" % (__version__)
 
 
-def cgi(htdocs_directory):  # pragma: no cover
+def cgi(htdocs_directory: str) -> None:  # pragma: no cover
     import weblogo._cgi
 
     weblogo._cgi.main(htdocs_directory)
@@ -199,7 +200,7 @@ std_percentCG = {
 # Nat Biotechnol 2004, 22:547-53
 
 
-class LogoOptions(object):
+class LogoOptions:
     """A container for all logo formatting options. Not all of these
     are directly accessible through the CLI or web interfaces.
 
@@ -279,7 +280,7 @@ class LogoOptions(object):
 
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: dict) -> None:
         """Create a new LogoOptions instance.
 
         >>> logooptions = LogoOptions(logo_title = "Some Title String")
@@ -361,7 +362,7 @@ class LogoOptions(object):
         for k, v in kwargs.items():
             setattr(self, k, v)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         attributes = list(vars(self).keys())
         attributes.sort()
         return stdrepr(self, attributes)
