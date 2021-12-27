@@ -53,6 +53,9 @@ VLARHF-QH-EFTPELQ-HALEAHFCA------V---GDALA----K-----A-----YH-----------
 
 """
 
+
+from typing import Iterator, List, TextIO
+
 from ..seq import Alphabet, Seq, SeqList
 
 names = ("fasta", "pearson", "fa")
@@ -93,7 +96,7 @@ VLARHF-QH-EFTPELQ-HALEAHFCA------V---GDALA----K-----A-----YH-----------
 """
 
 
-def read(fin, alphabet=None):
+def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
     """Read and parse a fasta file.
 
     Args:
@@ -111,19 +114,19 @@ def read(fin, alphabet=None):
     return SeqList(seqs, name=name)
 
 
-def readseq(fin, alphabet=None):
+def readseq(fin: TextIO, alphabet: Alphabet = None) -> Seq:
     """Read one sequence from the file, starting
     from the current file position."""
     return next(iterseq(fin, alphabet))
 
 
-def iterseq(fin, alphabet=None):
+def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Iterator[Seq]:
     """Parse a fasta file and generate sequences.
 
     Args:
         fin -- A stream or file to read
         alphabet -- The expected alphabet of the data, if given
-    Yeilds:
+    Yields:
         Seq -- One alphabetic sequence at a time.
     Raises:
         ValueError -- If the file is unparsable
@@ -131,11 +134,17 @@ def iterseq(fin, alphabet=None):
     alphabet = Alphabet(alphabet)
 
     seqs = []
-    comments = []  # FIXME: comments before first sequence are lost.
+    comments: List[str] = []  # FIXME: comments before first sequence are lost.
     header = None
     header_lineno = -1
 
-    def build_seq(seqs, alphabet, header, header_lineno, comments):
+    def build_seq(
+        seqs: List[str],
+        alphabet: Alphabet,
+        header: str,
+        header_lineno: int,
+        comments: List[str],
+    ) -> Seq:
         try:
             name = header.split(" ", 1)[0]
             if comments:
@@ -172,10 +181,11 @@ def iterseq(fin, alphabet=None):
 
     if not seqs:
         return
+    assert header is not None
     yield build_seq(seqs, alphabet, header, header_lineno, comments)
 
 
-def write(fout, seqs):
+def write(fout: TextIO, seqs: SeqList) -> None:
     """Write a fasta file.
 
     Args:
@@ -189,7 +199,7 @@ def write(fout, seqs):
         writeseq(fout, s)
 
 
-def writeseq(afile, seq):
+def writeseq(afile: TextIO, seq: Seq) -> None:
     """Write a single sequence in fasta format.
 
     Args:
@@ -200,10 +210,10 @@ def writeseq(afile, seq):
     # We prepend '>' to the first header line
     # Additional lines start with ';' to indicate comment lines
     if header:
-        header = header.splitlines()
-        print(">" + header[0], file=afile)
-        if len(header) > 1:
-            for h in header[1:]:
+        headings = header.splitlines()
+        print(">" + headings[0], file=afile)
+        if len(headings) > 1:
+            for h in headings[1:]:
                 print(";" + h, file=afile)
     else:
         print(">", file=afile)

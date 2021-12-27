@@ -39,6 +39,7 @@ Ref :
 
 
 import re
+from typing import Iterator, TextIO
 
 from ..seq import Alphabet, Seq, SeqList
 from ..utils import Token
@@ -85,16 +86,16 @@ seq_line = re.compile(r"(\s*\S+\s+)(\S+)\s*(\d*)\s*$")
 match_line = re.compile(r"([\s:\.\*]*)$")
 
 
-def iterseq(fin, alphabet=None):
+def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Iterator[Seq]:
     """Iterate over the sequences in the file."""
     # Default implementation
     return iter(read(fin, alphabet))
 
 
-def read(fin, alphabet=None):
+def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
     alphabet = Alphabet(alphabet)
     seq_ids = []
-    seqs = []
+    seqs: list = []
     block_count = 0
     data_len = 0
 
@@ -103,18 +104,23 @@ def read(fin, alphabet=None):
             block_count = 0
         elif token.typeof == "seq_id":
             if len(seqs) <= block_count:
+
                 seq_ids.append(token.data)
                 seqs.append([])
+
         elif token.typeof == "seq":
-            if not alphabet.alphabetic(token.data):
+            data = token.data
+            assert data is not None
+
+            if not alphabet.alphabetic(data):
                 raise ValueError(
                     "Character on line: %d not in alphabet: %s : %s"
-                    % (token.lineno, alphabet, token.data)
+                    % (token.lineno, alphabet, data)
                 )
-            seqs[block_count].append(token.data)
+            seqs[block_count].append(data)
             if block_count == 0:
-                data_len = len(token.data)
-            elif data_len != len(token.data):
+                data_len = len(data)
+            elif data_len != len(data):
                 raise ValueError("Inconsistent line lengths")
 
             block_count += 1
@@ -131,7 +137,7 @@ def read(fin, alphabet=None):
 #     space and then the sequence.
 
 
-def _scan(fin):
+def _scan(fin: TextIO) -> Iterator[Token]:
     """Scan a clustal format MSA file and yield tokens.
     The basic file structure is
         begin_document
@@ -198,10 +204,9 @@ def _scan(fin):
     if state == block:
         yield Token("end_block")
     yield Token("end")
-    return
 
 
-def write(fout, seqs):
+def write(fout: TextIO, seqs: SeqList) -> None:
     """Write 'seqs' to 'fout' as text in clustal format"""
     header = "CLUSTAL W (1.81) multiple sequence alignment"
     name_width = 17
@@ -215,4 +220,5 @@ def write(fout, seqs):
             end = min(start + seq_width, len(s))
             print(s.name.ljust(name_width), end="", file=fout)
             print(s[start:end], file=fout)
+
         print(file=fout)

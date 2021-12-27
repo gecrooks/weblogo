@@ -31,6 +31,8 @@ column is the sequence itself. The columns are separated by a single tab ("\\t")
 
 """
 
+from typing import Iterator, List, TextIO
+
 from ..seq import Alphabet, Seq, SeqList
 
 names = ("table", "tab")
@@ -50,7 +52,7 @@ EC0010	MGNTKLANPAPLGLMGFGMTTILLNLHNVGYFALDGIILAMGIFYGGIAQ
 """
 
 
-def read(fin, alphabet=None):
+def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
     """Read and parse file.
 
     Args:
@@ -65,13 +67,13 @@ def read(fin, alphabet=None):
     return SeqList(seqs)
 
 
-def iterseq(fin, alphabet=None):
+def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Iterator[Seq]:
     """Parse a file and generate sequences.
 
     Args:
         fin -- A stream or file to read
         alphabet -- The expected alphabet of the data, if given
-    Yeilds:
+    Yields:
         Seq -- One alphabetic sequence at a time.
     Raises:
         ValueError -- If the file is unparsable
@@ -92,7 +94,7 @@ def iterseq(fin, alphabet=None):
         yield Seq(columns[1], alphabet=alphabet, name=columns[0])
 
 
-def write(fout, seqs):
+def write(fout: TextIO, seqs: List[Seq]) -> None:
     """Write a two column, tab-delimited file.
 
     Args:
@@ -103,7 +105,7 @@ def write(fout, seqs):
         writeseq(fout, s)
 
 
-def writeseq(fout, seq):
+def writeseq(fout: TextIO, seq: Seq) -> None:
     """Write a single sequence in fasta format.
 
     Args:

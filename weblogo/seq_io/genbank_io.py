@@ -7,6 +7,8 @@ Currently only reads sequence data and not annotations.
 
 """
 
+from typing import Iterator, TextIO
+
 from ..seq import Alphabet, Seq, SeqList
 from ..utils import isblank
 
@@ -14,7 +16,7 @@ names = ("genbank",)
 extensions = ("gb", "genbank", "gbk")
 
 
-def read(fin, alphabet=None):
+def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
     """Read and parse a file of genbank records.
 
     Args:
@@ -31,14 +33,14 @@ def read(fin, alphabet=None):
     return SeqList(seqs)
 
 
-def iterseq(fin, alphabet=None):
+def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Iterator[Seq]:
     """Iterate over genbank records
 
     Args:
     fin -- A stream or file to read
     alphabet -- The expected alphabet of the data, if given
 
-    Yeilds:
+    Yields:
     Seq -- One alphabetic sequence at a time.
 
     Raises:
@@ -48,7 +50,7 @@ def iterseq(fin, alphabet=None):
 
     header, block, data = range(3)
     state = header
-    seq = []
+    seq: list = []
     for L, line in enumerate(fin):
         if isblank(line):
             continue

@@ -34,6 +34,7 @@ See:
 """
 
 import re
+from typing import Iterator, TextIO
 
 from ..seq import Alphabet, Seq, SeqList
 from ..utils import Token
@@ -76,16 +77,16 @@ extensions = ("sth", "stockholm", "align")
 header_line = re.compile(r"#\s+STOCKHOLM\s+1.\d\s+$")
 
 
-def iterseq(fin, alphabet=None):
+def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Iterator[Seq]:
     """Iterate over the sequences in the file."""
     # Default implementation
     return iter(read(fin, alphabet))
 
 
-def read(fin, alphabet=None):
+def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
     alphabet = Alphabet(alphabet)
     seq_ids = []
-    seqs = []
+    seqs: list = []
     block_count = 0
 
     for token in _scan(fin):
@@ -96,19 +97,22 @@ def read(fin, alphabet=None):
                 seq_ids.append(token.data)
                 seqs.append([])
         elif token.typeof == "seq":
-            if not alphabet.alphabetic(token.data):
+            data = token.data
+            assert data is not None
+
+            if not alphabet.alphabetic(data):
                 raise ValueError(
                     "Character on line: %d not in alphabet: %s : %s"
-                    % (token.lineno, alphabet, token.data)
+                    % (token.lineno, alphabet, data)
                 )
-            seqs[block_count].append(token.data)
+            seqs[block_count].append(data)
             block_count += 1
 
     seqs = [Seq("".join(s), alphabet, name=i) for s, i in zip(seqs, seq_ids)]
     return SeqList(seqs)
 
 
-def _scan(fin):
+def _scan(fin: TextIO) -> Iterator[Token]:
     header, body, block = range(3)
 
     yield Token("begin")

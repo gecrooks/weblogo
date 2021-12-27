@@ -63,21 +63,23 @@ GTCGTCGTTG GTGGTGGTGG TGTTG
 
 """
 
-from ..seq import Seq, SeqList
+from typing import Iterator, TextIO
+
+from ..seq import Alphabet, Seq, SeqList
 
 names = ("phylip",)
 extensions = ("phy",)
 
 
-def iterseq(fin, alphabet=None):
+def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Iterator[Seq]:
     """Iterate over the sequences in the file."""
     # Default implementation
     return iter(read(fin, alphabet))
 
 
 # Read takes in a phylip file name, reads it, processes it, and returns a SeqList
-def read(fin, alphabet=None):
-    sequence = []  # where sequences are stored
+def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
+    sequence: list = []  # where sequences are stored
     idents = []
     num_seq = 0
     num_total_seq = 0  # length of sequence of 1 species

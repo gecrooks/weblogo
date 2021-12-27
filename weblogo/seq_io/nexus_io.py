@@ -34,20 +34,22 @@ Reference:
 Maddison, Swofford, Maddison. 1997. Syst. Biol. 46(4):590-621
 """
 
-from ..seq import Seq, SeqList
+from typing import Iterator, TextIO
+
+from ..seq import Alphabet, Seq, SeqList
 from ._nexus import Nexus, safename
 
 names = ("nexus", "paup")
 extensions = ("nex", "nexus", "paup", "nxs")
 
 
-def iterseq(fin, alphabet=None):
+def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Iterator[Seq]:
     """Iterate over the sequences in the file."""
     # Default implementation
     return iter(read(fin, alphabet))
 
 
-def read(fin, alphabet=None):
+def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
     """Extract sequence data from a nexus file."""
     n = Nexus(fin)
 

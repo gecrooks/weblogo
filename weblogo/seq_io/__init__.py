@@ -138,7 +138,8 @@ Attributes :
 #    - http://www.genomatix.de/online_help/help/sequence_formats.html
 
 
-from typing.io import TextIO
+from types import ModuleType
+from typing import List, TextIO
 
 from ..seq import Alphabet, SeqList
 from . import genbank_io  # null_io,
@@ -194,23 +195,23 @@ formats = (
 )
 
 
-def format_names():
+def format_names() -> dict:
     """Return a map between format names and format modules"""
     global formats
     fnames = {}
     for f in formats:
-        for name in f.names:
+        for name in f.names:  # type: ignore
             assert name not in fnames  # Insanity check
             fnames[name] = f
     return fnames
 
 
-def format_extensions():
+def format_extensions() -> dict:
     """Return a map between filename extensions and sequence file types"""
     global formats
     fext = {}
     for f in formats:
-        for ext in f.extensions:
+        for ext in f.extensions:  # type: ignore
             assert ext not in fext  # Insanity check
             fext[ext] = f
     return fext
@@ -237,7 +238,7 @@ _parsers = (
 )
 
 
-def _get_parsers(fin):
+def _get_parsers(fin: TextIO) -> List[ModuleType]:
     global _parsers
 
     fnames = format_names()
@@ -281,9 +282,9 @@ def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
     for p in parsers:
         fin.seek(0)
         try:
-            return p.read(fin, alphabet)
+            return p.read(fin, alphabet)  # type: ignore
         except ValueError:
             pass
 
-    names = ", ".join([p.names[0] for p in parsers])
+    names = ", ".join([p.names[0] for p in parsers])  # type: ignore
     raise ValueError("Cannot parse sequence file: Tried %s " % names)
