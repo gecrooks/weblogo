@@ -23,11 +23,17 @@ A sequence logo is a graphical representation of an amino acid or nucleic acid m
 
 
 ### Installation
-If the python package <code>pip</code> has been installed, then WebLogo and its dependencies can be downloaded and installed with a single command:
+To install with pip:
 
 ```sh
-$ sudo pip install weblogo
+$ pip install weblogo
 ```
+
+To install with conda:
+```sh
+$ conda install -c bioconda weblogo
+```
+
 
 ### Development
 To install the development version of WebLogo, clone the github repository. 

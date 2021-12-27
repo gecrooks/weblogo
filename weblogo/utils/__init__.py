@@ -26,7 +26,8 @@
 """Extra utilities and core classes not in standard python.
 """
 
-from typing import Any, Iterable, List, TextIO
+
+from typing import Any, ByteString, Iterable, List, TextIO
 
 import pkg_resources
 
@@ -239,7 +240,11 @@ class ArgumentError(ValueError):
 
 
 # TODO: Replace with direct calls to pkg_resources
-def resource_string(modulename: str, resource: str, basefilename: str = None) -> bytes:
+
+
+def resource_string(
+    modulename: str, resource: str, basefilename: str = None
+) -> ByteString:
     """Locate and return a resource as a string.
     >>> f = resource_string( __name__, 'somedatafile', __file__)
     """

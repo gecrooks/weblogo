@@ -29,7 +29,8 @@ Null sequence IO. Acts like /dev/null. Read returns empty sequences or sequence 
 writes do nothing.
 """
 
-from typing import Generator, Iterable, TextIO
+
+from typing import Iterator, TextIO
 
 from ..seq import Alphabet, Seq, SeqList
 
@@ -44,7 +45,7 @@ def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
     return SeqList([])
 
 
-def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Iterable[Seq]:
+def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Iterator[Seq]:
     assert fin is not None
     if alphabet is not None:
         pass
