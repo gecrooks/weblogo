@@ -39,7 +39,7 @@ Ref :
 
 
 import re
-from typing import Iterator, List, TextIO
+from typing import Iterator, TextIO
 
 from ..seq import Alphabet, Seq, SeqList
 from ..utils import Token
