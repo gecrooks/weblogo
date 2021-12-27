@@ -50,6 +50,7 @@ ttacctgctacgccagccttctgtgcgcgcaactgtctggtcccgcccc2
 
 """
 
+from typing import IO, Iterable, List, Optional
 from ..seq import Alphabet, Seq, SeqList
 from ..utils import remove_whitespace
 
@@ -77,7 +78,7 @@ ttacctgctacgccagccttctgtgcgcgcaactgtctggtcccgcccc2
 """
 
 
-def read(fin, alphabet=None):
+def read(fin: IO, alphabet: Alphabet = None) -> SeqList:
     """Read and parse an IG file.
 
     Args:
@@ -92,25 +93,32 @@ def read(fin, alphabet=None):
     return SeqList(seqs)
 
 
-def iterseq(fin, alphabet=None):
+def iterseq(fin: IO, alphabet: Alphabet = None) -> Iterable[Seq]:
     """Parse an IG file and generate sequences.
 
     Args:
         fin -- A stream or file to read
         alphabet -- The expected alphabet of the data, if given
-    Yeilds:
+    Yields:
         Seq -- One alphabetic sequence at a time.
     Raises:
         ValueError -- If the file is unparsable
     """
     alphabet = Alphabet(alphabet)
 
-    seqs = []
-    header = []
+    seqs: list = []
+    header: list = []
     start_lineno = -1
     name = None
 
-    def build_seq(seqs, alphabet, name, comments, lineno):
+    def build_seq(
+        seqs: List[Seq],
+        alphabet: Alphabet,
+        name: Optional[str],
+        comments: List[str],
+        lineno: int,
+    ) -> Seq:
+
         try:
             desc = "\n".join(comments)
             s = Seq("".join(seqs), alphabet, name=name, description=desc)
@@ -151,7 +159,7 @@ def iterseq(fin, alphabet=None):
     return
 
 
-def write(fout, seqs):
+def write(fout: IO, seqs: SeqList) -> None:
     """Write an IG file.
 
     Args:
@@ -164,16 +172,17 @@ def write(fout, seqs):
         writeseq(fout, s)
 
 
-def writeseq(fout, seq):
+def writeseq(fout: IO, seq: Seq) -> None:
     """Write a single sequence in IG format.
 
     Args:
-        afile -- A writable stream.
+        fout -- A writable stream.
         seq  -- A Seq instance
     Raises:
         ValueError -- If a sequence is missing a name
     """
     desc = seq.description or ""
+
     # We prepend ';' to each line
     for h in desc.splitlines():
         print(";" + h, file=fout)
