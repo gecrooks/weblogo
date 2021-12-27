@@ -7,7 +7,7 @@ Currently only reads sequence data and not annotations.
 
 """
 
-from typing import IO, Iterator, List, TextIO
+from typing import Iterator, TextIO
 
 from ..seq import Alphabet, Seq, SeqList
 from ..utils import isblank

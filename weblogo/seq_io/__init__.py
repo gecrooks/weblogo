@@ -139,7 +139,7 @@ Attributes :
 
 
 from types import ModuleType
-from typing import IO, List, TextIO, Union
+from typing import List, TextIO
 
 from ..seq import Alphabet, SeqList
 from . import genbank_io  # null_io,

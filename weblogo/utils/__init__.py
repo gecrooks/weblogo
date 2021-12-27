@@ -27,7 +27,7 @@
 """
 
 
-from typing import Any, ByteString, Iterable, List, TextIO
+from typing import Any, Iterable, List, TextIO
 
 import pkg_resources
 
