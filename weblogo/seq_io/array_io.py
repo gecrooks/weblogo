@@ -82,7 +82,7 @@ def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Generator:
     Args:
         fin -- A stream or file to read
         alphabet -- The expected alphabet of the data, if given
-    Yeilds:
+    Yields:
         Seq -- One alphabetic sequence at a time.
     Raises:
         ValueError -- If the file is unparsable
