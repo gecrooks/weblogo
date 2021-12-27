@@ -137,7 +137,7 @@ def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
 #     space and then the sequence.
 
 
-def _scan(fin: TextIO) -> Iterator[Token]:
+def _scan(fin: TextIO) -> None:
     """Scan a clustal format MSA file and yield tokens.
     The basic file structure is
         begin_document
@@ -207,7 +207,7 @@ def _scan(fin: TextIO) -> Iterator[Token]:
     return
 
 
-def write(fout: TextIO, seqs: List[Seq]) -> None:
+def write(fout: TextIO, seqs: SeqList) -> None:
     """Write 'seqs' to 'fout' as text in clustal format"""
     header = "CLUSTAL W (1.81) multiple sequence alignment"
     name_width = 17
@@ -221,4 +221,5 @@ def write(fout: TextIO, seqs: List[Seq]) -> None:
             end = min(start + seq_width, len(s))
             print(s.name.ljust(name_width), end="", file=fout)
             print(s[start:end], file=fout)
+
         print(file=fout)
