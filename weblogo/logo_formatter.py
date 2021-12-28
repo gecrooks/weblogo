@@ -10,6 +10,7 @@ import shutil
 from math import log
 from string import Template
 from subprocess import PIPE, Popen
+from typing import Optional
 
 from .color import Color
 from .logo import LogoData, LogoFormat
@@ -189,6 +190,11 @@ def eps_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
 
     data.append("StartLine")
 
+    # assert checks for logoformat attributes that are intialized to None
+    assert logoformat.logo_start is not None
+    assert logoformat.first_index is not None
+    assert logoformat.logo_end is not None
+
     seq_from = logoformat.logo_start - logoformat.first_index
     seq_to = logoformat.logo_end - logoformat.first_index + 1
 
@@ -286,7 +292,7 @@ default_formatter = eps_formatter
 """The default logo formatter."""
 
 
-class GhostscriptAPI(object):
+class GhostscriptAPI:
     """Interface to the command line program Ghostscript ('gs')"""
 
     formats = ("png", "pdf", "jpeg")
@@ -313,7 +319,9 @@ class GhostscriptAPI(object):
 
     def version(self) -> bytes:
         """Returns: The ghostscript version string"""
+
         args = [self.command, "--version"]
+
         try:
             p = Popen(args, stdout=PIPE)
             (out, err) = p.communicate()
@@ -327,9 +335,9 @@ class GhostscriptAPI(object):
         self,
         format: str,
         postscript: str,
-        width: int,
-        height: int,
-        resolution: int = 300,
+        width: Optional[float],
+        height: Optional[float],
+        resolution: Optional[float] = 300.0,
     ) -> bytes:
         """Convert a string of postscript into a different graphical format
 
@@ -362,6 +370,8 @@ class GhostscriptAPI(object):
 
         if device != "pdf":
             args.append("-r%s" % str(resolution))
+            assert resolution is not None
+
             if resolution < 300:  # Antialias if resolution is Less than 300 DPI
                 args.append("-dGraphicsAlphaBits=4")
                 args.append("-dTextAlphaBits=4")
