@@ -41,11 +41,12 @@
 
 import os
 import sys
+
 from datetime import datetime
 from io import StringIO, TextIOWrapper
 from math import log, sqrt
-from typing import Any, Callable, Dict, List, Optional, TextIO, Union
-from urllib import parse
+from typing import Any, Callable, Dict, List, Optional, Union
+
 from urllib.parse import urlparse, urlunparse
 from urllib.request import Request, urlopen
 
@@ -473,6 +474,7 @@ class LogoFormat(LogoOptions):
         # Inclusive upper and lower bounds
         # FIXME: Validate here. Move from eps_formatter
 
+        # asserts checks that defaults that were initialized to None have been set
         assert self.first_index is not None
         assert self.seqlen is not None
 
