@@ -8,7 +8,7 @@ and data formats can decoded to strings, e.g. eps_as_string = eps_data.decode()
 import os
 import shutil
 from math import log
-from string import Template
+from string import Template, ascii_lowercase
 from subprocess import PIPE, Popen
 from typing import Optional
 
@@ -214,13 +214,18 @@ def eps_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
         data.append("(%s) StartStack" % logoformat.annotate[seq_index])
 
         if conv_factor:
+            assert logodata.entropy is not None
+            assert logoformat.unit_name is not None
+
             stack_height = logodata.entropy[seq_index] * std_units[logoformat.unit_name]
         else:
             stack_height = 1.0  # probability   # pragma: no cover
 
         # Sort by frequency. If equal frequency then reverse alphabetic
-        # (So sort reverse alphabetic first, then frequencty)
+        # (So sort reverse alphabetic first, then frequency)
         # TODO: doublecheck this actual works
+        assert logodata.alphabet is not None
+        assert logodata.counts is not None
         s = list(zip(logodata.counts[seq_index], logodata.alphabet))
         s.sort(key=lambda x: x[1])
         s.reverse()
@@ -232,11 +237,17 @@ def eps_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
         C = float(sum(logodata.counts[seq_index]))
         if C > 0.0:
             fraction_width = 1.0
+
+            assert logoformat.scale_width is not None
             if logoformat.scale_width:
+                assert logodata.weight is not None
                 fraction_width = logodata.weight[seq_index]
                 # print(fraction_width, file=sys.stderr)
+
             for rank, c in enumerate(s):
+                assert logoformat.color_scheme is not None
                 color = logoformat.color_scheme.symbol_color(seq_index, c[1], rank)
+
                 data.append(
                     " %f %f %s (%s) ShowSymbol"
                     % (
@@ -251,10 +262,13 @@ def eps_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
         if logodata.entropy_interval is not None and conv_factor and C > 0.0:
 
             low, high = logodata.entropy_interval[seq_index]
+
+            assert logodata.entropy is not None
             center = logodata.entropy[seq_index]
             low *= conv_factor
             high *= conv_factor
             center *= conv_factor
+
             if high > logoformat.yaxis_scale:
                 high = logoformat.yaxis_scale  # pragma: no cover
 
