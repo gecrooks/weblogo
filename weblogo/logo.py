@@ -44,7 +44,7 @@ import sys
 from datetime import datetime
 from io import StringIO, TextIOWrapper
 from math import log, sqrt
-from typing import Any, Callable, Dict, List, Optional, Union
+from typing import Any, Callable, Dict, Iterable, Iterator, List, Optional, Union
 from urllib.parse import urlparse, urlunparse
 from urllib.request import Request, urlopen
 
@@ -377,6 +377,7 @@ class LogoFormat(LogoOptions):
 
     >>> logodata = LogoData.from_seqs(seqs)
     >>> logooptions = LogoOptions()
+
     >>> logooptions.title = "A Logo Title"
     >>> format = LogoFormat(logodata, logooptions)
 
@@ -524,6 +525,7 @@ class LogoFormat(LogoOptions):
                 if self.alphabet is None:
                     raise ArgumentError("Need an alphabet", "alphabet")
 
+                assert self.alphabet is not None
                 self.yaxis_scale = log(len(self.alphabet)) * conversion_factor
             else:
                 self.yaxis_scale = 1.0  # probability units
@@ -830,9 +832,9 @@ class LogoData:
         self,
         length: Optional[int] = None,
         alphabet: Optional[Alphabet] = None,
-        counts: Optional[np.ndarray] = None,
-        entropy: Optional[np.ndarray] = None,
-        entropy_interval: Optional[np.ndarray] = None,
+        counts: np.ndarray = None,
+        entropy: np.ndarray = None,
+        entropy_interval: np.ndarray = None,
         weight: Optional[np.ndarray] = None,
     ) -> None:
         """Creates a new LogoData object"""
@@ -845,7 +847,7 @@ class LogoData:
 
     @classmethod
     def from_counts(
-        cls, alphabet: Alphabet, counts: np.ndarray, prior: np.ndarray = None
+        cls, alphabet: Optional[Alphabet], counts: np.ndarray, prior: np.ndarray = None
     ) -> "LogoData":
         """Build a LogoData object from counts."""
         # Counts is a Motif object?
