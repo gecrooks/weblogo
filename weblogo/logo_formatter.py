@@ -45,6 +45,8 @@ def pdf_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
     """Generate a logo in PDF format."""
     eps = eps_formatter(logodata, logoformat).decode()
     gs = GhostscriptAPI()
+    assert logoformat.logo_height is not None
+    assert logoformat.logo_width is not None
     return gs.convert("pdf", eps, logoformat.logo_width, logoformat.logo_height)
 
 
@@ -349,9 +351,9 @@ class GhostscriptAPI:
         self,
         format: str,
         postscript: str,
-        width: Optional[float],
-        height: Optional[float],
-        resolution: Optional[float] = 300.0,
+        width: Optional[int],
+        height: Optional[int],
+        resolution: int = 300,
     ) -> bytes:
         """Convert a string of postscript into a different graphical format
 

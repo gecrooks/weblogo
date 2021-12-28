@@ -325,7 +325,7 @@ class LogoOptions:
         self.errorbar_width_fraction = 0.25
         self.errorbar_gray = 0.75
 
-        self.resolution = 96.0  # Dots per inch
+        self.resolution: int = 96  # Dots per inch
 
         self.default_color = Color.by_name("black")
         self.color_scheme: Optional[ColorScheme] = None
@@ -408,8 +408,8 @@ class LogoFormat(LogoOptions):
         self.xaxis_label_height = None
         self.line_height = None
         self.line_width = None
-        self.logo_height: Optional[float] = None
-        self.logo_width: Optional[float] = None
+        self.logo_height: Optional[int] = None
+        self.logo_width: Optional[int] = None
         self.creation_date = None
         self.end_type = None
 
