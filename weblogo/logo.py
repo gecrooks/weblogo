@@ -42,9 +42,9 @@
 import os
 import sys
 from datetime import datetime
-from io import StringIO
+from io import StringIO, TextIOWrapper
 from math import log, sqrt
-from typing.io import TextIO
+from typing import Any, Callable, Dict, List, Optional, Union
 from urllib.parse import urlparse, urlunparse
 from urllib.request import Request, urlopen
 
@@ -77,6 +77,7 @@ from .seq import (
 from .utils import ArgumentError, isfloat, stdrepr
 
 # Shorten development version string of the form weblogo-3.6.1.dev43+g64d9f12.d20190304
+
 if __version__.find("+") != -1:
     __version__ = __version__[: __version__.find("+")]
 
@@ -123,7 +124,7 @@ description = "Create sequence logos from biological sequence alignments."
 release_description = "WebLogo %s" % (__version__)
 
 
-def cgi(htdocs_directory):  # pragma: no cover
+def cgi(htdocs_directory: str) -> None:  # pragma: no cover
     import weblogo._cgi
 
     weblogo._cgi.main(htdocs_directory)
@@ -199,7 +200,7 @@ std_percentCG = {
 # Nat Biotechnol 2004, 22:547-53
 
 
-class LogoOptions(object):
+class LogoOptions:
     """A container for all logo formatting options. Not all of these
     are directly accessible through the CLI or web interfaces.
 
@@ -279,7 +280,7 @@ class LogoOptions(object):
 
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: dict) -> None:
         """Create a new LogoOptions instance.
 
         >>> logooptions = LogoOptions(logo_title = "Some Title String")
@@ -288,7 +289,7 @@ class LogoOptions(object):
 
         """
 
-        self.alphabet = None
+        self.alphabet: Optional[Alphabet] = None
 
         self.creator_text = release_description
 
@@ -300,10 +301,10 @@ class LogoOptions(object):
 
         self.show_yaxis = True
         # yaxis_lable default depends on other settings. See LogoFormat
-        self.yaxis_label = None
+        self.yaxis_label: Optional[str] = None
         self.yaxis_tic_interval = 1.0
         self.yaxis_minor_tic_ratio = 5
-        self.yaxis_scale = None
+        self.yaxis_scale: Optional[float] = None
 
         self.show_xaxis = True
         self.xaxis_label = ""
@@ -324,10 +325,10 @@ class LogoOptions(object):
         self.errorbar_width_fraction = 0.25
         self.errorbar_gray = 0.75
 
-        self.resolution = 96.0  # Dots per inch
+        self.resolution: int = 96  # Dots per inch
 
         self.default_color = Color.by_name("black")
-        self.color_scheme = None
+        self.color_scheme: Optional[ColorScheme] = None
         # self.show_color_key = False # NOT yet implemented
 
         self.debug = False
@@ -352,8 +353,8 @@ class LogoOptions(object):
         self.title_font = "ArialMT"
 
         self.first_index = 1
-        self.logo_start = None
-        self.logo_end = None
+        self.logo_start: Optional[int] = None
+        self.logo_end: Optional[int] = None
         self.scale_width = True
 
         self.reverse_stacks = True  # If true, draw stacks with largest letters on top.
@@ -361,7 +362,7 @@ class LogoOptions(object):
         for k, v in kwargs.items():
             setattr(self, k, v)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         attributes = list(vars(self).keys())
         attributes.sort()
         return stdrepr(self, attributes)
@@ -376,6 +377,7 @@ class LogoFormat(LogoOptions):
 
     >>> logodata = LogoData.from_seqs(seqs)
     >>> logooptions = LogoOptions()
+
     >>> logooptions.title = "A Logo Title"
     >>> format = LogoFormat(logodata, logooptions)
 
@@ -383,14 +385,14 @@ class LogoFormat(LogoOptions):
         ArgumentError: if arguments are invalid.
     """
 
-    def __init__(self, logodata, logooptions=None):
+    def __init__(self, logodata: "LogoData", logooptions: LogoOptions = None) -> None:
         """Create a new LogoFormat instance."""
 
         if logooptions is not None:
             self.__dict__.update(logooptions.__dict__)
 
-        self.alphabet = logodata.alphabet
-        self.seqlen = logodata.length
+        self.alphabet: Optional[Alphabet] = logodata.alphabet
+        self.seqlen: Optional[int] = logodata.length
 
         # Derived parameters.
         self.show_title = False
@@ -406,8 +408,8 @@ class LogoFormat(LogoOptions):
         self.xaxis_label_height = None
         self.line_height = None
         self.line_width = None
-        self.logo_height = None
-        self.logo_width = None
+        self.logo_height: Optional[int] = None
+        self.logo_width: Optional[int] = None
         self.creation_date = None
         self.end_type = None
 
@@ -470,13 +472,23 @@ class LogoFormat(LogoOptions):
 
         # Inclusive upper and lower bounds
         # FIXME: Validate here. Move from eps_formatter
+
+        # asserts checks that defaults that were initialized to None have been set
+        assert self.first_index is not None
+        assert self.seqlen is not None
+
         if self.logo_start is None:
             self.logo_start = self.first_index
+
+        assert self.logo_start is not None
 
         if self.logo_end is None:
             self.logo_end = self.seqlen + self.first_index - 1
 
+        assert self.logo_end is not None
+        assert self.logo_start is not None
         self.total_stacks = self.logo_end - self.logo_start + 1
+
         if self.total_stacks <= 0:
             raise ArgumentError("Logo must contain at least one stack", "logo_end")
 
@@ -500,6 +512,7 @@ class LogoFormat(LogoOptions):
         if self.yaxis_label is None:
             self.yaxis_label = self.unit_name
 
+        assert self.yaxis_label is not None
         if self.yaxis_label:
             self.show_yaxis_label = True
         else:
@@ -512,6 +525,7 @@ class LogoFormat(LogoOptions):
                 if self.alphabet is None:
                     raise ArgumentError("Need an alphabet", "alphabet")
 
+                assert self.alphabet is not None
                 self.yaxis_scale = log(len(self.alphabet)) * conversion_factor
             else:
                 self.yaxis_scale = 1.0  # probability units
@@ -607,7 +621,8 @@ class LogoFormat(LogoOptions):
         self.end_type = end_type
 
         if self.annotate is None:
-            self.annotate = []
+            self.annotate: list = []
+
             for i in range(self.seqlen):
                 index = i + self.first_index
                 if index % self.number_interval == 0:
@@ -626,13 +641,15 @@ class LogoFormat(LogoOptions):
 # End class LogoFormat
 
 
-def parse_prior(composition, alphabet, weight=None):
+def parse_prior(
+    composition: Any, alphabet: Alphabet, weight: float = None
+) -> Optional[np.ndarray]:
     """Parse a description of the expected monomer distribution of a sequence.
 
     Valid compositions:
 
     * None or 'none'
-        No composition sepecified
+        No composition specified
     * 'auto' or 'automatic'
         Use the typical average distribution
         for proteins and an equiprobable distribution for
@@ -645,9 +662,12 @@ def parse_prior(composition, alphabet, weight=None):
         Use the average CG percentage for the species's genome.
     * An explicit distribution
         e.g. {'A':10, 'C':40, 'G':40, 'T':10}
+
+    returns a dict of {monomer: probability} pairs.
     """
     if composition is None:
         return None
+
     comp = composition.strip()
 
     if comp.lower() == "none":
@@ -660,7 +680,9 @@ def parse_prior(composition, alphabet, weight=None):
         raise ValueError("Weight cannot be negative.")
 
     if comp.lower() == "equiprobable":
+        prior: np.ndarray
         prior = weight * equiprobable_distribution(len(alphabet))
+
     elif comp.lower() == "auto" or comp.lower() == "automatic":
         if alphabet == unambiguous_protein_alphabet:
             prior = weight * asarray(aa_composition, float64)
@@ -715,7 +737,7 @@ def parse_prior(composition, alphabet, weight=None):
     return prior
 
 
-def base_distribution(percentCG):
+def base_distribution(percentCG: float) -> np.ndarray:
     A = (1.0 - (percentCG / 100.0)) / 2.0
     C = (percentCG / 100.0) / 2.0
     G = (percentCG / 100.0) / 2.0
@@ -727,9 +749,9 @@ def equiprobable_distribution(length: int) -> np.ndarray:
     return ones((length), float64) / length
 
 
-def _seq_formats():
+def _seq_formats() -> Dict[str, str]:
     """Return a dictionary mapping between the names of formats for the sequence data
-    and the corresponing parsers.
+    and the corresponding parsers.
     """
     # Add position weight matrix formats to input parsers by hand
     fin_choices = dict(seq_io.format_names())
@@ -738,21 +760,21 @@ def _seq_formats():
     return fin_choices
 
 
-def _seq_names():
+def _seq_names() -> List[str]:
     """Returns a list of the names of accepted sequence data formats."""
-    fin_names = [f.names[0] for f in seq_io.formats]
+    fin_names = [f.names[0] for f in seq_io.formats]  # type: ignore
     fin_names.remove("plain")
     fin_names.append("transfac")
     return fin_names
 
 
 def read_seq_data(
-    fin,
-    input_parser=seq_io.read,
-    alphabet=None,
-    ignore_lower_case=False,
-    max_file_size=0,
-):
+    fin: Union[StringIO, TextIOWrapper, None],
+    input_parser: Callable = seq_io.read,
+    alphabet: Alphabet = None,
+    ignore_lower_case: bool = False,
+    max_file_size: int = 0,
+) -> SeqList:
     """Read sequence data from the input stream and return a seqs object.
 
     The environment variable WEBLOGO_MAX_FILE_SIZE overides the max_file_size argument.
@@ -763,8 +785,11 @@ def read_seq_data(
 
     # If max_file_size is set, or if fin==stdin (which is non-seekable), we
     # read the data and replace fin with a StringIO object.
+    assert fin is not None
+
     if max_file_size > 0:
         data = fin.read(max_file_size)
+
         more_data = fin.read(2)
         if more_data != "":
             raise IOError("File exceeds maximum allowed size: %d bytes" % max_file_size)
@@ -791,7 +816,7 @@ def read_seq_data(
     return seqs
 
 
-class LogoData(object):
+class LogoData:
     """The data needed to generate a sequence logo.
 
     Args:
@@ -805,13 +830,13 @@ class LogoData(object):
 
     def __init__(
         self,
-        length=None,
-        alphabet=None,
-        counts=None,
-        entropy=None,
-        entropy_interval=None,
-        weight=None,
-    ):
+        length: Optional[int] = None,
+        alphabet: Optional[Alphabet] = None,
+        counts: np.ndarray = None,
+        entropy: np.ndarray = None,
+        entropy_interval: np.ndarray = None,
+        weight: Optional[np.ndarray] = None,
+    ) -> None:
         """Creates a new LogoData object"""
         self.length = length
         self.alphabet = alphabet
@@ -822,7 +847,7 @@ class LogoData(object):
 
     @classmethod
     def from_counts(
-        cls, alphabet: Alphabet, counts: np.ndarray, prior: np.ndarray = None
+        cls, alphabet: Optional[Alphabet], counts: np.ndarray, prior: np.ndarray = None
     ) -> "LogoData":
         """Build a LogoData object from counts."""
         # Counts is a Motif object?
@@ -905,13 +930,22 @@ class LogoData(object):
         print("#\t", file=out)
         # Show column names
         print("#", end="\t", file=out)
+
+        # asserts checks that defaults that were initialized to None have been set
+        assert self.alphabet is not None
+        assert self.length is not None
+        assert self.counts is not None
+        assert self.entropy is not None
+
         for a in self.alphabet:
             print(a, end=" \t", file=out)
         print("Entropy\tLow\tHigh\tWeight", file=out)
 
         # Write the data table
+
         for i in range(self.length):
             print(i + 1, end=" \t", file=out)
+
             for c in self.counts[i]:
                 print(c, end=" \t", file=out)
             print("%6.4f" % self.entropy[i], end=" \t", file=out)
@@ -928,7 +962,7 @@ class LogoData(object):
         return out.getvalue()
 
 
-def _from_URL_fileopen(target_url: str) -> TextIO:  # pragma: no cover
+def _from_URL_fileopen(target_url: str) -> StringIO:  # pragma: no cover
     """opens files from a remote URL location"""
 
     # parsing url in component parts

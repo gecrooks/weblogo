@@ -60,7 +60,7 @@ from .seq import Alphabet
 
 
 # TODO: Make as abstract
-class ColorRule(object):
+class ColorRule:
     """
     Define an interface for coloring individual symbols based on their position
     and identity.  Subclasses should reimplement the symbol_color() method to
