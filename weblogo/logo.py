@@ -44,7 +44,7 @@ import sys
 from datetime import datetime
 from io import StringIO, TextIOWrapper
 from math import log, sqrt
-from typing import Any, Callable, Dict, List, Optional, Union
+from typing import Any, Callable, Dict, Iterable, Iterator, List, Optional, Union
 from urllib.parse import urlparse, urlunparse
 from urllib.request import Request, urlopen
 
