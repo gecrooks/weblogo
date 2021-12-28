@@ -44,8 +44,7 @@ import sys
 from datetime import datetime
 from io import StringIO, TextIOWrapper
 from math import log, sqrt
-from typing import Any, Callable, Dict, List, Optional, TextIO, Union
-from urllib import parse
+from typing import Any, Callable, Dict, List, Optional, Union
 from urllib.parse import urlparse, urlunparse
 from urllib.request import Request, urlopen
 
@@ -302,10 +301,10 @@ class LogoOptions:
 
         self.show_yaxis = True
         # yaxis_lable default depends on other settings. See LogoFormat
-        self.yaxis_label = None
+        self.yaxis_label: Optional[str] = None
         self.yaxis_tic_interval = 1.0
         self.yaxis_minor_tic_ratio = 5
-        self.yaxis_scale = None
+        self.yaxis_scale: Optional[float] = None
 
         self.show_xaxis = True
         self.xaxis_label = ""
@@ -329,7 +328,7 @@ class LogoOptions:
         self.resolution = 96.0  # Dots per inch
 
         self.default_color = Color.by_name("black")
-        self.color_scheme = None
+        self.color_scheme: Optional[ColorScheme] = None
         # self.show_color_key = False # NOT yet implemented
 
         self.debug = False
@@ -354,8 +353,8 @@ class LogoOptions:
         self.title_font = "ArialMT"
 
         self.first_index = 1
-        self.logo_start = None
-        self.logo_end = None
+        self.logo_start: Optional[int] = None
+        self.logo_end: Optional[int] = None
         self.scale_width = True
 
         self.reverse_stacks = True  # If true, draw stacks with largest letters on top.
@@ -473,17 +472,22 @@ class LogoFormat(LogoOptions):
         # Inclusive upper and lower bounds
         # FIXME: Validate here. Move from eps_formatter
 
+        # asserts checks that defaults that were initialized to None have been set
         assert self.first_index is not None
         assert self.seqlen is not None
-        assert self.logo_start is not None
 
         if self.logo_start is None:
             self.logo_start = self.first_index
 
+        assert self.logo_start is not None
+
         if self.logo_end is None:
             self.logo_end = self.seqlen + self.first_index - 1
 
+        assert self.logo_end is not None
+        assert self.logo_start is not None
         self.total_stacks = self.logo_end - self.logo_start + 1
+
         if self.total_stacks <= 0:
             raise ArgumentError("Logo must contain at least one stack", "logo_end")
 
@@ -507,6 +511,7 @@ class LogoFormat(LogoOptions):
         if self.yaxis_label is None:
             self.yaxis_label = self.unit_name
 
+        assert self.yaxis_label is not None
         if self.yaxis_label:
             self.show_yaxis_label = True
         else:
@@ -614,7 +619,8 @@ class LogoFormat(LogoOptions):
         self.end_type = end_type
 
         if self.annotate is None:
-            self.annotate = []
+            self.annotate: list = []
+
             for i in range(self.seqlen):
                 index = i + self.first_index
                 if index % self.number_interval == 0:
@@ -702,22 +708,22 @@ def parse_prior(
 
         if len(explicit) != len(alphabet) * 2:
             raise ValueError("Explicit prior does not match length of alphabet")
-        priors = -ones(len(alphabet), float64)
+        prior = -ones(len(alphabet), float64)
         try:
             for r in range(len(explicit) // 2):
                 letter = explicit[r * 2]
                 index = alphabet.ord(letter)
                 value = float(explicit[r * 2 + 1])
-                priors[index] = value
+                prior[index] = value
         except ValueError:
             raise ValueError("Cannot parse explicit composition")
 
-        if any(priors == -1.0):
+        if any(prior == -1.0):
             raise ValueError(
                 "Explicit prior does not match alphabet"
             )  # pragma: no cover
-        priors /= sum(priors)
-        priors *= weight
+        prior /= sum(prior)
+        prior *= weight
 
     else:
         raise ValueError("Unknown or malformed composition: %s" % composition)
@@ -778,6 +784,7 @@ def read_seq_data(
     # If max_file_size is set, or if fin==stdin (which is non-seekable), we
     # read the data and replace fin with a StringIO object.
     assert fin is not None
+
     if max_file_size > 0:
         data = fin.read(max_file_size)
 
