@@ -130,7 +130,7 @@ Authors:
 
 import codecs
 from array import array
-from typing import Iterator, Sequence, Tuple
+from typing import Iterator, Sequence, Tuple, Union
 
 __all__ = [
     "Alphabet",
@@ -281,7 +281,7 @@ class Alphabet(object):
         s = "".join(c)
         return Seq(s, self)
 
-    def ords(self, string: "Seq"):
+    def ords(self, string: Union["Seq", str]) -> "Seq":
         """Convert an alphabetic string into a byte array of ordinals."""
         s = str(string)
         s = s.translate(self._ord_table)

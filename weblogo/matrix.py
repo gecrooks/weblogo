@@ -27,10 +27,25 @@
 Arrays indexed by alphabetic strings.
 """
 
+from typing import (
+    Any,
+    Iterable,
+    Iterator,
+    List,
+    Optional,
+    TextIO,
+    Tuple,
+    Type,
+    TypeVar,
+    Union,
+)
+
 import numpy as np
+import numpy.typing as npt
 
 from .seq import (
     Alphabet,
+    Seq,
     unambiguous_dna_alphabet,
     unambiguous_protein_alphabet,
     unambiguous_rna_alphabet,
@@ -38,6 +53,8 @@ from .seq import (
 from .utils import ischar, isint
 
 __all__ = "AlphabeticArray", "submatrix_alphabet", "SubMatrix", "Motif"
+
+T = TypeVar("T", bound=npt.NBitBase)
 
 
 class AlphabeticArray(object):
@@ -85,7 +102,12 @@ class AlphabeticArray(object):
 
     __slots__ = ["alphabets", "array"]
 
-    def __init__(self, alphabets, values=None, dtype=None):
+    def __init__(
+        self,
+        alphabets: Union[Alphabet, Tuple[Alphabet, ...], str],
+        values: Union[list, np.ndarray] = None,
+        dtype: npt.DTypeLike = None,
+    ) -> None:
         """
         Args:
         - alphabets -- a list of alphabets (as string or Alphabet objects) to
@@ -104,39 +126,43 @@ class AlphabeticArray(object):
         # A dummy object to be used in place of None in the alphabets list
         # so that we get meaningful error messages if we try to index a
         # nonalphabetic dimension with a string.
-        class NullAlphabet(object):
-            def ord(self, key):
+        class NullAlphabet:
+            def ord(self) -> None:
                 raise IndexError(
                     "This dimension does not have an alphabet"
                 )  # pragma: no cover
 
-            def ords(self, key):
+            def ords(self) -> None:
                 raise IndexError(
                     "This dimension does not have an alphabet"
                 )  # pragma: no cover
 
-        alpha = []
-        shape = []
+        alpha: list = []
+        logo_shape: List[Any] = []
         for a in alphabets:
             if isinstance(a, str):
                 a = Alphabet(a)
 
             if a is None:
-                shape.append(None)
+                logo_shape.append(None)
                 alpha.append(NullAlphabet())
+
             elif isinstance(a, Alphabet):
-                shape.append(len(a))
+                logo_shape.append(len(a))
                 alpha.append(a)
+
             else:
-                shape.append(int(a))  # pragma: no cover
+                logo_shape.append(int(a))  # pragma: no cover
                 alpha.append(None)  # pragma: no cover
 
-        shape = tuple(shape)
+        shape = tuple(logo_shape)
         if values is None:
             values = np.zeros(shape=shape, dtype=dtype)
+
         else:
             values = np.asarray(values, dtype=dtype)
             vshape = values.shape
+
             if len(shape) != len(vshape):
                 raise ValueError(
                     "The values array is the wrong shape."
@@ -149,42 +175,53 @@ class AlphabeticArray(object):
         self.array = values
         self.alphabets = tuple(alpha)
 
-    def __getitem__(self, key):
+    def __getitem__(self, key: Seq) -> Any:
         return self.array.__getitem__(self._ordkey(key))
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key: Seq, value: str) -> None:
         self.array.__setitem__(self._ordkey(key), value)
 
-    def _ordkey(self, key):
+    def _ordkey(self, key: Any) -> Union[int, np.ndarray, slice, Tuple, Alphabet, None]:
         """Convert string indices into integers. Handles characters, strings
         slices with strings, and tuples of the same. Anything else is
         unchanged.
         """
 
-        def norm(key, alpha):
+        def norm(
+            key: Any, alpha: Alphabet
+        ) -> Union[int, np.ndarray, slice, Tuple, Alphabet, None]:
             if key is None:
                 return None
+
             elif isinstance(key, str) or isinstance(key, Alphabet):
                 key = str(key)
+
                 if len(key) == 1:
                     return alpha.ord(key)
+
                 if len(key) == 0:
                     return None  # pragma: no cover
+
                 return np.asarray(alpha.ords(key))
+
             elif isinstance(key, slice):
+                assert key is not None
                 start = norm(key.start, alpha)  # pragma: no cover
                 stop = norm(key.stop, alpha)  # pragma: no cover
                 step = key.step  # pragma: no cover
+
                 return slice(start, stop, step)  # pragma: no cover
+
             else:
                 return key
 
         if isinstance(key, tuple):
             return tuple([norm(k, a) for k, a in zip(key, self.alphabets)])
+
         else:
             return norm(key, self.alphabets[0])
 
-    def index(self, keys):
+    def index(self, keys: Any) -> np.ndarray:
         """Return an array of shape (len(key1), len(key2), ...) whose values
         are indexed by keys.
 
@@ -202,28 +239,34 @@ class AlphabeticArray(object):
             for j in range(len(keys) - i - 1):
                 k = k[..., np.newaxis]
             outerkeys.append(k)
+
         return self.array.__getitem__(tuple(outerkeys))
 
-    def reindex(self, new_alphabet):
+    def reindex(
+        self, new_alphabet: Union[Alphabet, Tuple[Alphabet, ...], str]
+    ) -> "AlphabeticArray":
         """Create a new AlphabeticArray with the given alphabet. The new
         alphabet must be a subset of the current alphabet. Useful for
         extracting a submatrix or for permuting the alphabet.
         """
         new_array = self.index(new_alphabet)
+
         return AlphabeticArray(new_alphabet, new_array)
 
     # The following code is designed to proxy all attributes
     # of the wrapped array. But I'm not entirely sure that this will work as
     # intended.
-    def __getattr__(self, name):
+    def __getattr__(self, name: str) -> str:
         try:
-            return object.__getattr__(self, name)
+            return AlphabeticArray.__getattr__(self, name)
+
         except AttributeError:
             return getattr(self.array, name)
 
-    def __setattr__(self, name, value):
+    def __setattr__(self, name: str, value: str) -> None:
         try:
-            return object.__setattr__(self, name, value)
+            return AlphabeticArray.__setattr__(self, name, value)
+
         except AttributeError:  # pragma: no cover
             return setattr(self.array, name, value)  # pragma: no cover
 
@@ -263,19 +306,36 @@ class SubMatrix(AlphabeticArray):
     __slots__ = ["alphabet", "array", "name", "description", "scale"]
 
     def __init__(
-        self, alphabet, array=None, typeof=None, name=None, description=None, scale=None
-    ):
-        AlphabeticArray.__init__(self, (alphabet, alphabet), array, typeof)
+        self,
+        alphabet: Union[Alphabet, Tuple[Alphabet, ...], str] = None,
+        array: Union[list, np.ndarray] = None,
+        typeof: Optional[npt.DTypeLike] = None,
+        name: str = None,
+        description: str = None,
+        scale: float = None,
+    ) -> None:
+
+        input_alphabet: Tuple[Alphabet, ...] = (
+            alphabet,
+            alphabet,
+        )
+        AlphabeticArray.__init__(self, input_alphabet, array, typeof)
         self.alphabet = Alphabet(alphabet)
         self.name = name
         self.description = description
         self.scale = scale
 
-    def reindex(self, alphabet):
+    def reindex(
+        self, alphabet: Union[Alphabet, Tuple[Alphabet, ...], str]
+    ) -> AlphabeticArray:
         return AlphabeticArray.reindex(self, (alphabet, alphabet))
 
     @staticmethod
-    def read(fin, alphabet=None, typeof=np.float64):
+    def read(
+        fin: TextIO,
+        alphabet: Union[Alphabet, Tuple[Alphabet, ...], str] = None,
+        typeof: np.dtype = np.float64,
+    ) -> "SubMatrix":
         """Parse and return a substitution matrix
 
         Arguments:
@@ -292,6 +352,7 @@ class SubMatrix(AlphabeticArray):
         # TODO: Read DNA substitution matrixes
         if alphabet is None:
             alphabet = submatrix_alphabet
+
         L = len(alphabet)
         matrix = np.zeros((L, L), typeof)
 
@@ -377,30 +438,36 @@ class Motif(AlphabeticArray):
     _TRANSFAC_DELIM_LINES = ["XX", "//"]
 
     def __init__(
-        self, alphabet, array=None, dtype=None, name=None, description=None, scale=None
-    ):
+        self,
+        alphabet: Union[Alphabet, Tuple[Alphabet, ...], str] = None,
+        array: np.ndarray = None,
+        dtype: np.dtype = None,
+        name: str = None,
+        description: str = None,
+        scale: float = None,
+    ) -> None:
         AlphabeticArray.__init__(self, (None, alphabet), array, dtype)
         self.name = name
         self.description = description
         self.scale = scale
 
     @property
-    def alphabet(self):
+    def alphabet(self) -> Alphabet:
         return self.alphabets[1]
 
-    def reindex(self, alphabet):
-        return Motif(alphabet, AlphabeticArray.reindex(self, (None, alphabet)))
+    def reindex(self, alphabet: Union[Alphabet, Tuple[Alphabet, ...], str]) -> "Motif":
+        return Motif(alphabet, array=AlphabeticArray.reindex(self, (None, alphabet)))
 
     # These methods alter self, and therefore do not return a value.
     # (Compare to Seq objects, where the data is immutable and
     #  therefore methods return a new Seq.)
     # TODO: Should reindex (above) also act on self?
 
-    def reverse(self):
+    def reverse(self) -> None:
         """Reverse sequence data"""
         self.array = self.array[::-1]  # view into the original numpy array
 
-    def complement(self):
+    def complement(self) -> None:
         """Complement nucleic acid sequence."""
         from weblogo.seq import Alphabet, Seq
 
@@ -412,7 +479,7 @@ class Motif(AlphabeticArray):
         self.alphabets = (None, alphabet)
         self.array = m.array
 
-    def reverse_complement(self):
+    def reverse_complement(self) -> None:
         """Complements and reverses nucleic acid
         sequence (i.e. the other strand of a DNA sequence.)
         """
@@ -420,13 +487,15 @@ class Motif(AlphabeticArray):
         self.complement()
 
     @classmethod
-    def read_transfac(cls, fin, alphabet=None):
+    def read_transfac(
+        cls, fin: TextIO, alphabet: Union[Alphabet, Tuple[Alphabet, ...], str] = None
+    ) -> "Motif":
         """Parse a TRANSFAC-format PWM from a file.
         Returns a Motif object, representing the provided
         PWM along with an inferred or provided alphabet.
         """
 
-        items = []
+        items: npt.ArrayLike = []
 
         start = False
         for line in fin:
@@ -534,11 +603,12 @@ class Motif(AlphabeticArray):
                 r.pop()
 
         # items should now be a list of lists of numbers (as strings)
-        rows = len(items)
-        cols = len(items[0])
-        matrix = np.zeros((rows, cols), dtype=np.float64)
-        for r in range(rows):
-            for c in range(cols):
+        num_rows = len(items)
+        num_cols = len(items[0])
+        matrix: npt.ArrayLike = np.zeros((rows, cols), dtype=np.float64)
+
+        for r in range(num_rows):  # type: ignore
+            for c in range(num_cols):  # type: ignore
                 matrix[r, c] = float(items[r][c])
 
         if position_header:
