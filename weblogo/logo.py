@@ -710,22 +710,22 @@ def parse_prior(
 
         if len(explicit) != len(alphabet) * 2:
             raise ValueError("Explicit prior does not match length of alphabet")
-        priors = -ones(len(alphabet), float64)
+        prior = -ones(len(alphabet), float64)
         try:
             for r in range(len(explicit) // 2):
                 letter = explicit[r * 2]
                 index = alphabet.ord(letter)
                 value = float(explicit[r * 2 + 1])
-                priors[index] = value
+                prior[index] = value
         except ValueError:
             raise ValueError("Cannot parse explicit composition")
 
-        if any(priors == -1.0):
+        if any(prior == -1.0):
             raise ValueError(
                 "Explicit prior does not match alphabet"
             )  # pragma: no cover
-        priors /= sum(priors)
-        priors *= weight
+        prior /= sum(prior)
+        prior *= weight
 
     else:
         raise ValueError("Unknown or malformed composition: %s" % composition)
