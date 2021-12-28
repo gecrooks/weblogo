@@ -41,7 +41,7 @@ import shutil
 import sys
 from io import BytesIO, StringIO, TextIOWrapper
 from string import Template
-from typing import Any, Callable, List, Optional
+from typing import Any, Callable, List, Optional, Union
 
 import weblogo
 from weblogo.colorscheme import ColorScheme, SymbolColor
@@ -368,7 +368,7 @@ def main(htdocs_directory: str = None) -> None:
     sequences_url = form["sequences_url"].get_value()
 
     sequences = None
-    seq_file = None
+    seq_file: Union[StringIO, TextIOWrapper, None] = None
 
     if sequences_from_file:
         if sequences_from_textfield or sequences_url:

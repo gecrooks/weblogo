@@ -290,7 +290,7 @@ class LogoOptions:
 
         """
 
-        self.alphabet = None
+        self.alphabet: Optional[Alphabet] = None
 
         self.creator_text = release_description
 
@@ -391,9 +391,8 @@ class LogoFormat(LogoOptions):
         if logooptions is not None:
             self.__dict__.update(logooptions.__dict__)
 
-        assert logodata is not None
-        self.alphabet = logodata.alphabet
-        self.seqlen = logodata.length
+        self.alphabet: Optional[Alphabet] = logodata.alphabet
+        self.seqlen: Optional[int] = logodata.length
 
         # Derived parameters.
         self.show_title = False
@@ -762,7 +761,7 @@ def _seq_names() -> List[str]:
 
 
 def read_seq_data(
-    fin: Union[StringIO, TextIOWrapper],
+    fin: Union[StringIO, TextIOWrapper, None],
     input_parser: Callable = seq_io.read,
     alphabet: Alphabet = None,
     ignore_lower_case: bool = False,
@@ -778,6 +777,7 @@ def read_seq_data(
 
     # If max_file_size is set, or if fin==stdin (which is non-seekable), we
     # read the data and replace fin with a StringIO object.
+    assert fin is not None
     if max_file_size > 0:
         data = fin.read(max_file_size)
 
