@@ -8,7 +8,7 @@ and data formats can decoded to strings, e.g. eps_as_string = eps_data.decode()
 import os
 import shutil
 from math import log
-from string import Template
+from string import Template, ascii_lowercase
 from subprocess import PIPE, Popen
 from typing import Optional
 
