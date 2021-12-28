@@ -475,7 +475,6 @@ class LogoFormat(LogoOptions):
 
         assert self.first_index is not None
         assert self.seqlen is not None
-        assert self.logo_start is not None
 
         if self.logo_start is None:
             self.logo_start = self.first_index
@@ -702,22 +701,22 @@ def parse_prior(
 
         if len(explicit) != len(alphabet) * 2:
             raise ValueError("Explicit prior does not match length of alphabet")
-        priors = -ones(len(alphabet), float64)
+        prior = -ones(len(alphabet), float64)
         try:
             for r in range(len(explicit) // 2):
                 letter = explicit[r * 2]
                 index = alphabet.ord(letter)
                 value = float(explicit[r * 2 + 1])
-                priors[index] = value
+                prior[index] = value
         except ValueError:
             raise ValueError("Cannot parse explicit composition")
 
-        if any(priors == -1.0):
+        if any(prior == -1.0):
             raise ValueError(
                 "Explicit prior does not match alphabet"
             )  # pragma: no cover
-        priors /= sum(priors)
-        priors *= weight
+        prior /= sum(prior)
+        prior *= weight
 
     else:
         raise ValueError("Unknown or malformed composition: %s" % composition)
@@ -778,6 +777,7 @@ def read_seq_data(
     # If max_file_size is set, or if fin==stdin (which is non-seekable), we
     # read the data and replace fin with a StringIO object.
     assert fin is not None
+
     if max_file_size > 0:
         data = fin.read(max_file_size)
 
