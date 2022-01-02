@@ -137,7 +137,7 @@ class AlphabeticArray(object):
                     "This dimension does not have an alphabet"
                 )  # pragma: no cover
 
-        alpha: list = []
+        logo_letters = []
         logo_shape: List[Any] = []
         for a in alphabets:
             if isinstance(a, str):
@@ -145,15 +145,15 @@ class AlphabeticArray(object):
 
             if a is None:
                 logo_shape.append(None)
-                alpha.append(NullAlphabet())
+                logo_letters.append(NullAlphabet())
 
             elif isinstance(a, Alphabet):
                 logo_shape.append(len(a))
-                alpha.append(a)
+                logo_letters.append(a)
 
             else:
                 logo_shape.append(int(a))  # pragma: no cover
-                alpha.append(None)  # pragma: no cover
+                logo_letters.append(None)  # pragma: no cover
 
         shape = tuple(logo_shape)
         if values is None:
@@ -173,7 +173,7 @@ class AlphabeticArray(object):
                         "The values array is the wrong shape."
                     )  # pragma: no cover
         self.array = values
-        self.alphabets = tuple(alpha)
+        self.alphabets = tuple(logo_letters)
 
     def __getitem__(self, key: Seq) -> Any:
         return self.array.__getitem__(self._ordkey(key))
@@ -307,7 +307,7 @@ class SubMatrix(AlphabeticArray):
 
     def __init__(
         self,
-        alphabet: Union[Alphabet, Tuple[Alphabet, ...], str] = None,
+        alphabet: Union[Alphabet, Tuple[Alphabet]] = None,
         array: Union[list, np.ndarray] = None,
         typeof: Optional[npt.DTypeLike] = None,
         name: str = None,
@@ -487,9 +487,7 @@ class Motif(AlphabeticArray):
         self.complement()
 
     @classmethod
-    def read_transfac(
-        cls, fin: TextIO, alphabet: Union[Alphabet, Tuple[Alphabet, ...], str] = None
-    ) -> "Motif":
+    def read_transfac(cls, fin: TextIO, alphabet: Alphabet = None) -> "Motif":
         """Parse a TRANSFAC-format PWM from a file.
         Returns a Motif object, representing the provided
         PWM along with an inferred or provided alphabet.
