@@ -243,7 +243,7 @@ class AlphabeticArray(object):
         return self.array.__getitem__(tuple(outerkeys))
 
     def reindex(
-        self, new_alphabet: Union[Alphabet, Tuple[Alphabet, ...], str]
+        self, new_alphabet: Tuple[Alphabet, ...] s
     ) -> "AlphabeticArray":
         """Create a new AlphabeticArray with the given alphabet. The new
         alphabet must be a subset of the current alphabet. Useful for
@@ -277,7 +277,7 @@ class AlphabeticArray(object):
 submatrix_alphabet = Alphabet("ARNDCQEGHILKMFPSTWYVBZX")
 
 
-class SubMatrix(AlphabeticArray):
+class SubMatrix(object):
     """A two dimensional array indexed by an Alphabet. Used to hold substitution
     matrices and similar information.
 
@@ -446,6 +446,7 @@ class Motif(AlphabeticArray):
         description: str = None,
         scale: float = None,
     ) -> None:
+
         AlphabeticArray.__init__(self, (None, alphabet), array, dtype)
         self.name = name
         self.description = description
@@ -613,3 +614,4 @@ class Motif(AlphabeticArray):
             matrix.transpose()  # pragma: no cover
 
         return Motif(defacto_alphabet, matrix).reindex(alphabet)
+
