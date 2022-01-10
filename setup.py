@@ -30,7 +30,7 @@ setup(
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Science/Research",
-        "License :: OSI Approved :: BSD License",
+        "License :: OSI Approved :: MIT License",
         "Topic :: Scientific/Engineering :: Bio-Informatics",
         "Programming Language :: Python",
         "Natural Language :: English",
