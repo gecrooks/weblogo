@@ -50,7 +50,7 @@ Outstanding bugs and feature requests are listed on the <a href="https://github.
 
 ## Open Source License
 
-This package is distributed under the <a href="http://opensource.org/licenses/MIT">The MIT Open Source License Open Source License</a>. Much of the code was written by Gavin E. Crooks, Gary Hon, Steven Brenner, John-Marc Chandonia, Liana Lareau, David Ding, Clare Gollnick and other contributors.
+This package is distributed under the <a href="https://mit-license.org/">The MIT Open Source License Open Source License</a>. Much of the code was written by Gavin E. Crooks, Gary Hon, Steven Brenner, John-Marc Chandonia, Liana Lareau, David Ding, Clare Gollnick and other contributors.
 
 ## Copyright Notice
 
