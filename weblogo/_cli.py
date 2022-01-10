@@ -45,7 +45,7 @@ import os
 import sys
 from io import StringIO
 from optparse import OptionGroup
-from typing import Any, Union
+from typing import Any
 
 from . import (
     LogoData,
@@ -124,7 +124,7 @@ def httpd_serve_forever(port: int = 8080) -> None:
             return False
 
         def is_python(
-            self, path: Union[str, os.PathLike[str]]
+            self, path
         ) -> bool:  # Let CGIHTTPRequestHandler know that cgi script is python
             return True
 

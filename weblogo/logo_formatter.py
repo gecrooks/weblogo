@@ -286,7 +286,7 @@ def eps_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
 
     # Create and output logo
     template = resource_string(__name__, "template.eps", __file__).decode()
-    print()
+
     logo = Template(template).substitute(substitutions)
 
     return logo.encode()
