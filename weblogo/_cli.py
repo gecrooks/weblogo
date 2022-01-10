@@ -45,7 +45,7 @@ import os
 import sys
 from io import StringIO
 from optparse import OptionGroup
-from typing import Any, Union
+from typing import Any
 
 from . import (
     LogoData,
