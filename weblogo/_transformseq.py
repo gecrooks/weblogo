@@ -4,9 +4,8 @@
 #  Lawrence Berkeley National Laboratory (subject to receipt of any required
 #  approvals from the U.S. Dept. of Energy).  All rights reserved.
 
-#  This software is distributed under the new MIT Open Source License.
-#  <https://mit-license.org/>
-
+#  This software is distributed under the new BSD Open Source License.
+#  <http://www.opensource.org/licenses/bsd-license.html>
 #  Please see the LICENSE.txt file that should have been included
 #  as part of this package.
 
