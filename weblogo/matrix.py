@@ -242,9 +242,7 @@ class AlphabeticArray(object):
 
         return self.array.__getitem__(tuple(outerkeys))
 
-    def reindex(
-        self, new_alphabet: Tuple[Alphabet, ...] s
-    ) -> "AlphabeticArray":
+    def reindex(self, new_alphabet: Tuple[Alphabet, ...]) -> "AlphabeticArray":
         """Create a new AlphabeticArray with the given alphabet. The new
         alphabet must be a subset of the current alphabet. Useful for
         extracting a submatrix or for permuting the alphabet.
@@ -614,4 +612,3 @@ class Motif(AlphabeticArray):
             matrix.transpose()  # pragma: no cover
 
         return Motif(defacto_alphabet, matrix).reindex(alphabet)
-
