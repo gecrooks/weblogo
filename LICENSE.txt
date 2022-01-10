@@ -1,8 +1,7 @@
 The MIT Open Source License 
 ===========================
 
-Parts of the code are covered by the MIT license, which is equivalent to the
-BSD license apart from the third, no promotion clause. Please refer to
+Parts of the code are covered by the MIT license. Please refer to
 individual source code files for further details.
 
 #  Copyright (c) 2003-2004 The Regents of the University of California.
