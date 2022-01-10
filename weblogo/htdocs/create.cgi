@@ -37,10 +37,9 @@
 #  POSSIBILITY OF SUCH DAMAGE.
 
 import cgi
+import cgitb
 
 import weblogo
-
-import cgitb
 
 cgitb.enable()
 
