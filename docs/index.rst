@@ -39,7 +39,7 @@ To run as a standalone webserver at localhost:8080
 Distribution and Modification
 -----------------------------
 
-This package is distributed under the new BSD Open Source License.
+This package is distributed under the MIT Open Source License.
 Please see the LICENSE.txt file for details on copyright and licensing.
 The WebLogo source code can be downloaded from
 https://github.com/WebLogo/weblogo
