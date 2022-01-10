@@ -23,7 +23,7 @@ setup(
     setup_requires=["setuptools_scm"],
     description="WebLogo3 : Sequence Logos Redrawn",
     long_description=long_description,
-    license="BSD",
+    license="MIT",
     maintainer="Gavin Crooks",
     maintainer_email="gec@threeplusone.com",
     url="https://github.com/WebLogo/weblogo",
