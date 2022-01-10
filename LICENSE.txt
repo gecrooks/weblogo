@@ -8,7 +8,6 @@ individual source code files for further details.
 #  Copyright (c) 2005 Gavin E. Crooks
 #  Copyright (c) 2006 David Ding
 #  Copyright (c) 2006 Clare Gollnick
-#  Copyright (c) 2002-2005 ActiveState Corp.
 
 #  This software is distributed under the MIT Open Source License.
 #  <http://www.opensource.org/licenses/mit-license.html>
