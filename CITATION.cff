@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Crooks"
+  given-names: "Gavin"
+  orcid: "https://orcid.org/0000-0002-6870-7956"
+title: "WebLogo: A Sequence Logo Generator"
+version: 3.7.9
+doi: 10.1101/gr.849004
+date-released: 2022-01-09
+url: "https://github.com/WebLogo/weblogo"
