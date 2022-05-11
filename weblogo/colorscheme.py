@@ -116,12 +116,12 @@ class SymbolColor(ColorRule):
     """
 
     def __init__(self, symbols: str, color: str, description: str = None) -> None:
-        self.symbols = symbols.upper()
+        self.symbols = symbols
         self.color = Color.from_string(color)
         self.description = description
 
     def symbol_color(self, seq_index: int, symbol: str, rank: int) -> Optional[Color]:
-        if symbol.upper() in self.symbols:
+        if symbol in self.symbols:
             return self.color
         return None
 
@@ -152,12 +152,12 @@ class RefSeqColor(ColorRule):
     """
 
     def __init__(self, ref_seq: str, color: str, description: str = None) -> None:
-        self.ref_seq = ref_seq.upper()
+        self.ref_seq = ref_seq
         self.color = Color.from_string(color)
         self.description = description
 
     def symbol_color(self, seq_index: int, symbol: str, rank: int) -> Optional[Color]:
-        if symbol.upper() == self.ref_seq[seq_index]:
+        if symbol == self.ref_seq[seq_index]:
             return self.color
         return None
 
