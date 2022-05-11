@@ -291,7 +291,7 @@ class test_logooptions(unittest.TestCase):
 
 class test_colorscheme(unittest.TestCase):
     def test_symbol_color(self):
-        sc = SymbolColor("abc", "black", "Because")
+        sc = SymbolColor("ABC", "black", "Because")
         self.assertEqual(sc.description, "Because")
         self.assertEqual(sc.symbol_color(0, "A", 0), Color.by_name("black"))
         self.assertEqual(sc.symbol_color(1, "D", 0), None)
@@ -303,7 +303,7 @@ class test_colorscheme(unittest.TestCase):
         self.assertEqual(ic.symbol_color(1, "A", 0), Color.by_name("black"))
 
     def test_ref_seq_color(self):
-        rc = RefSeqColor("abc", "black", "Because")
+        rc = RefSeqColor("ABC", "black", "Because")
         self.assertEqual(rc.description, "Because")
 
         self.assertEqual(rc.symbol_color(0, "A", 0), Color.by_name("black"))
