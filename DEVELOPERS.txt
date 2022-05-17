@@ -40,7 +40,7 @@ DEVELOPING WEBLOGO
 
 8. Tag
 	tag release on Github at https://github.com/WebLogo/weblogo/releases/new
-    (creating a new release with autoupdate pypi)
+    (creating a new release with autoupdate pypi and conda packages)
 
 
 10. Update server: login to weblogo.threeplusone.com, weblogo directory and switch branches 
