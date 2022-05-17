@@ -543,7 +543,7 @@ class test_gamma(unittest.TestCase):
             return x * x * g.pdf(x)
 
         x2 = integrate(fx2, 0, upper)
-        var = x2 - mean**2
+        var = x2 - mean ** 2
         self.assertAlmostEqual(var, v)
 
     def test_cdf(self):

@@ -213,7 +213,7 @@ class Dirichlet(object):
                         / A2
                     )
 
-        var -= mean**2
+        var -= mean ** 2
         return var
 
     def mean_relative_entropy(self, pvec: np.ndarray) -> float:
@@ -266,7 +266,7 @@ class Gamma(object):
 
     @classmethod
     def from_mean_variance(cls, mean: float, variance: float) -> "Gamma":
-        alpha = mean**2 / variance
+        alpha = mean ** 2 / variance
         beta = alpha / mean
         return cls(alpha, beta)
 
@@ -274,7 +274,7 @@ class Gamma(object):
         return self.alpha / self.beta
 
     def variance(self) -> float:
-        return self.alpha / (self.beta**2)
+        return self.alpha / (self.beta ** 2)
 
     def sample(self) -> float:
         return random.gammavariate(self.alpha, 1.0 / self.beta)
@@ -284,7 +284,7 @@ class Gamma(object):
             return 0.0
         a = self.alpha
         b = self.beta
-        return (x ** (a - 1.0)) * exp(-b * x) * (b**a) / gamma(a)
+        return (x ** (a - 1.0)) * exp(-b * x) * (b ** a) / gamma(a)
 
     def cdf(self, x: float) -> float:
         return 1.0 - gammaincc(self.alpha, self.beta * x)
