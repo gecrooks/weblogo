@@ -33,7 +33,7 @@ $ pip install weblogo
 To install with conda:
 
 ```sh
-$ conda install -c bioconda weblogo
+$ conda install -c conda-forge weblogo
 ```
 
 ## Development
