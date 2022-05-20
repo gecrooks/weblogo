@@ -25,36 +25,36 @@ def _exec(args, outputtext, returncode=0, stdin=None):
     stdin.close()
 
 
-def test_malformed_options():
+def test_malformed_options() -> None:
     _exec(["--notarealoption"], [], 2)
     _exec(["extrajunk"], [], 2)
     _exec(["-I"], [], 2)
 
 
-def test_help_option():
+def test_help_option() -> None:
     _exec(["-h"], ["options"])
     _exec(["--help"], ["options"])
 
 
-def test_version_option():
+def test_version_option() -> None:
     _exec(["--version"], weblogo._transformseq.__version__)
 
 
-def test_clustal():
+def test_clustal() -> None:
     _exec(["-F", "clustal"], ["TCTTGTGATGTGGTTAACCAAT"])
 
 
-def test_reverse():
+def test_reverse() -> None:
     _exec(["--reverse"], ["TAACCAATTGGTGTAGTGTTCT"])
 
 
-def test_complement():
+def test_complement() -> None:
     _exec(["--complement"], ["AGAACACTACACCAATTGGTTA"])
 
 
-def test_seg():
+def test_seg() -> None:
     _exec(["--seg"], ["XXXXXXXXXXXXXXXXXXXXXX"])
 
 
-def test_subsample():
+def test_subsample() -> None:
     _exec(["--subsample", "0.4"], [])

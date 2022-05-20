@@ -328,7 +328,9 @@ class Motif(AlphabeticArray):
         self.complement()
 
     @classmethod
-    def read_transfac(cls, fin: TextIO, alphabet: Union[Alphabet, str] = None) -> "Motif":
+    def read_transfac(
+        cls, fin: TextIO, alphabet: Union[Alphabet, str] = None
+    ) -> "Motif":
         """Parse a TRANSFAC-format PWM from a file.
         Returns a Motif object, representing the provided
         PWM along with an inferred or provided alphabet.

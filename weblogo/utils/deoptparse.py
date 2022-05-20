@@ -156,7 +156,7 @@ class DeOption(Option):
     TYPE_CHECKER["dict"] = _check_dict
     choices = None
 
-    def _new_check_choice(self):
+    def _new_check_choice(self) -> None:
         if self.type == "dict":
             if self.choices is None:
                 raise OptionValueError(

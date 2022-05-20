@@ -31,19 +31,19 @@ from weblogo.seq_io import plain_io, table_io
 
 
 class test_table_io(unittest.TestCase):
-    def test_read(self):
+    def test_read(self) -> None:
         f = StringIO(table_io.example)
         seqs = table_io.read(f)
         self.assertEqual(len(seqs), 10)
         self.assertEqual(seqs[2].name, "EC0003")
         self.assertEqual(len(seqs[1]), 50)
 
-    def test_read_fail(self):
+    def test_read_fail(self) -> None:
         f = StringIO(plain_io.example)
         # Wrong alphabet
         self.assertRaises(ValueError, table_io.read, f)
 
-    def test_write_seq(self):
+    def test_write_seq(self) -> None:
         f = StringIO(table_io.example)
         seqs = table_io.read(f)
 

@@ -32,7 +32,7 @@ from weblogo.seq import rna_alphabet
 from . import data_stream
 
 
-def test_read():
+def test_read() -> None:
     f = StringIO(ig_io.example)
     seqs = ig_io.read(f)
 
@@ -42,7 +42,7 @@ def test_read():
     assert len(seqs[1]) == 299
 
 
-def test_read2():
+def test_read2() -> None:
     f = data_stream("intelligenetics.txt")
     seqs = ig_io.read(f)
     assert len(seqs[0]) == 518
@@ -50,7 +50,7 @@ def test_read2():
     f.close()
 
 
-def test_write_seq():
+def test_write_seq() -> None:
     f = StringIO(ig_io.example)
     seqs = ig_io.read(f)
     fout = StringIO()
@@ -60,13 +60,13 @@ def test_write_seq():
     assert seqs == seqs2
 
 
-def test_read_fail():
+def test_read_fail() -> None:
     with pytest.raises(ValueError):
         f = data_stream("intelligenetics.txt")
         ig_io.read(f, alphabet=rna_alphabet)
 
 
-def test_write_seq_fail():
+def test_write_seq_fail() -> None:
     f = StringIO(ig_io.example)
     seqs = ig_io.read(f)
     seqs[0].name = ""
