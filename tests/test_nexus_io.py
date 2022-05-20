@@ -8,7 +8,7 @@ from weblogo.seq_io import clustal_io, nexus_io, plain_io
 from . import data_stream
 
 
-def test_read():
+def test_read() -> None:
     f = data_stream("nexus/protein.nex")
     seqs = nexus_io.read(f)
     # print seqs
@@ -19,7 +19,7 @@ def test_read():
     f.close()
 
 
-def test_parse_StringIO():
+def test_parse_StringIO() -> None:
     # Bio.Nexus cannot read from a StringIO object.
     f0 = data_stream("nexus/protein.nex")
     f = StringIO(f0.read())
@@ -27,33 +27,33 @@ def test_parse_StringIO():
     f0.close()
 
 
-def test_parse_fasta_fail():
+def test_parse_fasta_fail() -> None:
     with pytest.raises(ValueError):
         with data_stream("globin.fa") as f:
             nexus_io.read(f)
 
 
-def test_parse_clustal_fail():
+def test_parse_clustal_fail() -> None:
     # should fail with parse error
     with pytest.raises(ValueError):
         f = StringIO(clustal_io.example)
         nexus_io.read(f, protein_alphabet)
 
 
-def test_parse_plain_fail():
+def test_parse_plain_fail() -> None:
     # should fail with parse error
     f = StringIO(plain_io.example)
     with pytest.raises(ValueError):
         nexus_io.read(f)
 
 
-def test_iterseq():
+def test_iterseq() -> None:
     f = data_stream("nexus/protein.nex")
     for seq in nexus_io.iterseq(f):
         pass
 
 
-def test_read_alphabet():
+def test_read_alphabet() -> None:
     f = data_stream("nexus/protein.nex")
     seqs = nexus_io.read(f, alphabet=protein_alphabet)
     # print seqs

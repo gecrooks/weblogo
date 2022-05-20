@@ -42,7 +42,7 @@ from weblogo.transform import (
 
 
 class test_mask_low_complexity(unittest.TestCase):
-    def test_segging(self):
+    def test_segging(self) -> None:
         before = (
             "mgnrafkshhghflsaegeavkthhghhdhhthfhvenhggkvalkthcgkylsigdhkqvylshhlhgdhslfhlehhg"
             "gkvsikghhhhyisadhhghvstkehhdhdttfeeiii".upper()
@@ -69,7 +69,7 @@ class test_mask_low_complexity(unittest.TestCase):
 
         mask_low_complexity(bseq, 100000, 4.3, 4.3)
 
-    def test_seg_invalid(self):
+    def test_seg_invalid(self) -> None:
         seq = Seq("KTHCGKYLSIGDHKQVYLSHH", protein_alphabet)
         self.assertRaises(ValueError, mask_low_complexity, seq, 12, -1, 0)
         self.assertRaises(ValueError, mask_low_complexity, seq, -1, 0, 0)
@@ -79,7 +79,7 @@ class test_mask_low_complexity(unittest.TestCase):
 
 
 class test_transform(unittest.TestCase):
-    def test_transform(self):
+    def test_transform(self) -> None:
         trans = Transform(
             Seq("ACGTURYSWKMBDHVN", nucleic_alphabet),
             Seq("ACGTTNNNNNNNNNNN", dna_alphabet),
@@ -92,14 +92,14 @@ class test_transform(unittest.TestCase):
         s2 = Seq(protein_alphabet, protein_alphabet)
         self.assertRaises(ValueError, trans, s2)
 
-    # def test_translations(self):
+    # def test_translations(self) -> None:
 
     #     s = Seq("ACGTURYSWKMBDHVNACGTURYSWKMBDHVN", nucleic_alphabet)
     #     s2 = dna_ext_to_std(s)
     #     s3 = Seq("ACGTTNNNNNNNNNNNACGTTNNNNNNNNNNN", dna_alphabet)
     #     self.assertEqual(s2, s3)
 
-    def test_reduced_protein_alphabets(self):
+    def test_reduced_protein_alphabets(self) -> None:
         seq = Seq(
             "ENHGGKVALKTHCGKYLSIGDHKQVYLSHHLHGDHSLFHLEHHGGKVSIKGHHHHYISADHHGHVSTKEHHDHDT"
             "TFEEIII",
@@ -111,7 +111,7 @@ class test_transform(unittest.TestCase):
 
 
 class test_geneticcode(unittest.TestCase):
-    def test_repr(self):
+    def test_repr(self) -> None:
         for t in GeneticCode.std_list():
             r = repr(t)
             gc = eval(r)

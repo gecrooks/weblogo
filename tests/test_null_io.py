@@ -29,12 +29,12 @@ from io import StringIO
 from weblogo.seq_io import null_io, plain_io
 
 
-def test_read():
+def test_read() -> None:
     f = StringIO(plain_io.example)
     null_io.read(f)
 
 
-def test_write():
+def test_write() -> None:
     f = StringIO(plain_io.example)
     seqs = plain_io.read(f)
 
@@ -44,7 +44,7 @@ def test_write():
     assert fout.read() == ""
 
 
-def test_iterseq():
+def test_iterseq() -> None:
     f = StringIO(plain_io.example)
     for seq in null_io.iterseq(f):
         pass

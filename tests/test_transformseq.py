@@ -5,7 +5,7 @@ import weblogo._transformseq
 from . import data_stream
 
 
-def _exec(args, outputtext, returncode=0, stdin=None):
+def _exec(args, outputtext, returncode=0, stdin=None):  # type: ignore
     if not stdin:
         stdin = data_stream("cap.fa")
     args = ["transformseq"] + args
