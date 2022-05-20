@@ -32,10 +32,10 @@ delint:   ## Run isort and black to delint project
 	@echo
 
 types:		## Static typechecking
-	@mypy weblogo --ignore-missing-imports --follow-imports=skip
+	@mypy weblogo tests --ignore-missing-imports --follow-imports=skip
 
 untyped:	## Report type errors and untyped functions
-	@mypy weblogo --ignore-missing-imports --follow-imports=skip --disallow-untyped-defs
+	@mypy weblogo  --ignore-missing-imports --follow-imports=skip --disallow-untyped-defs
 
 docs:		## Build documentation
 	$(MAKE) -C docs html && open docs/_build/html/index.html

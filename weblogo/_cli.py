@@ -196,7 +196,7 @@ def _build_logodata(options: Any) -> LogoData:
             motif.complement()
 
         prior = parse_prior(options.composition, motif.alphabet, options.weight)
-        data = LogoData.from_counts(motif.alphabet, motif, prior)
+        data = LogoData.from_counts(motif.alphabet, motif.array, prior)
     else:
         if options.reverse or options.revcomp:
             seqs = SeqList([s.reverse() for s in seqs], seqs.alphabet)

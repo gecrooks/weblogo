@@ -439,9 +439,9 @@ def main(htdocs_directory: str = None) -> None:
         try:
             # Try reading data in transfac format first.
             # TODO Refactor this code
-            motif = Motif.read_transfac(seq_file, alphabet=logooptions.alphabet)
+            motif = Motif.read_transfac(seq_file, alphabet=logooptions.alphabet)  # type: ignore  # FIXME
             prior = weblogo.parse_prior(comp, motif.alphabet)
-            data = weblogo.LogoData.from_counts(motif.alphabet, motif, prior)
+            data = weblogo.LogoData.from_counts(motif.alphabet, motif.array, prior)
         except ValueError:
             seqs = weblogo.read_seq_data(
                 seq_file,

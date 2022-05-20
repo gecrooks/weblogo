@@ -166,7 +166,7 @@ class Alphabet(object):
     _letters: str
     _alternatives: Tuple[Tuple[str, str], ...]
     _ord_table: bytes
-    _chr_table: bytes
+    _chr_table: str
 
     __slots__ = ["_letters", "_alternatives", "_ord_table", "_chr_table"]
 
@@ -265,7 +265,7 @@ class Alphabet(object):
                 return False
         return True
 
-    def chr(self, n: int):
+    def chr(self, n: int) -> str:
         """The n'th character in the alphabet (zero indexed) or \\0"""
         return self._chr_table[n]
 
@@ -281,11 +281,11 @@ class Alphabet(object):
         s = "".join(c)
         return Seq(s, self)
 
-    def ords(self, string: Union["Seq", str]) -> "Seq":
+    def ords(self, string: Union["Seq", str]) -> array:
         """Convert an alphabetic string into a byte array of ordinals."""
         s = str(string)
         s = s.translate(self._ord_table)
-        a = array("B", codecs.latin_1_encode(s)[0])  # TESTME FIXME?
+        a = array("B", codecs.latin_1_encode(s)[0])  # type: ignore # TESTME FIXME?
         return a
 
     def normalize(self, string):
@@ -425,7 +425,7 @@ class Seq(str):
     # preserving the sequence, name and alphabet?
     name: str
     description: str
-    alphabet: Alphabet
+    _alphabet: Alphabet
 
     def __new__(
         cls,
