@@ -37,7 +37,7 @@
 import typing
 import unittest
 from math import log, sqrt
-from typing import List, Tuple
+from typing import Tuple
 
 import pytest
 from numpy import all, array, float64, ones, zeros

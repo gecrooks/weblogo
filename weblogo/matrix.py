@@ -28,19 +28,7 @@ Arrays indexed by alphabetic strings.
 """
 
 from array import array
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Iterable,
-    Iterator,
-    List,
-    Optional,
-    TextIO,
-    Tuple,
-    Type,
-    TypeVar,
-    Union,
-)
+from typing import TYPE_CHECKING, Any, List, TextIO, Tuple, Union
 
 import numpy as np
 
