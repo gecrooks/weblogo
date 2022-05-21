@@ -48,7 +48,3 @@ def test_iterseq() -> None:
     f = StringIO(plain_io.example)
     for seq in null_io.iterseq(f):
         pass
-
-
-def test_writeseq():
-    null_io.writeseq("fout", ["seqs"])

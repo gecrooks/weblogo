@@ -99,7 +99,7 @@ class test_alphabet(unittest.TestCase):
         """If we pass an alphabet to the constuctor, it's passed
         right back"""
         a1 = Alphabet("kjdahf")
-        a2 = Alphabet(a1)
+        a2 = Alphabet(str(a1))
         self.assertTrue(a1 == a2)
 
         self.assertFalse(a1 == "not an alphabet")
@@ -124,7 +124,7 @@ class test_alphabet(unittest.TestCase):
         self.assertRaises(ValueError, a.normalize, "aslkfdnnr33")
 
     def test_alt(self) -> None:
-        alt = zip("12345", "ABCED")
+        alt = tuple(zip("12345", "ABCED"))
         alpha = Alphabet("ABCDE", alt)
         assert alpha.ord("A") == 0
         for a, c in alt:
@@ -156,7 +156,7 @@ class test_alphabet(unittest.TestCase):
 
 class test_seq(unittest.TestCase):
     def test_create_seq(self) -> None:
-        self.assertTrue(Seq("alphabet", "alphbet"))
+        self.assertTrue(Seq("alphabet", Alphabet("alphbet")))
         self.assertRaises(ValueError, Seq, "not alphabetic", "alphabet")
 
         a = (
@@ -271,7 +271,7 @@ class test_seq(unittest.TestCase):
     def test_join(self) -> None:
         s1 = Seq("AAAA", dna_alphabet)
         s2 = Seq("TTTT", dna_alphabet)
-        s3 = "GGGG"
+        s3 = Seq("GGGG")
         s0 = Seq("", dna_alphabet)
 
         j = s0.join([s1, s2, s3])

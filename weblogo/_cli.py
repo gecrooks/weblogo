@@ -45,7 +45,8 @@ import os
 import sys
 from io import StringIO
 from optparse import OptionGroup
-from typing import Any
+from os import PathLike
+from typing import Any, Union
 
 from . import (
     LogoData,
@@ -124,7 +125,7 @@ def httpd_serve_forever(port: int = 8080) -> None:
             return False
 
         def is_python(
-            self, path
+            self, path: Union[str, PathLike[str]]
         ) -> bool:  # Let CGIHTTPRequestHandler know that cgi script is python
             return True
 
@@ -202,7 +203,7 @@ def _build_logodata(options: Any) -> LogoData:
             seqs = SeqList([s.reverse() for s in seqs], seqs.alphabet)
 
         if options.complement or options.revcomp:
-            if not nucleic_alphabet.alphabetic(seqs.alphabet):
+            if not nucleic_alphabet.alphabetic(str(seqs.alphabet)):
                 raise ValueError(
                     "non-nucleic sequence cannot be complemented"
                 )  # pragam: no cover
@@ -213,7 +214,9 @@ def _build_logodata(options: Any) -> LogoData:
             )
             seqs.alphabet = aaa
 
-        prior = parse_prior(options.composition, seqs.alphabet, options.weight)
+        a = seqs.alphabet
+        assert a is not None
+        prior = parse_prior(options.composition, a, options.weight)
         data = LogoData.from_seqs(seqs, prior)
 
     return data

@@ -311,7 +311,7 @@ class Motif(AlphabeticArray):
         from weblogo.seq import Alphabet, Seq
 
         alphabet = self.alphabet
-        complement_alphabet = Alphabet(Seq(alphabet, alphabet).complement())
+        complement_alphabet = Alphabet(Seq(str(alphabet), alphabet).complement())
         self.alphabets = (None, complement_alphabet)
 
         assert alphabet is not None
@@ -420,7 +420,7 @@ class Motif(AlphabeticArray):
         defacto_alphabet = Alphabet(defacto_alphabet_str)
 
         if alphabet:
-            alphabet = Alphabet(alphabet)
+            alphabet = Alphabet(str(alphabet))
             if not defacto_alphabet.alphabetic(str(alphabet)):
                 # Allow alphabet to be a superset of defacto_alphabet
                 alphabet = defacto_alphabet

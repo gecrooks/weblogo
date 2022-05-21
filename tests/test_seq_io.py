@@ -84,7 +84,7 @@ class test_seq_io(unittest.TestCase):
         seqs = seq_io.read(f)
         # print seqs
         self.assertEqual(len(seqs), 8)
-        self.assertEqual(seqs[0].name, None)
+        self.assertEqual(seqs[0].name, "")
         self.assertEqual(len(seqs[1]), 60)
 
     def test_read_fasta(self) -> None:

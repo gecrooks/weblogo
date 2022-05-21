@@ -34,10 +34,11 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 #  POSSIBILITY OF SUCH DAMAGE.
 
+import typing
 import unittest
 from math import log, sqrt
+from typing import List, Tuple
 
-import typing
 import pytest
 from numpy import all, array, float64, ones, zeros
 from pkg_resources import resource_stream
@@ -119,15 +120,15 @@ def test_logoformat_errors() -> None:
         LogoFormat(logodata, logooptions)
 
 
-def test_logoformats():
+def test_logoformats() -> None:
     # Make sure all different logo option code gets run
     logodata = LogoData()
     logodata.alphabet = unambiguous_rna_alphabet
     logodata.length = 100
 
     logooptions = LogoOptions()
-    logooptions.fineprint = None
-    logooptions.xaxis_label = True
+    logooptions.fineprint = ""
+    logooptions.xaxis_label = ""
     logooptions.yaxis_label = "Label"
     LogoFormat(logodata, logooptions)
 
@@ -149,7 +150,7 @@ def test_logoformats():
     logooptions.show_xaxis = False
     LogoFormat(logodata, logooptions)
 
-    logodata.alphabet = "ABCD"
+    logodata.alphabet = Alphabet("ABCD")
     LogoFormat(logodata, logooptions)
 
 
@@ -159,10 +160,9 @@ class test_ghostscript(unittest.TestCase):
 
 
 class test_parse_prior(unittest.TestCase):
-    def test_parse_prior_none(self):
+    def test_parse_prior_none(self) -> None:
         self.assertEqual(None, parse_prior(None, unambiguous_protein_alphabet))
         self.assertEqual(None, parse_prior("none", unambiguous_protein_alphabet))
-        self.assertEqual(None, parse_prior("noNe", None))
 
     def test_parse_prior_equiprobable(self) -> None:
         self.assertTrue(
@@ -281,13 +281,13 @@ def test_parse_prior_error() -> None:
 
 
 class test_logooptions(unittest.TestCase):
-    def test_create(self):
+    def test_create(self) -> None:
         opt = LogoOptions()
         opt.small_fontsize = 10
         repr(opt)
 
-        opt = LogoOptions(title="sometitle")
-        self.assertEqual(opt.title, "sometitle")
+        opt = LogoOptions(logo_title="sometitle")  # type: ignore
+        self.assertEqual(opt.logo_title, "sometitle")
 
 
 class test_colorscheme(unittest.TestCase):
@@ -297,7 +297,7 @@ class test_colorscheme(unittest.TestCase):
         self.assertEqual(sc.symbol_color(0, "A", 0), Color.by_name("black"))
         self.assertEqual(sc.symbol_color(1, "D", 0), None)
 
-    def test_index_color(self):
+    def test_index_color(self) -> None:
         ic = IndexColor([1, 3], "black", "Because")
         self.assertEqual(ic.description, "Because")
         self.assertEqual(ic.symbol_color(0, "A", 0), None)
@@ -319,7 +319,7 @@ class test_colorscheme(unittest.TestCase):
         self.assertEqual(rc.symbol_color(1, "C", 0), None)
         self.assertEqual(rc.symbol_color(2, "C", 0), Color.by_name("black"))
 
-    def test_colorscheme(self):
+    def test_colorscheme(self) -> None:
         cs = ColorScheme(
             [
                 SymbolColor("G", "orange"),
@@ -346,7 +346,7 @@ class test_colorscheme(unittest.TestCase):
             ],
             title="title",
             description="description",
-            alphabet="GTUCA",
+            alphabet=Alphabet("GTUCA"),
         )
         self.assertRaises(KeyError, cs.symbol_color, 1, "X", 1)
 
@@ -534,13 +534,13 @@ class test_gamma(unittest.TestCase):
         norm = integrate(g.pdf, 0, upper)
         self.assertAlmostEqual(norm, 1.0)
 
-        def fx(x):
+        def fx(x: float) -> float:
             return x * g.pdf(x)
 
         mean = integrate(fx, 0, upper)
         self.assertAlmostEqual(mean, m)
 
-        def fx2(x):
+        def fx2(x: float) -> float:
             return x * x * g.pdf(x)
 
         x2 = integrate(fx2, 0, upper)
@@ -585,7 +585,7 @@ class test_gamma(unittest.TestCase):
 
 
 class test_Dirichlet(unittest.TestCase):
-    def test_init(self):
+    def test_init(self) -> None:
         Dirichlet(
             (
                 1,
@@ -596,7 +596,7 @@ class test_Dirichlet(unittest.TestCase):
         )
 
     def test_random(self) -> None:
-        def do_test(alpha, samples=1000):
+        def do_test(alpha: Tuple[float, ...], samples: int = 1000) -> None:
             ent = zeros((samples,), float64)
             # alpha = ones( ( K,), Float64 ) * A/K
 
@@ -650,7 +650,7 @@ class test_Dirichlet(unittest.TestCase):
         self.assertAlmostEqual(cv[0, 0], 1.0 * (1.0 - 1.0 / 4.0) / (4.0 * 5.0))
         self.assertAlmostEqual(cv[0, 1], -1 / (4.0 * 4.0 * 5.0))
 
-    def test_mean_x(self):
+    def test_mean_x(self) -> None:
         alpha = (1.0, 2.0, 3.0, 4.0)
         xx = (2.0, 2.0, 2.0, 2.0)
         m = Dirichlet(alpha).mean_x(xx)
@@ -664,7 +664,7 @@ class test_Dirichlet(unittest.TestCase):
         m = Dirichlet(alpha).mean_x(xx)
         self.assertEqual(m, 3.0)
 
-    def test_variance_x(self):
+    def test_variance_x(self) -> None:
         alpha = (1.0, 1.0, 1.0, 1.0)
         xx = (2.0, 2.0, 2.0, 2.0)
         v = Dirichlet(alpha).variance_x(xx)
@@ -679,7 +679,7 @@ class test_Dirichlet(unittest.TestCase):
         xx2 = (2.0, 2.0, 2.0, 2.0, 2.0)
         self.assertRaises(ValueError, Dirichlet(alpha).variance_x, xx2)
 
-    def test_relative_entropy(self):
+    def test_relative_entropy(self) -> None:
         alpha = (2.0, 10.0, 1.0, 1.0)
         d = Dirichlet(alpha)
         pvec = (0.1, 0.2, 0.3, 0.4)
@@ -718,15 +718,15 @@ class _from_URL_fileopen_Tests(unittest.TestCase):
         self.assertRaises(ValueError, _from_URL_fileopen, (broken_url))
 
 
-def mean(a):
+def mean(a) -> float:  # type: ignore
     return sum(a) / len(a)
 
 
-def var(a):
+def var(a) -> float:  # type: ignore
     return (sum(a * a) / len(a)) - mean(a) ** 2
 
 
-def integrate(f, a, b, n=1000):
+def integrate(f, a, b, n=1000):  # type: ignore
     """
     Numerically integrate the function 'f' from 'a' to 'b' using a discretization with 'n' points.
 

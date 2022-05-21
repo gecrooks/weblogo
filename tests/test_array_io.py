@@ -36,7 +36,7 @@ class test_array_io(unittest.TestCase):
         seqs = array_io.read(f)
         # print(seqs)
         self.assertEqual(len(seqs), 8)
-        self.assertEqual(seqs[0].name, None)
+        self.assertEqual(seqs[0].name, "")
         self.assertEqual(len(seqs[1]), 60)
 
     def test_write_seq(self) -> None:

@@ -31,10 +31,7 @@ delint:   ## Run isort and black to delint project
 	black $(FILES)
 	@echo
 
-types:		## Static typechecking
-	@mypy weblogo tests --ignore-missing-imports --follow-imports=skip
-
-untyped:	## Report type errors and untyped functions
+types:	## Report type errors and untyped functions
 	@mypy weblogo tests --ignore-missing-imports --follow-imports=skip --disallow-untyped-defs
 
 docs:		## Build documentation

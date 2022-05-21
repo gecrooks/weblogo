@@ -37,7 +37,7 @@ def test_read_example() -> None:
     seqs = plain_io.read(f)
     # print seqs
     assert len(seqs) == 1
-    assert seqs[0].name is None
+    assert not seqs[0].name
     # print seqs[0]
     assert len(seqs[0]) == 450
 

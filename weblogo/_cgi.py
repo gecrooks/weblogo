@@ -448,7 +448,9 @@ def main(htdocs_directory: str = None) -> None:
                 alphabet=logooptions.alphabet,
                 ignore_lower_case=ignore_lower_case,
             )
-            prior = weblogo.parse_prior(comp, seqs.alphabet)
+            alpha = seqs.alphabet
+            assert alpha is not None
+            prior = weblogo.parse_prior(comp, alpha)
             data = weblogo.LogoData.from_seqs(seqs, prior)
 
         logoformat = weblogo.LogoFormat(data, logooptions)

@@ -89,7 +89,7 @@ class test_transform(unittest.TestCase):
         self.assertEqual(s1.alphabet, dna_alphabet)
         self.assertEqual(s1, Seq("AAAAAN", dna_alphabet))
 
-        s2 = Seq(protein_alphabet, protein_alphabet)
+        s2 = Seq(str(protein_alphabet), protein_alphabet)
         self.assertRaises(ValueError, trans, s2)
 
     # def test_translations(self) -> None:
@@ -121,8 +121,8 @@ class test_geneticcode(unittest.TestCase):
             # print t
             # print gc
 
-    def test_translate_std(self):
-        dna = "GCCATTGTAATGGGCCGCTGAAAGGGTGCCCGA"
+    def test_translate_std(self) -> None:
+        dna = Seq("GCCATTGTAATGGGCCGCTGAAAGGGTGCCCGA")
         t = GeneticCode.std()
         s = t.translate(dna)
         self.assertEqual(str(s), "AIVMGR*KGAR")
@@ -130,7 +130,7 @@ class test_geneticcode(unittest.TestCase):
         for t in GeneticCode.std_list():
             t.translate(dna)
 
-    def test_translate(self):
+    def test_translate(self) -> None:
         # Ref: http://lists.open-bio.org/pipermail/biopython/2006-March/002960.html
 
         cft = (
@@ -144,18 +144,18 @@ class test_geneticcode(unittest.TestCase):
         )
 
         for code, dna, protein in cft:
-            c = GeneticCode.by_name(code)
-            trans = c.translate(dna)
+            c = GeneticCode.by_name(code)  # type: ignore
+            trans = c.translate(Seq(dna))
             self.assertEqual(str(trans), protein)
 
         self.assertRaises(ValueError, GeneticCode.by_name, "not_a_name")
 
-    def test_back_translate(self):
-        prot = "ACDEFGHIKLMNPQRSTVWY*"
+    def test_back_translate(self) -> None:
+        prot = Seq("ACDEFGHIKLMNPQRSTVWY*")
         t = GeneticCode.std()
-        t.table["CGA"]
+        t.table["CGA"]  # type: ignore
         s = t.back_translate(prot)
-        self.assertEqual(prot, str(t.translate(s)))
+        self.assertEqual(str(prot), str(t.translate(s)))
 
         GeneticCode.std().back_table
 
