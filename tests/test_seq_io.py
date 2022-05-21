@@ -47,7 +47,7 @@ from . import data_stream, test_genbank_io
 
 
 class test_seq_io(unittest.TestCase):
-    def test_attr(self):
+    def test_attr(self) -> None:
         f = seq_io.formats
         for i in f:
             i.names[0]  # Ensure every format has a name.
@@ -55,39 +55,39 @@ class test_seq_io(unittest.TestCase):
         seq_io.format_names()
         seq_io.format_extensions()
 
-    def test_parse_clustal(self):
+    def test_parse_clustal(self) -> None:
         with data_stream("clustal.aln") as f:
             seqs = seq_io.read(f)
         self.assertEqual(len(seqs), 7)
         self.assertEqual(seqs[1].name, "CATH_HUMAN")
         self.assertEqual(len(seqs[1]), 395)
 
-    def test_parse_error(self):
+    def test_parse_error(self) -> None:
         """Wrong alphabet should throw a parsing error"""
         with data_stream("clustal.aln") as f:
             self.assertRaises(ValueError, seq_io.read, f, nucleic_alphabet)
 
-    def test_parse_clustal181(self):
+    def test_parse_clustal181(self) -> None:
         with data_stream("clustal181.aln") as f:
             seq_io.read(f, protein_alphabet)
 
-    def test_parse_clustal_glualign(self):
+    def test_parse_clustal_glualign(self) -> None:
         with data_stream("clustal_glualign.aln") as f:
             seq_io.read(f, nucleic_alphabet)
 
-    def test_parse_clustalw182(self):
+    def test_parse_clustalw182(self) -> None:
         with data_stream("clustalw182.aln") as f:
             seq_io.read(f, protein_alphabet)
 
-    def test_read_example_array(self):
+    def test_read_example_array(self) -> None:
         f = StringIO(array_io.example)
         seqs = seq_io.read(f)
         # print seqs
         self.assertEqual(len(seqs), 8)
-        self.assertEqual(seqs[0].name, None)
+        self.assertEqual(seqs[0].name, "")
         self.assertEqual(len(seqs[1]), 60)
 
-    def test_read_fasta(self):
+    def test_read_fasta(self) -> None:
         f = StringIO(fasta_io.example)
         seqs = seq_io.read(f)
         # print seqs
@@ -95,23 +95,23 @@ class test_seq_io(unittest.TestCase):
         self.assertEqual(seqs[0].description, "Lamprey GLOBIN V - SEA LAMPREY")
         self.assertEqual(len(seqs[1]), 231)
 
-    def test_parse_globin_fasta(self):
+    def test_parse_globin_fasta(self) -> None:
         with data_stream("globin.fa") as f:
             seqs = seq_io.read(f)
         self.assertEqual(len(seqs), 56)
 
-    def test_parser_extensions(self):
+    def test_parser_extensions(self) -> None:
         # Test that the list of extension is a list.
         # Very easy with one extension list to write ('txt') rather than ('txt',)
         for p in seq_io._parsers:
             self.assertTrue(type(p.extensions) == tuple)
 
-    def test_parser_names(self):
+    def test_parser_names(self) -> None:
         # Same for names
         for p in seq_io._parsers:
             self.assertTrue(type(p.names) == tuple)
 
-    def test_parsers(self):
+    def test_parsers(self) -> None:
         # seq_io._parsers is an ordered  list of sequence parsers that are
         # tried, in turn, on files of unknown format. Each parser must raise
         # an exception when fed a format further down the list.

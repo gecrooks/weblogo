@@ -419,7 +419,7 @@ class GeneticCode(object):
 
     # End create tables
 
-    def translate(self, seq: List[str], frame: int = 0) -> Seq:
+    def translate(self, seq: Seq, frame: int = 0) -> Seq:
         """Translate a DNA sequence to a polypeptide using full
         IUPAC ambiguities in DNA/RNA and amino acid codes.
 
@@ -439,7 +439,7 @@ class GeneticCode(object):
 
         return Seq("".join(trans), protein_alphabet)
 
-    def back_translate(self, seq: List[str]) -> Seq:
+    def back_translate(self, seq: Seq) -> Seq:
         """Convert protein back into coding DNA.
 
         Args:

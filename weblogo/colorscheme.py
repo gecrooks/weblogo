@@ -133,7 +133,7 @@ class IndexColor(ColorRule):
     """
 
     def __init__(
-        self, indices: Sequence[list], color: str, description: str = None
+        self, indices: Sequence[int], color: str, description: str = None
     ) -> None:
         self.indices = indices
         self.color = Color.from_string(color)
