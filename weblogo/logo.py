@@ -315,7 +315,7 @@ class LogoOptions:
         self.annotate = None
 
         self.show_fineprint = True
-        self.fineprint = "WebLogo " + __version__
+        self.fineprint: str = "WebLogo " + __version__
 
         self.show_boxes = False
         self.shrink_fraction = 0.5
@@ -810,7 +810,7 @@ def read_seq_data(
 
     # Add alphabet to seqs.
     if alphabet:
-        seqs.alphabet = Alphabet(alphabet)
+        seqs.alphabet = Alphabet(str(alphabet))
     else:
         seqs.alphabet = Alphabet.which(seqs)
     return seqs

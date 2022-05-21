@@ -70,7 +70,7 @@ TGCCTT
 
 
 class test_fasta_io(unittest.TestCase):
-    def test_read(self):
+    def test_read(self) -> None:
         f = StringIO(fasta_io.example)
         seqs = fasta_io.read(f)
         # print seqs
@@ -79,7 +79,7 @@ class test_fasta_io(unittest.TestCase):
         self.assertEqual(seqs[0].name, "Lamprey")
         self.assertEqual(len(seqs[1]), 231)
 
-    #    def test_read_long(self):
+    #    def test_read_long(self) -> None:
     #        f = data_stream("NC_000913.ffn")
     #        count = 0
     #        start = time.time()
@@ -93,29 +93,29 @@ class test_fasta_io(unittest.TestCase):
     #        # Timing is 3s 1.67 GHz G4
     #        # print t
 
-    def test_read_fail(self):
+    def test_read_fail(self) -> None:
         f = StringIO(fasta_io.example)
         # Wrong alphabet
         self.assertRaises(ValueError, fasta_io.read, f, nucleic_alphabet)
 
-    def test_parse_globin(self):
+    def test_parse_globin(self) -> None:
         # f = open_resource(__file__, "test_data", "globin.fa")
         f = data_stream("globin.fa")
         seqs = fasta_io.read(f, protein_alphabet)
         self.assertEqual(len(seqs), 56)
         f.close()
 
-    def test_parse_clustal_fail(self):
+    def test_parse_clustal_fail(self) -> None:
         # should fail with parse error
         f = StringIO(clustal_io.example)
         self.assertRaises(ValueError, fasta_io.read, f, protein_alphabet)
 
-    def test_parse_plain_fail(self):
+    def test_parse_plain_fail(self) -> None:
         # should fail with parse error
         f = StringIO(plain_io.example)
         self.assertRaises(ValueError, fasta_io.read, f)
 
-    def test_write_seq(self):
+    def test_write_seq(self) -> None:
         f = StringIO(fasta_io.example)
         seqs = fasta_io.read(f)
         fout = StringIO()
@@ -126,14 +126,14 @@ class test_fasta_io(unittest.TestCase):
 
         self.assertEqual(seqs, seqs2)
 
-    def test_write_with_header(self):
+    def test_write_with_header(self) -> None:
         f = StringIO(fasta_io.example)
         seqs = fasta_io.read(f)
         seqs.description = "A description\nMore description"
         fout = StringIO()
         fasta_io.write(fout, seqs)
 
-    def test_read_comments(self):
+    def test_read_comments(self) -> None:
         f = StringIO(example_with_optional_comments)
         seqs = fasta_io.read(f)
         self.assertEqual(len(seqs), 2)
@@ -142,7 +142,7 @@ class test_fasta_io(unittest.TestCase):
             seqs[1].description.splitlines()[1], ("comment line 1 (optional)")
         )
 
-    def test_write_comments(self):
+    def test_write_comments(self) -> None:
         f = StringIO(example_with_optional_comments)
         seqs = fasta_io.read(f)
         fout = StringIO()
@@ -153,7 +153,7 @@ class test_fasta_io(unittest.TestCase):
 
         self.assertEqual(seqs[1].description, seqs2[1].description)
 
-    def test_read_headerless(self):
+    def test_read_headerless(self) -> None:
         # This example has blank headers.
         f = StringIO(example3)
         seqs = fasta_io.read(f)
@@ -163,12 +163,12 @@ class test_fasta_io(unittest.TestCase):
         fout = StringIO()
         fasta_io.write(fout, seqs)
 
-    def test_read_empty(self):
+    def test_read_empty(self) -> None:
         f = StringIO()
         seqs = fasta_io.read(f)
         assert len(seqs) == 0
 
-    def test_isaligned(self):
+    def test_isaligned(self) -> None:
         seqs = fasta_io.read(StringIO())
         assert seqs.isaligned()
         seqs = fasta_io.read(StringIO(fasta_io.example))
@@ -176,7 +176,7 @@ class test_fasta_io(unittest.TestCase):
         seqs = fasta_io.read(StringIO(example4))
         assert not seqs.isaligned()
 
-    def test_read_with_blank_line(self):
+    def test_read_with_blank_line(self) -> None:
         f = StringIO(example4)
         seqs = fasta_io.read(f)
         assert not seqs.isaligned()

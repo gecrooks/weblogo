@@ -130,7 +130,7 @@ Authors:
 
 import codecs
 from array import array
-from typing import Iterator, Sequence, Tuple, Union
+from typing import Any, Generator, Iterator, List, Optional, Sequence, Tuple, Union
 
 __all__ = [
     "Alphabet",
@@ -164,14 +164,18 @@ class Alphabet(object):
     """
 
     _letters: str
-    _alternatives: Tuple[Tuple[str, str], ...]
+    _alternatives: Tuple[str, str]
     _ord_table: bytes
-    _chr_table: bytes
+    _chr_table: str
 
     __slots__ = ["_letters", "_alternatives", "_ord_table", "_chr_table"]
 
     # We're immutable, so use __new__ not __init__
-    def __new__(cls, letters, alternatives=None):
+    def __new__(
+        cls,
+        letters: Union["Alphabet", str] = None,
+        alternatives: Tuple[Tuple[str, str], ...] = None,
+    ) -> "Alphabet":
         """Create a new, immutable Alphabet.
 
         e.g.
@@ -200,6 +204,8 @@ class Alphabet(object):
 
         if letters is None:
             letters = ascii_letters
+        else:
+            letters = str(letters)
         self._letters = letters
 
         equivalent_by_case = zip(
@@ -207,7 +213,7 @@ class Alphabet(object):
         )
 
         if alternatives is None:
-            alternatives = equivalent_by_case
+            alternatives = tuple(equivalent_by_case)
 
         # The ord_table maps between the ordinal position of a character in ascii
         # and the ordinal position in this alphabet. Characters not in the
@@ -265,7 +271,7 @@ class Alphabet(object):
                 return False
         return True
 
-    def chr(self, n: int):
+    def chr(self, n: int) -> str:
         """The n'th character in the alphabet (zero indexed) or \\0"""
         return self._chr_table[n]
 
@@ -281,14 +287,14 @@ class Alphabet(object):
         s = "".join(c)
         return Seq(s, self)
 
-    def ords(self, string: Union["Seq", str]) -> "Seq":
+    def ords(self, string: Union["Seq", str]) -> array:
         """Convert an alphabetic string into a byte array of ordinals."""
         s = str(string)
         s = s.translate(self._ord_table)
-        a = array("B", codecs.latin_1_encode(s)[0])  # TESTME FIXME?
+        a = array("B", codecs.latin_1_encode(s)[0])  # type: ignore # TESTME FIXME?
         return a
 
-    def normalize(self, string):
+    def normalize(self, string: str) -> "Seq":
         """Normalize an alphabetic string by converting all alternative symbols
         to the canonical equivalent in 'letters'.
         """
@@ -319,25 +325,27 @@ class Alphabet(object):
     def __len__(self) -> int:
         return len(self._letters)
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: Any) -> bool:
         if not hasattr(other, "_ord_table"):
             return False
         return self._ord_table == other._ord_table
 
-    def __ne__(self, other) -> bool:
+    def __ne__(self, other: Any) -> bool:
         return not self.__eq__(other)
 
     def __iter__(self) -> Iterator[str]:
         return iter(self._letters)
 
-    def __getitem__(self, key) -> str:
+    def __getitem__(self, key: Any) -> str:
         return self._letters[key]
 
     def __hash__(self) -> int:
         return hash(tuple(self._ord_table))
 
     @staticmethod
-    def which(seqs, alphabets=None):
+    def which(
+        seqs: Union["Seq", "SeqList"], alphabets: List["Alphabet"] = None
+    ) -> "Alphabet":
         """Returns the most appropriate unambiguous protein, RNA or DNA alphabet
         for a Seq or SeqList. If a list of alphabets is supplied, then the best alphabet
         is selected from that list.
@@ -348,11 +356,11 @@ class Alphabet(object):
 
         """
         if alphabets is None:
-            alphabets = (
+            alphabets = [
                 unambiguous_dna_alphabet,
                 unambiguous_rna_alphabet,
                 unambiguous_protein_alphabet,
-            )
+            ]
         import math
 
         score = [sum(seqs.tally(a)) / math.log(len(a)) for a in alphabets]
@@ -370,37 +378,38 @@ generic_alphabet = Alphabet(None, None)
 
 protein_alphabet = Alphabet(
     "ACDEFGHIKLMNOPQRSTUVWYBJZX*-",
-    zip("acdefghiklmnopqrstuvwybjzx?.~", "ACDEFGHIKLMNOPQRSTUVWYBJZXX--"),
+    tuple(zip("acdefghiklmnopqrstuvwybjzx?.~", "ACDEFGHIKLMNOPQRSTUVWYBJZXX--")),
 )
 
 nucleic_alphabet = Alphabet(
-    "ACGTURYSWKMBDHVN-", zip("acgturyswkmbdhvnXx?.~", "ACGTURYSWKMBDHVNNNN--")
+    "ACGTURYSWKMBDHVN-", tuple(zip("acgturyswkmbdhvnXx?.~", "ACGTURYSWKMBDHVNNNN--"))
 )
 
 dna_alphabet = Alphabet(
-    "ACGTRYSWKMBDHVN-", zip("acgtryswkmbdhvnXx?.~Uu", "ACGTRYSWKMBDHVNNNN--TT")
+    "ACGTRYSWKMBDHVN-", tuple(zip("acgtryswkmbdhvnXx?.~Uu", "ACGTRYSWKMBDHVNNNN--TT"))
 )
 
 rna_alphabet = Alphabet(
-    "ACGURYSWKMBDHVN-", zip("acguryswkmbdhvnXx?.~Tt", "ACGURYSWKMBDHVNNNN--UU")
+    "ACGURYSWKMBDHVN-", tuple(zip("acguryswkmbdhvnXx?.~Tt", "ACGURYSWKMBDHVNNNN--UU"))
 )
 
 reduced_nucleic_alphabet = Alphabet(
     "ACGTN-",
-    zip("acgtryswkmbdhvnXx?.~TtRYSWKMBDHV", "ACGTNNNNNNNNNNNNNN--TTNNNNNNNNNN"),
+    tuple(zip("acgtryswkmbdhvnXx?.~TtRYSWKMBDHV", "ACGTNNNNNNNNNNNNNN--TTNNNNNNNNNN")),
 )
 
 reduced_protein_alphabet = Alphabet(
     "ACDEFGHIKLMNPQRSTVWYX*-",
-    zip("acdefghiklmnpqrstvwyx?.~BbZzUu", "ACDEFGHIKLMNPQRSTVWYXX--XXXXCC"),
+    tuple(zip("acdefghiklmnpqrstvwyx?.~BbZzUu", "ACDEFGHIKLMNPQRSTVWYXX--XXXXCC")),
 )
 
-unambiguous_dna_alphabet = Alphabet("ACGT", zip("acgt", "ACGT"))
+unambiguous_dna_alphabet = Alphabet("ACGT", tuple(zip("acgt", "ACGT")))
 
-unambiguous_rna_alphabet = Alphabet("ACGU", zip("acgu", "ACGU"))
+unambiguous_rna_alphabet = Alphabet("ACGU", tuple(zip("acgu", "ACGU")))
 
 unambiguous_protein_alphabet = Alphabet(
-    "ACDEFGHIKLMNPQRSTVWY", zip("acdefghiklmnopqrstuvwy", "ACDEFGHIKLMNOPQRSTUVWY")
+    "ACDEFGHIKLMNPQRSTVWY",
+    tuple(zip("acdefghiklmnopqrstuvwy", "ACDEFGHIKLMNOPQRSTUVWY")),
 )
 
 _complement_table = str.maketrans(
@@ -425,18 +434,22 @@ class Seq(str):
     # preserving the sequence, name and alphabet?
     name: str
     description: str
-    alphabet: Alphabet
+    _alphabet: Alphabet
 
     def __new__(
         cls,
-        obj,
-        alphabet=generic_alphabet,
-        name=None,
-        description=None,
-    ):
+        obj: str,
+        alphabet: Optional[Alphabet] = generic_alphabet,
+        name: str = None,
+        description: str = None,
+    ) -> "Seq":
         self = str.__new__(cls, obj)
         if alphabet is None:
             alphabet = generic_alphabet
+        if name is None:
+            name = ""
+        if description is None:
+            description = ""
         if not isinstance(alphabet, Alphabet):
             alphabet = Alphabet(alphabet)
         if not alphabet.alphabetic(self):
@@ -452,18 +465,18 @@ class Seq(str):
 
     # Make alphabet constant
     @property
-    def alphabet(self):
+    def alphabet(self) -> Alphabet:
         return self._alphabet
 
     # END PROPERTIES
 
-    def ords(self):
+    def ords(self) -> array:
         """Convert sequence to an array of integers
         in the range [0, len(alphabet) )
         """
         return self.alphabet.ords(self)
 
-    def tally(self, alphabet=None):
+    def tally(self, alphabet: Alphabet = None) -> List[int]:
         """Counts the occurrences of alphabetic characters.
 
         Arguments:
@@ -488,41 +501,41 @@ class Seq(str):
 
         return counts
 
-    def __getitem__(self, key):
+    def __getitem__(self, key: Any) -> "Seq":
         cls = self.__class__
         return cls(str.__getitem__(self, key), self.alphabet)
 
-    def __add__(self, other):
+    def __add__(self, other: Any) -> "Seq":
         # called for "self + other"
         cls = self.__class__
         return cls(str.__add__(self, other), self.alphabet)
 
-    def __radd__(self, other):
+    def __radd__(self, other: Any) -> "Seq":
         # Called when "other + self" and other is superclass of self
         cls = self.__class__
         return cls(str.__add__(self, other), self.alphabet)
 
-    def join(self, str_list):
+    def join(self, str_list: List["Seq"]) -> "Seq":  # type: ignore  # Incorrectly overrides superclass join
         cls = self.__class__
         return cls(super(Seq, self).join(str_list), self.alphabet)
 
-    def __eq__(self, other):
+    def __eq__(self, other: Any) -> bool:
         if not hasattr(other, "alphabet"):
             return False
         if self.alphabet != other.alphabet:
             return False
         return str.__eq__(self, other)
 
-    def __ne__(self, other):
+    def __ne__(self, other: Any) -> bool:
         return not self.__eq__(other)
 
-    def tostring(self):
+    def tostring(self) -> "str":
         """Converts Seq to a raw string."""
         # Compatibility with biopython
         return str(self)
 
     # ---- Transformations of Seq ----
-    def reverse(self):
+    def reverse(self) -> "Seq":
         """Return the reversed sequence.
 
         Note that this method returns a new object, in contrast to
@@ -531,11 +544,11 @@ class Seq(str):
         cls = self.__class__
         return cls(self[::-1], self.alphabet)
 
-    def ungap(self):
+    def ungap(self) -> "Seq":
         # FIXME: Gap symbols should be specified by the Alphabet?
         return self.remove("-.~")
 
-    def remove(self, delchars):
+    def remove(self, delchars: str) -> "Seq":
         """Return a new alphabetic sequence with all characters in 'delchars'
         removed.
         """
@@ -559,7 +572,9 @@ class Seq(str):
         )
         return cls(str(self).translate(trans), self.alphabet)
 
-    def mask(self, letters="abcdefghijklmnopqrstuvwxyz", mask="X"):
+    def mask(
+        self, letters: str = "abcdefghijklmnopqrstuvwxyz", mask: str = "X"
+    ) -> "Seq":
         """Replace all occurrences of letters with the mask character.
         The default is to replace all lower case letters with 'X'.
         """
@@ -571,7 +586,7 @@ class Seq(str):
         cls = self.__class__
         return cls(str(self).translate(trans), self.alphabet)
 
-    def translate(self):
+    def translate(self) -> "Seq":  # type: ignore  # RENAME: Incorrectly overrides superclass translate.
         """Translate a nucleotide sequence to a polypeptide using full
         IUPAC ambiguities in DNA/RNA and amino acid codes, using the
         standard genetic code. See weblogo.transform.GeneticCode for
@@ -582,7 +597,7 @@ class Seq(str):
 
         return GeneticCode.std().translate(self)
 
-    def back_translate(self):
+    def back_translate(self) -> "Seq":
         """Translate a protein sequence back into coding DNA, using the
         standard genetic code. See weblogo.transform.GeneticCode for
         details and more options.
@@ -591,21 +606,21 @@ class Seq(str):
 
         return GeneticCode.std().back_translate(self)
 
-    def reverse_complement(self):
+    def reverse_complement(self) -> "Seq":
         """Returns reversed complementary nucleic acid sequence (i.e. the other
         strand of a DNA sequence.)
         """
         return self.reverse().complement()
 
-    def complement(self):
+    def complement(self) -> "Seq":
         """Returns complementary nucleic acid sequence."""
-        if not nucleic_alphabet.alphabetic(self.alphabet):
-            raise ValueError("Incompatable alphabets")
+        if not nucleic_alphabet.alphabetic(str(self.alphabet)):
+            raise ValueError("Incompatibly alphabets")
         s = str.translate(self, _complement_table)
         cls = self.__class__
         return cls(s, self.alphabet, self.name, self.description)
 
-    def words(self, k, alphabet=None):
+    def words(self, k: int, alphabet: Alphabet = None) -> Generator[str, None, None]:
         """Return an iteration over all subwords of length k in the sequence. If an optional
         alphabet is provided, only words from that alphabet are returned.
 
@@ -625,7 +640,7 @@ class Seq(str):
             if alphabet is None or alphabet.alphabetic(word):
                 yield word
 
-    def word_count(self, k, alphabet=None):
+    def word_count(self, k: int, alphabet: Alphabet = None) -> List:
         """Return a count of all subwords in the sequence.
 
         >>> from weblogo.seq import *
@@ -646,7 +661,13 @@ class SeqList(list):
 
     __slots__ = ["alphabet", "name", "description"]
 
-    def __init__(self, alist=[], alphabet=None, name=None, description=None):
+    def __init__(
+        self,
+        alist: List[Seq] = [],
+        alphabet: Alphabet = None,
+        name: str = None,
+        description: str = None,
+    ):
         list.__init__(self, alist)
         self.alphabet = alphabet
         self.name = name
@@ -657,7 +678,7 @@ class SeqList(list):
     # def read(cls, afile, alphabet = None):
     #    return weblogo.seq_io.read(afile, alphabet)
 
-    def isaligned(self):
+    def isaligned(self) -> bool:
         """Are all sequences of the same length and alphabet?"""
         if len(self) == 0:
             return True
@@ -673,7 +694,7 @@ class SeqList(list):
                 return False
         return True
 
-    def ords(self, alphabet=None):
+    def ords(self, alphabet: Alphabet = None) -> List[array]:
         """Convert sequence list into a 2D array of ordinals."""
         if not alphabet:
             alphabet = self.alphabet
@@ -684,7 +705,7 @@ class SeqList(list):
             k.append(alphabet.ords(s))
         return k
 
-    def tally(self, alphabet=None):
+    def tally(self, alphabet: Alphabet = None) -> List[int]:
         """Counts the occurrences of alphabetic characters.
 
         Arguments:
@@ -701,7 +722,7 @@ class SeqList(list):
         counts = [sum(c) for c in zip(*[s.tally(alphabet) for s in self])]
         return counts
 
-    def profile(self, alphabet=None):
+    def profile(self, alphabet: Alphabet = None):  # type: ignore  # Nasty circular import
         """Counts the occurrences of characters in each column.
 
         Returns: Motif(counts, alphabet)
@@ -739,16 +760,16 @@ class SeqList(list):
 # end class SeqList
 
 
-def dna(string):
+def dna(string: str) -> Seq:
     """Create an alphabetic sequence representing a stretch of DNA."""
     return Seq(string, alphabet=dna_alphabet)
 
 
-def rna(string):
+def rna(string: str) -> Seq:
     """Create an alphabetic sequence representing a stretch of RNA."""
     return Seq(string, alphabet=rna_alphabet)
 
 
-def protein(string):
+def protein(string: str) -> Seq:
     """Create an alphabetic sequence representing a stretch of polypeptide."""
     return Seq(string, alphabet=protein_alphabet)

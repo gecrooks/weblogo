@@ -8,11 +8,11 @@ from . import data_stream
 
 
 class test_nexus(unittest.TestCase):
-    def test_create(self):
+    def test_create(self) -> None:
         n = Nexus()
         self.assertNotEqual(n, None)
 
-    def test_parse_f0(self):
+    def test_parse_f0(self) -> None:
         f = data_stream("nexus/test_Nexus_input.nex")
         n = Nexus(f)
         # self.output_basics(n)
@@ -32,12 +32,12 @@ class test_nexus(unittest.TestCase):
         self.assertEqual(taxa, expected)
         f.close()
 
-    def test_parse_protein(self):
+    def test_parse_protein(self) -> None:
         f = data_stream("nexus/protein.nex")
         Nexus(f)
         f.close()
 
-    def test_parse_dna(self):
+    def test_parse_dna(self) -> None:
         f = data_stream("nexus/dna.nex")
         n = Nexus(f)
 
@@ -48,7 +48,7 @@ class test_nexus(unittest.TestCase):
         self.assertEqual(taxa[-1], "Whale")
         f.close()
 
-    def test_TreeTest1(self):
+    def test_TreeTest1(self) -> None:
         """Test Tree module."""
         f = data_stream("nexus/test_Nexus_input.nex")
         n = Nexus(f)

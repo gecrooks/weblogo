@@ -43,20 +43,23 @@
 #
 # Additional file_in and file_out types
 
-import random
 import sys
 from copy import copy
 from optparse import IndentedHelpFormatter, Option, OptionParser, OptionValueError
+from typing import Any, Iterable, Optional, TextIO, Type
 
 
-def _copyright_callback(option, opt, value, parser):
+def _copyright_callback(
+    option: Any, opt: Any, value: Any, parser: "DeOptionParser"
+) -> None:
+
     if option or opt or value or parser:
         pass  # Shut up lint checker
     print(parser.copyright)
     sys.exit()
 
 
-def _doc_callback(option, opt, value, parser):
+def _doc_callback(option: Any, opt: Any, value: Any, parser: "DeOptionParser") -> None:
     if option or opt or value or parser:
         pass  # Shut up lint checker
     print(parser.long_description)
@@ -65,16 +68,22 @@ def _doc_callback(option, opt, value, parser):
 
 class DeHelpFormatter(IndentedHelpFormatter):
     def __init__(
-        self, indent_increment=2, max_help_position=32, width=78, short_first=1
+        self,
+        indent_increment: int = 2,
+        max_help_position: int = 32,
+        width: int = 78,
+        short_first: int = 1,
     ):
         IndentedHelpFormatter.__init__(
             self, indent_increment, max_help_position, width, short_first
         )
 
-    def format_option_strings(self, option):
+    def format_option_strings(self, option: Option) -> str:
         """Return a comma-separated list of option strings & metavariables."""
         if option.takes_value():
-            metavar = option.metavar or option.dest.upper()
+            dest = option.dest
+            assert dest is not None
+            metavar = option.metavar or dest.upper()
             short_opts = option._short_opts
             long_opts = [lopt + " " + metavar for lopt in option._long_opts]
         else:
@@ -94,7 +103,7 @@ class DeHelpFormatter(IndentedHelpFormatter):
         return " ".join(opts)
 
 
-def _check_file_in(option, opt, value):
+def _check_file_in(option: Any, opt: Any, value: str) -> TextIO:
     if option or opt or value:
         pass  # Shut up lint checker
     try:
@@ -103,7 +112,7 @@ def _check_file_in(option, opt, value):
         raise OptionValueError("option %s: cannot open file: %s" % (opt, value))
 
 
-def _check_file_out(option, opt, value):
+def _check_file_out(option: Any, opt: Any, value: str) -> TextIO:
     if option or opt or value:
         pass  # Shut up lint checker
     try:
@@ -112,7 +121,7 @@ def _check_file_out(option, opt, value):
         raise OptionValueError("option %s: cannot open file: %s" % (opt, value))
 
 
-def _check_boolean(option, opt, value):
+def _check_boolean(option: Any, opt: Any, value: str) -> bool:
     if option or opt or value:
         pass  # Shut up lint checker
     v = value.lower()
@@ -133,7 +142,7 @@ def _check_boolean(option, opt, value):
         )
 
 
-def _check_dict(option, opt, value):
+def _check_dict(option: Any, opt: Any, value: str) -> str:
     if option or opt or value:
         pass  # Shut up lint checker
     v = value.lower()
@@ -156,7 +165,7 @@ class DeOption(Option):
     TYPE_CHECKER["dict"] = _check_dict
     choices = None
 
-    def _new_check_choice(self):
+    def _new_check_choice(self) -> None:
         if self.type == "dict":
             if self.choices is None:
                 raise OptionValueError(
@@ -179,19 +188,18 @@ class DeOption(Option):
 class DeOptionParser(OptionParser):
     def __init__(
         self,
-        usage=None,
-        option_list=None,
-        option_class=DeOption,
-        version=None,
-        conflict_handler="error",
-        description=None,
-        long_description=None,
-        formatter=DeHelpFormatter(),
-        add_help_option=True,
-        prog=None,
-        copyright=None,
-        add_verbose_options=True,
-        add_random_options=False,
+        usage: str = None,
+        option_list: Optional[Iterable[Option]] = None,
+        option_class: Type[Option] = DeOption,
+        version: str = None,
+        conflict_handler: str = "error",
+        description: str = None,
+        long_description: str = None,
+        formatter: IndentedHelpFormatter = DeHelpFormatter(),
+        add_help_option: bool = True,
+        prog: str = None,
+        copyright: str = None,
+        add_verbose_options: bool = True,
     ):
 
         OptionParser.__init__(
@@ -240,48 +248,3 @@ class DeOptionParser(OptionParser):
                 default=False,
                 help="Verbose output (Not quite)",
             )
-
-        self.random_options = False
-        if add_random_options:
-            self.random_options = True
-            self.add_option(
-                "--seed",
-                action="store",
-                type="int",
-                dest="random_seed",
-                help="Initial seed for pseudo-random number generator. "
-                "(default: System time)",
-                metavar="INTEGER",
-            )
-
-            self.add_option(
-                "--generator",
-                action="store",
-                dest="random_generator",
-                default="MersenneTwister",
-                help="Select MersenneTwister (default) or WichmannHill pseudo-random "
-                "number generator",
-                metavar="TYPE",
-            )
-
-    def parse_args(self, args, values=None):
-        (options, args) = OptionParser.parse_args(self, args, values)
-
-        if self.random_options:
-            if (
-                options.random_generator is None
-                or options.random_generator == "MersenneTwister"
-            ):
-                r = random.Random()
-            elif options.random_generator == "WichmannHill":
-                r = random.WichmannHill()
-            else:
-                self.error(
-                    "Acceptible generators are MersenneTwister (default) or WichmannHill"
-                )
-            if options.random_seed:
-                r.seed(options.random_seed)
-
-            options.__dict__["random"] = r
-
-        return (options, args)

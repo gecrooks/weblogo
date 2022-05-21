@@ -38,12 +38,15 @@
 
 import random
 from math import exp, log, sqrt
-from typing import Tuple
+from typing import TYPE_CHECKING, Tuple
 
 import numpy as np
 import scipy.optimize
 from numpy import asarray, float64, shape, zeros
 from scipy.special import digamma, gamma, gammaincc, polygamma
+
+if TYPE_CHECKING:
+    from numpy.typing import ArrayLike
 
 
 class Dirichlet(object):
@@ -75,7 +78,7 @@ class Dirichlet(object):
         "_mean",
     )
 
-    def __init__(self, alpha: np.ndarray) -> None:
+    def __init__(self, alpha: "ArrayLike") -> None:
         """
         Args:
             - alpha  -- The parameters of the Dirichlet prior distribution.
@@ -129,13 +132,13 @@ class Dirichlet(object):
                 cv[j, i] = v
         return cv
 
-    def mean_x(self, x: np.ndarray) -> float:
+    def mean_x(self, x: "ArrayLike") -> float:
         x = asarray(x, float64)
         if shape(x) != shape(self.alpha):
             raise ValueError("Argument must be same dimension as Dirichlet")
         return sum(x * self.mean())
 
-    def variance_x(self, x: np.ndarray) -> float:
+    def variance_x(self, x: "ArrayLike") -> float:
         x = asarray(x, float64)
         if shape(x) != shape(self.alpha):
             raise ValueError("Argument must be same dimension as Dirichlet")
@@ -213,20 +216,23 @@ class Dirichlet(object):
                         / A2
                     )
 
-        var -= mean ** 2
+        var -= mean**2
         return var
 
-    def mean_relative_entropy(self, pvec: np.ndarray) -> float:
+    def mean_relative_entropy(self, pvec: "ArrayLike") -> float:
+        pvec = asarray(pvec)
         ln_p = np.log(pvec)
         return -self.mean_x(ln_p) - self.mean_entropy()
 
-    def variance_relative_entropy(self, pvec: np.ndarray) -> float:
+    def variance_relative_entropy(self, pvec: "ArrayLike") -> float:
+        pvec = asarray(pvec)
         ln_p = np.log(pvec)
         return self.variance_x(ln_p) + self.variance_entropy()
 
     def interval_relative_entropy(
-        self, pvec: np.ndarray, frac: float
+        self, pvec: "ArrayLike", frac: float
     ) -> Tuple[float, float]:
+        pvec = asarray(pvec)
         mean = self.mean_relative_entropy(pvec)
         variance = self.variance_relative_entropy(pvec)
         sd = sqrt(variance)
@@ -266,7 +272,7 @@ class Gamma(object):
 
     @classmethod
     def from_mean_variance(cls, mean: float, variance: float) -> "Gamma":
-        alpha = mean ** 2 / variance
+        alpha = mean**2 / variance
         beta = alpha / mean
         return cls(alpha, beta)
 
@@ -274,7 +280,7 @@ class Gamma(object):
         return self.alpha / self.beta
 
     def variance(self) -> float:
-        return self.alpha / (self.beta ** 2)
+        return self.alpha / (self.beta**2)
 
     def sample(self) -> float:
         return random.gammavariate(self.alpha, 1.0 / self.beta)
@@ -284,7 +290,7 @@ class Gamma(object):
             return 0.0
         a = self.alpha
         b = self.beta
-        return (x ** (a - 1.0)) * exp(-b * x) * (b ** a) / gamma(a)
+        return (x ** (a - 1.0)) * exp(-b * x) * (b**a) / gamma(a)
 
     def cdf(self, x: float) -> float:
         return 1.0 - gammaincc(self.alpha, self.beta * x)

@@ -25,9 +25,9 @@ DEVELOPING WEBLOGO
 	bash build_examples.sh
 	
 	
-5. Run build and test under all supported python versions.
+5. Run tests
 	
-	tox
+	make test
 
 
 6. Run webpage tests.
@@ -39,7 +39,8 @@ DEVELOPING WEBLOGO
 
 
 8. Tag
-	tag release on Github at https://github.com/WebLogo/weblogo/releases/new	
+	tag release on Github at https://github.com/WebLogo/weblogo/releases/new
+    (creating a new release with autoupdate pypi and conda packages)
 
 
 10. Update server: login to weblogo.threeplusone.com, weblogo directory and switch branches 
@@ -48,9 +49,6 @@ DEVELOPING WEBLOGO
 
 
 11. Check server is working correctly. Run tests at weblogo.threeplusone.com/tests.html
-
-
-12. Post announcement. (http://groups.google.com/group/WebLogo)
 
 
 

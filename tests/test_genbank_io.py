@@ -33,7 +33,7 @@ from weblogo.seq_io import genbank_io
 from . import data_stream
 
 
-def examples():
+def examples():  # type: ignore
     return (
         data_stream("genbank/NT_019265.gb"),
         data_stream("genbank/cox2.gb"),
@@ -60,14 +60,14 @@ class test_genbank_io(unittest.TestCase):
     #        print
     #        print
 
-    def test_parse(self):
+    def test_parse(self) -> None:
         for f in examples():
             # print f.name
             genbank_io.read(f)
             f.close()
             # print seqs
 
-    def test_read(self):
+    def test_read(self) -> None:
         f = data_stream("genbank/cox2.gb")
         seqs = genbank_io.read(f)
 

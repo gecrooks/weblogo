@@ -32,17 +32,17 @@ from weblogo.seq import protein_alphabet, rna_alphabet
 from weblogo.seq_io import fasta_io, plain_io
 
 
-def test_read_example():
+def test_read_example() -> None:
     f = StringIO(plain_io.example)
     seqs = plain_io.read(f)
     # print seqs
     assert len(seqs) == 1
-    assert seqs[0].name is None
+    assert not seqs[0].name
     # print seqs[0]
     assert len(seqs[0]) == 450
 
 
-def test_write_seq():
+def test_write_seq() -> None:
     f = StringIO(plain_io.example)
     seqs = plain_io.read(f)
 
@@ -58,7 +58,7 @@ def test_write_seq():
     assert seqs == seqs2
 
 
-def test_parse_fasta_fail():
+def test_parse_fasta_fail() -> None:
     # should fail with parse error
     with pytest.raises(ValueError):
         f = StringIO(fasta_io.example)
