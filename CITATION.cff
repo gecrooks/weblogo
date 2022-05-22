@@ -9,18 +9,15 @@ preferred-citation:
       given-names: "John-Marc"
     - family-names: "Brenner"
       given-names: "Steven"
-      orcid: "https://orcid.org/0000-0002-6870-7956"
   title: "WebLogo: A Sequence Logo Generator"
   type: article
+  journal: "Genome Research"
+  volume: 14
+  start: 1188
+  end: 1190
+  year: 2004
+  doi: 10.1101/gr.849004
 version: 3.7
-keywords:
-  - bioinformatics
-  - biostatistics
-  - "data visualization"
-  - python
-  - biology
-  - science
-doi: 10.1101/gr.849004
 date-released: 2019-03-04
 license: MIT
 url: "http://weblogo.threeplusone.com/"
