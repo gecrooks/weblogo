@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+preferred-citation:
+  authors:
+    - family-names: "Crooks"
+      given-names: "Gavin"
+    - family-names: "Hon"
+      given-names: "Gary"
+    - family-names: "Chandonia"
+      given-names: "John-Marc"
+    - family-names: "Brenner"
+      given-names: "Steven"
+  title: "WebLogo: A Sequence Logo Generator"
+  type: article
+  journal: "Genome Research"
+  volume: 14
+  start: 1188
+  end: 1190
+  year: 2004
+  doi: 10.1101/gr.849004
+version: 3.7
+date-released: 2019-03-04
+license: MIT
+url: "http://weblogo.threeplusone.com/"
+repository-code: "https://github.com/WebLogo/weblogo"
