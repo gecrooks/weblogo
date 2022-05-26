@@ -315,7 +315,7 @@ class LogoOptions:
         self.annotate = None
 
         self.show_fineprint = True
-        self.fineprint: str = "WebLogo " + __version__
+        self.fineprint: str = "WebLogo " + ".".join(__version__.split(".")[0:3])
 
         self.show_boxes = False
         self.shrink_fraction = 0.5
