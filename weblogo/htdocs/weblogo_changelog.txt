@@ -6,7 +6,7 @@ WebLogo Release Notes
 * updated examples for website
 * `conda` installation enabled with `conda-forge`
 * remove support for python 3.6
-* Weblogo 3.7 runs under python 3.7, 3.8, and 3.9
+* Weblogo 3.7 runs under python 3.7, 3.8, 3.9 and 3.10
 
 
 3.7 (2019-03-04) [Gavin Crooks]
