@@ -1,6 +1,14 @@
 WebLogo Release Notes
 
 
+3.7.11 (2022-05-26) [Gavin Crooks, Melissa Fabros]
+* enable typehints
+* updated examples for website
+* `conda` installation enabled with `conda-forge`
+* remove support for python 3.6
+* Weblogo 3.7 runs under python 3.7, 3.8, 3.9 and 3.10
+
+
 3.7 (2019-03-04) [Gavin Crooks]
 
 * Refactor and cleanup code, removing python 2.7 support
