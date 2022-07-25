@@ -348,8 +348,6 @@ def main(htdocs_directory: str = None) -> None:
                 errors.append(("color%d" % i, "Invalid color: %s" % color))
 
     if form["color_scheme"].value == "color_custom":
-        assert logooptions.color_scheme is not None
-
         logooptions.color_scheme = custom
     else:
         try:

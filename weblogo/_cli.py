@@ -125,7 +125,7 @@ def httpd_serve_forever(port: int = 8080) -> None:
             return False
 
         def is_python(
-            self, path: Union[str, PathLike[str]]
+            self, path: Union[str, PathLike]
         ) -> bool:  # Let CGIHTTPRequestHandler know that cgi script is python
             return True
 
