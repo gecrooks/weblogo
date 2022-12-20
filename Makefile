@@ -13,13 +13,13 @@ DIR = /home/ec2-user/weblogo
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-12s\033[0m %s\n", $$1, $$2}'
 
-test:		## Run unittests with current enviroment
+test:  ## Run unittests with current enviroment
 	@python -m pytest
 
-cov:		## Report test coverage
+cov:  ## Report test coverage
 	@python -m pytest --cov=weblogo --cov-report term-missing
 
-lint:		## Lint check python source
+lint:  ## Lint check python source
 	@isort --check $(FILES)  ||  echo "isort:   FAILED!"
 	@black --check --quiet $(FILES)    || echo "black:   FAILED!"
 	@flake8 $(FILES)
@@ -31,19 +31,19 @@ delint:   ## Run isort and black to delint project
 	black $(FILES)
 	@echo
 
-types:	## Report type errors and untyped functions
+types:  ## Report type errors and untyped functions
 	@mypy weblogo tests --ignore-missing-imports --follow-imports=skip --disallow-untyped-defs
 
-docs:		## Build documentation
+docs:  ## Build documentation
 	$(MAKE) -C docs html && open docs/_build/html/index.html
 
-examples: 	## Build examples
+examples:  ## Build examples
 	cd weblogo/htdocs/examples && ./build_examples.sh
 
-login:		## ssh into remote server
+login:  ## ssh into remote server
 	ssh  ${USER}@${HOST}
 
-sync:		## Sync remote server
+sync:  ## Sync remote server
 	ssh ${USER}@${HOST} 'cd weblogo && git pull'
 
 reinstall:	## Reinstall weblogo on remote server
