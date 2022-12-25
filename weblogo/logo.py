@@ -964,8 +964,6 @@ class LogoData:
     def csv(self) -> str:
         """Return logodata as a csv formatted string"""
         out = StringIO()
-        ver = "WebLogo " + ".".join(__version__.split(".")[0:3])
-        # print("# "+ver  , file=out)
 
         # asserts checks that defaults that were initialized to None have been set
         assert self.alphabet is not None
