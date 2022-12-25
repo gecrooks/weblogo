@@ -417,7 +417,7 @@ def _build_option_parser() -> DeOptionParser:
         choices=formatters,
         metavar="FORMAT",
         help="Format of output: eps (default), png, png_print, pdf, jpeg, svg, "
-        "logodata",
+        "logodata, csv",
         default=default_formatter,
     )
 

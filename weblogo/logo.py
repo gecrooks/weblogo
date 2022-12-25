@@ -961,6 +961,41 @@ class LogoData:
 
         return out.getvalue()
 
+    def csv(self) -> str:
+        """Return logodata as a csv formatted string"""
+        out = StringIO()
+
+        # asserts checks that defaults that were initialized to None have been set
+        assert self.alphabet is not None
+        assert self.length is not None
+        assert self.counts is not None
+        assert self.entropy is not None
+
+        # Show column names
+        print("Position", end=",", file=out)
+
+        for a in self.alphabet:
+            print(a, end=",", file=out)
+        print("Entropy,Low,High,Weight", file=out)
+
+        # Write the data table
+
+        for i in range(self.length):
+            print(i + 1, end=",", file=out)
+
+            for c in self.counts[i]:
+                print(c, end=",", file=out)
+            print("%6.4f" % self.entropy[i], end=",", file=out)
+            if self.entropy_interval is not None:
+                print("%6.4f" % self.entropy_interval[i][0], end=",", file=out)
+                print("%6.4f" % self.entropy_interval[i][1], end=",", file=out)
+            else:
+                print(",", ",", end="", file=out)
+            if self.weight is not None:
+                print("%6.4f" % self.weight[i], end="", file=out)
+            print("", file=out)
+        return out.getvalue()
+
 
 def _from_URL_fileopen(target_url: str) -> StringIO:  # pragma: no cover
     """opens files from a remote URL location"""
