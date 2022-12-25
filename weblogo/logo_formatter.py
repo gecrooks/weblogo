@@ -115,6 +115,11 @@ def txt_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
     """Create a text representation of the logo data."""
     return str(logodata).encode()
 
+def csv_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
+    """Create a csv representation of the logo data."""
+    return logodata.csv().encode()
+
+
 
 def eps_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
     """Generate a logo in Encapsulated Postscript (EPS)"""
@@ -295,13 +300,14 @@ def eps_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
 formatters = {
     "eps": eps_formatter,
     "pdf": pdf_formatter,
-    "png": png_formatter,
+    "png": png_print_formatter,
     "png_print": png_print_formatter,
     "jpeg": jpeg_formatter,
     "svg": svg_formatter,
     "logodata": txt_formatter,
+    "csv": csv_formatter,
 }
-"""Map between output format names and corresponing logo formatter"""
+"""Map between output format names and corresponding logo formatter"""
 
 
 default_formatter = eps_formatter
