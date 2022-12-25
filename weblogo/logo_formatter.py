@@ -115,10 +115,10 @@ def txt_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
     """Create a text representation of the logo data."""
     return str(logodata).encode()
 
+
 def csv_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
     """Create a csv representation of the logo data."""
     return logodata.csv().encode()
-
 
 
 def eps_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:

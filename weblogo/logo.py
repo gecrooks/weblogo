@@ -961,7 +961,6 @@ class LogoData:
 
         return out.getvalue()
 
-
     def csv(self) -> str:
         """Return logodata as a csv formatted string"""
         out = StringIO()

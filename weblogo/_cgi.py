@@ -71,7 +71,7 @@ mime_type = {
     "png": "image/png",
     "png_print": "image/png",
     "logodata": "text/plain",
-    "csv": "text/plain",    
+    "csv": "text/plain",
     "jpeg": "image/jpeg",
 }
 
@@ -82,7 +82,7 @@ extension = {
     "svg": "svg",
     "png_print": "png",
     "logodata": "txt",
-    "csv": "csv",    
+    "csv": "csv",
     "jpeg": "jpeg",
 }
 
@@ -182,7 +182,16 @@ def main(htdocs_directory: str = None) -> None:
             "format",
             "png",
             weblogo.formatters.get,
-            options=["png_print", "png", "jpeg", "eps", "pdf", "svg", "logodata", "csv"],
+            options=[
+                "png_print",
+                "png",
+                "jpeg",
+                "eps",
+                "pdf",
+                "svg",
+                "logodata",
+                "csv",
+            ],
             # TODO: Should copy list from __init__.formatters
             errmsg="Unknown format option.",
         ),
