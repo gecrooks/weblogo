@@ -79,7 +79,7 @@ from .utils import ArgumentError, isfloat, stdrepr
 # Shorten development version string of the form weblogo-3.6.1.dev43+g64d9f12.d20190304
 
 if __version__.find("+") != -1:
-    __version__ = __version__[: __version__.find("+")]
+    __version__ = __version__[: __version__.find("+")]  # pragma: no cover
 
 
 # from .logo_formatter import (GhostscriptAPI, pdf_formatter, jpeg_formatter, png_formatter,

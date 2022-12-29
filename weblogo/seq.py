@@ -283,7 +283,7 @@ class Alphabet(object):
 
     def chrs(self, sequence_of_ints: Sequence[int]) -> "Seq":
         """Convert a sequence of ordinals into an alphabetic string."""
-        c = [self._chr_table[n] for n in sequence_of_ints]
+        c = [self.chr(n) for n in sequence_of_ints]
         s = "".join(c)
         return Seq(s, self)
 
@@ -336,8 +336,8 @@ class Alphabet(object):
     def __iter__(self) -> Iterator[str]:
         return iter(self._letters)
 
-    def __getitem__(self, key: Any) -> str:
-        return self._letters[key]
+    # def __getitem__(self, key: Any) -> str:
+    #     return self._letters[key]
 
     def __hash__(self) -> int:
         return hash(tuple(self._ord_table))

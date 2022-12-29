@@ -100,6 +100,7 @@ def test_formats() -> None:
     _exec(["--format", "jpeg"], [])
 
     _exec(["--format", "logodata"], [])
+    _exec(["--format", "csv"], [])
 
 
 @pytest.mark.skipif(shutil.which("pdf2svg") is None, reason="requires pdf2svg")

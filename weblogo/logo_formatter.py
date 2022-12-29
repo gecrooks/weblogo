@@ -20,7 +20,6 @@ __all__ = [
     "pdf_formatter",
     "jpeg_formatter",
     "svg_formatter",
-    "png_formatter",
     "png_print_formatter",
     "txt_formatter",
     "eps_formatter",
@@ -100,9 +99,9 @@ def svg_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
         os.remove(fname_pdf)
 
 
-def png_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
-    """Generate a logo in PNG format."""
-    return _bitmap_formatter(logodata, logoformat, device="png")
+# def png_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
+#     """Generate a logo in PNG format."""
+#     return _bitmap_formatter(logodata, logoformat, device="png")
 
 
 def png_print_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:

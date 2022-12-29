@@ -114,10 +114,10 @@ def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
     return SeqList(seqs, name=name)
 
 
-def readseq(fin: TextIO, alphabet: Alphabet = None) -> Seq:
-    """Read one sequence from the file, starting
-    from the current file position."""
-    return next(iterseq(fin, alphabet))
+# def readseq(fin: TextIO, alphabet: Alphabet = None) -> Seq:
+#     """Read one sequence from the file, starting
+#     from the current file position."""
+#     return next(iterseq(fin, alphabet))
 
 
 def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Iterator[Seq]:

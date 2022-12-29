@@ -42,7 +42,7 @@ from .seq import (
 from .utils import ischar, isint
 
 if TYPE_CHECKING:
-    from numpy.typing import ArrayLike, DTypeLike
+    from numpy.typing import ArrayLike, DTypeLike  # pragma: no cover
 
 __all__ = "AlphabeticArray", "Motif"
 

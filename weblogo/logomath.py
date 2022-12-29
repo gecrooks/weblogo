@@ -46,7 +46,7 @@ from numpy import asarray, float64, shape, zeros
 from scipy.special import digamma, gamma, gammaincc, polygamma
 
 if TYPE_CHECKING:
-    from numpy.typing import ArrayLike
+    from numpy.typing import ArrayLike  # pragma: no cover
 
 
 class Dirichlet(object):
