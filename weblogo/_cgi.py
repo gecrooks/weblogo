@@ -498,7 +498,9 @@ def main(htdocs_directory: Optional[str] = None) -> None:
 
 
 def send_form(
-    controls: List[Field], errors: Optional[List[tuple]] = None, htdocs_directory: Optional[str] = None
+    controls: List[Field],
+    errors: Optional[List[tuple]] = None,
+    htdocs_directory: Optional[str] = None,
 ) -> None:
     if errors is None:
         errors = []

@@ -385,7 +385,9 @@ class LogoFormat(LogoOptions):
         ArgumentError: if arguments are invalid.
     """
 
-    def __init__(self, logodata: "LogoData", logooptions: Optional[LogoOptions] = None) -> None:
+    def __init__(
+        self, logodata: "LogoData", logooptions: Optional[LogoOptions] = None
+    ) -> None:
         """Create a new LogoFormat instance."""
 
         if logooptions is not None:
@@ -847,7 +849,10 @@ class LogoData:
 
     @classmethod
     def from_counts(
-        cls, alphabet: Optional[Alphabet], counts: np.ndarray, prior: Optional[np.ndarray] = None
+        cls,
+        alphabet: Optional[Alphabet],
+        counts: np.ndarray,
+        prior: Optional[np.ndarray] = None,
     ) -> "LogoData":
         """Build a LogoData object from counts."""
         # Counts is a Motif object?

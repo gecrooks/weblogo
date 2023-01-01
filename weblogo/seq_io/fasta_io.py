@@ -54,7 +54,7 @@ VLARHF-QH-EFTPELQ-HALEAHFCA------V---GDALA----K-----A-----YH-----------
 """
 
 
-from typing import Optional, Iterator, List, TextIO
+from typing import Iterator, List, Optional, TextIO
 
 from ..seq import Alphabet, Seq, SeqList
 

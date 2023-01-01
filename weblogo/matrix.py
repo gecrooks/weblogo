@@ -28,9 +28,10 @@ Arrays indexed by alphabetic strings.
 """
 
 from array import array
-from typing import Optional, TYPE_CHECKING, Any, List, TextIO, Tuple, Union
+from typing import Any, List, Optional, TextIO, Tuple, Union
 
 import numpy as np
+from numpy.typing import ArrayLike, DTypeLike
 
 from .seq import (
     Alphabet,
@@ -40,9 +41,6 @@ from .seq import (
     unambiguous_rna_alphabet,
 )
 from .utils import ischar, isint
-
-if TYPE_CHECKING:
-    from numpy.typing import ArrayLike, DTypeLike  # pragma: no cover
 
 __all__ = "AlphabeticArray", "Motif"
 

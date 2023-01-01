@@ -40,7 +40,7 @@ in as a sequence.  Whitespace is removed.
 -EPC-RDENVHFNRIFLPTIYFIIFLTGIVGNGLVILVMGYQKKLRSMTDKYRLHLSVAD
 """
 
-from typing import Optional, Iterator, List, TextIO
+from typing import Iterator, List, Optional, TextIO
 
 from ..seq import Alphabet, Seq, SeqList
 from ..utils import remove_whitespace

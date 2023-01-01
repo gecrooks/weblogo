@@ -99,7 +99,7 @@ def main() -> None:
     except ValueError as err:
         print("Error:", err, file=sys.stderr)
         sys.exit(2)
-    except KeyboardInterrupt:   # pragma: no cover
+    except KeyboardInterrupt:  # pragma: no cover
         sys.exit(0)
 
 

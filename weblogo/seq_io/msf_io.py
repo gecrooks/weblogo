@@ -38,7 +38,7 @@ ways:
 """
 
 import re
-from typing import Optional, Iterator, TextIO
+from typing import Iterator, Optional, TextIO
 
 from ..seq import Alphabet, Seq, SeqList
 from ..utils import Token

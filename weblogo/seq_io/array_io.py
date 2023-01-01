@@ -41,7 +41,7 @@ of characters. Blank lines and white space are ignored.
 -EPC-RDENVHFNRIFLPTIYFIIFLTGIVGNGLVILVMGYQKKLRSMTDKYRLHLSVAD
 """
 
-from typing import Optional, Generator, TextIO
+from typing import Generator, Optional, TextIO
 
 from ..seq import Alphabet, Seq, SeqList
 from ..utils import remove_whitespace

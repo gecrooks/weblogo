@@ -620,7 +620,9 @@ class Seq(str):
         cls = self.__class__
         return cls(s, self.alphabet, self.name, self.description)
 
-    def words(self, k: int, alphabet: Optional[Alphabet] = None) -> Generator[str, None, None]:
+    def words(
+        self, k: int, alphabet: Optional[Alphabet] = None
+    ) -> Generator[str, None, None]:
         """Return an iteration over all subwords of length k in the sequence. If an optional
         alphabet is provided, only words from that alphabet are returned.
 
