@@ -79,7 +79,7 @@ ttacctgctacgccagccttctgtgcgcgcaactgtctggtcccgcccc2
 """
 
 
-def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
+def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
     """Read and parse an IG file.
 
     Args:
@@ -94,7 +94,7 @@ def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
     return SeqList(seqs)
 
 
-def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Iterator[Seq]:
+def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Iterator[Seq]:
     """Parse an IG file and generate sequences.
 
     Args:

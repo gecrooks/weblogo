@@ -117,9 +117,9 @@ class Field:
     def __init__(
         self,
         name: str,
-        default: Any = None,
-        conversion: Callable = None,
-        options: List[Any] = None,
+        default: Optional[Any] = None,
+        conversion: Optional[Callable] = None,
+        options: Optional[List[Any]] = None,
         errmsg: str = "Illegal value.",
     ) -> None:
 
@@ -168,7 +168,7 @@ def float_or_none(value: Any) -> Optional[float]:
     return float(value)
 
 
-def main(htdocs_directory: str = None) -> None:
+def main(htdocs_directory: Optional[str] = None) -> None:
     logooptions = weblogo.LogoOptions()
 
     # A list of form fields.
@@ -498,7 +498,9 @@ def main(htdocs_directory: str = None) -> None:
 
 
 def send_form(
-    controls: List[Field], errors: List[tuple] = None, htdocs_directory: str = None
+    controls: List[Field],
+    errors: Optional[List[tuple]] = None,
+    htdocs_directory: Optional[str] = None,
 ) -> None:
     if errors is None:
         errors = []

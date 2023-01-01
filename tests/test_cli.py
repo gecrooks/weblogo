@@ -1,6 +1,6 @@
 import shutil
 from subprocess import PIPE, Popen
-from typing import List, TextIO
+from typing import List, Optional, TextIO
 
 import pytest
 
@@ -8,7 +8,10 @@ from . import data_stream
 
 
 def _exec(
-    args: List[str], outputtext: List[str], returncode: int = 0, stdin: TextIO = None
+    args: List[str],
+    outputtext: List[str],
+    returncode: int = 0,
+    stdin: Optional[TextIO] = None,
 ) -> None:
     if not stdin:
         stdin = data_stream("cap.fa")
@@ -100,6 +103,7 @@ def test_formats() -> None:
     _exec(["--format", "jpeg"], [])
 
     _exec(["--format", "logodata"], [])
+    _exec(["--format", "csv"], [])
 
 
 @pytest.mark.skipif(shutil.which("pdf2svg") is None, reason="requires pdf2svg")

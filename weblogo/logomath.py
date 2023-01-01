@@ -38,15 +38,13 @@
 
 import random
 from math import exp, log, sqrt
-from typing import TYPE_CHECKING, Tuple
+from typing import Tuple
 
 import numpy as np
 import scipy.optimize
 from numpy import asarray, float64, shape, zeros
+from numpy.typing import ArrayLike  # pragma: no cover
 from scipy.special import digamma, gamma, gammaincc, polygamma
-
-if TYPE_CHECKING:
-    from numpy.typing import ArrayLike
 
 
 class Dirichlet(object):

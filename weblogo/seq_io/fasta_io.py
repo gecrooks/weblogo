@@ -54,7 +54,7 @@ VLARHF-QH-EFTPELQ-HALEAHFCA------V---GDALA----K-----A-----YH-----------
 """
 
 
-from typing import Iterator, List, TextIO
+from typing import Iterator, List, Optional, TextIO
 
 from ..seq import Alphabet, Seq, SeqList
 
@@ -96,7 +96,7 @@ VLARHF-QH-EFTPELQ-HALEAHFCA------V---GDALA----K-----A-----YH-----------
 """
 
 
-def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
+def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
     """Read and parse a fasta file.
 
     Args:
@@ -114,13 +114,13 @@ def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
     return SeqList(seqs, name=name)
 
 
-def readseq(fin: TextIO, alphabet: Alphabet = None) -> Seq:
-    """Read one sequence from the file, starting
-    from the current file position."""
-    return next(iterseq(fin, alphabet))
+# def readseq(fin: TextIO, alphabet: Alphabet = None) -> Seq:
+#     """Read one sequence from the file, starting
+#     from the current file position."""
+#     return next(iterseq(fin, alphabet))
 
 
-def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Iterator[Seq]:
+def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Iterator[Seq]:
     """Parse a fasta file and generate sequences.
 
     Args:

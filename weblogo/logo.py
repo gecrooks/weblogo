@@ -79,7 +79,7 @@ from .utils import ArgumentError, isfloat, stdrepr
 # Shorten development version string of the form weblogo-3.6.1.dev43+g64d9f12.d20190304
 
 if __version__.find("+") != -1:
-    __version__ = __version__[: __version__.find("+")]
+    __version__ = __version__[: __version__.find("+")]  # pragma: no cover
 
 
 # from .logo_formatter import (GhostscriptAPI, pdf_formatter, jpeg_formatter, png_formatter,
@@ -385,7 +385,9 @@ class LogoFormat(LogoOptions):
         ArgumentError: if arguments are invalid.
     """
 
-    def __init__(self, logodata: "LogoData", logooptions: LogoOptions = None) -> None:
+    def __init__(
+        self, logodata: "LogoData", logooptions: Optional[LogoOptions] = None
+    ) -> None:
         """Create a new LogoFormat instance."""
 
         if logooptions is not None:
@@ -642,7 +644,7 @@ class LogoFormat(LogoOptions):
 
 
 def parse_prior(
-    composition: Any, alphabet: Alphabet, weight: float = None
+    composition: Any, alphabet: Alphabet, weight: Optional[float] = None
 ) -> Optional[np.ndarray]:
     """Parse a description of the expected monomer distribution of a sequence.
 
@@ -771,7 +773,7 @@ def _seq_names() -> List[str]:
 def read_seq_data(
     fin: Union[StringIO, TextIOWrapper, None],
     input_parser: Callable = seq_io.read,
-    alphabet: Alphabet = None,
+    alphabet: Optional[Alphabet] = None,
     ignore_lower_case: bool = False,
     max_file_size: int = 0,
 ) -> SeqList:
@@ -832,9 +834,9 @@ class LogoData:
         self,
         length: Optional[int] = None,
         alphabet: Optional[Alphabet] = None,
-        counts: np.ndarray = None,
-        entropy: np.ndarray = None,
-        entropy_interval: np.ndarray = None,
+        counts: Optional[np.ndarray] = None,
+        entropy: Optional[np.ndarray] = None,
+        entropy_interval: Optional[np.ndarray] = None,
         weight: Optional[np.ndarray] = None,
     ) -> None:
         """Creates a new LogoData object"""
@@ -847,7 +849,10 @@ class LogoData:
 
     @classmethod
     def from_counts(
-        cls, alphabet: Optional[Alphabet], counts: np.ndarray, prior: np.ndarray = None
+        cls,
+        alphabet: Optional[Alphabet],
+        counts: np.ndarray,
+        prior: Optional[np.ndarray] = None,
     ) -> "LogoData":
         """Build a LogoData object from counts."""
         # Counts is a Motif object?
@@ -895,7 +900,7 @@ class LogoData:
         return cls(seq_length, alphabet, counts, ent, entropy_interval, weight)
 
     @classmethod
-    def from_seqs(cls, seqs: SeqList, prior: np.ndarray = None) -> "LogoData":
+    def from_seqs(cls, seqs: SeqList, prior: Optional[np.ndarray] = None) -> "LogoData":
         """Build a LogoData object from a SeqList, a list of sequences."""
         # --- VALIDATE DATA ---
         # check that at least one sequence of length at least 1 long

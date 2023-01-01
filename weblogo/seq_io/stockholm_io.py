@@ -34,7 +34,7 @@ See:
 """
 
 import re
-from typing import Iterator, TextIO
+from typing import Iterator, Optional, TextIO
 
 from ..seq import Alphabet, Seq, SeqList
 from ..utils import Token
@@ -77,13 +77,13 @@ extensions = ("sth", "stockholm", "align")
 header_line = re.compile(r"#\s+STOCKHOLM\s+1.\d\s+$")
 
 
-def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Iterator[Seq]:
+def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Iterator[Seq]:
     """Iterate over the sequences in the file."""
     # Default implementation
     return iter(read(fin, alphabet))
 
 
-def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
+def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
     alphabet = Alphabet(alphabet)
     seq_ids = []
     seqs: list = []

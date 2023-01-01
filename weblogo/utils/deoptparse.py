@@ -188,17 +188,17 @@ class DeOption(Option):
 class DeOptionParser(OptionParser):
     def __init__(
         self,
-        usage: str = None,
+        usage: Optional[str] = None,
         option_list: Optional[Iterable[Option]] = None,
         option_class: Type[Option] = DeOption,
-        version: str = None,
+        version: Optional[str] = None,
         conflict_handler: str = "error",
-        description: str = None,
-        long_description: str = None,
+        description: Optional[str] = None,
+        long_description: Optional[str] = None,
         formatter: IndentedHelpFormatter = DeHelpFormatter(),
         add_help_option: bool = True,
-        prog: str = None,
-        copyright: str = None,
+        prog: Optional[str] = None,
+        copyright: Optional[str] = None,
         add_verbose_options: bool = True,
     ):
 
