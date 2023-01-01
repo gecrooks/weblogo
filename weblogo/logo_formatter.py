@@ -247,8 +247,7 @@ def eps_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
             assert logoformat.scale_width is not None
             if logoformat.scale_width:
                 assert logodata.weight is not None
-                fraction_width = logodata.weight[seq_index]
-                # print(fraction_width, file=sys.stderr)
+                fraction_width = float(logodata.weight[seq_index])
 
             for rank, c in enumerate(s):
                 assert logoformat.color_scheme is not None
