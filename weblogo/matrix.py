@@ -28,7 +28,7 @@ Arrays indexed by alphabetic strings.
 """
 
 from array import array
-from typing import TYPE_CHECKING, Any, List, TextIO, Tuple, Union
+from typing import Optional, TYPE_CHECKING, Any, List, TextIO, Tuple, Union
 
 import numpy as np
 
@@ -95,8 +95,8 @@ class AlphabeticArray(object):
     def __init__(
         self,
         alphabets: Union[Alphabet, Tuple[Union[Alphabet, None], ...], str],
-        values: "ArrayLike" = None,
-        dtype: "DTypeLike" = None,
+        values: Optional["ArrayLike"] = None,
+        dtype: Optional["DTypeLike"] = None,
     ):
         """
         Args:
@@ -264,11 +264,11 @@ class Motif(AlphabeticArray):
     def __init__(
         self,
         alphabet: Alphabet,
-        array: "ArrayLike" = None,
-        dtype: "DTypeLike" = None,
-        name: str = None,
-        description: str = None,
-        scale: float = None,
+        array: Optional["ArrayLike"] = None,
+        dtype: Optional["DTypeLike"] = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        scale: Optional[float] = None,
     ):
         AlphabeticArray.__init__(self, (None, alphabet), array, dtype)
         self.name = name
@@ -317,7 +317,7 @@ class Motif(AlphabeticArray):
 
     @classmethod
     def read_transfac(
-        cls, fin: TextIO, alphabet: Union[Alphabet, str] = None
+        cls, fin: TextIO, alphabet: Optional[Union[Alphabet, str]] = None
     ) -> "Motif":
         """Parse a TRANSFAC-format PWM from a file.
         Returns a Motif object, representing the provided

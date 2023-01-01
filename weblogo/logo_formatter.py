@@ -318,7 +318,7 @@ class GhostscriptAPI:
 
     formats = ("png", "pdf", "jpeg")
 
-    def __init__(self, path: os.PathLike = None) -> None:
+    def __init__(self, path: Optional[os.PathLike] = None) -> None:
         """
         Raises:
             EnvironmentError: If cannot find Ghostscript executable on

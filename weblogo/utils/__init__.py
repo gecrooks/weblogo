@@ -27,7 +27,7 @@
 """
 
 
-from typing import Any, Iterable, List, TextIO
+from typing import Optional, Any, Iterable, List, TextIO
 
 import pkg_resources
 
@@ -102,7 +102,7 @@ def invert_dict(dictionary: dict) -> dict:
     return dict((value, key) for key, value in dictionary.items())
 
 
-def stdrepr(obj: Any, attributes: List[str] = None, name: str = None) -> str:
+def stdrepr(obj: Any, attributes: Optional[List[str]] = None, name: Optional[str] = None) -> str:
     """Create a standard representation of an object."""
     if name is None:
         name = obj.__class__.__name__
@@ -141,7 +141,7 @@ class Token:
     __slots__ = ["typeof", "data", "lineno", "offset"]
 
     def __init__(
-        self, typeof: str, data: str = None, lineno: int = -1, offset: int = -1
+        self, typeof: str, data: Optional[str] = None, lineno: int = -1, offset: int = -1
     ) -> None:
         self.typeof = typeof
         self.data = data
@@ -223,7 +223,7 @@ class ArgumentError(ValueError):
     are also stored.
     """
 
-    def __init__(self, message: str, key: str, value: Any = None) -> None:
+    def __init__(self, message: str, key: str, value: Optional[Any] = None) -> None:
         """Args:
         - msg -- An error message.
         - key -- The name of the argument or component at fault.
@@ -242,21 +242,21 @@ class ArgumentError(ValueError):
 # TODO: Replace with direct calls to pkg_resources
 
 
-def resource_string(modulename: str, resource: str, basefilename: str = None) -> bytes:
+def resource_string(modulename: str, resource: str, basefilename: Optional[str] = None) -> bytes:
     """Locate and return a resource as a string.
     >>> f = resource_string( __name__, 'somedatafile', __file__)
     """
     return pkg_resources.resource_string(modulename, resource)
 
 
-def resource_stream(modulename: str, resource: str, basefilename: str = None) -> TextIO:
+def resource_stream(modulename: str, resource: str, basefilename: Optional[str] = None) -> TextIO:
     """Locate and return a resource as a stream.
     >>> f = resource_stream( __name__, 'somedatafile', __file__)
     """
     return open(resource_filename(modulename, resource, basefilename))
 
 
-def resource_filename(modulename: str, resource: str, basefilename: str = None) -> str:
+def resource_filename(modulename: str, resource: str, basefilename: Optional[str] = None) -> str:
     """Locate and return a resource filename.
     >>> f = resource_filename( __name__, 'somedatafile', __file__)
     """

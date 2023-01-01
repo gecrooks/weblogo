@@ -139,7 +139,7 @@ Attributes :
 
 
 from types import ModuleType
-from typing import List, TextIO
+from typing import Optional, List, TextIO
 
 from ..seq import Alphabet, SeqList
 from . import genbank_io  # null_io,
@@ -261,7 +261,7 @@ def _get_parsers(fin: TextIO) -> List[ModuleType]:
     return parsers
 
 
-def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
+def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
     """Read a sequence file and attempt to guess its format.
     First the filename extension (if available) is used to infer the format.
     If that fails, then we attempt to parse the file using several common

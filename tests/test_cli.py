@@ -1,6 +1,6 @@
 import shutil
 from subprocess import PIPE, Popen
-from typing import List, TextIO
+from typing import Optional, List, TextIO
 
 import pytest
 
@@ -8,7 +8,7 @@ from . import data_stream
 
 
 def _exec(
-    args: List[str], outputtext: List[str], returncode: int = 0, stdin: TextIO = None
+    args: List[str], outputtext: List[str], returncode: int = 0, stdin: Optional[TextIO] = None
 ) -> None:
     if not stdin:
         stdin = data_stream("cap.fa")

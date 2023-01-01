@@ -30,7 +30,7 @@ writes do nothing.
 """
 
 
-from typing import Iterator, TextIO
+from typing import Optional, Iterator, TextIO
 
 from ..seq import Alphabet, Seq, SeqList
 
@@ -38,14 +38,14 @@ names = ()
 extensions = ()
 
 
-def read(fin: TextIO, alphabet: Alphabet = None) -> SeqList:
+def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
     assert fin is not None  # Do something with arguments to quiet pychecker
     # if alphabet is not None:
     #     pass
     return SeqList([])
 
 
-def iterseq(fin: TextIO, alphabet: Alphabet = None) -> Iterator[Seq]:
+def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Iterator[Seq]:
     assert fin is not None
     # if alphabet is not None:
     #     pass

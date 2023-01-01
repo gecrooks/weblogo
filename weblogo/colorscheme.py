@@ -115,7 +115,7 @@ class SymbolColor(ColorRule):
     a single color.
     """
 
-    def __init__(self, symbols: str, color: str, description: str = None) -> None:
+    def __init__(self, symbols: str, color: str, description: Optional[str] = None) -> None:
         self.symbols = symbols
         self.color = Color.from_string(color)
         self.description = description
@@ -133,7 +133,7 @@ class IndexColor(ColorRule):
     """
 
     def __init__(
-        self, indices: Sequence[int], color: str, description: str = None
+        self, indices: Sequence[int], color: str, description: Optional[str] = None
     ) -> None:
         self.indices = indices
         self.color = Color.from_string(color)
@@ -151,7 +151,7 @@ class RefSeqColor(ColorRule):
     which positions match that sequence and which don't.
     """
 
-    def __init__(self, ref_seq: str, color: str, description: str = None) -> None:
+    def __init__(self, ref_seq: str, color: str, description: Optional[str] = None) -> None:
         self.ref_seq = ref_seq
         self.color = Color.from_string(color)
         self.description = description
