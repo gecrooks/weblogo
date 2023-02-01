@@ -52,7 +52,6 @@ from typing import Any, Iterable, Optional, TextIO, Type
 def _copyright_callback(
     option: Any, opt: Any, value: Any, parser: "DeOptionParser"
 ) -> None:
-
     if option or opt or value or parser:
         pass  # Shut up lint checker
     print(parser.copyright)
@@ -201,7 +200,6 @@ class DeOptionParser(OptionParser):
         copyright: Optional[str] = None,
         add_verbose_options: bool = True,
     ):
-
         OptionParser.__init__(
             self,
             usage,

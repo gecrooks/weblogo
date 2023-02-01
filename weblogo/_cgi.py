@@ -122,7 +122,6 @@ class Field:
         options: Optional[List[Any]] = None,
         errmsg: str = "Illegal value.",
     ) -> None:
-
         self.name = name
         self.default = default
         self.value = default

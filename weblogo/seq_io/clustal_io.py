@@ -104,7 +104,6 @@ def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
             block_count = 0
         elif token.typeof == "seq_id":
             if len(seqs) <= block_count:
-
                 seq_ids.append(token.data)
                 seqs.append([])
 

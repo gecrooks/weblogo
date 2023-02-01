@@ -90,7 +90,6 @@ class ColorScheme(ColorRule):
         default_color: str = "black",
         alphabet: Alphabet = seq.generic_alphabet,
     ) -> None:
-
         self.rules = rules
         self.title = title
         self.description = description
