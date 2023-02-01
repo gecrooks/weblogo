@@ -858,7 +858,7 @@ class Nexus(object):
                 (i[1], i[0]) for i in self.ambiguous_values.items() if i[0] != "X"
             )
             self.rev_ambiguous_values = {}
-            for (k, v) in rev.items():
+            for k, v in rev.items():
                 key = sorted(c for c in k)
                 self.rev_ambiguous_values["".join(key)] = v
         # overwrite symbols for datype rna,dna,nucleotide

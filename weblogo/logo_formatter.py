@@ -83,7 +83,6 @@ def svg_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
     fpdfi, fname_pdf = tempfile.mkstemp(suffix=".pdf")
     fsvgi, fname_svg = tempfile.mkstemp(suffix=".svg")
     try:
-
         fpdf2 = open(fname_pdf, "w")
         fpdf2.buffer.write(pdf)
         fpdf2.seek(0)
@@ -265,7 +264,6 @@ def eps_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
 
         # Draw error bar on top of logo. Replaced by DrawErrorbarFirst above.
         if logodata.entropy_interval is not None and conv_factor and C > 0.0:
-
             low, high = logodata.entropy_interval[seq_index]
 
             assert logodata.entropy is not None

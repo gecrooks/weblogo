@@ -118,7 +118,6 @@ def _scan(fin: TextIO) -> Iterator[Token]:
     yield Token("begin")
     state = header
     for L, line in enumerate(fin):
-
         if state == header:
             if line.isspace():
                 continue

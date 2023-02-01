@@ -119,7 +119,6 @@ def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Iterator[Seq]:
         comments: List[str],
         lineno: int,
     ) -> Seq:
-
         try:
             desc = "\n".join(comments)
             s = Seq("".join(seqs), alphabet, name=name, description=desc)
