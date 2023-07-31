@@ -104,12 +104,12 @@ class test_seq_io(unittest.TestCase):
         # Test that the list of extension is a list.
         # Very easy with one extension list to write ('txt') rather than ('txt',)
         for p in seq_io._parsers:
-            self.assertTrue(type(p.extensions) == tuple)
+            self.assertTrue(type(p.extensions) is tuple)
 
     def test_parser_names(self) -> None:
         # Same for names
         for p in seq_io._parsers:
-            self.assertTrue(type(p.names) == tuple)
+            self.assertTrue(type(p.names) is tuple)
 
     def test_parsers(self) -> None:
         # seq_io._parsers is an ordered  list of sequence parsers that are
