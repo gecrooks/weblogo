@@ -522,7 +522,7 @@ def send_form(
                 value = "auto"
             if value == "true":
                 substitutions[c.name] = "checked"
-            elif type(value) == bool:
+            elif type(value) is bool:
                 if value:
                     substitutions[c.name] = "checked"
                 else:

@@ -51,7 +51,7 @@ class Color(object):
     """
 
     def __init__(self, red: float, green: float, blue: float) -> None:
-        if not (type(red) == type(green) == type(blue)):
+        if not (type(red) is type(green) is type(blue)):
             raise TypeError("Mixed floats and integers?")
         # Convert integer RBG values in [0, 255] to floats in [0, 1]
         if isinstance(red, int):
