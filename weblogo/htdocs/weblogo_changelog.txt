@@ -1,4 +1,8 @@
 WebLogo Release Notes
+3.8 (2024-03-03) [Gavin Crooks, Melissa Fabros]
+* fixes for Ghostscript deprecation
+* remove support for python 3.8
+Weblogo 3.8 runs under python 3.9, 3.10, 3.11, 3.12
 
 
 3.7.11 (2022-05-26) [Gavin Crooks, Melissa Fabros]
