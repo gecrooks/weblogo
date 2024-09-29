@@ -17,8 +17,8 @@ preferred-citation:
   end: 1190
   year: 2004
   doi: 10.1101/gr.849004
-version: 3.7
-date-released: 2019-03-04
+version: 3.8
+date-released: 2024-03-03
 license: MIT
 url: "http://weblogo.threeplusone.com/"
 repository-code: "https://github.com/WebLogo/weblogo"
