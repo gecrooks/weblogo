@@ -1,5 +1,10 @@
 #! /usr/local/bin/python
 
+# cgithb library imported from python 3.12
+# Distributed under the PSF license
+# https://docs.python.org/3/license.html
+
+
 # NOTE: the above "/usr/local/bin/python" is NOT a mistake.  It is
 # intentionally NOT "/usr/bin/env python".  On many systems
 # (e.g. Solaris), /usr/local/bin is not in $PATH as passed to CGI

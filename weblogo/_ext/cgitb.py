@@ -1,3 +1,9 @@
+
+# cgithb library imported from python 3.12
+# Distributed under the PSF license
+# https://docs.python.org/3/license.html
+
+
 """More comprehensive traceback formatting for Python scripts.
 
 To enable this module, do:
