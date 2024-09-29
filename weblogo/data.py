@@ -40,33 +40,6 @@ To convert a property dictionary to a list :
 >>> comp = [ amino_acid_composition[k] for k in amino_acid_letters]
 
 
-
-Resources:
-    Various standard data files are included in the weblogo distribution. These
-    may be loaded with the data_string, data_stream or data_filename methods.
-    A complete set of names is stored in 'resource_names'
-
-BLOSUM Scoring Matrices
-    Source: ftp://ftp.ncbi.nih.gov/repository/blocks/unix/blosum
-    These are all new blast style with 1/3 bit scaling
-    - blosum35
-    - blosum45
-    - blosum62
-    - blosum40
-    - blosum50
-    - blosum80
-    - blosum100
-
-Other substitution scoring matrices:
-    - dist20_comp
-    - pam250
-    - pam120
-    - vtml160
-
-Description of database cross references :
-    - dbxref.txt (http://www.expasy.org/cgi-bin/lists?dbxref.txt)
-
-
 Attributes:
     - amino_acid_letters
         -- Standard codes for the 20 canonical amino acids, in alphabetic
@@ -139,72 +112,10 @@ Status: Beta (Data needs to be proof checked.)
 from typing import ByteString, TextIO
 
 from . import utils
-from .utils import resource_filename, resource_stream, resource_string
 
 # Explicitly list set of available data resources. We want to be able to access
 # these resources in, for example, a webapp, without inadvertently allowing
 # unrestricted read access to the local file system.
-
-resource_names = [
-    "blosum35",
-    "blosum45",
-    "blosum62",
-    "blosum40",
-    "blosum50",
-    "blosum80",
-    "blosum100",
-    "dist20_comp",
-    "pam250",
-    "pam120",
-    "dbxref.txt",
-    "vtml160",
-]
-
-_resource_filenames = {
-    "blosum35": "data/blosum35.mat",
-    "blosum45": "data/blosum45.mat",
-    "blosum62": "data/blosum62.mat",
-    "blosum40": "data/blosum40.mat",
-    "blosum50": "data/blosum50.mat",
-    "blosum80": "data/blosum80.mat",
-    "blosum100": "data/blosum100.mat",
-    "dist20_comp": "data/dist20_comp.mat",
-    "pam250": "data/pam250.mat",
-    "pam120": "data/pam120.mat",
-    "dbxref.txt": "data/dbxref.txt",
-    "vtml160": "data/vtml160",
-}
-
-
-# TODO: Substitution matrix parser, SeqMatrix.read
-# _resource_parsers = {}
-
-
-def data_string(name: str) -> ByteString:
-    """Load the specified resource as a string."""
-    fn = _resource_filenames[name]
-    return resource_string(__name__, fn, __file__)
-
-
-def data_stream(name: str) -> TextIO:
-    """Provide an open file handle to the specified resource."""
-    fn = _resource_filenames[name]
-    return resource_stream(__name__, fn, __file__)
-
-
-def data_filename(name: str) -> str:
-    """Provide a filename for the given resource in the local filesystem."""
-    fn = _resource_filenames[name]
-    return resource_filename(__name__, fn, __file__)
-
-
-# def data_object( name, parser = None) :
-#    if parser is None :
-#        if name in _resource_parsers :
-#            parser = _resource_parsers[name]
-#        else :
-#            parser = str
-#    return parser( data_stream(name) )
 
 
 amino_acid_letters = "ACDEFGHIKLMNPQRSTVWY"
