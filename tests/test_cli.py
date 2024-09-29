@@ -4,7 +4,7 @@ from typing import List, Optional, TextIO
 
 import pytest
 
-from . import data_stream
+from . import data_ref
 
 
 def _exec(
@@ -14,7 +14,7 @@ def _exec(
     stdin: Optional[TextIO] = None,
 ) -> None:
     if not stdin:
-        stdin = data_stream("cap.fa")
+        stdin = data_ref("cap.fa").open()
     args = ["weblogo"] + args
     p = Popen(args, stdin=stdin, stdout=PIPE, stderr=PIPE)
     (out, err) = p.communicate()

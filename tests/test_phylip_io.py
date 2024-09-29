@@ -40,26 +40,23 @@ from io import StringIO
 from weblogo.seq import protein_alphabet
 from weblogo.seq_io import clustal_io, phylip_io, plain_io
 
-from . import data_stream
+from . import data_ref
 
 
 class test_phylip_io(unittest.TestCase):
     def test_read(self) -> None:
-        f = data_stream("phylip_test_1.phy")
-        seqs = phylip_io.read(f)
-        # print seqs
+        with data_ref("phylip_test_1.phy").open() as f:
+            seqs = phylip_io.read(f)
         self.assertEqual(len(seqs), 10)
         self.assertEqual(seqs[0].name, "Cow")
         self.assertEqual(len(seqs[1]), 234)
-        f.close()
 
     def test_iterseq(self) -> None:
-        f = data_stream("phylip_test_1.phy")
-        n = 0
-        for seq in phylip_io.iterseq(f):
-            n += 1
-        assert n == 10
-        f.close()
+        with data_ref("phylip_test_1.phy").open() as f:
+            n = 0
+            for seq in phylip_io.iterseq(f):
+                n += 1
+            assert n == 10
 
     def test_parse_plain_fail(self) -> None:
         # should fail with parse error
@@ -67,13 +64,12 @@ class test_phylip_io(unittest.TestCase):
         self.assertRaises(ValueError, phylip_io.read, f)
 
     def test_parse_phylip_test_2(self) -> None:
-        f = data_stream("phylip_test_2.phy")
-        seqs = phylip_io.read(f)
+        with data_ref("phylip_test_2.phy").open() as f:
+            seqs = phylip_io.read(f)
         self.assertEqual(len(seqs), 6)
         self.assertEqual(len(seqs[0]), 20)
         self.assertEqual(str(seqs[1]), "CGTTACTCGTTGTCGTTACT")
         self.assertEqual(seqs[1].name, "Hesperorni")
-        f.close()
 
     def test_parse_clustal_fail(self) -> None:
         # should fail with parse error
@@ -81,52 +77,46 @@ class test_phylip_io(unittest.TestCase):
         self.assertRaises(ValueError, phylip_io.read, f, protein_alphabet)
 
     def test_parse_phylip_test_3(self) -> None:
-        f = data_stream("phylip_test_3.phy")
-        seqs = phylip_io.read(f)
+        with data_ref("phylip_test_3.phy").open() as f:
+            seqs = phylip_io.read(f)
         self.assertEqual(len(seqs), 6)
         self.assertEqual(len(seqs[0]), 20)
         self.assertEqual(str(seqs[1]), "CGTTACTCGTTGTCGTTACT")
         self.assertEqual(seqs[1].name, "Hesperorni")
-        f.close()
 
     def test_parse_phylip_test_4(self) -> None:
-        f = data_stream("phylip_test_4.phy")
-        seqs = phylip_io.read(f)
+        with data_ref("phylip_test_4.phy").open() as f:
+            seqs = phylip_io.read(f)
         self.assertEqual(len(seqs), 6)
         self.assertEqual(len(seqs[0]), 25)
         self.assertEqual(str(seqs[1]), "GTGGTGGTGGGCGCCGGCCGTGTGG")
         self.assertEqual(seqs[2].name, "ddrasa")
-        f.close()
 
     def test_parse_phylip_test_5(self) -> None:
-        f = data_stream("phylip_test_5.phy")
-        seqs = phylip_io.read(f)
+        with data_ref("phylip_test_5.phy").open() as f:
+            seqs = phylip_io.read(f)
         self.assertEqual(len(seqs), 6)
         self.assertEqual(len(seqs[0]), 50)
         self.assertEqual(
             str(seqs[1]), "GTGGTGGTGGGCGCCGGCCGTGTGGGTGGTGGTGGGCGCCGGCCGTGTGG"
         )
         self.assertEqual(seqs[2].name, "ddrasa")
-        f.close()
 
     def test_parse_wrong_phylip_codes_1(self) -> None:
-        f = data_stream("phylip_test_6.corrupt.phy")
-        self.assertRaises(ValueError, phylip_io.read, f, protein_alphabet)
-        f.close()
+        with data_ref("phylip_test_6.corrupt.phy").open() as f:
+            self.assertRaises(ValueError, phylip_io.read, f, protein_alphabet)
 
     def test_parse_wrong_phylip_codes_2(self) -> None:
-        f = data_stream("phylip_test_7.corrupt.phy")
-        self.assertRaises(ValueError, phylip_io.read, f, protein_alphabet)
-        f.close()
+        with data_ref("phylip_test_7.corrupt.phy").open() as f:
+            self.assertRaises(ValueError, phylip_io.read, f, protein_alphabet)
 
     def test_parse_phylip_dna(self) -> None:
-        f = data_stream("dna.phy")
-        seqs = phylip_io.read(f)
+        with data_ref("dna.phy").open() as f:
+            seqs = phylip_io.read(f)
         self.assertEqual(len(seqs), 10)
         self.assertEqual(len(seqs[0]), 705)
         self.assertEqual(str(seqs[1][0:10]), "ATGGCACACC")
         self.assertEqual(seqs[2].name, "Chicken")
-        f.close()
 
 
 if __name__ == "__main__":

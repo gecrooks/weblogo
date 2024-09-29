@@ -34,8 +34,6 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 #  POSSIBILITY OF SUCH DAMAGE.
 
-from weblogo._ext import cgi as cgilib
-from weblogo._ext import cgitb
 import os.path
 import shutil
 import sys
@@ -43,7 +41,11 @@ from io import BytesIO, StringIO, TextIOWrapper
 from string import Template
 from typing import Any, Callable, List, Optional, Union
 
+import importlib_resources
+
 import weblogo
+from weblogo._ext import cgi as cgilib
+from weblogo._ext import cgitb
 from weblogo.colorscheme import ColorScheme, SymbolColor
 
 cgitb.enable()
@@ -54,14 +56,6 @@ cgitb.enable()
 # TODO: In WebLogo2: why slash create.cgi? I think this was a workaround
 # for some browser quirk
 # <form method="post" action="/create.cgi" enctype="multipart/form-data">
-
-
-# Should replace with weblogo.utils?
-def resource_string(resource: str, basefilename: str) -> str:
-    import os
-
-    fn = os.path.join(os.path.dirname(basefilename), resource)
-    return open(fn).read()
 
 
 mime_type = {
@@ -568,7 +562,10 @@ def send_form(
     else:
         substitutions["error_message"] = ""
 
-    template = resource_string("create_html_template.html", htdocs_directory)
+    ref = importlib_resources.files("weblogo.htdocs").joinpath(
+        "create_html_template.html"
+    )
+    template = ref.read_bytes()
     html = Template(template).safe_substitute(substitutions)  # FIXME
 
     print("Content-Type: text/html\n\n")

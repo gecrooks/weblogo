@@ -30,59 +30,52 @@ from io import StringIO
 from weblogo.seq import nucleic_alphabet, protein_alphabet
 from weblogo.seq_io import clustal_io, fasta_io, table_io
 
-from . import data_stream
+from . import data_ref
 
 
 class test_clustal_parser(unittest.TestCase):
     def test_parse_clustal(self) -> None:
-        f = data_stream("clustal.aln")
-        seqs = clustal_io.read(f)
+        with data_ref("clustal.aln").open() as f:
+            seqs = clustal_io.read(f)
         self.assertEqual(len(seqs), 7)
         self.assertEqual(seqs[1].name, "CATH_HUMAN")
         self.assertEqual(len(seqs[1]), 395)
-        f.close()
 
     def test_parse_clustal2_newline(self) -> None:
-        # Bug regession test. Clustal barfed on windows line endings, sometimes
-        f = data_stream("clustalw2.aln")
-        s = f.read()
+        # Bug regression test. Clustal barfed on windows line endings, sometimes
+        with data_ref("clustalw2.aln").open() as f:
+            s = f.read()
 
         import re
 
         s = re.sub("\n", "\r\n", s)  # Change to windows line endings
 
         clustal_io.read(StringIO(s))
-        f.close()
 
     def test_parse_headerless(self) -> None:
-        f = data_stream("clustal_headerless.aln")
-        seqs = clustal_io.read(f)
+        with data_ref("clustal_headerless.aln").open() as f:
+            seqs = clustal_io.read(f)
         self.assertEqual(len(seqs), 21)
         self.assertEqual(seqs[2].name, "O16386_CAEEL")
         self.assertEqual(len(seqs[1]), 137)
-        f.close()
 
     """ Wrong alphabet should throw a parsing error """
 
     def test_parse_error(self) -> None:
-        f = data_stream("clustal.aln")
-        self.assertRaises(ValueError, clustal_io.read, f, nucleic_alphabet)
-        f.close()
+        with data_ref("clustal.aln").open() as f:
+            self.assertRaises(ValueError, clustal_io.read, f, nucleic_alphabet)
 
     def test_parse_clustal181(self) -> None:
-        f = data_stream("clustal181.aln")
-        clustal_io.read(f)
-        f.close()
+        with data_ref("clustal181.aln").open() as f:
+            clustal_io.read(f)
 
     def test_parse_clustal_glualign(self) -> None:
-        f = data_stream("clustal_glualign.aln")
-        clustal_io.read(f, nucleic_alphabet)
-        f.close()
+        with data_ref("clustal_glualign.aln").open() as f:
+            clustal_io.read(f, nucleic_alphabet)
 
     def test_parse_clustalw182(self) -> None:
-        f = data_stream("clustalw182.aln")
-        clustal_io.read(f, protein_alphabet)
-        f.close()
+        with data_ref("clustalw182.aln").open() as f:
+            clustal_io.read(f, protein_alphabet)
 
     def test_parse_fasta_fail(self) -> None:
         # should fail with parse error
@@ -92,9 +85,8 @@ class test_clustal_parser(unittest.TestCase):
 
     def test_parse_fasta_fail2(self) -> None:
         # should fail with parse error
-        f = data_stream("globin.fa")
-        self.assertRaises(ValueError, clustal_io.read, f)
-        f.close()
+        with data_ref("globin.fa").open() as f:
+            self.assertRaises(ValueError, clustal_io.read, f)
 
     def test_parse_clustal_example(self) -> None:
         f = StringIO(clustal_io.example)

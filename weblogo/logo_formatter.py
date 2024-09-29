@@ -12,9 +12,10 @@ from string import Template
 from subprocess import PIPE, Popen
 from typing import Optional
 
+import importlib_resources
+
 from .color import Color
 from .logo import LogoData, LogoFormat
-from .utils import resource_string
 
 __all__ = [
     "pdf_formatter",
@@ -285,8 +286,8 @@ def eps_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
     data.append("EndLine")
     substitutions["logo_data"] = "\n".join(data)
 
-    # Create and output logo
-    template = resource_string(__name__, "template.eps", __file__).decode()
+    ref = importlib_resources.files("weblogo").joinpath("template.eps")
+    template = ref.read_bytes().decode()
 
     logo = Template(template).substitute(substitutions)
 

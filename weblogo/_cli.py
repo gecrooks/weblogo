@@ -41,12 +41,16 @@
 # WebLogo Command Line Interfaceg
 
 
+import atexit
 import os
 import sys
+from contextlib import ExitStack
 from io import StringIO
 from optparse import OptionGroup
 from os import PathLike
 from typing import Any, Union
+
+import importlib_resources
 
 from . import (
     LogoData,
@@ -67,7 +71,6 @@ from . import (
 from .colorscheme import ColorScheme, SymbolColor
 from .logo import _seq_formats, _seq_names
 from .seq import Seq, SeqList, nucleic_alphabet
-from .utils import resource_filename
 from .utils.deoptparse import DeOptionParser
 
 
@@ -136,8 +139,12 @@ def httpd_serve_forever(port: int = 8080) -> None:
     pythonpath += os.pathsep + os.path.abspath(sys.path[0])  # .split()[0]
     os.environ["PYTHONPATH"] = pythonpath
 
-    htdocs = resource_filename(__name__, "htdocs", __file__)
-    os.chdir(htdocs)
+    file_manager = ExitStack()
+    atexit.register(file_manager.close)
+    ref = importlib_resources.files("weblogo") / "htdocs"
+    path = file_manager.enter_context(importlib_resources.as_file(ref))
+
+    os.chdir(path)
 
     HandlerClass = __HTTPRequestHandler
     ServerClass = server.HTTPServer

@@ -43,7 +43,7 @@ from weblogo.seq_io import (
     table_io,
 )
 
-from . import data_stream, test_genbank_io
+from . import data_ref, data_stream, test_genbank_io
 
 
 class test_seq_io(unittest.TestCase):
@@ -56,7 +56,7 @@ class test_seq_io(unittest.TestCase):
         seq_io.format_extensions()
 
     def test_parse_clustal(self) -> None:
-        with data_stream("clustal.aln") as f:
+        with data_ref("clustal.aln").open() as f:
             seqs = seq_io.read(f)
         self.assertEqual(len(seqs), 7)
         self.assertEqual(seqs[1].name, "CATH_HUMAN")
@@ -64,19 +64,19 @@ class test_seq_io(unittest.TestCase):
 
     def test_parse_error(self) -> None:
         """Wrong alphabet should throw a parsing error"""
-        with data_stream("clustal.aln") as f:
+        with data_ref("clustal.aln").open() as f:
             self.assertRaises(ValueError, seq_io.read, f, nucleic_alphabet)
 
     def test_parse_clustal181(self) -> None:
-        with data_stream("clustal181.aln") as f:
+        with data_ref("clustal181.aln").open() as f:
             seq_io.read(f, protein_alphabet)
 
     def test_parse_clustal_glualign(self) -> None:
-        with data_stream("clustal_glualign.aln") as f:
+        with data_ref("clustal_glualign.aln").open() as f:
             seq_io.read(f, nucleic_alphabet)
 
     def test_parse_clustalw182(self) -> None:
-        with data_stream("clustalw182.aln") as f:
+        with data_ref("clustalw182.aln").open() as f:
             seq_io.read(f, protein_alphabet)
 
     def test_read_example_array(self) -> None:
@@ -96,7 +96,7 @@ class test_seq_io(unittest.TestCase):
         self.assertEqual(len(seqs[1]), 231)
 
     def test_parse_globin_fasta(self) -> None:
-        with data_stream("globin.fa") as f:
+        with data_ref("globin.fa").open() as f:
             seqs = seq_io.read(f)
         self.assertEqual(len(seqs), 56)
 

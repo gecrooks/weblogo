@@ -2,6 +2,7 @@ numpy
 scipy
 setuptools
 setuptools-scm
+importlib-resources
 
 # Testing
 pytest >= 4.6
