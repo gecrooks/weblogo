@@ -34,7 +34,6 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 #  POSSIBILITY OF SUCH DAMAGE.
 
-import typing
 import unittest
 from math import log, sqrt
 from typing import Tuple

@@ -27,7 +27,7 @@
 """
 
 
-from typing import Any, Iterable, List, Optional, TextIO
+from typing import Any, Iterable, List, Optional
 
 __all__ = (
     "isblank",
