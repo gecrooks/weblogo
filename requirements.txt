@@ -3,6 +3,7 @@ scipy
 setuptools
 setuptools-scm
 importlib-resources
+importlib-metadata
 
 # Testing
 pytest >= 4.6
