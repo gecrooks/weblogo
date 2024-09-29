@@ -307,25 +307,7 @@ class GeneticCode(object):
         self._back_table: Optional[Dict[str, str]] = None
 
     @staticmethod
-    def std_list() -> Tuple[
-        "GeneticCode",
-        "GeneticCode",
-        "GeneticCode",
-        "GeneticCode",
-        "GeneticCode",
-        "GeneticCode",
-        "GeneticCode",
-        "GeneticCode",
-        "GeneticCode",
-        "GeneticCode",
-        "GeneticCode",
-        "GeneticCode",
-        "GeneticCode",
-        "GeneticCode",
-        "GeneticCode",
-        "GeneticCode",
-        "GeneticCode",
-    ]:
+    def std_list() -> Tuple["GeneticCode", ...]:
         "Return a list of standard genetic codes."
         return _codon_tables
 
