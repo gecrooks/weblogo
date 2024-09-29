@@ -36,8 +36,8 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 #  POSSIBILITY OF SUCH DAMAGE.
 
-import cgi
-import cgitb
+from weblogo._ext import cgi
+from weblogo._ext import cgitb
 
 import weblogo
 

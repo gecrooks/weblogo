@@ -34,8 +34,8 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 #  POSSIBILITY OF SUCH DAMAGE.
 
-import cgi as cgilib
-import cgitb
+from weblogo._ext import cgi as cgilib
+from weblogo._ext import cgitb
 import os.path
 import shutil
 import sys
