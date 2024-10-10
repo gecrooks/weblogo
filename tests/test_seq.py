@@ -44,7 +44,7 @@ from weblogo.seq import (
     unambiguous_protein_alphabet,
 )
 
-from . import data_stream
+from . import data_ref
 
 
 class test_alphabet(unittest.TestCase):
@@ -134,10 +134,11 @@ class test_alphabet(unittest.TestCase):
         a = Alphabet.which(Seq("ARNDCQEGHILKMFPSTWYVX"))
         assert a == unambiguous_protein_alphabet
 
-        f1 = data_stream("cap.fa")
-        f2 = data_stream("cox2.msf")
-        f3 = data_stream("Rv3829c.fasta")
-        f4 = data_stream("chain_B.fasta")
+        # FIXME: sloppy use of file references
+        f1 = data_ref("cap.fa").open()
+        f2 = data_ref("cox2.msf").open()
+        f3 = data_ref("Rv3829c.fasta").open()
+        f4 = data_ref("chain_B.fasta").open()
 
         tests = (
             (seq_io.read(f1), unambiguous_dna_alphabet),

@@ -2,12 +2,12 @@ from subprocess import PIPE, Popen
 
 import weblogo._transformseq
 
-from . import data_stream
+from . import data_ref
 
 
 def _exec(args, outputtext, returncode=0, stdin=None):  # type: ignore
     if not stdin:
-        stdin = data_stream("cap.fa")
+        stdin = data_ref("cap.fa").open()
     args = ["transformseq"] + args
     p = Popen(args, stdin=stdin, stdout=PIPE, stderr=PIPE)
     (out, err) = p.communicate()

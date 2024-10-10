@@ -47,9 +47,6 @@ from weblogo.utils import (
     isfloat,
     isint,
     remove_whitespace,
-    resource_filename,
-    resource_stream,
-    resource_string,
 )
 
 
@@ -137,14 +134,6 @@ class test_utils(unittest.TestCase):
             self.assertEqual(err.msg, message)
             self.assertEqual(err.key, component)
             self.assertEqual(err.value, 10)
-
-    def test_resource(self) -> None:
-        fn = resource_filename(__name__, "data/cap.fa", __file__)
-        self.assertTrue(fn.endswith("data/cap.fa"))
-        f = resource_stream(__name__, "data/cap.fa", __file__)
-        f.close()
-        s = resource_string(__name__, "data/cap.fa", __file__).decode()
-        self.assertTrue(s.startswith(">aldB"))
 
 
 tfile = """line 0

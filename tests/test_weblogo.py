@@ -34,14 +34,12 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 #  POSSIBILITY OF SUCH DAMAGE.
 
-import typing
 import unittest
 from math import log, sqrt
 from typing import Tuple
 
 import pytest
 from numpy import all, array, float64, ones, zeros
-from pkg_resources import resource_stream
 from scipy.stats import entropy
 
 from weblogo import (
@@ -62,10 +60,6 @@ from weblogo.seq import (
     unambiguous_rna_alphabet,
 )
 from weblogo.utils import ArgumentError
-
-
-def data_stream(name: str) -> typing.IO[bytes]:
-    return resource_stream(__name__, "data/" + name)
 
 
 class test_logoformat(unittest.TestCase):

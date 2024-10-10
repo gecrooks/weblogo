@@ -1,17 +1,20 @@
-# TODO: replace with direct calls to pkg_resources
-
+from io import StringIO
 from typing import TextIO
 
-from weblogo.utils import resource_filename, resource_stream, resource_string
+import importlib_resources
 
 
 def data_string(name: str) -> bytes:
-    return resource_string(__name__, "data/" + name, __file__)
+    ref = data_ref(name)
+    with ref.open() as f:
+        data = f.read()
+    return data
 
 
 def data_stream(name: str) -> TextIO:
-    return resource_stream(__name__, "data/" + name, __file__)
+    return StringIO(data_string(name))
 
 
-def data_filename(name: str) -> str:
-    return resource_filename(__name__, "data/" + name, __file__)
+def data_ref(name: str):
+    ref = importlib_resources.files(__name__).joinpath("data").joinpath(name)
+    return ref

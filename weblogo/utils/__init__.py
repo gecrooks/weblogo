@@ -27,9 +27,7 @@
 """
 
 
-from typing import Any, Iterable, List, Optional, TextIO
-
-import pkg_resources
+from typing import Any, Iterable, List, Optional
 
 __all__ = (
     "isblank",
@@ -45,9 +43,6 @@ __all__ = (
     "crc64",
     "ArgumentError",
     "group_count",
-    "resource_string",
-    "resource_stream",
-    "resource_filename",
 )
 
 
@@ -243,33 +238,3 @@ class ArgumentError(ValueError):
 
 
 # end class ArgumentError
-
-
-# TODO: Replace with direct calls to pkg_resources
-
-
-def resource_string(
-    modulename: str, resource: str, basefilename: Optional[str] = None
-) -> bytes:
-    """Locate and return a resource as a string.
-    >>> f = resource_string( __name__, 'somedatafile', __file__)
-    """
-    return pkg_resources.resource_string(modulename, resource)
-
-
-def resource_stream(
-    modulename: str, resource: str, basefilename: Optional[str] = None
-) -> TextIO:
-    """Locate and return a resource as a stream.
-    >>> f = resource_stream( __name__, 'somedatafile', __file__)
-    """
-    return open(resource_filename(modulename, resource, basefilename))
-
-
-def resource_filename(
-    modulename: str, resource: str, basefilename: Optional[str] = None
-) -> str:
-    """Locate and return a resource filename.
-    >>> f = resource_filename( __name__, 'somedatafile', __file__)
-    """
-    return pkg_resources.resource_filename(modulename, resource)
