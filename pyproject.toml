@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "weblogo"
-version = "3.9.0"  # Replace with your actual version
-description = "WebLogo: A sequence logo generator"  # Replace with your actual description
+version = "3.9.0"
+description = "WebLogo: A sequence logo generator"
 authors = [
     { name = "Gavin Crooks", email = "gec@threeplusone.com" },
     ]
