@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "weblogo"
 version = "3.9.0"
-description = "WebLogo: A sequence logo generator"
+description = "WebLogo is a web based application designed to make the generation of sequence logos as easy and painless as possible. WebLogo can create output in several common graphics' formats, including the bitmap formats GIF and PNG, suitable for on-screen display, and the vector formats EPS and PDF, more suitable for printing, publication, and further editing."
 authors = [
     { name = "Gavin Crooks", email = "gec@threeplusone.com" },
     ]
@@ -21,8 +21,6 @@ classifiers = [
 requires-python = ">=3.9"
 dependencies = [
     "numpy",
-    "Pillow",
-    # Add other dependencies here
     scipy,
     pytest,
     "pytest-cov",
@@ -39,3 +37,19 @@ dependencies = [
 "Homepage" = "https://github.com/gecrooks/weblogo"
 "Documentation" = "https://weblogo.readthedocs.io/"
 "Issue Tracker" = "https://github.com/gecrooks/weblogo/issues"
+
+
+# isort configuration
+[isort]
+"profile" = "black"
+
+# flake8 linter configuration
+[flake8]
+"exclude" = _nexus, _ext
+"max-line-length" = 88
+"extend-ignore" = E203, E501, W503
+
+# mypy type enforcement configuration
+[mypy]
+"exclude" = "weblogo/seq_io/_nexus/"
+
