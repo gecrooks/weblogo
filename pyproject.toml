@@ -1,6 +1,41 @@
 [build-system]
-requires = [
-    "setuptools",
-    "some-build-toolkit",
-]
+requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "weblogo"
+version = "3.9.0"  # Replace with your actual version
+description = "WebLogo: A sequence logo generator"  # Replace with your actual description
+authors = [
+    { name = "Gavin Crooks", email = "gec@threeplusone.com" },
+    ]
+    
+readme = "README.md"
+license = { file = "LICENSE.txt" }
+keywords = ["bioinformatics", "visualization", "sequence logos"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+requires-python = ">=3.9"
+dependencies = [
+    "numpy",
+    "Pillow",
+    # Add other dependencies here
+    scipy,
+    pytest,
+    "pytest-cov",
+    "tox",
+    "flake8",
+    "mypy",
+    "isort",
+    "black",
+    "sphinx",
+    "guzzle_sphinx_theme",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/gecrooks/weblogo"
+"Documentation" = "https://weblogo.readthedocs.io/"
+"Issue Tracker" = "https://github.com/gecrooks/weblogo/issues"
