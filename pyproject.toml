@@ -1,11 +1,11 @@
 [build-system]
-requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
+requires = ["setuptools>=67.0", "setuptools_scm[toml]>=8.0"]
 
 [project]
 name = "weblogo"
-version = "3.9.0"
-description = "WebLogo is a web based application designed to make the generation of sequence logos as easy and painless as possible. WebLogo can create output in several common graphics' formats, including the bitmap formats GIF and PNG, suitable for on-screen display, and the vector formats EPS and PDF, more suitable for printing, publication, and further editing."
+dynamic = ["version"]
+description ="WebLogo3 : Sequence Logos Redrawn"
 authors = [
     { name = "Gavin Crooks", email = "gec@threeplusone.com" },
     ]
@@ -18,19 +18,12 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
     "numpy",
-    scipy,
-    pytest,
-    "pytest-cov",
-    "tox",
-    "flake8",
-    "mypy",
-    "isort",
-    "black",
-    "sphinx",
-    "guzzle_sphinx_theme",
+    "scipy",
+    "importlib-resources",
+    "importlib-metadata"
 ]
 
 [project.urls]
@@ -38,18 +31,86 @@ dependencies = [
 "Documentation" = "https://weblogo.readthedocs.io/"
 "Issue Tracker" = "https://github.com/gecrooks/weblogo/issues"
 
+[project.scripts]
+weblogo = "weblogo._cli:main"
+transformseq = "weblogo._transformseq:main"
 
-# isort configuration
-[isort]
-"profile" = "black"
+[project.optional-dependencies]
+dev = [
+    "setuptools_scm",
+    "pytest",
+    "pytest-cov",
+    "mypy",
+    "sphinx",
+    "guzzle_sphinx_theme",
+    "ruff",
+    "pre-commit",
+]
 
-# flake8 linter configuration
-[flake8]
-"exclude" = _nexus, _ext
-"max-line-length" = 88
-"extend-ignore" = E203, E501, W503
 
-# mypy type enforcement configuration
-[mypy]
-"exclude" = "weblogo/seq_io/_nexus/"
+
+docs = [
+  "sphinx",
+  "guzzle_sphinx_theme",
+  ]
+
+[tool.setuptools]
+packages = ["weblogo"]
+
+
+[tool.setuptools_scm]
+fallback_version = "0.0.0.dev"
+
+
+[tool.ruff]
+# https://docs.astral.sh/ruff/configuration/
+line-length = 88
+indent-width = 4
+
+[tool.ruff.lint]
+ignore = []
+
+[tool.ruff.lint.per-file-ignores]
+# Don't complaine about unused imports in __init__.py
+"__init__.py" = ["F401", "F403"]
+
+
+# pytest configuration
+# https://docs.pytest.org/en/7.2.x/reference/customize.html
+
+[tool.pytest.ini_options]
+testpaths = "tests"
+
+
+
+[tool.coverage.run]
+branch = true
+source = ["weblogo"]
+parallel = true
+
+[tool.coverage.report]
+omit = ['*_test.py']
+exclude_lines = [
+  '\#\s*pragma: no cover',
+  '^\s*raise AssertionError\b',
+  '^\s*raise NotImplementedError\b',
+  '^\s*return NotImplemented\b',
+  '^\s*raise$',
+  '^assert False\b',
+  '''^if __name__ == ['"]__main__['"]:$''',
+]
+
+
+# mypy typecheck configuration
+# https://mypy.readthedocs.io/en/stable/config_file.html
+
+[tool.mypy]
+files = 'weblogo'
+exclude = ["weblogo/seq_io/_nexus/"]
+
+# Suppresses error about unresolved imports
+ignore_missing_imports = true
+
+# Disallows functions without type annotations
+disallow_untyped_defs = true
 
