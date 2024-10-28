@@ -21,7 +21,7 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 
-""" Color specifications using CSS2 (Cascading Style Sheet) syntax."""
+"""Color specifications using CSS2 (Cascading Style Sheet) syntax."""
 
 from typing import Any, List
 

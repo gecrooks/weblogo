@@ -42,7 +42,7 @@ To install the development version of WebLogo, clone the github repository.
 $ git clone git clone https://github.com/WebLogo/weblogo.git weblogo
 ```
 
-Please consult the developer notes, <code>DEVELOPERS.txt</code> and software license <code>LICENSE.txt</code>
+Please consult the developer notes, <code>DEVELOPERS.txt</code> and software license <code>LICENSE</code>
 
 Outstanding bugs and feature requests are listed on the <a href="https://github.com/CrooksEnsemble/weblogo/issues">WebLogo issue tracker.</a>
 

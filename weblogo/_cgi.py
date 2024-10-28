@@ -516,7 +516,7 @@ def send_form(
                 value = "auto"
             if value == "true":
                 substitutions[c.name] = "checked"
-            elif type(value) is bool:
+            elif type(value) is bool:  # noqa: E721
                 if value:
                     substitutions[c.name] = "checked"
                 else:
@@ -542,7 +542,7 @@ def send_form(
         print(errors, file=sys.stderr)
         error_message: List[str] = []
         for e in errors:
-            if type(e) is str:
+            if type(e) is str:  # noqa: E721
                 msg = e
             elif len(e) == 2:
                 substitutions[e[0] + "_err"] = "class='error'"

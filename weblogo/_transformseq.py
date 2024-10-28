@@ -10,7 +10,7 @@
 #  as part of this package.
 
 
-""" A tool for converting multiple sequence alignments from
+"""A tool for converting multiple sequence alignments from
 one format to another.
 """
 

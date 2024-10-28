@@ -23,9 +23,7 @@
 #
 
 
-"""Extra utilities and core classes not in standard python.
-"""
-
+"""Extra utilities and core classes not in standard python."""
 
 from typing import Any, Iterable, List, Optional
 

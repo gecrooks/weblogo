@@ -23,7 +23,7 @@
 #
 
 
-""" Alphabetic sequences and associated tools and data.
+"""Alphabetic sequences and associated tools and data.
 
 Seq is a subclass of a python string with additional annotation and an alphabet.
 The characters in string must be contained in the alphabet. Various standard
