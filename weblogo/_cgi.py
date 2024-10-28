@@ -565,7 +565,7 @@ def send_form(
     ref = importlib_resources.files("weblogo.htdocs").joinpath(
         "create_html_template.html"
     )
-    template = ref.read_bytes()
+    template = ref.read_text()
     html = Template(template).safe_substitute(substitutions)  # FIXME
 
     print("Content-Type: text/html\n\n")
