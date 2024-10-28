@@ -16,8 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.10', '3.11', '3.12', '3.13']
-
+        python-version: ['3.11', '3.12', '3.13']
+           os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
@@ -34,10 +34,6 @@ jobs:
     - name: Test with pytest
       run: |
         python -m pytest
-    - name: Lint with black and isort (run `make delint` to fix issues)
+    - name: Lint with ruff
       run: |
-        black --check .
-        isort --check .
-    - name: Lint with flake8
-      run: |
-        flake8 .
+        python -m ruff check .

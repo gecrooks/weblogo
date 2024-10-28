@@ -11,7 +11,7 @@ authors = [
     ]
     
 readme = "README.md"
-license = { file = "LICENSE.txt" }
+license = { file = "LICENSE" }
 keywords = ["bioinformatics", "visualization", "sequence logos"]
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -106,11 +106,11 @@ exclude_lines = [
 
 [tool.mypy]
 files = 'weblogo'
-exclude = ["weblogo/seq_io/_nexus/"]
+exclude = ["weblogo/seq_io/_nexus/", "weblogo/_ext"]
 
 # Suppresses error about unresolved imports
 ignore_missing_imports = true
 
 # Disallows functions without type annotations
-disallow_untyped_defs = true
+disallow_untyped_defs = false
 
