@@ -12,9 +12,6 @@ A sequence logo is a graphical representation of an amino acid or nucleic acid m
 
 > Schneider TD, Stephens RM. 1990. Sequence Logos: A New Way to Display Consensus Sequences. Nucleic Acids Res. 18:6097-6100
 
-## Current Software Version
-
-3.7
 
 ## WebLogo 2
 

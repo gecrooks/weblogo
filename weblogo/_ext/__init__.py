@@ -1,3 +1,3 @@
 #
-# Imported code
+# Third party imported code
 #

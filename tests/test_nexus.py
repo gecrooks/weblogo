@@ -2,7 +2,7 @@
 
 import unittest
 
-from weblogo.seq_io._nexus import Nexus
+from weblogo._ext.nexus import Nexus
 
 from . import data_stream
 
