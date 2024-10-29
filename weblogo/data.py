@@ -109,7 +109,6 @@ Status: Beta (Data needs to be proof checked.)
 # The ExPasy ProtScale tool is a great source of amino acid properties.
 # http://au.expasy.org/cgi-bin/protscale.pl
 
-
 from . import utils
 
 # Explicitly list set of available data resources. We want to be able to access

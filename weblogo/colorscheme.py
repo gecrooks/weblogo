@@ -22,7 +22,7 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 
-""" Popular color codings for nucleic and amino acids.
+"""Popular color codings for nucleic and amino acids.
 
 Classes:
     ColorScheme -- A color scheme
@@ -50,7 +50,6 @@ Status : Beta - Needs documentation.
 # Clamp, M., Cuff, J., Searle, S. M. and Barton, G. J. (2004),
 # "The Jalview Java Alignment Editor," Bioinformatics, 12, 426-7
 # http://www.jalview.org
-
 
 from typing import List, Optional, Sequence
 

@@ -137,7 +137,6 @@ Attributes :
 #    - http://www.cse.ucsc.edu/research/compbio/a2m-desc.html (a2m)
 #    - http://www.genomatix.de/online_help/help/sequence_formats.html
 
-
 from types import ModuleType
 from typing import List, Optional, TextIO
 

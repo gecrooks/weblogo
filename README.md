@@ -12,9 +12,6 @@ A sequence logo is a graphical representation of an amino acid or nucleic acid m
 
 > Schneider TD, Stephens RM. 1990. Sequence Logos: A New Way to Display Consensus Sequences. Nucleic Acids Res. 18:6097-6100
 
-## Current Software Version
-
-3.7
 
 ## WebLogo 2
 
@@ -42,7 +39,7 @@ To install the development version of WebLogo, clone the github repository.
 $ git clone git clone https://github.com/WebLogo/weblogo.git weblogo
 ```
 
-Please consult the developer notes, <code>DEVELOPERS.txt</code> and software license <code>LICENSE.txt</code>
+Please consult the developer notes, <code>DEVELOPERS.txt</code> and software license <code>LICENSE</code>
 
 Outstanding bugs and feature requests are listed on the <a href="https://github.com/CrooksEnsemble/weblogo/issues">WebLogo issue tracker.</a>
 

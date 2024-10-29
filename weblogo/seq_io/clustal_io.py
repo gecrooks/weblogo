@@ -22,7 +22,7 @@
 #  THE SOFTWARE.
 #
 
-""" Read and write the CLUSTAL sequence file format.
+"""Read and write the CLUSTAL sequence file format.
 
 See :
 - http://www.cmpharm.ucsf.edu/~goh/Treecorr/sampleAlignment.html
@@ -36,7 +36,6 @@ Ref :
 """
 
 # TODO: What happens if CLUSTAL is not the first line of the file?
-
 
 import re
 from typing import Iterator, Optional, TextIO

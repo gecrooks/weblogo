@@ -1,4 +1,5 @@
-#! /usr/local/bin/python
+
+# type: ignore
 
 # cgithb library imported from python 3.12
 # Distributed under the PSF license
@@ -34,6 +35,8 @@ meaning the request size is unlimited.
 # Rossum rewrote, reformatted and documented the module and is currently
 # responsible for its maintenance.
 #
+
+
 
 __version__ = "2.6"
 

@@ -1,3 +1,6 @@
+
+# type: ignore
+
 # cgithb library imported from python 3.12
 # Distributed under the PSF license
 # https://docs.python.org/3/license.html
@@ -26,6 +29,8 @@ for you, call cgitb.handler().  The optional argument to handler() is a
 The default handler displays output as HTML.
 
 """
+
+
 
 import inspect
 import keyword

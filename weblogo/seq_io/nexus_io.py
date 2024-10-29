@@ -37,7 +37,7 @@ Maddison, Swofford, Maddison. 1997. Syst. Biol. 46(4):590-621
 from typing import Iterator, Optional, TextIO
 
 from ..seq import Alphabet, Seq, SeqList
-from ._nexus import Nexus, safename
+from .._ext.nexus import Nexus, safename
 
 names = ("nexus", "paup")
 extensions = ("nex", "nexus", "paup", "nxs")
