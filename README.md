@@ -12,7 +12,6 @@ A sequence logo is a graphical representation of an amino acid or nucleic acid m
 
 > Schneider TD, Stephens RM. 1990. Sequence Logos: A New Way to Display Consensus Sequences. Nucleic Acids Res. 18:6097-6100
 
-
 ## WebLogo 2
 
 The legacy WebLogo 2 server can be found <a href="http://weblogo.berkeley.edu/">here.</a>
@@ -36,7 +35,9 @@ $ conda install -c conda-forge weblogo
 To install the development version of WebLogo, clone the github repository.
 
 ```sh
-$ git clone git clone https://github.com/WebLogo/weblogo.git weblogo
+$ git clone https://github.com/gecrooks/weblogo.git
+$ cd weblogo
+$ pip install -e .
 ```
 
 Please consult the developer notes, <code>DEVELOPERS.txt</code> and software license <code>LICENSE</code>
