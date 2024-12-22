@@ -141,9 +141,8 @@ class AlphabeticArray(object):
                 shape.append(int(a))  # pragma: no cover
                 alpha.append(None)  # pragma: no cover
 
-        # shape = tuple(shape) # CHECKME, line not needed?
         if values is None:
-            values = np.zeros(shape=shape, dtype=dtype)
+            values = np.zeros(shape=shape, dtype=dtype) # type: ignore
         else:
             values = np.asarray(values, dtype=dtype)
             vshape = values.shape
@@ -160,7 +159,7 @@ class AlphabeticArray(object):
         self.alphabets = tuple(alpha)
 
     def __getitem__(self, key: Any) -> Any:
-        return self.array.__getitem__(self._ordkey(key))
+        return self.array.__getitem__(self._ordkey(key)) # type: ignore
 
     def __setitem__(self, key: Any, value: Any) -> None:
         self.array.__setitem__(self._ordkey(key), value)
@@ -230,7 +229,7 @@ class AlphabeticArray(object):
     # intended.
     def __getattr__(self, name: str) -> str:
         try:
-            return self.array.__getattr__(self, name)
+            return self.array.__getattr__(self, name) # type: ignore
         except AttributeError:
             return getattr(self.array, name)
 
