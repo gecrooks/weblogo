@@ -27,8 +27,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y ghostscript
-        sudo apt-get install -y ttf-mscorefonts-installer
+        sudo apt-get install -y ttf-mscorefonts-installer ghostscript
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi          
         python -m pip install '.[dev]'
