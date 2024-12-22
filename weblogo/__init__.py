@@ -1,10 +1,9 @@
 import importlib_metadata
 
-try:
-    __version__ = importlib_metadata.version(__package__)  # type: ignore
-except Exception:  # pragma: no cover
-    # package is not installed
-    __version__ = "0.0.0"
+
+
+__version__:str = importlib_metadata.version(__package__)  # type: ignore
+
 
 
 from .logo import *  # noqa: F401, F403

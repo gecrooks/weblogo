@@ -86,7 +86,7 @@ class Dirichlet(object):
         # TODO: what if alpha's not one dimensional?
         self.alpha = asarray(alpha, float64)
 
-        self._total = sum(alpha)
+        self._total = sum(self.alpha)
         self._mean: np.ndarray = self.alpha / self._total
 
     def sample(self) -> np.ndarray:

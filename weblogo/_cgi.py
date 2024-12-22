@@ -48,7 +48,7 @@ from weblogo._ext import cgi as cgilib
 from weblogo._ext import cgitb
 from weblogo.colorscheme import ColorScheme, SymbolColor
 
-cgitb.enable()
+cgitb.enable() # type: ignore
 
 
 # TODO: Check units
@@ -286,7 +286,7 @@ def main(htdocs_directory: Optional[str] = None) -> None:
     for c in controls:
         form[c.name] = c
 
-    form_values = cgilib.FieldStorage()
+    form_values = cgilib.FieldStorage() # type: ignore
 
     # Send default form?
     if len(form_values) == 0 or "cmd_reset" in form_values:
