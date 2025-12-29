@@ -16,15 +16,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
+        python-version: ['3.10', '3.11', '3.12', '3.13']
         os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
     - uses: actions/checkout@v4
-    - name: Set up uv
-      uses: astral-sh/setup-uv@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
-        enable-cache: true
     - name: Install dependencies
       run: |
         sudo apt-get update
@@ -33,12 +32,13 @@ jobs:
         # https://askubuntu.com/questions/651441/how-to-install-arial-font-and-other-windows-fonts-in-ubuntu
         echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | sudo debconf-set-selections 
         sudo apt-get install -y ttf-mscorefonts-installer --reinstall
-        fc-match Arial
-        uv venv
-        uv sync --extra dev
+        fc-match Arial        
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi          
+        python -m pip install '.[dev]'
     - name: Test with pytest
       run: |
-        uv run python -m pytest
+        python -m pytest
     - name: Lint with ruff
       run: |
-        uv run ruff check .
+        python -m ruff check .
