@@ -1,7 +1,13 @@
 
 name: Build
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+    - cron: "0 13 * * *"  # Every day at 1pm UTC (6am PST)
 
 jobs:
   build:
