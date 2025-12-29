@@ -1328,24 +1328,6 @@ dependencies = [
     { name = "scipy", version = "1.16.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
 ]
 
-[package.optional-dependencies]
-dev = [
-    { name = "guzzle-sphinx-theme" },
-    { name = "mypy" },
-    { name = "pre-commit" },
-    { name = "pytest" },
-    { name = "pytest-cov" },
-    { name = "ruff" },
-    { name = "setuptools-scm" },
-    { name = "sphinx", version = "8.1.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "sphinx", version = "9.0.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-]
-docs = [
-    { name = "guzzle-sphinx-theme" },
-    { name = "sphinx", version = "8.1.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "sphinx", version = "9.0.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-]
-
 [package.dev-dependencies]
 dev = [
     { name = "guzzle-sphinx-theme" },
@@ -1361,22 +1343,11 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "guzzle-sphinx-theme", marker = "extra == 'dev'" },
-    { name = "guzzle-sphinx-theme", marker = "extra == 'docs'" },
     { name = "importlib-metadata" },
     { name = "importlib-resources" },
-    { name = "mypy", marker = "extra == 'dev'" },
     { name = "numpy" },
-    { name = "pre-commit", marker = "extra == 'dev'" },
-    { name = "pytest", marker = "extra == 'dev'" },
-    { name = "pytest-cov", marker = "extra == 'dev'" },
-    { name = "ruff", marker = "extra == 'dev'" },
     { name = "scipy" },
-    { name = "setuptools-scm", marker = "extra == 'dev'" },
-    { name = "sphinx", marker = "extra == 'dev'" },
-    { name = "sphinx", marker = "extra == 'docs'" },
 ]
-provides-extras = ["dev", "docs"]
 
 [package.metadata.requires-dev]
 dev = [

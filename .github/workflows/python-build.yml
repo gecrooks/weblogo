@@ -1,7 +1,13 @@
 
 name: Build
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+    - cron: "0 13 * * *"  # Every day at 1pm UTC (6am PST)
 
 jobs:
   build:
@@ -23,7 +29,7 @@ jobs:
         cache-key-prefix: ${{ matrix.python-version }} 
     - name: Install dependencies
       # Use uv to sync dependencies from pyproject.toml or requirements.txt
-      run: uv sync
+      run: uv sync --group dev
     - name: Run tests
       # Use uv run to execute commands within the managed environment
       run: uv run pytest
