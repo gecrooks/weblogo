@@ -22,14 +22,14 @@ jobs:
           - "3.11"
           - "3.12"
 
-    steps:
-      - uses: actions/checkout
+  steps:
+    - uses: actions/checkout
 
-      - name: Install uv and set the Python version
-        uses: astral-sh/setup-uv
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
+    - name: Install uv and set the Python version
+      uses: astral-sh/setup-uv
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -y ghostscript
@@ -39,7 +39,7 @@ jobs:
         sudo apt-get install -y ttf-mscorefonts-installer --reinstall
         fc-match Arial
 
-      - name: Lint with ruff
+    - name: Lint with ruff
       run: |
-        uv run ruff check .
+       uv run ruff check .
 
