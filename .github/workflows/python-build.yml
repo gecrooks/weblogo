@@ -30,6 +30,8 @@ jobs:
     - name: Install dependencies
       # Use uv to sync dependencies from pyproject.toml or requirements.txt
       run: uv sync --group dev
+    - name: Lint with ruff
+      run: uv run ruff check .      
     - name: Run tests
       # Use uv run to execute commands within the managed environment
       run: uv run pytest
