@@ -10,7 +10,6 @@ on:
   schedule:
     - cron: "0 13 * * *"  # Every day at 1pm UTC (6am PST)
 
-
 jobs:
   build:
     name: continuous-integration
@@ -21,25 +20,27 @@ jobs:
           - "3.10"
           - "3.11"
           - "3.12"
-
     steps:
-    - uses: actions/checkout
-
-    - name: Install uv and set the Python version
-    uses: astral-sh/setup-uv
-    with:
-      python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-    run: |
-        sudo apt-get update
-        sudo apt-get install -y ghostscript
-        # Install fonts
-        # https://askubuntu.com/questions/651441/how-to-install-arial-font-and-other-windows-fonts-in-ubuntu
-        echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | sudo debconf-set-selections 
-        sudo apt-get install -y ttf-mscorefonts-installer --reinstall
-        fc-match Arial
-
-    - name: Lint with ruff
-    run: |
-       uv run ruff check .
-
+      - uses: actions/checkout@v4
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+          enable-cache: true
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ghostscript
+          # Install fonts
+          # https://askubuntu.com/questions/651441/how-to-install-arial-font-and-other-windows-fonts-in-ubuntu
+          echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | sudo debconf-set-selections
+          sudo apt-get install -y ttf-mscorefonts-installer --reinstall
+          fc-match Arial
+          uv venv
+          uv sync --extra dev
+      - name: Test with pytest
+        run: |
+          uv run python -m pytest
+      - name: Lint with ruff
+        run: |
+          uv run ruff check .
