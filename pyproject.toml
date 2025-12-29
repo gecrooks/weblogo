@@ -37,11 +37,6 @@ weblogo = "weblogo._cli:main"
 transformseq = "weblogo._transformseq:main"
 
 
-docs = [
-  "sphinx",
-  "guzzle_sphinx_theme",
-  ]
-
 
 [tool.setuptools]
 packages = ["weblogo"]
