@@ -18,17 +18,50 @@ The legacy WebLogo 2 server can be found <a href="http://weblogo.berkeley.edu/">
 
 ## Installation
 
-To install with pip:
+To install with uv:
 
 ```sh
-$ pip install weblogo
+$ uv venv
+$ uv add weblogo
 ```
 
-To install with conda:
+Activate the environment before running `weblogo`:
 
 ```sh
-$ conda install -c conda-forge weblogo
+$ source .venv/bin/activate
 ```
+
+On Windows PowerShell:
+
+```sh
+> .venv\Scripts\Activate.ps1
+```
+
+Then run:
+
+```sh
+$ weblogo --help
+```
+
+Weblogo uses the program ghostcript to covert eps files to other graphical file formats, such as pdf. 
+
+Mac:
+```
+brew install ghostscript
+```
+
+Ubuntu:
+
+```
+    sudo apt-get update
+    sudo apt-get install -y ghostscript
+    # Install fonts
+    # https://askubuntu.com/questions/651441/how-to-install-arial-font-and-other-windows-fonts-in-ubuntu
+    echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | sudo debconf-set-selections
+    sudo apt-get install -y ttf-mscorefonts-installer --reinstall
+    fc-match Arial
+```
+
 
 ## Development
 
@@ -37,12 +70,22 @@ To install the development version of WebLogo, clone the github repository.
 ```sh
 $ git clone https://github.com/gecrooks/weblogo.git
 $ cd weblogo
-$ pip install -e .
+$ uv venv
+$ uv add --dev ruff pytest pytest-cov mypy sphinx guzzle_sphinx_theme pre-commit setuptools_scm
+```
+
+Common tasks (no activation required):
+
+```sh
+$ uv run python -m pytest
+$ uv run ruff check
+$ uv run mypy weblogo
+$ uv run sphinx-build -b html docs docs/_build/html
 ```
 
 Please consult the developer notes, <code>DEVELOPERS.txt</code> and software license <code>LICENSE</code>
 
-Outstanding bugs and feature requests are listed on the <a href="https://github.com/CrooksEnsemble/weblogo/issues">WebLogo issue tracker.</a>
+Outstanding bugs and feature requests are listed on the <a href="https://github.com/gecrooks/weblogo/issues">WebLogo issue tracker.</a>
 
 ## Open Source License
 
