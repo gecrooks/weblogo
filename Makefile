@@ -60,10 +60,6 @@ login:  ## ssh into remote server
 sync:  ## Sync remote server
 	ssh ${USER}@${HOST} 'cd weblogo && git pull'
 
-.PHONY: reinstall
-reinstall:	## Reinstall weblogo on remote server
-	# uv install to update versions with latest git tag
-	ssh ${USER}@${HOST} 'cd weblogo && uv venv && uv add -e .'
 
 .PHONY: restart
 restart:  	## Restart remote server
