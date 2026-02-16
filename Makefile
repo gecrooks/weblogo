@@ -5,7 +5,7 @@ NAME = weblogo
 FILES = $(NAME) tests docs/conf.py setup.py
 
 USER = -i ~/.ssh/aws_kaiju.pem ec2-user
-HOST = weblogo.threeplusone.com
+HOST = 18.221.9.251
 DIR = /home/ec2-user/weblogo
 
 
