@@ -38,7 +38,6 @@
 
 import random
 from math import exp, log, sqrt
-from typing import Tuple
 
 import numpy as np
 import scipy.optimize
@@ -227,7 +226,7 @@ class Dirichlet(object):
 
     def interval_relative_entropy(
         self, pvec: "ArrayLike", frac: float
-    ) -> Tuple[float, float]:
+    ) -> tuple[float, float]:
         pvec = np.asarray(pvec)
         mean = self.mean_relative_entropy(pvec)
         variance = self.variance_relative_entropy(pvec)

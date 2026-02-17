@@ -50,7 +50,8 @@ ttacctgctacgccagccttctgtgcgcgcaactgtctggtcccgcccc2
 
 """
 
-from typing import Iterator, List, Optional, TextIO
+from collections.abc import Iterator
+from typing import TextIO
 
 from ..seq import Alphabet, Seq, SeqList
 from ..utils import remove_whitespace
@@ -79,7 +80,7 @@ ttacctgctacgccagccttctgtgcgcgcaactgtctggtcccgcccc2
 """
 
 
-def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
+def read(fin: TextIO, alphabet: Alphabet | None = None) -> SeqList:
     """Read and parse an IG file.
 
     Args:
@@ -94,7 +95,7 @@ def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
     return SeqList(seqs)
 
 
-def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Iterator[Seq]:
+def iterseq(fin: TextIO, alphabet: Alphabet | None = None) -> Iterator[Seq]:
     """Parse an IG file and generate sequences.
 
     Args:
@@ -113,10 +114,10 @@ def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Iterator[Seq]:
     name = None
 
     def build_seq(
-        seqs: List[str],
+        seqs: list[str],
         alphabet: Alphabet,
-        name: Optional[str],
-        comments: List[str],
+        name: str | None,
+        comments: list[str],
         lineno: int,
     ) -> Seq:
         try:

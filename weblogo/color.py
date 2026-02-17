@@ -23,7 +23,7 @@
 
 """Color specifications using CSS2 (Cascading Style Sheet) syntax."""
 
-from typing import Any, List
+from typing import Any
 
 
 class Color(object):
@@ -66,7 +66,7 @@ class Color(object):
         self.blue = max(0.0, min(blue, 1.0))
 
     @staticmethod
-    def names() -> List[str]:
+    def names() -> list[str]:
         "Return a list of standard color names."
         return list(_std_colors.keys())
 

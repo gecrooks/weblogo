@@ -129,8 +129,9 @@ Authors:
 # 'ACGT-NNNN'
 
 import codecs
+import collections.abc
 from array import array
-from typing import Any, Generator, Iterator, List, Optional, Sequence, Tuple, Union
+from typing import Any, Generator, Iterator
 
 __all__ = [
     "Alphabet",
@@ -164,7 +165,7 @@ class Alphabet(object):
     """
 
     _letters: str
-    _alternatives: Tuple[str, str]
+    _alternatives: tuple[str, str]
     _ord_table: bytes
     _chr_table: str
 
@@ -173,8 +174,8 @@ class Alphabet(object):
     # We're immutable, so use __new__ not __init__
     def __new__(
         cls,
-        letters: Optional[Union["Alphabet", str]] = None,
-        alternatives: Optional[Tuple[Tuple[str, str], ...]] = None,
+        letters: "Alphabet | str | None" = None,
+        alternatives: tuple[tuple[str, str], ...] | None = None,
     ) -> "Alphabet":
         """Create a new, immutable Alphabet.
 
@@ -281,13 +282,13 @@ class Alphabet(object):
         """
         return self._ord_table[ord(c)]
 
-    def chrs(self, sequence_of_ints: Sequence[int]) -> "Seq":
+    def chrs(self, sequence_of_ints: collections.abc.Sequence[int]) -> "Seq":
         """Convert a sequence of ordinals into an alphabetic string."""
         c = [self.chr(n) for n in sequence_of_ints]
         s = "".join(c)
         return Seq(s, self)
 
-    def ords(self, string: Union["Seq", str]) -> array:
+    def ords(self, string: "Seq | str") -> array:
         """Convert an alphabetic string into a byte array of ordinals."""
         s = str(string)
         s = s.translate(self._ord_table)
@@ -344,7 +345,7 @@ class Alphabet(object):
 
     @staticmethod
     def which(
-        seqs: Union["Seq", "SeqList"], alphabets: Optional[List["Alphabet"]] = None
+        seqs: "Seq | SeqList", alphabets: list["Alphabet"] | None = None
     ) -> "Alphabet":
         """Returns the most appropriate unambiguous protein, RNA or DNA alphabet
         for a Seq or SeqList. If a list of alphabets is supplied, then the best alphabet
@@ -437,9 +438,9 @@ class Seq(str):
     def __new__(
         cls,
         obj: str,
-        alphabet: Optional[Alphabet] = generic_alphabet,
-        name: Optional[str] = None,
-        description: Optional[str] = None,
+        alphabet: Alphabet | None = generic_alphabet,
+        name: str | None = None,
+        description: str | None = None,
     ) -> "Seq":
         self = str.__new__(cls, obj)
         if alphabet is None:
@@ -474,7 +475,7 @@ class Seq(str):
         """
         return self.alphabet.ords(self)
 
-    def tally(self, alphabet: Optional[Alphabet] = None) -> List[int]:
+    def tally(self, alphabet: Alphabet | None = None) -> list[int]:
         """Counts the occurrences of alphabetic characters.
 
         Arguments:
@@ -513,7 +514,7 @@ class Seq(str):
         cls = self.__class__
         return cls(str.__add__(self, other), self.alphabet)
 
-    def join(self, str_list: List["Seq"]) -> "Seq":  # type: ignore  # Incorrectly overrides superclass join
+    def join(self, str_list: list["Seq"]) -> "Seq":  # type: ignore  # Incorrectly overrides superclass join
         cls = self.__class__
         return cls(super(Seq, self).join(str_list), self.alphabet)
 
@@ -619,7 +620,7 @@ class Seq(str):
         return cls(s, self.alphabet, self.name, self.description)
 
     def words(
-        self, k: int, alphabet: Optional[Alphabet] = None
+        self, k: int, alphabet: Alphabet | None = None
     ) -> Generator[str, None, None]:
         """Return an iteration over all subwords of length k in the sequence. If an optional
         alphabet is provided, only words from that alphabet are returned.
@@ -640,7 +641,7 @@ class Seq(str):
             if alphabet is None or alphabet.alphabetic(word):
                 yield word
 
-    def word_count(self, k: int, alphabet: Optional[Alphabet] = None) -> List:
+    def word_count(self, k: int, alphabet: Alphabet | None = None) -> list:
         """Return a count of all subwords in the sequence.
 
         >>> from weblogo.seq import *
@@ -660,11 +661,11 @@ class SeqList(list):
 
     def __init__(
         self,
-        alist: List[Seq] = [],
-        alphabet: Optional[Alphabet] = None,
-        name: Optional[str] = None,
-        description: Optional[str] = None,
-    ):
+        alist: list[Seq] = [],
+        alphabet: Alphabet | None = None,
+        name: str | None = None,
+        description: str | None = None,
+    ) -> None:
         list.__init__(self, alist)
         self.alphabet = alphabet
         self.name = name
@@ -691,7 +692,7 @@ class SeqList(list):
                 return False
         return True
 
-    def ords(self, alphabet: Optional[Alphabet] = None) -> List[array]:
+    def ords(self, alphabet: Alphabet | None = None) -> list[array]:
         """Convert sequence list into a 2D array of ordinals."""
         if not alphabet:
             alphabet = self.alphabet
@@ -702,7 +703,7 @@ class SeqList(list):
             k.append(alphabet.ords(s))
         return k
 
-    def tally(self, alphabet: Optional[Alphabet] = None) -> List[int]:
+    def tally(self, alphabet: Alphabet | None = None) -> list[int]:
         """Counts the occurrences of alphabetic characters.
 
         Arguments:
@@ -719,7 +720,7 @@ class SeqList(list):
         counts = [sum(c) for c in zip(*[s.tally(alphabet) for s in self])]
         return counts
 
-    def profile(self, alphabet: Optional[Alphabet] = None):  # type: ignore  # Nasty circular import
+    def profile(self, alphabet: Alphabet | None = None):  # type: ignore  # Nasty circular import
         """Counts the occurrences of characters in each column.
 
         Returns: Motif(counts, alphabet)

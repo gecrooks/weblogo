@@ -41,7 +41,8 @@ of characters. Blank lines and white space are ignored.
 -EPC-RDENVHFNRIFLPTIYFIIFLTGIVGNGLVILVMGYQKKLRSMTDKYRLHLSVAD
 """
 
-from typing import Generator, Optional, TextIO
+from collections.abc import Generator
+from typing import TextIO
 
 from ..seq import Alphabet, Seq, SeqList
 from ..utils import remove_whitespace
@@ -61,7 +62,7 @@ names = ("array", "flatfile")
 extensions = ()
 
 
-def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
+def read(fin: TextIO, alphabet: Alphabet | None = None) -> SeqList:
     """Read a file of raw sequence alignment data.
 
     Args:
@@ -76,7 +77,7 @@ def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
     return SeqList(seqs)
 
 
-def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Generator:
+def iterseq(fin: TextIO, alphabet: Alphabet | None = None) -> Generator:
     """Read one line of sequence data and yield the sequence.
 
     Args:

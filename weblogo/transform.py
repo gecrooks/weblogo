@@ -46,8 +46,6 @@ Other:
 
 """
 
-from typing import Dict, List, Optional, Tuple
-
 import numpy as np
 from scipy.stats import entropy
 
@@ -87,8 +85,8 @@ class Transform(object):
         self,
         source: Seq,
         target: Seq,
-        name: Optional[str] = None,
-        description: Optional[str] = None,
+        name: str | None = None,
+        description: str | None = None,
     ) -> None:
         self.table = str.maketrans(source.tostring(), target.tostring())
         self.source = source
@@ -298,11 +296,11 @@ class GeneticCode(object):
 
         # Building the full translation table is expensive,
         # so we avoid doing so until necessary.
-        self._table: Optional[Dict[str, str]] = None
-        self._back_table: Optional[Dict[str, str]] = None
+        self._table: dict[str, str] | None = None
+        self._back_table: dict[str, str] | None = None
 
     @staticmethod
-    def std_list() -> Tuple["GeneticCode", ...]:
+    def std_list() -> tuple["GeneticCode", ...]:
         "Return a list of standard genetic codes."
         return _codon_tables
 
@@ -320,7 +318,7 @@ class GeneticCode(object):
         raise ValueError(f"No such translation table: {name!s}")
 
     @property
-    def table(self) -> Optional[Dict[str, str]]:
+    def table(self) -> dict[str, str] | None:
         """A map between codons and amino acids"""
         if self._table is None:
             self._create_table()  # pragma: no cover
@@ -328,7 +326,7 @@ class GeneticCode(object):
         return self._table
 
     @property
-    def back_table(self) -> Optional[Dict[str, str]]:
+    def back_table(self) -> dict[str, str] | None:
         """A map between amino acids and codons"""
         if self._back_table is None:
             self._create_table()  # pragma: no cover
@@ -441,7 +439,7 @@ class GeneticCode(object):
     # TODO: translate_all_frames(self,seq) -> 6 translations.
 
     def __repr__(self) -> str:
-        string: List[str] = []
+        string: list[str] = []
         string += f'GeneticCode( {self.ident:d}, "'
         string += self.description
         string += '", \n'
@@ -466,7 +464,7 @@ class GeneticCode(object):
         """Returns a text representation of this genetic code."""
         # Inspired by http://bugzilla.open-bio.org/show_bug.cgi?id=1963
         letters = "TCAG"  # Conventional ordering for codon tables.
-        string: List[str] = []
+        string: list[str] = []
 
         if self.ident:
             string += f"Genetic Code [{self.ident:d}]: "

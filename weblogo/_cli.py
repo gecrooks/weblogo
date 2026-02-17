@@ -48,7 +48,7 @@ import sys
 from contextlib import ExitStack
 from io import StringIO
 from os import PathLike
-from typing import Any, Callable, Union
+from typing import Any, Callable
 
 import importlib_resources
 
@@ -121,7 +121,7 @@ def httpd_serve_forever(port: int = 8080) -> None:
             return False
 
         def is_python(
-            self, path: Union[str, PathLike]
+            self, path: str | PathLike
         ) -> bool:  # Let CGIHTTPRequestHandler know that cgi script is python
             return True
 

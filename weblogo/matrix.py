@@ -28,7 +28,7 @@ Arrays indexed by alphabetic strings.
 """
 
 from array import array
-from typing import Any, List, Optional, TextIO, Tuple, Union
+from typing import Any, TextIO
 
 import numpy as np
 from numpy.typing import ArrayLike, DTypeLike
@@ -92,10 +92,10 @@ class AlphabeticArray(object):
 
     def __init__(
         self,
-        alphabets: Union[Alphabet, Tuple[Union[Alphabet, None], ...], str],
-        values: Optional["ArrayLike"] = None,
-        dtype: Optional["DTypeLike"] = None,
-    ):
+        alphabets: Alphabet | tuple[Alphabet | None, ...] | str,
+        values: "ArrayLike | None" = None,
+        dtype: "DTypeLike | None" = None,
+    ) -> None:
         """
         Args:
         - alphabets -- a list of alphabets (as string or Alphabet objects) to
@@ -120,13 +120,13 @@ class AlphabeticArray(object):
                     "This dimension does not have an alphabet"
                 )  # pragma: no cover
 
-            def ords(self, string: Union["Seq", str]) -> array:
+            def ords(self, string: "Seq | str") -> array:
                 raise IndexError(
                     "This dimension does not have an alphabet"
                 )  # pragma: no cover
 
-        alpha: List[Union[Alphabet, None]] = []
-        shape: List[Union[int, None]] = []
+        alpha: list[Alphabet | None] = []
+        shape: list[int | None] = []
         for a in alphabets:
             if isinstance(a, str):
                 a = Alphabet(a)
@@ -164,7 +164,7 @@ class AlphabeticArray(object):
     def __setitem__(self, key: Any, value: Any) -> None:
         self.array.__setitem__(self._ordkey(key), value)
 
-    def _ordkey(self, key: Any) -> Union[int, np.ndarray, slice, Tuple, Alphabet]:
+    def _ordkey(self, key: Any) -> int | np.ndarray | slice | tuple | Alphabet:
         """Convert string indices into integers. Handles characters, strings
         slices with strings, and tuples of the same. Anything else is
         unchanged.
@@ -172,7 +172,7 @@ class AlphabeticArray(object):
 
         def norm(
             key: Any, alpha: Alphabet
-        ) -> Union[int, np.ndarray, slice, Tuple, Alphabet, None]:
+        ) -> int | np.ndarray | slice | tuple | Alphabet | None:
             if key is None:
                 return None
             elif isinstance(key, str) or isinstance(key, Alphabet):
@@ -258,12 +258,12 @@ class Motif(AlphabeticArray):
     def __init__(
         self,
         alphabet: Alphabet,
-        array: Optional["ArrayLike"] = None,
-        dtype: Optional["DTypeLike"] = None,
-        name: Optional[str] = None,
-        description: Optional[str] = None,
-        scale: Optional[float] = None,
-    ):
+        array: "ArrayLike | None" = None,
+        dtype: "DTypeLike | None" = None,
+        name: str | None = None,
+        description: str | None = None,
+        scale: float | None = None,
+    ) -> None:
         AlphabeticArray.__init__(self, (None, alphabet), array, dtype)
         self.name = name
         self.description = description
@@ -274,7 +274,7 @@ class Motif(AlphabeticArray):
         assert self.alphabets[1] is not None
         return self.alphabets[1]
 
-    def reindex(self, alphabet: Union[Alphabet, Tuple[Alphabet, ...], str]) -> "Motif":
+    def reindex(self, alphabet: Alphabet | tuple[Alphabet, ...] | str) -> "Motif":
         return Motif(alphabet, AlphabeticArray.reindex(self, (None, alphabet)))  # type: ignore
 
     # These methods alter self, and therefore do not return a value.
@@ -311,7 +311,7 @@ class Motif(AlphabeticArray):
 
     @classmethod
     def read_transfac(
-        cls, fin: TextIO, alphabet: Optional[Union[Alphabet, str]] = None
+        cls, fin: TextIO, alphabet: Alphabet | str | None = None
     ) -> "Motif":
         """Parse a TRANSFAC-format PWM from a file.
         Returns a Motif object, representing the provided

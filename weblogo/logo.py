@@ -44,7 +44,7 @@ from dataclasses import MISSING, dataclass, field
 from datetime import datetime
 from io import StringIO, TextIOWrapper
 from math import log, sqrt
-from typing import Any, Callable, Dict, List, Optional, Union
+from typing import Any, Callable
 from urllib.parse import urlparse, urlunparse
 from urllib.request import Request, urlopen
 
@@ -243,7 +243,7 @@ class LogoOptions:
 
     """
 
-    alphabet: Optional[Alphabet] = None
+    alphabet: Alphabet | None = None
 
     creator_text: str = field(default_factory=lambda: release_description)
 
@@ -255,10 +255,10 @@ class LogoOptions:
 
     show_yaxis: bool = True
     # yaxis_label default depends on other settings. See LogoFormat
-    yaxis_label: Optional[str] = None
+    yaxis_label: str | None = None
     yaxis_tic_interval: float = 1.0
     yaxis_minor_tic_ratio: int = 5
-    yaxis_scale: Optional[float] = None
+    yaxis_scale: float | None = None
 
     show_xaxis: bool = True
     xaxis_label: str = ""
@@ -284,7 +284,7 @@ class LogoOptions:
     resolution: int = 600
 
     default_color: Color = field(default_factory=lambda: Color.by_name("black"))
-    color_scheme: Optional[ColorScheme] = None
+    color_scheme: ColorScheme | None = None
 
     debug: bool = False
 
@@ -308,8 +308,8 @@ class LogoOptions:
     title_font: str = "ArialMT"
 
     first_index: int = 1
-    logo_start: Optional[int] = None
-    logo_end: Optional[int] = None
+    logo_start: int | None = None
+    logo_end: int | None = None
     scale_width: bool = True
 
     reverse_stacks: bool = True
@@ -352,15 +352,15 @@ class LogoFormat(LogoOptions):
     """
 
     def __init__(
-        self, logodata: "LogoData", logooptions: Optional[LogoOptions] = None
+        self, logodata: "LogoData", logooptions: LogoOptions | None = None
     ) -> None:
         """Create a new LogoFormat instance."""
 
         if logooptions is not None:
             self.__dict__.update(logooptions.__dict__)
 
-        self.alphabet: Optional[Alphabet] = logodata.alphabet
-        self.seqlen: Optional[int] = logodata.length
+        self.alphabet: Alphabet | None = logodata.alphabet
+        self.seqlen: int | None = logodata.length
 
         # Derived parameters.
         self.show_title = False
@@ -376,8 +376,8 @@ class LogoFormat(LogoOptions):
         self.xaxis_label_height = None
         self.line_height = None
         self.line_width = None
-        self.logo_height: Optional[int] = None
-        self.logo_width: Optional[int] = None
+        self.logo_height: int | None = None
+        self.logo_width: int | None = None
         self.creation_date = None
         self.end_type = None
 
@@ -613,8 +613,8 @@ class LogoFormat(LogoOptions):
 
 
 def parse_prior(
-    composition: Any, alphabet: Alphabet, weight: Optional[float] = None
-) -> Optional[np.ndarray]:
+    composition: Any, alphabet: Alphabet, weight: float | None = None
+) -> np.ndarray | None:
     """Parse a description of the expected monomer distribution of a sequence.
 
     Valid compositions:
@@ -720,7 +720,7 @@ def equiprobable_distribution(length: int) -> np.ndarray:
     return np.ones((length), np.float64) / length
 
 
-def _seq_formats() -> Dict[str, str]:
+def _seq_formats() -> dict[str, str]:
     """Return a dictionary mapping between the names of formats for the sequence data
     and the corresponding parsers.
     """
@@ -731,7 +731,7 @@ def _seq_formats() -> Dict[str, str]:
     return fin_choices
 
 
-def _seq_names() -> List[str]:
+def _seq_names() -> list[str]:
     """Returns a list of the names of accepted sequence data formats."""
     fin_names = [f.names[0] for f in seq_io.formats]  # type: ignore
     fin_names.remove("plain")
@@ -740,9 +740,9 @@ def _seq_names() -> List[str]:
 
 
 def read_seq_data(
-    fin: Union[StringIO, TextIOWrapper, None],
+    fin: StringIO | TextIOWrapper | None,
     input_parser: Callable = seq_io.read,
-    alphabet: Optional[Alphabet] = None,
+    alphabet: Alphabet | None = None,
     ignore_lower_case: bool = False,
     max_file_size: int = 0,
 ) -> SeqList:
@@ -801,12 +801,12 @@ class LogoData:
 
     def __init__(
         self,
-        length: Optional[int] = None,
-        alphabet: Optional[Alphabet] = None,
-        counts: Optional[np.ndarray] = None,
-        entropy: Optional[np.ndarray] = None,
-        entropy_interval: Optional[np.ndarray] = None,
-        weight: Optional[np.ndarray] = None,
+        length: int | None = None,
+        alphabet: Alphabet | None = None,
+        counts: np.ndarray | None = None,
+        entropy: np.ndarray | None = None,
+        entropy_interval: np.ndarray | None = None,
+        weight: np.ndarray | None = None,
     ) -> None:
         """Creates a new LogoData object"""
         self.length = length
@@ -819,9 +819,9 @@ class LogoData:
     @classmethod
     def from_counts(
         cls,
-        alphabet: Optional[Alphabet],
+        alphabet: Alphabet | None,
         counts: np.ndarray,
-        prior: Optional[np.ndarray] = None,
+        prior: np.ndarray | None = None,
     ) -> "LogoData":
         """Build a LogoData object from counts."""
 
@@ -867,7 +867,7 @@ class LogoData:
         return cls(seq_length, alphabet, counts, ent, entropy_interval, weight)
 
     @classmethod
-    def from_seqs(cls, seqs: SeqList, prior: Optional[np.ndarray] = None) -> "LogoData":
+    def from_seqs(cls, seqs: SeqList, prior: np.ndarray | None = None) -> "LogoData":
         """Build a LogoData object from a SeqList, a list of sequences."""
         # --- VALIDATE DATA ---
         # check that at least one sequence of length at least 1 long

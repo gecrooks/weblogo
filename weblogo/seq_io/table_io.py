@@ -31,7 +31,8 @@ column is the sequence itself. The columns are separated by a single tab ("\\t")
 
 """
 
-from typing import Iterator, List, Optional, TextIO
+from collections.abc import Iterator
+from typing import TextIO
 
 from ..seq import Alphabet, Seq, SeqList
 
@@ -52,7 +53,7 @@ EC0010	MGNTKLANPAPLGLMGFGMTTILLNLHNVGYFALDGIILAMGIFYGGIAQ
 """
 
 
-def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
+def read(fin: TextIO, alphabet: Alphabet | None = None) -> SeqList:
     """Read and parse file.
 
     Args:
@@ -67,7 +68,7 @@ def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
     return SeqList(seqs)
 
 
-def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Iterator[Seq]:
+def iterseq(fin: TextIO, alphabet: Alphabet | None = None) -> Iterator[Seq]:
     """Parse a file and generate sequences.
 
     Args:
@@ -93,7 +94,7 @@ def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Iterator[Seq]:
         yield Seq(columns[1], alphabet=alphabet, name=columns[0])
 
 
-def write(fout: TextIO, seqs: List[Seq]) -> None:
+def write(fout: TextIO, seqs: list[Seq]) -> None:
     """Write a two column, tab-delimited file.
 
     Args:

@@ -25,7 +25,8 @@
 
 """Extra utilities and core classes not in standard python."""
 
-from typing import Any, Iterable, List, Optional
+import collections.abc
+from typing import Any
 
 __all__ = (
     "isblank",
@@ -95,7 +96,7 @@ def invert_dict(dictionary: dict) -> dict:
 
 
 def stdrepr(
-    obj: Any, attributes: Optional[List[str]] = None, name: Optional[str] = None
+    obj: Any, attributes: list[str] | None = None, name: str | None = None
 ) -> str:
     """Create a standard representation of an object."""
     if name is None:
@@ -112,7 +113,7 @@ def stdrepr(
     return f"{name}(\n    {arg_str}\n)"
 
 
-def group_count(i: Iterable) -> list:
+def group_count(i: collections.abc.Iterable) -> list:
     """An iteration that returns tuples of items and the number of consecutive
     occurrences. Thus group_count('aabbbc') yields ('a',2), ('b',3), ('c',1)
     """
@@ -137,7 +138,7 @@ class Token:
     def __init__(
         self,
         typeof: str,
-        data: Optional[str] = None,
+        data: str | None = None,
         lineno: int = -1,
         offset: int = -1,
     ) -> None:
@@ -218,7 +219,7 @@ class ArgumentError(ValueError):
     are also stored.
     """
 
-    def __init__(self, message: str, key: str, value: Optional[Any] = None) -> None:
+    def __init__(self, message: str, key: str, value: Any | None = None) -> None:
         """Args:
         - msg -- An error message.
         - key -- The name of the argument or component at fault.

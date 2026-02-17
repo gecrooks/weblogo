@@ -53,7 +53,8 @@ VLARHF-QH-EFTPELQ-HALEAHFCA------V---GDALA----K-----A-----YH-----------
 
 """
 
-from typing import Iterator, List, Optional, TextIO
+from collections.abc import Iterator
+from typing import TextIO
 
 from ..seq import Alphabet, Seq, SeqList
 
@@ -95,7 +96,7 @@ VLARHF-QH-EFTPELQ-HALEAHFCA------V---GDALA----K-----A-----YH-----------
 """
 
 
-def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
+def read(fin: TextIO, alphabet: Alphabet | None = None) -> SeqList:
     """Read and parse a fasta file.
 
     Args:
@@ -119,7 +120,7 @@ def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
 #     return next(iterseq(fin, alphabet))
 
 
-def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Iterator[Seq]:
+def iterseq(fin: TextIO, alphabet: Alphabet | None = None) -> Iterator[Seq]:
     """Parse a fasta file and generate sequences.
 
     Args:
@@ -133,16 +134,16 @@ def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Iterator[Seq]:
     alphabet = Alphabet(alphabet)
 
     seqs = []
-    comments: List[str] = []  # FIXME: comments before first sequence are lost.
+    comments: list[str] = []  # FIXME: comments before first sequence are lost.
     header = None
     header_lineno = -1
 
     def build_seq(
-        seqs: List[str],
+        seqs: list[str],
         alphabet: Alphabet,
         header: str,
         header_lineno: int,
-        comments: List[str],
+        comments: list[str],
     ) -> Seq:
         try:
             name = header.split(" ", 1)[0]
