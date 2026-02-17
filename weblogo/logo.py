@@ -40,6 +40,7 @@
 
 import os
 import sys
+from dataclasses import MISSING, dataclass, field
 from datetime import datetime
 from io import StringIO, TextIOWrapper
 from math import log, sqrt
@@ -80,16 +81,9 @@ if __version__.find("+") != -1:
 
 
 
-# ------ META DATA ------
-#            'ColorScheme',
-#            'parse_prior',
-#            'release_description',
-#            'description'
-#            ]
-
 description = "Create sequence logos from biological sequence alignments."
 
-release_description = "WebLogo %s" % (__version__)
+release_description = f"WebLogo {__version__}"
 
 
 def cgi(htdocs_directory: str) -> None:  # pragma: no cover
@@ -168,6 +162,7 @@ std_percentCG = {
 # Nat Biotechnol 2004, 22:547-53
 
 
+@dataclass
 class LogoOptions:
     """A container for all logo formatting options. Not all of these
     are directly accessible through the CLI or web interfaces.
@@ -248,7 +243,78 @@ class LogoOptions:
 
     """
 
-    def __init__(self, **kwargs: dict) -> None:
+    alphabet: Optional[Alphabet] = None
+
+    creator_text: str = field(default_factory=lambda: release_description)
+
+    logo_title: str = ""
+    logo_label: str = ""
+    stacks_per_line: int = 40
+
+    unit_name: str = "bits"
+
+    show_yaxis: bool = True
+    # yaxis_label default depends on other settings. See LogoFormat
+    yaxis_label: Optional[str] = None
+    yaxis_tic_interval: float = 1.0
+    yaxis_minor_tic_ratio: int = 5
+    yaxis_scale: Optional[float] = None
+
+    show_xaxis: bool = True
+    xaxis_label: str = ""
+    xaxis_tic_interval: int = 1
+    rotate_numbers: bool = False
+    number_interval: int = 5
+    show_ends: bool = False
+    annotate: Any = None
+
+    show_fineprint: bool = True
+    fineprint: str = field(
+        default_factory=lambda: "WebLogo " + ".".join(__version__.split(".")[0:3])
+    )
+
+    show_boxes: bool = False
+    shrink_fraction: float = 0.5
+
+    show_errorbars: bool = True
+    errorbar_fraction: float = 0.90
+    errorbar_width_fraction: float = 0.25
+    errorbar_gray: float = 0.75
+
+    resolution: int = 600
+
+    default_color: Color = field(default_factory=lambda: Color.by_name("black"))
+    color_scheme: Optional[ColorScheme] = None
+
+    debug: bool = False
+
+    logo_margin: float = 2
+    stroke_width: float = 0.5
+    tic_length: float = 5
+
+    stack_width: float = field(default_factory=lambda: std_sizes["medium"])
+    stack_aspect_ratio: float = 5
+
+    stack_margin: float = 0.5
+    pad_right: bool = False
+
+    small_fontsize: float = 6
+    fontsize: float = 10
+    title_fontsize: float = 12
+    number_fontsize: float = 8
+
+    text_font: str = "ArialMT"
+    logo_font: str = "Arial-BoldMT"
+    title_font: str = "ArialMT"
+
+    first_index: int = 1
+    logo_start: Optional[int] = None
+    logo_end: Optional[int] = None
+    scale_width: bool = True
+
+    reverse_stacks: bool = True
+
+    def __init__(self, **kwargs: Any) -> None:
         """Create a new LogoOptions instance.
 
         >>> logooptions = LogoOptions(logo_title = "Some Title String")
@@ -256,87 +322,19 @@ class LogoOptions:
         >>> repr(logooptions)
 
         """
-
-        self.alphabet: Optional[Alphabet] = None
-
-        self.creator_text = release_description
-
-        self.logo_title = ""
-        self.logo_label = ""
-        self.stacks_per_line = 40
-
-        self.unit_name = "bits"
-
-        self.show_yaxis = True
-        # yaxis_lable default depends on other settings. See LogoFormat
-        self.yaxis_label: Optional[str] = None
-        self.yaxis_tic_interval = 1.0
-        self.yaxis_minor_tic_ratio = 5
-        self.yaxis_scale: Optional[float] = None
-
-        self.show_xaxis = True
-        self.xaxis_label = ""
-        self.xaxis_tic_interval = 1
-        self.rotate_numbers = False
-        self.number_interval = 5
-        self.show_ends = False
-        self.annotate = None
-
-        self.show_fineprint = True
-        self.fineprint: str = "WebLogo " + ".".join(__version__.split(".")[0:3])
-
-        self.show_boxes = False
-        self.shrink_fraction = 0.5
-
-        self.show_errorbars = True
-        self.errorbar_fraction = 0.90
-        self.errorbar_width_fraction = 0.25
-        self.errorbar_gray = 0.75
-
-        self.resolution: int = 600  # Dots per inch
-
-        self.default_color = Color.by_name("black")
-        self.color_scheme: Optional[ColorScheme] = None
-        # self.show_color_key = False # NOT yet implemented
-
-        self.debug = False
-
-        self.logo_margin = 2
-        self.stroke_width = 0.5
-        self.tic_length = 5
-
-        self.stack_width = std_sizes["medium"]
-        self.stack_aspect_ratio = 5
-
-        self.stack_margin = 0.5
-        self.pad_right = False
-
-        self.small_fontsize = 6
-        self.fontsize = 10
-        self.title_fontsize = 12
-        self.number_fontsize = 8
-
-        self.text_font = "ArialMT"
-        self.logo_font = "Arial-BoldMT"
-        self.title_font = "ArialMT"
-
-        self.first_index = 1
-        self.logo_start: Optional[int] = None
-        self.logo_end: Optional[int] = None
-        self.scale_width = True
-
-        self.reverse_stacks = True  # If true, draw stacks with largest letters on top.
-
-        for k, v in kwargs.items():
-            setattr(self, k, v)
+        # Initialize all fields to their defaults, then apply overrides
+        for name, f in self.__dataclass_fields__.items():
+            if name in kwargs:
+                setattr(self, name, kwargs[name])
+            elif f.default is not MISSING:
+                setattr(self, name, f.default)
+            else:
+                setattr(self, name, f.default_factory())  # type: ignore[misc]
 
     def __repr__(self) -> str:
         attributes = list(vars(self).keys())
         attributes.sort()
         return stdrepr(self, attributes)
-
-
-# End class LogoOptions
 
 
 class LogoFormat(LogoOptions):
@@ -604,7 +602,7 @@ class LogoFormat(LogoOptions):
             for i in range(self.seqlen):
                 index = i + self.first_index
                 if index % self.number_interval == 0:
-                    self.annotate.append("%d" % index)
+                    self.annotate.append(f"{index}")
                 else:
                     self.annotate.append("")
 
@@ -612,11 +610,6 @@ class LogoFormat(LogoOptions):
             raise ArgumentError(
                 "Annotations must be same length as sequences.", "annotate"
             )
-
-    # End __init__
-
-
-# End class LogoFormat
 
 
 def parse_prior(
@@ -706,7 +699,7 @@ def parse_prior(
         prior *= weight
 
     else:
-        raise ValueError("Unknown or malformed composition: %s" % composition)
+        raise ValueError(f"Unknown or malformed composition: {composition}")
 
     if len(prior) != len(alphabet):
         raise ValueError(
@@ -770,7 +763,7 @@ def read_seq_data(
 
         more_data = fin.read(2)
         if more_data != "":
-            raise IOError("File exceeds maximum allowed size: %d bytes" % max_file_size)
+            raise IOError(f"File exceeds maximum allowed size: {max_file_size} bytes")
         fin = StringIO(data)
     elif fin == sys.stdin:
         fin = StringIO(fin.read())
@@ -831,8 +824,6 @@ class LogoData:
         prior: Optional[np.ndarray] = None,
     ) -> "LogoData":
         """Build a LogoData object from counts."""
-        # Counts is a Motif object?
-        # counts = counts.array
 
         seq_length, A = counts.shape
 
@@ -890,8 +881,7 @@ class LogoData:
             # TODO: Redundant? Should be checked in SeqList?
             if seq_length != len(s):
                 raise ArgumentError(
-                    "Sequence number %d differs in length from the previous sequences"
-                    % (i + 1),
+                    f"Sequence number {i + 1} differs in length from the previous sequences",
                     "sequences",
                 )
 
@@ -929,14 +919,14 @@ class LogoData:
 
             for c in self.counts[i]:
                 print(c, end=" \t", file=out)
-            print("%6.4f" % self.entropy[i], end=" \t", file=out)
+            print(f"{self.entropy[i]:6.4f}", end=" \t", file=out)
             if self.entropy_interval is not None:
-                print("%6.4f" % self.entropy_interval[i][0], end=" \t", file=out)
-                print("%6.4f" % self.entropy_interval[i][1], end=" \t", file=out)
+                print(f"{self.entropy_interval[i][0]:6.4f}", end=" \t", file=out)
+                print(f"{self.entropy_interval[i][1]:6.4f}", end=" \t", file=out)
             else:
                 print("\t", "\t", end="", file=out)
             if self.weight is not None:
-                print("%6.4f" % self.weight[i], end="", file=out)
+                print(f"{self.weight[i]:6.4f}", end="", file=out)
             print("", file=out)
         print("# End LogoData", file=out)
 
@@ -966,14 +956,14 @@ class LogoData:
 
             for c in self.counts[i]:
                 print(c, end=",", file=out)
-            print("%6.4f" % self.entropy[i], end=",", file=out)
+            print(f"{self.entropy[i]:6.4f}", end=",", file=out)
             if self.entropy_interval is not None:
-                print("%6.4f" % self.entropy_interval[i][0], end=",", file=out)
-                print("%6.4f" % self.entropy_interval[i][1], end=",", file=out)
+                print(f"{self.entropy_interval[i][0]:6.4f}", end=",", file=out)
+                print(f"{self.entropy_interval[i][1]:6.4f}", end=",", file=out)
             else:
                 print(",", ",", end="", file=out)
             if self.weight is not None:
-                print("%6.4f" % self.weight[i], end="", file=out)
+                print(f"{self.weight[i]:6.4f}", end="", file=out)
             print("", file=out)
         return out.getvalue()
 
@@ -986,7 +976,7 @@ def _from_URL_fileopen(target_url: str) -> StringIO:  # pragma: no cover
 
     # checks if string is URL link
     if scheme != "http" and scheme != "https" and scheme != "ftp":
-        raise ValueError("Cannot open url: %s", target_url)
+        raise ValueError(f"Cannot open url: {target_url}")
 
     # checks for dropbox link
     if net_location == "www.dropbox.com":

@@ -6,20 +6,8 @@ with no external dependencies (no Ghostscript).
 Written by Claude / Opus 4.6 (2026-02-16)
 """
 
-from math import log
 from .color import Color
-from .logo import LogoData, LogoFormat
-
-# Unit conversion factors (duplicated from logo_formatter to avoid circular import)
-_std_units = {
-    "bits": 1.0 / log(2),
-    "nats": 1.0,
-    "digits": 1.0 / log(10),
-    "kT": 1.0,
-    "kJ/mol": 8.314472 * 298.15 / 1000.0,
-    "kcal/mol": 1.987 * 298.15 / 1000.0,
-    "probability": None,
-}
+from .logo import LogoData, LogoFormat, std_units
 
 # Exact character bounding boxes for Arial-BoldMT, extracted from PostScript
 # via Ghostscript `charpath pathbbox` at 1000pt, normalized to fractions of em.
@@ -139,7 +127,7 @@ def native_pdf_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
     assert logoformat.logo_end is not None
     assert logoformat.char_width is not None
 
-    conv_factor = _std_units[logoformat.unit_name]
+    conv_factor = std_units[logoformat.unit_name]
 
     seq_from = logoformat.logo_start - logoformat.first_index
     seq_to = logoformat.logo_end - logoformat.first_index + 1
@@ -190,7 +178,7 @@ def native_pdf_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
         if conv_factor:
             assert logodata.entropy is not None
             stack_height_units = (
-                logodata.entropy[seq_index] * _std_units[logoformat.unit_name]
+                logodata.entropy[seq_index] * std_units[logoformat.unit_name]
             )
         else:
             stack_height_units = 1.0

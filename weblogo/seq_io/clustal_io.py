@@ -112,8 +112,7 @@ def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
 
             if not alphabet.alphabetic(data):
                 raise ValueError(
-                    "Character on line: %d not in alphabet: %s : %s"
-                    % (token.lineno, alphabet, data)
+                    f"Character on line: {token.lineno} not in alphabet: {alphabet} : {data}"
                 )
             seqs[block_count].append(data)
             if block_count == 0:
@@ -188,7 +187,7 @@ def _scan(fin: TextIO) -> Iterator[Token]:
 
             m = seq_line.match(line)
             if m is None:
-                raise ValueError("Parse error on line: %d (%s)" % (L, line))
+                raise ValueError(f"Parse error on line: {L} ({line})")
             leader_width = len(m.group(1))
             yield Token("seq_id", m.group(1).strip())
             yield Token("seq", m.group(2).strip())

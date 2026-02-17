@@ -83,8 +83,7 @@ def _build_argument_parser() -> argparse.ArgumentParser:
         dest="reader",
         type=_lookup(seq_io.format_names(), "format"),
         default=seq_io,
-        help="Multiple sequence alignment format: (%s)"
-        % ", ".join([f.names[0] for f in seq_io.formats]),  # type: ignore
+        help=f"Multiple sequence alignment format: ({', '.join([f.names[0] for f in seq_io.formats])})",  # type: ignore
         metavar="FORMAT",
     )
 
@@ -149,8 +148,7 @@ def _build_argument_parser() -> argparse.ArgumentParser:
         dest="writer",
         type=_lookup(out_choices, "output format"),
         default=seq_io.fasta_io,
-        help="Multiple sequence alignment output format: (%s) (Default: fasta)"
-        % ", ".join(out_names),
+        help=f"Multiple sequence alignment output format: ({', '.join(out_names)}) (Default: fasta)",
         metavar="FORMAT",
     )
 

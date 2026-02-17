@@ -95,13 +95,12 @@ def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Iterator[Seq]:
         line = line.strip()
 
         if line[0] == ">":  # probably a fasta file. Fail.
-            raise ValueError("Parse Error on input line: %d " % (linenum))
+            raise ValueError(f"Parse Error on input line: {linenum} ")
         line = remove_whitespace(line)
 
         if not alphabet.alphabetic(line):
             raise ValueError(
-                "Character on line: %d not in alphabet: %s : %s"
-                % (linenum, alphabet, line)
+                f"Character on line: {linenum} not in alphabet: {alphabet} : {line}"
             )
         lines.append(line)
 

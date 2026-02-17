@@ -286,4 +286,4 @@ def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
             pass
 
     names = ", ".join([p.names[0] for p in parsers])  # type: ignore
-    raise ValueError("Cannot parse sequence file: Tried %s " % names)
+    raise ValueError(f"Cannot parse sequence file: Tried {names} ")

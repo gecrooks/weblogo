@@ -97,7 +97,7 @@ class ColorScheme(ColorRule):
 
     def symbol_color(self, seq_index: int, symbol: str, rank: int) -> Color:
         if symbol not in self.alphabet:
-            raise KeyError("Colored symbol '%s' does not exist in alphabet." % symbol)
+            raise KeyError(f"Colored symbol '{symbol}' does not exist in alphabet.")
 
         for rule in self.rules:
             color = rule.symbol_color(seq_index, symbol, rank)

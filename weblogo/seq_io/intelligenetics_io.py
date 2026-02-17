@@ -124,8 +124,8 @@ def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Iterator[Seq]:
             s = Seq("".join(seqs), alphabet, name=name, description=desc)
         except ValueError:
             raise ValueError(
-                "Parse failed with sequence starting at line %d: "
-                "Character not in alphabet: %s" % (lineno, alphabet)
+                f"Parse failed with sequence starting at line {lineno}: "
+                f"Character not in alphabet: {alphabet}"
             )
         return s
 
@@ -187,7 +187,7 @@ def writeseq(fout: TextIO, seq: Seq) -> None:
     for h in desc.splitlines():
         print(";" + h, file=fout)
     if not seq.name:
-        raise ValueError("Write failed with missing sequence name: %s" % str(seq))
+        raise ValueError(f"Write failed with missing sequence name: {seq}")
     print(seq.name, file=fout)
     L = len(seq)
     line_length = 80

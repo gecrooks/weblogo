@@ -369,8 +369,6 @@ class Alphabet(object):
         return a
 
 
-# End class Alphabet
-
 # ------------------- Standard ALPHABETS -------------------
 # Standard alphabets are defined here, after Alphabet class.
 
@@ -453,7 +451,7 @@ class Seq(str):
         if not isinstance(alphabet, Alphabet):
             alphabet = Alphabet(alphabet)
         if not alphabet.alphabetic(self):
-            raise ValueError("Sequence not alphabetic %s, '%s'" % (alphabet, self))
+            raise ValueError(f"Sequence not alphabetic {alphabet}, '{self}'")
 
         self._alphabet = alphabet
         self.name = name
@@ -655,9 +653,6 @@ class Seq(str):
         return group_count(words)
 
 
-# end class Seq
-
-
 class SeqList(list):
     """A list of sequences."""
 
@@ -757,9 +752,6 @@ class SeqList(list):
         from .matrix import Motif
 
         return Motif(alphabet, counts)
-
-
-# end class SeqList
 
 
 def dna(string: str) -> Seq:

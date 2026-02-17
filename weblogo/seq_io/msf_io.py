@@ -112,8 +112,7 @@ def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
 
             if not alphabet.alphabetic(data):
                 raise ValueError(
-                    "Character on line: %d not in alphabet: %s : %s"
-                    % (token.lineno, alphabet, token.data)
+                    f"Character on line: {token.lineno} not in alphabet: {alphabet} : {token.data}"
                 )
             seqs[block_count].append(data)
             block_count += 1
@@ -153,7 +152,7 @@ def _line_is(fin: TextIO) -> Iterator[Token]:
                 continue
             m = seq_line.match(line)
             if m is None:
-                raise ValueError("Parse error on line: %d" % L)  # pragma: no cover
+                raise ValueError(f"Parse error on line: {L}")  # pragma: no cover
             if m.group(1).isdigit() and m.group(2).strip().isdigit():
                 continue
             yield Token("seq_id", m.group(1).strip())

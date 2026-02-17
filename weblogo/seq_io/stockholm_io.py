@@ -102,8 +102,7 @@ def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
 
             if not alphabet.alphabetic(data):
                 raise ValueError(
-                    "Character on line: %d not in alphabet: %s : %s"
-                    % (token.lineno, alphabet, data)
+                    f"Character on line: {token.lineno} not in alphabet: {alphabet} : {data}"
                 )
             seqs[block_count].append(data)
             block_count += 1
@@ -128,7 +127,7 @@ def _scan(fin: TextIO) -> Iterator[Token]:
                 yield Token("header", m.group())
                 continue
             else:
-                raise ValueError("Parse error on line: %d" % L)
+                raise ValueError(f"Parse error on line: {L}")
 
         if state == body:
             if line.isspace():
@@ -151,7 +150,7 @@ def _scan(fin: TextIO) -> Iterator[Token]:
 
             name_seq = line.split(None, 1)  # Split into two parts at first whitespace
             if len(name_seq) != 2:
-                raise ValueError("Parse error on line: %d" % L)  # pragma: no cover
+                raise ValueError(f"Parse error on line: {L}")  # pragma: no cover
 
             yield Token("seq_id", name_seq[0].strip())
             yield Token("seq", name_seq[1].strip())

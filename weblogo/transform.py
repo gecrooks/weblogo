@@ -105,8 +105,6 @@ class Transform(object):
         return cls(s, self.target.alphabet, seq.name, seq.description)
 
 
-# End class Translation
-
 # FIXME: Test, document, add to seq.
 dna_complement = Transform(
     Seq("ACGTRYSWKMBDHVN-acgtUuryswkmbdhvnXx?.~", dna_alphabet),
@@ -159,11 +157,11 @@ def mask_low_complexity(
 
     lg20 = np.log2(20)
     if trigger < 0 or trigger > lg20:
-        raise ValueError("Invalid trigger complexity: %f" % trigger)
+        raise ValueError(f"Invalid trigger complexity: {trigger:f}")
     if extension < 0 or extension > lg20 or extension < trigger:
-        raise ValueError("Invalid extension complexity: %f" % extension)
+        raise ValueError(f"Invalid extension complexity: {extension:f}")
     if width < 0:
-        raise ValueError("Invalid width: %d" % width)
+        raise ValueError(f"Invalid width: {width:d}")
 
     if width > len(seq):
         return seq
@@ -208,9 +206,6 @@ def mask_low_complexity(
     segged.name = seq.name
     segged.description = seq.description
     return segged
-
-
-# end mask_low_complexity()
 
 
 class GeneticCode(object):
@@ -322,7 +317,7 @@ class GeneticCode(object):
         for t in _codon_tables:
             if t.ident == name or t.description == name:
                 return t
-        raise ValueError("No such translation table: %s" % str(name))
+        raise ValueError(f"No such translation table: {name!s}")
 
     @property
     def table(self) -> Optional[Dict[str, str]]:
@@ -403,8 +398,6 @@ class GeneticCode(object):
 
         self._table = ltable
 
-    # End create tables
-
     def translate(self, seq: Seq, frame: int = 0) -> Seq:
         """Translate a DNA sequence to a polypeptide using full
         IUPAC ambiguities in DNA/RNA and amino acid codes.
@@ -449,7 +442,7 @@ class GeneticCode(object):
 
     def __repr__(self) -> str:
         string: List[str] = []
-        string += 'GeneticCode( %d, "' % self.ident
+        string += f'GeneticCode( {self.ident:d}, "'
         string += self.description
         string += '", \n'
         string += '    amino_acid = "'
@@ -476,13 +469,13 @@ class GeneticCode(object):
         string: List[str] = []
 
         if self.ident:
-            string += "Genetic Code [%d]: " % self.ident
+            string += f"Genetic Code [{self.ident:d}]: "
         else:
             string += "Genetic Code: "  # pragma: no cover
         string += self.description or ""
 
         string += "\n    "
-        string += " ".join(["  %s      " % c2 for c2 in letters])
+        string += " ".join([f"  {c2}      " for c2 in letters])
 
         string += "\n   +"
         string += "+".join(["---------" for c2 in letters]) + "+  "
@@ -503,9 +496,9 @@ class GeneticCode(object):
                     else:
                         amino = table.get(codon, "?")
                         if codon in self.start_codons:
-                            string += " %s(s)|" % amino
+                            string += f" {amino}(s)|"
                         else:
-                            string += " %s   |" % amino
+                            string += f" {amino}   |"
                 string += " " + c3
 
             string += "\n   +"
@@ -513,9 +506,6 @@ class GeneticCode(object):
             string += "+  "
         string += "\n"
         return "".join(string)
-
-
-# end class GeneticCode
 
 
 # Data from http://www.ncbi.nlm.nih.gov/projects/collab/FT/index.html#7.5

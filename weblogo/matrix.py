@@ -240,9 +240,6 @@ class AlphabeticArray(object):
             return setattr(self.array, name, value)  # pragma: no cover
 
 
-# End class AlphabeticArray
-
-
 class Motif(AlphabeticArray):
     """A two dimensional array where the second dimension is indexed by an
     Alphabet. Used to represent sequence motifs and similar information.

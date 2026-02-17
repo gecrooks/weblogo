@@ -88,8 +88,7 @@ def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Iterator[Seq]:
         columns = line.split("\t")
         if len(columns) != 2:
             raise ValueError(
-                "Parse failed on line %d: did not find two columns separated by a tab."
-                % lineno
+                f"Parse failed on line {lineno}: did not find two columns separated by a tab."
             )
         yield Seq(columns[1], alphabet=alphabet, name=columns[0])
 

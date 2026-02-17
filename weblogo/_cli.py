@@ -92,7 +92,6 @@ def main() -> None:
 
         formatter = opts.formatter
         logo = formatter(data, format)
-        # logo = logo.encode()
 
         opts.fout.buffer.write(logo)
 
@@ -101,9 +100,6 @@ def main() -> None:
         sys.exit(2)
     except KeyboardInterrupt:  # pragma: no cover
         sys.exit(0)
-
-
-# End main()
 
 
 def httpd_serve_forever(port: int = 8080) -> None:
@@ -146,15 +142,12 @@ def httpd_serve_forever(port: int = 8080) -> None:
     HandlerClass = __HTTPRequestHandler
     ServerClass = server.HTTPServer
     httpd = ServerClass(("", port), HandlerClass)
-    print("WebLogo server running at http://localhost:%d/" % port)
+    print(f"WebLogo server running at http://localhost:{port}/")
 
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
         sys.exit(0)
-
-
-# end httpd_serve_forever()
 
 
 def _build_logodata(options: Any) -> LogoData:
@@ -281,22 +274,13 @@ def _build_logoformat(logodata: LogoData, opts: Any) -> LogoFormat:
     for k in direct_from_opts:
         args[k] = opts.__dict__[k]
 
-    # logo_size = copy.copy(opts.__dict__['logo_size'])
-    #    size_from_opts = ["stack_width", "stack_height"]
-    #    for k in size_from_opts :
-    #        length = getattr(opts, k)
-    #        if length :
-    #            setattr( logo_size, k, length )
-    #   args["size"] = logo_size
-
     if opts.colors:
         color_scheme = ColorScheme()
         for color, symbols, desc in opts.colors:
             try:
-                # c = Color.from_string(color)
                 color_scheme.rules.append(SymbolColor(symbols, color, desc))
             except ValueError:
-                raise ValueError("error: option --color: invalid value: '%s'" % color)
+                raise ValueError(f"error: option --color: invalid value: '{color}'")
 
         args["color_scheme"] = color_scheme
 
@@ -327,8 +311,7 @@ def _parse_bool(value: str) -> bool:
     }
     if v not in choices:
         raise argparse.ArgumentTypeError(
-            "invalid choice: '%s' (choose from 'yes' or 'no', 'true' or 'false')"
-            % value
+            f"invalid choice: '{value}' (choose from 'yes' or 'no', 'true' or 'false')"
         )
     return choices[v]
 
@@ -340,8 +323,7 @@ def _lookup(choices_dict: dict, label: str) -> Callable:
         v = value.lower()
         if v not in choices_dict:
             raise argparse.ArgumentTypeError(
-                "invalid choice: '%s' (choose from '%s')"
-                % (value, "', '".join(choices_dict))
+                f"invalid choice: '{value}' (choose from '{"', '".join(choices_dict)}')"
             )
         return choices_dict[v]
 
@@ -412,7 +394,7 @@ def _build_argument_parser() -> argparse.ArgumentParser:
         type=_lookup(_seq_formats(), "datatype"),
         default=seq_io,
         help="Type of multiple sequence alignment or position"
-        " weight matrix file: (%s)" % ", ".join(_seq_names()),
+        f" weight matrix file: ({', '.join(_seq_names())})",
         metavar="FORMAT",
     )
 
@@ -639,8 +621,7 @@ def _build_argument_parser() -> argparse.ArgumentParser:
         dest="number_interval",
         type=float,
         default=defaults.number_interval,
-        help="Distance between numbers on X-axis (default: %s)"
-        % defaults.number_interval,
+        help=f"Distance between numbers on X-axis (default: {defaults.number_interval})",
         metavar="NUMBER",
     )
 
@@ -728,7 +709,7 @@ def _build_argument_parser() -> argparse.ArgumentParser:
         type=_lookup(std_color_schemes, "color scheme"),
         metavar="SCHEME",
         default=None,  # Auto
-        help="Specify a standard color scheme (%s)" % ", ".join(color_scheme_choices),
+        help=f"Specify a standard color scheme ({', '.join(color_scheme_choices)})",
     )
 
     color_grp.add_argument(
@@ -758,7 +739,7 @@ def _build_argument_parser() -> argparse.ArgumentParser:
         dest="fontsize",
         type=float,
         default=defaults.fontsize,
-        help="Regular text font size in points (default: %s)" % defaults.fontsize,
+        help=f"Regular text font size in points (default: {defaults.fontsize})",
         metavar="POINTS",
     )
 
@@ -767,7 +748,7 @@ def _build_argument_parser() -> argparse.ArgumentParser:
         dest="title_fontsize",
         type=float,
         default=defaults.title_fontsize,
-        help="Title text font size in points (default: %s)" % defaults.title_fontsize,
+        help=f"Title text font size in points (default: {defaults.title_fontsize})",
         metavar="POINTS",
     )
 
@@ -776,7 +757,7 @@ def _build_argument_parser() -> argparse.ArgumentParser:
         dest="small_fontsize",
         type=float,
         default=defaults.small_fontsize,
-        help="Small text font size in points (default: %s)" % defaults.small_fontsize,
+        help=f"Small text font size in points (default: {defaults.small_fontsize})",
         metavar="POINTS",
     )
 
@@ -785,8 +766,7 @@ def _build_argument_parser() -> argparse.ArgumentParser:
         dest="number_fontsize",
         type=float,
         default=defaults.number_fontsize,
-        help="Axis numbers font size in points (default: %s)"
-        % defaults.number_fontsize,
+        help=f"Axis numbers font size in points (default: {defaults.number_fontsize})",
         metavar="POINTS",
     )
 
@@ -794,7 +774,7 @@ def _build_argument_parser() -> argparse.ArgumentParser:
         "--text-font",
         dest="text_font",
         default=defaults.text_font,
-        help="Specify font for labels (default: %s)" % defaults.text_font,
+        help=f"Specify font for labels (default: {defaults.text_font})",
         metavar="FONT",
     )
 
@@ -802,7 +782,7 @@ def _build_argument_parser() -> argparse.ArgumentParser:
         "--logo-font",
         dest="logo_font",
         default=defaults.text_font,
-        help="Specify font for logo (default: %s)" % defaults.logo_font,
+        help=f"Specify font for logo (default: {defaults.logo_font})",
         metavar="FONT",
     )
 
@@ -810,7 +790,7 @@ def _build_argument_parser() -> argparse.ArgumentParser:
         "--title-font",
         dest="title_font",
         default=defaults.title_font,
-        help="Specify font for title (default: %s)" % defaults.title_font,
+        help=f"Specify font for title (default: {defaults.title_font})",
         metavar="FONT",
     )
 
@@ -822,7 +802,7 @@ def _build_argument_parser() -> argparse.ArgumentParser:
         dest="stack_width",
         type=float,
         default=defaults.stack_width,
-        help="Width of a logo stack (default: %s)" % defaults.stack_width,
+        help=f"Width of a logo stack (default: {defaults.stack_width})",
         metavar="POINTS",
     )
 
@@ -831,8 +811,7 @@ def _build_argument_parser() -> argparse.ArgumentParser:
         dest="stack_aspect_ratio",
         type=float,
         default=defaults.stack_aspect_ratio,
-        help="Ratio of stack height to width (default: %s)"
-        % defaults.stack_aspect_ratio,
+        help=f"Ratio of stack height to width (default: {defaults.stack_aspect_ratio})",
         metavar="POINTS",
     )
 
@@ -879,8 +858,7 @@ def _build_argument_parser() -> argparse.ArgumentParser:
         dest="errorbar_fraction",
         type=float,
         default=defaults.errorbar_fraction,
-        help="Sets error bars display proportion (default: %s)"
-        % defaults.errorbar_fraction,
+        help=f"Sets error bars display proportion (default: {defaults.errorbar_fraction})",
         metavar="NUMBER",
     )
 
@@ -889,8 +867,7 @@ def _build_argument_parser() -> argparse.ArgumentParser:
         dest="errorbar_width_fraction",
         type=float,
         default=defaults.errorbar_width_fraction,
-        help="Sets error bars width display proportion (default: %s)"
-        % defaults.errorbar_width_fraction,
+        help=f"Sets error bars width display proportion (default: {defaults.errorbar_width_fraction})",
         metavar="NUMBER",
     )
 
@@ -899,8 +876,7 @@ def _build_argument_parser() -> argparse.ArgumentParser:
         dest="errorbar_gray",
         type=float,
         default=defaults.errorbar_gray,
-        help="Sets error bars' gray scale percentage (default: %s)"
-        % defaults.errorbar_gray,
+        help=f"Sets error bars' gray scale percentage (default: {defaults.errorbar_gray})",
         metavar="NUMBER",
     )
 

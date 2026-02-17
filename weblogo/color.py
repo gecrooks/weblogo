@@ -93,11 +93,11 @@ class Color(object):
 
         if not (saturation >= 0.0 and saturation <= 1.0):
             raise ValueError(
-                "Out-of-range saturation %f" % saturation
+                f"Out-of-range saturation {saturation:f}"
             )  # pragma: no cover
         if not (lightness >= 0.0 and lightness <= 1.0):
             raise ValueError(
-                "Out-of-range lightness %f" % lightness
+                f"Out-of-range lightness {lightness:f}"
             )  # pragma: no cover
 
         if saturation == 0:
@@ -122,7 +122,7 @@ class Color(object):
         try:
             return _std_colors[s]
         except KeyError:
-            raise ValueError("Unknown color name: %s" % s)
+            raise ValueError(f"Unknown color name: {s}")
 
     @classmethod
     def from_string(cls, string: str) -> "Color":
@@ -150,21 +150,21 @@ class Color(object):
                 b = int(s[5:7], 16)
                 return cls(r, g, b)
             else:
-                raise ValueError("Cannot parse string: %s" % s)
+                raise ValueError(f"Cannot parse string: {s}")
 
         if s[0:4] == "rgb(" and s[-1] == ")":
             rgb = s[4:-1].split(",")
             if len(rgb) != 3:
-                raise ValueError("Cannot parse string a: %s" % s)
+                raise ValueError(f"Cannot parse string a: {s}")
             return cls(to_frac(rgb[0]), to_frac(rgb[1]), to_frac(rgb[2]))
 
         if s[0:4] == "hsl(" and s[-1] == ")":
             hsl = s[4:-1].split(",")
             if len(hsl) != 3:
-                raise ValueError("Cannot parse string a: %s" % s)
+                raise ValueError(f"Cannot parse string a: {s}")
             return cls.from_hsl(int(hsl[0]), to_frac(hsl[1]), to_frac(hsl[2]))
 
-        raise ValueError("Cannot parse string: %s" % s)
+        raise ValueError(f"Cannot parse string: {s}")
 
     def __eq__(self, other: Any) -> bool:
         if not isinstance(other, self.__class__):
@@ -175,7 +175,7 @@ class Color(object):
         return req and beq and geq
 
     def __repr__(self) -> str:
-        return "Color(%f,%f,%f)" % (self.red, self.green, self.blue)
+        return f"Color({self.red:f},{self.green:f},{self.blue:f})"
 
 
 _std_colors = dict(

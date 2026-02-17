@@ -151,8 +151,8 @@ def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Iterator[Seq]:
             s = Seq("".join(seqs), alphabet, name=name, description=header)
         except ValueError:
             raise ValueError(
-                "Parse failed with sequence starting at line %d: "
-                "Character not in alphabet: %s" % (header_lineno, alphabet)
+                f"Parse failed with sequence starting at line {header_lineno}: "
+                f"Character not in alphabet: {alphabet}"
             )
         return s
 
@@ -174,7 +174,7 @@ def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Iterator[Seq]:
         else:
             if header is None:
                 raise ValueError(
-                    "Parse failed on line %d: sequence before header" % (lineno)
+                    f"Parse failed on line {lineno}: sequence before header"
                 )
             seqs.append(line)
 

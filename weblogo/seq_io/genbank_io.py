@@ -56,7 +56,7 @@ def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Iterator[Seq]:
             continue
         if state == header:
             if not line.startswith("LOCUS"):
-                raise ValueError("Cannot find start of record at line %d" % L)
+                raise ValueError(f"Cannot find start of record at line {L}")
             state = block
         elif state == block:
             if line.startswith("ORIGIN") or line.startswith("//"):

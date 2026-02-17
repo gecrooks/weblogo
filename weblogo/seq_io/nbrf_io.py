@@ -142,7 +142,7 @@ def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Iterator[Seq]:
                     seq_alpha = type_code[seq_type]
                 state = header
                 continue
-            raise ValueError("Parse error on line: %d" % lineno)
+            raise ValueError(f"Parse error on line: {lineno}")
 
         elif state == header:
             seq_desc = line.strip()

@@ -97,18 +97,17 @@ def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Generator:
         line = line.strip()
 
         if line[0] == ">":  # probably a fasta file. Fail.
-            raise ValueError("Parse Error on input line: %d " % linenum)
+            raise ValueError(f"Parse Error on input line: {linenum} ")
 
         line = remove_whitespace(line)
 
         if not alphabet.alphabetic(line):
             raise ValueError(
-                "Character on line: %d not in alphabet: %s : %s"
-                % (linenum, alphabet, line)
+                f"Character on line: {linenum} not in alphabet: {alphabet} : {line}"
             )
 
         if line_length and line_length != len(line):
-            raise ValueError("Line %d has an incommensurate length." % linenum)
+            raise ValueError(f"Line {linenum} has an incommensurate length.")
         line_length = len(line)
 
         yield Seq(line, alphabet)

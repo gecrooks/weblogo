@@ -106,10 +106,10 @@ def stdrepr(
     for a in attributes:
         if a[0] == "_":
             continue  # pragma: no cover
-        args.append("%s=%s" % (a, repr(getattr(obj, a))))
+        args.append(f"{a}={getattr(obj, a)!r}")
     arg_str = ",\n".join(args).replace("\n", "\n    ")
 
-    return "%s(\n    %s\n)" % (name, arg_str)
+    return f"{name}(\n    {arg_str}\n)"
 
 
 def group_count(i: Iterable) -> list:
@@ -161,7 +161,7 @@ def crc32(string: str) -> str:
     """Return the standard CRC32 checksum as a hexidecimal string."""
     import binascii
 
-    return "%08X" % binascii.crc32(string.encode())
+    return f"{binascii.crc32(string.encode()):08X}"
 
 
 _crc64_table = None
@@ -207,10 +207,7 @@ def crc64(string: str) -> str:
         crch = temp1h ^ _crc64_table[idx]
         crcl = temp1l
 
-    return "%08X%08X" % (crch, crcl)
-
-
-# End crc64
+    return f"{crch:08X}{crcl:08X}"
 
 
 class ArgumentError(ValueError):
@@ -232,6 +229,3 @@ class ArgumentError(ValueError):
         self.msg = message
         self.key = key
         self.value = value
-
-
-# end class ArgumentError
