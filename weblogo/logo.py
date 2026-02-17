@@ -513,6 +513,14 @@ class LogoFormat(LogoOptions):
             float(self.yaxis_tic_interval) / self.yaxis_minor_tic_ratio
         )
 
+        if self.color_scheme is not None and not isinstance(
+            self.color_scheme, ColorScheme
+        ):
+            raise TypeError(
+                "color_scheme must be a ColorScheme object, "
+                f"got {type(self.color_scheme).__name__}"
+            )
+
         if self.color_scheme is None:
             if self.alphabet in default_color_schemes:
                 self.color_scheme = default_color_schemes[self.alphabet]

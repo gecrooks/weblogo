@@ -320,6 +320,16 @@ def test_colorscheme() -> None:
         cs.symbol_color(1, "X", 1)
 
 
+def test_colorscheme_string_rejected() -> None:
+    logodata = LogoData()
+    logodata.alphabet = unambiguous_dna_alphabet
+    logodata.length = 100
+    options = LogoOptions()
+    options.color_scheme = "monochrome"  # type: ignore[assignment]
+    with pytest.raises(TypeError):
+        LogoFormat(logodata, options)
+
+
 def test_color_names() -> None:
     names = Color.names()
     assert len(names) == 147
