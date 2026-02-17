@@ -49,8 +49,6 @@ from urllib.request import Request, urlopen
 
 import numpy as np
 
-# Avoid 'from numpy import *' since numpy has lots of names defined
-from numpy import any, array, asarray, float64, ones, zeros
 from scipy.stats import entropy
 
 from . import __version__, seq_io
@@ -657,7 +655,7 @@ def parse_prior(
 
     elif comp.lower() == "auto" or comp.lower() == "automatic":
         if alphabet == unambiguous_protein_alphabet:
-            prior = weight * asarray(aa_composition, float64)
+            prior = weight * np.asarray(aa_composition, np.float64)
         else:
             prior = weight * equiprobable_distribution(len(alphabet))
 
@@ -682,7 +680,7 @@ def parse_prior(
 
         if len(explicit) != len(alphabet) * 2:
             raise ValueError("Explicit prior does not match length of alphabet")
-        prior = -ones(len(alphabet), float64)
+        prior = -np.ones(len(alphabet), np.float64)
         try:
             for r in range(len(explicit) // 2):
                 letter = explicit[r * 2]
@@ -692,7 +690,7 @@ def parse_prior(
         except ValueError:
             raise ValueError("Cannot parse explicit composition")
 
-        if any(prior == -1.0):
+        if np.any(prior == -1.0):
             raise ValueError(
                 "Explicit prior does not match alphabet"
             )  # pragma: no cover
@@ -714,11 +712,11 @@ def base_distribution(percentCG: float) -> np.ndarray:
     C = (percentCG / 100.0) / 2.0
     G = (percentCG / 100.0) / 2.0
     T = (1.0 - (percentCG / 100)) / 2.0
-    return asarray((A, C, G, T), float64)
+    return np.asarray((A, C, G, T), np.float64)
 
 
 def equiprobable_distribution(length: int) -> np.ndarray:
-    return ones((length), float64) / length
+    return np.ones((length), np.float64) / length
 
 
 def _seq_formats() -> Dict[str, str]:
@@ -831,11 +829,11 @@ class LogoData:
         seq_length, A = counts.shape
 
         if prior is not None:
-            prior = array(prior, float64)
+            prior = np.array(prior, np.float64)
 
         if prior is None or sum(prior) == 0.0:
             R = log(A)
-            ent = zeros(seq_length, float64)
+            ent = np.zeros(seq_length, np.float64)
             entropy_interval = None
             for i in range(0, seq_length):
                 C = sum(counts[i])
@@ -845,13 +843,13 @@ class LogoData:
                 else:
                     ent[i] = R - entropy(counts[i])
         else:
-            ent = zeros(seq_length, float64)
-            entropy_interval = zeros((seq_length, 2), float64)
+            ent = np.zeros(seq_length, np.float64)
+            entropy_interval = np.zeros((seq_length, 2), np.float64)
 
             R = log(A)
 
             for i in range(0, seq_length):
-                alpha = array(counts[i], float64)
+                alpha = np.array(counts[i], np.float64)
                 alpha += prior
 
                 posterior = Dirichlet(alpha)
@@ -861,7 +859,7 @@ class LogoData:
                     entropy_interval[i][1],
                 ) = posterior.interval_relative_entropy(prior / sum(prior), 0.95)
 
-        weight = array(np.sum(counts, axis=1), float)
+        weight = np.array(np.sum(counts, axis=1), float)
         max_weight = max(weight)
         if max_weight == 0.0:
             raise ValueError("No counts.")

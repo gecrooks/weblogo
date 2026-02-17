@@ -42,10 +42,8 @@ from typing import Tuple
 
 import numpy as np
 import scipy.optimize
-from numpy import asarray, float64, shape, zeros
 from numpy.typing import ArrayLike  # pragma: no cover
 from scipy.special import digamma, gamma, gammaincc, polygamma
-
 
 class Dirichlet(object):
     """The Dirichlet probability distribution. The Dirichlet is a continuous
@@ -84,7 +82,7 @@ class Dirichlet(object):
         """
         # TODO: Check that alphas are positive
         # TODO: what if alpha's not one dimensional?
-        self.alpha = asarray(alpha, float64)
+        self.alpha = np.asarray(alpha, np.float64)
 
         self._total = sum(self.alpha)
         self._mean: np.ndarray = self.alpha / self._total
@@ -102,7 +100,7 @@ class Dirichlet(object):
         """
         alpha = self.alpha
         K = len(alpha)
-        theta = zeros((K,), float64)
+        theta = np.zeros((K,), np.float64)
 
         for k in range(K):
             theta[k] = random.gammavariate(alpha[k], 1.0)
@@ -118,7 +116,7 @@ class Dirichlet(object):
         A = sum(alpha)
         # A2 = A * A
         K = len(alpha)
-        cv = zeros((K, K), float64)
+        cv = np.zeros((K, K), np.float64)
 
         for i in range(K):
             cv[i, i] = alpha[i] * (1.0 - alpha[i] / A) / (A * (A + 1.0))
@@ -131,14 +129,14 @@ class Dirichlet(object):
         return cv
 
     def mean_x(self, x: "ArrayLike") -> float:
-        x = asarray(x, float64)
-        if shape(x) != shape(self.alpha):
+        x = np.asarray(x, np.float64)
+        if np.shape(x) != np.shape(self.alpha):
             raise ValueError("Argument must be same dimension as Dirichlet")
         return sum(x * self.mean())
 
     def variance_x(self, x: "ArrayLike") -> float:
-        x = asarray(x, float64)
-        if shape(x) != shape(self.alpha):
+        x = np.asarray(x, np.float64)
+        if np.shape(x) != np.shape(self.alpha):
             raise ValueError("Argument must be same dimension as Dirichlet")
 
         cv = self.covariance()
@@ -184,9 +182,9 @@ class Dirichlet(object):
         A2 = A * (A + 1)
         L = len(alpha)
 
-        dg1 = zeros((L), float64)
-        dg2 = zeros((L), float64)
-        tg2 = zeros((L), float64)
+        dg1 = np.zeros((L), np.float64)
+        dg2 = np.zeros((L), np.float64)
+        tg2 = np.zeros((L), np.float64)
 
         for i in range(L):
             dg1[i] = digamma(alpha[i] + 1.0)
@@ -218,19 +216,19 @@ class Dirichlet(object):
         return var
 
     def mean_relative_entropy(self, pvec: "ArrayLike") -> float:
-        pvec = asarray(pvec)
+        pvec = np.asarray(pvec)
         ln_p = np.log(pvec)
         return -self.mean_x(ln_p) - self.mean_entropy()
 
     def variance_relative_entropy(self, pvec: "ArrayLike") -> float:
-        pvec = asarray(pvec)
+        pvec = np.asarray(pvec)
         ln_p = np.log(pvec)
         return self.variance_x(ln_p) + self.variance_entropy()
 
     def interval_relative_entropy(
         self, pvec: "ArrayLike", frac: float
     ) -> Tuple[float, float]:
-        pvec = asarray(pvec)
+        pvec = np.asarray(pvec)
         mean = self.mean_relative_entropy(pvec)
         variance = self.variance_relative_entropy(pvec)
         sd = sqrt(variance)

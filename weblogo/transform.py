@@ -48,7 +48,7 @@ Other:
 
 from typing import Dict, List, Optional, Tuple
 
-from numpy import log2
+import numpy as np
 from scipy.stats import entropy
 
 from .data import dna_ambiguity, dna_extended_letters
@@ -157,7 +157,7 @@ def mask_low_complexity(
         - Remove arbitary restriction to protein.
     """
 
-    lg20 = log2(20)
+    lg20 = np.log2(20)
     if trigger < 0 or trigger > lg20:
         raise ValueError("Invalid trigger complexity: %f" % trigger)
     if extension < 0 or extension > lg20 or extension < trigger:

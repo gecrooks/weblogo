@@ -38,8 +38,8 @@ import unittest
 from math import log, sqrt
 from typing import Tuple
 
+import numpy as np
 import pytest
-from numpy import all, array, float64, ones, zeros
 from scipy.stats import entropy
 
 from weblogo import (
@@ -154,7 +154,7 @@ class test_parse_prior(unittest.TestCase):
 
     def test_parse_prior_equiprobable(self) -> None:
         self.assertTrue(
-            all(
+            np.all(
                 20.0 * equiprobable_distribution(20)
                 == parse_prior(
                     "equiprobable", unambiguous_protein_alphabet, weight=20.0
@@ -163,7 +163,7 @@ class test_parse_prior(unittest.TestCase):
         )
 
         self.assertTrue(
-            all(
+            np.all(
                 1.2 * equiprobable_distribution(3)
                 == parse_prior(" equiprobablE  ", Alphabet("123"), 1.2)
             )
@@ -172,57 +172,57 @@ class test_parse_prior(unittest.TestCase):
     def test_parse_prior_percentage(self) -> None:
         # print(parse_prior('50%', unambiguous_dna_alphabet, 1.))
         self.assertTrue(
-            all(
+            np.all(
                 equiprobable_distribution(4)
                 == parse_prior("50%", unambiguous_dna_alphabet, 1.0)
             )
         )
 
         self.assertTrue(
-            all(
+            np.all(
                 equiprobable_distribution(4)
                 == parse_prior(" 50.0 % ", unambiguous_dna_alphabet, 1.0)
             )
         )
 
         self.assertTrue(
-            all(
-                array((0.3, 0.2, 0.2, 0.3), float64)
+            np.all(
+                np.array((0.3, 0.2, 0.2, 0.3), np.float64)
                 == parse_prior(" 40.0 % ", unambiguous_dna_alphabet, 1.0)
             )
         )
 
     def test_parse_prior_float(self) -> None:
         self.assertTrue(
-            all(
+            np.all(
                 equiprobable_distribution(4)
                 == parse_prior("0.5", unambiguous_dna_alphabet, 1.0)
             )
         )
 
         self.assertTrue(
-            all(
+            np.all(
                 equiprobable_distribution(4)
                 == parse_prior(" 0.500 ", unambiguous_dna_alphabet, 1.0)
             )
         )
 
         self.assertTrue(
-            all(
-                array((0.3, 0.2, 0.2, 0.3), float64)
+            np.all(
+                np.array((0.3, 0.2, 0.2, 0.3), np.float64)
                 == parse_prior(" 0.40 ", unambiguous_dna_alphabet, 1.0)
             )
         )
 
     def test_auto(self) -> None:
         self.assertTrue(
-            all(
+            np.all(
                 2.0 * equiprobable_distribution(4)
                 == parse_prior("auto", unambiguous_dna_alphabet)
             )
         )
         self.assertTrue(
-            all(
+            np.all(
                 2.0 * equiprobable_distribution(4)
                 == parse_prior("automatic", unambiguous_dna_alphabet)
             )
@@ -233,13 +233,13 @@ class test_parse_prior(unittest.TestCase):
 
     def test_weight(self) -> None:
         self.assertTrue(
-            all(
+            np.all(
                 2.0 * equiprobable_distribution(4)
                 == parse_prior("automatic", unambiguous_dna_alphabet)
             )
         )
         self.assertTrue(
-            all(
+            np.all(
                 123.123 * equiprobable_distribution(4)
                 == parse_prior("auto", unambiguous_dna_alphabet, 123.123)
             )
@@ -247,7 +247,7 @@ class test_parse_prior(unittest.TestCase):
 
     def test_explicit(self) -> None:
         s = "{'A':10, 'C':40, 'G':40, 'T':10}"
-        p = array((10, 40, 40, 10), float64) * 2.0 / 100.0
+        p = np.array((10, 40, 40, 10), np.float64) * 2.0 / 100.0
         self.assertTrue(all(p == parse_prior(s, unambiguous_dna_alphabet)))
 
 
@@ -585,7 +585,7 @@ class test_Dirichlet(unittest.TestCase):
 
     def test_random(self) -> None:
         def do_test(alpha: Tuple[float, ...], samples: int = 1000) -> None:
-            ent = zeros((samples,), float64)
+            ent = np.zeros((samples,), np.float64)
             # alpha = ones( ( K,), Float64 ) * A/K
 
             # pt = zeros( (len(alpha) ,), Float64)
@@ -624,14 +624,14 @@ class test_Dirichlet(unittest.TestCase):
         do_test((2.0, 6.0, 1.0, 1.0))
 
     def test_mean(self) -> None:
-        alpha = ones((10,), float64) * 23.0
+        alpha = np.ones((10,), np.float64) * 23.0
         d = Dirichlet(alpha)
         m = d.mean()
         self.assertAlmostEqual(m[2], 1.0 / 10)
         self.assertAlmostEqual(sum(m), 1.0)
 
     def test_covariance(self) -> None:
-        alpha = ones((4,), float64)
+        alpha = np.ones((4,), np.float64)
         d = Dirichlet(alpha)
         cv = d.covariance()
         self.assertEqual(cv.shape, (4, 4))
@@ -682,7 +682,7 @@ class test_Dirichlet(unittest.TestCase):
         # This test can fail randomly, but the precision from a few
         # thousand samples is low. Increasing samples, 1000->2000
         samples = 2000
-        sent = zeros((samples,), float64)
+        sent = np.zeros((samples,), np.float64)
 
         for s in range(samples):
             post = d.sample()
