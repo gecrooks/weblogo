@@ -1,4 +1,3 @@
-# This workflow will install the python package and dependencies, and run tests against a variety of Python versions
 
 name: Build
 
@@ -12,16 +11,15 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.10', '3.11', '3.12', '3.13']
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
         os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
@@ -30,15 +28,18 @@ jobs:
         sudo apt-get install -y ghostscript
         # Install fonts
         # https://askubuntu.com/questions/651441/how-to-install-arial-font-and-other-windows-fonts-in-ubuntu
-        echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | sudo debconf-set-selections 
+        echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | sudo debconf-set-selections
         sudo apt-get install -y ttf-mscorefonts-installer --reinstall
-        fc-match Arial        
-        python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi          
-        python -m pip install '.[dev]'
-    - name: Test with pytest
-      run: |
-        python -m pytest
+        fc-match Arial
+    - name: Install uv
+      # Use the official action to install uv and handle caching
+      uses: astral-sh/setup-uv@v7
+    - name: Install dependencies
+      # Use uv to sync dependencies from pyproject.toml or requirements.txt
+      run: uv sync --group dev
     - name: Lint with ruff
-      run: |
-        python -m ruff check .
+      run: uv run ruff check .      
+    - name: Run tests
+      # Use uv run to execute commands within the managed environment
+      run: uv run pytest
+

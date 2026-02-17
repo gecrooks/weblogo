@@ -5,7 +5,7 @@ NAME = weblogo
 FILES = $(NAME) tests docs/conf.py setup.py
 
 USER = -i ~/.ssh/aws_kaiju.pem ec2-user
-HOST = weblogo.threeplusone.com
+HOST = 18.221.9.251
 DIR = /home/ec2-user/weblogo
 
 
@@ -18,34 +18,34 @@ help:
 
 .PHONY: test
 test:  ## Run unittests
-	python -m pytest --disable-pytest-warnings
+	uv run python -m pytest --disable-pytest-warnings
 
 .PHONY: coverage
 coverage:  ## Report test coverage
 	@echo
-	python -m pytest --disable-pytest-warnings --cov-report term-missing --cov $(NAME)
+	uv run python -m pytest --disable-pytest-warnings --cov-report term-missing --cov $(NAME)
 	@echo
 
 .PHONY: lint
 lint:  ## Lint check python source
-	@python -m ruff check
+	@uv run ruff check
 
 .PHONY: delint
 delint:
 	@echo
-	python -m ruff format
+	uv run ruff format
 
 .PHONY: typecheck
 typecheck:  ## Static typechecking
-	python -m mypy $(NAME)
+	uv run mypy $(NAME)
 
 .PHONY: docs
 docs:  ## Build documentation
-	(cd docs; make html)
+	uv run sphinx-build -b html docs docs/_build/html
 
 .PHONY: docs-open
 docs-open:  ## Build documentation and open in webbrowser
-	(cd docs; make html)
+	uv run sphinx-build -b html docs docs/_build/html
 	open docs/_build/html/index.html
 
 .PHONY: examples
@@ -60,13 +60,7 @@ login:  ## ssh into remote server
 sync:  ## Sync remote server
 	ssh ${USER}@${HOST} 'cd weblogo && git pull'
 
-.PHONY: reinstall
-reinstall:	## Reinstall weblogo on remote server
-	# pip install needed to update versions with latest git tag
-	ssh ${USER}@${HOST} 'cd weblogo && sudo pip3 install -e .'
 
 .PHONY: restart
 restart:  	## Restart remote server
 	ssh ${USER}@${HOST} 'sudo systemctl restart httpd.service'
-
-

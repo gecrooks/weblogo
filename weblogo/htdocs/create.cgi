@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/home/ec2-user/weblogo/.venv/bin/python
 
 #  Copyright (c) 2003-2004 The Regents of the University of California.
 #  Copyright (c) 2005 Gavin E. Crooks

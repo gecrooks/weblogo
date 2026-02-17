@@ -36,22 +36,6 @@ dependencies = [
 weblogo = "weblogo._cli:main"
 transformseq = "weblogo._transformseq:main"
 
-[project.optional-dependencies]
-dev = [
-    "setuptools_scm",
-    "pytest",
-    "pytest-cov",
-    "mypy",
-    "sphinx",
-    "guzzle_sphinx_theme",
-    "ruff",
-    "pre-commit",
-]
-
-docs = [
-  "sphinx",
-  "guzzle_sphinx_theme",
-  ]
 
 
 [tool.setuptools]
@@ -118,4 +102,16 @@ ignore_missing_imports = true
 
 # Disallows functions without type annotations
 disallow_untyped_defs = false
+
+[dependency-groups]
+dev = [
+    "guzzle-sphinx-theme>=0.7.11",
+    "mypy>=1.19.1",
+    "pre-commit>=4.5.1",
+    "pytest>=9.0.2",
+    "pytest-cov>=7.0.0",
+    "ruff>=0.14.10",
+    "setuptools-scm>=9.2.2",
+    "sphinx>=8.1.3",
+]
 
