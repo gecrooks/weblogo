@@ -322,8 +322,9 @@ def _lookup(choices_dict: dict, label: str) -> Callable:
     def parse(value: str) -> Any:
         v = value.lower()
         if v not in choices_dict:
+            options = "', '".join(choices_dict)
             raise argparse.ArgumentTypeError(
-                f"invalid choice: '{value}' (choose from '{"', '".join(choices_dict)}')"
+                f"invalid choice: '{value}' (choose from '{options}')"
             )
         return choices_dict[v]
 

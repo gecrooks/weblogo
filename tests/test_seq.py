@@ -498,7 +498,7 @@ def test_seqlist_create_empty() -> None:
     seqs.extend((s1, s2))
 
     assert len(seqs) == 3
-    assert type(seqs) == SeqList
+    assert type(seqs) is SeqList
 
 
 def test_seqlist_repr() -> None:

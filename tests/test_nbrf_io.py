@@ -110,12 +110,9 @@ def test_pir_file_from_clustal() -> None:
     f = data_stream("clustalw.pir")
     seqs = nbrf_io.read(f)
     assert len(seqs) == 2
-    assert (
-        seqs[1].endswith(
-            "C-AATC-G-CAATG-G--CTTGAACCGGGTAAAAGTCGT-A----------------------------------------"
-            "-----------------------------------------"
-        )
-        == True
+    assert seqs[1].endswith(
+        "C-AATC-G-CAATG-G--CTTGAACCGGGTAAAAGTCGT-A----------------------------------------"
+        "-----------------------------------------"
     )
     f.close()
 
