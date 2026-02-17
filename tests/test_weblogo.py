@@ -43,7 +43,6 @@ from numpy import all, array, float64, ones, zeros
 from scipy.stats import entropy
 
 from weblogo import (
-    GhostscriptAPI,
     LogoData,
     LogoFormat,
     LogoOptions,
@@ -146,11 +145,6 @@ def test_logoformats() -> None:
 
     logodata.alphabet = Alphabet("ABCD")
     LogoFormat(logodata, logooptions)
-
-
-class test_ghostscript(unittest.TestCase):
-    def test_version(self) -> None:
-        GhostscriptAPI().version()
 
 
 class test_parse_prior(unittest.TestCase):

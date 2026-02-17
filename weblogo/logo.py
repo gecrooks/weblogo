@@ -81,37 +81,8 @@ if __version__.find("+") != -1:
     __version__ = __version__[: __version__.find("+")]  # pragma: no cover
 
 
-# from .logo_formatter import (GhostscriptAPI, pdf_formatter, jpeg_formatter, png_formatter,
-#                             png_print_formatter,
-#                             txt_formatter, eps_formatter, formatters, default_formatter)
+
 # ------ META DATA ------
-
-
-# __all__ = ['LogoOptions',
-#            'description',
-#            '__version__',
-#            'LogoFormat',
-#            'LogoData',
-#            'GhostscriptAPI',
-#            'std_color_schemes',
-#            'default_color_schemes',
-#            'classic',
-#            'std_units',
-#            'std_sizes',
-#            'std_alphabets',
-#            'std_percentCG',
-#            'pdf_formatter',
-#            'jpeg_formatter',
-#            'png_formatter',
-#            'png_print_formatter',
-#            'txt_formatter',
-#            'eps_formatter',
-#            'formatters',
-#            'default_formatter',
-#            'base_distribution',
-#            'equiprobable_distribution',
-#            'read_seq_data',
-#            'Color',
 #            'ColorScheme',
 #            'parse_prior',
 #            'release_description',
@@ -245,7 +216,7 @@ class LogoOptions:
         errorbar_width_fraction:  Sets error bars display
         errorbar_gray:            Sets error bars' gray scale percentage (default .75)
 
-        resolution:               Dots per inch (default: 96). Used for bitmapped output
+        resolution:               Dots per inch (default: 600). Used for bitmapped output
                                        formats
 
         default_color:            Symbol color if not otherwise specified
@@ -324,7 +295,7 @@ class LogoOptions:
         self.errorbar_width_fraction = 0.25
         self.errorbar_gray = 0.75
 
-        self.resolution: int = 96  # Dots per inch
+        self.resolution: int = 600  # Dots per inch
 
         self.default_color = Color.by_name("black")
         self.color_scheme: Optional[ColorScheme] = None
@@ -472,7 +443,7 @@ class LogoFormat(LogoOptions):
                 raise ArgumentError(test[2], test[0])
 
         # Inclusive upper and lower bounds
-        # FIXME: Validate here. Move from eps_formatter
+        # FIXME: Validate here. Move from formatter
 
         # asserts checks that defaults that were initialized to None have been set
         assert self.first_index is not None

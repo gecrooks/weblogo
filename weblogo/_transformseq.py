@@ -61,7 +61,7 @@ def main() -> None:
 
 def _build_option_parser() -> DeOptionParser:
     parser = DeOptionParser(
-        usage="%prog [options]  < sequence_data.fa > sequence_logo.eps",
+        usage="%prog [options]  < sequence_data.fa > output.fa",
         description=description,
         version=__version__,
         add_verbose_options=False,

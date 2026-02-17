@@ -153,29 +153,21 @@
                                 </dd>
                                 <br>
                                 <dt id="create-sequence">Output format</dt>
-                                <dd>Generally speaking, vector formats (EPS and PDF) are better for print, while bitmaps (JPEG and PNG) are more suitable for displaying on the screen or embedding into a web page.
+                                <dd>Generally speaking, vector formats (PDF and SVG) are better for print, while bitmaps (JPEG and PNG) are more suitable for displaying on the screen or embedding into a web page.
                                 </dd>
                                 <dd>
                                     <table class="table table-bordered table-condensed">
+                                        <tr>
+                                            <td>PDF:</td>
+                                            <td> Portable Document Format (vector) </td>
+                                        </tr>
                                         <tr>
                                             <td>PNG:</td>
                                             <td>(600 DPI) Print resolution bitmap</td>
                                         </tr>
                                         <tr>
-                                            <td> PNG:</td>
-                                            <td>(low res, 96 DPI) Screen resolution bitmap </td>
-                                        </tr>
-                                        <tr>
                                             <td>JPEG:</td>
                                             <td> Screen resolution bitmap </td>
-                                        </tr>
-                                        <tr>
-                                            <td>EPS:</td>
-                                            <td> Encapsulated postscript </td>
-                                        </tr>
-                                        <tr>
-                                            <td>PDF:</td>
-                                            <td> Portable Document Format </td>
                                         </tr>
                                         <tr>
                                             <td>SVG:</td>
@@ -564,7 +556,7 @@
                             <dd>
                                 The command line client has many options not available through the web interface. Please consult the bundled <code class="code">build_examples.sh</code> script for inspiration.
                         <pre>
-Usage: weblogo [options]  < sequence_data.fa > sequence_logo.eps
+Usage: weblogo [options]  < sequence_data.fa > sequence_logo.pdf
 
 Create sequence logos from biological sequence alignments.
 
@@ -580,8 +572,8 @@ Options:
                                 msf, genbank, nbrf, nexus, phylip, stockholm,
                                 intelligenetics, table, array, transfac)
     -o --fout FILENAME          Output file (default: stdout)
-    -F --format FORMAT          Format of output: eps (default), png,
-                                png_print, pdf, jpeg, svg, logodata
+    -F --format FORMAT          Format of output: pdf (default), png,
+                                jpeg, svg, logodata
 
   Logo Data Options:
     -A --sequence-type TYPE     The type of sequence data: 'protein', 'rna' or
@@ -685,7 +677,7 @@ Options:
        --aspect-ratio POINTS    Ratio of stack height to width (default: 5)
        --box YES/NO             Draw boxes around symbols? (default: no)
        --resolution DPI         Bitmap resolution in dots per inch (DPI).
-                                (Default: 96 DPI, except png_print, 600 DPI)
+                                (Default: 600 DPI)
                                 Low resolution bitmaps (DPI<300) are
                                 antialiased.
        --scale-width YES/NO     Scale the visible stack width by the fraction

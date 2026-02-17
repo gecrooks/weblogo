@@ -59,22 +59,18 @@ cgitb.enable() # type: ignore
 
 
 mime_type = {
-    "eps": "application/postscript",
     "pdf": "application/pdf",
     "svg": "image/svg+xml",
     "png": "image/png",
-    "png_print": "image/png",
     "logodata": "text/plain",
     "csv": "text/plain",
     "jpeg": "image/jpeg",
 }
 
 extension = {
-    "eps": "eps",
     "pdf": "pdf",
     "png": "png",
     "svg": "svg",
-    "png_print": "png",
     "logodata": "txt",
     "csv": "csv",
     "jpeg": "jpeg",
@@ -173,14 +169,12 @@ def main(htdocs_directory: Optional[str] = None) -> None:
         Field("sequences_url", ""),
         Field(
             "format",
-            "png",
+            "pdf",
             weblogo.formatters.get,
             options=[
-                "png_print",
+                "pdf",
                 "png",
                 "jpeg",
-                "eps",
-                "pdf",
                 "svg",
                 "logodata",
                 "csv",
@@ -527,13 +521,12 @@ def send_form(
     substitutions["logo_range_err"] = ""
 
     # Disable graphics options if necessary auxiliary programs are not installed.
+    # PDF is native (no external tools needed).
+    # PNG and JPEG still require Ghostscript. SVG requires pdf2svg.
     if shutil.which("gs") is None and shutil.which("gswin32c.exe") is None:
-        substitutions["png_print"] = 'disabled="disabled"'
+        substitutions["png"] = 'disabled="disabled"'
         substitutions["png"] = 'disabled="disabled"'
         substitutions["jpeg"] = 'disabled="disabled"'
-        substitutions["pdf"] = 'disabled="disabled"'
-        substitutions["svg"] = 'disabled="disabled"'
-        substitutions["eps"] = 'selected="selected"'
 
     if shutil.which("pdf2svg") is None:
         substitutions["svg"] = 'disabled="disabled"'

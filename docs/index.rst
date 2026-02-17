@@ -27,7 +27,7 @@ To build a simple logo run
 
 .. code-block:: console
 
-    weblogo  < cap.fa > logo0.eps
+    weblogo  < cap.fa > logo0.pdf
 
 To run as a standalone webserver at localhost:8080
 
@@ -44,10 +44,9 @@ Please see the LICENSE.txt file for details on copyright and licensing.
 The WebLogo source code can be downloaded from
 https://github.com/WebLogo/weblogo
 
-WebLogo requires Python 3.6 or 3.7. Generating logos in PDF or bitmap graphics formats
-require that the ghostscript
-program 'gs' be installed. Scalable Vector Graphics (SVG) format also requires
-the program 'pdf2svg'.
+WebLogo requires Python 3.10+. PDF output is generated natively. Generating logos in bitmap
+formats (PNG, JPEG) requires that the ghostscript program 'gs' be installed.
+Scalable Vector Graphics (SVG) format also requires the program 'pdf2svg'.
 
 
 .. contents:: :local:

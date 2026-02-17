@@ -17,5 +17,5 @@ To create a logo in python code:
     >>> logooptions = LogoOptions()
     >>> logooptions.title = "A Logo Title"
     >>> logoformat = LogoFormat(logodata, logooptions)
-    >>> eps = eps_formatter(logodata, logoformat)
+    >>> pdf = pdf_formatter(logodata, logoformat)
 

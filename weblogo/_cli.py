@@ -318,7 +318,7 @@ def _build_logoformat(logodata: LogoData, opts: Any) -> LogoFormat:
 def _build_option_parser() -> DeOptionParser:
     defaults = LogoOptions()
     parser = DeOptionParser(
-        usage="%prog [options]  < sequence_data.fa > sequence_logo.eps",
+        usage="%prog [options]  < sequence_data.fa > sequence_logo.pdf",
         description=description,
         version=release_description,
         add_verbose_options=False,
@@ -423,7 +423,7 @@ def _build_option_parser() -> DeOptionParser:
         type="dict",
         choices=formatters,
         metavar="FORMAT",
-        help="Format of output: eps (default), png, png_print, pdf, jpeg, svg, "
+        help="Format of output: pdf (default), png, jpeg, svg, "
         "logodata, csv",
         default=default_formatter,
     )
@@ -924,10 +924,9 @@ def _build_option_parser() -> DeOptionParser:
         dest="resolution",
         action="store",
         type="float",
-        default=96,
-        help="Bitmap resolution in dots per inch (DPI).  (Default: 96 DPI,"
-        " except png_print, 600 DPI) Low resolution bitmaps (DPI<300)"
-        " are antialiased.",
+        default=600,
+        help="Bitmap resolution in dots per inch (DPI).  (Default: 600 DPI)"
+        " Low resolution bitmaps (DPI<300) are antialiased.",
         metavar="DPI",
     )
 

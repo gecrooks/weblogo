@@ -24,7 +24,7 @@ dependencies = [
     "numpy",
     "scipy",
     "importlib-resources",
-    "importlib-metadata"
+    "importlib-metadata",
 ]
 
 [project.urls]
