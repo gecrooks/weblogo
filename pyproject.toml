@@ -77,7 +77,6 @@ parallel = true
 
 [tool.coverage.report]
 omit = ['*_test.py',
-    'weblogo/utils/deoptparse.py',
     'weblogo/_ext/*']
 
 exclude_lines = [

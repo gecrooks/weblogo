@@ -36,7 +36,6 @@ __all__ = (
     "invert_dict",
     "stdrepr",
     "Token",
-    "deoptparse",
     "crc32",
     "crc64",
     "ArgumentError",

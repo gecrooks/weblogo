@@ -41,14 +41,14 @@
 # WebLogo Command Line Interfaceg
 
 
+import argparse
 import atexit
 import os
 import sys
 from contextlib import ExitStack
 from io import StringIO
-from optparse import OptionGroup
 from os import PathLike
-from typing import Any, Union
+from typing import Any, Callable, Union
 
 import importlib_resources
 
@@ -71,7 +71,6 @@ from . import (
 from .colorscheme import ColorScheme, SymbolColor
 from .logo import _seq_formats, _seq_names
 from .seq import Seq, SeqList, nucleic_alphabet
-from .utils.deoptparse import DeOptionParser
 
 
 # ====================== Main: Parse Command line =============================
@@ -79,10 +78,8 @@ def main() -> None:
     """WebLogo command line interface"""
 
     # ------ Parse Command line ------
-    parser = _build_option_parser()
-    (opts, args) = parser.parse_args(sys.argv[1:])
-    if args:
-        parser.error("Unparsable arguments: %s " % args)
+    parser = _build_argument_parser()
+    opts = parser.parse_args(sys.argv[1:])
 
     if opts.serve:
         httpd_serve_forever(opts.port)  # Never returns?    # pragma: no cover
@@ -314,114 +311,126 @@ def _build_logoformat(logodata: LogoData, opts: Any) -> LogoFormat:
     return theformat
 
 
+# ========================== Helpers ==========================
+
+
+def _parse_bool(value: str) -> bool:
+    """Parse a boolean string value for argparse."""
+    v = value.lower()
+    choices = {
+        "no": False,
+        "false": False,
+        "0": False,
+        "yes": True,
+        "true": True,
+        "1": True,
+    }
+    if v not in choices:
+        raise argparse.ArgumentTypeError(
+            "invalid choice: '%s' (choose from 'yes' or 'no', 'true' or 'false')"
+            % value
+        )
+    return choices[v]
+
+
+def _lookup(choices_dict: dict, label: str) -> Callable:
+    """Create an argparse type function that looks up values in a dict."""
+
+    def parse(value: str) -> Any:
+        v = value.lower()
+        if v not in choices_dict:
+            raise argparse.ArgumentTypeError(
+                "invalid choice: '%s' (choose from '%s')"
+                % (value, "', '".join(choices_dict))
+            )
+        return choices_dict[v]
+
+    parse.__name__ = label
+    return parse
+
+
 # ========================== OPTIONS ==========================
-def _build_option_parser() -> DeOptionParser:
+def _build_argument_parser() -> argparse.ArgumentParser:
     defaults = LogoOptions()
-    parser = DeOptionParser(
-        usage="%prog [options]  < sequence_data.fa > sequence_logo.pdf",
+    parser = argparse.ArgumentParser(
+        usage="%(prog)s [options]  < sequence_data.fa > sequence_logo.pdf",
         description=description,
-        version=release_description,
-        add_verbose_options=False,
+    )
+    parser.add_argument(
+        "--version", action="version", version=release_description
     )
 
-    io_grp = OptionGroup(
-        parser,
-        "Input/Output Options",
+    io_grp = parser.add_argument_group("Input/Output Options")
+    data_grp = parser.add_argument_group("Logo Data Options")
+    trans_grp = parser.add_argument_group(
+        "Transformations", "Optional transformations of the sequence data."
     )
-    data_grp = OptionGroup(
-        parser,
-        "Logo Data Options",
-    )
-    trans_grp = OptionGroup(
-        parser, "Transformations", "Optional transformations of the sequence data."
-    )
-
-    format_grp = OptionGroup(
-        parser,
+    format_grp = parser.add_argument_group(
         "Logo Format Options",
         "These options control the format and display of the logo.",
     )
-    color_grp = OptionGroup(
-        parser,
+    color_grp = parser.add_argument_group(
         "Color Options",
         "Colors can be specified using CSS2 syntax. e.g. 'red', '#FF0000', etc",
     )
-    font_grp = OptionGroup(
-        parser,
+    font_grp = parser.add_argument_group(
         "Font Format Options",
         "These options provide control over the font sizes and types.",
     )
-    advanced_grp = OptionGroup(
-        parser,
+    advanced_grp = parser.add_argument_group(
         "Advanced Format Options",
         "These options provide fine control over the display of the logo.",
     )
-    server_grp = OptionGroup(
-        parser, "WebLogo Server", "Run a standalone webserver on a local port."
+    server_grp = parser.add_argument_group(
+        "WebLogo Server", "Run a standalone webserver on a local port."
     )
-
-    parser.add_option_group(io_grp)
-    parser.add_option_group(data_grp)
-    parser.add_option_group(trans_grp)
-    parser.add_option_group(format_grp)
-    parser.add_option_group(color_grp)
-    parser.add_option_group(font_grp)
-    parser.add_option_group(advanced_grp)
-    parser.add_option_group(server_grp)
 
     # ========================== IO OPTIONS ==========================
 
-    io_grp.add_option(
+    io_grp.add_argument(
         "-f",
         "--fin",
         dest="fin",
-        action="store",
-        type="file_in",
+        type=argparse.FileType("r"),
         default=None,
         help="Sequence input file (default: stdin)",
         metavar="FILENAME",
     )
 
-    io_grp.add_option(
-        "",
+    io_grp.add_argument(
         "--upload",
         dest="upload",
-        action="store",
         default=None,
         help="Upload input file from URL",
         metavar="URL",
     )
 
-    io_grp.add_option(
+    io_grp.add_argument(
         "-D",
         "--datatype",
         dest="input_parser",
-        action="store",
-        type="dict",
+        type=_lookup(_seq_formats(), "datatype"),
         default=seq_io,
-        choices=_seq_formats(),
         help="Type of multiple sequence alignment or position"
         " weight matrix file: (%s)" % ", ".join(_seq_names()),
         metavar="FORMAT",
     )
 
-    io_grp.add_option(
+    io_grp.add_argument(
         "-o",
         "--fout",
         dest="fout",
-        type="file_out",
+        type=argparse.FileType("w"),
         default=sys.stdout,
         help="Output file (default: stdout)",
         metavar="FILENAME",
     )
 
-    io_grp.add_option(
+    io_grp.add_argument(
         "-F",
         "--format",
         dest="formatter",
-        action="store",
-        type="dict",
-        choices=formatters,
+        type=_lookup(formatters, "format"),
         metavar="FORMAT",
         help="Format of output: pdf (default), png, jpeg, svg, "
         "logodata, csv",
@@ -430,22 +439,19 @@ def _build_option_parser() -> DeOptionParser:
 
     # ========================== Data OPTIONS ==========================
 
-    data_grp.add_option(
+    data_grp.add_argument(
         "-A",
         "--sequence-type",
         dest="alphabet",
-        action="store",
-        type="dict",
-        choices=std_alphabets,
+        type=_lookup(std_alphabets, "sequence type"),
         help="The type of sequence data: 'protein', 'rna' or 'dna'.",
         metavar="TYPE",
     )
 
-    data_grp.add_option(
+    data_grp.add_argument(
         "-a",
         "--alphabet",
         dest="alphabet",
-        action="store",
         help="The set of symbols to count, e.g. 'AGTC'. "
         "All characters not in the alphabet are ignored. "
         "If neither the alphabet nor sequence-type are specified then weblogo "
@@ -453,13 +459,11 @@ def _build_option_parser() -> DeOptionParser:
         "See also --sequence-type, --ignore-lower-case",
     )
 
-    data_grp.add_option(
+    data_grp.add_argument(
         "-U",
         "--units",
         dest="unit_name",
-        action="store",
         choices=list(std_units.keys()),
-        type="choice",
         default=defaults.unit_name,
         help="A unit of entropy ('bits' (default), 'nats', 'digits'), or a unit of"
         "free energy ('kT', 'kJ/mol', 'kcal/mol'), or 'probability' for"
@@ -467,12 +471,9 @@ def _build_option_parser() -> DeOptionParser:
         metavar="UNIT",
     )
 
-    data_grp.add_option(
-        "",
+    data_grp.add_argument(
         "--composition",
         dest="composition",
-        action="store",
-        type="string",
         default="auto",
         help="The expected composition of the sequences: 'auto' (default), "
         "'equiprobable', 'none' (do not perform any compositional "
@@ -484,44 +485,39 @@ def _build_option_parser() -> DeOptionParser:
         metavar="COMP.",
     )
 
-    data_grp.add_option(
-        "",
+    data_grp.add_argument(
         "--weight",
         dest="weight",
-        action="store",
-        type="float",
+        type=float,
         default=None,
         help="The weight of prior data.  Default depends on alphabet length",
         metavar="NUMBER",
     )
 
-    data_grp.add_option(
+    data_grp.add_argument(
         "-i",
         "--first-index",
         dest="first_index",
-        action="store",
-        type="int",
+        type=int,
         default=1,
         help="Index of first position in sequence data (default: 1)",
         metavar="INDEX",
     )
 
-    data_grp.add_option(
+    data_grp.add_argument(
         "-l",
         "--lower",
         dest="logo_start",
-        action="store",
-        type="int",
+        type=int,
         help="Lower bound of sequence to display",
         metavar="INDEX",
     )
 
-    data_grp.add_option(
+    data_grp.add_argument(
         "-u",
         "--upper",
         dest="logo_end",
-        action="store",
-        type="int",
+        type=int,
         help="Upper bound of sequence to display",
         metavar="INDEX",
     )
@@ -529,8 +525,7 @@ def _build_option_parser() -> DeOptionParser:
     # ========================== Transformation OPTIONS ==========================
 
     # FIXME Add test?
-    trans_grp.add_option(
-        "",
+    trans_grp.add_argument(
         "--ignore-lower-case",
         dest="ignore_lower_case",
         action="store_true",
@@ -539,8 +534,7 @@ def _build_option_parser() -> DeOptionParser:
         " in sequences.",
     )
 
-    trans_grp.add_option(
-        "",
+    trans_grp.add_argument(
         "--reverse",
         dest="reverse",
         action="store_true",
@@ -548,8 +542,7 @@ def _build_option_parser() -> DeOptionParser:
         help="reverse sequences",
     )
 
-    trans_grp.add_option(
-        "",
+    trans_grp.add_argument(
         "--complement",
         dest="complement",
         action="store_true",
@@ -557,8 +550,7 @@ def _build_option_parser() -> DeOptionParser:
         help="complement nucleic sequences",
     )
 
-    trans_grp.add_option(
-        "",
+    trans_grp.add_argument(
         "--revcomp",
         dest="revcomp",
         action="store_true",
@@ -568,78 +560,64 @@ def _build_option_parser() -> DeOptionParser:
 
     # ========================== FORMAT OPTIONS ==========================
 
-    format_grp.add_option(
+    format_grp.add_argument(
         "-s",
         "--size",
         dest="stack_width",
-        action="store",
-        type="dict",
-        choices=std_sizes,
+        type=_lookup(std_sizes, "logo size"),
         metavar="LOGOSIZE",
         default=defaults.stack_width,
         help="Specify a standard logo size (small, medium (default), large)",
     )
 
-    format_grp.add_option(
+    format_grp.add_argument(
         "-n",
         "--stacks-per-line",
         dest="stacks_per_line",
-        action="store",
-        type="int",
-        help="Maximum number of logo stacks per logo line. (default: %default)",
+        type=int,
+        help="Maximum number of logo stacks per logo line. (default: %(default)s)",
         default=defaults.stacks_per_line,
         metavar="COUNT",
     )
 
-    format_grp.add_option(
+    format_grp.add_argument(
         "-t",
         "--title",
         dest="logo_title",
-        action="store",
-        type="string",
         help="Logo title text.",
         default=defaults.logo_title,
         metavar="TEXT",
     )
 
-    format_grp.add_option(
-        "",
+    format_grp.add_argument(
         "--label",
         dest="logo_label",
-        action="store",
-        type="string",
         help="A figure label, e.g. '2a'",
         default=defaults.logo_label,
         metavar="TEXT",
     )
 
-    format_grp.add_option(
+    format_grp.add_argument(
         "-X",
         "--show-xaxis",
-        action="store",
-        type="boolean",
+        type=_parse_bool,
         default=defaults.show_xaxis,
         metavar="YES/NO",
-        help="Display sequence numbers along x-axis? (default: %default)",
+        help="Display sequence numbers along x-axis? (default: %(default)s)",
     )
 
-    format_grp.add_option(
+    format_grp.add_argument(
         "-x",
         "--xlabel",
         dest="xaxis_label",
-        action="store",
-        type="string",
         default=defaults.xaxis_label,
         help="X-axis label",
         metavar="TEXT",
     )
 
-    format_grp.add_option(
-        "",
+    format_grp.add_argument(
         "--annotate",
         dest="annotate",
-        action="store",
-        type="string",
         default=None,
         help="A comma separated list of custom stack annotations, "
         "e.g. '1,3,4,5,6,7'.  Annotation list must be same length as "
@@ -647,140 +625,113 @@ def _build_option_parser() -> DeOptionParser:
         metavar="TEXT",
     )
 
-    format_grp.add_option(
-        "",
+    format_grp.add_argument(
         "--rotate-numbers",
         dest="rotate_numbers",
-        action="store",
-        type="boolean",
+        type=_parse_bool,
         default=defaults.rotate_numbers,
-        help="Draw X-axis numbers with vertical orientation (default: %default).",
+        help="Draw X-axis numbers with vertical orientation (default: %(default)s).",
         metavar="YES/NO",
     )
 
-    format_grp.add_option(
-        "",
+    format_grp.add_argument(
         "--number-interval",
         dest="number_interval",
-        action="store",
-        type="float",
+        type=float,
         default=defaults.number_interval,
         help="Distance between numbers on X-axis (default: %s)"
         % defaults.number_interval,
         metavar="NUMBER",
     )
 
-    format_grp.add_option(
+    format_grp.add_argument(
         "-S",
         "--yaxis",
         dest="yaxis_scale",
-        action="store",
-        type="float",
+        type=float,
         help="Height of yaxis in units. (Default: Maximum value with "
         "uninformative prior.)",
         metavar="NUMBER",
     )
 
-    format_grp.add_option(
+    format_grp.add_argument(
         "-Y",
         "--show-yaxis",
-        action="store",
-        type="boolean",
+        type=_parse_bool,
         dest="show_yaxis",
         default=defaults.show_yaxis,
         metavar="YES/NO",
-        help="Display entropy scale along y-axis? (default: %default)",
+        help="Display entropy scale along y-axis? (default: %(default)s)",
     )
 
-    format_grp.add_option(
+    format_grp.add_argument(
         "-y",
         "--ylabel",
         dest="yaxis_label",
-        action="store",
-        type="string",
         help="Y-axis label (default depends on plot type and units)",
         metavar="TEXT",
     )
 
-    format_grp.add_option(
+    format_grp.add_argument(
         "-E",
         "--show-ends",
-        action="store",
-        type="boolean",
+        type=_parse_bool,
         default=defaults.show_ends,
         metavar="YES/NO",
-        help="Label the ends of the sequence? (default: %default)",
+        help="Label the ends of the sequence? (default: %(default)s)",
     )
 
-    format_grp.add_option(
+    format_grp.add_argument(
         "-P",
         "--fineprint",
         dest="fineprint",
-        action="store",
-        type="string",
         default=defaults.fineprint,
         help="The fine print (default: weblogo version)",
         metavar="TEXT",
     )
 
-    format_grp.add_option(
-        "",
+    format_grp.add_argument(
         "--ticmarks",
         dest="yaxis_tic_interval",
-        action="store",
-        type="float",
+        type=float,
         default=defaults.yaxis_tic_interval,
-        help="Distance between ticmarks (default: %default)",
+        help="Distance between ticmarks (default: %(default)s)",
         metavar="NUMBER",
     )
 
-    format_grp.add_option(
-        "",
+    format_grp.add_argument(
         "--errorbars",
         dest="show_errorbars",
-        action="store",
-        type="boolean",
+        type=_parse_bool,
         default=defaults.show_errorbars,
         metavar="YES/NO",
-        help="Display error bars? (default: %default)",
+        help="Display error bars? (default: %(default)s)",
     )
 
-    format_grp.add_option(
-        "",
+    format_grp.add_argument(
         "--reverse-stacks",
         dest="reverse_stacks",
-        action="store",
-        type="boolean",
+        type=_parse_bool,
         default=defaults.show_errorbars,
         metavar="YES/NO",
-        help="Draw stacks with largest letters on top? (default: %default)",
+        help="Draw stacks with largest letters on top? (default: %(default)s)",
     )
 
     # ========================== Color OPTIONS ==========================
-    # TODO: Future Feature
-    # color_grp.add_option( "-K", "--color-key",
-    #    dest= "show_color_key",
-    #    action="store",
-    #    type = "boolean",
-    #    default= defaults.show_color_key,
-    #    metavar = "YES/NO",
-    #    help="Display a color key (default: %default)")
 
     color_scheme_choices = list(std_color_schemes.keys())
     color_scheme_choices.sort()
-    color_grp.add_option(
+    color_grp.add_argument(
         "-c",
         "--color-scheme",
         dest="color_scheme",
-        action="store",
-        type="dict",
-        choices=std_color_schemes,
+        type=_lookup(std_color_schemes, "color scheme"),
         metavar="SCHEME",
         default=None,  # Auto
         help="Specify a standard color scheme (%s)" % ", ".join(color_scheme_choices),
     )
 
-    color_grp.add_option(
+    color_grp.add_argument(
         "-C",
         "--color",
         dest="colors",
@@ -792,11 +743,9 @@ def _build_option_parser() -> DeOptionParser:
         "--color red TC 'Pyrimidine' ",
     )
 
-    color_grp.add_option(
-        "",
+    color_grp.add_argument(
         "--default-color",
         dest="default_color",
-        action="store",
         metavar="COLOR",
         default=defaults.default_color,
         help="Symbol color if not otherwise specified.",
@@ -804,79 +753,62 @@ def _build_option_parser() -> DeOptionParser:
 
     # ========================== Font options =========================
 
-    font_grp.add_option(
-        "",
+    font_grp.add_argument(
         "--fontsize",
         dest="fontsize",
-        action="store",
-        type="float",
+        type=float,
         default=defaults.fontsize,
         help="Regular text font size in points (default: %s)" % defaults.fontsize,
         metavar="POINTS",
     )
 
-    font_grp.add_option(
-        "",
+    font_grp.add_argument(
         "--title-fontsize",
         dest="title_fontsize",
-        action="store",
-        type="float",
+        type=float,
         default=defaults.title_fontsize,
         help="Title text font size in points (default: %s)" % defaults.title_fontsize,
         metavar="POINTS",
     )
 
-    font_grp.add_option(
-        "",
+    font_grp.add_argument(
         "--small-fontsize",
         dest="small_fontsize",
-        action="store",
-        type="float",
+        type=float,
         default=defaults.small_fontsize,
         help="Small text font size in points (default: %s)" % defaults.small_fontsize,
         metavar="POINTS",
     )
 
-    font_grp.add_option(
-        "",
+    font_grp.add_argument(
         "--number-fontsize",
         dest="number_fontsize",
-        action="store",
-        type="float",
+        type=float,
         default=defaults.number_fontsize,
         help="Axis numbers font size in points (default: %s)"
         % defaults.number_fontsize,
         metavar="POINTS",
     )
 
-    font_grp.add_option(
-        "",
+    font_grp.add_argument(
         "--text-font",
         dest="text_font",
-        action="store",
-        type="string",
         default=defaults.text_font,
         help="Specify font for labels (default: %s)" % defaults.text_font,
         metavar="FONT",
     )
 
-    font_grp.add_option(
-        "",
+    font_grp.add_argument(
         "--logo-font",
         dest="logo_font",
-        action="store",
-        type="string",
         default=defaults.text_font,
         help="Specify font for logo (default: %s)" % defaults.logo_font,
         metavar="FONT",
     )
 
-    font_grp.add_option(
-        "",
+    font_grp.add_argument(
         "--title-font",
         dest="title_font",
-        action="store",
-        type="string",
         default=defaults.title_font,
         help="Specify font for title (default: %s)" % defaults.title_font,
         metavar="FONT",
@@ -884,58 +816,49 @@ def _build_option_parser() -> DeOptionParser:
 
     # ========================== Advanced options =========================
 
-    advanced_grp.add_option(
+    advanced_grp.add_argument(
         "-W",
         "--stack-width",
         dest="stack_width",
-        action="store",
-        type="float",
+        type=float,
         default=defaults.stack_width,
         help="Width of a logo stack (default: %s)" % defaults.stack_width,
         metavar="POINTS",
     )
 
-    advanced_grp.add_option(
-        "",
+    advanced_grp.add_argument(
         "--aspect-ratio",
         dest="stack_aspect_ratio",
-        action="store",
-        type="float",
+        type=float,
         default=defaults.stack_aspect_ratio,
         help="Ratio of stack height to width (default: %s)"
         % defaults.stack_aspect_ratio,
         metavar="POINTS",
     )
 
-    advanced_grp.add_option(
-        "",
+    advanced_grp.add_argument(
         "--box",
         dest="show_boxes",
-        action="store",
-        type="boolean",
+        type=_parse_bool,
         default=False,
         metavar="YES/NO",
         help="Draw boxes around symbols? (default: no)",
     )
 
-    advanced_grp.add_option(
-        "",
+    advanced_grp.add_argument(
         "--resolution",
         dest="resolution",
-        action="store",
-        type="float",
+        type=float,
         default=600,
         help="Bitmap resolution in dots per inch (DPI).  (Default: 600 DPI)"
         " Low resolution bitmaps (DPI<300) are antialiased.",
         metavar="DPI",
     )
 
-    advanced_grp.add_option(
-        "",
+    advanced_grp.add_argument(
         "--scale-width",
         dest="scale_width",
-        action="store",
-        type="boolean",
+        type=_parse_bool,
         default=True,
         metavar="YES/NO",
         help="Scale the visible stack width by the fraction of symbols in the"
@@ -943,46 +866,38 @@ def _build_option_parser() -> DeOptionParser:
         "(Default: yes)",
     )
 
-    advanced_grp.add_option(
-        "",
+    advanced_grp.add_argument(
         "--debug",
-        action="store",
-        type="boolean",
+        type=_parse_bool,
         default=defaults.debug,
         metavar="YES/NO",
-        help="Output additional diagnostic information. (Default: %default)",
+        help="Output additional diagnostic information. (Default: %(default)s)",
     )
 
-    advanced_grp.add_option(
-        "",
+    advanced_grp.add_argument(
         "--errorbar-fraction",
         dest="errorbar_fraction",
-        action="store",
-        type="float",
+        type=float,
         default=defaults.errorbar_fraction,
         help="Sets error bars display proportion (default: %s)"
         % defaults.errorbar_fraction,
         metavar="NUMBER",
     )
 
-    advanced_grp.add_option(
-        "",
+    advanced_grp.add_argument(
         "--errorbar-width-fraction",
         dest="errorbar_width_fraction",
-        action="store",
-        type="float",
+        type=float,
         default=defaults.errorbar_width_fraction,
         help="Sets error bars width display proportion (default: %s)"
         % defaults.errorbar_width_fraction,
         metavar="NUMBER",
     )
 
-    advanced_grp.add_option(
-        "",
+    advanced_grp.add_argument(
         "--errorbar-gray",
         dest="errorbar_gray",
-        action="store",
-        type="float",
+        type=float,
         default=defaults.errorbar_gray,
         help="Sets error bars' gray scale percentage (default: %s)"
         % defaults.errorbar_gray,
@@ -990,8 +905,7 @@ def _build_option_parser() -> DeOptionParser:
     )
 
     # ========================== Server options =========================
-    server_grp.add_option(
-        "",
+    server_grp.add_argument(
         "--serve",
         dest="serve",
         action="store_true",
@@ -999,20 +913,13 @@ def _build_option_parser() -> DeOptionParser:
         help="Start a standalone WebLogo server for creating sequence logos.",
     )
 
-    server_grp.add_option(
-        "",
+    server_grp.add_argument(
         "--port",
         dest="port",
-        action="store",
-        type="int",
+        type=int,
         default=8080,
-        help="Listen to this local port. (Default: %default)",
+        help="Listen to this local port. (Default: %(default)s)",
         metavar="PORT",
     )
 
     return parser
-
-    # END _build_option_parser
-
-
-##############################################################
