@@ -25,7 +25,8 @@
 
 """Extra utilities and core classes not in standard python."""
 
-from typing import Any, Iterable, List, Optional
+import collections.abc
+from typing import Any
 
 __all__ = (
     "isblank",
@@ -36,7 +37,6 @@ __all__ = (
     "invert_dict",
     "stdrepr",
     "Token",
-    "deoptparse",
     "crc32",
     "crc64",
     "ArgumentError",
@@ -96,7 +96,7 @@ def invert_dict(dictionary: dict) -> dict:
 
 
 def stdrepr(
-    obj: Any, attributes: Optional[List[str]] = None, name: Optional[str] = None
+    obj: Any, attributes: list[str] | None = None, name: str | None = None
 ) -> str:
     """Create a standard representation of an object."""
     if name is None:
@@ -107,13 +107,13 @@ def stdrepr(
     for a in attributes:
         if a[0] == "_":
             continue  # pragma: no cover
-        args.append("%s=%s" % (a, repr(getattr(obj, a))))
+        args.append(f"{a}={getattr(obj, a)!r}")
     arg_str = ",\n".join(args).replace("\n", "\n    ")
 
-    return "%s(\n    %s\n)" % (name, arg_str)
+    return f"{name}(\n    {arg_str}\n)"
 
 
-def group_count(i: Iterable) -> list:
+def group_count(i: collections.abc.Iterable) -> list:
     """An iteration that returns tuples of items and the number of consecutive
     occurrences. Thus group_count('aabbbc') yields ('a',2), ('b',3), ('c',1)
     """
@@ -138,7 +138,7 @@ class Token:
     def __init__(
         self,
         typeof: str,
-        data: Optional[str] = None,
+        data: str | None = None,
         lineno: int = -1,
         offset: int = -1,
     ) -> None:
@@ -162,7 +162,7 @@ def crc32(string: str) -> str:
     """Return the standard CRC32 checksum as a hexidecimal string."""
     import binascii
 
-    return "%08X" % binascii.crc32(string.encode())
+    return f"{binascii.crc32(string.encode()):08X}"
 
 
 _crc64_table = None
@@ -208,10 +208,7 @@ def crc64(string: str) -> str:
         crch = temp1h ^ _crc64_table[idx]
         crcl = temp1l
 
-    return "%08X%08X" % (crch, crcl)
-
-
-# End crc64
+    return f"{crch:08X}{crcl:08X}"
 
 
 class ArgumentError(ValueError):
@@ -222,7 +219,7 @@ class ArgumentError(ValueError):
     are also stored.
     """
 
-    def __init__(self, message: str, key: str, value: Optional[Any] = None) -> None:
+    def __init__(self, message: str, key: str, value: Any | None = None) -> None:
         """Args:
         - msg -- An error message.
         - key -- The name of the argument or component at fault.
@@ -233,6 +230,3 @@ class ArgumentError(ValueError):
         self.msg = message
         self.key = key
         self.value = value
-
-
-# end class ArgumentError

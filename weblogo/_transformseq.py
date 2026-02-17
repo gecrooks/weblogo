@@ -14,13 +14,13 @@
 one format to another.
 """
 
+import argparse
 import sys
-from optparse import OptionGroup
 
 from weblogo import seq_io
+from weblogo._cli import _lookup
 from weblogo.seq import Seq, SeqList, nucleic_alphabet
 from weblogo.transform import mask_low_complexity
-from weblogo.utils.deoptparse import DeOptionParser
 
 __version__ = "1.0.0"
 description = """ A tool for converting multiple sequence alignments from
@@ -29,10 +29,8 @@ one format to another. """
 
 def main() -> None:
     # ------ Parse Command line ------
-    parser = _build_option_parser()
-    (opts, args) = parser.parse_args(sys.argv[1:])
-    if args:
-        parser.error("Unparsable arguments: %s " % args)
+    parser = _build_argument_parser()
+    opts = parser.parse_args(sys.argv[1:])
 
     seqs = opts.reader.read(opts.fin)
 
@@ -59,99 +57,79 @@ def main() -> None:
     opts.writer.write(opts.fout, seqs)
 
 
-def _build_option_parser() -> DeOptionParser:
-    parser = DeOptionParser(
-        usage="%prog [options]  < sequence_data.fa > sequence_logo.eps",
+def _build_argument_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        usage="%(prog)s [options]  < sequence_data.fa > output.fa",
         description=description,
-        version=__version__,
-        add_verbose_options=False,
+    )
+    parser.add_argument(
+        "--version", action="version", version=__version__
     )
 
-    io_grp = OptionGroup(
-        parser,
-        "Input/Output Options",
-    )
-    parser.add_option_group(io_grp)
+    io_grp = parser.add_argument_group("Input/Output Options")
 
-    io_grp.add_option(
+    io_grp.add_argument(
         "-f",
         "--fin",
         dest="fin",
-        action="store",
-        type="file_in",
+        type=argparse.FileType("r"),
         default=sys.stdin,
         help="Sequence input file (default: stdin)",
         metavar="FILENAME",
     )
 
-    io_grp.add_option(
-        "",
+    io_grp.add_argument(
         "--format-in",
         dest="reader",
-        action="store",
-        type="dict",
+        type=_lookup(seq_io.format_names(), "format"),
         default=seq_io,
-        choices=seq_io.format_names(),
-        help="Multiple sequence alignment format: (%s)"
-        % ", ".join([f.names[0] for f in seq_io.formats]),  # type: ignore
+        help=f"Multiple sequence alignment format: ({', '.join([f.names[0] for f in seq_io.formats])})",  # type: ignore
         metavar="FORMAT",
     )
 
-    io_grp.add_option(
+    io_grp.add_argument(
         "-o",
         "--fout",
         dest="fout",
-        type="file_out",
+        type=argparse.FileType("w"),
         default=sys.stdout,
         help="Output file (default: stdout)",
         metavar="FILENAME",
     )
 
-    trans_grp = OptionGroup(
-        parser,
-        "Transformations",
-    )
-    parser.add_option_group(trans_grp)
+    trans_grp = parser.add_argument_group("Transformations")
 
-    trans_grp.add_option(
-        "",
+    trans_grp.add_argument(
         "--seg",
         dest="trans_seg",
         action="store_true",
         default=False,
         help="Mask low complexity regions in protein sequences.",
-        metavar="TRUE/FALSE",
     )
 
-    trans_grp.add_option(
-        "",
+    trans_grp.add_argument(
         "--subsample",
         dest="subsample",
-        action="store",
-        type="float",
+        type=float,
         default=None,
         help="Return a random subsample of the sequences.",
         metavar="FRACTION",
     )
 
-    trans_grp.add_option(
-        "",
+    trans_grp.add_argument(
         "--reverse",
         dest="reverse",
         action="store_true",
         default=False,
         help="reverse sequences",
-        metavar="TRUE/FALSE",
     )
 
-    trans_grp.add_option(
-        "",
+    trans_grp.add_argument(
         "--complement",
         dest="complement",
         action="store_true",
         default=False,
         help="complement DNA sequences",
-        metavar="TRUE/FALSE",
     )
 
     # Writers
@@ -164,16 +142,13 @@ def _build_option_parser() -> DeOptionParser:
         out_choices[f.names[0]] = f  # type: ignore
     out_names = [f.names[0] for f in out_formats]  # type: ignore
 
-    io_grp.add_option(
+    io_grp.add_argument(
         "-F",
         "--format-out",
         dest="writer",
-        action="store",
-        type="dict",
+        type=_lookup(out_choices, "output format"),
         default=seq_io.fasta_io,
-        choices=out_choices,
-        help="Multiple sequence alignment output format: (%s) (Default: fasta)"
-        % ", ".join(out_names),
+        help=f"Multiple sequence alignment output format: ({', '.join(out_names)}) (Default: fasta)",
         metavar="FORMAT",
     )
 

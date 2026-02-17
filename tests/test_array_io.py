@@ -24,43 +24,43 @@
 #  THE SOFTWARE.
 #
 
-import unittest
+import pytest
 from io import StringIO
 
 from weblogo.seq_io import array_io, fasta_io
 
 
-class test_array_io(unittest.TestCase):
-    def test_read_example(self) -> None:
-        f = StringIO(array_io.example)
-        seqs = array_io.read(f)
-        # print(seqs)
-        self.assertEqual(len(seqs), 8)
-        self.assertEqual(seqs[0].name, "")
-        self.assertEqual(len(seqs[1]), 60)
+def test_array_io_read_example() -> None:
+    f = StringIO(array_io.example)
+    seqs = array_io.read(f)
+    # print(seqs)
+    assert len(seqs) == 8
+    assert seqs[0].name == ""
+    assert len(seqs[1]) == 60
 
-    def test_write_seq(self) -> None:
-        f = StringIO(array_io.example)
-        seqs = array_io.read(f)
-        fout = StringIO()
-        array_io.write(fout, seqs)
-        fout.seek(0)
-        seqs2 = array_io.read(fout)
-        self.assertEqual(seqs, seqs2)
 
-    def test_fail(self) -> None:
-        # Lengths differ
-        example = """
+def test_array_io_write_seq() -> None:
+    f = StringIO(array_io.example)
+    seqs = array_io.read(f)
+    fout = StringIO()
+    array_io.write(fout, seqs)
+    fout.seek(0)
+    seqs2 = array_io.read(fout)
+    assert seqs == seqs2
+
+
+def test_array_io_fail() -> None:
+    # Lengths differ
+    example = """
 -SPC-MLETETLNKYVVIIAYALVFLLSLLGNSLVMLVILYSRVGRSVTDVYLLNLALAD
 -EPC-RDEN
 """
-        f = StringIO(example)
-        self.assertRaises(ValueError, array_io.read, f)
-
-    def test_read_fasta(self) -> None:
-        f = StringIO(fasta_io.example)
-        self.assertRaises(ValueError, array_io.read, f)
+    f = StringIO(example)
+    with pytest.raises(ValueError):
+        array_io.read(f)
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_array_io_read_fasta() -> None:
+    f = StringIO(fasta_io.example)
+    with pytest.raises(ValueError):
+        array_io.read(f)

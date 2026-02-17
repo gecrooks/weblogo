@@ -10,7 +10,7 @@ DEVELOPING WEBLOGO
 ---------------------------------------------
 
 1. Make sure local repository is up to date.
-   The WebLogo repository is https://github.com/WebLogo/weblogo
+   The WebLogo repository is https://github.com/gecrooks/weblogo
 	git pull origin master
 
 
@@ -38,9 +38,12 @@ DEVELOPING WEBLOGO
 7. Commit final changes.
 
 
-8. Tag
-	tag release on Github at https://github.com/WebLogo/weblogo/releases/new
-    (creating a new release with autoupdate pypi and conda packages)
+8. Tag and release
+	git tag v3.x.x
+	git push --tags
+	gh release create v3.x.x --generate-notes
+    This triggers .github/workflows/publish.yml which builds and publishes to PyPI
+    via trusted publishing (no tokens needed).
 
 
 10. Update server: login to weblogo.threeplusone.com, weblogo directory and switch branches 

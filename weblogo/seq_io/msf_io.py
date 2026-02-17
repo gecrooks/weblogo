@@ -38,7 +38,8 @@ ways:
 """
 
 import re
-from typing import Iterator, Optional, TextIO
+from collections.abc import Iterator
+from typing import TextIO
 
 from ..seq import Alphabet, Seq, SeqList
 from ..utils import Token
@@ -86,13 +87,13 @@ end_header = re.compile(r"(//)(\s*)$")
 seq_line = re.compile(r"\s*(\S+)\s+([\S\s.?]+)$")
 
 
-def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Iterator[Seq]:
+def iterseq(fin: TextIO, alphabet: Alphabet | None = None) -> Iterator[Seq]:
     """Iterate over the sequences in the file."""
     # Default implementation
     return iter(read(fin, alphabet))
 
 
-def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
+def read(fin: TextIO, alphabet: Alphabet | None = None) -> SeqList:
     alphabet = Alphabet(alphabet)
     seq_ids = []
     seqs: list = []
@@ -112,8 +113,7 @@ def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
 
             if not alphabet.alphabetic(data):
                 raise ValueError(
-                    "Character on line: %d not in alphabet: %s : %s"
-                    % (token.lineno, alphabet, token.data)
+                    f"Character on line: {token.lineno} not in alphabet: {alphabet} : {token.data}"
                 )
             seqs[block_count].append(data)
             block_count += 1
@@ -153,7 +153,7 @@ def _line_is(fin: TextIO) -> Iterator[Token]:
                 continue
             m = seq_line.match(line)
             if m is None:
-                raise ValueError("Parse error on line: %d" % L)  # pragma: no cover
+                raise ValueError(f"Parse error on line: {L}")  # pragma: no cover
             if m.group(1).isdigit() and m.group(2).strip().isdigit():
                 continue
             yield Token("seq_id", m.group(1).strip())

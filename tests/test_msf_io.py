@@ -34,7 +34,7 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 #  POSSIBILITY OF SUCH DAMAGE.
 
-import unittest
+import pytest
 from io import StringIO
 
 from weblogo.seq import nucleic_alphabet
@@ -43,61 +43,68 @@ from weblogo.seq_io import msf_io, plain_io
 from . import data_stream
 
 
-class test_msf_io(unittest.TestCase):
-    def test_parse_msf(self) -> None:
-        f = data_stream("dna.msf")
-        seqs = msf_io.read(f)
-        self.assertEqual(len(seqs), 10)
-        self.assertEqual(seqs[1].name, "Carp")
-        self.assertEqual(len(seqs[1]), 705)
-        self.assertEqual(str(seqs[2][0:10]), "ATGGCCAACC")
-        f.close()
+def test_msf_io_parse_msf() -> None:
+    f = data_stream("dna.msf")
+    seqs = msf_io.read(f)
+    assert len(seqs) == 10
+    assert seqs[1].name == "Carp"
+    assert len(seqs[1]) == 705
+    assert str(seqs[2][0:10]) == "ATGGCCAACC"
+    f.close()
 
-    def test_parse_msf2(self) -> None:
-        f = data_stream("cox2.msf")
-        seqs = msf_io.read(f)
-        self.assertEqual(len(seqs), 5)
-        self.assertEqual(seqs[1].name, "cox2_crifa")
-        self.assertEqual(len(seqs[1]), 166)
-        self.assertEqual(str(seqs[2][0:10]), "MSFILTFWMI")
-        f.close()
 
-    def test_parse_1beo(self) -> None:
-        f = data_stream("1beo.msf")
+def test_msf_io_parse_msf2() -> None:
+    f = data_stream("cox2.msf")
+    seqs = msf_io.read(f)
+    assert len(seqs) == 5
+    assert seqs[1].name == "cox2_crifa"
+    assert len(seqs[1]) == 166
+    assert str(seqs[2][0:10]) == "MSFILTFWMI"
+    f.close()
+
+
+def test_msf_io_parse_1beo() -> None:
+    f = data_stream("1beo.msf")
+    msf_io.read(f)
+    f.close()
+
+
+# Wrong alphabet should throw a parsing error
+
+
+def test_msf_io_parse_error() -> None:
+    f = data_stream("cox2.msf")
+    with pytest.raises(ValueError):
+        msf_io.read(f, nucleic_alphabet)
+    f.close()
+
+
+def test_msf_io_parse_fasta_fail2() -> None:
+    # should fail with parse error
+    f = data_stream("globin.fa")
+    with pytest.raises(ValueError):
         msf_io.read(f)
-        f.close()
-
-    """ Wrong alphabet should throw a parsing error """
-
-    def test_parse_error(self) -> None:
-        f = data_stream("cox2.msf")
-        self.assertRaises(ValueError, msf_io.read, f, nucleic_alphabet)
-        f.close()
-
-    def test_parse_fasta_fail2(self) -> None:
-        # should fail with parse error
-        f = data_stream("globin.fa")
-        self.assertRaises(ValueError, msf_io.read, f)
-        f.close()
-
-    def test_parse_plain_fail(self) -> None:
-        # should fail with parse error
-        f = StringIO(plain_io.example)
-        self.assertRaises(ValueError, msf_io.read, f)
-        f.close()
-
-    def test_parse_phylip_fail(self) -> None:
-        # should fail with parse error
-        f = data_stream("phylip_test_2.phy")
-        self.assertRaises(ValueError, msf_io.read, f)
-        f.close()
-
-    def test_iter(self) -> None:
-        f = data_stream("1beo.msf")
-        for seq in msf_io.iterseq(f):
-            pass
-        f.close()
+    f.close()
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_msf_io_parse_plain_fail() -> None:
+    # should fail with parse error
+    f = StringIO(plain_io.example)
+    with pytest.raises(ValueError):
+        msf_io.read(f)
+    f.close()
+
+
+def test_msf_io_parse_phylip_fail() -> None:
+    # should fail with parse error
+    f = data_stream("phylip_test_2.phy")
+    with pytest.raises(ValueError):
+        msf_io.read(f)
+    f.close()
+
+
+def test_msf_io_iter() -> None:
+    f = data_stream("1beo.msf")
+    for seq in msf_io.iterseq(f):
+        pass
+    f.close()

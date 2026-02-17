@@ -34,7 +34,7 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 #  POSSIBILITY OF SUCH DAMAGE.
 
-import unittest
+import pytest
 from io import StringIO
 
 from weblogo.seq import dna_alphabet, protein_alphabet
@@ -43,83 +43,83 @@ from weblogo.seq_io import clustal_io, nbrf_io, plain_io
 from . import data_stream
 
 
-class test_nbrf_io(unittest.TestCase):
-    def test_parse_cox2(self) -> None:
-        f = data_stream("cox2.nbrf")
-        seqs = nbrf_io.read(f)
-        self.assertEqual(len(seqs), 5)
-        self.assertEqual(len(seqs[1]), 210)
-        self.assertEqual(
-            str(seqs[0]),
-            "MAFILSFWMIFLLDSVIVLLSFVCFVCVWICALLFSTVLLVSKLNNIYCTWDFTASKFIDVYWFTIGGMFSLG"
-            "LLLRLCLLLYFGHLNFVSFDLCKVVGFQWYWVYFIFGETTIFSNLILESDYMIGDLRLLQCNHVLTLLSLVIY"
-            "KLWLSAVDVIHSFAISSLGVKVENLVAVMK",
-        )
-        self.assertEqual(seqs[0].alphabet, protein_alphabet)
-        f.close()
-
-    def test_parse_crab(self) -> None:
-        f = data_stream("crab.nbrf")
-        seqs = nbrf_io.read(f)
-        self.assertEqual(seqs[0].alphabet, protein_alphabet)
-        self.assertEqual(len(seqs), 9)
-        self.assertEqual(seqs[2].name, "CRAB_CHICK")
-        self.assertEqual(
-            seqs[2].description, "ALPHA CRYSTALLIN B CHAIN (ALPHA(B)-CRYSTALLIN)."
-        )
-        f.close()
-
-    def test_parse_dna(self) -> None:
-        f = data_stream("dna.pir")
-        seqs = nbrf_io.read(f)
-        self.assertEqual(seqs[0].alphabet, dna_alphabet)
-        self.assertEqual(len(seqs), 10)
-        f.close()
-
-    def test_parse_examples(self) -> None:
-        f = data_stream("rhod.pir")
-        seqs = nbrf_io.read(f)
-        self.assertEqual(seqs[0].alphabet, protein_alphabet)
-        self.assertEqual(len(seqs), 3)
-        f.close()
-
-    def test_parse_protein(self) -> None:
-        f = data_stream("protein.pir")
-        seqs = nbrf_io.read(f)
-        self.assertEqual(seqs[0].alphabet, protein_alphabet)
-        self.assertEqual(len(seqs), 10)
-        f.close()
-
-    def test_parse_clustal_fail(self) -> None:
-        # should fail with parse error
-        f = StringIO(clustal_io.example)
-        self.assertRaises(ValueError, nbrf_io.read, f, protein_alphabet)
-
-    def test_parse_plain_fail(self) -> None:
-        # should fail with parse error
-        f = StringIO(plain_io.example)
-        self.assertRaises(ValueError, nbrf_io.read, f)
-
-    def test_pir_file_from_clustal(self) -> None:
-        f = data_stream("clustalw.pir")
-        seqs = nbrf_io.read(f)
-        self.assertEqual(len(seqs), 2)
-        self.assertEqual(
-            seqs[1].endswith(
-                "C-AATC-G-CAATG-G--CTTGAACCGGGTAAAAGTCGT-A----------------------------------------"
-                "-----------------------------------------"
-            ),
-            True,
-        )
-        f.close()
-
-    def test_parse_examples_alphabet(self) -> None:
-        f = data_stream("rhod.pir")
-        seqs = nbrf_io.read(f, alphabet=protein_alphabet)
-        self.assertEqual(seqs[0].alphabet, protein_alphabet)
-        self.assertEqual(len(seqs), 3)
-        f.close()
+def test_parse_cox2() -> None:
+    f = data_stream("cox2.nbrf")
+    seqs = nbrf_io.read(f)
+    assert len(seqs) == 5
+    assert len(seqs[1]) == 210
+    assert (
+        str(seqs[0])
+        == "MAFILSFWMIFLLDSVIVLLSFVCFVCVWICALLFSTVLLVSKLNNIYCTWDFTASKFIDVYWFTIGGMFSLG"
+        "LLLRLCLLLYFGHLNFVSFDLCKVVGFQWYWVYFIFGETTIFSNLILESDYMIGDLRLLQCNHVLTLLSLVIY"
+        "KLWLSAVDVIHSFAISSLGVKVENLVAVMK"
+    )
+    assert seqs[0].alphabet == protein_alphabet
+    f.close()
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_parse_crab() -> None:
+    f = data_stream("crab.nbrf")
+    seqs = nbrf_io.read(f)
+    assert seqs[0].alphabet == protein_alphabet
+    assert len(seqs) == 9
+    assert seqs[2].name == "CRAB_CHICK"
+    assert seqs[2].description == "ALPHA CRYSTALLIN B CHAIN (ALPHA(B)-CRYSTALLIN)."
+    f.close()
+
+
+def test_parse_dna() -> None:
+    f = data_stream("dna.pir")
+    seqs = nbrf_io.read(f)
+    assert seqs[0].alphabet == dna_alphabet
+    assert len(seqs) == 10
+    f.close()
+
+
+def test_parse_examples() -> None:
+    f = data_stream("rhod.pir")
+    seqs = nbrf_io.read(f)
+    assert seqs[0].alphabet == protein_alphabet
+    assert len(seqs) == 3
+    f.close()
+
+
+def test_parse_protein() -> None:
+    f = data_stream("protein.pir")
+    seqs = nbrf_io.read(f)
+    assert seqs[0].alphabet == protein_alphabet
+    assert len(seqs) == 10
+    f.close()
+
+
+def test_parse_clustal_fail() -> None:
+    # should fail with parse error
+    f = StringIO(clustal_io.example)
+    with pytest.raises(ValueError):
+        nbrf_io.read(f, protein_alphabet)
+
+
+def test_parse_plain_fail() -> None:
+    # should fail with parse error
+    f = StringIO(plain_io.example)
+    with pytest.raises(ValueError):
+        nbrf_io.read(f)
+
+
+def test_pir_file_from_clustal() -> None:
+    f = data_stream("clustalw.pir")
+    seqs = nbrf_io.read(f)
+    assert len(seqs) == 2
+    assert seqs[1].endswith(
+        "C-AATC-G-CAATG-G--CTTGAACCGGGTAAAAGTCGT-A----------------------------------------"
+        "-----------------------------------------"
+    )
+    f.close()
+
+
+def test_parse_examples_alphabet() -> None:
+    f = data_stream("rhod.pir")
+    seqs = nbrf_io.read(f, alphabet=protein_alphabet)
+    assert seqs[0].alphabet == protein_alphabet
+    assert len(seqs) == 3
+    f.close()

@@ -22,7 +22,9 @@ jobs:
       uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
+    - name: Set up uv
+      uses: astral-sh/setup-uv@v7
+    - name: Install system dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -y ghostscript
@@ -31,11 +33,7 @@ jobs:
         echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | sudo debconf-set-selections
         sudo apt-get install -y ttf-mscorefonts-installer --reinstall
         fc-match Arial
-    - name: Install uv
-      # Use the official action to install uv and handle caching
-      uses: astral-sh/setup-uv@v7
     - name: Install dependencies
-      # Use uv to sync dependencies from pyproject.toml or requirements.txt
       run: uv sync --group dev
     - name: Lint with ruff
       run: uv run ruff check .      

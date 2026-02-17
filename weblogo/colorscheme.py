@@ -51,7 +51,7 @@ Status : Beta - Needs documentation.
 # "The Jalview Java Alignment Editor," Bioinformatics, 12, 426-7
 # http://www.jalview.org
 
-from typing import List, Optional, Sequence
+import collections.abc
 
 from . import seq
 from .color import Color
@@ -66,7 +66,7 @@ class ColorRule:
     return a Color object based on the given parameters.
     """
 
-    def symbol_color(self, seq_index: int, symbol: str, rank: int) -> Optional[Color]:
+    def symbol_color(self, seq_index: int, symbol: str, rank: int) -> Color | None:
         raise NotImplementedError  # pragma: no cover
 
 
@@ -83,7 +83,7 @@ class ColorScheme(ColorRule):
 
     def __init__(
         self,
-        rules: List[ColorRule] = [],
+        rules: list[ColorRule] = [],
         title: str = "",
         description: str = "",
         default_color: str = "black",
@@ -97,7 +97,7 @@ class ColorScheme(ColorRule):
 
     def symbol_color(self, seq_index: int, symbol: str, rank: int) -> Color:
         if symbol not in self.alphabet:
-            raise KeyError("Colored symbol '%s' does not exist in alphabet." % symbol)
+            raise KeyError(f"Colored symbol '{symbol}' does not exist in alphabet.")
 
         for rule in self.rules:
             color = rule.symbol_color(seq_index, symbol, rank)
@@ -114,13 +114,13 @@ class SymbolColor(ColorRule):
     """
 
     def __init__(
-        self, symbols: str, color: str, description: Optional[str] = None
+        self, symbols: str, color: str, description: str | None = None
     ) -> None:
         self.symbols = symbols
         self.color = Color.from_string(color)
         self.description = description
 
-    def symbol_color(self, seq_index: int, symbol: str, rank: int) -> Optional[Color]:
+    def symbol_color(self, seq_index: int, symbol: str, rank: int) -> Color | None:
         if symbol in self.symbols:
             return self.color
         return None
@@ -133,13 +133,13 @@ class IndexColor(ColorRule):
     """
 
     def __init__(
-        self, indices: Sequence[int], color: str, description: Optional[str] = None
+        self, indices: collections.abc.Sequence[int], color: str, description: str | None = None
     ) -> None:
         self.indices = indices
         self.color = Color.from_string(color)
         self.description = description
 
-    def symbol_color(self, seq_index: int, symbol: str, rank: int) -> Optional[Color]:
+    def symbol_color(self, seq_index: int, symbol: str, rank: int) -> Color | None:
         if seq_index in self.indices:
             return self.color
         return None
@@ -152,13 +152,13 @@ class RefSeqColor(ColorRule):
     """
 
     def __init__(
-        self, ref_seq: str, color: str, description: Optional[str] = None
+        self, ref_seq: str, color: str, description: str | None = None
     ) -> None:
         self.ref_seq = ref_seq
         self.color = Color.from_string(color)
         self.description = description
 
-    def symbol_color(self, seq_index: int, symbol: str, rank: int) -> Optional[Color]:
+    def symbol_color(self, seq_index: int, symbol: str, rank: int) -> Color | None:
         if symbol == self.ref_seq[seq_index]:
             return self.color
         return None

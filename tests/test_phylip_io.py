@@ -34,7 +34,7 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 #  POSSIBILITY OF SUCH DAMAGE.
 
-import unittest
+import pytest
 from io import StringIO
 
 from weblogo.seq import protein_alphabet
@@ -43,81 +43,90 @@ from weblogo.seq_io import clustal_io, phylip_io, plain_io
 from . import data_ref
 
 
-class test_phylip_io(unittest.TestCase):
-    def test_read(self) -> None:
-        with data_ref("phylip_test_1.phy").open() as f:
-            seqs = phylip_io.read(f)
-        self.assertEqual(len(seqs), 10)
-        self.assertEqual(seqs[0].name, "Cow")
-        self.assertEqual(len(seqs[1]), 234)
-
-    def test_iterseq(self) -> None:
-        with data_ref("phylip_test_1.phy").open() as f:
-            n = 0
-            for seq in phylip_io.iterseq(f):
-                n += 1
-            assert n == 10
-
-    def test_parse_plain_fail(self) -> None:
-        # should fail with parse error
-        f = StringIO(plain_io.example)
-        self.assertRaises(ValueError, phylip_io.read, f)
-
-    def test_parse_phylip_test_2(self) -> None:
-        with data_ref("phylip_test_2.phy").open() as f:
-            seqs = phylip_io.read(f)
-        self.assertEqual(len(seqs), 6)
-        self.assertEqual(len(seqs[0]), 20)
-        self.assertEqual(str(seqs[1]), "CGTTACTCGTTGTCGTTACT")
-        self.assertEqual(seqs[1].name, "Hesperorni")
-
-    def test_parse_clustal_fail(self) -> None:
-        # should fail with parse error
-        f = StringIO(clustal_io.example)
-        self.assertRaises(ValueError, phylip_io.read, f, protein_alphabet)
-
-    def test_parse_phylip_test_3(self) -> None:
-        with data_ref("phylip_test_3.phy").open() as f:
-            seqs = phylip_io.read(f)
-        self.assertEqual(len(seqs), 6)
-        self.assertEqual(len(seqs[0]), 20)
-        self.assertEqual(str(seqs[1]), "CGTTACTCGTTGTCGTTACT")
-        self.assertEqual(seqs[1].name, "Hesperorni")
-
-    def test_parse_phylip_test_4(self) -> None:
-        with data_ref("phylip_test_4.phy").open() as f:
-            seqs = phylip_io.read(f)
-        self.assertEqual(len(seqs), 6)
-        self.assertEqual(len(seqs[0]), 25)
-        self.assertEqual(str(seqs[1]), "GTGGTGGTGGGCGCCGGCCGTGTGG")
-        self.assertEqual(seqs[2].name, "ddrasa")
-
-    def test_parse_phylip_test_5(self) -> None:
-        with data_ref("phylip_test_5.phy").open() as f:
-            seqs = phylip_io.read(f)
-        self.assertEqual(len(seqs), 6)
-        self.assertEqual(len(seqs[0]), 50)
-        self.assertEqual(
-            str(seqs[1]), "GTGGTGGTGGGCGCCGGCCGTGTGGGTGGTGGTGGGCGCCGGCCGTGTGG"
-        )
-        self.assertEqual(seqs[2].name, "ddrasa")
-
-    def test_parse_wrong_phylip_codes_1(self) -> None:
-        with data_ref("phylip_test_6.corrupt.phy").open() as f:
-            self.assertRaises(ValueError, phylip_io.read, f, protein_alphabet)
-
-    def test_parse_wrong_phylip_codes_2(self) -> None:
-        with data_ref("phylip_test_7.corrupt.phy").open() as f:
-            self.assertRaises(ValueError, phylip_io.read, f, protein_alphabet)
-
-    def test_parse_phylip_dna(self) -> None:
-        with data_ref("dna.phy").open() as f:
-            seqs = phylip_io.read(f)
-        self.assertEqual(len(seqs), 10)
-        self.assertEqual(len(seqs[0]), 705)
-        self.assertEqual(str(seqs[1][0:10]), "ATGGCACACC")
-        self.assertEqual(seqs[2].name, "Chicken")
+def test_phylip_io_read() -> None:
+    with data_ref("phylip_test_1.phy").open() as f:
+        seqs = phylip_io.read(f)
+    assert len(seqs) == 10
+    assert seqs[0].name == "Cow"
+    assert len(seqs[1]) == 234
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_phylip_io_iterseq() -> None:
+    with data_ref("phylip_test_1.phy").open() as f:
+        n = 0
+        for seq in phylip_io.iterseq(f):
+            n += 1
+        assert n == 10
+
+
+def test_phylip_io_parse_plain_fail() -> None:
+    # should fail with parse error
+    f = StringIO(plain_io.example)
+    with pytest.raises(ValueError):
+        phylip_io.read(f)
+
+
+def test_phylip_io_parse_phylip_test_2() -> None:
+    with data_ref("phylip_test_2.phy").open() as f:
+        seqs = phylip_io.read(f)
+    assert len(seqs) == 6
+    assert len(seqs[0]) == 20
+    assert str(seqs[1]) == "CGTTACTCGTTGTCGTTACT"
+    assert seqs[1].name == "Hesperorni"
+
+
+def test_phylip_io_parse_clustal_fail() -> None:
+    # should fail with parse error
+    f = StringIO(clustal_io.example)
+    with pytest.raises(ValueError):
+        phylip_io.read(f, protein_alphabet)
+
+
+def test_phylip_io_parse_phylip_test_3() -> None:
+    with data_ref("phylip_test_3.phy").open() as f:
+        seqs = phylip_io.read(f)
+    assert len(seqs) == 6
+    assert len(seqs[0]) == 20
+    assert str(seqs[1]) == "CGTTACTCGTTGTCGTTACT"
+    assert seqs[1].name == "Hesperorni"
+
+
+def test_phylip_io_parse_phylip_test_4() -> None:
+    with data_ref("phylip_test_4.phy").open() as f:
+        seqs = phylip_io.read(f)
+    assert len(seqs) == 6
+    assert len(seqs[0]) == 25
+    assert str(seqs[1]) == "GTGGTGGTGGGCGCCGGCCGTGTGG"
+    assert seqs[2].name == "ddrasa"
+
+
+def test_phylip_io_parse_phylip_test_5() -> None:
+    with data_ref("phylip_test_5.phy").open() as f:
+        seqs = phylip_io.read(f)
+    assert len(seqs) == 6
+    assert len(seqs[0]) == 50
+    assert (
+        str(seqs[1]) == "GTGGTGGTGGGCGCCGGCCGTGTGGGTGGTGGTGGGCGCCGGCCGTGTGG"
+    )
+    assert seqs[2].name == "ddrasa"
+
+
+def test_phylip_io_parse_wrong_phylip_codes_1() -> None:
+    with data_ref("phylip_test_6.corrupt.phy").open() as f:
+        with pytest.raises(ValueError):
+            phylip_io.read(f, protein_alphabet)
+
+
+def test_phylip_io_parse_wrong_phylip_codes_2() -> None:
+    with data_ref("phylip_test_7.corrupt.phy").open() as f:
+        with pytest.raises(ValueError):
+            phylip_io.read(f, protein_alphabet)
+
+
+def test_phylip_io_parse_phylip_dna() -> None:
+    with data_ref("dna.phy").open() as f:
+        seqs = phylip_io.read(f)
+    assert len(seqs) == 10
+    assert len(seqs[0]) == 705
+    assert str(seqs[1][0:10]) == "ATGGCACACC"
+    assert seqs[2].name == "Chicken"

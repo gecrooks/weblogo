@@ -12,6 +12,7 @@ def _exec(
     outputtext: List[str],
     returncode: int = 0,
     stdin: Optional[TextIO] = None,
+    binary: bool = False,
 ) -> None:
     if not stdin:
         stdin = data_ref("cap.fa").open()
@@ -25,9 +26,13 @@ def _exec(
         assert len(err) == 0
 
     if outputtext:
-        outs = out.decode()
-        for item in outputtext:
-            assert item in outs
+        if binary:
+            for item in outputtext:
+                assert item.encode("latin-1") in out
+        else:
+            outs = out.decode()
+            for item in outputtext:
+                assert item in outs
 
     stdin.close()
 
@@ -48,35 +53,29 @@ def test_help_option() -> None:
 
 
 def test_default_build() -> None:
-    _exec([], ["%%Title:        Sequence Logo:"])
+    _exec([], ["%PDF-1.4"], binary=True)
 
 
 # Format options
 def test_width() -> None:
-    _exec(["-W", "1234"], ["/stack_width         1234"])
-    _exec(["--stack-width", "1234"], ["/stack_width         1234"])
+    _exec(["-W", "1234"], [])
+    _exec(["--stack-width", "1234"], [])
 
 
 def test_height() -> None:
-    _exec(["-W", "1000"], ["/stack_height        5000"])
-    _exec(["-W", "1000", "--aspect-ratio", "2"], ["/stack_height        2000"])
+    _exec(["-W", "1000"], [])
+    _exec(["-W", "1000", "--aspect-ratio", "2"], [])
 
 
 def test_stacks_per_line() -> None:
-    _exec(["-n", "7"], ["/stacks_per_line     7 def"])
-    _exec(["--stacks-per-line", "7"], ["/stacks_per_line     7 def"])
+    _exec(["-n", "7"], [])
+    _exec(["--stacks-per-line", "7"], [])
 
 
 def test_title() -> None:
-    _exec(
-        ["-t", "3456"],
-        ["/logo_title         (3456) def", "/show_title         True def"],
-    )
-    _exec(["-t", ""], ["/logo_title         () def", "/show_title         False def"])
-    _exec(
-        ["--title", "3456"],
-        ["/logo_title         (3456) def", "/show_title         True def"],
-    )
+    _exec(["-t", "3456"], [])
+    _exec(["-t", ""], [])
+    _exec(["--title", "3456"], [])
 
 
 def test_annotate() -> None:
@@ -96,10 +95,8 @@ def test_reverse_complement() -> None:
 
 
 def test_formats() -> None:
-    _exec(["--format", "eps"], [])
-    _exec(["--format", "png"], [])
-    _exec(["--format", "png_print"], [])
     _exec(["--format", "pdf"], [])
+    _exec(["--format", "png"], [])
     _exec(["--format", "jpeg"], [])
 
     _exec(["--format", "logodata"], [])

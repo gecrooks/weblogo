@@ -34,8 +34,6 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 #  POSSIBILITY OF SUCH DAMAGE.
 
-import unittest
-
 from weblogo.utils import (
     ArgumentError,
     Token,
@@ -50,90 +48,94 @@ from weblogo.utils import (
 )
 
 
-class test_utils(unittest.TestCase):
-    def test_isfloat(self) -> None:
-        self.assertTrue(isfloat("0.5"))
-        self.assertTrue(isfloat(" 0"))
-        self.assertTrue(isfloat("+1000000000  "))
-        self.assertTrue(isfloat("2"))
-        self.assertTrue(isfloat("0000.2323"))
-        self.assertTrue(isfloat("0.1e-23"))
-        self.assertTrue(isfloat(" -0.5e+23"))
-        self.assertFalse(isfloat(None))
-        self.assertFalse(isfloat(""))
-        self.assertFalse(isfloat("asdad"))
-        self.assertFalse(isfloat("q34sd"))
-        self.assertFalse(isfloat("92384.kjdfghiksw"))
-        self.assertFalse(isfloat("adf!@#nn"))
+def test_isfloat() -> None:
+    assert isfloat("0.5")
+    assert isfloat(" 0")
+    assert isfloat("+1000000000  ")
+    assert isfloat("2")
+    assert isfloat("0000.2323")
+    assert isfloat("0.1e-23")
+    assert isfloat(" -0.5e+23")
+    assert not isfloat(None)
+    assert not isfloat("")
+    assert not isfloat("asdad")
+    assert not isfloat("q34sd")
+    assert not isfloat("92384.kjdfghiksw")
+    assert not isfloat("adf!@#nn")
 
-    def test_isint(self) -> None:
-        self.assertTrue(isint("0"))
-        self.assertTrue(isint("-1"))
-        self.assertTrue(isint("10"))
-        self.assertTrue(isint("100101012234"))
-        self.assertTrue(isint("000"))
-        self.assertFalse(isint(None))
-        self.assertFalse(isint(""))
-        self.assertFalse(isint("asdad"))
-        self.assertFalse(isint("q34sd"))
-        self.assertFalse(isint("0.23"))
-        self.assertFalse(isint("adf!@#nn"))
 
-    def test_remove_whitespace(self) -> None:
-        self.assertEqual(
-            remove_whitespace("  kjashd askjdh askjdh\tasdf"), "kjashdaskjdhaskjdhasdf"
-        )
+def test_isint() -> None:
+    assert isint("0")
+    assert isint("-1")
+    assert isint("10")
+    assert isint("100101012234")
+    assert isint("000")
+    assert not isint(None)
+    assert not isint("")
+    assert not isint("asdad")
+    assert not isint("q34sd")
+    assert not isint("0.23")
+    assert not isint("adf!@#nn")
 
-    def test_isblank(self) -> None:
-        blank = ("", " ", "\n", "\t \n\n")
-        not_blank = (" a",)
-        for s in blank:
-            self.assertTrue(isblank(s))
-        for s in not_blank:
-            self.assertFalse(isblank(s))
 
-        self.assertFalse(isblank(123))
+def test_remove_whitespace() -> None:
+    assert remove_whitespace("  kjashd askjdh askjdh\tasdf") == "kjashdaskjdhaskjdhasdf"
 
-    def test_group_count(self) -> None:
-        test = "aaabbbbcccddea"
-        out = group_count(test)
-        self.assertEqual(
-            tuple(out), (("a", 3), ("b", 4), ("c", 3), ("d", 2), ("e", 1), ("a", 1))
-        )
 
-    def test_token(self) -> None:
-        t = Token("kind", "some data", 4, 3)
-        str(t)
-        r = repr(t)
-        t2 = eval(r)
-        self.assertEqual(t2.typeof, "kind")
+def test_isblank() -> None:
+    blank = ("", " ", "\n", "\t \n\n")
+    not_blank = (" a",)
+    for s in blank:
+        assert isblank(s)
+    for s in not_blank:
+        assert not isblank(s)
 
-    def test_invert_dict(self) -> None:
-        d = dict(a=3, b=4)
-        invd = invert_dict(d)
-        self.assertTrue(3 in invd)
-        self.assertEqual(invd[3], "a")
+    assert not isblank(123)
 
-    def test_crc64(self) -> None:
-        self.assertEqual(crc64("IHATEMATH"), "E3DCADD69B01ADD1")
 
-    def test_crc32(self) -> None:
-        self.assertEqual(crc32("Test the CRC-32 of this string."), "%08X" % 1571220330)
+def test_group_count() -> None:
+    test = "aaabbbbcccddea"
+    out = group_count(test)
+    assert tuple(out) == (("a", 3), ("b", 4), ("c", 3), ("d", 2), ("e", 1), ("a", 1))
 
-    def test_ArgumentValueError(self) -> None:
-        message = "Some message"
-        component = "whatsit"
-        try:
-            raise ArgumentError(message, component)
-        except ArgumentError as err:
-            self.assertEqual(err.msg, message)
-            self.assertEqual(err.key, component)
-        try:
-            raise ArgumentError(message, component, 10)
-        except ArgumentError as err:
-            self.assertEqual(err.msg, message)
-            self.assertEqual(err.key, component)
-            self.assertEqual(err.value, 10)
+
+def test_token() -> None:
+    t = Token("kind", "some data", 4, 3)
+    str(t)
+    r = repr(t)
+    t2 = eval(r)
+    assert t2.typeof == "kind"
+
+
+def test_invert_dict() -> None:
+    d = dict(a=3, b=4)
+    invd = invert_dict(d)
+    assert 3 in invd
+    assert invd[3] == "a"
+
+
+def test_crc64() -> None:
+    assert crc64("IHATEMATH") == "E3DCADD69B01ADD1"
+
+
+def test_crc32() -> None:
+    assert crc32("Test the CRC-32 of this string.") == "%08X" % 1571220330
+
+
+def test_ArgumentValueError() -> None:
+    message = "Some message"
+    component = "whatsit"
+    try:
+        raise ArgumentError(message, component)
+    except ArgumentError as err:
+        assert err.msg == message
+        assert err.key == component
+    try:
+        raise ArgumentError(message, component, 10)
+    except ArgumentError as err:
+        assert err.msg == message
+        assert err.key == component
+        assert err.value == 10
 
 
 tfile = """line 0
@@ -142,6 +144,3 @@ Blah
 line 3
 line 4
 """
-
-if __name__ == "__main__":
-    unittest.main()

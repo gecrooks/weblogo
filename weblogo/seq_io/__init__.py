@@ -138,7 +138,7 @@ Attributes :
 #    - http://www.genomatix.de/online_help/help/sequence_formats.html
 
 from types import ModuleType
-from typing import List, Optional, TextIO
+from typing import TextIO
 
 from ..seq import Alphabet, SeqList
 from . import genbank_io  # null_io,
@@ -237,7 +237,7 @@ _parsers = (
 )
 
 
-def _get_parsers(fin: TextIO) -> List[ModuleType]:
+def _get_parsers(fin: TextIO) -> list[ModuleType]:
     global _parsers
 
     fnames = format_names()
@@ -260,7 +260,7 @@ def _get_parsers(fin: TextIO) -> List[ModuleType]:
     return parsers
 
 
-def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
+def read(fin: TextIO, alphabet: Alphabet | None = None) -> SeqList:
     """Read a sequence file and attempt to guess its format.
     First the filename extension (if available) is used to infer the format.
     If that fails, then we attempt to parse the file using several common
@@ -286,4 +286,4 @@ def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
             pass
 
     names = ", ".join([p.names[0] for p in parsers])  # type: ignore
-    raise ValueError("Cannot parse sequence file: Tried %s " % names)
+    raise ValueError(f"Cannot parse sequence file: Tried {names} ")

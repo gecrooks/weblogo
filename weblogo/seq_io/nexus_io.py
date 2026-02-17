@@ -34,7 +34,8 @@ Reference:
 Maddison, Swofford, Maddison. 1997. Syst. Biol. 46(4):590-621
 """
 
-from typing import Iterator, Optional, TextIO
+from collections.abc import Iterator
+from typing import TextIO
 
 from ..seq import Alphabet, Seq, SeqList
 from .._ext.nexus import Nexus, safename
@@ -43,13 +44,13 @@ names = ("nexus", "paup")
 extensions = ("nex", "nexus", "paup", "nxs")
 
 
-def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Iterator[Seq]:
+def iterseq(fin: TextIO, alphabet: Alphabet | None = None) -> Iterator[Seq]:
     """Iterate over the sequences in the file."""
     # Default implementation
     return iter(read(fin, alphabet))
 
 
-def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
+def read(fin: TextIO, alphabet: Alphabet | None = None) -> SeqList:
     """Extract sequence data from a nexus file."""
     n = Nexus(fin)
 

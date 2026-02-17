@@ -153,29 +153,21 @@
                                 </dd>
                                 <br>
                                 <dt id="create-sequence">Output format</dt>
-                                <dd>Generally speaking, vector formats (EPS and PDF) are better for print, while bitmaps (JPEG and PNG) are more suitable for displaying on the screen or embedding into a web page.
+                                <dd>Generally speaking, vector formats (PDF and SVG) are better for print, while bitmaps (JPEG and PNG) are more suitable for displaying on the screen or embedding into a web page.
                                 </dd>
                                 <dd>
                                     <table class="table table-bordered table-condensed">
+                                        <tr>
+                                            <td>PDF:</td>
+                                            <td> Portable Document Format (vector) </td>
+                                        </tr>
                                         <tr>
                                             <td>PNG:</td>
                                             <td>(600 DPI) Print resolution bitmap</td>
                                         </tr>
                                         <tr>
-                                            <td> PNG:</td>
-                                            <td>(low res, 96 DPI) Screen resolution bitmap </td>
-                                        </tr>
-                                        <tr>
                                             <td>JPEG:</td>
                                             <td> Screen resolution bitmap </td>
-                                        </tr>
-                                        <tr>
-                                            <td>EPS:</td>
-                                            <td> Encapsulated postscript </td>
-                                        </tr>
-                                        <tr>
-                                            <td>PDF:</td>
-                                            <td> Portable Document Format </td>
                                         </tr>
                                         <tr>
                                             <td>SVG:</td>
@@ -493,34 +485,9 @@
                             <dt>
                                 <h4> Download and Installation</h4></dt>
                             <dd>
-                                WebLogo and its dependencies can be downloaded and installed with pip,
-                                <pre>
-                pip install weblogo
-                </pre>
-                or conda.
-                                <pre>
-                conda install -c conda-forge weblogo
-                </pre>
-                 Alternatively, weblogo and its dependencies can be installed manually. The WebLogo source code can be downloaded from
-                                <a href="https://github.com/WebLogo/weblogo/issues">Weblogo's Github repository</a>. This code is distributed under various <a href="http://www.opensource.org/docs/definition">open source licenses</a>. Please consult the <code class="code">LICENSE.txt</code> file in the source distribution for details.
                                 <p>
-                                    After unpacking the WebLogo tarfile, it should be possible to immediately create logos using the command line client (provided that python, numpy and ghostscript have already been installed).
+                                    See the <a href="https://github.com/gecrooks/weblogo#installation">installation instructions</a> in the project README for how to install WebLogo and its dependencies.
                                 </p>
-                                <pre>
-                ./weblogo --format PNG &lt; cap.fa &gt; cap.png   
-                </pre>
-                                <p>
-                                    Please consult the file <code class="code">build_examples.sh</code> for more examples. </p>
-                                <p>
-                                    To run WebLogo as a stand alone web service, run the logo server command :
-                                </p>
-                                <pre>
-                ./weblogo --serve 
-                </pre>
-                                <p>
-                                    It should now be possible to access WebLogo at <a href="http://localhost:8080/">http://localhost:8080/</a>.
-                                </p>
-                                
                             </dd>
                             <dt>
                                 <h4>Web App</h4></dt>
@@ -564,7 +531,7 @@
                             <dd>
                                 The command line client has many options not available through the web interface. Please consult the bundled <code class="code">build_examples.sh</code> script for inspiration.
                         <pre>
-Usage: weblogo [options]  < sequence_data.fa > sequence_logo.eps
+Usage: weblogo [options]  < sequence_data.fa > sequence_logo.pdf
 
 Create sequence logos from biological sequence alignments.
 
@@ -580,8 +547,8 @@ Options:
                                 msf, genbank, nbrf, nexus, phylip, stockholm,
                                 intelligenetics, table, array, transfac)
     -o --fout FILENAME          Output file (default: stdout)
-    -F --format FORMAT          Format of output: eps (default), png,
-                                png_print, pdf, jpeg, svg, logodata
+    -F --format FORMAT          Format of output: pdf (default), png,
+                                jpeg, svg, logodata
 
   Logo Data Options:
     -A --sequence-type TYPE     The type of sequence data: 'protein', 'rna' or
@@ -685,7 +652,7 @@ Options:
        --aspect-ratio POINTS    Ratio of stack height to width (default: 5)
        --box YES/NO             Draw boxes around symbols? (default: no)
        --resolution DPI         Bitmap resolution in dots per inch (DPI).
-                                (Default: 96 DPI, except png_print, 600 DPI)
+                                (Default: 600 DPI)
                                 Low resolution bitmaps (DPI<300) are
                                 antialiased.
        --scale-width YES/NO     Scale the visible stack width by the fraction
@@ -733,20 +700,13 @@ Options:
                             <h2>WebLogo Development and Future Features</h2>
                             <p>
                                 The development project is hosted at
-                                <a href="https://github.com/WebLogo/weblogo">https://github.com/WebLogo/weblogo</a>. If you wish to extend WebLogo or to contribute code, then you should download the full source code development package directly from the Github repository.
+                                <a href="https://github.com/gecrooks/weblogo">https://github.com/gecrooks/weblogo</a>. See the <a href="https://github.com/gecrooks/weblogo#development">development instructions</a> in the project README for how to set up a development environment.
                             </p>
-                            <pre>
-                &gt; git clone https://github.com/WebLogo/weblogo
-                &gt; pip install -e .
-
-                
-                &gt; cd weblogo
-              </pre>
                             <p>
                                 Please consult the developer notes, <code class="code">DEVELOPERS.txt</code> and software license <code class="code">LICENSE.txt</code>
                             </p>
                             <p>
-                                Outstanding bugs and feature requests are listed on the <a href="https://github.com/WebLogo/weblogo/issues">WebLogo issue tracker.</a>
+                                Outstanding bugs and feature requests are listed on the <a href="https://github.com/gecrooks/weblogo/issues">WebLogo issue tracker.</a>
                             </p>
                         </div>
                         <!--end WebLogo Development row Container-->
@@ -759,10 +719,6 @@ Options:
                             <h2>Miscellanea</h2>
                             <dl>
                                 <!--start defined list Miscellanea-->
-                                <dt>
-                                    <h4>WebLogo 2</h4></dt>
-                                <dd> The legacy WebLogo 2 sever can be found <a href="http://weblogo.berkeley.edu/">here.</a>
-                                </dd>
                                 <dt>
                                     <h4>Acknowledgments</h4></dt>
                                 <dd>
@@ -795,7 +751,7 @@ Options:
                                     <h4>Feedback</h4></dt>
                                 <dd>
                                     <p>
-                                        Suggestions on how to improve WebLogo are heartily welcomed! Please direct questions to <a href="https://github.com/WebLogo/weblogo/issues"> WebLogo's issue tracker</a>.
+                                        Suggestions on how to improve WebLogo are heartily welcomed! Please direct questions to <a href="https://github.com/gecrooks/weblogo/issues"> WebLogo's issue tracker</a>.
                                     </p>
                                 </dd>
                             </dl>

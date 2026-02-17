@@ -2,7 +2,7 @@
 
 WebLogo is a web based application designed to make the generation of sequence logos as easy and painless as possible.
 
-WebLogo can create output in several common graphics' formats, including the bitmap formats GIF and PNG, suitable for on-screen display, and the vector formats EPS and PDF, more suitable for printing, publication, and further editing. Additional graphics options include bitmap resolution, titles, optional axis, and axis labels, antialiasing, error bars, and alternative symbol formats.
+WebLogo can create output in several common graphics' formats, including the bitmap formats JPEG and PNG, suitable for on-screen display, and the vector formats PDF and SVG, more suitable for printing, publication, and further editing. Additional graphics options include bitmap resolution, titles, optional axis, and axis labels, antialiasing, error bars, and alternative symbol formats.
 
 A sequence logo is a graphical representation of an amino acid or nucleic acid multiple sequence alignment. Each logo consists of stacks of symbols, one stack for each position in the sequence. The overall height of the stack indicates the sequence conservation at that position, while the height of symbols within the stack indicates the relative frequency of each amino or nucleic acid at that position. The width of the stack is proportional to the fraction of valid symbols in that position.
 
@@ -11,10 +11,6 @@ A sequence logo is a graphical representation of an amino acid or nucleic acid m
 > Crooks GE, Hon G, Chandonia JM, Brenner SE WebLogo: A sequence logo generator, Genome Research, 14:1188-1190, (2004) [Full Text ](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC419797/)
 
 > Schneider TD, Stephens RM. 1990. Sequence Logos: A New Way to Display Consensus Sequences. Nucleic Acids Res. 18:6097-6100
-
-## WebLogo 2
-
-The legacy WebLogo 2 server can be found <a href="http://weblogo.berkeley.edu/">here.</a>
 
 ## Installation
 
@@ -43,7 +39,7 @@ Then run:
 $ weblogo --help
 ```
 
-Weblogo uses the program ghostcript to covert eps files to other graphical file formats, such as pdf. 
+Weblogo uses ghostscript to convert PDF to bitmap formats (PNG, JPEG). PDF output is generated natively and does not require ghostscript.
 
 Mac:
 ```

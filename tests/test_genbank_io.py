@@ -25,8 +25,6 @@
 #
 
 
-import unittest
-
 from weblogo import seq_io
 from weblogo.seq_io import genbank_io
 
@@ -51,40 +49,37 @@ def examples():  # type: ignore
     )
 
 
-class test_genbank_io(unittest.TestCase):
-    # Useful for debugging
-    # def test_scan(self) :
-    #    for f in examples():
-    #        for t in genbank_io._scan(f):
-    #            print t
-    #        print
-    #        print
+# Useful for debugging
+# def test_scan():
+#    for f in examples():
+#        for t in genbank_io._scan(f):
+#            print t
+#        print
+#        print
 
-    def test_parse(self) -> None:
-        for f in examples():
-            # print f.name
-            genbank_io.read(f)
-            f.close()
-            # print seqs
 
-    def test_read(self) -> None:
-        f = data_stream("genbank/cox2.gb")
-        seqs = genbank_io.read(f)
-
-        self.assertEqual(len(seqs), 5)
-        self.assertEqual(len(seqs[1]), 210)
-
-        f.seek(0)
-        seqs = seq_io.read(f)
-        self.assertEqual(len(seqs), 5)
-        self.assertEqual(len(seqs[1]), 210)
+def test_parse() -> None:
+    for f in examples():
+        # print f.name
+        genbank_io.read(f)
         f.close()
-
-        f = data_stream("genbank/NT_019265.gb")
-        seqs = genbank_io.read(f)
-        self.assertEqual(len(seqs), 0)
-        f.close()
+        # print seqs
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_read() -> None:
+    f = data_stream("genbank/cox2.gb")
+    seqs = genbank_io.read(f)
+
+    assert len(seqs) == 5
+    assert len(seqs[1]) == 210
+
+    f.seek(0)
+    seqs = seq_io.read(f)
+    assert len(seqs) == 5
+    assert len(seqs[1]) == 210
+    f.close()
+
+    f = data_stream("genbank/NT_019265.gb")
+    seqs = genbank_io.read(f)
+    assert len(seqs) == 0
+    f.close()

@@ -38,7 +38,8 @@ Ref :
 # TODO: What happens if CLUSTAL is not the first line of the file?
 
 import re
-from typing import Iterator, Optional, TextIO
+from collections.abc import Iterator
+from typing import TextIO
 
 from ..seq import Alphabet, Seq, SeqList
 from ..utils import Token
@@ -85,13 +86,13 @@ seq_line = re.compile(r"(\s*\S+\s+)(\S+)\s*(\d*)\s*$")
 match_line = re.compile(r"([\s:\.\*]*)$")
 
 
-def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Iterator[Seq]:
+def iterseq(fin: TextIO, alphabet: Alphabet | None = None) -> Iterator[Seq]:
     """Iterate over the sequences in the file."""
     # Default implementation
     return iter(read(fin, alphabet))
 
 
-def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
+def read(fin: TextIO, alphabet: Alphabet | None = None) -> SeqList:
     alphabet = Alphabet(alphabet)
     seq_ids = []
     seqs: list = []
@@ -112,8 +113,7 @@ def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
 
             if not alphabet.alphabetic(data):
                 raise ValueError(
-                    "Character on line: %d not in alphabet: %s : %s"
-                    % (token.lineno, alphabet, data)
+                    f"Character on line: {token.lineno} not in alphabet: {alphabet} : {data}"
                 )
             seqs[block_count].append(data)
             if block_count == 0:
@@ -188,7 +188,7 @@ def _scan(fin: TextIO) -> Iterator[Token]:
 
             m = seq_line.match(line)
             if m is None:
-                raise ValueError("Parse error on line: %d (%s)" % (L, line))
+                raise ValueError(f"Parse error on line: {L} ({line})")
             leader_width = len(m.group(1))
             yield Token("seq_id", m.group(1).strip())
             yield Token("seq", m.group(2).strip())

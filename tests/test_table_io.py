@@ -24,37 +24,35 @@
 #  THE SOFTWARE.
 #
 
-import unittest
+import pytest
 from io import StringIO
 
 from weblogo.seq_io import plain_io, table_io
 
 
-class test_table_io(unittest.TestCase):
-    def test_read(self) -> None:
-        f = StringIO(table_io.example)
-        seqs = table_io.read(f)
-        self.assertEqual(len(seqs), 10)
-        self.assertEqual(seqs[2].name, "EC0003")
-        self.assertEqual(len(seqs[1]), 50)
-
-    def test_read_fail(self) -> None:
-        f = StringIO(plain_io.example)
-        # Wrong alphabet
-        self.assertRaises(ValueError, table_io.read, f)
-
-    def test_write_seq(self) -> None:
-        f = StringIO(table_io.example)
-        seqs = table_io.read(f)
-
-        fout = StringIO()
-        table_io.write(fout, seqs)
-
-        fout.seek(0)
-        seqs2 = table_io.read(fout)
-
-        self.assertEqual(seqs, seqs2)
+def test_table_io_read() -> None:
+    f = StringIO(table_io.example)
+    seqs = table_io.read(f)
+    assert len(seqs) == 10
+    assert seqs[2].name == "EC0003"
+    assert len(seqs[1]) == 50
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_table_io_read_fail() -> None:
+    f = StringIO(plain_io.example)
+    # Wrong alphabet
+    with pytest.raises(ValueError):
+        table_io.read(f)
+
+
+def test_table_io_write_seq() -> None:
+    f = StringIO(table_io.example)
+    seqs = table_io.read(f)
+
+    fout = StringIO()
+    table_io.write(fout, seqs)
+
+    fout.seek(0)
+    seqs2 = table_io.read(fout)
+
+    assert seqs == seqs2

@@ -24,7 +24,7 @@ dependencies = [
     "numpy",
     "scipy",
     "importlib-resources",
-    "importlib-metadata"
+    "importlib-metadata",
 ]
 
 [project.urls]
@@ -77,7 +77,6 @@ parallel = true
 
 [tool.coverage.report]
 omit = ['*_test.py',
-    'weblogo/utils/deoptparse.py',
     'weblogo/_ext/*']
 
 exclude_lines = [

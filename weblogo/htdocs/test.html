@@ -62,6 +62,7 @@ The entropy should be 2 bits, 1 bit, 0 bits
 <input type="hidden" name="show_fineprint" value="true" >
 <input type="hidden" name="show_errorbars" value="true" >
 <input type="hidden" name="download" value="true" >
+<input type="hidden" name="format" value="pdf" >
 <input type="hidden" name="composition" value="comp_none" >
 
 <input type="hidden" name="sequences" value=
@@ -92,7 +93,8 @@ Replace and display x-label, y-label and title.
 
 <input type="hidden" name="yaxis_label" value="The Y-axis" > 
 <input type="hidden" name="xaxis_label" value="The X-axis" > 
-<input type="hidden" name="logo_title" value="This is the TITLE" > 
+<input type="hidden" name="logo_title" value="This is the TITLE" >
+<input type="hidden" name="format" value="pdf" >
 <input type="hidden" name="sequences" value=
 ">
 AAAGTGAAAGTGAAAGTGAAAGTG
@@ -112,10 +114,11 @@ Same, but do not show axes
 <input type="hidden" name="show_fineprint" value="true" >
 <input type="hidden" name="show_errorbars" value="true" >
 <input type="hidden" name="download" value="true" >
+<input type="hidden" name="format" value="pdf" >
 
-<input type="hidden" name="yaxis_label" value="This is the Y-axis" > 
-<input type="hidden" name="xaxis_label" value="This is the X-axis" > 
-<input type="hidden" name="logo_title" value="This is the TITLE" > 
+<input type="hidden" name="yaxis_label" value="This is the Y-axis" >
+<input type="hidden" name="xaxis_label" value="This is the X-axis" >
+<input type="hidden" name="logo_title" value="This is the TITLE" >
 <input type="hidden" name="sequences" value=
 ">
 AAAGTGAAAGTGAAAGTGAAAGTG
@@ -144,9 +147,8 @@ Ensure that this logo can be created in each of the available formats
 <input type="hidden" name="download" value="true" >
 
 Format: <select name="format">
-<option value="png_print">PNG</option>
-<option value="eps">EPS (vector)</option>
-<option value="pdf">PDF (vector)</option>
+<option value="pdf" selected="selected">PDF (vector)</option>
+<option value="png">PNG</option>
 <option value="svg">SVG (vector)</option>
 <option value="logodata">data</option>
 </select> 
@@ -179,6 +181,7 @@ should be alphabetized, top down.
 <input type="hidden" name="show_fineprint" value="true" >
 <input type="hidden" name="show_errorbars" value="true" >
 <input type="hidden" name="download" value="true" >
+<input type="hidden" name="format" value="pdf" >
 <input type="hidden" name="composition" value="comp_none" >
 (NA)
 <input type="hidden" name="sequences" value=
@@ -202,6 +205,7 @@ TGCCTT
 <input type="hidden" name="show_fineprint" value="true" >
 <input type="hidden" name="show_errorbars" value="true" > (AA)
 <input type="hidden" name="download" value="true" >
+<input type="hidden" name="format" value="pdf" >
 <input type="hidden" name="sequences" value=
 ">
 PK
@@ -228,6 +232,7 @@ Should not die just because there is only 1 stack.
 <input type="submit" name="cmd_edit" value="Edit" >
 <input type="submit" name="cmd_create" value="Create" >
 <input type="hidden" name="download" value="true" >
+<input type="hidden" name="format" value="pdf" >
 <input type="hidden" name="sequences" value=
 ">
 A
@@ -258,6 +263,7 @@ is 2 bits.
 <input type="hidden" name="show_xaxis" value="true" >
 <input type="hidden" name="download" value="true" >
 <input type="hidden" name="show_fineprint" value="true" >
+<input type="hidden" name="format" value="pdf" >
 <select name="composition" >
 <option value = "comp_none" >No adjustment for composition</option>
 <option value = "comp_auto" >auto</option>
@@ -408,7 +414,8 @@ Same sequences, three different sizes.
 <input type="hidden" name="show_yaxis" value="true" >
 <input type="hidden" name="show_xaxis" value="true" >
 <input type="hidden" name="show_fineprint" value="true" >
-Size: 
+<input type="hidden" name="format" value="pdf" >
+Size:
 <select name="stack_width" >
 <option  selected="selected" >small</option>
 <option >medium</option>
@@ -538,6 +545,7 @@ TCTTGTGATGTGGTTAACCAAT
 <input type="hidden" name="show_fineprint" value="true" >
 <input type="hidden" name="show_errorbars" value="true" >
 <input type="hidden" name="download" value="true" >
+<input type="hidden" name="format" value="pdf" >
 
 <input type="hidden" name="sequences" value=
 "AC   M00001

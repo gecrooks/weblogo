@@ -5,54 +5,54 @@ mkdir -p tmp
 echo "# Test weblogo by building logos with many different options."
 
 echo  -n '.'
-weblogo  < cap.fa > tmp/logo0.eps ||exit
+weblogo  < cap.fa > tmp/logo0.pdf ||exit
 
 echo  -n '.'
-weblogo --title "Default Logo with Title" < cap.fa > tmp/logo1.eps ||exit
+weblogo --title "Default Logo with Title" < cap.fa > tmp/logo1.pdf ||exit
 
 echo  -n '.'
-weblogo --debug yes --fineprint "Default Logo with this fineprint and debug on" < cap.fa > tmp/logo2.eps ||exit
+weblogo --debug yes --fineprint "Default Logo with this fineprint and debug on" < cap.fa > tmp/logo2.pdf ||exit
 
 echo  -n '.'
-weblogo --debug no  --fineprint "--debug no"   --debug no < cap.fa > tmp/logo3.eps ||exit
+weblogo --debug no  --fineprint "--debug no"   --debug no < cap.fa > tmp/logo3.pdf ||exit
 
 echo  -n '.'
-weblogo --debug yes --fineprint "" --title "No fine print" --debug yes < cap.fa > tmp/logo4.eps ||exit
+weblogo --debug yes --fineprint "" --title "No fine print" --debug yes < cap.fa > tmp/logo4.pdf ||exit
 
 echo  -n '.'
-weblogo --debug yes --fineprint "No title" --title "" < cap.fa > tmp/logo5.eps ||exit
+weblogo --debug yes --fineprint "No title" --title "" < cap.fa > tmp/logo5.pdf ||exit
 
 echo  -n '.'
-weblogo --debug yes --fineprint "--first-index -10" --first-index -10 < cap.fa > tmp/logo6.eps ||exit
+weblogo --debug yes --fineprint "--first-index -10" --first-index -10 < cap.fa > tmp/logo6.pdf ||exit
 
 echo  -n '.'
-weblogo --debug yes --fineprint " --first-index -10 --stacks-per-line 11 " --first-index -10 --stacks-per-line 11 < cap.fa > tmp/logo7a.eps ||exit
+weblogo --debug yes --fineprint " --first-index -10 --stacks-per-line 11 " --first-index -10 --stacks-per-line 11 < cap.fa > tmp/logo7a.pdf ||exit
 
 echo  -n '.'
-weblogo --debug yes --fineprint " --first-index -10 --stacks-per-line 8 " --first-index -10 --stacks-per-line 8 < cap.fa > tmp/logo7b.eps ||exit
+weblogo --debug yes --fineprint " --first-index -10 --stacks-per-line 8 " --first-index -10 --stacks-per-line 8 < cap.fa > tmp/logo7b.pdf ||exit
 
 echo  -n '.'
-weblogo --debug yes --fineprint " --first-index -10 --stacks-per-line 7 " --first-index -10 --stacks-per-line 7 < cap.fa > tmp/logo7c.eps ||exit
+weblogo --debug yes --fineprint " --first-index -10 --stacks-per-line 7 " --first-index -10 --stacks-per-line 7 < cap.fa > tmp/logo7c.pdf ||exit
 
 echo  -n '.'
-weblogo --debug yes --fineprint "Test fin and fout" --fin cap.fa  --fout tmp/logo8.eps ||exit
+weblogo --debug yes --fineprint "Test fin and fout" --fin cap.fa  --fout tmp/logo8.pdf ||exit
 
 # Test Y Axis
 
 echo  -n '.'
-weblogo --debug yes --fineprint "Custom yaxis label " --ylabel 'yaxis label' < cap.fa > tmp/logo9a.eps ||exit
+weblogo --debug yes --fineprint "Custom yaxis label " --ylabel 'yaxis label' < cap.fa > tmp/logo9a.pdf ||exit
 
 echo  -n '.'
-weblogo --debug yes --fineprint "Custom units" --units 'nats' < cap.fa > tmp/logo9b.eps ||exit
+weblogo --debug yes --fineprint "Custom units" --units 'nats' < cap.fa > tmp/logo9b.pdf ||exit
 
 echo  -n '.'
-weblogo --debug yes --fineprint "Override custom units with custom yaxis label."  --ylabel 'yaxis label' --units nats < cap.fa > tmp/logo9c.eps ||exit
+weblogo --debug yes --fineprint "Override custom units with custom yaxis label."  --ylabel 'yaxis label' --units nats < cap.fa > tmp/logo9c.pdf ||exit
 
 echo  -n '.'
-weblogo --debug yes --fineprint "Empty ylabel"  --ylabel '' < cap.fa > tmp/logo9d.eps
+weblogo --debug yes --fineprint "Empty ylabel"  --ylabel '' < cap.fa > tmp/logo9d.pdf
 
 echo  -n '.'
-weblogo --debug yes --fineprint "No Yaxis"  --show-yaxis no  < cap.fa > tmp/logo9e.eps ||exit
+weblogo --debug yes --fineprint "No Yaxis"  --show-yaxis no  < cap.fa > tmp/logo9e.pdf ||exit
 
 # Test X Axis
 
@@ -71,13 +71,10 @@ weblogo --debug yes --format pdf --fineprint "No Xaxis, custom label"  --xlabel 
 # Test Formats
 
 echo  -n '.'
-weblogo --debug no  --fineprint "Format: eps" --format eps < cap.fa > tmp/logo11a.eps ||exit
-
-echo  -n '.'
 weblogo --debug no  --fineprint "Format: png" --size large --format png < cap.fa > tmp/logo11b.png ||exit
 
 echo  -n '.'
-weblogo --debug no  --fineprint "Format: png high res" --format png_print < cap.fa > tmp/logo11c.png ||exit
+weblogo --debug no  --fineprint "Format: png high res" --format png < cap.fa > tmp/logo11c.png ||exit
 
 echo  -n '.'
 weblogo --debug no  --fineprint "Format: pdf" --format pdf < cap.fa > tmp/logo11d.pdf ||exit
@@ -85,22 +82,19 @@ weblogo --debug no  --fineprint "Format: pdf" --format pdf < cap.fa > tmp/logo11
 echo  -n '.'
 weblogo --debug no  --fineprint "Format: jpeg" --size large --format jpeg < cap.fa > tmp/logo11e.jpeg ||exit
 
-echo  -n '.'
-weblogo --debug no  --fineprint "Format: EPS" --format EPS < cap.fa > tmp/logo11f.eps ||exit
-
 # Test Sizes
 
 echo  -n '.'
-weblogo --debug no  --format png_print --fineprint "default size" < cap.fa > tmp/logo12_default.png ||exit
+weblogo --debug no  --format png --fineprint "default size" < cap.fa > tmp/logo12_default.png ||exit
 
 echo  -n '.'
-weblogo --debug no  --format png_print --fineprint "--size large" --size large < cap.fa > tmp/logo12_large.png ||exit
+weblogo --debug no  --format png --fineprint "--size large" --size large < cap.fa > tmp/logo12_large.png ||exit
 
 echo  -n '.'
-weblogo --debug no  --format png_print --fineprint "--size medium" --size medium < cap.fa > tmp/logo12_medium.png ||exit
+weblogo --debug no  --format png --fineprint "--size medium" --size medium < cap.fa > tmp/logo12_medium.png ||exit
 
 echo  -n '.'
-weblogo --debug no  --format png_print --fineprint "--size small" --size small < cap.fa > tmp/logo12_small.png ||exit
+weblogo --debug no  --format png --fineprint "--size small" --size small < cap.fa > tmp/logo12_small.png ||exit
 
 
 
@@ -145,8 +139,3 @@ echo  -n '.'
 weblogo --format pdf --alphabet 'AGTC' > tmp/logo15.pdf < cap.fa || exit
 
 echo
-
-
-
-
-

@@ -40,7 +40,8 @@ in as a sequence.  Whitespace is removed.
 -EPC-RDENVHFNRIFLPTIYFIIFLTGIVGNGLVILVMGYQKKLRSMTDKYRLHLSVAD
 """
 
-from typing import Iterator, List, Optional, TextIO
+from collections.abc import Iterator
+from typing import TextIO
 
 from ..seq import Alphabet, Seq, SeqList
 from ..utils import remove_whitespace
@@ -60,7 +61,7 @@ names = ("plain", "raw")
 extensions = ()
 
 
-def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
+def read(fin: TextIO, alphabet: Alphabet | None = None) -> SeqList:
     """Read a file of raw sequence data.
 
     Args:
@@ -75,7 +76,7 @@ def read(fin: TextIO, alphabet: Optional[Alphabet] = None) -> SeqList:
     return SeqList(seqs)
 
 
-def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Iterator[Seq]:
+def iterseq(fin: TextIO, alphabet: Alphabet | None = None) -> Iterator[Seq]:
     """Read the sequence data and yield one (and only one) sequence.
 
     Args:
@@ -95,20 +96,19 @@ def iterseq(fin: TextIO, alphabet: Optional[Alphabet] = None) -> Iterator[Seq]:
         line = line.strip()
 
         if line[0] == ">":  # probably a fasta file. Fail.
-            raise ValueError("Parse Error on input line: %d " % (linenum))
+            raise ValueError(f"Parse Error on input line: {linenum} ")
         line = remove_whitespace(line)
 
         if not alphabet.alphabetic(line):
             raise ValueError(
-                "Character on line: %d not in alphabet: %s : %s"
-                % (linenum, alphabet, line)
+                f"Character on line: {linenum} not in alphabet: {alphabet} : {line}"
             )
         lines.append(line)
 
     yield Seq("".join(lines), alphabet)
 
 
-def write(afile: TextIO, seqs: List[Seq]) -> None:
+def write(afile: TextIO, seqs: list[Seq]) -> None:
     """Write raw sequence data, one line per sequence.
 
     arguments:
