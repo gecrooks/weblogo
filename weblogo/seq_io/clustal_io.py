@@ -35,8 +35,6 @@ Ref :
     penalties and weight matrix choice. Nucleic Acids Res. 22:4673-4680.
 """
 
-# TODO: What happens if CLUSTAL is not the first line of the file?
-
 import re
 from collections.abc import Iterator
 from typing import TextIO

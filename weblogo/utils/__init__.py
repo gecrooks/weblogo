@@ -80,7 +80,6 @@ def ischar(s: Any) -> bool:
 
 def remove_whitespace(astring: str) -> str:
     """Remove all whitespace from a string."""
-    # TODO: Is this horrible slow?
     return "".join(astring.split())
 
 

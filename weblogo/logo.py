@@ -454,13 +454,11 @@ class LogoFormat(LogoOptions):
 
         # Run arguments tests. The second, attribute argument to the ArgumentError is
         # used by the UI to provide user feedback.
-        # FIXME: More validation
         for test in arg_conditions:
             if not test[1](getattr(self, test[0])):
                 raise ArgumentError(test[2], test[0])
 
         # Inclusive upper and lower bounds
-        # FIXME: Validate here. Move from formatter
 
         if self.first_index is None:
             raise ValueError("first_index must not be None")  # pragma: no cover
@@ -851,9 +849,7 @@ class LogoData:
             ent = np.zeros(seq_length, np.float64)
             entropy_interval = None
             for i in range(0, seq_length):
-                C = sum(counts[i])
-                # FIXME: fixup .moremath.entropy()?
-                if C == 0:
+                if sum(counts[i]) == 0:
                     ent[i] = 0.0
                 else:
                     ent[i] = R - entropy(counts[i])
@@ -893,15 +889,11 @@ class LogoData:
         # Check sequence lengths
         seq_length = len(seqs[0])
         for i, s in enumerate(seqs):
-            # print(i, s, len(s))
-            # TODO: Redundant? Should be checked in SeqList?
             if seq_length != len(s):
                 raise ArgumentError(
                     f"Sequence number {i + 1} differs in length from the previous sequences",
                     "sequences",
                 )
-
-        # FIXME: Check seqs.alphabet?
 
         counts = seqs.profile()
         return cls.from_counts(seqs.alphabet, counts, prior)

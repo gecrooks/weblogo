@@ -508,7 +508,6 @@ def _build_argument_parser() -> argparse.ArgumentParser:
 
     # ========================== Transformation OPTIONS ==========================
 
-    # FIXME Add test?
     trans_grp.add_argument(
         "--ignore-lower-case",
         dest="ignore_lower_case",

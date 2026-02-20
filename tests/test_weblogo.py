@@ -683,8 +683,6 @@ def test_dirichlet_variance_x() -> None:
     alpha = (1.0, 2.0, 3.0, 4.0)
     xx = (2.0, 0.0, 1.0, 10.0)
     v = Dirichlet(alpha).variance_x(xx)
-    # print(v)
-    # TODO: Don't actually know if this is correct
 
     xx2 = (2.0, 2.0, 2.0, 2.0, 2.0)
     with pytest.raises(ValueError):

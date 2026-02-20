@@ -150,25 +150,16 @@ def test_alphabet_which_alphabet() -> None:
     a = Alphabet.which(Seq("ARNDCQEGHILKMFPSTWYVX"))
     assert a == unambiguous_protein_alphabet
 
-    # FIXME: sloppy use of file references
-    f1 = data_ref("cap.fa").open()
-    f2 = data_ref("cox2.msf").open()
-    f3 = data_ref("Rv3829c.fasta").open()
-    f4 = data_ref("chain_B.fasta").open()
-
-    tests = (
-        (seq_io.read(f1), unambiguous_dna_alphabet),
-        (seq_io.read(f2), unambiguous_protein_alphabet),
-        (seq_io.read(f3), unambiguous_protein_alphabet),
-        (seq_io.read(f4), unambiguous_protein_alphabet),
+    test_cases = (
+        ("cap.fa", unambiguous_dna_alphabet),
+        ("cox2.msf", unambiguous_protein_alphabet),
+        ("Rv3829c.fasta", unambiguous_protein_alphabet),
+        ("chain_B.fasta", unambiguous_protein_alphabet),
     )
-    for t in tests:
-        assert Alphabet.which(t[0]) == t[1]
-
-    f1.close()
-    f2.close()
-    f3.close()
-    f4.close()
+    for filename, expected_alphabet in test_cases:
+        with data_ref(filename).open() as f:
+            seqs = seq_io.read(f)
+            assert Alphabet.which(seqs) == expected_alphabet
 
 
 # --- Tests from test_seq ---
@@ -410,13 +401,6 @@ def test_seqlist_ords() -> None:
     s2 = Seq("ACGTURSWKMBDHVNACGTURKMBDHVN", nucleic_alphabet)
     seqs = SeqList([s0, s1, s2], nucleic_alphabet)
     seqs.ords()
-    # assert a.shape == (3, 28)
-
-    # Fails if seqs are of different lengths
-    # FIXME?
-    # s3 = Seq("ACGTUR", nucleic_alphabet )
-    # seqs2 = SeqList( [ s0,s1,s3,s2],  nucleic_alphabet)
-    # with pytest.raises(ValueError): seqs2.ords()
 
     # Use a different alphabet
     seqs.ords(nucleic_alphabet)

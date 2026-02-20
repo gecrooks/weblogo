@@ -101,13 +101,6 @@ class Transform:
         return cls(s, self.target.alphabet, seq.name, seq.description)
 
 
-# FIXME: Test, document, add to seq.
-dna_complement = Transform(
-    Seq("ACGTRYSWKMBDHVN-acgtUuryswkmbdhvnXx?.~", dna_alphabet),
-    Seq("TGCAYRSWMKVHDBN-tgcaAayrswmkvhdbnXx?.~", dna_alphabet),
-)
-
-
 def mask_low_complexity(
     seq: Seq,
     width: int = 12,
@@ -240,10 +233,6 @@ class GeneticCode:
     Authors:
         JXG, GEC
     """
-
-    # TODO: Explain use of '?' in translated sequence.
-    # TODO: Does translate fails with aproriate execption when fed gaps?
-    # TODO: Can back_translate handle gaps?
 
     def __init__(
         self,
@@ -401,8 +390,6 @@ class GeneticCode:
         Returns :
         -- Seq - A polypeptide sequence
         """
-        # TODO: Optimize.
-        # TODO: Insanity check alphabet.
         seqs = seq
         table = self.table
         if table is None:
@@ -424,8 +411,6 @@ class GeneticCode:
         Returns :
         -- Seq - A DNA sequence
         """
-        # TODO: Optimize
-        # TODO: Insanity check alphabet.
         table = self.back_table
         if table is None:
             raise ValueError("Back-translation table not initialized")  # pragma: no cover
@@ -433,10 +418,6 @@ class GeneticCode:
         seqs = seq
         trans = [table[a] for a in seqs]
         return Seq("".join(trans), dna_alphabet)
-
-    # TODO: translate_orf(self, seq, start) ?
-    # TODO: translate_to_stop(self, seq, frame) ?
-    # TODO: translate_all_frames(self,seq) -> 6 translations.
 
     def __repr__(self) -> str:
         string: list[str] = []
