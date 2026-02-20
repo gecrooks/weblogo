@@ -147,7 +147,7 @@ def test_fasta_io_read_comments() -> None:
     f = StringIO(example_with_optional_comments)
     seqs = fasta_io.read(f)
     assert len(seqs) == 2
-    assert seqs[1].startswith("SATVSEI")
+    assert str(seqs[1]).startswith("SATVSEI")
     assert (
         seqs[1].description.splitlines()[1] == ("comment line 1 (optional)")
     )

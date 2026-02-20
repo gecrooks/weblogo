@@ -96,7 +96,7 @@ class Transform:
         """Translate sequence."""
         if not self.source.alphabet.alphabetic(seq):
             raise ValueError("Incompatible alphabets")
-        s = str.translate(seq, self.table)
+        s = str(seq).translate(self.table)
         cls = self.target.__class__
         return cls(s, self.target.alphabet, seq.name, seq.description)
 

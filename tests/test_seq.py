@@ -560,3 +560,17 @@ def test_seqlist_profile_skip_non_alphabet_chars() -> None:
 def test_bad_mask() -> None:
     with pytest.raises(ValueError):
         dna("AAaaaaAAA").mask(mask="ABC")
+
+
+def test_seq_contains() -> None:
+    s = dna("ACGT")
+    assert "A" in s
+    assert "X" not in s
+
+
+def test_seq_hash() -> None:
+    s1 = dna("ACGT")
+    s2 = dna("ACGT")
+    assert hash(s1) == hash(s2)
+    d = {s1: "test"}
+    assert d[s2] == "test"
