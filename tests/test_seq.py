@@ -521,6 +521,42 @@ def test_seqlist_str() -> None:
 # --- Standalone test ---
 
 
+def test_alphabet_which_custom_alphabets() -> None:
+    """Alphabet.which with an explicit alphabets list."""
+    a = Alphabet("AC")
+    b = Alphabet("GT")
+    s = SeqList([Seq("AACCAA", generic_alphabet)], generic_alphabet)
+    result = Alphabet.which(s, alphabets=[a, b])
+    assert result == a
+
+
+def test_seqlist_profile_explicit_alphabet() -> None:
+    """SeqList.profile with an explicit alphabet argument."""
+    a = Alphabet("ABCD")
+    s0 = Seq("ABCDD", a)
+    s1 = Seq("AAAAD", a)
+    seqs = SeqList([s0, s1], a)
+    tally = seqs.profile(a)
+    assert list(tally[0]) == [2, 0, 0, 0]
+
+
+def test_seqlist_profile_skip_non_alphabet_chars() -> None:
+    """Profile with a narrower alphabet skips out-of-range chars."""
+    wide = Alphabet("ABCD")
+    narrow = Alphabet("AB")
+    s0 = Seq("ABCD", wide)
+    s1 = Seq("AABB", wide)
+    seqs = SeqList([s0, s1], wide)
+    tally = seqs.profile(narrow)
+    # Column 0: A,A -> A=2, B=0. Column 1: B,A -> A=1, B=1
+    # Column 2: C,B -> C not in narrow (skipped), B=1 -> A=0, B=1
+    # Column 3: D,B -> D not in narrow (skipped), B=1 -> A=0, B=1
+    assert list(tally[0]) == [2, 0]
+    assert list(tally[1]) == [1, 1]
+    assert list(tally[2]) == [0, 1]
+    assert list(tally[3]) == [0, 1]
+
+
 def test_bad_mask() -> None:
     with pytest.raises(ValueError):
         dna("AAaaaaAAA").mask(mask="ABC")

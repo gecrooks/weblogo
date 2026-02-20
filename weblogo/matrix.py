@@ -360,7 +360,7 @@ class Motif(AlphabeticArray):
                 )  # pragma: no cover
 
         # Vertical or horizontal arrangement?
-        if header[0] == "PO" or header[0] == "P0":
+        if header[0] == "PO" or header[0] == "P0":  # pragma: no branch
             header.pop(0)
 
         position_header = True

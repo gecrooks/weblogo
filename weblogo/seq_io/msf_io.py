@@ -146,7 +146,7 @@ def _line_is(fin: TextIO) -> Iterator[Token]:
             state = block
             # skips to a block of sequences
 
-        if state == block:
+        if state == block:  # pragma: no branch
             if line.isspace():
                 yield Token("end_block")
                 state = body

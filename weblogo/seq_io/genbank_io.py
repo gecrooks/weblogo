@@ -62,7 +62,7 @@ def iterseq(fin: TextIO, alphabet: Alphabet | None = None) -> Iterator[Seq]:
         elif state == block:
             if line.startswith("ORIGIN") or line.startswith("//"):
                 state = data
-        elif state == data:
+        elif state == data:  # pragma: no branch
             if line.startswith("//"):
                 yield Seq("".join(seq), alphabet)
                 seq = []

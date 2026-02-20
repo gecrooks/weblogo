@@ -197,7 +197,7 @@ def _scan(fin: TextIO) -> Iterator[Token]:
             continue
 
         # END state blocks. If I ever get here something has gone terrible wrong
-        raise RuntimeError()  # pragma: nocover
+        raise RuntimeError()  # pragma: no cover
 
     if state == block:
         yield Token("end_block")

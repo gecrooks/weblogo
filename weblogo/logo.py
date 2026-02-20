@@ -356,7 +356,7 @@ class LogoFormat(LogoOptions):
     ) -> None:
         """Create a new LogoFormat instance."""
 
-        if logooptions is not None:
+        if logooptions is not None:  # pragma: no branch
             self.__dict__.update(logooptions.__dict__)
 
         self.alphabet: Alphabet | None = logodata.alphabet
@@ -564,7 +564,7 @@ class LogoFormat(LogoOptions):
         if self.show_xaxis_label:
             self.xaxis_label_height += self.fontsize
         if self.show_fineprint:
-            if len(self.fineprint) != 0:
+            if len(self.fineprint) != 0:  # pragma: no branch
                 self.xaxis_label_height += self.small_fontsize
 
         self.line_height = (

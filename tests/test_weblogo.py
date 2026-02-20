@@ -34,6 +34,7 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 #  POSSIBILITY OF SUCH DAMAGE.
 
+import shutil
 from math import log, sqrt
 from typing import Tuple
 
@@ -720,6 +721,13 @@ def test_dirichlet_relative_entropy() -> None:
     assert abs(high - sent[int(samples * 0.975)]) < 0.2
 
 
+def test_dirichlet_mean_entropy_with_zero_alpha() -> None:
+    """mean_entropy skips zero alpha elements."""
+    d = Dirichlet([1.0, 0.0, 2.0])
+    e = d.mean_entropy()
+    assert e > 0
+
+
 def test_from_URL_fileopen_URLscheme() -> None:
     """test for http, https, or ftp scheme"""
     from weblogo.logo import _from_URL_fileopen
@@ -810,3 +818,470 @@ def test_csv_formatter() -> None:
     csv = csv_formatter(logodata, logoformat)
     assert isinstance(csv, bytes)
     assert b"," in csv
+
+
+def _make_logo_data():  # type: ignore[no-untyped-def]
+    """Helper to create LogoData/LogoFormat for formatter tests."""
+    from weblogo.seq import Seq, SeqList
+
+    seqs = SeqList(
+        [Seq("AACGTAG"), Seq("AAGGTAC"), Seq("AACGTAG"), Seq("GAAGTAC")],
+        unambiguous_dna_alphabet,
+    )
+    logodata = LogoData.from_seqs(seqs)
+    logoformat = LogoFormat(logodata, LogoOptions())
+    return logodata, logoformat
+
+
+_has_gs = shutil.which("gs") is not None or shutil.which("gswin32c.exe") is not None
+_has_pdf2svg = shutil.which("pdf2svg") is not None
+
+
+@pytest.mark.skipif(not _has_gs, reason="requires Ghostscript")
+def test_png_formatter() -> None:
+    """Test that the PNG formatter produces valid PNG output."""
+    from weblogo.logo_formatter import png_formatter
+
+    logodata, logoformat = _make_logo_data()
+    png = png_formatter(logodata, logoformat)
+    assert isinstance(png, bytes)
+    assert len(png) > 0
+    assert png[:4] == b"\x89PNG"
+
+
+@pytest.mark.skipif(not _has_gs, reason="requires Ghostscript")
+def test_jpeg_formatter() -> None:
+    """Test that the JPEG formatter produces valid JPEG output."""
+    from weblogo.logo_formatter import jpeg_formatter
+
+    logodata, logoformat = _make_logo_data()
+    jpeg = jpeg_formatter(logodata, logoformat)
+    assert isinstance(jpeg, bytes)
+    assert len(jpeg) > 0
+    assert jpeg[:2] == b"\xff\xd8"
+
+
+@pytest.mark.skipif(not _has_gs, reason="requires Ghostscript")
+def test_png_formatter_antialiased() -> None:
+    """Test PNG with low resolution triggers antialiasing."""
+    from weblogo.logo_formatter import png_formatter
+
+    logodata, logoformat = _make_logo_data()
+    logoformat.resolution = 72
+    png = png_formatter(logodata, logoformat)
+    assert isinstance(png, bytes)
+    assert png[:4] == b"\x89PNG"
+
+
+@pytest.mark.skipif(not _has_pdf2svg, reason="requires pdf2svg")
+def test_svg_formatter() -> None:
+    """Test that the SVG formatter produces SVG output."""
+    from weblogo.logo_formatter import svg_formatter
+
+    logodata, logoformat = _make_logo_data()
+    svg = svg_formatter(logodata, logoformat)
+    assert isinstance(svg, bytes)
+    assert b"<svg" in svg or b"<?xml" in svg
+
+
+def test_svg_formatter_missing_pdf2svg() -> None:
+    """Test that svg_formatter raises when pdf2svg is not found (covers line 110)."""
+    from unittest.mock import patch
+
+    from weblogo.logo_formatter import svg_formatter
+
+    logodata, logoformat = _make_logo_data()
+    with patch("weblogo.logo_formatter.shutil.which", return_value=None):
+        with pytest.raises(EnvironmentError, match="pdf2svg"):
+            svg_formatter(logodata, logoformat)
+
+
+# ---------------------------------------------------------------------------
+# native_pdf_formatter coverage tests
+# ---------------------------------------------------------------------------
+
+
+def _make_dna_logo(seqs_strs=None, **opts):  # type: ignore[no-untyped-def]
+    """Helper: build LogoData + LogoFormat from DNA sequences with custom options."""
+    from weblogo.seq import Seq, SeqList
+
+    if seqs_strs is None:
+        seqs_strs = ["AACGTAG", "AAGGTAC", "AACGTAG", "GAAGTAC"]
+    seqs = SeqList([Seq(s) for s in seqs_strs], unambiguous_dna_alphabet)
+    logodata = LogoData.from_seqs(seqs)
+    logooptions = LogoOptions(**opts)  # type: ignore[arg-type]
+    logoformat = LogoFormat(logodata, logooptions)
+    return logodata, logoformat
+
+
+def _make_protein_logo(seqs_strs=None, **opts):  # type: ignore[no-untyped-def]
+    """Helper: build LogoData + LogoFormat from protein sequences with custom options."""
+    from weblogo.seq import Seq, SeqList
+
+    if seqs_strs is None:
+        seqs_strs = ["AICDMI", "AICDMI", "AICDMI", "AICDMI"]
+    seqs = SeqList([Seq(s) for s in seqs_strs], unambiguous_protein_alphabet)
+    logodata = LogoData.from_seqs(seqs)
+    logooptions = LogoOptions(**opts)  # type: ignore[arg-type]
+    logoformat = LogoFormat(logodata, logooptions)
+    return logodata, logoformat
+
+
+def test_native_pdf_labels() -> None:
+    """logo_label + xaxis_label → covers 106, 110, 301-307, 312-323."""
+    from weblogo.pdf_formatter import native_pdf_formatter
+
+    logodata, logoformat = _make_dna_logo(
+        logo_label="(a)", xaxis_label="Residue Position"
+    )
+    pdf = native_pdf_formatter(logodata, logoformat)
+    assert pdf[:5] == b"%PDF-"
+    assert b"(\\(a\\))" in pdf  # escaped logo label
+    assert b"(Residue Position)" in pdf
+
+
+def test_native_pdf_no_fineprint() -> None:
+    """show_fineprint=False with xaxis_label → covers 113->117, 317->319."""
+    from weblogo.pdf_formatter import native_pdf_formatter
+
+    logodata, logoformat = _make_dna_logo(
+        show_fineprint=False, xaxis_label="Position"
+    )
+    pdf = native_pdf_formatter(logodata, logoformat)
+    assert pdf[:5] == b"%PDF-"
+    assert b"WebLogo" not in pdf  # fineprint suppressed
+    assert b"(Position)" in pdf  # xaxis label present
+
+
+def test_native_pdf_multiline() -> None:
+    """Sequences longer than stacks_per_line → covers 142-143."""
+    from weblogo.pdf_formatter import native_pdf_formatter
+
+    long_seqs = ["ACGTACGTACGTACGT" * 5] * 4  # 80 chars
+    logodata, logoformat = _make_dna_logo(long_seqs, stacks_per_line=20)
+    pdf = native_pdf_formatter(logodata, logoformat)
+    assert pdf[:5] == b"%PDF-"
+
+
+def test_native_pdf_no_yaxis_no_xaxis() -> None:
+    """show_yaxis=False + show_xaxis=False → covers 160->163, 171->178."""
+    from weblogo.pdf_formatter import native_pdf_formatter
+
+    logodata, logoformat = _make_dna_logo(
+        show_yaxis=False, show_xaxis=False
+    )
+    pdf = native_pdf_formatter(logodata, logoformat)
+    assert pdf[:5] == b"%PDF-"
+
+
+def test_native_pdf_probability() -> None:
+    """unit_name='probability' (conv_factor=0) → covers 184."""
+    from weblogo.pdf_formatter import native_pdf_formatter
+
+    logodata, logoformat = _make_dna_logo(unit_name="probability")
+    pdf = native_pdf_formatter(logodata, logoformat)
+    assert pdf[:5] == b"%PDF-"
+
+
+def test_native_pdf_reverse_stacks_false() -> None:
+    """reverse_stacks=False → covers 195."""
+    from weblogo.pdf_formatter import native_pdf_formatter
+
+    logodata, logoformat = _make_dna_logo(reverse_stacks=False)
+    pdf = native_pdf_formatter(logodata, logoformat)
+    assert pdf[:5] == b"%PDF-"
+
+
+def test_native_pdf_scale_width_false() -> None:
+    """scale_width=False → covers 202->207."""
+    from weblogo.pdf_formatter import native_pdf_formatter
+
+    logodata, logoformat = _make_dna_logo(scale_width=False)
+    pdf = native_pdf_formatter(logodata, logoformat)
+    assert pdf[:5] == b"%PDF-"
+
+
+def test_native_pdf_show_boxes() -> None:
+    """show_boxes=True → covers 220-221, 234-236."""
+    from weblogo.pdf_formatter import native_pdf_formatter
+
+    logodata, logoformat = _make_dna_logo(show_boxes=True)
+    pdf = native_pdf_formatter(logodata, logoformat)
+    assert pdf[:5] == b"%PDF-"
+
+
+def test_native_pdf_rotate_numbers() -> None:
+    """rotate_numbers=True → covers 451-461."""
+    from weblogo.pdf_formatter import native_pdf_formatter
+
+    logodata, logoformat = _make_dna_logo(rotate_numbers=True)
+    pdf = native_pdf_formatter(logodata, logoformat)
+    assert pdf[:5] == b"%PDF-"
+
+
+def test_native_pdf_no_errorbars() -> None:
+    """show_errorbars=False with entropy_interval set → covers 631."""
+    from weblogo.pdf_formatter import native_pdf_formatter
+    from weblogo.seq import Seq, SeqList
+
+    seqs = SeqList(
+        [Seq("AACGTAG"), Seq("AAGGTAC"), Seq("AACGTAG"), Seq("GAAGTAC")],
+        unambiguous_dna_alphabet,
+    )
+    prior = equiprobable_distribution(4) * 2.0
+    logodata = LogoData.from_seqs(seqs, prior=prior)
+    logooptions = LogoOptions(show_errorbars=False)  # type: ignore[arg-type]
+    logoformat = LogoFormat(logodata, logooptions)
+    pdf = native_pdf_formatter(logodata, logoformat)
+    assert pdf[:5] == b"%PDF-"
+    # No RG operator for error bars
+    assert b" RG" not in pdf
+
+
+def test_native_pdf_yaxis_label_empty() -> None:
+    """yaxis_label='' → covers 396->exit."""
+    from weblogo.pdf_formatter import native_pdf_formatter
+
+    logodata, logoformat = _make_dna_logo(yaxis_label="")
+    pdf = native_pdf_formatter(logodata, logoformat)
+    assert pdf[:5] == b"%PDF-"
+
+
+def test_native_pdf_no_minor_tics() -> None:
+    """yaxis_minor_tic_interval=0 → covers 384->396."""
+    from weblogo.pdf_formatter import native_pdf_formatter
+
+    logodata, logoformat = _make_dna_logo()
+    logoformat.yaxis_minor_tic_interval = 0
+    pdf = native_pdf_formatter(logodata, logoformat)
+    assert pdf[:5] == b"%PDF-"
+
+
+def test_native_pdf_protein_ends() -> None:
+    """Protein seqs + show_ends → covers 479-483, 495->exit, 510-514, 525->exit."""
+    from weblogo.pdf_formatter import native_pdf_formatter
+
+    logodata, logoformat = _make_protein_logo(show_ends=True, show_xaxis=True)
+    pdf = native_pdf_formatter(logodata, logoformat)
+    assert pdf[:5] == b"%PDF-"
+    # Protein ends use N/C labels
+    assert b"(N)" in pdf
+    assert b"(C)" in pdf
+
+
+def test_native_pdf_dna_ends() -> None:
+    """DNA seqs + show_ends → covers 476-478, 495 (prime), 507-509, 525 (prime)."""
+    from weblogo.pdf_formatter import native_pdf_formatter
+
+    logodata, logoformat = _make_dna_logo(show_ends=True, show_xaxis=True)
+    pdf = native_pdf_formatter(logodata, logoformat)
+    assert pdf[:5] == b"%PDF-"
+    # DNA ends use 5'/3' labels
+    assert b"(5)" in pdf
+    assert b"(3)" in pdf
+
+
+def test_native_pdf_serifed_I() -> None:
+    """Protein seqs with 'I' → covers 541, 547-548, 582-623."""
+    from weblogo.pdf_formatter import native_pdf_formatter
+
+    # Sequences rich in I to ensure it gets drawn
+    seqs = ["IIIIII", "IIIIII", "IIIIII", "IIIIII"]
+    logodata, logoformat = _make_protein_logo(seqs)
+    pdf = native_pdf_formatter(logodata, logoformat)
+    assert pdf[:5] == b"%PDF-"
+    # The serifed I is drawn using T glyphs
+    assert b"(T) Tj" in pdf
+
+
+def test_native_pdf_errorbar_clamp() -> None:
+    """Error bar high > yaxis_scale → covers 260."""
+    from weblogo.pdf_formatter import native_pdf_formatter
+    from weblogo.seq import Seq, SeqList
+
+    seqs = SeqList(
+        [Seq("AACGTAG"), Seq("AAGGTAC"), Seq("AACGTAG"), Seq("GAAGTAC")],
+        unambiguous_dna_alphabet,
+    )
+    prior = equiprobable_distribution(4) * 2.0
+    logodata = LogoData.from_seqs(seqs, prior=prior)
+    logoformat = LogoFormat(logodata, LogoOptions())
+    # Force yaxis_scale very small so error bars exceed it
+    logoformat.yaxis_scale = 0.001
+    pdf = native_pdf_formatter(logodata, logoformat)
+    assert pdf[:5] == b"%PDF-"
+
+
+def test_native_pdf_zero_count_column() -> None:
+    """Column with all-zero counts → covers 199->251."""
+    from weblogo.pdf_formatter import native_pdf_formatter
+
+    logodata, logoformat = _make_dna_logo()
+    # Manually zero out one column's counts
+    logodata.counts[2] = [0, 0, 0, 0]
+    pdf = native_pdf_formatter(logodata, logoformat)
+    assert pdf[:5] == b"%PDF-"
+
+
+def test_native_pdf_errorbars_with_prior() -> None:
+    """Error bars drawn when entropy_interval is set → covers 252-264, 630-662."""
+    from weblogo.pdf_formatter import native_pdf_formatter
+    from weblogo.seq import Seq, SeqList
+
+    seqs = SeqList(
+        [Seq("AACGTAG"), Seq("AAGGTAC"), Seq("AACGTAG"), Seq("GAAGTAC")],
+        unambiguous_dna_alphabet,
+    )
+    prior = equiprobable_distribution(4) * 2.0
+    logodata = LogoData.from_seqs(seqs, prior=prior)
+    logoformat = LogoFormat(logodata, LogoOptions())
+    pdf = native_pdf_formatter(logodata, logoformat)
+    assert pdf[:5] == b"%PDF-"
+    # Error bars use gray color (RG operator)
+    assert b" RG" in pdf
+
+
+def test_native_pdf_xaxis_label_with_fineprint() -> None:
+    """xaxis_label with fineprint showing → covers 317->319 branch."""
+    from weblogo.pdf_formatter import native_pdf_formatter
+
+    logodata, logoformat = _make_dna_logo(
+        xaxis_label="Residue", show_fineprint=True
+    )
+    pdf = native_pdf_formatter(logodata, logoformat)
+    assert pdf[:5] == b"%PDF-"
+    assert b"(Residue)" in pdf
+
+
+# ---------------------------------------------------------------------------
+# logo.py coverage tests
+# ---------------------------------------------------------------------------
+
+
+def test_logoformat_bad_annotate() -> None:
+    """Custom annotate of wrong length → covers logo.py:610."""
+    logodata = LogoData()
+    logodata.alphabet = unambiguous_dna_alphabet
+    logodata.length = 100
+    opts = LogoOptions()
+    opts.annotate = ["1", "2"]  # wrong length
+    with pytest.raises(ArgumentError):
+        LogoFormat(logodata, opts)
+
+
+def test_read_seq_data_max_file_size() -> None:
+    """read_seq_data with max_file_size → covers logo.py:762-767."""
+    from io import StringIO
+
+    from weblogo.logo import read_seq_data
+
+    # File that fits within limit
+    fin = StringIO(">s1\nACGT\n>s2\nACGT\n")
+    seqs = read_seq_data(fin, max_file_size=10000)
+    assert len(seqs) == 2
+
+    # File that exceeds limit
+    fin = StringIO(">s1\nACGT\n" * 100)
+    with pytest.raises(IOError, match="exceeds maximum"):
+        read_seq_data(fin, max_file_size=10)
+
+
+def test_read_seq_data_stdin() -> None:
+    """read_seq_data with fin==sys.stdin → covers logo.py:769."""
+    import sys
+    from io import StringIO
+    from unittest.mock import patch
+
+    from weblogo.logo import read_seq_data
+
+    fake_stdin = StringIO(">s1\nACGT\n>s2\nACGT\n")
+    # Make fake_stdin compare equal to sys.stdin
+    with patch.object(sys, "stdin", fake_stdin):
+        seqs = read_seq_data(sys.stdin)
+    assert len(seqs) == 2
+
+
+def test_read_seq_data_empty() -> None:
+    """read_seq_data with no parseable sequences → covers logo.py:775."""
+    from io import StringIO
+
+    from weblogo.logo import read_seq_data
+
+    fin = StringIO("")
+    with pytest.raises(ValueError, match="multiple sequence alignment"):
+        read_seq_data(fin)
+
+
+def test_read_seq_data_ignore_lower_case() -> None:
+    """read_seq_data with ignore_lower_case=True → covers logo.py:779-780."""
+    from io import StringIO
+
+    from weblogo.logo import read_seq_data
+
+    fin = StringIO(">s1\nACgT\n>s2\nAcGT\n")
+    seqs = read_seq_data(fin, ignore_lower_case=True)
+    assert len(seqs) == 2
+
+
+def test_logodata_from_counts_zero_column() -> None:
+    """from_counts with a zero-count row, no prior → covers logo.py:841."""
+    counts = np.array(
+        [[10, 5, 3, 2], [0, 0, 0, 0], [8, 6, 4, 2]], dtype=np.float64
+    )
+    ld = LogoData.from_counts(unambiguous_dna_alphabet, counts)
+    assert ld.entropy[1] == 0.0
+
+
+def test_logodata_from_counts_all_zero() -> None:
+    """from_counts with all-zero counts → covers logo.py:864."""
+    counts = np.array([[0, 0, 0, 0], [0, 0, 0, 0]], dtype=np.float64)
+    with pytest.raises(ValueError, match="No counts"):
+        LogoData.from_counts(unambiguous_dna_alphabet, counts)
+
+
+def test_logodata_from_seqs_empty() -> None:
+    """from_seqs with empty SeqList → covers logo.py:875."""
+    from weblogo.seq import SeqList
+
+    seqs = SeqList([], unambiguous_dna_alphabet)
+    with pytest.raises(ValueError, match="No sequence data"):
+        LogoData.from_seqs(seqs)
+
+
+def test_logodata_from_seqs_diff_lengths() -> None:
+    """from_seqs with different length sequences → covers logo.py:883."""
+    from weblogo.seq import Seq, SeqList
+
+    seqs = SeqList(
+        [Seq("ACGT"), Seq("ACG")], unambiguous_dna_alphabet
+    )
+    with pytest.raises(ArgumentError):
+        LogoData.from_seqs(seqs)
+
+
+def test_logodata_str_no_weight() -> None:
+    """LogoData.__str__() with weight=None → covers logo.py:928->930."""
+    ld = LogoData()
+    ld.alphabet = unambiguous_dna_alphabet
+    ld.length = 2
+    ld.counts = np.array([[10, 5, 3, 2], [8, 6, 4, 2]], dtype=np.float64)
+    ld.entropy = np.array([1.0, 0.9])
+    ld.entropy_interval = None
+    ld.weight = None
+    s = str(ld)
+    assert "LogoData" in s
+    assert "Entropy" in s
+
+
+def test_logodata_csv_no_weight() -> None:
+    """LogoData.csv() with weight=None → covers logo.py:965->967."""
+    ld = LogoData()
+    ld.alphabet = unambiguous_dna_alphabet
+    ld.length = 2
+    ld.counts = np.array([[10, 5, 3, 2], [8, 6, 4, 2]], dtype=np.float64)
+    ld.entropy = np.array([1.0, 0.9])
+    ld.entropy_interval = None
+    ld.weight = None
+    c = ld.csv()
+    assert "Position" in c
+    assert "Entropy" in c

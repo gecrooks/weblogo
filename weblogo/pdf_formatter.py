@@ -480,7 +480,7 @@ def _draw_left_end(parts: list, fmt: LogoFormat, content_x: float,
         label = "N"
         use_prime = False
     else:
-        return
+        return  # pragma: no cover — only called when show_ends is True
 
     x = content_x - fmt.fontsize * 0.25
     y = content_y - fmt.fontsize * 1.25
@@ -511,7 +511,7 @@ def _draw_right_end(parts: list, fmt: LogoFormat, right_x: float,
         label = "C"
         use_prime = False
     else:
-        return
+        return  # pragma: no cover — only called when show_ends is True
 
     x = right_x + fmt.fontsize * 0.25
     y = content_y - fmt.fontsize * 1.25
@@ -538,7 +538,7 @@ def _draw_symbol(parts: list, symbol: str, x: float, y_bottom: float,
     In PDF coords, y_bottom is the bottom of the target box, y increases upward.
     """
     if target_height <= 0 or target_width <= 0:
-        return
+        return  # pragma: no cover — defensive guard
 
     # IReplacementHack: Helvetica 'I' is too narrow (no serifs).
     # Render two 'T' glyphs overlaid — one normal (crossbar at top) and one
@@ -555,7 +555,7 @@ def _draw_symbol(parts: list, symbol: str, x: float, y_bottom: float,
     ref_char_height = (uy - ly) * ref_size
 
     if ref_char_height <= 0 or ref_char_width <= 0:
-        return
+        return  # pragma: no cover — all known bboxes have positive dimensions
 
     sx = target_width / ref_char_width
     sy = target_height / ref_char_height
@@ -590,7 +590,7 @@ def _draw_serifed_I(parts: list, x: float, y_bottom: float,
     ref_char_height = (uy - ly) * ref_size
 
     if ref_char_height <= 0 or ref_char_width <= 0:
-        return
+        return  # pragma: no cover — T bbox always has positive dimensions
 
     sx = target_width / ref_char_width
     sy = target_height / ref_char_height
