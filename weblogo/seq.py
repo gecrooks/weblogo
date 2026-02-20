@@ -25,7 +25,7 @@
 
 """Alphabetic sequences and associated tools and data.
 
-Seq is a subclass of a python string with additional annotation and an alphabet.
+Seq is an alphabetic string with additional annotation and an alphabet.
 The characters in string must be contained in the alphabet. Various standard
 alphabets are provided.
 
@@ -415,9 +415,8 @@ _complement_table = str.maketrans(
 )
 
 
-class Seq(str):
-    """An alphabetic string. A subclass of "str" consisting solely of
-    letters from the same alphabet.
+class Seq:
+    """An alphabetic string consisting solely of letters from the same alphabet.
 
     Attributes:
         alphabet    -- A string or Alphabet of allowed characters.
@@ -433,40 +432,54 @@ class Seq(str):
     name: str
     description: str
     _alphabet: Alphabet
+    _data: str
 
-    def __new__(
-        cls,
+    def __init__(
+        self,
         obj: str,
         alphabet: Alphabet | None = generic_alphabet,
         name: str | None = None,
         description: str | None = None,
-    ) -> "Seq":
-        self = str.__new__(cls, obj)
+    ) -> None:
+        data = str(obj)
         if alphabet is None:
             alphabet = generic_alphabet
-        if name is None:
-            name = ""
-        if description is None:
-            description = ""
         if not isinstance(alphabet, Alphabet):
             alphabet = Alphabet(alphabet)
-        if not alphabet.alphabetic(self):
-            raise ValueError(f"Sequence not alphabetic {alphabet}, '{self}'")
-
+        if not alphabet.alphabetic(data):
+            raise ValueError(f"Sequence not alphabetic {alphabet}, '{data}'")
+        self._data = data
         self._alphabet = alphabet
-        self.name = name
-        self.description = description
+        self.name = name or ""
+        self.description = description or ""
 
-        return self
+    # --- String protocol methods ---
 
-    # BEGIN PROPERTIES
+    def __str__(self) -> str:
+        return self._data
+
+    def __repr__(self) -> str:
+        return repr(self._data)
+
+    def __len__(self) -> int:
+        return len(self._data)
+
+    def __iter__(self) -> Iterator[str]:
+        return iter(self._data)
+
+    def __contains__(self, item: Any) -> bool:
+        return item in self._data
+
+    def __hash__(self) -> int:
+        return hash(self._data)
+
+    def __bool__(self) -> bool:
+        return bool(self._data)
 
     # Make alphabet constant
     @property
     def alphabet(self) -> Alphabet:
         return self._alphabet
-
-    # END PROPERTIES
 
     def ords(self) -> array:
         """Convert sequence to an array of integers
@@ -501,28 +514,28 @@ class Seq(str):
 
     def __getitem__(self, key: Any) -> "Seq":
         cls = self.__class__
-        return cls(str.__getitem__(self, key), self.alphabet)
+        return cls(self._data[key], self.alphabet)
 
     def __add__(self, other: Any) -> "Seq":
         # called for "self + other"
         cls = self.__class__
-        return cls(str.__add__(self, other), self.alphabet)
+        return cls(self._data + str(other), self.alphabet)
 
     def __radd__(self, other: Any) -> "Seq":
-        # Called when "other + self" and other is superclass of self
+        # Called when "other + self" and other is not a Seq
         cls = self.__class__
-        return cls(str.__add__(self, other), self.alphabet)
+        return cls(str(other) + self._data, self.alphabet)
 
-    def join(self, str_list: list["Seq"]) -> "Seq":  # type: ignore  # Incorrectly overrides superclass join
+    def join(self, str_list: list["Seq"]) -> "Seq":
         cls = self.__class__
-        return cls(super(Seq, self).join(str_list), self.alphabet)
+        return cls(self._data.join(str(s) for s in str_list), self.alphabet)
 
     def __eq__(self, other: Any) -> bool:
         if not hasattr(other, "alphabet"):
             return False
         if self.alphabet != other.alphabet:
             return False
-        return str.__eq__(self, other)
+        return self._data == str(other)
 
     def __ne__(self, other: Any) -> bool:
         return not self.__eq__(other)
@@ -540,7 +553,7 @@ class Seq(str):
         the in-place reverse() method of list objects.
         """
         cls = self.__class__
-        return cls(self[::-1], self.alphabet)
+        return cls(self._data[::-1], self.alphabet)
 
     def ungap(self) -> "Seq":
         # FIXME: Gap symbols should be specified by the Alphabet?
@@ -614,7 +627,7 @@ class Seq(str):
         """Returns complementary nucleic acid sequence."""
         if not nucleic_alphabet.alphabetic(str(self.alphabet)):
             raise ValueError("Incompatibly alphabets")
-        s = str.translate(self, _complement_table)
+        s = self._data.translate(_complement_table)
         cls = self.__class__
         return cls(s, self.alphabet, self.name, self.description)
 
