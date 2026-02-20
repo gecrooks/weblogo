@@ -81,6 +81,27 @@ if __version__.find("+") != -1:
 
 
 
+__all__ = [
+    "LogoData",
+    "LogoFormat",
+    "LogoOptions",
+    "aa_composition",
+    "base_distribution",
+    "cgi",
+    "classic",
+    "default_color_schemes",
+    "description",
+    "equiprobable_distribution",
+    "parse_prior",
+    "read_seq_data",
+    "release_description",
+    "std_alphabets",
+    "std_color_schemes",
+    "std_percentCG",
+    "std_sizes",
+    "std_units",
+]
+
 description = "Create sequence logos from biological sequence alignments."
 
 release_description = f"WebLogo {__version__}"
