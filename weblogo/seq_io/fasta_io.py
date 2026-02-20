@@ -181,7 +181,8 @@ def iterseq(fin: TextIO, alphabet: Alphabet | None = None) -> Iterator[Seq]:
 
     if not seqs:
         return
-    assert header is not None
+    if header is None:
+        raise ValueError("No header found for final sequence")  # pragma: no cover
     yield build_seq(seqs, alphabet, header, header_lineno, comments)
 
 

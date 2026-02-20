@@ -244,7 +244,8 @@ class Alphabet:
                     _to.append(c)
         self._alternatives = ("".join(_from), "".join(_to))
 
-        assert ord_table[0] == 0xFF
+        if ord_table[0] != 0xFF:
+            raise ValueError("Alphabet must not contain null character")  # pragma: no cover
         self._ord_table = ord_table
 
         # The chr_table maps between ordinal position in the alphabet letters

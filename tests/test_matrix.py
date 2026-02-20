@@ -59,6 +59,22 @@ def test_motif_reindex() -> None:
             assert m[k, a] == m2[k, a]
 
 
+def test_motif_read_transfac_nonstandard_alphabet() -> None:
+    """Header with a digit column and non-standard alphabet.
+
+    Covers branch 374->368 (isint(h) True, skip setting position_header)
+    and branch 414->418 (no standard alphabet matches, loop exhausts).
+    """
+    from io import StringIO
+
+    data = "PO\t1\tX\n01\t10\t20\n02\t30\t40\n03\t50\t60\nXX\n"
+    m = Motif.read_transfac(StringIO(data))
+    assert str(m.alphabet) == "1X"
+    assert m.array.shape == (3, 2)
+    assert m[0, "1"] == 10.0
+    assert m[2, "X"] == 60.0
+
+
 def test_motif_reverse() -> None:
     f = data_stream("transfac_matrix.txt")
     m = Motif.read_transfac(f)

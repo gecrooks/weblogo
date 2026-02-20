@@ -108,6 +108,24 @@ def test_parse_globin_fasta() -> None:
     assert len(seqs) == 56
 
 
+def test_get_parsers_unknown_extension() -> None:
+    """Extension not in fnames or fext: best_guess stays as default."""
+    fin = StringIO()
+    fin.name = "data.xyz"
+    parsers = seq_io._get_parsers(fin)
+    assert parsers[0] is seq_io._parsers[0]
+
+
+def test_get_parsers_non_parser_format() -> None:
+    """Extension maps to a format not in _parsers (e.g. intelligenetics_io)."""
+    from weblogo.seq_io import intelligenetics_io
+
+    fin = StringIO()
+    fin.name = "data.ig"
+    parsers = seq_io._get_parsers(fin)
+    assert parsers[0] is intelligenetics_io
+
+
 def test_parser_extensions() -> None:
     # Test that the list of extension is a list.
     # Very easy with one extension list to write ('txt') rather than ('txt',)

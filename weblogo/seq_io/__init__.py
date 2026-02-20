@@ -195,7 +195,8 @@ def format_names() -> dict:
     fnames = {}
     for f in formats:
         for name in f.names:  # type: ignore
-            assert name not in fnames  # Insanity check
+            if name in fnames:
+                raise ValueError(f"Duplicate format name: {name}")  # pragma: no cover
             fnames[name] = f
     return fnames
 
@@ -206,7 +207,8 @@ def format_extensions() -> dict:
     fext = {}
     for f in formats:
         for ext in f.extensions:  # type: ignore
-            assert ext not in fext  # Insanity check
+            if ext in fext:
+                raise ValueError(f"Duplicate format extension: {ext}")  # pragma: no cover
             fext[ext] = f
     return fext
 

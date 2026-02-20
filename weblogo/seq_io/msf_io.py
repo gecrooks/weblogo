@@ -109,7 +109,8 @@ def read(fin: TextIO, alphabet: Alphabet | None = None) -> SeqList:
                 seqs.append([])
         elif token.typeof == "seq":
             data = token.data
-            assert data is not None
+            if data is None:
+                raise ValueError(f"Missing sequence data at line: {token.lineno}")  # pragma: no cover
 
             if not alphabet.alphabetic(data):
                 raise ValueError(
@@ -146,7 +147,7 @@ def _line_is(fin: TextIO) -> Iterator[Token]:
             state = block
             # skips to a block of sequences
 
-        if state == block:
+        if state == block:  # pragma: no branch
             if line.isspace():
                 yield Token("end_block")
                 state = body

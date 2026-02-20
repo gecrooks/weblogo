@@ -109,7 +109,8 @@ def read(fin: TextIO, alphabet: Alphabet | None = None) -> SeqList:
 
         elif token.typeof == "seq":
             data = token.data
-            assert data is not None
+            if data is None:
+                raise ValueError(f"Missing sequence data at line: {token.lineno}")  # pragma: no cover
 
             if not alphabet.alphabetic(data):
                 raise ValueError(
@@ -197,7 +198,7 @@ def _scan(fin: TextIO) -> Iterator[Token]:
             continue
 
         # END state blocks. If I ever get here something has gone terrible wrong
-        raise RuntimeError()  # pragma: nocover
+        raise RuntimeError()  # pragma: no cover
 
     if state == block:
         yield Token("end_block")

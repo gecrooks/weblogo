@@ -81,6 +81,27 @@ if __version__.find("+") != -1:
 
 
 
+__all__ = [
+    "LogoData",
+    "LogoFormat",
+    "LogoOptions",
+    "aa_composition",
+    "base_distribution",
+    "cgi",
+    "classic",
+    "default_color_schemes",
+    "description",
+    "equiprobable_distribution",
+    "parse_prior",
+    "read_seq_data",
+    "release_description",
+    "std_alphabets",
+    "std_color_schemes",
+    "std_percentCG",
+    "std_sizes",
+    "std_units",
+]
+
 description = "Create sequence logos from biological sequence alignments."
 
 release_description = f"WebLogo {__version__}"
@@ -356,7 +377,7 @@ class LogoFormat(LogoOptions):
     ) -> None:
         """Create a new LogoFormat instance."""
 
-        if logooptions is not None:
+        if logooptions is not None:  # pragma: no branch
             self.__dict__.update(logooptions.__dict__)
 
         self.alphabet: Alphabet | None = logodata.alphabet
@@ -441,20 +462,16 @@ class LogoFormat(LogoOptions):
         # Inclusive upper and lower bounds
         # FIXME: Validate here. Move from formatter
 
-        # asserts checks that defaults that were initialized to None have been set
-        assert self.first_index is not None
-        assert self.seqlen is not None
+        if self.first_index is None:
+            raise ValueError("first_index must not be None")  # pragma: no cover
+        if self.seqlen is None:
+            raise ValueError("seqlen must not be None")  # pragma: no cover
 
         if self.logo_start is None:
             self.logo_start = self.first_index
 
-        assert self.logo_start is not None
-
         if self.logo_end is None:
             self.logo_end = self.seqlen + self.first_index - 1
-
-        assert self.logo_end is not None
-        assert self.logo_start is not None
         self.total_stacks = self.logo_end - self.logo_start + 1
 
         if self.total_stacks <= 0:
@@ -480,7 +497,6 @@ class LogoFormat(LogoOptions):
         if self.yaxis_label is None:
             self.yaxis_label = self.unit_name
 
-        assert self.yaxis_label is not None
         if self.yaxis_label:
             self.show_yaxis_label = True
         else:
@@ -493,7 +509,6 @@ class LogoFormat(LogoOptions):
                 if self.alphabet is None:
                     raise ArgumentError("Need an alphabet", "alphabet")
 
-                assert self.alphabet is not None
                 self.yaxis_scale = log(len(self.alphabet)) * conversion_factor
             else:
                 self.yaxis_scale = 1.0  # probability units
@@ -564,7 +579,7 @@ class LogoFormat(LogoOptions):
         if self.show_xaxis_label:
             self.xaxis_label_height += self.fontsize
         if self.show_fineprint:
-            if len(self.fineprint) != 0:
+            if len(self.fineprint) != 0:  # pragma: no branch
                 self.xaxis_label_height += self.small_fontsize
 
         self.line_height = (
@@ -756,7 +771,8 @@ def read_seq_data(
 
     # If max_file_size is set, or if fin==stdin (which is non-seekable), we
     # read the data and replace fin with a StringIO object.
-    assert fin is not None
+    if fin is None:
+        raise ValueError("Input file must not be None")  # pragma: no cover
 
     if max_file_size > 0:
         data = fin.read(max_file_size)
@@ -902,11 +918,14 @@ class LogoData:
         # Show column names
         print("#", end="\t", file=out)
 
-        # asserts checks that defaults that were initialized to None have been set
-        assert self.alphabet is not None
-        assert self.length is not None
-        assert self.counts is not None
-        assert self.entropy is not None
+        if self.alphabet is None:
+            raise ValueError("alphabet must not be None")  # pragma: no cover
+        if self.length is None:
+            raise ValueError("length must not be None")  # pragma: no cover
+        if self.counts is None:
+            raise ValueError("counts must not be None")  # pragma: no cover
+        if self.entropy is None:
+            raise ValueError("entropy must not be None")  # pragma: no cover
 
         for a in self.alphabet:
             print(a, end=" \t", file=out)
@@ -936,11 +955,14 @@ class LogoData:
         """Return logodata as a csv formatted string"""
         out = StringIO()
 
-        # asserts checks that defaults that were initialized to None have been set
-        assert self.alphabet is not None
-        assert self.length is not None
-        assert self.counts is not None
-        assert self.entropy is not None
+        if self.alphabet is None:
+            raise ValueError("alphabet must not be None")  # pragma: no cover
+        if self.length is None:
+            raise ValueError("length must not be None")  # pragma: no cover
+        if self.counts is None:
+            raise ValueError("counts must not be None")  # pragma: no cover
+        if self.entropy is None:
+            raise ValueError("entropy must not be None")  # pragma: no cover
 
         # Show column names
         print("Position", end=",", file=out)

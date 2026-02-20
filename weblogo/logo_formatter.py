@@ -47,7 +47,8 @@ def _bitmap_formatter(logodata: LogoData, logoformat: LogoFormat, device: str) -
     gs_device = device_map[device]
 
     resolution = logoformat.resolution
-    assert resolution is not None
+    if resolution is None:
+        raise ValueError("resolution must not be None")  # pragma: no cover
 
     _, fname_pdf = tempfile.mkstemp(suffix=".pdf")
     try:

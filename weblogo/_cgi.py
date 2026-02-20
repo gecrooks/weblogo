@@ -456,7 +456,8 @@ def _main(htdocs_directory: Optional[str] = None) -> None:
                 ignore_lower_case=ignore_lower_case,
             )
             alpha = seqs.alphabet
-            assert alpha is not None
+            if alpha is None:
+                raise ValueError("Sequences must have an alphabet")  # pragma: no cover
             prior = weblogo.parse_prior(comp, alpha)
             data = weblogo.LogoData.from_seqs(seqs, prior)
 

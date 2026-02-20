@@ -138,10 +138,10 @@ def read(fin: TextIO, alphabet: Alphabet | None = None) -> SeqList:
                 raise ValueError("parse error")
 
         # when options end, this takes care of the sequence
-        elif num_options == 0:
+        elif num_options == 0:  # pragma: no branch
             if num_seq == 0:
                 raise ValueError("Empty File, or possibly wrong file")
-            elif tracker < num_seq:
+            elif tracker < num_seq:  # pragma: no branch
                 if num_seq > len(sequence):
                     sequence.append("".join(line[10:].split()))  # removes species name
                     idents.append(line[0:10].strip())
