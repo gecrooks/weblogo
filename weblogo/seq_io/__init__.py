@@ -76,7 +76,6 @@ Supported File Formats
     intelligenetics_io  intelligenetics ig          yes  yes
     msf_io              msf             msf         yes
     nbrf_io             nbrf, pir       pir         yes
-    nexus_io            nexus           nexus       yes
     phylip_io           phylip          phy         yes
     plain_io            plain, raw                  yes  yes    none
     table_io            table           tbl         yes  yes    none
@@ -149,7 +148,6 @@ from . import (
     intelligenetics_io,
     msf_io,
     nbrf_io,
-    nexus_io,
     phylip_io,
     plain_io,
     stockholm_io,
@@ -161,10 +159,8 @@ __all__ = [
     "fasta_io",
     "msf_io",
     "nbrf_io",
-    "nexus_io",
     "plain_io",
     "phylip_io",
-    "null_io",
     "stockholm_io",
     "intelligenetics_io",
     "table_io",
@@ -185,7 +181,6 @@ formats = (
     msf_io,
     genbank_io,
     nbrf_io,
-    nexus_io,
     phylip_io,
     stockholm_io,
     intelligenetics_io,
@@ -231,7 +226,6 @@ _parsers = (
     genbank_io,
     stockholm_io,
     msf_io,
-    nexus_io,
     table_io,
     array_io,
 )

@@ -51,9 +51,7 @@ fallback_version = "0.0.0.dev"
 # https://docs.astral.sh/ruff/configuration/
 line-length = 88
 indent-width = 4
-exclude = [
-    "_ext",
-]
+exclude = []
 
 [tool.ruff.lint]
 ignore = []
@@ -77,8 +75,7 @@ source = ["weblogo"]
 parallel = true
 
 [tool.coverage.report]
-omit = ['*_test.py',
-    'weblogo/_ext/*']
+omit = ['*_test.py']
 
 exclude_lines = [
   '\#\s*pragma: no cover',
