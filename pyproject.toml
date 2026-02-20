@@ -35,7 +35,6 @@ dependencies = [
 
 [project.scripts]
 weblogo = "weblogo._cli:main"
-transformseq = "weblogo._transformseq:main"
 
 
 
