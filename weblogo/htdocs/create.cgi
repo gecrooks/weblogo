@@ -37,9 +37,6 @@
 #  POSSIBILITY OF SUCH DAMAGE.
 
 import weblogo
-from weblogo._ext import cgi, cgitb
-
-cgitb.enable()
 
 if __name__ == "__main__":
     weblogo.cgi(__file__)

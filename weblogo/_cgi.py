@@ -34,21 +34,21 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 #  POSSIBILITY OF SUCH DAMAGE.
 
+import os
 import os.path
 import shutil
 import sys
+import traceback
 from io import BytesIO, StringIO, TextIOWrapper
 from string import Template
 from typing import Any, Callable, List, Optional, Union
+from urllib.parse import unquote_plus
 
 import importlib_resources
+from multipart import parse_form
 
 import weblogo
-from weblogo._ext import cgi as cgilib
-from weblogo._ext import cgitb
 from weblogo.colorscheme import ColorScheme, SymbolColor
-
-cgitb.enable() # type: ignore
 
 
 # TODO: Check units
@@ -158,6 +158,16 @@ def float_or_none(value: Any) -> Optional[float]:
 
 
 def main(htdocs_directory: Optional[str] = None) -> None:
+    try:
+        _main(htdocs_directory)
+    except Exception:
+        print("Content-Type: text/html\n\n")
+        print("<html><body><h1>Internal Server Error</h1><pre>")
+        traceback.print_exc(file=sys.stdout)
+        print("</pre></body></html>")
+
+
+def _main(htdocs_directory: Optional[str] = None) -> None:
     logooptions = weblogo.LogoOptions()
 
     # A list of form fields.
@@ -280,10 +290,27 @@ def main(htdocs_directory: Optional[str] = None) -> None:
     for c in controls:
         form[c.name] = c
 
-    form_values = cgilib.FieldStorage() # type: ignore
+    forms: dict[str, str] = {}
+    files: dict[str, bytes] = {}
+    content_type = os.environ.get("CONTENT_TYPE", "")
+    is_urlencoded = "application/x-www-form-urlencoded" in content_type
+    if "multipart/form-data" in content_type or is_urlencoded:
+        headers = {"Content-Type": content_type.encode()}
+
+        def on_field(f: Any) -> None:
+            value = f.value.decode()
+            if is_urlencoded:
+                value = unquote_plus(value)
+            forms[f.field_name.decode()] = value
+
+        def on_file(f: Any) -> None:
+            f.file_object.seek(0)
+            files[f.field_name.decode()] = f.file_object.read()
+
+        parse_form(headers, sys.stdin.buffer, on_field, on_file)
 
     # Send default form?
-    if len(form_values) == 0 or "cmd_reset" in form_values:
+    if (not forms and not files) or "cmd_reset" in forms:
         # Load default truth values now.
         form["show_errorbars"].value = logooptions.show_errorbars
         form["show_xaxis"].value = logooptions.show_xaxis
@@ -297,7 +324,7 @@ def main(htdocs_directory: Optional[str] = None) -> None:
 
     # Get form content
     for c in controls:
-        c.value = form_values.getfirst(c.name, c.default)
+        c.value = forms.get(c.name, c.default)
 
     options_from_form = [
         "format",
@@ -357,8 +384,8 @@ def main(htdocs_directory: Optional[str] = None) -> None:
     # FIXME: Sending malformed or missing form keys should not cause a crash
     # sequences_file = form["sequences_file"]
     sequences_from_file = None
-    if "sequences_file" in form_values:
-        sequences_from_file = form_values.getvalue("sequences_file")
+    if "sequences_file" in files:
+        sequences_from_file = files["sequences_file"]
 
     sequences_from_textfield = form["sequences"].get_value()
     sequences_url = form["sequences_url"].get_value()
@@ -419,14 +446,14 @@ def main(htdocs_directory: Optional[str] = None) -> None:
     # We do not proceed to the time consuming logo creation step unless
     # required by a 'create' or 'validate' command, and no errors have been
     # found yet.
-    if errors or "cmd_edit" in form_values:
+    if errors or "cmd_edit" in forms:
         send_form(controls, errors, htdocs_directory)
         return
 
     try:
         comp = form["composition"].get_value()
         percentCG = form["percentCG"].get_value()
-        ignore_lower_case = "ignore_lower_case" in form_values
+        ignore_lower_case = "ignore_lower_case" in forms
         if comp == "percentCG":
             comp = str(percentCG / 100)
 
@@ -459,7 +486,7 @@ def main(htdocs_directory: Optional[str] = None) -> None:
     except RuntimeError as err:
         errors.append(err.args)
 
-    if errors or "cmd_validate" in form_values:
+    if errors or "cmd_validate" in forms:
         send_form(controls, errors, htdocs_directory)
         return
 
@@ -470,7 +497,7 @@ def main(htdocs_directory: Optional[str] = None) -> None:
     print("Content-Type:", mime_type[format])
     # Content-Disposition: inline       Open logo in browser window
     # Content-Disposition: attachment   Download logo
-    if "download" in form_values:
+    if "download" in forms:
         print(
             "Content-Disposition: attachment; " 'filename="logo.%s"' % extension[format]
         )

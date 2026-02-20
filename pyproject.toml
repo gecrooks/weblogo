@@ -25,6 +25,7 @@ dependencies = [
     "scipy",
     "importlib-resources",
     "importlib-metadata",
+    "python-multipart",
 ]
 
 [project.urls]
