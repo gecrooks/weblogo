@@ -58,7 +58,6 @@ from .color import Color
 from .seq import Alphabet
 
 
-# TODO: Make as abstract
 class ColorRule:
     """
     Define an interface for coloring individual symbols based on their position

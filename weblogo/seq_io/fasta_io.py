@@ -134,7 +134,7 @@ def iterseq(fin: TextIO, alphabet: Alphabet | None = None) -> Iterator[Seq]:
     alphabet = Alphabet(alphabet)
 
     seqs = []
-    comments: list[str] = []  # FIXME: comments before first sequence are lost.
+    comments: list[str] = []
     header = None
     header_lineno = -1
 

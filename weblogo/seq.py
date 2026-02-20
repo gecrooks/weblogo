@@ -121,14 +121,6 @@ Authors:
     GEC 2004,2005
 """
 
-# TODO: Add this to docstring somewhere.
-# To replace all ambiguous nucleic code by 'N', replace alphabet and then n
-# normalize.
-#
-# >>> Seq( 'ACGT-RYKM', reduced_nucleic_alphabet).normalized()
-# 'ACGT-NNNN'
-
-import codecs
 import collections.abc
 from array import array
 from typing import Any, Generator, Iterator
@@ -291,7 +283,7 @@ class Alphabet:
         """Convert an alphabetic string into a byte array of ordinals."""
         s = str(string)
         s = s.translate(self._ord_table)
-        a = array("B", codecs.latin_1_encode(s)[0])  # type: ignore # TESTME FIXME?
+        a = array("B", s.encode("latin-1"))
         return a
 
     def normalize(self, string: str) -> "Seq":
@@ -305,14 +297,6 @@ class Alphabet:
     def letters(self) -> str:
         """Letters of the alphabet as a string."""
         return str(self)
-
-    # def _all_letters(self):
-    #     """ All allowed letters, including alternatives."""
-    #     let = []
-    #     let.append(self._letters)
-    #     for key, value in self._alternatives:
-    #         let.append(value)
-    #     return ''.join(let)
 
     def __repr__(self) -> str:
         return (
@@ -336,8 +320,6 @@ class Alphabet:
     def __iter__(self) -> Iterator[str]:
         return iter(self._letters)
 
-    # def __getitem__(self, key: Any) -> str:
-    #     return self._letters[key]
 
     def __hash__(self) -> int:
         return hash(tuple(self._ord_table))
@@ -427,8 +409,6 @@ class Seq:
         GEC 2005
     """
 
-    # TODO: need a method to return a copy of the string with a new alphabet,
-    # preserving the sequence, name and alphabet?
     name: str
     description: str
     _alphabet: Alphabet
@@ -556,7 +536,6 @@ class Seq:
         return cls(self._data[::-1], self.alphabet)
 
     def ungap(self) -> "Seq":
-        # FIXME: Gap symbols should be specified by the Alphabet?
         return self.remove("-.~")
 
     def remove(self, delchars: str) -> "Seq":
@@ -597,13 +576,12 @@ class Seq:
         cls = self.__class__
         return cls(str(self).translate(trans), self.alphabet)
 
-    def translate(self) -> "Seq":  # type: ignore  # RENAME: Incorrectly overrides superclass translate.
+    def translate(self) -> "Seq":
         """Translate a nucleotide sequence to a polypeptide using full
         IUPAC ambiguities in DNA/RNA and amino acid codes, using the
         standard genetic code. See weblogo.transform.GeneticCode for
         details and more options.
         """
-        # Note: masks str.translate
         from .transform import GeneticCode
 
         return GeneticCode.std().translate(self)
@@ -680,11 +658,6 @@ class SeqList(list):
         self.alphabet = alphabet
         self.name = name
         self.description = description
-
-    # TOOWTDI. Replicates seq_io.read()
-    # @classmethod
-    # def read(cls, afile, alphabet = None):
-    #    return weblogo.seq_io.read(afile, alphabet)
 
     def isaligned(self) -> bool:
         """Are all sequences of the same length and alphabet?"""

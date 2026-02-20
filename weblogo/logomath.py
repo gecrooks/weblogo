@@ -73,8 +73,6 @@ class Dirichlet:
             - alpha  -- The parameters of the Dirichlet prior distribution.
                         A vector of non-negative real numbers.
         """
-        # TODO: Check that alphas are positive
-        # TODO: what if alpha's not one dimensional?
         self.alpha = np.asarray(alpha, np.float64)
 
         self._total = sum(self.alpha)
@@ -152,13 +150,12 @@ class Dirichlet:
             GEC 2005
 
         """
-        # TODO: Optimize
         alpha = self.alpha
         A = float(sum(alpha))
         ent = 0.0
         for a in alpha:
             if a > 0:
-                ent += -1.0 * a * digamma(1.0 + a)  # FIXME: Check
+                ent += -1.0 * a * digamma(1.0 + a)
         ent /= A
         ent += digamma(A + 1.0)
         return ent

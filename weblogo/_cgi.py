@@ -51,13 +51,6 @@ import weblogo
 from weblogo.colorscheme import ColorScheme, SymbolColor
 
 
-# TODO: Check units
-
-# TODO: In WebLogo2: why slash create.cgi? I think this was a workaround
-# for some browser quirk
-# <form method="post" action="/create.cgi" enctype="multipart/form-data">
-
-
 mime_type = {
     "pdf": "application/pdf",
     "svg": "image/svg+xml",
@@ -189,7 +182,6 @@ def _main(htdocs_directory: Optional[str] = None) -> None:
                 "logodata",
                 "csv",
             ],
-            # TODO: Should copy list from __init__.formatters
             errmsg="Unknown format option.",
         ),
         Field(
@@ -380,9 +372,6 @@ def _main(htdocs_directory: Optional[str] = None) -> None:
         except ValueError as err:
             errors.append(err.args)
 
-    # FIXME: Ugly fix: Must check that sequence_file key exists
-    # FIXME: Sending malformed or missing form keys should not cause a crash
-    # sequences_file = form["sequences_file"]
     sequences_from_file = None
     if "sequences_file" in files:
         sequences_from_file = files["sequences_file"]
@@ -445,8 +434,7 @@ def _main(htdocs_directory: Optional[str] = None) -> None:
 
         try:
             # Try reading data in transfac format first.
-            # TODO Refactor this code
-            motif = Motif.read_transfac(seq_file, alphabet=logooptions.alphabet)  # type: ignore  # FIXME
+            motif = Motif.read_transfac(seq_file, alphabet=logooptions.alphabet)  # type: ignore
             prior = weblogo.parse_prior(comp, motif.alphabet)
             data = weblogo.LogoData.from_counts(motif.alphabet, motif.array, prior)
         except ValueError:
@@ -571,21 +559,11 @@ def send_form(
         "create_html_template.html"
     )
     template = ref.read_text()
-    html = Template(template).safe_substitute(substitutions)  # FIXME
+    html = Template(template).safe_substitute(substitutions)
 
     print("Content-Type: text/html\n\n")
     print(html)
 
-    # DEBUG
-    # keys = substitutions.keys()
-    # keys.sort()
-    # for k in keys :
-    #    print(k, "=", substitutions[k], " <br />")
-
-    # print(" <br />")
-    # print(" <br />")
-    # for k in controls :
-    #    print(k.name, "=", k.get_value(), " <br />")
 
 
 if __name__ == "__main__":

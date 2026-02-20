@@ -193,7 +193,7 @@ class AlphabeticArray:
         if isinstance(key, tuple):
             return tuple([norm(k, a) for k, a in zip(key, self.alphabets)])  # type: ignore
         else:
-            return norm(key, self.alphabets[0])  # type: ignore # FIXME
+            return norm(key, self.alphabets[0])  # type: ignore
 
     def index(self, keys: Any) -> np.ndarray:
         """Return an array of shape (len(key1), len(key2), ...) whose values
@@ -202,7 +202,6 @@ class AlphabeticArray:
         a.outerindex( (I,J,K) )[i,j,k] == a.array[I[i],J[j],K[k]]
 
         """
-        # TODO: Above docstring is not very clear.
         # Deep voodoo using numpy indexing
         keys = self._ordkey(keys)
         outerkeys = []
@@ -280,14 +279,11 @@ class Motif(AlphabeticArray):
     # These methods alter self, and therefore do not return a value.
     # (Compare to Seq objects, where the data is immutable and
     #  therefore methods return a new Seq.)
-    # TODO: Should reindex (above) also act on self?
 
-    # Deprecate?
     def reverse(self) -> None:
         """Reverse sequence data"""
         self.array = self.array[::-1]  # view into the original numpy array
 
-    # Deprecate?
     def complement(self) -> None:
         """Complement nucleic acid sequence."""
         from weblogo.seq import Alphabet, Seq
@@ -302,7 +298,6 @@ class Motif(AlphabeticArray):
         self.alphabets = (None, alphabet)
         self.array = m.array
 
-    # Deprecate?
     def reverse_complement(self) -> None:
         """Complements and reverses nucleic acid
         sequence (i.e. the other strand of a DNA sequence.)

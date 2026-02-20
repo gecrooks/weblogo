@@ -147,10 +147,6 @@ def test_parsers() -> None:
     # We may include examples here for parsers that are not currently in
     # seq_io._parsers
 
-    # TODO: Refactor these examples as with test_genbank_io.examples()
-    # TODO: Then test that each example works with read() and iterseq()
-    # TODO: Also autotest Write and writeseq, where available.
-
     fasta_examples = (StringIO(fasta_io.example), data_stream("globin.fa"))
 
     clustal_examples = (

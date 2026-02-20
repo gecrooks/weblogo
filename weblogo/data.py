@@ -103,9 +103,6 @@ Attributes:
 Status: Beta (Data needs to be proof checked.)
 """
 
-# FIXME: Proof check data
-# FIXME: Add __all__
-
 # The ExPasy ProtScale tool is a great source of amino acid properties.
 # http://au.expasy.org/cgi-bin/protscale.pl
 
@@ -212,7 +209,7 @@ amino_acid_mass = {
     "L": 131.18,
     "M": 149.21,
     "N": 132.12,
-    # "O" : ???, # TODO
+    "O": 255.31,
     "P": 115.13,
     "Q": 146.15,
     "R": 174.20,
