@@ -44,7 +44,7 @@ import scipy.optimize
 from numpy.typing import ArrayLike  # pragma: no cover
 from scipy.special import digamma, gamma, gammaincc, polygamma
 
-class Dirichlet(object):
+class Dirichlet:
     """The Dirichlet probability distribution. The Dirichlet is a continuous
     multivariate probability distribution across non-negative unit length
     vectors. In other words, the Dirichlet is a probability distribution of
@@ -238,7 +238,7 @@ class Dirichlet(object):
         return low_limit, high_limit
 
 
-class Gamma(object):
+class Gamma:
     """The gamma probability distribution. (Not to be confused with the
     gamma function.)
 

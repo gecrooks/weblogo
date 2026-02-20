@@ -26,7 +26,7 @@
 from typing import Any
 
 
-class Color(object):
+class Color:
     """Color specifications using CSS2 (Cascading Style Sheet) syntax.
 
     http://www.w3.org/TR/REC-CSS2/syndata.html#color-units

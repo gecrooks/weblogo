@@ -155,7 +155,7 @@ __all__ = [
 ]
 
 
-class Alphabet(object):
+class Alphabet:
     """An ordered subset of printable ascii characters.
 
     Status:

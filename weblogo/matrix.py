@@ -45,7 +45,7 @@ from .utils import ischar, isint
 __all__ = "AlphabeticArray", "Motif"
 
 
-class AlphabeticArray(object):
+class AlphabeticArray:
     """An alphabetic array. Wraps a numpy array so that each dimension
     can be associated with an alphabet and indexed with characters or strings.
 

@@ -61,7 +61,7 @@ __all__ = [
 ]
 
 
-class Transform(object):
+class Transform:
     """A translation between alphabetic strings.
     (This class is not called 'Translation' to avoid confusion with the
     biological translation of RNA to protein.)
@@ -204,7 +204,7 @@ def mask_low_complexity(
     return segged
 
 
-class GeneticCode(object):
+class GeneticCode:
     """An encoding of amino acids by DNA triplets.
 
     Example :
