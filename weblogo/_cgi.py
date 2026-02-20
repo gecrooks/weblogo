@@ -403,24 +403,8 @@ def _main(htdocs_directory: Optional[str] = None) -> None:
         if sequences_url:
             errors.append(("sequences", "Cannot upload, sequence source conflict"))
         else:
-            # check SEQUENCES_MAXLENGT
-            # If a user tries to paste a very large file into sequence textarea,
-            # then WebLogo runs very slow for no apparently good reason. (Might be client side bug?)
-            # So we limit the maximum sequence size.
-            # Form field also limits size, but not necessarly respected. Also can truncate data
-            # without warning, so we'll set textarea maximum to be larger than MAX_SEQUENCE_SIZE
-            SEQUENCES_MAXLENGTH = 100000
-            if len(sequences_from_textfield) > SEQUENCES_MAXLENGTH:
-                errors.append(
-                    (
-                        "sequences",
-                        "Sequence data too large for text input. Use file upload instead.",
-                    )
-                )
-                controls[0] = Field("sequences", "")
-            else:
-                sequences = sequences_from_textfield
-                seq_file = StringIO(sequences)
+            sequences = sequences_from_textfield
+            seq_file = StringIO(sequences)
 
     elif sequences_url:
         from .logo import _from_URL_fileopen
