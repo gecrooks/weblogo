@@ -87,8 +87,10 @@ def native_pdf_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
 
     Produces a valid PDF 1.4 with Standard 14 fonts — no external tools required.
     """
-    assert logoformat.logo_width is not None
-    assert logoformat.logo_height is not None
+    if logoformat.logo_width is None:
+        raise ValueError("logo_width must not be None")  # pragma: no cover
+    if logoformat.logo_height is None:
+        raise ValueError("logo_height must not be None")  # pragma: no cover
 
     logo_width = logoformat.logo_width
     logo_height = logoformat.logo_height
@@ -114,18 +116,30 @@ def native_pdf_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
         _draw_fineprint(stream_parts, logoformat, logo_width)
 
     # --- Lines ---
-    assert logoformat.lines_per_logo is not None
-    assert logoformat.line_height is not None
-    assert logoformat.line_margin_left is not None
-    assert logoformat.line_margin_right is not None
-    assert logoformat.line_margin_bottom is not None
-    assert logoformat.line_margin_top is not None
-    assert logoformat.title_height is not None
-    assert logoformat.xaxis_label_height is not None
-    assert logoformat.logo_start is not None
-    assert logoformat.first_index is not None
-    assert logoformat.logo_end is not None
-    assert logoformat.char_width is not None
+    if logoformat.lines_per_logo is None:
+        raise ValueError("lines_per_logo must not be None")  # pragma: no cover
+    if logoformat.line_height is None:
+        raise ValueError("line_height must not be None")  # pragma: no cover
+    if logoformat.line_margin_left is None:
+        raise ValueError("line_margin_left must not be None")  # pragma: no cover
+    if logoformat.line_margin_right is None:
+        raise ValueError("line_margin_right must not be None")  # pragma: no cover
+    if logoformat.line_margin_bottom is None:
+        raise ValueError("line_margin_bottom must not be None")  # pragma: no cover
+    if logoformat.line_margin_top is None:
+        raise ValueError("line_margin_top must not be None")  # pragma: no cover
+    if logoformat.title_height is None:
+        raise ValueError("title_height must not be None")  # pragma: no cover
+    if logoformat.xaxis_label_height is None:
+        raise ValueError("xaxis_label_height must not be None")  # pragma: no cover
+    if logoformat.logo_start is None:
+        raise ValueError("logo_start must not be None")  # pragma: no cover
+    if logoformat.first_index is None:
+        raise ValueError("first_index must not be None")  # pragma: no cover
+    if logoformat.logo_end is None:
+        raise ValueError("logo_end must not be None")  # pragma: no cover
+    if logoformat.char_width is None:
+        raise ValueError("char_width must not be None")  # pragma: no cover
 
     conv_factor = std_units[logoformat.unit_name]
 
@@ -176,7 +190,8 @@ def native_pdf_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
 
         # Calculate stack height in data units
         if conv_factor:
-            assert logodata.entropy is not None
+            if logodata.entropy is None:
+                raise ValueError("entropy must not be None")  # pragma: no cover
             stack_height_units = (
                 logodata.entropy[seq_index] * std_units[logoformat.unit_name]
             )
@@ -184,8 +199,10 @@ def native_pdf_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
             stack_height_units = 1.0
 
         # Sort symbols by frequency
-        assert logodata.alphabet is not None
-        assert logodata.counts is not None
+        if logodata.alphabet is None:
+            raise ValueError("alphabet must not be None")  # pragma: no cover
+        if logodata.counts is None:
+            raise ValueError("counts must not be None")  # pragma: no cover
         s = list(zip(logodata.counts[seq_index], logodata.alphabet))
         s.sort(key=lambda x: x[1])
         s.reverse()
@@ -198,9 +215,11 @@ def native_pdf_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
 
         if C > 0.0:
             fraction_width = 1.0
-            assert logoformat.scale_width is not None
+            if logoformat.scale_width is None:
+                raise ValueError("scale_width must not be None")  # pragma: no cover
             if logoformat.scale_width:
-                assert logodata.weight is not None
+                if logodata.weight is None:
+                    raise ValueError("weight must not be None")  # pragma: no cover
                 fraction_width = float(logodata.weight[seq_index])
 
             # Current y position (bottom of next symbol, building upward)
@@ -222,7 +241,8 @@ def native_pdf_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
                 else:
                     char_height_pts_draw = char_height_pts
 
-                assert logoformat.color_scheme is not None
+                if logoformat.color_scheme is None:
+                    raise ValueError("color_scheme must not be None")  # pragma: no cover
                 color = logoformat.color_scheme.symbol_color(seq_index, symbol, rank)
 
                 char_x = stack_x + logoformat.stack_margin
@@ -250,7 +270,8 @@ def native_pdf_formatter(logodata: LogoData, logoformat: LogoFormat) -> bytes:
         # Draw error bar
         if logodata.entropy_interval is not None and conv_factor and C > 0.0:
             low, high = logodata.entropy_interval[seq_index]
-            assert logodata.entropy is not None
+            if logodata.entropy is None:
+                raise ValueError("entropy must not be None")  # pragma: no cover
             center = logodata.entropy[seq_index]
             low *= conv_factor
             high *= conv_factor
@@ -309,7 +330,8 @@ def _draw_logo_label(parts: list, fmt: LogoFormat, logo_height: int) -> None:
 
 def _draw_xaxis_label(parts: list, fmt: LogoFormat, logo_width: int) -> None:
     """Draw x-axis label, bottom center."""
-    assert fmt.xaxis_label_height is not None
+    if fmt.xaxis_label_height is None:
+        raise ValueError("xaxis_label_height must not be None")  # pragma: no cover
     label_width = _string_width(fmt.xaxis_label, fmt.fontsize)
     x = (logo_width - label_width) / 2.0
     # Place above fineprint area
@@ -325,7 +347,8 @@ def _draw_xaxis_label(parts: list, fmt: LogoFormat, logo_width: int) -> None:
 
 def _draw_fineprint(parts: list, fmt: LogoFormat, logo_width: int) -> None:
     """Draw fineprint text at bottom-right."""
-    assert fmt.line_margin_right is not None
+    if fmt.line_margin_right is None:
+        raise ValueError("line_margin_right must not be None")  # pragma: no cover
     fp_width = _string_width(fmt.fineprint, fmt.small_fontsize)
     x = logo_width - fmt.logo_margin - fmt.line_margin_right - fp_width
     y = fmt.logo_margin
@@ -339,7 +362,8 @@ def _draw_fineprint(parts: list, fmt: LogoFormat, logo_width: int) -> None:
 def _draw_yaxis(parts: list, fmt: LogoFormat, content_x: float,
                 content_y: float) -> None:
     """Draw y-axis with tics, labels, and axis label."""
-    assert fmt.yaxis_scale is not None
+    if fmt.yaxis_scale is None:
+        raise ValueError("yaxis_scale must not be None")  # pragma: no cover
 
     axis_x = content_x - fmt.stack_margin
     axis_bottom = content_y
@@ -380,7 +404,8 @@ def _draw_yaxis(parts: list, fmt: LogoFormat, content_x: float,
         tic_val += fmt.yaxis_tic_interval
 
     # Minor tics
-    assert fmt.yaxis_minor_tic_interval is not None
+    if fmt.yaxis_minor_tic_interval is None:
+        raise ValueError("yaxis_minor_tic_interval must not be None")  # pragma: no cover
     if fmt.yaxis_minor_tic_interval > 0:
         minor_val = 0.0
         while minor_val <= fmt.yaxis_scale + 1e-10:
@@ -630,8 +655,10 @@ def _draw_errorbar(parts: list, fmt: LogoFormat, stack_x: float,
     if not fmt.show_errorbars:
         return
 
-    assert fmt.yaxis_scale is not None
-    assert fmt.char_width is not None
+    if fmt.yaxis_scale is None:
+        raise ValueError("yaxis_scale must not be None")  # pragma: no cover
+    if fmt.char_width is None:
+        raise ValueError("char_width must not be None")  # pragma: no cover
     points_per_unit = fmt.stack_height / fmt.yaxis_scale
     center_pdf_y = stack_y + center * points_per_unit
     down_y = center_pdf_y - down * points_per_unit * fmt.errorbar_fraction

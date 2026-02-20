@@ -109,7 +109,8 @@ def read(fin: TextIO, alphabet: Alphabet | None = None) -> SeqList:
 
         elif token.typeof == "seq":
             data = token.data
-            assert data is not None
+            if data is None:
+                raise ValueError(f"Missing sequence data at line: {token.lineno}")  # pragma: no cover
 
             if not alphabet.alphabetic(data):
                 raise ValueError(

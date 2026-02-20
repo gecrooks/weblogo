@@ -174,6 +174,6 @@ def iterseq(fin: TextIO, alphabet: Alphabet | None = None) -> Iterator[Seq]:
                 continue
         else:
             # If we ever get here something has gone terrible wrong
-            assert False  # pragma: no cover
+            raise AssertionError("Unreachable")  # pragma: no cover
 
     # end for

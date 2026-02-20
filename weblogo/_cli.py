@@ -212,7 +212,8 @@ def _build_logodata(options: Any) -> LogoData:
             seqs.alphabet = aaa
 
         a = seqs.alphabet
-        assert a is not None
+        if a is None:
+            raise ValueError("Sequences must have an alphabet")  # pragma: no cover
         prior = parse_prior(options.composition, a, options.weight)
         data = LogoData.from_seqs(seqs, prior)
 

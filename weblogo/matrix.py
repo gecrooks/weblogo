@@ -174,7 +174,8 @@ class AlphabeticArray:
             if key is None:
                 return None
             elif isinstance(key, str) or isinstance(key, Alphabet):
-                assert alpha is not None
+                if alpha is None:
+                    raise ValueError("Alphabet required for string indexing")  # pragma: no cover
                 key = str(key)
                 if len(key) == 1:
                     return alpha.ord(key)
@@ -269,7 +270,8 @@ class Motif(AlphabeticArray):
 
     @property
     def alphabet(self) -> Alphabet:
-        assert self.alphabets[1] is not None
+        if self.alphabets[1] is None:
+            raise ValueError("Motif alphabet must not be None")  # pragma: no cover
         return self.alphabets[1]
 
     def reindex(self, alphabet: Alphabet | tuple[Alphabet, ...] | str) -> "Motif":
@@ -294,7 +296,8 @@ class Motif(AlphabeticArray):
         complement_alphabet = Alphabet(Seq(str(alphabet), alphabet).complement())
         self.alphabets = (None, complement_alphabet)
 
-        assert alphabet is not None
+        if alphabet is None:
+            raise ValueError("Alphabet must not be None")  # pragma: no cover
         m = self.reindex(alphabet)
         self.alphabets = (None, alphabet)
         self.array = m.array

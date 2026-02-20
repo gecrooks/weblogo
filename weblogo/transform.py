@@ -405,7 +405,8 @@ class GeneticCode:
         # TODO: Insanity check alphabet.
         seqs = seq
         table = self.table
-        assert table is not None
+        if table is None:
+            raise ValueError("Translation table not initialized")  # pragma: no cover
         trans = []
         L = len(seq)
         for i in range(frame, L - 2, 3):
@@ -426,7 +427,8 @@ class GeneticCode:
         # TODO: Optimize
         # TODO: Insanity check alphabet.
         table = self.back_table
-        assert table is not None
+        if table is None:
+            raise ValueError("Back-translation table not initialized")  # pragma: no cover
 
         seqs = seq
         trans = [table[a] for a in seqs]
@@ -477,7 +479,8 @@ class GeneticCode:
         string += "+".join(["---------" for c2 in letters]) + "+  "
 
         table = self.table
-        assert table is not None
+        if table is None:
+            raise ValueError("Translation table not initialized")  # pragma: no cover
 
         for c1 in letters:
             for c3 in letters:

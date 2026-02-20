@@ -39,14 +39,14 @@ extensions = ()
 
 
 def read(fin: TextIO, alphabet: Alphabet | None = None) -> SeqList:
-    assert fin is not None  # Do something with arguments to quiet pychecker
+    _ = fin  # Unused parameter
     # if alphabet is not None:
     #     pass
     return SeqList([])
 
 
 def iterseq(fin: TextIO, alphabet: Alphabet | None = None) -> Iterator[Seq]:
-    assert fin is not None
+    _ = fin  # Unused parameter
     # if alphabet is not None:
     #     pass
     yield Seq("")
@@ -59,6 +59,5 @@ def write(fout: TextIO, seqs: SeqList) -> None:
 
 
 def writeseq(fout: TextIO, seq: SeqList) -> None:
-    assert fout is not None
-    assert seq is not None
+    _ = fout, seq  # Unused parameters
     return
