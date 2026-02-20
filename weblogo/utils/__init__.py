@@ -102,7 +102,7 @@ def stdrepr(
     if name is None:
         name = obj.__class__.__name__
     if attributes is None:
-        attributes = obj.__class__.__slots__
+        attributes = list(vars(obj).keys())
     args = []
     for a in attributes:
         if a[0] == "_":
@@ -132,8 +132,6 @@ class Token:
     o lineno    -- the line of the file on which the data was found (if known)
     o offset    -- the offset of the data within the line (if known)
     """
-
-    __slots__ = ["typeof", "data", "lineno", "offset"]
 
     def __init__(
         self,

@@ -67,12 +67,6 @@ class Dirichlet(object):
         Alpha
     """
 
-    __slots__ = (
-        "alpha",
-        "_total",
-        "_mean",
-    )
-
     def __init__(self, alpha: "ArrayLike") -> None:
         """
         Args:
@@ -250,8 +244,6 @@ class Gamma(object):
 
 
     """
-
-    __slots__ = "alpha", "beta"
 
     def __init__(self, alpha: float, beta: float) -> None:
         if alpha <= 0.0:

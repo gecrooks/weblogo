@@ -79,8 +79,6 @@ class Transform(object):
     Status : Beta
     """
 
-    __slots__ = ["table", "source", "target", "name", "description"]
-
     def __init__(
         self,
         source: Seq,

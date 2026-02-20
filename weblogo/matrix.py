@@ -88,8 +88,6 @@ class AlphabeticArray(object):
     # Design note: Subclassing numpy arrays is hard, so instead we
     # build this proxy wrapper.
 
-    __slots__ = ["alphabets", "array"]
-
     def __init__(
         self,
         alphabets: Alphabet | tuple[Alphabet | None, ...] | str,

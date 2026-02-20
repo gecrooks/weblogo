@@ -169,8 +169,6 @@ class Alphabet(object):
     _ord_table: bytes
     _chr_table: str
 
-    __slots__ = ["_letters", "_alternatives", "_ord_table", "_chr_table"]
-
     # We're immutable, so use __new__ not __init__
     def __new__(
         cls,
@@ -656,8 +654,6 @@ class Seq(str):
 
 class SeqList(list):
     """A list of sequences."""
-
-    __slots__ = ["alphabet", "name", "description"]
 
     def __init__(
         self,
