@@ -9,6 +9,13 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 from . import data_ref
+from weblogo._cli import (
+    _build_argument_parser,
+    _build_logodata,
+    _build_logoformat,
+    _lookup,
+    _parse_bool,
+)
 
 
 def _exec(
@@ -113,14 +120,6 @@ def test_formats_svg() -> None:
 
 
 # ====================== In-process tests for _cli.py ======================
-
-from weblogo._cli import (
-    _build_argument_parser,
-    _build_logodata,
-    _build_logoformat,
-    _lookup,
-    _parse_bool,
-)
 
 
 class TestParseBool:
