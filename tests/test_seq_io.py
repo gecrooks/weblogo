@@ -36,7 +36,6 @@ from weblogo.seq_io import (
     genbank_io,
     msf_io,
     nbrf_io,
-    nexus_io,
     phylip_io,
     plain_io,
     stockholm_io,
@@ -164,10 +163,6 @@ def test_parsers() -> None:
         data_stream("rhod.pir"),
         data_stream("protein.pir"),
     )
-    nexus_examples = (
-        data_stream("nexus/protein.nex"),
-        data_stream("nexus/dna.nex"),
-    )
     stockholm_examples = (
         StringIO(stockholm_io.example),
         data_stream("pfam_example.txt"),
@@ -183,7 +178,6 @@ def test_parsers() -> None:
         phylip_io: phylip_examples,
         msf_io: msf_examples,
         nbrf_io: nbrf_examples,
-        nexus_io: nexus_examples,
         stockholm_io: stockholm_examples,
         table_io: table_examples,
         array_io: array_examples,

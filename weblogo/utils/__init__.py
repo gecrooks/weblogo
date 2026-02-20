@@ -37,8 +37,6 @@ __all__ = (
     "invert_dict",
     "stdrepr",
     "Token",
-    "crc32",
-    "crc64",
     "ArgumentError",
     "group_count",
 )
@@ -102,7 +100,7 @@ def stdrepr(
     if name is None:
         name = obj.__class__.__name__
     if attributes is None:
-        attributes = obj.__class__.__slots__
+        attributes = list(vars(obj).keys())
     args = []
     for a in attributes:
         if a[0] == "_":
@@ -133,8 +131,6 @@ class Token:
     o offset    -- the offset of the data within the line (if known)
     """
 
-    __slots__ = ["typeof", "data", "lineno", "offset"]
-
     def __init__(
         self,
         typeof: str,
@@ -156,59 +152,6 @@ class Token:
             coord += ":" + str(self.offset)
         coord = coord.ljust(7)
         return (coord + "  " + self.typeof + " : ").ljust(32) + str(self.data or "")
-
-
-def crc32(string: str) -> str:
-    """Return the standard CRC32 checksum as a hexidecimal string."""
-    import binascii
-
-    return f"{binascii.crc32(string.encode()):08X}"
-
-
-_crc64_table = None
-
-
-def crc64(string: str) -> str:
-    """Calculate ISO 3309 standard cyclic redundancy checksum.
-    Used, for example, by SWISS-PROT.
-
-    Returns : The CRC as a hexadecimal string.
-
-    Reference:
-    o W. H. Press, S. A. Teukolsky, W. T. Vetterling, and B. P. Flannery,
-     "Numerical recipes in C", 2nd ed., Cambridge University Press.
-     Pages 896ff.
-    """
-    # Adapted from biopython, which was adapted from bioperl
-    global _crc64_table
-    if _crc64_table is None:
-        # Initialisation of CRC64 table
-        table = []
-        for i in range(256):
-            k = i
-            part_h = 0
-            for j in range(8):
-                rflag = k & 1
-                k >>= 1
-                if part_h & 1:
-                    k |= 1 << 31  # pragma: no cover
-                part_h >>= 1
-                if rflag:
-                    part_h ^= 0xD8000000
-            table.append(part_h)
-        _crc64_table = tuple(table)
-
-    crcl = 0
-    crch = 0
-    for c in string:
-        shr = (crch & 0xFF) << 24
-        temp1h = crch >> 8
-        temp1l = (crcl >> 8) | shr
-        idx = (crcl ^ ord(c)) & 0xFF
-        crch = temp1h ^ _crc64_table[idx]
-        crcl = temp1l
-
-    return f"{crch:08X}{crcl:08X}"
 
 
 class ArgumentError(ValueError):

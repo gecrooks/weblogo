@@ -37,8 +37,6 @@
 from weblogo.utils import (
     ArgumentError,
     Token,
-    crc32,
-    crc64,
     group_count,
     invert_dict,
     isblank,
@@ -107,19 +105,25 @@ def test_token() -> None:
     assert t2.typeof == "kind"
 
 
+def test_token_default_offset() -> None:
+    t = Token("kind", "some data", 4)
+    s = str(t)
+    assert ":" not in s.split()[0]  # no offset in coord
+
+
+def test_stdrepr_explicit_name() -> None:
+    from weblogo.utils import stdrepr
+
+    t = Token("kind", "some data", 4, 3)
+    r = stdrepr(t, name="CustomName")
+    assert r.startswith("CustomName(")
+
+
 def test_invert_dict() -> None:
     d = dict(a=3, b=4)
     invd = invert_dict(d)
     assert 3 in invd
     assert invd[3] == "a"
-
-
-def test_crc64() -> None:
-    assert crc64("IHATEMATH") == "E3DCADD69B01ADD1"
-
-
-def test_crc32() -> None:
-    assert crc32("Test the CRC-32 of this string.") == "%08X" % 1571220330
 
 
 def test_ArgumentValueError() -> None:

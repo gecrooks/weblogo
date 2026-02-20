@@ -756,3 +756,57 @@ def integrate(f, a, b, n=1000):  # type: ignore
         total += f(a + (i) * h)
     result = h * (total - 0.5 * f(a) - 0.5 * f(b))
     return result
+
+
+def test_pdf_formatter() -> None:
+    """Test that the PDF formatter produces valid PDF output."""
+    from weblogo.logo_formatter import pdf_formatter
+    from weblogo.seq import Seq, SeqList
+
+    seqs = SeqList(
+        [Seq("AACGTAG"), Seq("AAGGTAC"), Seq("AACGTAG"), Seq("GAAGTAC")],
+        unambiguous_dna_alphabet,
+    )
+    logodata = LogoData.from_seqs(seqs)
+    logooptions = LogoOptions()
+    logooptions.logo_title = "Test"
+    logoformat = LogoFormat(logodata, logooptions)
+
+    pdf = pdf_formatter(logodata, logoformat)
+    assert isinstance(pdf, bytes)
+    assert len(pdf) > 0
+    assert pdf[:5] == b"%PDF-"
+
+
+def test_txt_formatter() -> None:
+    """Test that the text formatter produces output."""
+    from weblogo.logo_formatter import txt_formatter
+    from weblogo.seq import Seq, SeqList
+
+    seqs = SeqList(
+        [Seq("AACGTAG"), Seq("AAGGTAC"), Seq("AACGTAG"), Seq("GAAGTAC")],
+        unambiguous_dna_alphabet,
+    )
+    logodata = LogoData.from_seqs(seqs)
+    logoformat = LogoFormat(logodata, LogoOptions())
+
+    txt = txt_formatter(logodata, logoformat)
+    assert isinstance(txt, bytes)
+    assert len(txt) > 0
+
+
+def test_csv_formatter() -> None:
+    """Test that the CSV formatter produces output."""
+    from weblogo.logo_formatter import csv_formatter
+    from weblogo.seq import Seq, SeqList
+
+    seqs = SeqList(
+        [Seq("AACGTAG"), Seq("AAGGTAC"), Seq("AACGTAG"), Seq("GAAGTAC")],
+        unambiguous_dna_alphabet,
+    )
+    logodata = LogoData.from_seqs(seqs)
+    logoformat = LogoFormat(logodata, LogoOptions())
+
+    csv = csv_formatter(logodata, logoformat)
+    assert isinstance(csv, bytes)
+    assert b"," in csv

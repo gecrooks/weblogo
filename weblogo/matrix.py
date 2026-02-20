@@ -45,7 +45,7 @@ from .utils import ischar, isint
 __all__ = "AlphabeticArray", "Motif"
 
 
-class AlphabeticArray(object):
+class AlphabeticArray:
     """An alphabetic array. Wraps a numpy array so that each dimension
     can be associated with an alphabet and indexed with characters or strings.
 
@@ -87,8 +87,6 @@ class AlphabeticArray(object):
 
     # Design note: Subclassing numpy arrays is hard, so instead we
     # build this proxy wrapper.
-
-    __slots__ = ["alphabets", "array"]
 
     def __init__(
         self,
@@ -162,7 +160,7 @@ class AlphabeticArray(object):
         return self.array.__getitem__(self._ordkey(key)) # type: ignore
 
     def __setitem__(self, key: Any, value: Any) -> None:
-        self.array.__setitem__(self._ordkey(key), value)
+        self.array.__setitem__(self._ordkey(key), value)  # type: ignore[index]
 
     def _ordkey(self, key: Any) -> int | np.ndarray | slice | tuple | Alphabet:
         """Convert string indices into integers. Handles characters, strings
