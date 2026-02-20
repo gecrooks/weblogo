@@ -162,7 +162,7 @@ class AlphabeticArray(object):
         return self.array.__getitem__(self._ordkey(key)) # type: ignore
 
     def __setitem__(self, key: Any, value: Any) -> None:
-        self.array.__setitem__(self._ordkey(key), value)
+        self.array.__setitem__(self._ordkey(key), value)  # type: ignore[index]
 
     def _ordkey(self, key: Any) -> int | np.ndarray | slice | tuple | Alphabet:
         """Convert string indices into integers. Handles characters, strings

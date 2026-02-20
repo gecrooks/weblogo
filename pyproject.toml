@@ -98,7 +98,7 @@ files = 'weblogo'
 ignore_missing_imports = true
 
 # Disallows functions without type annotations
-disallow_untyped_defs = false
+disallow_untyped_defs = true
 
 [dependency-groups]
 dev = [
