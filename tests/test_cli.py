@@ -169,6 +169,7 @@ class TestBuildArgumentParser:
         assert opts.logo_title == ""
         assert opts.show_xaxis is True
         assert opts.show_yaxis is True
+        assert opts.small_sample_correction is True
 
     def test_format_option(self) -> None:
         parser = _build_argument_parser()
@@ -195,6 +196,8 @@ class TestBuildArgumentParser:
         opts = parser.parse_args(["--show-xaxis", "no", "--show-yaxis", "no"])
         assert opts.show_xaxis is False
         assert opts.show_yaxis is False
+        opts = parser.parse_args(["--small-sample-correction", "no"])
+        assert opts.small_sample_correction is False
 
     def test_color_option(self) -> None:
         parser = _build_argument_parser()
@@ -261,7 +264,7 @@ class TestBuildLogodata:
         opts.fin.close()
 
     def test_stdin_input(self) -> None:
-        """Read from stdin when no --fin provided (covers line 160)."""
+        """Read from stdin when no --fin provided"""
         parser = _build_argument_parser()
         opts = parser.parse_args([])
         opts.fin = None
@@ -272,7 +275,7 @@ class TestBuildLogodata:
         assert data.length > 0
 
     def test_upload_url(self) -> None:
-        """Upload from URL when no --fin provided (covers lines 163-165)."""
+        """Upload from URL when no --fin provided."""
         parser = _build_argument_parser()
         opts = parser.parse_args([])
         opts.fin = None
@@ -283,7 +286,7 @@ class TestBuildLogodata:
         assert data.length > 0
 
     def test_transfac_parse_error_reraise(self) -> None:
-        """Explicit transfac format with non-transfac data re-raises (covers line 178)."""
+        """Explicit transfac format with non-transfac data re-raises."""
         parser = _build_argument_parser()
         opts = parser.parse_args(["-D", "transfac"])
         opts.fin = StringIO(">s1\nACGT\n>s2\nACGT\n")
@@ -291,7 +294,7 @@ class TestBuildLogodata:
             _build_logodata(opts)
 
     def test_transfac_ignore_lower_case_error(self) -> None:
-        """Transfac with --ignore-lower-case raises (covers line 188)."""
+        """Transfac with --ignore-lower-case raises."""
         parser = _build_argument_parser()
         opts = parser.parse_args(["--ignore-lower-case"])
         opts.fin = data_ref("transfac_matrix.txt").open()
@@ -300,7 +303,7 @@ class TestBuildLogodata:
         opts.fin.close()
 
     def test_transfac_reverse(self) -> None:
-        """Transfac with --reverse (covers line 192)."""
+        """Transfac with --reverse."""
         parser = _build_argument_parser()
         opts = parser.parse_args(["--reverse"])
         opts.fin = data_ref("transfac_matrix.txt").open()
@@ -309,7 +312,7 @@ class TestBuildLogodata:
         opts.fin.close()
 
     def test_transfac_complement(self) -> None:
-        """Transfac with --complement (covers line 194)."""
+        """Transfac with --complement."""
         parser = _build_argument_parser()
         opts = parser.parse_args(["--complement"])
         opts.fin = data_ref("transfac_matrix.txt").open()
@@ -317,8 +320,17 @@ class TestBuildLogodata:
         assert data.length > 0
         opts.fin.close()
 
+    def test_transfac_no_small_sample_correction(self) -> None:
+        """Transfac with small sample correction disabled."""
+        parser = _build_argument_parser()
+        opts = parser.parse_args(["--small-sample-correction", "no"])
+        opts.fin = data_ref("transfac_matrix.txt").open()
+        data = _build_logodata(opts)
+        assert data.length > 0
+        opts.fin.close()
+
     def test_complement_sequences(self) -> None:
-        """Complement on DNA sequence data (covers lines 203-212)."""
+        """Complement on DNA sequence data."""
         parser = _build_argument_parser()
         opts = parser.parse_args(["--complement", "-A", "dna"])
         opts.fin = data_ref("cap.fa").open()
@@ -326,8 +338,17 @@ class TestBuildLogodata:
         assert data.length > 0
         opts.fin.close()
 
+    def test_sequences_no_small_sample_correction(self) -> None:
+        """Sequence data with small sample correction disabled."""
+        parser = _build_argument_parser()
+        opts = parser.parse_args(["--small-sample-correction", "no"])
+        opts.fin = data_ref("cap.fa").open()
+        data = _build_logodata(opts)
+        assert data.length > 0
+        opts.fin.close()
+
     def test_complement_protein_error(self) -> None:
-        """Complement on protein data raises ValueError (covers line 204)."""
+        """Complement on protein data raises ValueError."""
         parser = _build_argument_parser()
         opts = parser.parse_args(["--complement", "-A", "protein"])
         opts.fin = data_ref("Rv3829c.fasta").open()
@@ -338,7 +359,7 @@ class TestBuildLogodata:
 
 class TestHttpdServe:
     def test_httpd_serve_forever(self) -> None:
-        """Test server setup and KeyboardInterrupt exit (covers lines 108-150)."""
+        """Test server setup and KeyboardInterrupt exit."""
         from weblogo._cli import httpd_serve_forever
 
         captured_handler_class = {}
@@ -367,7 +388,7 @@ class TestHttpdServe:
 
         assert exc_info.value.code == 0
 
-        # Now test the handler class methods (covers lines 117-121, 126)
+        # Now test the handler class methods
         handler_cls = captured_handler_class["cls"]
         handler = handler_cls.__new__(handler_cls)
 

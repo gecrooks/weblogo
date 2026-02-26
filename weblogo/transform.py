@@ -94,7 +94,7 @@ class Transform:
 
     def __call__(self, seq: Seq) -> Seq:
         """Translate sequence."""
-        if not self.source.alphabet.alphabetic(seq):
+        if not self.source.alphabet.alphabetic(seq.tostring()):
             raise ValueError("Incompatible alphabets")
         s = str(seq).translate(self.table)
         cls = self.target.__class__
