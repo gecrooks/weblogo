@@ -45,7 +45,7 @@ from typing import Any, Callable, List, Optional, Union
 from urllib.parse import unquote_plus
 
 import importlib_resources
-from multipart import parse_form
+from python_multipart import parse_form
 
 import weblogo
 from weblogo.colorscheme import ColorScheme, SymbolColor

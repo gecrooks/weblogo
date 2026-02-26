@@ -262,9 +262,6 @@ def _build_logoformat(logodata: LogoData, opts: Any) -> LogoFormat:
         "title_fontsize",
         "small_fontsize",
         "number_fontsize",
-        "text_font",
-        "logo_font",
-        "title_font",
         # Advanced Format Options.
         "stack_aspect_ratio",
         "show_boxes",
@@ -783,30 +780,6 @@ def _build_argument_parser() -> argparse.ArgumentParser:
         default=defaults.number_fontsize,
         help=f"Axis numbers font size in points (default: {defaults.number_fontsize})",
         metavar="POINTS",
-    )
-
-    font_grp.add_argument(
-        "--text-font",
-        dest="text_font",
-        default=defaults.text_font,
-        help=f"Specify font for labels (default: {defaults.text_font})",
-        metavar="FONT",
-    )
-
-    font_grp.add_argument(
-        "--logo-font",
-        dest="logo_font",
-        default=defaults.text_font,
-        help=f"Specify font for logo (default: {defaults.logo_font})",
-        metavar="FONT",
-    )
-
-    font_grp.add_argument(
-        "--title-font",
-        dest="title_font",
-        default=defaults.title_font,
-        help=f"Specify font for title (default: {defaults.title_font})",
-        metavar="FONT",
     )
 
     # ========================== Advanced options =========================

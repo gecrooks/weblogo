@@ -254,9 +254,6 @@ class LogoOptions:
         title_fontsize:           Title text font size in points
         number_fontsize:          Font size for axis-numbers, in points.
 
-        text_font:                Select font for labels
-        logo_font:                Select font for Logo
-        title_font:               Select font for Logo's title
 
         first_index:              Index of first position in sequence data
         logo_start:               Lower bound of sequence to display
@@ -324,9 +321,6 @@ class LogoOptions:
     title_fontsize: float = 12
     number_fontsize: float = 8
 
-    text_font: str = "ArialMT"
-    logo_font: str = "Arial-BoldMT"
-    title_font: str = "ArialMT"
 
     first_index: int = 1
     logo_start: int | None = None
