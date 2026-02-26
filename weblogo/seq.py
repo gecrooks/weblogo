@@ -623,7 +623,7 @@ class Seq:
             return
 
         # An optimization. Chopping up strings is faster.
-        seq = self.alphabet.normalize(self).tostring()
+        seq = self.alphabet.normalize(self.tostring()).tostring()
         # seq = self.tostring()
 
         for i in range(0, len(seq) - k + 1):

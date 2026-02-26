@@ -193,7 +193,9 @@ def _build_logodata(options: Any) -> LogoData:
         if options.complement or options.revcomp:
             motif.complement()
 
-        prior = parse_prior(options.composition, motif.alphabet, options.weight)
+        prior = None
+        if options.small_sample_correction:
+            prior = parse_prior(options.composition, motif.alphabet, options.weight)
         data = LogoData.from_counts(motif.alphabet, motif.array, prior)
     else:
         if options.reverse or options.revcomp:
@@ -214,7 +216,9 @@ def _build_logodata(options: Any) -> LogoData:
         a = seqs.alphabet
         if a is None:
             raise ValueError("Sequences must have an alphabet")  # pragma: no cover
-        prior = parse_prior(options.composition, a, options.weight)
+        prior = None
+        if options.small_sample_correction:
+            prior = parse_prior(options.composition, a, options.weight)
         data = LogoData.from_seqs(seqs, prior)
 
     return data
@@ -467,6 +471,16 @@ def _build_argument_parser() -> argparse.ArgumentParser:
         "distribution for proteins and equiprobable distribution for "
         "everything else. ",
         metavar="COMP.",
+    )
+
+    data_grp.add_argument(
+        "--small-sample-correction",
+        dest="small_sample_correction",
+        type=_parse_bool,
+        default=True,
+        metavar="YES/NO",
+        help="Apply small sample correction? (Default: yes). If no, the prior "
+        "composition is ignored.",
     )
 
     data_grp.add_argument(

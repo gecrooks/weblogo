@@ -883,7 +883,7 @@ def test_svg_formatter() -> None:
 
 
 def test_svg_formatter_missing_pdf2svg() -> None:
-    """Test that svg_formatter raises when pdf2svg is not found (covers line 110)."""
+    """Test that svg_formatter raises when pdf2svg is not found."""
     from unittest.mock import patch
 
     from weblogo.logo_formatter import svg_formatter

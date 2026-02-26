@@ -289,7 +289,9 @@ class Motif(AlphabeticArray):
         from weblogo.seq import Alphabet, Seq
 
         alphabet = self.alphabet
-        complement_alphabet = Alphabet(Seq(str(alphabet), alphabet).complement())
+        complement_alphabet = Alphabet(
+            Seq(str(alphabet), alphabet).complement().tostring()
+        )
         self.alphabets = (None, complement_alphabet)
 
         if alphabet is None:
